@@ -21,12 +21,12 @@ params:
   sampling_rate: NA
   filter: NA
   equation_mets: NA
+  bmr_kcal_d: NA
   axis: NA
   sed_cutpoint: NA
   mpa_cutpoint: NA
   vpa_cutpoint: NA
   minimum_wear_time_for_analysis: NA
-  mets_period: NA
   results_by_day: NA
   results_summary: NA
 ---
@@ -38,47 +38,6 @@ library(patchwork)
 library(flextable)
 library(officer)
 ```
-
-```{r BMR, echo = F}
-sex <- params$sex
-age <- params$age
-height <- params$height
-weight <- params$weight
-
-# BMR using weight
-BMR <-
-  ifelse(age <3 & sex == "male", 61.0 * weight - 33.7,
-         ifelse(age >=3 & age <10 & sex == "male", 23.3 * weight + 514,
-                ifelse(age >=10 & age <18 & sex == "male", 18.4 * weight + 581,
-                       ifelse(age >=18 & age <30 & sex == "male", 16.0 * weight + 545,
-                              ifelse(age >=30 & age <60 & sex == "male", 14.2  * weight + 593,
-                                     ifelse(age >=60 & age <70 & sex == "male", 13.0 * weight + 567,
-                                            ifelse(age >=70 & sex == "male", 13.7 * weight + 481,
-                                                   
-                                                  ifelse(age <3 & sex == "female", 58.9 * weight - 23.1,
-                                                         ifelse(age >=3 & age <10 & (sex == "female" | sex == "undefined"), 20.1 * weight + 507,
-                                                                ifelse(age >=10 & age <18 & (sex == "female" | sex == "undefined"), 11.1 * weight + 761,
-                                                                       ifelse(age >=18 & age <30 & (sex == "female" | sex == "undefined"), 13.1 * weight + 558,
-                                                                              ifelse(age >=30 & age <60 & (sex == "female" | sex == "undefined"), 9.74 * weight + 694,
-                                                                                     ifelse(age >=60 & age <70 & (sex == "female" | sex == "undefined"), 10.2 * weight +  572,
-                                                                                            ifelse(age >=70 & (sex == "female" | sex == "undefined"), 10.0 * weight + 577))))))))))))))
-# BMR using weight and height
-BMR_bis <-
-  ifelse(age <3 & sex == "male", 28.2 * weight + 859 * height - 371,
-         ifelse(age >=3 & age <10 & sex == "male", 15.1 * weight + 74.2 * height + 306,
-                ifelse(age >=10 & age <18 & sex == "male", 15.6 * weight + 266 * height + 299,
-                       ifelse(age >=18 & age <30 & sex == "male", 14.4 * weight + 313 * height + 113,
-                              ifelse(age >=30 & age <60 & sex == "male", 11.4 * weight + 541 * height - 137,
-                                     ifelse(age >=60 & sex == "male", 11.4 * weight + 541 * height - 256,
-                                            
-                                                  ifelse(age <3 & sex == "female", 30.4 * weight + 703 * height - 287,
-                                                         ifelse(age >=3 & age <10 & (sex == "female" | sex == "undefined"), 15.9 * weight + 210 * height + 349,
-                                                                ifelse(age >=10 & age <18 & (sex == "female" | sex == "undefined"), 9.40 * weight + 249 * height + 462,
-                                                                       ifelse(age >=18 & age <30 & (sex == "female" | sex == "undefined"), 10.4 * weight + 615 * height - 282,
-                                                                              ifelse(age >=30 & age <60 & (sex == "female" | sex == "undefined"), 8.18 * weight + 502 * height - 11.6,
-                                                                                     ifelse(age >=60 & (sex == "female" | sex == "undefined"), 8.52 * weight + 421 * height + 10.7))))))))))))
-```
-
 ***
 \vspace{2truemm}
 
@@ -94,7 +53,7 @@ BMR_bis <-
  * Height: `r params$height` m
  * Weight: `r params$weight` kg
  * Measurement period: `r params$start_date` to `r params$end_date`
- * Estimated Basal Metabolic Rate (BMR): `r format(round(BMR, 2), nsmall = 2)` kcal/day* 
+ * Estimated Basal Metabolic Rate (BMR): `r format(round(params$bmr_kcal_d, 2), nsmall = 2)` kcal/day* 
 
 \vspace{-4truemm}
 *Estimation based on Henry equations (2005, doi: [10.1079/PHN2005801](https://www.cambridge.org/core/journals/public-health-nutrition/article/basal-metabolic-rate-studies-in-humans-measurement-and-development-of-new-equations/61A9EA486ABFA478FEF2FCE1E70D5BEE)); if the patient reported undefined sex, equations for females were used.
@@ -107,7 +66,7 @@ BMR_bis <-
  * Position: `r params$position`
  * Side: `r params$side`
  * Sampling rate: `r params$sampling_rate` Hz
- * Filter: : `r params$filter`
+ * Filter: `r params$filter`
 
  
 **Parameters for accelerometer data analysis**
@@ -119,7 +78,6 @@ BMR_bis <-
  * SED cut-point: <`r params$sed_cutpoint` counts/min.
  * MVPA cut-point: >=`r params$mpa_cutpoint` counts/min.
  * Minimum wear time for valid day: `r params$minimum_wear_time_for_analysis` hours.
- * Period to estimate mean METs: `r params$mets_period[1]`h to `r params$mets_period[2]`h.
 
 \vspace{24truemm}
 # Summary (Tabular View)
@@ -132,7 +90,7 @@ flextable(
     ~Metric,                   ~"Result (daily average)",
     "Wear time (min)",         paste0(round(df[["wear_time"]], 0), " min"),
     "Number of valid days",    paste0(df[["valid_days"]], " day(s)"),
-    "PAL",                     paste0(format(round(df[["mean_METS"]] * 3.5 / BMR, 2), nsmall = 2)),
+    "PAL",                     paste0(format(round(df[["pal"]], 2), nsmall = 2)),
     "Total number of steps",   paste0(round(df[["total_steps"]], 0), " steps"),
     "SED time",                paste0(format(round(df[["minutes_SED"]], 1), nsmall = 1), " min"),
     "LPA time",                paste0(format(round(df[["minutes_LPA"]], 1), nsmall = 1), " min"),
@@ -149,13 +107,22 @@ flextable(
     
 ```
 
-# Results By Days
+```{r, echo = F}
+pal_status <- ifelse(df[["pal"]] <1.40, "Insufficient",
+                    ifelse(df[["pal"]] <= 1.69, "Sedentary or light activity lifestyle",
+                                       ifelse(df[["pal"]] <= 1.99, "Active or moderately active lifestyle",
+                                              ifelse(df[["pal"]] <= 2.40, "Vigorous or vigorously active lifestyle", "Likely not sustainable"))))
+
+# ref: http://www.fao.org/3/y5686e/y5686e07.htm#bm07.3
+```
+
+Based on the determined PAL and the Food and Agriculture Organization of the United Nations (FAO), the activity lifestyle can be qualified as "`r pal_status`".
+
+# Results By Day
 
 ```{r, echo = F, out.width='100%'}
 # Get dataframe
-df <- 
-  params$results_by_day %>%
-  mutate(pal = mean_METS * 3.5 / BMR)
+df <- params$results_by_day
 
 # Set text sizes
 title_axis_size = 10
@@ -173,7 +140,7 @@ df %>%
                                 "SED daily prop. (%)" = "percent_SED", "LPA daily prop. (%)" = "percent_LPA", "MVPA daily prop. (%)" = "percent_MVPA")) %>%
   ggplot(aes(x = date, y = value)) +
   geom_bar(stat = "identity") +
-  geom_text(aes(label = format(round(value, 1), nsmall = 1)), size = label_text_size, vjust = -.5) +
+  geom_text(aes(label = round(value, 1), nsmall = 1), size = label_text_size, vjust = -.5) +
   labs(x = "Date", y = "") +
   scale_y_continuous(expand = expansion(mult = c(.05, .2))) +
   theme_bw() + 

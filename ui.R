@@ -4,6 +4,7 @@
 #######################################################################################################
 
 library(shiny)
+library(shinyFeedback)
 library(shinydashboard)
 library(ggplot2)
 library(dplyr)
@@ -22,7 +23,7 @@ device <- c("...", "7164", "GT1M", "GT3X", "GT3X+", "wGT3X+", "wGT3X-BT", "GT9X"
 position <- c("...", "wrist", "hip", "thigh", "ankle")
 side <- c("...", "right", "left")
 filter <- c("...", "normal", "LFE")
-metrics <- c("...", "axis1", "axis2", "axis3", "vm", "steps", "inclineStanding", "inclineSitting", "inclineLying")
+metrics <- c("axis1", "axis2", "axis3", "vm", "steps", "inclineStanding", "inclineSitting", "inclineLying")
 equations <- c("santos_lozano_2013_mixed_older_adults", "santos_lozano_2013_mixed_adults", "santos_lozano_2013_mixed_youth",
                "freedson_1998_walk_adults", "hendelman_2000_walk_adults", "hendelman_2000_walk_adl_adults", "nichols_2000_walk_adults", "sasaki_2011_walk_adults")
 axis <- c("vector magnitude", "vertical axis")
@@ -36,10 +37,12 @@ ui <-
     dashboardHeader(title = "activAnalyzer (bêta)"),
     dashboardSidebar(),
     dashboardBody(
+        shinyFeedback::useShinyFeedback(),
 
         ################
         # Notes to users
         ################
+        
         fluidRow(
             column(6, 
             "Author: Pierre-Yves de Müllenheim (pydemull@uco.fr)"
@@ -53,6 +56,7 @@ ui <-
         ########################
         # Assessor's information
         ########################
+        
         fluidRow(
             column(6,                   
                    h2("Assessor's information")
@@ -104,9 +108,11 @@ ui <-
                    numericInput("weight", "Weight (kg)", value = "", min = 0)
             ),
         ),
+       
         ######################
         # Device's information
         ######################
+        
         fluidRow(
             column(6,                   
                    h2("Device's information")
@@ -130,13 +136,13 @@ ui <-
             ),
         ),
         
-        ################
-        # Data selection
-        ################
+        ####################################################################
+        # Data uploading, nonwear time configuration, and data visualization
+        ####################################################################
         
         fluidRow(
             column(6,                   
-                   h2("Data selection")
+                   h2("Data uploading, nonwear time configuration, and data visualization")
             ),
         ),
         fluidRow(
@@ -144,28 +150,31 @@ ui <-
                    fileInput("upload", NULL, placeholder = "agd. file")
             ),
         ),
-        
-        ###################################
-        # Input for the metric to visualize
-        ###################################
-        
         fluidRow(
-          column(12,                   
-                 h2("Data visualisation")
-                 ),
+
+            column(3,
+                   numericInput("frame_size", "Time interval to be considered for nonwear time detection (min)", value = 90, min = 0)
+            ),
+            column(4,
+                   numericInput("allowanceFrame_size", "Time interval with nonzero counts allowed during a nonwear period (min)", value = 2, min = 0)
+            ),
         ),
         fluidRow(
-            column(6,
-                   selectInput("Metric", "Metric to visualise", metrics)
-                   ),
+            column(3,
+                   actionButton("validate", "Validate configuration", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
+            ),
         ),
-        
+
         ###########################################
         # Box for the plot showing the monitor data
         ###########################################
         
         fluidRow(
             box(plotOutput("graph"), width = 12)
+        ),
+        fluidRow(
+            align = "center",
+                   selectInput("Metric", "Metric to visualize", metrics),
         ),
         
         ################################################
@@ -179,14 +188,6 @@ ui <-
         ),
         
         fluidRow(
-            column(2,
-                   sliderInput(inputId = "period",
-                        label = "Period to compute daily mean METs (hours)",
-                        min = 0,
-                        max = 24,
-                        step = 1,
-                        value = c(7, 18))
-                   ),
             column(4,
                    selectInput("equation_mets", "Equation to compute METs", equations)
                    ),
@@ -238,18 +239,16 @@ ui <-
         ),
         fluidRow(
           column(4,
-                 downloadButton("ExpResultsByDays", "Export results by day", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
-                 downloadButton("ExpDailySummary", "Export daily summary", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
+                 downloadButton("ExpResultsByDays", "Export results by day (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
+                 downloadButton("ExpDailySummary", "Export daily summary (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
                ),
-        ),
-    
+
         #################
         # Generate report
         #################
         
-        fluidRow(
             column(4,
-                   downloadButton("report", "Generate report")
+                   downloadButton("report", "Generate report (.pdf)")
                    ),
         )
     )
