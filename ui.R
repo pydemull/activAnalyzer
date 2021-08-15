@@ -4,8 +4,8 @@
 #######################################################################################################
 
 library(shiny)
-library(shinyFeedback)
 library(shinydashboard)
+library(shinyFeedback)
 library(ggplot2)
 library(dplyr)
 library(PhysicalActivity)
@@ -23,6 +23,7 @@ device <- c("...", "7164", "GT1M", "GT3X", "GT3X+", "wGT3X+", "wGT3X-BT", "GT9X"
 position <- c("...", "wrist", "hip", "thigh", "ankle")
 side <- c("...", "right", "left")
 filter <- c("...", "normal", "LFE")
+axis_weartime <- c("vm", "vertical axis")
 metrics <- c("axis1", "axis2", "axis3", "vm", "steps", "inclineStanding", "inclineSitting", "inclineLying")
 equations <- c("santos_lozano_2013_mixed_older_adults", "santos_lozano_2013_mixed_adults", "santos_lozano_2013_mixed_youth",
                "freedson_1998_walk_adults", "hendelman_2000_walk_adults", "hendelman_2000_walk_adl_adults", "nichols_2000_walk_adults", "sasaki_2011_walk_adults")
@@ -102,9 +103,6 @@ ui <-
                    numericInput("age", "Age (yr)", value = "", min = 0)
             ),
             column(2,
-                   numericInput("height", "Height (m)", value = "", min = 0)
-            ),
-            column(2,
                    numericInput("weight", "Weight (kg)", value = "", min = 0)
             ),
         ),
@@ -136,24 +134,26 @@ ui <-
             ),
         ),
         
-        ####################################################################
-        # Data uploading, nonwear time configuration, and data visualization
-        ####################################################################
+        ################################################################
+        # Data uploading, nonwear time detection, and data visualization
+        ################################################################
         
         fluidRow(
             column(6,                   
-                   h2("Data uploading, nonwear time configuration, and data visualization")
+                   h2("Data uploading, nonwear time detection, and data visualization")
             ),
         ),
         fluidRow(
             column(6,
-                   fileInput("upload", NULL, placeholder = "agd. file")
+                   fileInput("upload", NULL, placeholder = ".agd file")
             ),
         ),
         fluidRow(
-
+            column(1,
+                   selectInput("axis_weartime", "Axis to detect nonwear time", axis_weartime)
+            ),  
             column(3,
-                   numericInput("frame_size", "Time interval to be considered for nonwear time detection (min)", value = 90, min = 0)
+                    numericInput("frame_size", "Time interval to be considered for nonwear time detection (min)", value = 90, min = 0)
             ),
             column(4,
                    numericInput("allowanceFrame_size", "Time interval with nonzero counts allowed during a nonwear period (min)", value = 2, min = 0)
@@ -217,7 +217,7 @@ ui <-
         ),
 
         ####################################
-        # Table of results summarised by day
+        # Table of results summarized by day
         ####################################
         
         fluidRow(
@@ -226,7 +226,7 @@ ui <-
                    reactableOutput("results_by_day")
                    ),
         ),
-        
+
         ############################################
         # Table of results averaged on a daily basis
         ############################################

@@ -1,6 +1,5 @@
-prepare_dataset <- function(data, frame_size, allowanceFrame_size) {
+prepare_dataset <- function(data) {
   
-  # Formatting dataset
   df <-
     readActigraph(data) %>%
     dataCollapser(TS = "TimeStamp", by = 60) %>%
@@ -8,12 +7,7 @@ prepare_dataset <- function(data, frame_size, allowanceFrame_size) {
            TimeStamp2 = TimeStamp) %>%
     tidyr::separate("TimeStamp2", c("date", "time"), sep = " ") %>%
     mutate(time = hms::as_hms(time)) %>%
-    select(TimeStamp, date, time, everything())
-  
-  # Adding wearing marks
-  df <- wearingMarking(df, TS = "TimeStamp", cts = "vm", frame = frame_size, allowanceFrame = allowanceFrame_size) %>%
-    mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
-           wearing_count = ifelse(wearing == "w", 1, 0))
+    dplyr::select(TimeStamp, date, time, everything())
   
   return(df)
   
