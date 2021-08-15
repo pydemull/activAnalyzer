@@ -20,6 +20,9 @@ params:
   side: NA
   sampling_rate: NA
   filter: NA
+  axis_weartime: NA
+  frame_size: NA
+  allowanceFrame_size: NA
   equation_mets: NA
   bmr_kcal_d: NA
   axis: NA
@@ -72,7 +75,9 @@ library(officer)
 **Parameters for accelerometer data analysis**
 \vspace{-4truemm}
 
- * Wear time algorithm: Choi et al., (2011, doi: [10.1249/MSS.0b013e3181ed61a3](https://journals.lww.com/acsm-msse/pages/articleviewer.aspx?year=2011&issue=02000&article=00022&type=Fulltext))
+ * Axis used for analyzing wear time: `r params$axis_weartime`.
+ * Size of the interval considered for nonwear time detection: `r params$frame_size` min.
+ * Size of the interval allowed during a nonwear epoch: `r params$allowanceFrame_size` min.
  * METs equation: `r params$equation_mets `.
  * Axis used for SED/PA categorization: `r params$axis`.
  * SED cut-point: <`r params$sed_cutpoint` counts/min.

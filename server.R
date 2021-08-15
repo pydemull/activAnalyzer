@@ -7,8 +7,8 @@ server <- function(input, output, session) {
   # Getting reactive data
     data <- reactive({
     
-    req(input$upload)
-    prepare_dataset(data = input$upload$datapath)
+      req(input$upload)
+      prepare_dataset(data = input$upload$datapath)
     
     })
   
@@ -35,7 +35,7 @@ server <- function(input, output, session) {
               input$allowanceFrame_size >= 0)
 
         # Creating reactive dataframe
-          if (input$axis_weartime == "vm") {  
+          if (input$axis_weartime == "vector magnitude") {  
           
             df <- wearingMarking(dataset = data(), 
                                  TS = "TimeStamp", 
@@ -66,7 +66,7 @@ server <- function(input, output, session) {
             observeEvent(input$validate,
                        shinyFeedback::feedbackWarning(
                          "frame_size", 
-                         is.numeric(input$frame_size) == FALSE | input$frame_size < 0,
+                         (is.numeric(input$frame_size) == FALSE | input$frame_size < 0),
                          "Please choose a number >= 0"
                        )
           )
@@ -75,7 +75,7 @@ server <- function(input, output, session) {
             observeEvent(input$validate,
                        shinyFeedback::feedbackWarning(
                          "allowanceFrame_size", 
-                         is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0,
+                         (is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0),
                          "Please choose a number >= 0"
                        )
           )
@@ -148,14 +148,14 @@ server <- function(input, output, session) {
         })
   
   
-  # Getting results corresponding to valid wear time by day (except for total kcal 
-  # that also uses nonwear time by attributing bmr to nonwear epochs)
+  # Getting results by day corresponding to valid wear time  (except for total kcal 
+  # that also uses nonwear time with attribution of bmr to nonwear epochs)
     
     results_by_day <- eventReactive(input$Run, ({
       
       # Setting axis to compute METs
-        if(input$axis == "vertical axis") { axis_chosen <- df()$axis1
-        } else { axis_chosen <- df()$vm }
+        if(input$axis == "vector magnitude") { axis_chosen <- df()$vm
+        } else { axis_chosen <- df()$axis1 }
       
       # Computing BMR in kcal/min
         bmr_kcal_min <- bmr_kcal_d() / (24*60)
@@ -316,6 +316,9 @@ server <- function(input, output, session) {
         side = input$side,
         sampling_rate = input$sampling_rate,
         filter = input$filter,
+        axis_weartime = input$axis_weartime,
+        frame_size = input$frame_size,
+        allowanceFrame_size = input$allowanceFrame_size,
         equation_mets = input$equation_mets,
         bmr_kcal_d = bmr_kcal_d(),
         axis = input$axis,

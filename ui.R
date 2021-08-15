@@ -23,7 +23,7 @@ device <- c("...", "7164", "GT1M", "GT3X", "GT3X+", "wGT3X+", "wGT3X-BT", "GT9X"
 position <- c("...", "wrist", "hip", "thigh", "ankle")
 side <- c("...", "right", "left")
 filter <- c("...", "normal", "LFE")
-axis_weartime <- c("vm", "vertical axis")
+axis_weartime <- c("vector magnitude", "vertical axis")
 metrics <- c("axis1", "axis2", "axis3", "vm", "steps", "inclineStanding", "inclineSitting", "inclineLying")
 equations <- c("santos_lozano_2013_mixed_older_adults", "santos_lozano_2013_mixed_adults", "santos_lozano_2013_mixed_youth",
                "freedson_1998_walk_adults", "hendelman_2000_walk_adults", "hendelman_2000_walk_adl_adults", "nichols_2000_walk_adults", "sasaki_2011_walk_adults")
@@ -51,7 +51,11 @@ ui <-
         ),
         fluidRow(
             column(6, 
-                   "Note: This app was developped to analyse ActiGraph data recorded at the hip."
+                   "Note: This app was developped to analyse ActiGraph accelerometer data recorded at the hip. Once analysis is completed,
+                   the app allows to export results to .csv files and to generate a report of the measurement. All the configured inputs
+                   relevant for interpreting the results are recorded into the report. Please be sure that the inputs that are configured
+                   when generating the report correspond to the analysis that was actually performed (in other words, avoid modifying the inputs
+                   after generating satisfactory results)."
             ),
         ),
         ########################
@@ -149,8 +153,8 @@ ui <-
             ),
         ),
         fluidRow(
-            column(1,
-                   selectInput("axis_weartime", "Axis to detect nonwear time", axis_weartime)
+            column(2,
+                   selectInput("axis_weartime", "Axis to be considered to detect nonwear time", axis_weartime)
             ),  
             column(3,
                     numericInput("frame_size", "Time interval to be considered for nonwear time detection (min)", value = 90, min = 0)
@@ -183,7 +187,7 @@ ui <-
         
         fluidRow(
           column(12,                   
-                 h2("Data analysis")
+                 h2("Computation of metrics")
                  ),
         ),
         
