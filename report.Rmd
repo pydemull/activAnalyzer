@@ -11,7 +11,6 @@ params:
   patient_surname: NA
   sex: NA
   age: NA
-  height: NA
   weight: NA
   start_date: NA
   end_date: NA
@@ -51,12 +50,11 @@ library(officer)
 **Patient**: `r params$patient_title` `r params$patient_surname` `r params$patient_name` 
 \vspace{-4truemm}
 
- * Age: `r params$age` yr
- * Sex: `r params$sex`
- * Height: `r params$height` m
- * Weight: `r params$weight` kg
- * Measurement period: `r params$start_date` to `r params$end_date`
- * Estimated Basal Metabolic Rate (BMR): `r format(round(params$bmr_kcal_d, 2), nsmall = 2)` kcal/day* 
+ * Age: `r params$age` yr.
+ * Sex: `r params$sex`.
+ * Weight: `r params$weight` kg.
+ * Measurement period: `r params$start_date` to `r params$end_date`.
+ * Estimated Basal Metabolic Rate (BMR): `r format(round(params$bmr_kcal_d, 2), nsmall = 2)` kcal/day*. 
 
 \vspace{-4truemm}
 *Estimation based on Henry equations (2005, doi: [10.1079/PHN2005801](https://www.cambridge.org/core/journals/public-health-nutrition/article/basal-metabolic-rate-studies-in-humans-measurement-and-development-of-new-equations/61A9EA486ABFA478FEF2FCE1E70D5BEE)); if the patient reported undefined sex, equations for females were used.
@@ -65,11 +63,11 @@ library(officer)
 **Accelerometer**
 \vspace{-4truemm}
 
- * Device: `r params$device`
- * Position: `r params$position`
- * Side: `r params$side`
- * Sampling rate: `r params$sampling_rate` Hz
- * Filter: `r params$filter`
+ * Device: `r params$device`.
+ * Position: `r params$position`.
+ * Side: `r params$side`.
+ * Sampling rate: `r params$sampling_rate` Hz.
+ * Filter: `r params$filter`.
 
  
 **Parameters for accelerometer data analysis**
@@ -142,7 +140,7 @@ df %>%
                                 "percent_SED", "percent_LPA", "percent_MVPA"),
          variable = fct_recode(variable, "Wear time (min)" = "wear_time", "Total steps" = "total_steps", "PAL" = "pal",
                                 "SED time (min)" = "minutes_SED", "LPA time (min)" = "minutes_LPA", "MVPA time (min)" = "minutes_MVPA", 
-                                "SED daily prop. (%)" = "percent_SED", "LPA daily prop. (%)" = "percent_LPA", "MVPA daily prop. (%)" = "percent_MVPA")) %>%
+                                "SED wear time prop. (%)" = "percent_SED", "LPA wear time prop. (%)" = "percent_LPA", "MVPA wear time prop. (%)" = "percent_MVPA")) %>%
   ggplot(aes(x = date, y = value)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label = round(value, 1), nsmall = 1), size = label_text_size, vjust = -.5) +

@@ -60,27 +60,35 @@ server <- function(input, output, session) {
            
          })
     
-    
-        # Controlling for correct inputs
-          # Frame size
-            observeEvent(input$validate,
-                       shinyFeedback::feedbackWarning(
-                         "frame_size", 
-                         (is.numeric(input$frame_size) == FALSE | input$frame_size < 0),
-                         "Please choose a number >= 0"
-                       )
-          )
-          
-          # Allowance frame size
-            observeEvent(input$validate,
-                       shinyFeedback::feedbackWarning(
-                         "allowanceFrame_size", 
-                         (is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0),
-                         "Please choose a number >= 0"
-                       )
-          )
-    
-
+  
+     # Controlling for correct inputs
+       # File input
+       observeEvent(input$validate,
+                    shinyFeedback::feedbackWarning(
+                      "upload", 
+                      isTruthy(input$upload) == FALSE,
+                      ""
+                    )
+       )
+       
+       # Frame size
+         observeEvent(input$validate,
+                    shinyFeedback::feedbackWarning(
+                      "frame_size", 
+                      (is.numeric(input$frame_size) == FALSE | input$frame_size < 0),
+                      "Please choose a number >= 0"
+                    )
+       )
+       
+       # Allowance frame size
+         observeEvent(input$validate,
+                    shinyFeedback::feedbackWarning(
+                      "allowanceFrame_size", 
+                      (is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0),
+                      "Please choose a number >= 0"
+                    )
+       )
+  
   ########################################
   # Visualizing all data with nonwear time
   ########################################
@@ -113,7 +121,7 @@ server <- function(input, output, session) {
         shinyFeedback::feedbackWarning(
           "sex", 
           (input$sex %in% c("male", "female", "undefined")) == FALSE,
-          "Please provide a valid value for sex"
+          "Please provide a value for sex"
           )
         )
       
@@ -122,7 +130,7 @@ server <- function(input, output, session) {
         shinyFeedback::feedbackWarning(
           "age", 
           ((is.numeric(input$age) == FALSE | input$age <= 0)),
-          "Please provide a valid value for age"
+          "Please provide a value >0 for age"
           )
         )
       
@@ -131,7 +139,7 @@ server <- function(input, output, session) {
         shinyFeedback::feedbackWarning(
           "weight", 
           ((is.numeric(input$weight) == FALSE | input$weight <= 0)),
-          "Please provide a valid value for weight"
+          "Please provide a value >0 for weight"
           )
         )
       
@@ -307,7 +315,6 @@ server <- function(input, output, session) {
         patient_surname = input$patient_surname,
         sex = input$sex,
         age = input$age,
-        height = input$height,
         weight = input$weight,
         start_date = min(df()$date),
         end_date = max(df()$date),
@@ -340,5 +347,6 @@ server <- function(input, output, session) {
       out <- file.rename(out, file)
     }
   )
+  
 }
 
