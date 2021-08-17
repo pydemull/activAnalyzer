@@ -48,7 +48,6 @@ library(officer)
 **Assessor**: `r params$assessor_title` `r params$assessor_surname` `r params$assessor_name`
 
 **Patient**: `r params$patient_title` `r params$patient_surname` `r params$patient_name` 
-\vspace{-4truemm}
 
  * Age: `r params$age` yr.
  * Sex: `r params$sex`.
@@ -56,12 +55,10 @@ library(officer)
  * Measurement period: `r params$start_date` to `r params$end_date`.
  * Estimated Basal Metabolic Rate (BMR): `r format(round(params$bmr_kcal_d, 2), nsmall = 2)` kcal/day*. 
 
-\vspace{-4truemm}
 *Estimation based on Henry equations (2005, doi: [10.1079/PHN2005801](https://www.cambridge.org/core/journals/public-health-nutrition/article/basal-metabolic-rate-studies-in-humans-measurement-and-development-of-new-equations/61A9EA486ABFA478FEF2FCE1E70D5BEE)); if the patient reported undefined sex, equations for females were used.
 
 \vspace{3truemm}
 **Accelerometer**
-\vspace{-4truemm}
 
  * Device: `r params$device`.
  * Position: `r params$position`.
@@ -71,7 +68,6 @@ library(officer)
 
  
 **Parameters for accelerometer data analysis**
-\vspace{-4truemm}
 
  * Axis used for analyzing wear time: `r params$axis_weartime`.
  * Size of the interval considered for nonwear time detection: `r params$frame_size` min.

@@ -39,6 +39,15 @@ ui <-
     dashboardSidebar(),
     dashboardBody(
         shinyFeedback::useShinyFeedback(),
+        tags$head(
+          tags$style(HTML("
+      .shiny-output-error-validation {
+        color: #ff0000;
+        font-weight: bold;
+      }
+    "))
+        ),
+        
 
         ################
         # Notes to users
@@ -51,7 +60,7 @@ ui <-
         ),
         fluidRow(
             column(6, 
-                   "Note: This app was developped to analyse ActiGraph accelerometer data recorded at the hip. Once analysis is completed,
+                   "Note: This app was developped to analyse ActiGraph accelerometer data recorded at the hip in adults. Once analysis is completed,
                    the app allows to export results to .csv files and to generate a report of the measurement. All the configured inputs
                    relevant for interpreting the results are recorded into the report. Please be sure that the inputs that are configured
                    when generating the report correspond to the analysis that was actually performed (in other words, avoid modifying the inputs
@@ -219,41 +228,46 @@ ui <-
                  actionButton("Run", "Run Analysis", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
           ),
         ),
-
-        ####################################
-        # Table of results summarized by day
-        ####################################
+        
+        #########
+        # Results
+        #########
         
         fluidRow(
             column(12,
-                   h2("Results by day"),
+                   h2("Results"),
+                   
+                   ############################################
+                   # Table of results averaged on a daily basis
+                   ############################################
+                   h3("Results by day"),
                    reactableOutput("results_by_day")
                    ),
         ),
 
-        ############################################
-        # Table of results averaged on a daily basis
-        ############################################
+                   ############################################
+                   # Table of results averaged on a daily basis
+                   ############################################
         
         fluidRow(
             column(12,
-                   h2("Results averaged on a daily basis"),
+                   h3("Results averaged on a daily basis"),
                    reactableOutput("results_summary")
                   ),
         ),
+      
+        ########
+        # Export
+        ########
+        
         fluidRow(
-          column(4,
+          column(12,
+                 h2("Export"),
                  downloadButton("ExpResultsByDays", "Export results by day (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
-                 downloadButton("ExpDailySummary", "Export daily summary (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
+                 downloadButton("ExpDailySummary", "Export daily summary (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
+                 downloadButton("report", "Generate report (.pdf)")
                ),
 
-        #################
-        # Generate report
-        #################
-        
-            column(4,
-                   downloadButton("report", "Generate report (.pdf)")
-                   ),
         )
     )
 )

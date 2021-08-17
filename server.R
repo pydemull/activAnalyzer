@@ -12,16 +12,6 @@ server <- function(input, output, session) {
     
     })
   
-  # Controlling for correct file extension
-    observeEvent(input$upload,
-                 shinyFeedback::feedbackWarning(
-                   "upload", 
-                   (tools::file_ext(input$upload$name) == "agd") == FALSE,
-                   "Invalid file format. Please upload a .agd file"
-                 )
-    )
-  
-  
   ####################################################
   # Getting dataframe with marks for wear/nonwear time
   ####################################################
@@ -62,16 +52,17 @@ server <- function(input, output, session) {
     
   
      # Controlling for correct inputs
-       # File input
-       observeEvent(input$validate,
-                    shinyFeedback::feedbackWarning(
-                      "upload", 
-                      isTruthy(input$upload) == FALSE,
-                      ""
-                    )
-       )
-       
-       # Frame size
+      
+         # File input
+         observeEvent(input$validate,
+                      shinyFeedback::feedbackWarning(
+                        "upload", 
+                        ((tools::file_ext(input$upload$name) == "agd") == FALSE),
+                        "Please choose a .agd file"
+                      )
+         )
+         
+         # Frame size
          observeEvent(input$validate,
                     shinyFeedback::feedbackWarning(
                       "frame_size", 
@@ -116,6 +107,7 @@ server <- function(input, output, session) {
   #########################################
     
     # Controlling for correct inputs
+     
       # Sex
         observeEvent(input$Run,
         shinyFeedback::feedbackWarning(
@@ -142,14 +134,11 @@ server <- function(input, output, session) {
           "Please provide a value >0 for weight"
           )
         )
+  
       
   # Getting BMR
     bmr_kcal_d <- eventReactive(input$Run, {
       
-          req(input$sex %in% c("male", "female", "undefined"))
-          req(input$age > 0)
-          req(input$weight > 0)
-    
       # Computing BMR
         compute_bmr(age = input$age, sex = input$sex, weight = input$weight)
         
@@ -160,6 +149,11 @@ server <- function(input, output, session) {
   # that also uses nonwear time with attribution of bmr to nonwear epochs)
     
     results_by_day <- eventReactive(input$Run, ({
+      
+      if (!input$sex %in% c("male", "female", "undefined") | input$age <= 0 | input$weight <= 0) {
+        validate("Please provide valid values for the inputs shown in Patient's information section.")
+      }
+      
       
       # Setting axis to compute METs
         if(input$axis == "vector magnitude") { axis_chosen <- df()$vm
