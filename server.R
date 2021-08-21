@@ -6,86 +6,89 @@ server <- function(input, output, session) {
   
   # Getting reactive data
     data <- reactive({
-    
+      
       req(input$upload)
       prepare_dataset(data = input$upload$datapath)
-    
+      
     })
-  
+    
   ####################################################
   # Getting dataframe with marks for wear/nonwear time
   ####################################################
   
-      df <- eventReactive(input$validate, {
-      
-          req(tools::file_ext(input$upload$name) == "agd" & 
-              is.numeric(input$frame_size) & 
-              input$frame_size >= 0 & 
-              is.numeric(input$allowanceFrame_size) & 
-              input$allowanceFrame_size >= 0)
-
-        # Creating reactive dataframe
-          if (input$axis_weartime == "vector magnitude") {  
-          
-            df <- wearingMarking(dataset = data(), 
-                                 TS = "TimeStamp", 
-                                 cts = "vm", 
-                                 frame = input$frame_size, 
-                                 allowanceFrame = input$allowanceFrame_size) %>%
-                  mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
-                         wearing_count = ifelse(wearing == "w", 1, 0)) 
-          } else {
-           
-            df <- wearingMarking(dataset = data(), 
-                                 TS = "TimeStamp", 
-                                 cts = "axis1", 
-                                 frame = input$frame_size, 
-                                 allowanceFrame = input$allowanceFrame_size) %>%
-                  mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
-                     wearing_count = ifelse(wearing == "w", 1, 0)) 
-            
-          }
-          
-          return(df)
-           
-         })
+  df <- eventReactive(input$validate, {
     
-  
-     # Controlling for correct inputs
-      
-         # File input
-         observeEvent(input$validate,
-                      shinyFeedback::feedbackWarning(
-                        "upload", 
-                        ((tools::file_ext(input$upload$name) == "agd") == FALSE),
-                        "Please choose a .agd file"
-                      )
-         )
-         
-         # Frame size
-         observeEvent(input$validate,
-                    shinyFeedback::feedbackWarning(
-                      "frame_size", 
-                      (is.numeric(input$frame_size) == FALSE | input$frame_size < 0),
-                      "Please choose a number >= 0"
-                    )
-       )
+     # Waiting for required conditions 
+       req(tools::file_ext(input$upload$name) == "agd" & 
+           is.numeric(input$frame_size) & 
+           input$frame_size >= 0 & 
+           is.numeric(input$allowanceFrame_size) & 
+           input$allowanceFrame_size >= 0)
+     
+     # Creating reactive dataframe
+     if (input$axis_weartime == "vector magnitude") {  
        
-       # Allowance frame size
-         observeEvent(input$validate,
-                    shinyFeedback::feedbackWarning(
-                      "allowanceFrame_size", 
-                      (is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0),
-                      "Please choose a number >= 0"
-                    )
-       )
+       df <- wearingMarking(dataset = data(), 
+                            TS = "TimeStamp", 
+                            cts = "vm", 
+                            frame = input$frame_size, 
+                            allowanceFrame = input$allowanceFrame_size) %>%
+         mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
+                wearing_count = ifelse(wearing == "w", 1, 0)) 
+     } else {
+       
+       df <- wearingMarking(dataset = data(), 
+                            TS = "TimeStamp", 
+                            cts = "axis1", 
+                            frame = input$frame_size, 
+                            allowanceFrame = input$allowanceFrame_size) %>%
+         mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
+                wearing_count = ifelse(wearing == "w", 1, 0)) 
+       
+     }
+     
+     return(df)
+    
+  })
   
+  
+  # Controlling for correct inputs
+  
+    # File input
+      observeEvent(input$validate,
+                 shinyFeedback::feedbackWarning(
+                   "upload", 
+                   ((tools::file_ext(input$upload$name) == "agd") == FALSE),
+                   "Invalid file format. Please choose a .agd file"
+                 )
+    )
+      
+    # Frame size
+      observeEvent(input$validate,
+                   shinyFeedback::feedbackWarning(
+                     "frame_size", 
+                     (is.numeric(input$frame_size) == FALSE | input$frame_size < 0),
+                     "Please choose a number >= 0"
+                   )
+      )
+    
+    # Allowance frame size
+      observeEvent(input$validate,
+                   shinyFeedback::feedbackWarning(
+                     "allowanceFrame_size", 
+                     (is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0),
+                     "Please choose a number >= 0"
+                   )
+      )
+      
+      
+ 
   ########################################
   # Visualizing all data with nonwear time
   ########################################
   
   output$graph <- renderPlot({
-    
+     
     # Setting metric to visualize  
       max_metric <- max(df()[input$Metric], na.rm = TRUE)
       
@@ -215,76 +218,76 @@ server <- function(input, output, session) {
   #################################################
   
   # Getting results averaged on valid days
-  results_summary <- reactive({
+    results_summary <- reactive({
     
     # Controlling for correct inputs
-    shinyFeedback::feedbackWarning(
-      "frame_size", 
-      is.numeric(input$frame_size) == FALSE | input$frame_size < 0,
-      "Please choose a number >= 0"
-    )
+      shinyFeedback::feedbackWarning(
+        "frame_size", 
+        is.numeric(input$frame_size) == FALSE | input$frame_size < 0,
+        "Please choose a number >= 0"
+      )
+      
+      results_by_day() %>%
+        mutate(validity = ifelse(wear_time >= input$minimum_wear_time_for_analysis * 60, "valid", "invalid")) %>%
+        filter(validity == "valid") %>%
+        summarise(valid_days = n(),
+                  wear_time = mean(wear_time),
+                  total_counts_axis1 = round(mean(total_counts_axis1), 2),
+                  total_counts_vm = round(mean(total_counts_vm), 2),
+                  total_steps = round(mean(total_steps), 2),
+                  total_kcal_awake = round(mean(total_kcal_awake), 2),
+                  pal = round(mean(pal), 2),
+                  minutes_SED = round(mean(minutes_SED), 2),
+                  minutes_LPA = round(mean(minutes_LPA), 2),
+                  minutes_MPA = round(mean(minutes_MPA), 2),
+                  minutes_VPA = round(mean(minutes_VPA), 2),
+                  minutes_MVPA = round(mean(minutes_MVPA), 2),
+                  percent_SED = round(mean(percent_SED), 2),
+                  percent_LPA = round(mean(percent_LPA), 2),
+                  percent_MPA = round(mean(percent_MPA), 2),
+                  percent_VPA = round(mean(percent_VPA), 2),
+                  percent_MVPA = round(mean(percent_MVPA), 2))
+    })
     
-    results_by_day() %>%
-      mutate(validity = ifelse(wear_time >= input$minimum_wear_time_for_analysis * 60, "valid", "invalid")) %>%
-      filter(validity == "valid") %>%
-      summarise(valid_days = n(),
-                wear_time = mean(wear_time),
-                total_counts_axis1 = round(mean(total_counts_axis1), 2),
-                total_counts_vm = round(mean(total_counts_vm), 2),
-                total_steps = round(mean(total_steps), 2),
-                total_kcal_awake = round(mean(total_kcal_awake), 2),
-                pal = round(mean(pal), 2),
-                minutes_SED = round(mean(minutes_SED), 2),
-                minutes_LPA = round(mean(minutes_LPA), 2),
-                minutes_MPA = round(mean(minutes_MPA), 2),
-                minutes_VPA = round(mean(minutes_VPA), 2),
-                minutes_MVPA = round(mean(minutes_MVPA), 2),
-                percent_SED = round(mean(percent_SED), 2),
-                percent_LPA = round(mean(percent_LPA), 2),
-                percent_MPA = round(mean(percent_MPA), 2),
-                percent_VPA = round(mean(percent_VPA), 2),
-                percent_MVPA = round(mean(percent_MVPA), 2))
-  })
-  
   # Showing results in a table
-  output$results_summary <- renderReactable({
+    output$results_summary <- renderReactable({
+      
+      reactable(
+        results_summary(), 
+        list(valid_days = colDef(minWidth = 90),
+             wear_time = colDef(minWidth = 90),
+             total_counts_axis1 = colDef(minWidth = 140),
+             total_counts_vm = colDef(minWidth = 120),
+             minutes_MVPA = colDef(minWidth = 120),
+             percent_MVPA = colDef(minWidth = 120)),
+        striped = TRUE
+      )
+      
+    })
     
-    reactable(
-      results_summary(), 
-      list(valid_days = colDef(minWidth = 90),
-           wear_time = colDef(minWidth = 90),
-           total_counts_axis1 = colDef(minWidth = 140),
-           total_counts_vm = colDef(minWidth = 120),
-           minutes_MVPA = colDef(minWidth = 120),
-           percent_MVPA = colDef(minWidth = 120)),
-      striped = TRUE
-    )
-    
-  })
-  
   ###################
   # Exporting results
   ###################
-  
+    
   # Exporting results by day 
-  output$ExpResultsByDays <- downloadHandler(
-    filename = function() {
-      paste0(input$upload, "_ResultsByDay.csv")
-    },
-    content = function(file) {
-      write_csv2(results_by_day(), file)
-    }
-  )
+    output$ExpResultsByDays <- downloadHandler(
+      filename = function() {
+        paste0(input$upload, "_ResultsByDay.csv")
+      },
+      content = function(file) {
+        write_csv2(results_by_day(), file)
+      }
+    )
   
   # Exporting daily summary  
-  output$ExpDailySummary <- downloadHandler(
-    filename = function() {
-      paste0(input$upload, "_DailySummary.csv")
-    },
-    content = function(file) {
-      write_csv2(results_summary(), file)
-    }
-  )
+    output$ExpDailySummary <- downloadHandler(
+      filename = function() {
+        paste0(input$upload, "_DailySummary.csv")
+      },
+      content = function(file) {
+        write_csv2(results_summary(), file)
+      }
+    )
   
   #################
   # Generate report

@@ -94,9 +94,9 @@ flextable(
     "SED time",                paste0(format(round(df[["minutes_SED"]], 1), nsmall = 1), " min"),
     "LPA time",                paste0(format(round(df[["minutes_LPA"]], 1), nsmall = 1), " min"),
     "MVPA time",               paste0(format(round(df[["minutes_MVPA"]], 1), nsmall = 1), " min"),
-    "SED daily prop.",         paste0(format(round(df[["percent_SED"]], 1), nsmall = 1), " %"),
-    "LPA daily prop.",         paste0(format(round(df[["percent_LPA"]], 1), nsmall = 1), " %"),
-    "MVPA daily prop.",        paste0(format(round(df[["percent_MVPA"]], 1), nsmall = 1), " %"))
+    "SED wear time prop.",         paste0(format(round(df[["percent_SED"]], 1), nsmall = 1), " %"),
+    "LPA wear time prop.",         paste0(format(round(df[["percent_LPA"]], 1), nsmall = 1), " %"),
+    "MVPA wear time prop.",        paste0(format(round(df[["percent_MVPA"]], 1), nsmall = 1), " %"))
   ) %>%
   theme_zebra() %>%
   align(align = "left", part = "all" ) %>%
@@ -115,7 +115,64 @@ pal_status <- ifelse(df[["pal"]] <1.40, "Insufficient",
 # ref: http://www.fao.org/3/y5686e/y5686e07.htm#bm07.3
 ```
 
-Based on the determined PAL and the Food and Agriculture Organization of the United Nations (FAO), the activity lifestyle can be qualified as "`r pal_status`".
+# Summary (Graphical View)
+
+```{r, echo = FALSE}
+# PAL
+table_pal <-
+tibble(
+  x = c(0, 0.25, 0.5, 0.75, 1),
+  label = as.factor(c(
+            "Undefined", 
+            "Sedentary or light activity lifestyle", 
+            "Active or moderately active lifestyle", 
+            "Vigorous or vigorously active lifestyle",
+            "Difficult to maintain over a long period of time"
+            )),
+  start = c(1.1, 1.40, 1.70, 2.00, 2.40),
+  end = c(1.40, 1.70, 2.00, 2.40, 2.8)
+) %>%
+  mutate(label = fct_relevel(label,  "Undefined",
+                                     "Sedentary or light activity lifestyle", 
+                                     "Active or moderately active lifestyle", 
+                                     "Vigorous or vigorously active lifestyle",
+                                     "Difficult to maintain over a long period of time")) 
+
+library(RColorBrewer)
+ggplot(data = table_pal, aes(x = x, y = start)) +
+  geom_rect(aes(ymin = start, ymax = end, fill = label), xmin = -Inf, xmax = Inf, alpha = 0.5) +
+  geom_vline(aes(xintercept = 0.5,), size = 1, color = "grey30", linetype ="dotted") +
+  geom_point(aes(x = 0.5, y = df[["pal"]]), size = 6, color = "red", shape = 1) +
+  geom_point(aes(x = 0.5, y = df[["pal"]]), size = 3, color = "red", shape = 16) +
+  geom_point(aes(x = 0.5, y = df[["pal"]]), size = 6, color = "red", shape = 3) +
+  scale_y_continuous(labels = as.character(format(round(c(1.1, 1.4, 1.7, 2.0, 2.4, 2.8), 2), nsmall = 1)), 
+                     breaks = c(1.1, 1.40, 1.70, 2.00, 2.40, 2.80)) +
+  scale_fill_brewer(palette="Greens") +
+  theme_bw() +
+  coord_flip(expand = FALSE) +
+  labs(x = "", y = "", fill = "FAO/WHO/UNU categories") +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = "right",
+        legend.title = element_text(face = "bold"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  guides(fill=guide_legend(nrow=5)) +
+  ggtitle("PAL")
+
+
+# steps
+
+# MVPA
+
+# SED
+
+```
+
+
+Based on the determined PAL and the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the activity lifestyle can be qualified as "`r pal_status`".
+
+
 
 # Results By Day
 
