@@ -60,7 +60,7 @@ ui <-
         ),
         fluidRow(
             column(6, 
-                   "Note: This app was developped to analyse ActiGraph accelerometer data recorded at the hip in adults. Once analysis is completed,
+                   "Note: This app was developped to analyse ActiGraph accelerometer data (1-min .agd files) recorded at the hip in adults. Once analysis is completed,
                    the app allows to export results to .csv files and to generate a report of the measurement. All the configured inputs
                    relevant for interpreting the results are recorded into the report. Please be sure that the inputs that are configured
                    when generating the report correspond to the analysis that was actually performed (in other words, avoid modifying the inputs

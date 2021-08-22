@@ -86,17 +86,18 @@ df <- params$results_summary
 
 flextable(
  tribble(
-    ~Metric,                   ~"Result (daily average)",
-    "Wear time (min)",         paste0(round(df[["wear_time"]], 0), " min"),
+    ~Metric,                   ~"Result (daily average on valid days)",
+    "Wear time",         paste0(round(df[["wear_time"]], 0), " min"),
     "Number of valid days",    paste0(df[["valid_days"]], " day(s)"),
     "PAL",                     paste0(format(round(df[["pal"]], 2), nsmall = 2)),
     "Total number of steps",   paste0(round(df[["total_steps"]], 0), " steps"),
     "SED time",                paste0(format(round(df[["minutes_SED"]], 1), nsmall = 1), " min"),
     "LPA time",                paste0(format(round(df[["minutes_LPA"]], 1), nsmall = 1), " min"),
     "MVPA time",               paste0(format(round(df[["minutes_MVPA"]], 1), nsmall = 1), " min"),
-    "SED wear time prop.",         paste0(format(round(df[["percent_SED"]], 1), nsmall = 1), " %"),
-    "LPA wear time prop.",         paste0(format(round(df[["percent_LPA"]], 1), nsmall = 1), " %"),
-    "MVPA wear time prop.",        paste0(format(round(df[["percent_MVPA"]], 1), nsmall = 1), " %"))
+    "SED wear time proportion",         paste0(format(round(df[["percent_SED"]], 1), nsmall = 1), " %"),
+    "LPA wear time proportion",         paste0(format(round(df[["percent_LPA"]], 1), nsmall = 1), " %"),
+    "MVPA wear time proportion",        paste0(format(round(df[["percent_MVPA"]], 1), nsmall = 1), " %"),
+    "MVPA dose",                        paste0(format(round(df[["mets_hours_mvpa"]], 1), nsmall = 1), " MET-hours"))
   ) %>%
   theme_zebra() %>%
   align(align = "left", part = "all" ) %>%
@@ -117,8 +118,12 @@ pal_status <- ifelse(df[["pal"]] <1.40, "Insufficient",
 
 # Summary (Graphical View)
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, fig.height=9}
+##### 
 # PAL
+#####
+
+# Data
 table_pal <-
 tibble(
   x = c(0, 0.25, 0.5, 0.75, 1),
@@ -137,40 +142,204 @@ tibble(
                                      "Active or moderately active lifestyle", 
                                      "Vigorous or vigorously active lifestyle",
                                      "Difficult to maintain over a long period of time")) 
-
+# graph
 library(RColorBrewer)
-ggplot(data = table_pal, aes(x = x, y = start)) +
+g_pal <-
+  ggplot(data = table_pal, aes(x = x, y = start)) +
   geom_rect(aes(ymin = start, ymax = end, fill = label), xmin = -Inf, xmax = Inf, alpha = 0.5) +
-  geom_vline(aes(xintercept = 0.5,), size = 1, color = "grey30", linetype ="dotted") +
-  geom_point(aes(x = 0.5, y = df[["pal"]]), size = 6, color = "red", shape = 1) +
-  geom_point(aes(x = 0.5, y = df[["pal"]]), size = 3, color = "red", shape = 16) +
-  geom_point(aes(x = 0.5, y = df[["pal"]]), size = 6, color = "red", shape = 3) +
+  geom_vline(aes(xintercept = 0.5,), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_hline(aes(yintercept = df[["pal"]],), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_point(aes(x = 0.5, y = df[["pal"]], color = "Result averaged on valid days"), size = 6, shape = 1) +
+  geom_point(aes(x = 0.5, y = df[["pal"]], color = "Result averaged on valid days"), size = 3, shape = 16) +
+  geom_point(aes(x = 0.5, y = df[["pal"]], color = "Result averaged on valid days"), size = 6, shape = 3) +
   scale_y_continuous(labels = as.character(format(round(c(1.1, 1.4, 1.7, 2.0, 2.4, 2.8), 2), nsmall = 1)), 
                      breaks = c(1.1, 1.40, 1.70, 2.00, 2.40, 2.80)) +
   scale_fill_brewer(palette="Greens") +
+  scale_color_manual(values = c("red")) +
   theme_bw() +
   coord_flip(expand = FALSE) +
-  labs(x = "", y = "", fill = "FAO/WHO/UNU categories") +
+  labs(x = "", y = "", fill = "FAO/WHO/UNU categories", color = "Patient's result") +
   theme(axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "right",
-        legend.title = element_text(face = "bold"),
+        legend.title = element_text(face = "bold" , size = 10),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
-  guides(fill=guide_legend(nrow=5)) +
-  ggtitle("PAL")
+  guides(fill=guide_legend(nrow=5), color = "none") +
+  ggtitle("Daily PAL")
 
+#######
+# Steps
+#######
 
-# steps
+# tab / categories for all adults
+table_steps1 <-
+tibble(
+  x = c(0, 0, 0.25, 0.5, 0.75, 1),
+  label = as.factor(c(
+            "Sedentary, basal physical activity", 
+            "Sedentary, limited physical activity", 
+            "Low active", 
+            "Somewhat active",
+            "Active",
+            "Highly active"
+            )),
+  start = c(0, 2500, 5000, 7500, 10000, 12500),
+  end = c(2500, 5000, 7500, 10000, 12500, 18000)
+) %>%
+  mutate(label = fct_relevel(label, "Sedentary, basal physical activity", 
+                                    "Sedentary, limited physical activity",
+                                    "Low active", 
+                                    "Somewhat active",
+                                    "Active",
+                                    "Highly active")) 
+# tab / categories for specific populations
+table_steps2 <-
+tibble(
+  label = as.factor(c(
+            "Adults (20-65 ans)", 
+            "Healthy older adults (65+ yr)", 
+            "People with disability \n and/or chronic illness"
+            )),
+  y = c(7000, 7000, 6500),
+  yend = c(8000, 10000, 8500),
+  x = c(0.35, 0.25, 0.15),
+  xend = c(0.35, 0.25, 0.15),
+  xmin = x-0.02,
+  xmax = x+0.02
+) %>%
+  mutate(label = fct_relevel(label, "Adults (20-65 ans)", 
+                                    "Healthy older adults (65+ yr)", 
+                                    "People with disability \n and/or chronic illness")) 
 
+# graph
+g_steps <-
+  ggplot(data = table_steps1, aes(x = x, y = start)) +
+  geom_rect(aes(ymin = start, ymax = end, fill = label), xmin = -Inf, xmax = Inf, alpha = 0.5) +
+  geom_vline(aes(xintercept = 0.5,), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_hline(aes(yintercept = df[["total_steps"]],), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_point(aes(x = 0.5, y = df[["total_steps"]]), color = "red", size = 6, shape = 1) +
+  geom_point(aes(x = 0.5, y = df[["total_steps"]]), color = "red", size = 3, shape = 16) +
+  geom_point(aes(x = 0.5, y = df[["total_steps"]]), color = "red", size = 10, shape = 3) +
+  geom_segment(data = table_steps2, 
+               aes(x=x, xend=xend, y=y, yend=yend, color = label), 
+               size = 0.7, arrow = arrow(length = unit(0.07, "inches"))) +
+  geom_errorbarh(data = table_steps2, 
+                 aes(y = y, xmin=xmin, xmax=xmax, color = label), 
+                 size = 0.7, height = 0) + 
+  scale_y_continuous(labels = as.character(c(0, 2500, 5000, 7500, 10000, 12500, 18000)), 
+                     breaks = c(0, 2500, 5000, 7500, 10000, 12500, 18000)) +
+  scale_fill_brewer(palette="Blues") +
+  scale_color_brewer(palette="Dark2") +
+  theme_bw() +
+  coord_flip(expand = FALSE) +
+  labs(x = "", 
+       y = "", 
+       fill = "Activity levels for healthy adults (Tudor-Locke et al., 2009)", 
+       color = "Expected values linked to MVPA \n (Tudor-Locke et al., 2009)") +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = "right",
+        legend.title = element_text(face = "bold", size = 10),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  guides(fill="none") +
+  ggtitle("Daily steps")
+
+######
 # MVPA
+######
 
+# data
+table_mvpa <-
+tibble(
+  x = seq(1, 24, 1), 
+  start = seq(0, 11.5, 0.5),
+  end = seq(0.5, 12, 0.5)
+)
+
+#graph
+g_mvpa <-
+  ggplot(data = table_mvpa, aes(x = x, y = end)) +
+  geom_rect(aes(ymin = start, ymax = end, fill = start), xmin = -Inf, xmax = Inf) +
+  geom_vline(aes(xintercept = 12), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_hline(aes(yintercept = df[["mets_hours_mvpa"]]), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_point(aes(x = 12, y = df[["mets_hours_mvpa"]], color = "Result averaged on valid days"), size = 6, shape = 1) +
+  geom_point(aes(x = 12, y = df[["mets_hours_mvpa"]], color = "Result averaged on valid days"), size = 3, shape = 16) +
+  geom_point(aes(x = 12, y = df[["mets_hours_mvpa"]], color = "Result averaged on valid days"), size = 6, shape = 3) +
+  scale_y_continuous(labels = as.character(seq(0, 12, 1)), 
+                     breaks = seq(0, 12, 1)) +
+  scale_fill_gradient(low="white", high="yellow") +
+  scale_color_manual(values = c("red")) +
+  theme_bw() +
+  coord_flip(expand = FALSE) +
+  labs(x = "", y = "", fill = "") +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = "none",
+        legend.title = element_text(face = "bold" , size = 10),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  ggtitle("Daily MET-hours spent in MVPA") +
+  annotate(geom = "text", label = "2021 WHO \n guidelines", x = 20, y = ((150/7/60*3) + (150/7/60*3*2))/2, vjust = 1, size = 3.5) +
+  geom_segment(x = -Inf, xend = Inf, y = 150/7/60*3, yend = 150/7/60*3, color = "black") +
+  geom_segment(x = -Inf, xend = Inf, y = 150/7/60*3*2, yend = 150/7/60*3*2, color = "black") +
+  geom_segment(x = 17, xend = 17, y = 150/7/60*3, yend = 150/7/60*3*2, color = "black", 
+               size = 0.7, arrow = arrow(length = unit(0.07, "inches"))) +
+  geom_segment(x = 17, xend = 17, y = 150/7/60*3*2, yend = 150/7/60*3, color = "black", 
+               size = 0.7, arrow = arrow(length = unit(0.07, "inches")))
+
+
+
+#####
 # SED
+#####
 
+# data
+table_sed <-
+tibble(
+  x = seq(1, 48, 1), 
+  start = seq(0, 23.5, 0.5),
+  end = seq(0.5, 24, 0.5)
+)
+
+#graph
+g_sed <-
+  ggplot(data = table_sed, aes(x = x, y = end)) +
+  geom_rect(aes(ymin = start, ymax = end, fill = start), xmin = -Inf, xmax = Inf) +
+  geom_vline(aes(xintercept = 24), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_hline(aes(yintercept = df[["minutes_SED"]]/60,), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged on valid days"), size = 6, shape = 1) +
+  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged on valid days"), size = 3, shape = 16) +
+  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged on valid days"), size = 6, shape = 3) +
+  scale_y_continuous(labels = as.character(seq(0, 24, 2)), 
+                     breaks = seq(0, 24, 2)) +
+  scale_fill_gradient(low="white", high="red") +
+  scale_color_manual(values = c("red")) +
+  theme_bw() +
+  coord_flip(expand = FALSE) +
+  labs(x = "", y = "", fill = "") +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = "none",
+        legend.title = element_text(face = "bold" , size = 10),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  ggtitle("Daily sedentary hours")
+
+
+##############
+# Whole figure
+##############
+
+library(patchwork)
+g_pal / g_steps / g_mvpa / g_sed + plot_layout(heights = c(2, 2, 2, 2))
 ```
 
 
-Based on the determined PAL and the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the activity lifestyle can be qualified as "`r pal_status`".
+Based on the determined PAL and the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the activity lifestyle can be qualified as "**`r pal_status`**" (this is a rough estimate because both basal metabolic rate and total energy expenditure were estimated from methods and equations that may not be accurate for a given individual).
+
+When moderate and vigorous physical activity times are converted to MET-hours,
 
 
 
@@ -193,10 +362,10 @@ df %>%
                                 "percent_SED", "percent_LPA", "percent_MVPA"),
          variable = fct_recode(variable, "Wear time (min)" = "wear_time", "Total steps" = "total_steps", "PAL" = "pal",
                                 "SED time (min)" = "minutes_SED", "LPA time (min)" = "minutes_LPA", "MVPA time (min)" = "minutes_MVPA", 
-                                "SED wear time prop. (%)" = "percent_SED", "LPA wear time prop. (%)" = "percent_LPA", "MVPA wear time prop. (%)" = "percent_MVPA")) %>%
+                                "SED wear time proportion (%)" = "percent_SED", "LPA wear time proportion (%)" = "percent_LPA", "MVPA wear time proportion (%)" = "percent_MVPA")) %>%
   ggplot(aes(x = date, y = value)) +
   geom_bar(stat = "identity") +
-  geom_text(aes(label = round(value, 1), nsmall = 1), size = label_text_size, vjust = -.5) +
+  geom_text(aes(label = round(value, 1)), size = label_text_size, vjust = -.5) +
   labs(x = "Date", y = "") +
   scale_y_continuous(expand = expansion(mult = c(.05, .2))) +
   theme_bw() + 

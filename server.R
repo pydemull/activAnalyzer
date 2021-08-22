@@ -26,30 +26,30 @@ server <- function(input, output, session) {
            input$allowanceFrame_size >= 0)
      
      # Creating reactive dataframe
-     if (input$axis_weartime == "vector magnitude") {  
+       if (input$axis_weartime == "vector magnitude") {  
+         
+         df <- wearingMarking(dataset = data(), 
+                              TS = "TimeStamp", 
+                              cts = "vm", 
+                              frame = input$frame_size, 
+                              allowanceFrame = input$allowanceFrame_size) %>%
+           mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
+                  wearing_count = ifelse(wearing == "w", 1, 0)) 
+       } else {
+         
+         df <- wearingMarking(dataset = data(), 
+                              TS = "TimeStamp", 
+                              cts = "axis1", 
+                              frame = input$frame_size, 
+                              allowanceFrame = input$allowanceFrame_size) %>%
+           mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
+                  wearing_count = ifelse(wearing == "w", 1, 0)) 
+         
+       }
        
-       df <- wearingMarking(dataset = data(), 
-                            TS = "TimeStamp", 
-                            cts = "vm", 
-                            frame = input$frame_size, 
-                            allowanceFrame = input$allowanceFrame_size) %>%
-         mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
-                wearing_count = ifelse(wearing == "w", 1, 0)) 
-     } else {
-       
-       df <- wearingMarking(dataset = data(), 
-                            TS = "TimeStamp", 
-                            cts = "axis1", 
-                            frame = input$frame_size, 
-                            allowanceFrame = input$allowanceFrame_size) %>%
-         mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
-                wearing_count = ifelse(wearing == "w", 1, 0)) 
-       
-     }
-     
-     return(df)
-    
-  })
+       return(df)
+      
+      })
   
   
   # Controlling for correct inputs
@@ -174,7 +174,8 @@ server <- function(input, output, session) {
             SED = ifelse(axis_chosen < input$sed_cutpoint, 1, 0),
             LPA = ifelse(axis_chosen >= input$sed_cutpoint & axis_chosen < input$mpa_cutpoint, 1, 0),
             MPA = ifelse(axis_chosen >= input$mpa_cutpoint & axis_chosen < input$vpa_cutpoint, 1, 0), 
-            VPA = ifelse(axis_chosen >= input$vpa_cutpoint, 1, 0))
+            VPA = ifelse(axis_chosen >= input$vpa_cutpoint, 1, 0),
+            mets_hours_mvpa = ifelse(METS >=3, 1/60 * METS, 0))
     
     # Creating a dataframe with results by day  
       results_by_day <-
@@ -197,6 +198,7 @@ server <- function(input, output, session) {
           percent_MPA = round(minutes_MPA / wear_time * 100, 2),
           percent_VPA = round(minutes_VPA / wear_time * 100, 2), 
           percent_MVPA = round(minutes_MVPA / wear_time * 100, 2),
+          mets_hours_mvpa = sum(mets_hours_mvpa),
           pal = round((total_kcal_awake + bmr_kcal_min * (24*60 - wear_time) + (total_kcal_awake + bmr_kcal_min * (24*60 - wear_time)) * 1/9) / bmr_kcal_d(), 2)) %>%
         ungroup()
       
@@ -236,7 +238,6 @@ server <- function(input, output, session) {
                   total_counts_vm = round(mean(total_counts_vm), 2),
                   total_steps = round(mean(total_steps), 2),
                   total_kcal_awake = round(mean(total_kcal_awake), 2),
-                  pal = round(mean(pal), 2),
                   minutes_SED = round(mean(minutes_SED), 2),
                   minutes_LPA = round(mean(minutes_LPA), 2),
                   minutes_MPA = round(mean(minutes_MPA), 2),
@@ -246,7 +247,9 @@ server <- function(input, output, session) {
                   percent_LPA = round(mean(percent_LPA), 2),
                   percent_MPA = round(mean(percent_MPA), 2),
                   percent_VPA = round(mean(percent_VPA), 2),
-                  percent_MVPA = round(mean(percent_MVPA), 2))
+                  percent_MVPA = round(mean(percent_MVPA), 2),
+                  mets_hours_mvpa = round(mean(mets_hours_mvpa), 1),
+                  pal = round(mean(pal), 2))
     })
     
   # Showing results in a table
