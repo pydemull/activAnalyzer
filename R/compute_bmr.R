@@ -1,6 +1,6 @@
 compute_bmr <- function(age, sex, weight) {
 
-# BMR using weight only (Henry, 2005; doi: 10.1079/PHN2005801)
+# BMR using sex and weight only (Henry, 2005; doi: 10.1079/PHN2005801)
 bmr <-
   ifelse(age <3 & sex == "male", 61.0 * weight - 33.7,
          ifelse(age >=3 & age <10 & sex == "male", 23.3 * weight + 514,
@@ -18,7 +18,7 @@ bmr <-
                                                                                       ifelse(age >=60 & age <70 & (sex == "female" | sex == "undefined"), 10.2 * weight +  572,
                                                                                              ifelse(age >=70 & (sex == "female" | sex == "undefined"), 10.0 * weight + 577))))))))))))))
 
-# BMR using weight and height (Henry, 2005; doi: 10.1079/PHN2005801)
+# BMR using sex, weight and height (Henry, 2005; doi: 10.1079/PHN2005801)
 
 #bmr_bis <-
 #  ifelse(age <3 & sex == "male", 28.2 * weight + 859 * height - 371,

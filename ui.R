@@ -60,7 +60,7 @@ ui <-
         ),
         fluidRow(
             column(6, 
-                   "Note: This app was developped to analyse ActiGraph accelerometer data (1-min .agd files) recorded at the hip in adults. Once analysis is completed,
+                   "Note: Welcome to the ActivAnalyzer app. This app was developped to analyse ActiGraph accelerometer data (.agd files) recorded at the hip in adults. Once analysis is completed,
                    the app allows to export results to .csv files and to generate a report of the measurement. All the configured inputs
                    relevant for interpreting the results are recorded into the report. Please be sure that the inputs that are configured
                    when generating the report correspond to the analysis that was actually performed (in other words, avoid modifying the inputs
@@ -196,7 +196,7 @@ ui <-
         
         fluidRow(
           column(12,                   
-                 h2("Computation of metrics")
+                 h2("Computation of metrics (Please choose appropriate values based on scientific literature)")
                  ),
         ),
         
@@ -237,9 +237,9 @@ ui <-
             column(12,
                    h2("Results"),
                    
-                   ############################################
-                   # Table of results averaged on a daily basis
-                   ############################################
+                   ###############################
+                   # Table of results shown by day
+                   ###############################
                    h3("Results by day"),
                    reactableOutput("results_by_day")
                    ),

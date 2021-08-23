@@ -1,3 +1,5 @@
+options(shiny.maxRequestSize=30*1024^2)
+
 server <- function(input, output, session) {
   
   ################
@@ -187,7 +189,7 @@ server <- function(input, output, session) {
           total_counts_axis1 = sum(axis1),
           total_counts_vm = sum(vm),
           total_steps = sum(steps),
-          total_kcal_awake = round(sum(kcal), 2),
+          total_kcal_wear_time = round(sum(kcal), 2),
           minutes_SED = sum(SED),
           minutes_LPA = sum(LPA),
           minutes_MPA = sum(MPA),
@@ -198,8 +200,8 @@ server <- function(input, output, session) {
           percent_MPA = round(minutes_MPA / wear_time * 100, 2),
           percent_VPA = round(minutes_VPA / wear_time * 100, 2), 
           percent_MVPA = round(minutes_MVPA / wear_time * 100, 2),
-          mets_hours_mvpa = sum(mets_hours_mvpa),
-          pal = round((total_kcal_awake + bmr_kcal_min * (24*60 - wear_time) + (total_kcal_awake + bmr_kcal_min * (24*60 - wear_time)) * 1/9) / bmr_kcal_d(), 2)) %>%
+          mets_hours_mvpa = round(sum(mets_hours_mvpa), 2),
+          pal = round((total_kcal_wear_time + bmr_kcal_min * (24*60 - wear_time)) * 10/9 / bmr_kcal_d(), 2)) %>%
         ungroup()
       
       return(results_by_day)
@@ -207,12 +209,16 @@ server <- function(input, output, session) {
     }))
   
   # Showing results in a table
-  output$results_by_day <- renderReactable({
-    reactable(results_by_day(),  
-              striped = TRUE,
-              list(minutes_MVPA = colDef(minWidth = 120),
-                   percent_MVPA = colDef(minWidth = 120)))
-  })
+    output$results_by_day <- renderReactable({
+      reactable(results_by_day(),  
+                striped = TRUE,
+                list(total_counts_axis1 = colDef(minWidth = 150),
+                     total_counts_vm = colDef(minWidth = 150),
+                     minutes_MVPA = colDef(minWidth = 120),
+                     percent_MVPA = colDef(minWidth = 120),
+                     total_kcal_wear_time = colDef(minWidth = 160),
+                     mets_hours_mvpa = colDef(minWidth = 160)))
+    })
   
   
   #################################################
@@ -221,36 +227,33 @@ server <- function(input, output, session) {
   
   # Getting results averaged on valid days
     results_summary <- reactive({
-    
-    # Controlling for correct inputs
-      shinyFeedback::feedbackWarning(
-        "frame_size", 
-        is.numeric(input$frame_size) == FALSE | input$frame_size < 0,
-        "Please choose a number >= 0"
-      )
       
-      results_by_day() %>%
-        mutate(validity = ifelse(wear_time >= input$minimum_wear_time_for_analysis * 60, "valid", "invalid")) %>%
-        filter(validity == "valid") %>%
-        summarise(valid_days = n(),
-                  wear_time = mean(wear_time),
-                  total_counts_axis1 = round(mean(total_counts_axis1), 2),
-                  total_counts_vm = round(mean(total_counts_vm), 2),
-                  total_steps = round(mean(total_steps), 2),
-                  total_kcal_awake = round(mean(total_kcal_awake), 2),
-                  minutes_SED = round(mean(minutes_SED), 2),
-                  minutes_LPA = round(mean(minutes_LPA), 2),
-                  minutes_MPA = round(mean(minutes_MPA), 2),
-                  minutes_VPA = round(mean(minutes_VPA), 2),
-                  minutes_MVPA = round(mean(minutes_MVPA), 2),
-                  percent_SED = round(mean(percent_SED), 2),
-                  percent_LPA = round(mean(percent_LPA), 2),
-                  percent_MPA = round(mean(percent_MPA), 2),
-                  percent_VPA = round(mean(percent_VPA), 2),
-                  percent_MVPA = round(mean(percent_MVPA), 2),
-                  mets_hours_mvpa = round(mean(mets_hours_mvpa), 1),
-                  pal = round(mean(pal), 2))
-    })
+      # Waiting for valid dataframe
+        req(is.data.frame(results_by_day()))
+    
+      # Computing results averaged on valid days'
+        results_by_day() %>%
+          mutate(validity = ifelse(wear_time >= input$minimum_wear_time_for_analysis * 60, "valid", "invalid")) %>%
+          filter(validity == "valid") %>%
+          summarise(valid_days = n(),
+                    wear_time = mean(wear_time),
+                    total_counts_axis1 = round(mean(total_counts_axis1), 2),
+                    total_counts_vm = round(mean(total_counts_vm), 2),
+                    total_steps = round(mean(total_steps), 2),
+                    total_kcal_wear_time = round(mean(total_kcal_wear_time), 2),
+                    minutes_SED = round(mean(minutes_SED), 2),
+                    minutes_LPA = round(mean(minutes_LPA), 2),
+                    minutes_MPA = round(mean(minutes_MPA), 2),
+                    minutes_VPA = round(mean(minutes_VPA), 2),
+                    minutes_MVPA = round(mean(minutes_MVPA), 2),
+                    percent_SED = round(mean(percent_SED), 2),
+                    percent_LPA = round(mean(percent_LPA), 2),
+                    percent_MPA = round(mean(percent_MPA), 2),
+                    percent_VPA = round(mean(percent_VPA), 2),
+                    percent_MVPA = round(mean(percent_MVPA), 2),
+                    mets_hours_mvpa = round(mean(mets_hours_mvpa), 1),
+                    pal = round(mean(pal), 2))
+        })
     
   # Showing results in a table
     output$results_summary <- renderReactable({
@@ -259,10 +262,12 @@ server <- function(input, output, session) {
         results_summary(), 
         list(valid_days = colDef(minWidth = 90),
              wear_time = colDef(minWidth = 90),
-             total_counts_axis1 = colDef(minWidth = 140),
-             total_counts_vm = colDef(minWidth = 120),
+             total_counts_axis1 = colDef(minWidth = 150),
+             total_counts_vm = colDef(minWidth = 150),
              minutes_MVPA = colDef(minWidth = 120),
-             percent_MVPA = colDef(minWidth = 120)),
+             percent_MVPA = colDef(minWidth = 120),
+             total_kcal_wear_time = colDef(minWidth = 160),
+             mets_hours_mvpa = colDef(minWidth = 160)),
         striped = TRUE
       )
       
