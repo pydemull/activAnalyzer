@@ -110,13 +110,13 @@ ui <-
         ), 
         fluidRow(
             column(2,
-                   selectInput("sex", "Sex", sex)
+                   selectInput("sex", "Sex (REQUIRED)", sex)
             ),
             column(2,
-                   numericInput("age", "Age (yr)", value = "", min = 0)
+                   numericInput("age", "Age (yr) (REQUIRED)", value = "", min = 0)
             ),
             column(2,
-                   numericInput("weight", "Weight (kg)", value = "", min = 0)
+                   numericInput("weight", "Weight (kg) (REQUIRED)", value = "", min = 0)
             ),
         ),
        
@@ -158,7 +158,7 @@ ui <-
         ),
         fluidRow(
             column(6,
-                   fileInput("upload", NULL, placeholder = ".agd file")
+                   fileInput("upload", NULL, placeholder = ".agd")
             ),
         ),
         fluidRow(

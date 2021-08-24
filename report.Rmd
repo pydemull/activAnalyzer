@@ -374,31 +374,43 @@ pal_status <- ifelse(df[["pal"]] <1.40, "Insufficient",
 
 # Results By Day
 
-```{r, echo = F, out.width='100%'}
-# Get dataframe
+```{r, echo = F, fig.width = 10, fig.height = 7}
+# Getting dataframe
 df2 <- params$results_by_day
 
 # Set text sizes
 title_axis_size = 10
-label_text_size = 2
+label_text_size = 4
  
 # Generate figure
 df2 %>%
+  mutate(validity = ifelse(wear_time >= 600, "Valid day", "Non valid day"),
+         validity = fct_relevel(validity, "Valid day", "Non valid day")) %>%
   pivot_longer(cols = c(wear_time, total_steps, pal, minutes_SED, minutes_LPA, minutes_MVPA, percent_SED, percent_LPA, percent_MVPA),
                names_to = "variable", values_to = "value") %>%
   mutate(variable = fct_relevel(variable, "wear_time", "total_steps", "pal", 
                                 "minutes_SED", "minutes_LPA", "minutes_MVPA", 
                                 "percent_SED", "percent_LPA", "percent_MVPA"),
-         variable = fct_recode(variable, "Wear time (min)" = "wear_time", "Total steps" = "total_steps", "PAL" = "pal",
-                                "SED time (min)" = "minutes_SED", "LPA time (min)" = "minutes_LPA", "MVPA time (min)" = "minutes_MVPA", 
-                                "SED wear time proportion (%)" = "percent_SED", "LPA wear time proportion (%)" = "percent_LPA", "MVPA wear time proportion (%)" = "percent_MVPA")) %>%
-  ggplot(aes(x = date, y = value)) +
+         variable = fct_recode(variable, 
+                               "Wear time (min)" = "wear_time", 
+                               "Total steps" = "total_steps", "PAL" = "pal",
+                                "SED time (min)" = "minutes_SED", 
+                               "LPA time (min)" = "minutes_LPA", 
+                               "MVPA time (min)" = "minutes_MVPA", 
+                                "SED wear time proportion (%)" = "percent_SED", 
+                               "LPA wear time proportion (%)" = "percent_LPA", 
+                               "MVPA wear time proportion (%)" = "percent_MVPA")) %>%
+  ggplot(aes(x = date, y = value, fill = validity)) +
   geom_bar(stat = "identity") +
-  geom_text(aes(label = round(value, 1)), size = label_text_size, vjust = -.5) +
-  labs(x = "Date", y = "") +
+  geom_point(size = 2, color = "red") +
+  geom_line(aes(group = 1), size = 0.7, color = "red") +
+  geom_text(aes(label = round(value, 1)), size = label_text_size, vjust = -0.8) +
+  labs(x = "Date", y = "", fill = "") +
   scale_y_continuous(expand = expansion(mult = c(.05, .2))) +
+  scale_fill_manual(values = c("#00BE6C", "#FC717F")) +
   theme_bw() + 
-  theme(legend.position = "none",
+  theme(legend.position = "bottom",
+        legend.text = element_text(size = 15),
         axis.title.x = element_blank(),
         axis.text.x = element_text(size = 8, angle = 45, hjust = 1),
         axis.text.y = element_blank(),
