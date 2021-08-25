@@ -13,10 +13,44 @@ server <- function(input, output, session) {
       prepare_dataset(data = input$upload$datapath)
       
     })
+  
+  # Notifying that uploading may take time
+    observeEvent(input$upload, {
+      showNotification("Please wait until seeing 'Upload complete'.", type = "message")
+    })
     
   ###########################################################################################
   # Getting dataframe with marks for wear/nonwear time when clicking on the "Validate" button
   ###########################################################################################
+    
+  # Controlling for correct inputs
+  
+    # File input
+    observeEvent(input$validate,
+                 shinyFeedback::feedbackWarning(
+                   "upload", 
+                   ((tools::file_ext(input$upload$name) == "agd") == FALSE),
+                   "Invalid file format. Please choose a .agd file"
+                 )
+    )
+    
+    # Frame size
+    observeEvent(input$validate,
+                 shinyFeedback::feedbackWarning(
+                   "frame_size", 
+                   (is.numeric(input$frame_size) == FALSE | input$frame_size < 0),
+                   "Please choose a number >= 0"
+                 )
+    )
+    
+    # Allowance frame size
+    observeEvent(input$validate,
+                 shinyFeedback::feedbackWarning(
+                   "allowanceFrame_size", 
+                   (is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0),
+                   "Please choose a number >= 0"
+                 )
+    )
     
   df <- eventReactive(input$validate, {
     
@@ -26,35 +60,6 @@ server <- function(input, output, session) {
            input$frame_size >= 0 & 
            is.numeric(input$allowanceFrame_size) & 
            input$allowanceFrame_size >= 0)
-    
-     # Controlling for correct inputs
-     
-       # File input
-         observeEvent(input$validate,
-                    shinyFeedback::feedbackWarning(
-                      "upload", 
-                      ((tools::file_ext(input$upload$name) == "agd") == FALSE),
-                      "Invalid file format. Please choose a .agd file"
-                    )
-         )
-       
-       # Frame size
-         observeEvent(input$validate,
-                    shinyFeedback::feedbackWarning(
-                      "frame_size", 
-                      (is.numeric(input$frame_size) == FALSE | input$frame_size < 0),
-                      "Please choose a number >= 0"
-                    )
-         )
-       
-       # Allowance frame size
-         observeEvent(input$validate,
-                    shinyFeedback::feedbackWarning(
-                      "allowanceFrame_size", 
-                      (is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0),
-                      "Please choose a number >= 0"
-                    )
-         )
       
      # Creating reactive dataframe
        if (input$axis_weartime == "vector magnitude") {  
@@ -179,7 +184,7 @@ server <- function(input, output, session) {
             # Computing MET-hr corresponding to MVPA only for each epoch
             mets_hours_mvpa = ifelse(METS >=3, 1/60 * METS, 0))
     
-       # Creating a dataframe with results by day and corresponding to valid wear time only  
+      # Creating a dataframe with results by day and corresponding to valid wear time only  
          results_by_day <-
            df_with_computed_metrics %>%
            group_by(date, .drop = FALSE) %>%
@@ -217,7 +222,15 @@ server <- function(input, output, session) {
                      striped = TRUE,
                      list(total_counts_axis1 = colDef(minWidth = 150),
                           total_counts_vm = colDef(minWidth = 150),
+                          minutes_SED = colDef(minWidth = 120),
+                          minutes_LPA = colDef(minWidth = 120),
+                          minutes_MPA = colDef(minWidth = 120),
+                          minutes_VPA = colDef(minWidth = 120),
                           minutes_MVPA = colDef(minWidth = 120),
+                          percent_SED = colDef(minWidth = 120),
+                          percent_LPA = colDef(minWidth = 120),
+                          percent_MPA = colDef(minWidth = 120),
+                          percent_VPA = colDef(minWidth = 120),
                           percent_MVPA = colDef(minWidth = 120),
                           total_kcal_wear_time = colDef(minWidth = 160),
                           mets_hours_mvpa = colDef(minWidth = 160)))
@@ -263,7 +276,15 @@ server <- function(input, output, session) {
                  wear_time = colDef(minWidth = 90),
                  total_counts_axis1 = colDef(minWidth = 150),
                  total_counts_vm = colDef(minWidth = 150),
+                 minutes_SED = colDef(minWidth = 120),
+                 minutes_LPA = colDef(minWidth = 120),
+                 minutes_MPA = colDef(minWidth = 120),
+                 minutes_VPA = colDef(minWidth = 120),
                  minutes_MVPA = colDef(minWidth = 120),
+                 percent_SED = colDef(minWidth = 120),
+                 percent_LPA = colDef(minWidth = 120),
+                 percent_MPA = colDef(minWidth = 120),
+                 percent_VPA = colDef(minWidth = 120),
                  percent_MVPA = colDef(minWidth = 120),
                  total_kcal_wear_time = colDef(minWidth = 160),
                  mets_hours_mvpa = colDef(minWidth = 160)),
@@ -299,58 +320,93 @@ server <- function(input, output, session) {
   #################
   # Generate report
   #################
-  
-  output$report <- downloadHandler(
-    filename = "report.pdf",
-    content = function(file) {
-      # Copy the report file to a temporary directory before processing it, in
-      # case we don't have write permissions to the current working dir (which
-      # can happen when deployed).
-      tempReport <- file.path(tempdir(), "report.Rmd")
-      file.copy("report.Rmd", tempReport, overwrite = TRUE)
+    
+    # Generating report
+      output$report <- downloadHandler(
+        filename = "report.pdf",
+        content = function(file) {
+
+          # Copy the report file to a temporary directory before processing it, in
+          # case we don't have write permissions to the current working dir (which
+          # can happen when deployed).
+          tempReport <- file.path(tempdir(), "report.Rmd")
+          file.copy("report.Rmd", tempReport, overwrite = TRUE)
+          
+          # Set up parameters to pass to Rmd document
+          params <- list(
+            assessor_title = input$assessor_title,
+            assessor_name = input$assessor_name,
+            assessor_surname = input$assessor_surname,
+            patient_title = input$patient_title,
+            patient_name = input$patient_name,
+            patient_surname = input$patient_surname,
+            sex = input$sex,
+            age = input$age,
+            weight = input$weight,
+            start_date = min(df()$date),
+            end_date = max(df()$date),
+            device = input$device,
+            position = input$position,
+            side = input$side,
+            sampling_rate = input$sampling_rate,
+            filter = input$filter,
+            axis_weartime = input$axis_weartime,
+            frame_size = input$frame_size,
+            allowanceFrame_size = input$allowanceFrame_size,
+            equation_mets = input$equation_mets,
+            bmr_kcal_d = bmr_kcal_d(),
+            axis = input$axis,
+            sed_cutpoint = input$sed_cutpoint,
+            mpa_cutpoint = input$mpa_cutpoint,
+            vpa_cutpoint = input$vpa_cutpoint,
+            minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
+            results_by_day = results_by_day(),
+            results_summary =  results_summary()
+          )
+    
+          # Knit the document, passing in the `params` list, and eval it in a
+          # child of the global environment (this isolates the code in the document
+          # from the code in this app).
+          out <- rmarkdown::render(tempReport,
+                                   params = params,
+                                   envir = new.env(parent = globalenv())
+          )
+          out <- file.rename(out, file)
+
+      }
+    )
       
-      # Set up parameters to pass to Rmd document
-      params <- list(
-        assessor_title = input$assessor_title,
-        assessor_name = input$assessor_name,
-        assessor_surname = input$assessor_surname,
-        patient_title = input$patient_title,
-        patient_name = input$patient_name,
-        patient_surname = input$patient_surname,
-        sex = input$sex,
-        age = input$age,
-        weight = input$weight,
-        start_date = min(df()$date),
-        end_date = max(df()$date),
-        device = input$device,
-        position = input$position,
-        side = input$side,
-        sampling_rate = input$sampling_rate,
-        filter = input$filter,
-        axis_weartime = input$axis_weartime,
-        frame_size = input$frame_size,
-        allowanceFrame_size = input$allowanceFrame_size,
-        equation_mets = input$equation_mets,
-        bmr_kcal_d = bmr_kcal_d(),
-        axis = input$axis,
-        sed_cutpoint = input$sed_cutpoint,
-        mpa_cutpoint = input$mpa_cutpoint,
-        vpa_cutpoint = input$vpa_cutpoint,
-        minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
-        results_by_day = results_by_day(),
-        results_summary =  results_summary()
+ ########### 
+ # Reset app
+ ########### 
+    
+    observeEvent(input$reset, {
+      
+      modal_confirm <- modalDialog(
+        "Are you sure you want to reset the app?",
+        title = "Reset app",
+        footer = tagList(
+          actionButton("cancel", "Cancel"),
+          actionButton("ok", "Reset", class = "btn btn-danger", style="color: #fff; background-color: #F8766D; border-color: #FC717F")
+        )
       )
       
-      # Knit the document, passing in the `params` list, and eval it in a
-      # child of the global environment (this isolates the code in the document
-      # from the code in this app).
-      out <- rmarkdown::render(tempReport,
-                               params = params,
-                               envir = new.env(parent = globalenv())
-      )
-      out <- file.rename(out, file)
-    }
-  )
-  
+      showModal(modal_confirm)
+    })
+    
+    observeEvent(input$ok, {
+      aggg_result = -1
+      if(aggg_result == -1)
+      {
+        session$reload()
+        return()
+      }
+          })
+    
+    observeEvent(input$cancel, {
+      removeModal()
+    })
 }
+    
+
 

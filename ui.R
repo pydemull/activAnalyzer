@@ -5,6 +5,7 @@
 
 library(shiny)
 library(shinydashboard)
+library(shinydashboardPlus)
 library(shinyFeedback)
 library(ggplot2)
 library(dplyr)
@@ -36,37 +37,32 @@ axis <- c("vector magnitude", "vertical axis")
 ui <- 
     dashboardPage(
     dashboardHeader(title = "activAnalyzer (bêta)"),
-    dashboardSidebar(),
+    dashboardSidebar(
+      sidebarMenu(
+      menuItem("App", tabName = "app", icon = icon("fas fa-tablet-alt")),
+      menuItem("User's guide", tabName = "guide", icon = icon("far fa-file-alt"))
+    )),
     dashboardBody(
-        shinyFeedback::useShinyFeedback(),
-        tags$head(
-          tags$style(HTML("
-      .shiny-output-error-validation {
-        color: #ff0000;
-        font-weight: bold;
-      }
-    "))
-        ),
+      tabItems(
         
-
-        ################
-        # Notes to users
-        ################
+        # $$$$$$$$$$$$$$$$$
+        # First tab content
+        # $$$$$$$$$$$$$$$$$
         
-        fluidRow(
-            column(6, 
-            "Author: Pierre-Yves de Müllenheim (pydemull@uco.fr)"
-                  ),
-        ),
-        fluidRow(
-            column(6, 
-                   "Note: Welcome to the ActivAnalyzer app. This app was developped to analyse ActiGraph accelerometer data (.agd files) recorded at the hip in adults. Once analysis is completed,
-                   the app allows to export results to .csv files and to generate a report of the measurement. All the configured inputs
-                   relevant for interpreting the results are recorded into the report. Please be sure that the inputs that are configured
-                   when generating the report correspond to the analysis that was actually performed (in other words, avoid modifying the inputs
-                   after generating satisfactory results)."
-            ),
-        ),
+          tabItem(tabName = "app",
+        
+          waiter::use_waitress(),
+          shinyFeedback::useShinyFeedback(),
+          tags$head(
+               tags$style(HTML("
+           .shiny-output-error-validation {
+             color: #ff0000;
+             font-weight: bold;
+           }
+         "))
+             ),
+          tags$head(tags$style('h2 {color:#337ab7;}')),
+        
         ########################
         # Assessor's information
         ########################
@@ -81,10 +77,10 @@ ui <-
                    selectInput("assessor_title", "Title", assessor_title)
             ),
             column(2,
-                   textInput("assessor_name", "Name", placeholder = "NAME")
+                   textInput("assessor_name", "Name", placeholder = "")
             ),
             column(2,
-                   textInput("assessor_surname", "Surname", placeholder = "Surname" )
+                   textInput("assessor_surname", "Surname", placeholder = "" )
             ),
         ),
         
@@ -102,10 +98,10 @@ ui <-
                    selectInput("patient_title", "Title", patient_title)
             ),
             column(2,
-                   textInput("patient_name", "Name", placeholder = "NAME")
+                   textInput("patient_name", "Name", placeholder = "")
             ),
             column(2,
-                   textInput("patient_surname", "Surname", placeholder = "Surname" )
+                   textInput("patient_surname", "Surname", placeholder = "" )
             ),
         ), 
         fluidRow(
@@ -152,7 +148,7 @@ ui <-
         ################################################################
         
         fluidRow(
-            column(6,                   
+            column(12,                   
                    h2("Data uploading, nonwear time detection, and data visualization")
             ),
         ),
@@ -251,7 +247,7 @@ ui <-
         
         fluidRow(
             column(12,
-                   h3("Results averaged on a daily basis"),
+                   h3("Results averaged on a valid days"),
                    reactableOutput("results_summary")
                   ),
         ),
@@ -268,6 +264,54 @@ ui <-
                  downloadButton("report", "Generate report (.pdf)")
                ),
 
+        ),
+        
+        
+        #######
+        # Reset
+        #######
+        
+        fluidRow(
+          column(4,
+                 h2("Reset app"),
+                 actionButton('reset',"Reset App",  style="color: #fff; background-color: #F8766D; border-color: #FC717F")
+                 )
         )
-    )
-)
+      ), # End first tab
+      
+     
+      
+      # $$$$$$$$$$$$$$$$$$
+      # Second tab content
+      # $$$$$$$$$$$$$$$$$$
+      
+        tabItem(tabName = "guide",
+              h2("User's guide"),
+              
+              ################
+              # Notes to users
+              ################
+              
+              fluidRow(
+                column(12, 
+                       "Author: Pierre-Yves de Müllenheim (pydemull@uco.fr)"
+                ),
+              ),
+              fluidRow(
+                column(12, 
+                       "Note: Welcome to the ActivAnalyzer app. This app was developped to analyse ActiGraph accelerometer data (.agd files) recorded at the hip in adults. Once analysis is completed,
+                   the app allows to export results to .csv files and to generate a report of the measurement. All the configured inputs
+                   relevant for interpreting the results are recorded into the report. Please be sure that the inputs that are configured
+                   when generating the report correspond to the analysis that was actually performed (in other words, avoid modifying the inputs
+                   after generating satisfactory results)."
+                ),
+              ),
+      ) # End second tab
+      
+              )
+     ), # End dashboardBody 
+    
+    footer = dashboardFooter(
+      left = "© 2021 Pierre-Yves de Müllenheim. All Rights Reserved.",
+   )
+  )
