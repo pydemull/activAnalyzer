@@ -51,7 +51,6 @@ ui <-
         
           tabItem(tabName = "app",
         
-          waiter::use_waitress(),
           shinyFeedback::useShinyFeedback(),
           tags$head(
                tags$style(HTML("
@@ -153,16 +152,17 @@ ui <-
             ),
         ),
         fluidRow(
-            column(6,
-                   fileInput("upload", NULL, placeholder = ".agd")
+            column(12,
+                   fileInput("upload", "Upload file (please wait until seeing 'Upload complete' before continuing)", placeholder = ".agd")
             ),
+
         ),
         fluidRow(
             column(2,
                    selectInput("axis_weartime", "Axis to be considered to detect nonwear time", axis_weartime)
             ),  
             column(3,
-                    numericInput("frame_size", "Time interval to be considered for nonwear time detection (min)", value = 90, min = 0)
+                    numericInput("frame_size", "Time interval to be considered to detect nonwear time (min)", value = 90, min = 0)
             ),
             column(4,
                    numericInput("allowanceFrame_size", "Time interval with nonzero counts allowed during a nonwear period (min)", value = 2, min = 0)
@@ -233,28 +233,28 @@ ui <-
             column(12,
                    h2("Results"),
                    
-                   ###############################
-                   # Table of results shown by day
-                   ###############################
+                   #########################
+                   # Table of results by day
+                   #########################
                    h3("Results by day"),
                    reactableOutput("results_by_day")
                    ),
         ),
 
-                   ############################################
-                   # Table of results averaged on a daily basis
-                   ############################################
+                   #########################################
+                   # Table of results averaged on valid days
+                   #########################################
         
         fluidRow(
             column(12,
-                   h3("Results averaged on a valid days"),
+                   h3("Results averaged on valid days"),
                    reactableOutput("results_summary")
                   ),
         ),
       
-        ########
-        # Export
-        ########
+        ################
+        # Export results
+        ################
         
         fluidRow(
           column(12,
@@ -267,9 +267,9 @@ ui <-
         ),
         
         
-        #######
-        # Reset
-        #######
+        ###########
+        # Reset app
+        ###########
         
         fluidRow(
           column(4,

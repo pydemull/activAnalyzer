@@ -13,11 +13,7 @@ server <- function(input, output, session) {
       prepare_dataset(data = input$upload$datapath)
       
     })
-  
-  # Notifying that uploading may take time
-    observeEvent(input$upload, {
-      showNotification("Please wait until seeing 'Upload complete'.", type = "message")
-    })
+
     
   ###########################################################################################
   # Getting dataframe with marks for wear/nonwear time when clicking on the "Validate" button
@@ -323,9 +319,11 @@ server <- function(input, output, session) {
     
     # Generating report
       output$report <- downloadHandler(
+        
+      
         filename = "report.pdf",
         content = function(file) {
-
+          
           # Copy the report file to a temporary directory before processing it, in
           # case we don't have write permissions to the current working dir (which
           # can happen when deployed).
