@@ -10,6 +10,9 @@ library(shinyFeedback)
 library(ggplot2)
 library(dplyr)
 library(PhysicalActivity)
+library(actigraph.sleepr)
+library(assertthat)
+library(lubridate)
 library(RSQLite)
 library(hms)
 library(reactable)
@@ -63,12 +66,12 @@ ui <-
           tags$head(tags$style('h2 {color:#337ab7;}')),
         
         ########################
-        # Assessor's information
+        # Assessor information
         ########################
         
         fluidRow(
             column(6,                   
-                   h2("Assessor's information")
+                   h2("Assessor information")
             ),
         ),
         fluidRow(
@@ -84,12 +87,12 @@ ui <-
         ),
         
         #######################
-        # Patient's information
+        # Patient information
         #######################
         
         fluidRow(
             column(6,                   
-                   h2("Patient's information")
+                   h2("Patient information")
             ),
         ),
         fluidRow(
@@ -116,30 +119,22 @@ ui <-
         ),
        
         ######################
-        # Device's information
+        # Device information
         ######################
         
         fluidRow(
             column(6,                   
-                   h2("Device's information")
+                   h2("Device information")
             ),
         ),
         fluidRow(
-            column(2,
-                   selectInput("device", "Device", device)
-            ),
             column(2,
                    selectInput("position", "Position", position)
             ),
             column(2,
                    selectInput("side", "Side", side)
             ),
-            column(2,
-                   numericInput("sampling_rate", "Sampling_rate (Hz)", value = "", min = 0)
-            ),
-            column(2,
-                   selectInput("filter", "Filter", filter)
-            ),
+
         ),
         
         ################################################################

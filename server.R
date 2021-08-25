@@ -7,13 +7,19 @@ server <- function(input, output, session) {
   ################
   
   # Getting reactive data
+    file <- reactive({
+      
+      req(input$upload)
+      read_agd(input$upload$datapath)
+
+    })
+
     data <- reactive({
       
       req(input$upload)
-      prepare_dataset(data = input$upload$datapath)
+      prepare_dataset(data = file())
       
     })
-
     
   ###########################################################################################
   # Getting dataframe with marks for wear/nonwear time when clicking on the "Validate" button
@@ -61,7 +67,7 @@ server <- function(input, output, session) {
        if (input$axis_weartime == "vector magnitude") {  
          
          df <- wearingMarking(dataset = data(), 
-                              TS = "TimeStamp", 
+                              TS = "timestamp", 
                               cts = "vm", 
                               frame = input$frame_size, 
                               allowanceFrame = input$allowanceFrame_size) %>%
@@ -70,7 +76,7 @@ server <- function(input, output, session) {
        } else {
          
          df <- wearingMarking(dataset = data(), 
-                              TS = "TimeStamp", 
+                              TS = "timestamp", 
                               cts = "axis1", 
                               frame = input$frame_size, 
                               allowanceFrame = input$allowanceFrame_size) %>%
@@ -341,13 +347,13 @@ server <- function(input, output, session) {
             sex = input$sex,
             age = input$age,
             weight = input$weight,
-            start_date = min(df()$date),
-            end_date = max(df()$date),
-            device = input$device,
+            start_date = attributes(file())$startdatetime,
+            end_date = attributes(file())$stopdatetime,
+            device = attributes(file())$devicename,
             position = input$position,
             side = input$side,
-            sampling_rate = input$sampling_rate,
-            filter = input$filter,
+            sampling_rate = attributes(file())$`original sample rate`,
+            filter = attributes(file())$filter,
             axis_weartime = input$axis_weartime,
             frame_size = input$frame_size,
             allowanceFrame_size = input$allowanceFrame_size,
