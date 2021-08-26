@@ -28,7 +28,7 @@ server <- function(input, output, session) {
   # Controlling for correct inputs
   
     # File input
-    observeEvent(input$validate,
+      observeEvent(input$validate,
                  shinyFeedback::feedbackWarning(
                    "upload", 
                    ((tools::file_ext(input$upload$name) == "agd") == FALSE),
@@ -37,7 +37,7 @@ server <- function(input, output, session) {
     )
     
     # Frame size
-    observeEvent(input$validate,
+      observeEvent(input$validate,
                  shinyFeedback::feedbackWarning(
                    "frame_size", 
                    (is.numeric(input$frame_size) == FALSE | input$frame_size < 0),
@@ -46,7 +46,7 @@ server <- function(input, output, session) {
     )
     
     # Allowance frame size
-    observeEvent(input$validate,
+      observeEvent(input$validate,
                  shinyFeedback::feedbackWarning(
                    "allowanceFrame_size", 
                    (is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0),
@@ -88,6 +88,14 @@ server <- function(input, output, session) {
        return(df)
       
       })
+  
+  # Return to default values
+   observeEvent(input$reset_nonwear, {
+     axis_weartime <- c("vector magnitude", "vertical axis")
+     updateSelectInput(inputId = "axis_weartime", choices = axis_weartime)
+     updateNumericInput(inputId = "frame_size", value = 90)
+     updateNumericInput(inputId = "allowanceFrame_size", value = 2)
+   })
   
  
   ########################################
@@ -330,6 +338,9 @@ server <- function(input, output, session) {
         filename = "report.pdf",
         content = function(file) {
           
+
+          withProgress(message = 'Please wait...', {
+            
           # Copy the report file to a temporary directory before processing it, in
           # case we don't have write permissions to the current working dir (which
           # can happen when deployed).
@@ -365,7 +376,8 @@ server <- function(input, output, session) {
             vpa_cutpoint = input$vpa_cutpoint,
             minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
             results_by_day = results_by_day(),
-            results_summary =  results_summary()
+            results_summary =  results_summary(),
+            rendered_by_shiny = TRUE
           )
     
           # Knit the document, passing in the `params` list, and eval it in a
@@ -376,9 +388,13 @@ server <- function(input, output, session) {
                                    envir = new.env(parent = globalenv())
           )
           out <- file.rename(out, file)
+          
+          })
 
       }
     )
+    
+
       
  ########### 
  # Reset app

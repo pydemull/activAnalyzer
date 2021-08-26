@@ -162,10 +162,13 @@ ui <-
             column(4,
                    numericInput("allowanceFrame_size", "Time interval with nonzero counts allowed during a nonwear period (min)", value = 2, min = 0)
             ),
+            column(3,
+                   shiny::actionButton("reset_nonwear", "Default values", style = "border-color: #2e6da4")
+            ),
         ),
         fluidRow(
             column(3,
-                   actionButton("validate", "Validate configuration", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
+                   shiny::actionButton("validate", "Validate configuration", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
             ),
         ),
 
@@ -216,7 +219,7 @@ ui <-
         ),
         fluidRow(
           column(3,
-                 actionButton("Run", "Run Analysis", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
+                 shiny::actionButton("Run", "Run Analysis", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
           ),
         ),
         
@@ -269,7 +272,7 @@ ui <-
         fluidRow(
           column(4,
                  h2("Reset app"),
-                 actionButton('reset',"Reset App",  style="color: #fff; background-color: #F8766D; border-color: #FC717F")
+                 shiny::actionButton('reset',"Reset App",  style="color: #fff; background-color: #F8766D; border-color: #FC717F")
                  )
         )
       ), # End first tab
