@@ -442,10 +442,3 @@ Regarding the daily step number, the expected values proposed for the different 
 
 After converting moderate and vigorous physical activity times to MET-hours, the estimate of MVPA dose was `r paste0(format(round(df[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hours, and thus falls **`r guidelines_status`**.
 
-
-# Technical information
-  * Computation of kcal for each valid 1-min epoch: METs x BMR [kcal/min].
-
-  * Computation of PAL:  [(kcal for valid wear time) + (BMR [kcal/min] * non-wear time [min])] * 10/9 / BMR [kcal/d].
-
-

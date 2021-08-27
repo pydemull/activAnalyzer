@@ -94,7 +94,7 @@ ui <-
         
         fluidRow(
             column(6,                   
-                   h2("Assessor information"),
+                   h2("Assessor"),
             ),
         ),
         fluidRow(
@@ -115,7 +115,7 @@ ui <-
         
         fluidRow(
             column(6,                   
-                   h2("Patient information")
+                   h2("Patient")
             ),
         ),
         fluidRow(
@@ -147,7 +147,7 @@ ui <-
         
         fluidRow(
             column(6,                   
-                   h2("Device information")
+                   h2("Device")
             ),
         ),
         fluidRow(
@@ -422,16 +422,33 @@ ui <-
               
               fluidRow(
                 column(12, 
-                       "Author: Pierre-Yves de Müllenheim (pydemull@uco.fr)"
+                       h4("Welcome to the ActivAnalyzer app. This app was developped to analyse ActiGraph accelerometer data (.agd files) recorded at the hip in adults. Once analysis is completed,
+                   the app allows to export results to .csv files and to generate a report of the measurement. All the configured inputs
+                   relevant for interpreting the results are recorded into the report. Be sure that the inputs that are configured
+                   when generating the report correspond to the analysis that was actually performed (in other words, avoid modifying the inputs
+                   after generating satisfactory results). Please read the user's guide for details about how the app works."),
                 ),
               ),
               fluidRow(
-                column(12, 
-                       "Note: Welcome to the ActivAnalyzer app. This app was developped to analyse ActiGraph accelerometer data (.agd files) recorded at the hip in adults. Once analysis is completed,
-                   the app allows to export results to .csv files and to generate a report of the measurement. All the configured inputs
-                   relevant for interpreting the results are recorded into the report. Please be sure that the inputs that are configured
-                   when generating the report correspond to the analysis that was actually performed (in other words, avoid modifying the inputs
-                   after generating satisfactory results)."
+                column(12,
+                       downloadButton("user_guide", "Download user's guide (.pdf)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
+                ),
+                
+              ),
+              fluidRow(
+                column(12,
+                       tags$hr(style="border-color: #337ab7;")
+                ),
+              ),
+              fluidRow(
+                column(12,
+                       h2(""),
+                       h2("Contact"),
+                       h4("Pierre-Yves de Müllenheim", style = "font-weight: bold; font-size: 20px"),
+                       h4("Associate professor"),
+                       h4("Institute of Physical Education and Sport Sciences (IFEPSA), UCO, Les Ponts-de-Cé, France"),
+                       h4("Email: pydemull@uco.fr")
+                       
                 ),
               ),
       ) # End second tab

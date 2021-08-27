@@ -645,6 +645,21 @@ server <- function(input, output, session) {
     observeEvent(input$cancel, {
       removeModal()
     })
+    
+  ####################### 
+  # Download user's guide
+  #######################
+    
+    output$user_guide <- downloadHandler(
+      filename = function() {
+        paste0(input$upload, "activanalyzer_manual.pdf")
+      },
+      content = function(file) {
+        file.copy("manual/user_guide.pdf", file)
+      }
+    )
+    
+    
 }
     
 
