@@ -3,6 +3,7 @@
 # Packages, functions, and lists of inputs
 #######################################################################################################
 
+# Packages
 library(shiny)
 library(shinydashboard)
 library(shinydashboardPlus)
@@ -18,8 +19,11 @@ library(hms)
 library(reactable)
 library(readr)
 library(tidyr)
+
+# Functions
 sapply(list.files(pattern="[.]R$", path="R/", full.names=TRUE), source)
 
+# Lists of inputs
 assessor_title <- c("...", "Mr", "Ms", "Mrs", "Dr", "Pr")
 patient_title <- c("...", "Mr", "Ms", "Mrs")
 sex <- c("...", "male", "female", "undefined")
@@ -29,9 +33,23 @@ side <- c("...", "right", "left")
 filter <- c("...", "normal", "LFE")
 axis_weartime <- c("vector magnitude", "vertical axis")
 metrics <- c("axis1", "axis2", "axis3", "vm", "steps", "inclineStanding", "inclineSitting", "inclineLying")
-equations <- c("santos_lozano_2013_mixed_older_adults", "santos_lozano_2013_mixed_adults", "santos_lozano_2013_mixed_youth",
-               "freedson_1998_walk_adults", "hendelman_2000_walk_adults", "hendelman_2000_walk_adl_adults", "nichols_2000_walk_adults", "sasaki_2011_walk_adults")
-axis <- c("vector magnitude", "vertical axis")
+equations <- c("...",
+               "Sasaki et al. (2011) [Adults]",
+               "Santos-Lozano et al. (2013) [Adults]",
+               "Freedson et al. (1998) [Adults]",
+               "Santos-Lozano et al. (2013) [Older adults]" 
+               )
+sed_cutpoints <- c("...", 
+                   "Aguilar-Farias et al. (2014) [Older adults]", 
+                   "Personalized...")
+mvpa_cutpoints <- c("...", 
+                    "Sasaki et al. (2011) [Adults]", 
+                    "Santos-Lozano et al. (2013) [Adults]", 
+                    "Santos-Lozano et al. (2013) [Older adults]", 
+                    "Personalized...")
+perso_sed_axis <- c("vector magnitude", "vertical axis")
+perso_mvpa_axis <- c("vector magnitude", "vertical axis")
+
 
 #######################################################################################################
 # UI
@@ -46,32 +64,36 @@ ui <-
       menuItem("User's guide", tabName = "guide", icon = icon("far fa-file-alt"))
     )),
     dashboardBody(
+      
       tabItems(
         
-        # $$$$$$$$$$$$$$$$$
-        # First tab content
-        # $$$$$$$$$$$$$$$$$
+    # $$$$$$$$$$$$$$$$$
+    # First tab content
+    # $$$$$$$$$$$$$$$$$
+      
+        tabItem(tabName = "app",
         
-          tabItem(tabName = "app",
-        
-          shinyFeedback::useShinyFeedback(),
-          tags$head(
-               tags$style(HTML("
-           .shiny-output-error-validation {
-             color: #ff0000;
-             font-weight: bold;
-           }
-         "))
+         # Controlling appearance of warning feedbacks      
+           shinyFeedback::useShinyFeedback(),
+           tags$head(
+                tags$style(HTML("
+            .shiny-output-error-validation {
+              color: #ff0000;
+              font-weight: bold;
+            }
+          "))
              ),
-          tags$head(tags$style('h2 {color:#337ab7;}')),
+         
+         # Setting title color
+           tags$head(tags$style('h2 {color:#337ab7;}')),
         
-        ########################
+        ######################
         # Assessor information
-        ########################
+        ######################
         
         fluidRow(
             column(6,                   
-                   h2("Assessor information")
+                   h2("Assessor information"),
             ),
         ),
         fluidRow(
@@ -86,9 +108,9 @@ ui <-
             ),
         ),
         
-        #######################
+        #####################
         # Patient information
-        #######################
+        #####################
         
         fluidRow(
             column(6,                   
@@ -118,9 +140,9 @@ ui <-
             ),
         ),
        
-        ######################
+        ####################
         # Device information
-        ######################
+        ####################
         
         fluidRow(
             column(6,                   
@@ -163,7 +185,7 @@ ui <-
                    numericInput("allowanceFrame_size", "Time interval with nonzero counts allowed during a nonwear period (min)", value = 2, min = 0)
             ),
             column(3,
-                   shiny::actionButton("reset_nonwear", "Default values", style = "border-color: #2e6da4")
+                   shiny::actionButton("reset_nonwear", "Return to default values", style = "border-color: #2e6da4")
             ),
         ),
         fluidRow(
@@ -172,11 +194,12 @@ ui <-
             ),
         ),
 
-        ###########################################
-        # Box for the plot showing the monitor data
-        ###########################################
+        ##########################
+        # Box showing monitor data
+        ##########################
         
         fluidRow(
+            h3(""),
             box(plotOutput("graph"), width = 12)
         ),
         fluidRow(
@@ -184,44 +207,124 @@ ui <-
                    selectInput("Metric", "Metric to visualize", metrics),
         ),
         
-        ################################################
-        # Inputs for computing physical activity metrics
-        ################################################
+        ###################
+        # computing metrics
+        ###################
+               
+            #******************
+            # Choosing Equation
+            #******************
+            
+            fluidRow(
+              column(12,                   
+                     h2("Computation of metrics")
+                     ),
+            ),
+            fluidRow(
+                column(10,
+                       h3("Choose a MET equation"),
+                       selectInput("equation_mets", "Equation", equations)
+                       ),
+            ),
+            fluidRow(
+              column(12,
+                reactableOutput("table_equations")
+              )
+            ),
         
-        fluidRow(
-          column(12,                   
-                 h2("Computation of metrics (Please choose appropriate values based on scientific literature)")
+            #********************
+            # Choosing cut-points
+            #********************
+           
+            fluidRow(
+             column(12,
+                    h3("Choose cut-points"),
+                    )
+            ),
+           
+                #***************
+                # SED cut-points
+                #***************
+                
+                fluidRow(
+                  column(12,
+                  selectInput("sed_cutpoints", "SED cut-point", choices = sed_cutpoints)
+                        )
+                ),
+        
+                fluidRow(
+                  column(12,
+                  tabsetPanel(
+                    id = "switcher_sed",
+                    type = "hidden",
+                    tabPanelBody("...", ""),
+                    tabPanelBody("Aguilar-Farias et al. (2014) [Older adults]", reactableOutput("table_sed_cutpoints")),
+                    tabPanelBody("Personalized...", 
+                                 fluidRow(
+                                   column(3,
+                                          wellPanel(selectInput("perso_sed_axis", "Axis for SED categorization", perso_sed_axis),
+                                                    numericInput("perso_sed_cutpoint", "SED cut-point in counts/min (<)", value = 200, min = 0))
+                                          ),
+                                   )
+                            )
+                        )
+                  )
+                ),
+        
+                #****************
+                # MVPA cut-points
+                #****************
+                
+                fluidRow(
+                  column(12,
+                         h3(""),
+                         selectInput("mvpa_cutpoints", "MVPA cut-points", choices = mvpa_cutpoints)
+                  )
+                ),
+                fluidRow(
+                  column(12,
+                         tabsetPanel(
+                           id = "switcher_mvpa",
+                           type = "hidden",
+                           tabPanelBody("...", ""),
+                           tabPanelBody("Sasaki et al. (2011) [Adults]", reactableOutput("table_mvpa_cutpoints_sasaki")),
+                           tabPanelBody("Santos-Lozano et al. (2013) [Adults]", reactableOutput("table_mvpa_cutpoints_santos_adults")),
+                           tabPanelBody("Santos-Lozano et al. (2013) [Older adults]", reactableOutput("table_mvpa_cutpoints_santos_older")),
+                           tabPanelBody("Personalized...", 
+                                        fluidRow(
+                                          column(3,
+                                                 wellPanel(selectInput("perso_mvpa_axis", "Axis for MVPA categorization", perso_mvpa_axis),
+                                                           numericInput("perso_mpa_cutpoint", "MPA cut-point in counts/min (>=)", value = 3208 , min = 0),
+                                                           numericInput("perso_vpa_cutpoint", "VPA cut-point in counts/min (>=)", value = 8565 , min = 0))
+                                          ),
+                                        )
+                           )
+                         )
+                  )
+                ),
+        
+               #********************************
+               # Minimum wear time for valid day
+               #********************************
+              
+               fluidRow(
+                 column(12,
+                        h3("Choose a minimum value for wear time to consider a day as valid"),
+                 ), 
+                 column(2,
+                        numericInput("minimum_wear_time_for_analysis", "Minimum wear time (hours)", value = 10)
+                 )
+               ),
+        
+               #*****************
+               # Running analysis
+               #*****************
+               
+                fluidRow(
+                 column(3,
+                        shiny::actionButton("Run", "Run Analysis", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
                  ),
-        ),
-        
-        fluidRow(
-            column(4,
-                   selectInput("equation_mets", "Equation to compute METs", equations)
-                   ),
-
-        ),
-        fluidRow(
-            column(2,
-                   selectInput("axis", "Axis for SED/PA categorization", axis)
-            ),
-            column(2,
-                   numericInput("sed_cutpoint", "SED cut-point (<)", value = 200)
-            ),
-            column(2,
-                   numericInput("mpa_cutpoint", "MPA cut-point (>=)", value = 2751)
-            ),
-            column(2,
-                   numericInput("vpa_cutpoint", "VPA cut-point (>=)", value = 9359)
-            ),
-            column(2,
-                   numericInput("minimum_wear_time_for_analysis", "Minimum wear time (hours)", value = 10)
-            ), 
-        ),
-        fluidRow(
-          column(3,
-                 shiny::actionButton("Run", "Run Analysis", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
-          ),
-        ),
+               ),
         
         #########
         # Results
@@ -231,23 +334,24 @@ ui <-
             column(12,
                    h2("Results"),
                    
-                   #########################
+                   #************************
                    # Table of results by day
-                   #########################
+                   #************************
+                   
                    h3("Results by day"),
                    reactableOutput("results_by_day")
                    ),
         ),
 
-                   #########################################
+                   #****************************************
                    # Table of results averaged on valid days
-                   #########################################
+                   #****************************************
         
-        fluidRow(
-            column(12,
-                   h3("Results averaged on valid days"),
-                   reactableOutput("results_summary")
-                  ),
+                   fluidRow(
+                       column(12,
+                              h3("Results averaged on valid days"),
+                              reactableOutput("results_summary")
+                             ),
         ),
       
         ################
@@ -279,10 +383,10 @@ ui <-
       
      
       
-      # $$$$$$$$$$$$$$$$$$
-      # Second tab content
-      # $$$$$$$$$$$$$$$$$$
-      
+     # $$$$$$$$$$$$$$$$$$
+     # Second tab content
+     # $$$$$$$$$$$$$$$$$$
+     
         tabItem(tabName = "guide",
               h2("User's guide"),
               

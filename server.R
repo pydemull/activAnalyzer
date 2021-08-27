@@ -6,17 +6,17 @@ server <- function(input, output, session) {
   # Uploading data
   ################
   
-  # Getting reactive data
+  # Getting reactive dataset
     file <- reactive({
       
       req(input$upload)
-      read_agd(input$upload$datapath)
+      path <- input$upload$datapath
+      read_agd(path)
 
     })
 
     data <- reactive({
       
-      req(input$upload)
       prepare_dataset(data = file())
       
     })
@@ -32,7 +32,7 @@ server <- function(input, output, session) {
                  shinyFeedback::feedbackWarning(
                    "upload", 
                    ((tools::file_ext(input$upload$name) == "agd") == FALSE),
-                   "Invalid file format. Please choose a .agd file"
+                   "Invalid file format. Please choose a .agd file."
                  )
     )
     
@@ -41,7 +41,7 @@ server <- function(input, output, session) {
                  shinyFeedback::feedbackWarning(
                    "frame_size", 
                    (is.numeric(input$frame_size) == FALSE | input$frame_size < 0),
-                   "Please choose a number >= 0"
+                   "Please choose a number >= 0."
                  )
     )
     
@@ -50,46 +50,48 @@ server <- function(input, output, session) {
                  shinyFeedback::feedbackWarning(
                    "allowanceFrame_size", 
                    (is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0),
-                   "Please choose a number >= 0"
+                   "Please choose a number >= 0."
                  )
     )
     
-  df <- eventReactive(input$validate, {
+    # Building reactive dataframe marked for nonwear/wear time
+      
+      df <- eventReactive(input$validate, {
     
-     # Waiting for required conditions 
-       req(tools::file_ext(input$upload$name) == "agd" & 
-           is.numeric(input$frame_size) & 
-           input$frame_size >= 0 & 
-           is.numeric(input$allowanceFrame_size) & 
-           input$allowanceFrame_size >= 0)
-      
-     # Creating reactive dataframe
-       if (input$axis_weartime == "vector magnitude") {  
-         
-         df <- wearingMarking(dataset = data(), 
-                              TS = "timestamp", 
-                              cts = "vm", 
-                              frame = input$frame_size, 
-                              allowanceFrame = input$allowanceFrame_size) %>%
-           mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
-                  wearing_count = ifelse(wearing == "w", 1, 0)) 
-       } else {
-         
-         df <- wearingMarking(dataset = data(), 
-                              TS = "timestamp", 
-                              cts = "axis1", 
-                              frame = input$frame_size, 
-                              allowanceFrame = input$allowanceFrame_size) %>%
-           mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
-                  wearing_count = ifelse(wearing == "w", 1, 0)) 
-         
-       }
+      # Waiting for required conditions 
+        req(tools::file_ext(input$upload$name) == "agd" & 
+            is.numeric(input$frame_size) & 
+            input$frame_size >= 0 & 
+            is.numeric(input$allowanceFrame_size) & 
+            input$allowanceFrame_size >= 0)
        
-       return(df)
-      
-      })
+      # Creating reactive dataframe
+        if (input$axis_weartime == "vector magnitude") {  
+          
+          df <- wearingMarking(dataset = data(), 
+                               TS = "timestamp", 
+                               cts = "vm", 
+                               frame = input$frame_size, 
+                               allowanceFrame = input$allowanceFrame_size) %>%
+            mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
+                   wearing_count = ifelse(wearing == "w", 1, 0)) 
+        } else {
+          
+          df <- wearingMarking(dataset = data(), 
+                               TS = "timestamp", 
+                               cts = "axis1", 
+                               frame = input$frame_size, 
+                               allowanceFrame = input$allowanceFrame_size) %>%
+            mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
+                   wearing_count = ifelse(wearing == "w", 1, 0)) 
+          
+        }
+        
+        return(df)
+       
+       })
   
-  # Return to default values
+  # Returning to default values
    observeEvent(input$reset_nonwear, {
      axis_weartime <- c("vector magnitude", "vertical axis")
      updateSelectInput(inputId = "axis_weartime", choices = axis_weartime)
@@ -131,7 +133,7 @@ server <- function(input, output, session) {
         shinyFeedback::feedbackWarning(
           "sex", 
           (input$sex %in% c("male", "female", "undefined")) == FALSE,
-          "Please provide a value for sex"
+          "Please provide a value for sex."
           )
         )
       
@@ -140,7 +142,7 @@ server <- function(input, output, session) {
         shinyFeedback::feedbackWarning(
           "age", 
           ((is.numeric(input$age) == FALSE | input$age <= 0)),
-          "Please provide a value >0 for age"
+          "Please provide a value >0 for age."
           )
         )
       
@@ -149,15 +151,155 @@ server <- function(input, output, session) {
         shinyFeedback::feedbackWarning(
           "weight", 
           ((is.numeric(input$weight) == FALSE | input$weight <= 0)),
-          "Please provide a value >0 for weight"
+          "Please provide a value >0 for weight."
           )
         )
-  
+        
+      # MET equation
+        observeEvent(input$Run,
+                   shinyFeedback::feedbackWarning(
+                     "equation_mets", 
+                     (input$equation_mets == "..."),
+                     "Please choose a MET equation."
+                   )
+      )
+        
+      # SED cut-point
+        observeEvent(input$Run,
+                     shinyFeedback::feedbackWarning(
+                       "sed_cutpoints", 
+                       (input$sed_cutpoints == "..."),
+                       "Please choose a value for the SED cut-point."
+                     )
+        )
+        
+        # SED cut-points
+        observeEvent(input$Run,
+                     shinyFeedback::feedbackWarning(
+                       "mvpa_cutpoints", 
+                       (input$sed_cutpoints == "..."),
+                        "Please choose values for the MPVA cut-points."
+                       )
+                     )
+
+        
+        
+
+  # Showing the table presenting the studies that validated METs equations
+    output$table_equations <- renderReactable({
+      
+      if(input$equation_mets == "...") {NULL
+        } else {
+        read_csv2("data/equations_mets.csv") %>% 
+        filter(Study == input$equation_mets) %>%
+        reactable(striped = TRUE,
+                  list(Study = colDef(minWidth = 80),
+                       'Population' = colDef(minWidth = 60),
+                       'Activities performed' = colDef(minWidth = 60),
+                       'Device used' = colDef(minWidth = 40),
+                       'Axis used' = colDef(minWidth = 40),
+                       'Filter enabled' = colDef(minWidth = 40))
+        )
+        }
+      
+    })
+    
+  # Switching to show appropriate choices for SED cut-points
+    observeEvent(input$sed_cutpoints, {
+      updateTabsetPanel(inputId = "switcher_sed", selected = input$sed_cutpoints)
+    })
+    
+    
+  # Showing the table presenting the studies that validated SED cut-points
+    output$table_sed_cutpoints <- renderReactable({
+      
+      if(input$sed_cutpoints == "...") {NULL
+      } else {
+        read_csv2("data/sed_cutpoints.csv") %>% 
+          filter(Study == input$sed_cutpoints) %>%
+          reactable(striped = TRUE,
+                    list(Study = colDef(minWidth = 80),
+                         'Population' = colDef(minWidth = 70),
+                         'Activities performed' = colDef(minWidth = 60),
+                         'Device used' = colDef(minWidth = 40),
+                         'Axis used' = colDef(minWidth = 60),
+                         'Filter enabled' = colDef(minWidth = 40),
+                         'SED cut-point' = colDef(minWidth = 40))
+          )
+      }
+      
+    })
+    
+  # Switching to show appropriate choices for MVPA cut-points
+    observeEvent(input$mvpa_cutpoints, {
+      updateTabsetPanel(inputId = "switcher_mvpa", selected = input$mvpa_cutpoints)
+    })
+    
+    
+  # Showing the table presenting the studies that validated MVPA cut-points
+    output$table_mvpa_cutpoints_sasaki <- renderReactable({
+      
+      if(input$mvpa_cutpoints == "...") {NULL
+      } else {
+        read_csv2("data/mvpa_cutpoints.csv") %>% 
+          filter(Study == input$mvpa_cutpoints) %>%
+          reactable(striped = TRUE,
+                    list(Study = colDef(minWidth = 80),
+                         'Population' = colDef(minWidth = 70),
+                         'Activities performed' = colDef(minWidth = 60),
+                         'Device used' = colDef(minWidth = 40),
+                         'Axis used' = colDef(minWidth = 60),
+                         'Filter enabled' = colDef(minWidth = 40),
+                         'MPA cut-point (3 METs)' = colDef(minWidth = 30),
+                         'VPA cut-point (6 METs)' = colDef(minWidth = 30))
+          )
+      }
+      
+    })
+    
+    output$table_mvpa_cutpoints_santos_adults <- renderReactable({
+      
+      if(input$mvpa_cutpoints == "...") {NULL
+      } else {
+        read_csv2("data/mvpa_cutpoints.csv") %>% 
+          filter(Study == input$mvpa_cutpoints) %>%
+          reactable(striped = TRUE,
+                    list(Study = colDef(minWidth = 80),
+                         'Population' = colDef(minWidth = 70),
+                         'Activities performed' = colDef(minWidth = 60),
+                         'Device used' = colDef(minWidth = 40),
+                         'Axis used' = colDef(minWidth = 60),
+                         'Filter enabled' = colDef(minWidth = 40),
+                         'MPA cut-point (3 METs)' = colDef(minWidth = 30),
+                         'VPA cut-point (6 METs)' = colDef(minWidth = 30))
+          )
+      }
+      
+    })
+    
+    output$table_mvpa_cutpoints_santos_older <- renderReactable({
+      
+      if(input$mvpa_cutpoints == "...") {NULL
+      } else {
+        read_csv2("data/mvpa_cutpoints.csv") %>% 
+          filter(Study == input$mvpa_cutpoints) %>%
+          reactable(striped = TRUE,
+                    list(Study = colDef(minWidth = 80),
+                         'Population' = colDef(minWidth = 70),
+                         'Activities performed' = colDef(minWidth = 60),
+                         'Device used' = colDef(minWidth = 40),
+                         'Axis used' = colDef(minWidth = 60),
+                         'Filter enabled' = colDef(minWidth = 40),
+                         'MPA cut-point (3 METs)' = colDef(minWidth = 30),
+                         'VPA cut-point (6 METs)' = colDef(minWidth = 30))
+          )
+      }
+      
+    })
       
   # Getting BMR (kcal/d)
     bmr_kcal_d <- eventReactive(input$Run, {
       
-      # Computing BMR
         compute_bmr(age = input$age, sex = input$sex, weight = input$weight)
         
         })
@@ -169,31 +311,96 @@ server <- function(input, output, session) {
     results_by_day <- eventReactive(input$Run, ({
       
       # Waiting for valid inputs
+
         if (!input$sex %in% c("male", "female", "undefined") | input$age <= 0 | input$weight <= 0) {
           validate("Please provide valid values for the inputs shown in Patient's information section.")
         }
-
-      # Setting axis to compute METs
-        if(input$axis == "vector magnitude") { axis_chosen <- df()$vm
-        } else { axis_chosen <- df()$axis1 }
       
+        if (input$equation_mets == "...") {
+          validate("Please choose a MET equation.")
+        }
+      
+        if (input$sed_cutpoints == "..." | input$mvpa_cutpoints == "...") {
+          validate("Please provide values for the cut-points.")
+        }
+        
+        if (input$sed_cutpoints == "Aguilar-Farias et al. (2014) [Older adults]" && 
+            input$perso_mvpa_axis == "vertical axis") {
+          validate("Please use the same axis for both SED and MVPA cut-points.")
+        }
+      
+        if (input$perso_sed_axis == "vertical axis" &&
+            input$mvpa_cutpoints %in% c("Sasaki et al. (2011) [Adults]", 
+                                        "Santos-Lozano et al. (2013) [Adults]", 
+                                        "Santos-Lozano et al. (2013) [Older adults]")) {
+          validate("Please use the same axis for both SED and MVPA cut-points.")
+        }
+      
+      
+
+      # Setting axis and cut-points to compute SED and MVPA times
+      
+        # SED
+          if(input$sed_cutpoints == "Aguilar-Farias et al. (2014) [Older adults]") { 
+            axis_sed_chosen <- df()$vm
+            sed_cutpoint_chosen <- 200
+          } else if (input$sed_cutpoints == "Personalized...") {
+               if(input$perso_sed_axis == "vector magnitude") {
+                 axis_sed_chosen <- df()$vm
+                 sed_cutpoint_chosen <- input$perso_sed_cutpoint
+               } else {
+                 axis_sed_chosen <- df()$axis1 
+                 sed_cutpoint_chosen <- input$perso_sed_cutpoint
+               }
+          } else {
+            NULL}
+      
+        # MVPA
+          if(input$mvpa_cutpoints == "Sasaki et al. (2011) [Adults]") { 
+            axis_mvpa_chosen <- df()$vm
+            mpa_cutpoint_chosen <- 2690
+            vpa_cutpoint_chosen <- 6167
+          } else if (input$mvpa_cutpoints == "Santos-Lozano et al. (2013) [Adults]"){
+            axis_mvpa_chosen <- df()$vm
+            mpa_cutpoint_chosen <- 3208 
+            vpa_cutpoint_chosen <- 8565 
+          } else if (input$mvpa_cutpoints == "Santos-Lozano et al. (2013) [Older adults]"){
+            axis_mvpa_chosen <- df()$vm
+            mpa_cutpoint_chosen <- 2751 
+            vpa_cutpoint_chosen <- 9359  
+          } else if (input$mvpa_cutpoints == "Personalized...") {
+            if(input$perso_mvpa_axis == "vector magnitude") {
+              axis_mvpa_chosen <- df()$vm
+              mpa_cutpoint_chosen <- input$perso_mpa_cutpoint
+              vpa_cutpoint_chosen <- input$perso_vpa_cutpoint
+            } else {
+              axis_mvpa_chosen <- df()$axis1 
+              mpa_cutpoint_chosen <- input$perso_mpa_cutpoint
+              vpa_cutpoint_chosen <- input$perso_vpa_cutpoint
+            }
+          } else {
+            NULL}
+      
+
       # Computing BMR in kcal/min
         bmr_kcal_min <- bmr_kcal_d() / (24*60)
       
+        
       # Adding variables of interest to the initial dataframe
         df_with_computed_metrics <-
           df() %>%
           mutate(
             METS = compute_mets(data = .data, equation = input$equation_mets, weight = input$weight, gender = input$sex),
             kcal = METS * bmr_kcal_min,
-            SED = ifelse(axis_chosen < input$sed_cutpoint, 1, 0),
-            LPA = ifelse(axis_chosen >= input$sed_cutpoint & axis_chosen < input$mpa_cutpoint, 1, 0),
-            MPA = ifelse(axis_chosen >= input$mpa_cutpoint & axis_chosen < input$vpa_cutpoint, 1, 0), 
-            VPA = ifelse(axis_chosen >= input$vpa_cutpoint, 1, 0),
+            SED = ifelse(axis_sed_chosen < sed_cutpoint_chosen, 1, 0),
+            LPA = ifelse(axis_mvpa_chosen >= sed_cutpoint_chosen & axis_mvpa_chosen < mpa_cutpoint_chosen, 1, 0),
+            MPA = ifelse(axis_mvpa_chosen >= mpa_cutpoint_chosen & axis_mvpa_chosen < vpa_cutpoint_chosen, 1, 0), 
+            VPA = ifelse(axis_mvpa_chosen >= vpa_cutpoint_chosen, 1, 0),
             
-            # Computing MET-hr corresponding to MVPA only for each epoch
-            mets_hours_mvpa = ifelse(METS >=3, 1/60 * METS, 0))
+      # Computing MET-hr corresponding to MVPA only for each epoch
+        mets_hours_mvpa = ifelse(METS >=3, 1/60 * METS, 0))
     
+      
       # Creating a dataframe with results by day and corresponding to valid wear time only  
          results_by_day <-
            df_with_computed_metrics %>%
@@ -224,10 +431,12 @@ server <- function(input, output, session) {
          
          return(results_by_day)
        
-       }))
+       })
+      )
   
        # Showing results by day in a table
          output$results_by_day <- renderReactable({
+           Sys.sleep(1)
            reactable(results_by_day(),  
                      striped = TRUE,
                      list(total_counts_axis1 = colDef(minWidth = 150),
