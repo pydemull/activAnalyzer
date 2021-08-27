@@ -8,6 +8,7 @@ library(shiny)
 library(shinydashboard)
 library(shinydashboardPlus)
 library(shinyFeedback)
+library(shinycssloaders)
 library(ggplot2)
 library(dplyr)
 library(PhysicalActivity)
@@ -84,7 +85,7 @@ ui <-
           "))
              ),
          
-         # Setting title color
+         # Setting color for section titles
            tags$head(tags$style('h2 {color:#337ab7;}')),
         
         ######################
@@ -158,6 +159,12 @@ ui <-
             ),
 
         ),
+        fluidRow(
+          column(12,
+                 tags$hr(style="border-color: #337ab7;")
+                    ),
+        ),
+        
         
         ################################################################
         # Data uploading, nonwear time detection, and data visualization
@@ -200,11 +207,16 @@ ui <-
         
         fluidRow(
             h3(""),
-            box(plotOutput("graph"), width = 12)
+            box(withSpinner(plotOutput("graph")), width = 12)
         ),
         fluidRow(
             align = "center",
                    selectInput("Metric", "Metric to visualize", metrics),
+        ),
+        fluidRow(
+          column(12,
+                 tags$hr(style="border-color: #337ab7;")
+          ),
         ),
         
         ###################
@@ -325,6 +337,11 @@ ui <-
                         shiny::actionButton("Run", "Run Analysis", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
                  ),
                ),
+        fluidRow(
+          column(12,
+                 tags$hr(style="border-color: #337ab7;")
+          ),
+        ),
         
         #########
         # Results
@@ -339,7 +356,7 @@ ui <-
                    #************************
                    
                    h3("Results by day"),
-                   reactableOutput("results_by_day")
+                   withSpinner(reactableOutput("results_by_day"))
                    ),
         ),
 
@@ -347,12 +364,17 @@ ui <-
                    # Table of results averaged on valid days
                    #****************************************
         
-                   fluidRow(
-                       column(12,
-                              h3("Results averaged on valid days"),
-                              reactableOutput("results_summary")
-                             ),
+       fluidRow(
+             column(12,
+                    h3("Results averaged on valid days"),
+                    withSpinner(reactableOutput("results_summary"))
+                   ),
         ),
+       fluidRow(
+         column(12,
+                tags$hr(style="border-color: #337ab7;")
+         ),
+       ),
       
         ################
         # Export results
@@ -363,11 +385,15 @@ ui <-
                  h2("Export"),
                  downloadButton("ExpResultsByDays", "Export results by day (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
                  downloadButton("ExpDailySummary", "Export daily summary (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
-                 downloadButton("report", "Generate report (.pdf)")
+                 downloadButton("report", "Generate report (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33")
                ),
 
         ),
-        
+        fluidRow(
+          column(12,
+                 tags$hr(style="border-color: #337ab7;")
+          ),
+        ),
         
         ###########
         # Reset app

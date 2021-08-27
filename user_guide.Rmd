@@ -16,17 +16,25 @@ knitr::opts_chunk$set(echo = TRUE)
 ***
 \vspace{2truemm}
 
-# Section 1: Assessor information
+# Section 1
+## Assessor information
 It is possible to provide title, name, and surname information related to the assessor. Assessor information must be provided to have a complete document after generating the report at the end of the app.
 
-# Section 2: Patient information
+## Patient information
 It is possible to provide title, name, and surname information related to the patient/client, as well as their sex, age, and weight. The user must provide sex, age, and weight information for getting results because these parameters are used to compute basal metabolic rate as well as physical activity level. Patient information must be provided to have a complete document after generating the report at the end of the app.
 
-# Section 3: Device information
-It is possible to indicate the position on the body where data were recorded. Several options are available for the position but for now, the app is designed to work with data recorded at the hip only. Device information must be provided to have a complete document after generating the report at the end of the app. Other relevant information regarding the device (i.e., ActiGraph model, sampling rate, filter enabled when the .agd file was generated from .gt3x data with Actilife® software) will be silently captured when uploading the initial data file.  
+## Device information
+It is possible to indicate where the device was placed on the body during the measurement period. Several options are available for the position but for now, the app is designed to work with data recorded at the hip only. Device information must be provided to have a complete document after generating the report at the end of the app. Other relevant information regarding the device (i.e., ActiGraph model, sampling rate, filter enabled when the .agd file was generated from .gt3x data with Actilife® software) will be silently captured when uploading the data file.  
 
-# Section 4: Data uploading, nonwear time detection, and data visualization
+# Section 2: Data uploading, nonwear time detection, and data visualization
 In this section, the user must upload a .agd file previously generated using Actilife<span>&#174;</span> software. The length of the epoch used in the .agd file (e.g., 10 s, 60 s) has no importance. Once a .agd file is uploaded, behind the scene, the app reads the file and collapses data to get a dataframe with 1-min epochs thanks to R functions provided in the `actigraph.sleepr` R package [@petkovaActigraphSleeprDetect2021]. Before collapsing data, the app also computes the vector magnitude according to the same procedure as implemented in the `PhysicalActivity` R package [@choiPhysicalActivityProcessAccelerometer2021]. Then, it is possible to configure the analysis to be performed to detect nonwear time. It consists of choosing the activity data (vector magnitude counts or vertical axis counts) and the time interval to be considered to detect nonwear time, as well as the time interval with nonzero counts allowed during a nonwear period. The default values provided in the app for configuring nonwear time detection are based on the paper by Choi et al. [-@choiAssessmentWearNonwear2012]. Finally, when all inputs are configured as required, the user must click on a "Validate configuration" button. If all inputs are valid, the app detects nonwear time again thanks to the `PhysicalActivity` R package [@choiPhysicalActivityProcessAccelerometer2021]. The app also provides a graphic allowing the user to visualize different metrics among those contained in the data file. Completing this step is required before going further in the app.
+
+#Section3: Computation of metrics
+This section allows the user to select an equation to compute METs and the axis and cut-points to be used to compute time spent in sedentary behavior (SED), light physical activity (LPA), moderate physical activity (MPA), vigorous physical activity (VPA), and moderate-to-vigorous physical activity (MVPA). 
+
+The equations provided for computing METs come from scientific articles. The `Sasaki et al. (2011) [Adults]` equation can be retried from the paper by Sasaki et al. []
+
+  * San
 
 # References
 

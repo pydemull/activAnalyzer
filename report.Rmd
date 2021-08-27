@@ -24,7 +24,8 @@ params:
   allowanceFrame_size: NA
   equation_mets: NA
   bmr_kcal_d: NA
-  axis: NA
+  axis_sed: NA
+  axis_mvpa: NA
   sed_cutpoint: NA
   mpa_cutpoint: NA
   vpa_cutpoint: NA
@@ -74,9 +75,11 @@ library(officer)
  * Size of the interval considered for nonwear time detection: `r params$frame_size` min.
  * Size of the interval allowed during a nonwear epoch: `r params$allowanceFrame_size` min.
  * METs equation: `r params$equation_mets `.
- * Axis used for SED/PA categorization: `r params$axis`.
+ * Axis used for SED categorization: `r params$axis_sed`.
+ * Axis used for MVPA categorization: `r params$axis_sed`.
  * SED cut-point: <`r params$sed_cutpoint` counts/min.
- * MVPA cut-point: >=`r params$mpa_cutpoint` counts/min.
+ * MPA cut-point: >=`r params$mpa_cutpoint` counts/min.
+ * VPA cut-point: >=`r params$vpa_cutpoint` counts/min.
  * Minimum wear time for valid day: `r params$minimum_wear_time_for_analysis` hours.
 
 
@@ -342,7 +345,7 @@ g_pal / g_steps / g_mvpa / g_sed + plot_layout(heights = c(2, 2, 2, 2)) & theme(
 ```{r , echo = F, }
 flextable(
  tribble(
-    ~Metric,                            ~"Result (daily average on valid days)",
+    ~Metric,                            ~"Result (daily average over valid days)",
     "Wear time",                          paste0(round(df[["wear_time"]], 0), " min"),
     "Number of valid days",               paste0(df[["valid_days"]], " day(s)"),
     "Physical activity level (PAL)",      paste0(format(round(df[["pal"]], 2), nsmall = 2)),
@@ -427,11 +430,17 @@ if (params$rendered_by_shiny)
 
 # Comments
 
-Based on the estimated physical activity level (PAL) and the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the activity lifestyle can be qualified as "**`r pal_status`**" (this is a rough estimate because both basal metabolic rate and total energy expenditure were estimated from methods and equations that may not be accurate for a given individual).
+**Physical activity level (PAL)**
+
+Based on the estimated PAL and the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the activity lifestyle can be qualified as "**`r pal_status`**" (this is a rough estimate because both basal metabolic rate and total energy expenditure were estimated from methods and equations that may not be accurate for a given individual).
+
+**Step count**
 
 Regarding the daily step number, the expected values proposed for the different categories of populations and that would correspond to reaching the 2021 World Health Organization (WHO) physical activity guidelines (cf. Summary, Graphical View) suggest the inclusion of both steps related to activities performed in the course of daily living AND at least 3000 steps taken at moderate intensity or higher. Importantly, the expected values were defined based on scientific literature that used classical pedometers. If the ActiGraph model used was a GT3X or a more recent model, the result obtained is likely to underestimate or overestimate the actual daily step count if the normal filter or the lower frequency extension filter was used, respectively.
 
-If moderate and vigorous physical activity times are converted to MET-hours, the estimate of MVPA dose is `r paste0(format(round(df[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hours, and thus **falls `r guidelines_status`**.
+**Compliance with physical activity guidelines**
+
+After converting moderate and vigorous physical activity times to MET-hours, the estimate of MVPA dose was `r paste0(format(round(df[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hours, and thus falls **`r guidelines_status`**.
 
 
 # Technical information

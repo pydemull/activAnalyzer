@@ -10,8 +10,7 @@ server <- function(input, output, session) {
     file <- reactive({
       
       req(input$upload)
-      path <- input$upload$datapath
-      read_agd(path)
+      read_agd(input$upload$datapath)
 
     })
 
@@ -91,13 +90,13 @@ server <- function(input, output, session) {
        
        })
   
-  # Returning to default values
-   observeEvent(input$reset_nonwear, {
-     axis_weartime <- c("vector magnitude", "vertical axis")
-     updateSelectInput(inputId = "axis_weartime", choices = axis_weartime)
-     updateNumericInput(inputId = "frame_size", value = 90)
-     updateNumericInput(inputId = "allowanceFrame_size", value = 2)
-   })
+  # Returning to default values for the wear time detection algorithm
+    observeEvent(input$reset_nonwear, {
+      axis_weartime <- c("vector magnitude", "vertical axis")
+      updateSelectInput(inputId = "axis_weartime", choices = axis_weartime)
+      updateNumericInput(inputId = "frame_size", value = 90)
+      updateNumericInput(inputId = "allowanceFrame_size", value = 2)
+    })
   
  
   ########################################
@@ -174,7 +173,7 @@ server <- function(input, output, session) {
         )
         
         # SED cut-points
-        observeEvent(input$Run,
+          observeEvent(input$Run,
                      shinyFeedback::feedbackWarning(
                        "mvpa_cutpoints", 
                        (input$sed_cutpoints == "..."),
@@ -222,9 +221,9 @@ server <- function(input, output, session) {
                          'Population' = colDef(minWidth = 70),
                          'Activities performed' = colDef(minWidth = 60),
                          'Device used' = colDef(minWidth = 40),
-                         'Axis used' = colDef(minWidth = 60),
+                         'Axis used' = colDef(minWidth = 30),
                          'Filter enabled' = colDef(minWidth = 40),
-                         'SED cut-point' = colDef(minWidth = 40))
+                         'SED cut-point in counts/min' = colDef(minWidth = 60))
           )
       }
       
@@ -248,10 +247,10 @@ server <- function(input, output, session) {
                          'Population' = colDef(minWidth = 70),
                          'Activities performed' = colDef(minWidth = 60),
                          'Device used' = colDef(minWidth = 40),
-                         'Axis used' = colDef(minWidth = 60),
+                         'Axis used' = colDef(minWidth = 30),
                          'Filter enabled' = colDef(minWidth = 40),
-                         'MPA cut-point (3 METs)' = colDef(minWidth = 30),
-                         'VPA cut-point (6 METs)' = colDef(minWidth = 30))
+                         'MPA cut-point (3 METs) in counts/min' = colDef(minWidth = 60),
+                         'VPA cut-point (6 METs) in counts/min' = colDef(minWidth = 60))
           )
       }
       
@@ -268,10 +267,10 @@ server <- function(input, output, session) {
                          'Population' = colDef(minWidth = 70),
                          'Activities performed' = colDef(minWidth = 60),
                          'Device used' = colDef(minWidth = 40),
-                         'Axis used' = colDef(minWidth = 60),
+                         'Axis used' = colDef(minWidth = 30),
                          'Filter enabled' = colDef(minWidth = 40),
-                         'MPA cut-point (3 METs)' = colDef(minWidth = 30),
-                         'VPA cut-point (6 METs)' = colDef(minWidth = 30))
+                         'MPA cut-point (3 METs) in counts/min' = colDef(minWidth = 60),
+                         'VPA cut-point (6 METs) in counts/min' = colDef(minWidth = 60))
           )
       }
       
@@ -288,10 +287,10 @@ server <- function(input, output, session) {
                          'Population' = colDef(minWidth = 70),
                          'Activities performed' = colDef(minWidth = 60),
                          'Device used' = colDef(minWidth = 40),
-                         'Axis used' = colDef(minWidth = 60),
+                         'Axis used' = colDef(minWidth = 30),
                          'Filter enabled' = colDef(minWidth = 40),
-                         'MPA cut-point (3 METs)' = colDef(minWidth = 30),
-                         'VPA cut-point (6 METs)' = colDef(minWidth = 30))
+                         'MPA cut-point (3 METs) in counts/min' = colDef(minWidth = 60),
+                         'VPA cut-point (6 METs) in counts/min' = colDef(minWidth = 60))
           )
       }
       
@@ -324,6 +323,10 @@ server <- function(input, output, session) {
           validate("Please provide values for the cut-points.")
         }
         
+        if (input$perso_sed_axis != input$perso_mvpa_axis) {
+          validate("Please use the same axis for both SED and MVPA cut-points.")
+        }
+      
         if (input$sed_cutpoints == "Aguilar-Farias et al. (2014) [Older adults]" && 
             input$perso_mvpa_axis == "vertical axis") {
           validate("Please use the same axis for both SED and MVPA cut-points.")
@@ -343,14 +346,17 @@ server <- function(input, output, session) {
         # SED
           if(input$sed_cutpoints == "Aguilar-Farias et al. (2014) [Older adults]") { 
             axis_sed_chosen <- df()$vm
-            sed_cutpoint_chosen <- 200
+            axis_sed_chosen_name <<- "vector magnitude"
+            sed_cutpoint_chosen <<- 200
           } else if (input$sed_cutpoints == "Personalized...") {
                if(input$perso_sed_axis == "vector magnitude") {
                  axis_sed_chosen <- df()$vm
-                 sed_cutpoint_chosen <- input$perso_sed_cutpoint
+                 axis_sed_chosen_name <<- "vector magnitude"
+                 sed_cutpoint_chosen <<- input$perso_sed_cutpoint
                } else {
                  axis_sed_chosen <- df()$axis1 
-                 sed_cutpoint_chosen <- input$perso_sed_cutpoint
+                 axis_sed_chosen_name <<- "vertical axis"
+                 sed_cutpoint_chosen <<- input$perso_sed_cutpoint
                }
           } else {
             NULL}
@@ -358,25 +364,30 @@ server <- function(input, output, session) {
         # MVPA
           if(input$mvpa_cutpoints == "Sasaki et al. (2011) [Adults]") { 
             axis_mvpa_chosen <- df()$vm
-            mpa_cutpoint_chosen <- 2690
-            vpa_cutpoint_chosen <- 6167
+            axis_mvpa_chosen_name <<- "vector magnitude"
+            mpa_cutpoint_chosen <<- 2690
+            vpa_cutpoint_chosen <<- 6167
           } else if (input$mvpa_cutpoints == "Santos-Lozano et al. (2013) [Adults]"){
             axis_mvpa_chosen <- df()$vm
-            mpa_cutpoint_chosen <- 3208 
-            vpa_cutpoint_chosen <- 8565 
+            axis_mvpa_chosen_name <<- "vector magnitude"
+            mpa_cutpoint_chosen <<- 3208 
+            vpa_cutpoint_chosen <<- 8565 
           } else if (input$mvpa_cutpoints == "Santos-Lozano et al. (2013) [Older adults]"){
             axis_mvpa_chosen <- df()$vm
-            mpa_cutpoint_chosen <- 2751 
-            vpa_cutpoint_chosen <- 9359  
+            axis_mvpa_chosen_name <<- "vector magnitude"
+            mpa_cutpoint_chosen <<- 2751 
+            vpa_cutpoint_chosen <<- 9359  
           } else if (input$mvpa_cutpoints == "Personalized...") {
             if(input$perso_mvpa_axis == "vector magnitude") {
               axis_mvpa_chosen <- df()$vm
-              mpa_cutpoint_chosen <- input$perso_mpa_cutpoint
-              vpa_cutpoint_chosen <- input$perso_vpa_cutpoint
+              axis_mvpa_chosen_name <<- "vector magnitude"
+              mpa_cutpoint_chosen <<- input$perso_mpa_cutpoint
+              vpa_cutpoint_chosen <<- input$perso_vpa_cutpoint
             } else {
-              axis_mvpa_chosen <- df()$axis1 
-              mpa_cutpoint_chosen <- input$perso_mpa_cutpoint
-              vpa_cutpoint_chosen <- input$perso_vpa_cutpoint
+              axis_mvpa_chosen <- df()$axis1
+              axis_mvpa_chosen_name <<- "vertical axis"
+              mpa_cutpoint_chosen <<- input$perso_mpa_cutpoint
+              vpa_cutpoint_chosen <<- input$perso_vpa_cutpoint
             }
           } else {
             NULL}
@@ -424,9 +435,9 @@ server <- function(input, output, session) {
              percent_MVPA = round(minutes_MVPA / wear_time * 100, 2),
              mets_hours_mvpa = round(sum(mets_hours_mvpa), 2),
              
-             # Computing physical activity level (PAL), that is, total EE / BMR: BMR is assigned to nonwear time; 
+             # Computing physical activity level (PAL), that is, total EE / BMR. BMR is assigned to nonwear time; 
              # the term 10/9 is used to take into account the thermic effect of food
-             pal = round((total_kcal_wear_time + bmr_kcal_min * (24*60 - wear_time)) * 10/9 / bmr_kcal_d(), 2)) %>%
+               pal = round((total_kcal_wear_time + bmr_kcal_min * (24*60 - wear_time)) * 10/9 / bmr_kcal_d(), 2)) %>%
            ungroup()
          
          return(results_by_day)
@@ -436,7 +447,7 @@ server <- function(input, output, session) {
   
        # Showing results by day in a table
          output$results_by_day <- renderReactable({
-           Sys.sleep(1)
+           Sys.sleep(0.5)
            reactable(results_by_day(),  
                      striped = TRUE,
                      list(total_counts_axis1 = colDef(minWidth = 150),
@@ -459,9 +470,7 @@ server <- function(input, output, session) {
   # Getting results averaged on valid days
     results_summary <- reactive({
       
-      # Waiting for valid dataframe
-        req(is.data.frame(results_by_day()))
-    
+
       # Computing results averaged on valid days
         results_by_day() %>%
           mutate(validity = ifelse(wear_time >= input$minimum_wear_time_for_analysis * 60, "valid", "invalid")) %>%
@@ -579,10 +588,11 @@ server <- function(input, output, session) {
             allowanceFrame_size = input$allowanceFrame_size,
             equation_mets = input$equation_mets,
             bmr_kcal_d = bmr_kcal_d(),
-            axis = input$axis,
-            sed_cutpoint = input$sed_cutpoint,
-            mpa_cutpoint = input$mpa_cutpoint,
-            vpa_cutpoint = input$vpa_cutpoint,
+            axis_sed = axis_sed_chosen_name,
+            axis_mvpa = axis_mvpa_chosen_name,
+            sed_cutpoint = sed_cutpoint_chosen,
+            mpa_cutpoint = mpa_cutpoint_chosen,
+            vpa_cutpoint = vpa_cutpoint_chosen,
             minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
             results_by_day = results_by_day(),
             results_summary =  results_summary(),
