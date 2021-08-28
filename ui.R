@@ -373,13 +373,13 @@ ui <-
                    ),
          ),
 
-                   #****************************************
-                   # Table of results averaged on valid days
-                   #****************************************
+                   #******************************************
+                   # Table of results averaged over valid days
+                   #******************************************
         
         fluidRow(
              column(12,
-                    h3("Results averaged on valid days"),
+                    h3("Results averaged over valid days"),
                     withSpinner(reactableOutput("results_summary"))
                    ),
         ),

@@ -124,9 +124,9 @@ g_pal <-
             alpha = 0.5) +
   geom_vline(aes(xintercept = 0.5,), size = 0.8, color = "grey30", linetype ="dotted") +
   geom_hline(aes(yintercept = df[["pal"]],), size = 0.8, color = "grey30", linetype ="dotted") +
-  geom_point(aes(x = 0.5, y = df[["pal"]], color = "Result averaged on valid days"), size = 6, shape = 1) +
-  geom_point(aes(x = 0.5, y = df[["pal"]], color = "Result averaged on valid days"), size = 3, shape = 16) +
-  geom_point(aes(x = 0.5, y = df[["pal"]], color = "Result averaged on valid days"), size = 6, shape = 3) +
+  geom_point(aes(x = 0.5, y = df[["pal"]], color = "Result averaged over valid days"), size = 6, shape = 1) +
+  geom_point(aes(x = 0.5, y = df[["pal"]], color = "Result averaged over valid days"), size = 3, shape = 16) +
+  geom_point(aes(x = 0.5, y = df[["pal"]], color = "Result averaged over valid days"), size = 6, shape = 3) +
   scale_y_continuous(labels = as.character(format(round(c(1.1, 1.4, 1.7, 2.0, 2.4, 2.8), 2), nsmall = 1)), 
                      breaks = c(1.1, 1.40, 1.70, 2.00, 2.40, 2.80)) +
   scale_fill_brewer(palette="Greens") +
@@ -312,9 +312,9 @@ g_sed <-
             xmax = Inf) +
   geom_vline(aes(xintercept = 24), size = 0.8, color = "grey30", linetype ="dotted") +
   geom_hline(aes(yintercept = df[["minutes_SED"]]/60,), size = 0.8, color = "grey30", linetype ="dotted") +
-  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged on valid days"), size = 6, shape = 1) +
-  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged on valid days"), size = 3, shape = 16) +
-  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged on valid days"), size = 6, shape = 3) +
+  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged over valid days"), size = 6, shape = 1) +
+  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged over valid days"), size = 3, shape = 16) +
+  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged over valid days"), size = 6, shape = 3) +
   scale_y_continuous(labels = as.character(seq(0, 24, 2)), 
                      breaks = seq(0, 24, 2)) +
   scale_fill_gradient(low="white", high="red") +
