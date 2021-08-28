@@ -87,10 +87,21 @@ ui <-
          
          # Setting color for section titles
            tags$head(tags$style('h2 {color:#337ab7;}')),
+         
+        ########################
+        # Section 1. Information
+        ########################
+         
+         fluidRow(
+           column(12,
+                  h3("Section 1. Information", style="font-weight: bold; font-size: 30px; color: #337ab7;"),
+                  tags$hr(style="border-color: #337ab7;")
+           ),
+         ),
         
-        ######################
-        # Assessor information
-        ######################
+        #******************
+        # Assessor
+        #******************
         
         fluidRow(
             column(6,                   
@@ -108,10 +119,10 @@ ui <-
                    textInput("assessor_surname", "Surname", placeholder = "" )
             ),
         ),
-        
-        #####################
-        # Patient information
-        #####################
+      
+        #******************
+        # Patient
+        #******************
         
         fluidRow(
             column(6,                   
@@ -141,9 +152,9 @@ ui <-
             ),
         ),
        
-        ####################
-        # Device information
-        ####################
+        #******************
+        # Device
+        #******************
         
         fluidRow(
             column(6,                   
@@ -159,27 +170,25 @@ ui <-
             ),
 
         ),
+
+        ###########################################################################
+        # Section 2. Data uploading, nonwear time detection, and data visualization
+        ###########################################################################
+        
+        #******************
+        # Inputs
+        #******************
+        
         fluidRow(
           column(12,
+                 h3("Section 2. Data uploading, nonwear time detection, and data visualization", style="font-weight: bold; font-size: 30px; color: #337ab7;"),
                  tags$hr(style="border-color: #337ab7;")
-                    ),
-        ),
-        
-        
-        ################################################################
-        # Data uploading, nonwear time detection, and data visualization
-        ################################################################
-        
-        fluidRow(
-            column(12,                   
-                   h2("Data uploading, nonwear time detection, and data visualization")
-            ),
+          ),
         ),
         fluidRow(
             column(12,
                    fileInput("upload", "Upload file (please wait until seeing 'Upload complete' before continuing)", placeholder = ".agd")
             ),
-
         ),
         fluidRow(
             column(2,
@@ -201,9 +210,9 @@ ui <-
             ),
         ),
 
-        ##########################
+        #*************************
         # Box showing monitor data
-        ##########################
+        #*************************
         
         fluidRow(
             h3(""),
@@ -213,40 +222,38 @@ ui <-
             align = "center",
                    selectInput("Metric", "Metric to visualize", metrics),
         ),
+
+        
+        ###################################
+        # Section 3. Computation of metrics
+        ###################################
+           
         fluidRow(
           column(12,
+                 h3("Section 3. Computation of metrics", style="font-weight: bold; font-size: 30px; color: #337ab7;"),
                  tags$hr(style="border-color: #337ab7;")
           ),
+        ),    
+        
+        #******************
+        # Choosing Equation
+        #******************
+
+        fluidRow(
+            column(10,
+                   h3("Choose a MET equation"),
+                   selectInput("equation_mets", "Equation", equations)
+                   ),
+        ),
+        fluidRow(
+          column(12,
+            reactableOutput("table_equations")
+          )
         ),
         
-        ###################
-        # computing metrics
-        ###################
-               
-            #******************
-            # Choosing Equation
-            #******************
-            
-            fluidRow(
-              column(12,                   
-                     h2("Computation of metrics")
-                     ),
-            ),
-            fluidRow(
-                column(10,
-                       h3("Choose a MET equation"),
-                       selectInput("equation_mets", "Equation", equations)
-                       ),
-            ),
-            fluidRow(
-              column(12,
-                reactableOutput("table_equations")
-              )
-            ),
-        
-            #********************
-            # Choosing cut-points
-            #********************
+        #********************
+        # Choosing cut-points
+        #********************
            
             fluidRow(
              column(12,
@@ -315,39 +322,45 @@ ui <-
                   )
                 ),
         
-               #********************************
-               # Minimum wear time for valid day
-               #********************************
-              
-               fluidRow(
-                 column(12,
-                        h3("Choose a minimum value for wear time to consider a day as valid"),
-                 ), 
-                 column(2,
-                        numericInput("minimum_wear_time_for_analysis", "Minimum wear time (hours)", value = 10)
-                 )
-               ),
-        
-               #*****************
-               # Running analysis
-               #*****************
-               
-                fluidRow(
-                 column(3,
-                        shiny::actionButton("Run", "Run Analysis", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
-                 ),
-               ),
+        #********************************
+        # Minimum wear time for valid day
+        #********************************
+       
         fluidRow(
           column(12,
-                 tags$hr(style="border-color: #337ab7;")
+                 h3("Choose a minimum value for wear time to consider a day as valid"),
+          ), 
+          column(2,
+                 numericInput("minimum_wear_time_for_analysis", "Minimum wear time (hours)", value = 10)
+          )
+        ),
+       
+        #*****************
+        # Running analysis
+        #*****************
+        
+         fluidRow(
+          column(3,
+                 shiny::actionButton("Run", "Run Analysis", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
           ),
         ),
-        
-        #########
-        # Results
-        #########
+
+        #######################################
+        # Section 4. Results, Export, and Reset
+        #######################################
         
         fluidRow(
+          column(12,
+                 h3("Section 4. Results, Export, and Reset", style="font-weight: bold; font-size: 30px; color: #337ab7;"),
+                 tags$hr(style="border-color: #337ab7;")
+          ),
+        ),  
+        
+        #********
+        # Results
+        #********
+        
+         fluidRow(
             column(12,
                    h2("Results"),
                    
@@ -358,27 +371,27 @@ ui <-
                    h3("Results by day"),
                    withSpinner(reactableOutput("results_by_day"))
                    ),
-        ),
+         ),
 
                    #****************************************
                    # Table of results averaged on valid days
                    #****************************************
         
-       fluidRow(
+        fluidRow(
              column(12,
                     h3("Results averaged on valid days"),
                     withSpinner(reactableOutput("results_summary"))
                    ),
         ),
-       fluidRow(
+        fluidRow(
          column(12,
                 tags$hr(style="border-color: #337ab7;")
          ),
-       ),
+        ),
       
-        ################
-        # Export results
-        ################
+        #******************
+        # Export
+        #******************
         
         fluidRow(
           column(12,
@@ -395,9 +408,9 @@ ui <-
           ),
         ),
         
-        ###########
+        #******************
         # Reset app
-        ###########
+        #******************
         
         fluidRow(
           column(4,

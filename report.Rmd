@@ -73,7 +73,7 @@ library(officer)
 
  * Axis used for analyzing wear time: `r params$axis_weartime`.
  * Size of the interval considered for nonwear time detection: `r params$frame_size` min.
- * Size of the interval allowed during a nonwear epoch: `r params$allowanceFrame_size` min.
+ * Size of the interval with nonzero counts allowed during a nonwear period: `r params$allowanceFrame_size` min.
  * METs equation: `r params$equation_mets `.
  * Axis used for SED categorization: `r params$axis_sed`.
  * Axis used for MVPA categorization: `r params$axis_sed`.
@@ -436,7 +436,7 @@ Based on the estimated PAL and the [Food and Agriculture Organization of the Uni
 
 **Step count**
 
-Regarding the daily step number, the expected values proposed for the different categories of populations and that would correspond to reaching the 2021 World Health Organization (WHO) physical activity guidelines (cf. Summary, Graphical View) suggest the inclusion of both steps related to activities performed in the course of daily living AND at least 3000 steps taken at moderate intensity or higher. Importantly, the expected values were defined based on scientific literature that used classical pedometers. If the ActiGraph model used was a GT3X or a more recent model, the result obtained is likely to underestimate or overestimate the actual daily step count if the normal filter or the lower frequency extension filter was used, respectively.
+Regarding the daily step number, the expected values proposed for the different categories of populations and that would correspond to reaching the 2021 World Health Organization (WHO) physical activity guidelines (cf. Summary, Graphical View) suggest the inclusion of both steps related to activities performed in the course of daily living AND at least 3000 steps taken at moderate intensity or higher. Importantly, the expected values were defined based on scientific literature that used classical pedometers. If the ActiGraph model used was a GT3X or a more recent model, the result obtained is likely to underestimate or overestimate the actual daily step count if the normal filter or the lower frequency extension filter, respectively, was used to generate activity counts.
 
 **Compliance with physical activity guidelines**
 
