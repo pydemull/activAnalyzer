@@ -307,7 +307,7 @@ server <- function(input, output, session) {
   # Getting results by day corresponding to valid wear time  (except for total kcal 
   # that also uses nonwear time with attribution of bmr to nonwear epochs)
     
-    results_by_day <- eventReactive(input$Run, ({
+    results_by_day <- eventReactive(input$Run, {
       
       # Waiting for valid inputs
 
@@ -443,8 +443,7 @@ server <- function(input, output, session) {
          return(results_by_day)
        
        })
-      )
-  
+
        # Showing results by day in a table
          output$results_by_day <- renderReactable({
            Sys.sleep(0.5)
@@ -468,7 +467,7 @@ server <- function(input, output, session) {
        
   
   # Getting results averaged on valid days
-    results_summary <- reactive({
+    results_summary <- eventReactive(input$Run, {
       
 
       # Computing results averaged on valid days
