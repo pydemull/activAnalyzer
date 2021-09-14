@@ -224,8 +224,8 @@ g_steps <-
   coord_flip(expand = FALSE) +
   labs(x = "", 
        y = "", 
-       fill = "Activity levels for healthy adults (Tudor-Locke et al., 2009)", 
-       color = "Expected values when people reach \nMVPA guidelines (Tudor-Locke et al., 2009)") +
+       fill = "Activity levels for healthy adults (Tudor-Locke et al., 2O11)", 
+       color = "Expected values when people reach \nMVPA guidelines (Tudor-Locke et al., 2011)") +
   theme(axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "right",
@@ -277,7 +277,7 @@ g_mvpa <-
   scale_fill_gradient(low="white", high="yellow") +
   theme_bw() +
   coord_flip(expand = FALSE) +
-  labs(x = "", y = "", color = "2021 WHO guidelines") +
+  labs(x = "", y = "", color = "2020 WHO guidelines") +
   theme(axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "right",
@@ -287,8 +287,8 @@ g_mvpa <-
   guides(fill = "none") +
   ggtitle("Daily MET-hours spent in MVPA")
 
-guidelines_status <- ifelse(df[["mets_hours_mvpa"]] < 150/7/60*3, "below the 2021 WHO physical activity guidelines",
-                            ifelse(df[["mets_hours_mvpa"]] >  150/7/60*3*2, "above the 2021 WHO physical activity guidelines", "within the 2021 WHO physical activity guidelines"))
+guidelines_status <- ifelse(df[["mets_hours_mvpa"]] < 150/7/60*3, "below the 2020 WHO physical activity guidelines",
+                            ifelse(df[["mets_hours_mvpa"]] >  150/7/60*3*2, "above the 2020 WHO physical activity guidelines", "within the 2020 WHO physical activity guidelines"))
 
 ################################### 
 # SED
@@ -436,7 +436,7 @@ Based on the estimated PAL and the [Food and Agriculture Organization of the Uni
 
 **Step count**
 
-Regarding the daily step number, the expected values proposed for the different categories of populations and that would correspond to reaching the 2021 World Health Organization (WHO) physical activity guidelines (cf. Summary, Graphical View) suggest the inclusion of both steps related to activities performed in the course of daily living AND at least 3000 steps taken at moderate intensity or higher. Importantly, the expected values were defined based on scientific literature that used classical pedometers. If the ActiGraph model used was a GT3X or a more recent model, the result obtained is likely to underestimate or overestimate the actual daily step count if the normal filter or the lower frequency extension filter, respectively, was used to generate activity counts.
+Regarding the daily step number, the expected values proposed for the different categories of populations and that would correspond to reaching the 2020 World Health Organization (WHO) physical activity guidelines (cf. Summary, Graphical View) suggest the inclusion of both steps related to activities performed in the course of daily living AND at least 3000 steps taken at moderate intensity or higher. Importantly, the expected values were defined based on scientific literature that used classical pedometers. If the ActiGraph model used was a GT3X or a more recent model, the result obtained is likely to underestimate or overestimate the actual daily step count if the normal filter or the lower frequency extension filter, respectively, was used to generate activity counts.
 
 **Compliance with physical activity guidelines**
 

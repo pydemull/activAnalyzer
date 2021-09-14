@@ -4,7 +4,7 @@ title: |
     | user's guide
 author: "Pierre-Yves de Müllenheim"
 date: "`r Sys.Date()`"
-description: "ActivAnalyzer"
+description: "activAnalyzer"
 documentclass: book
 
 output:
