@@ -1,0 +1,278 @@
+```{r, fig.height=4}
+library(tidyverse)
+
+
+
+################################### 
+# PAL
+################################### 
+
+# Data for figure
+table_pal <-
+tibble(
+  x = c(0, 0.25, 0.5, 0.75, 1),
+  label = as.factor(c(
+            "Undefined", 
+            "Sedentary or light activity lifestyle", 
+            "Active or moderately active lifestyle", 
+            "Vigorous or vigorously active lifestyle",
+            "Difficult to maintain over a long period of time"
+            )),
+  start = c(1.1, 1.40, 1.70, 2.00, 2.40),
+  end = c(1.40, 1.70, 2.00, 2.40, 2.8)
+) %>%
+  mutate(label = fct_relevel(label,  "Undefined",
+                                     "Sedentary or light activity lifestyle", 
+                                     "Active or moderately active lifestyle", 
+                                     "Vigorous or vigorously active lifestyle",
+                                     "Difficult to maintain over a long period of time")) 
+# Figure
+library(RColorBrewer)
+g_pal <-
+  ggplot(data = table_pal, aes(x = x, y = start)) +
+  geom_rect(aes(ymin = start, 
+                ymax = end, 
+                fill = label), 
+            xmin = -Inf, 
+            xmax = Inf, 
+            alpha = 0.5) +
+  geom_vline(aes(xintercept = 0.5,), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_hline(aes(yintercept = 2.1,), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_point(aes(x = 0.5, y = 2.1, color = "Result averaged over valid days"), size = 6, shape = 1) +
+  geom_point(aes(x = 0.5, y = 2.1, color = "Result averaged over valid days"), size = 3, shape = 16) +
+  geom_point(aes(x = 0.5, y = 2.1, color = "Result averaged over valid days"), size = 6, shape = 3) +
+  scale_y_continuous(labels = as.character(format(round(c(1.1, 1.4, 1.7, 2.0, 2.4, 2.8), 2), nsmall = 1)), 
+                     breaks = c(1.1, 1.40, 1.70, 2.00, 2.40, 2.80)) +
+  scale_fill_brewer(palette="Greens") +
+  scale_color_manual(values = c("red")) +
+  theme_bw() +
+  coord_flip(expand = FALSE) +
+  labs(x = "", y = "", 
+       fill = "FAO/WHO/UNU categories", 
+       color = "Patient's result") +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = "none",
+        legend.title = element_text(face = "bold" , size = 10),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  guides(fill=guide_legend(nrow=5), color = "none") +
+  ggtitle("Daily PAL") +
+  annotate("text", label = "Sedentary \nor lightly active", x = 0.75, y = 1.55) +
+  annotate("text", label = "Moderately \nactive", x = 0.75, y = 1.85) +
+  annotate("text", label = "Vigorously \nactive", x = 0.75, y = 2.2) +
+  annotate("text", label = "Difficult to maintain \nover a long period of time", x = 0.75, y = 2.6)
+
+
+
+
+################################### 
+# Steps
+################################### 
+
+# Data for figure / categories for all adults
+table_steps1 <-
+tibble(
+  x = c(0, 0, 0.25, 0.5, 0.75, 1),
+  label = as.factor(c(
+            "Sedentary, basal physical activity", 
+            "Sedentary, limited physical activity", 
+            "Low active", 
+            "Somewhat active",
+            "Active",
+            "Highly active"
+            )),
+  start = c(0, 2500, 5000, 7500, 10000, 12500),
+  end = c(2500, 5000, 7500, 10000, 12500, 18000)
+) %>%
+  mutate(label = fct_relevel(label, "Sedentary, basal physical activity", 
+                                    "Sedentary, limited physical activity",
+                                    "Low active", 
+                                    "Somewhat active",
+                                    "Active",
+                                    "Highly active")) 
+
+# Data for figure / categories for specific populations
+table_steps2 <-
+tibble(
+  label = as.factor(c(
+            "Adults (20-65 ans)", 
+            "Healthy older adults (65+ yr)", 
+            "People with disability \n and/or chronic illness"
+            )),
+  y = c(7000, 7000, 6500),
+  yend = c(8000, 10000, 8500),
+  x = c(0.35, 0.25, 0.15),
+  xend = c(0.35, 0.25, 0.15),
+  xmin = x-0.02,
+  xmax = x+0.02
+) %>%
+  mutate(label = fct_relevel(label, "Adults (20-65 ans)", 
+                                    "Healthy older adults (65+ yr)", 
+                                    "People with disability \n and/or chronic illness")) 
+
+# Figure
+g_steps <-
+  ggplot(data = table_steps1, aes(x = x, y = start)) +
+  geom_rect(aes(ymin = start, ymax = end, fill = label), 
+            xmin = -Inf, 
+            xmax = Inf, 
+            alpha = 0.5) +
+  geom_vline(aes(xintercept = 0.5,), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_hline(aes(yintercept = 11000,), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_point(aes(x = 0.5, y = 11000), color = "red", size = 6, shape = 1) +
+  geom_point(aes(x = 0.5, y = 11000), color = "red", size = 3, shape = 16) +
+  geom_point(aes(x = 0.5, y = 11000), color = "red", size = 6, shape = 3) +
+  geom_segment(data = table_steps2, 
+               aes(x = x, 
+                   xend = xend, 
+                   y = y, 
+                   yend = yend, 
+                   color = label), 
+               size = 0.7, 
+               arrow = arrow(length = unit(0.07, "inches"))) +
+  geom_errorbarh(data = table_steps2, 
+                 aes(y = y, 
+                     xmin = xmin, 
+                     xmax = xmax, 
+                     color = label), 
+                 size = 0.7, height = 0) + 
+  scale_y_continuous(labels = as.character(c(0, 2500, 5000, 7500, 10000, 12500, 18000)), 
+                     breaks = c(0, 2500, 5000, 7500, 10000, 12500, 18000)) +
+  scale_fill_brewer(palette="Blues") +
+  scale_color_brewer(palette="Dark2") +
+  theme_bw() +
+  coord_flip(expand = FALSE) +
+  labs(x = "", 
+       y = "", 
+       fill = "Activity levels for healthy adults (Tudor-Locke et al., 2O11)", 
+       color = "Expected values when people reach \nMVPA guidelines (Tudor-Locke et al., 2011)") +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = "none",
+        legend.title = element_text(face = "bold", size = 10),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  guides(fill="none") +
+  ggtitle("Daily steps") +
+  annotate("text", label = "Expected values for adults \nmeeting MVPA guidelines", x = 0.35, y = 8300, hjust = 0, fontface = "bold") +
+  annotate("text", label = "Expected values for healthy older \nadults meeting MVPA guidelines", x = 0.25, y = 10300, hjust = 0, fontface = "bold") +
+  annotate("text", label = "Expected values for people with disability \nand/or chronic disease", x = 0.15, y = 8800, hjust = 0, fontface = "bold")
+
+
+################################### 
+# MVPA
+################################### 
+
+# Data for figure
+table_mvpa <-
+tibble(
+  x = seq(1, 24, 1), 
+  start = seq(0, 11.5, 0.5),
+  end = seq(0.5, 12, 0.5)
+)
+
+# Figure
+library(ggpattern)
+
+g_mvpa <-
+  ggplot(data = table_mvpa, aes(x = x, y = end)) +
+  geom_rect(aes(ymin = start, 
+                ymax = end, 
+                fill = start), 
+            xmin = -Inf, xmax = Inf) +
+  geom_rect_pattern(aes(color = "1 to 2.1 MET-hr"), 
+                    xmin = -Inf, xmax = Inf, 
+                    ymin = 150/7/60*3, 
+                    ymax = 150/7/60*3*2, 
+                    fill = "white",
+                    pattern = "stripe", 
+                    pattern_size = 0, 
+                    pattern_fill = "grey30",
+                    pattern_spacing = 0.05,
+                    pattern_density = 0.08) +
+  geom_vline(aes(xintercept = 12), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_hline(aes(yintercept = 4.8), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_point(aes(x = 12, y =  4.5), color ="red", size = 6, shape = 1) +
+  geom_point(aes(x = 12, y =  4.5), color ="red", size = 3, shape = 16) +
+  geom_point(aes(x = 12, y =  4.5), color ="red", size = 6, shape = 3) +
+  scale_y_continuous(labels = as.character(seq(0, 12, 1)), 
+                     breaks = seq(0, 12, 1)) +
+  scale_color_manual(values = c("grey30")) + 
+  scale_fill_gradient(low="white", high="yellow") +
+  theme_bw() +
+  coord_flip(expand = FALSE) +
+  labs(x = "", y = "", color = "2020 WHO guidelines") +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = "none",
+        legend.title = element_text(face = "bold" , size = 10),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(fill = "beige"),
+        plot.margin = margin(2, 1, 0.5, 0, "cm")) +
+  guides(fill = "none") +
+  ggtitle("Daily MET-hours spent in MVPA")
+
+guidelines_status <- ifelse(df[["mets_hours_mvpa"]] < 150/7/60*3, "below the 2020 WHO physical activity guidelines",
+                            ifelse(df[["mets_hours_mvpa"]] >  150/7/60*3*2, "above the 2020 WHO physical activity guidelines", "within the 2020 WHO physical activity guidelines"))
+
+################################### 
+# SED
+################################### 
+
+# Data for figure
+table_sed <-
+tibble(
+  x = seq(1, 48, 1), 
+  start = seq(0, 23.5, 0.5),
+  end = seq(0.5, 24, 0.5)
+)
+
+# Figure
+g_sed <-
+  ggplot(data = table_sed, aes(x = x, y = end)) +
+  geom_rect(aes(ymin = start, 
+                ymax = end, 
+                fill = start), 
+            xmin = -Inf, 
+            xmax = Inf) +
+  geom_vline(aes(xintercept = 24), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_hline(aes(yintercept = df[["minutes_SED"]]/60,), size = 0.8, color = "grey30", linetype ="dotted") +
+  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged over valid days"), size = 6, shape = 1) +
+  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged over valid days"), size = 3, shape = 16) +
+  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged over valid days"), size = 6, shape = 3) +
+  scale_y_continuous(labels = as.character(seq(0, 24, 2)), 
+                     breaks = seq(0, 24, 2)) +
+  scale_fill_gradient(low="white", high="red") +
+  scale_color_manual(values = c("red")) +
+  theme_bw() +
+  coord_flip(expand = FALSE) +
+  labs(x = "", y = "", fill = "") +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = "none",
+        legend.title = element_text(face = "bold" , size = 10),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  ggtitle("Daily sedentary hours")
+
+
+##############
+# Whole figure
+##############
+
+library(patchwork)
+g_pal / g_steps / g_mvpa / g_sed + plot_layout(heights = c(4, 4, 4, 4)) & theme(legend.justification = "left")
+
+
+```
+
+
+
+```{r}
+df <- read_csv2("chastin_2021_zones.csv")
+```
+
+
+

@@ -1,0 +1,14 @@
+name: activAnalyzer
+title: activAnalyzer
+username:
+account: pydemull
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4107862
+bundleId: 5032293
+url: https://pydemull.shinyapps.io/activAnalyzer/
+when: 1631631506.94561
+lastSyncTime: 1631631506.94561
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: acc.agd

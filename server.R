@@ -434,6 +434,7 @@ server <- function(input, output, session) {
              percent_VPA = round(minutes_VPA / wear_time * 100, 2), 
              percent_MVPA = round(minutes_MVPA / wear_time * 100, 2),
              mets_hours_mvpa = round(sum(mets_hours_mvpa), 2),
+             ratio_mvpa_sed = round(minutes_MVPA / minutes_SED, 2),
              
              # Computing physical activity level (PAL), that is, total EE / BMR. BMR is assigned to nonwear time; 
              # the term 10/9 is used to take into account the thermic effect of food
@@ -491,6 +492,7 @@ server <- function(input, output, session) {
                     percent_VPA = round(mean(percent_VPA), 2),
                     percent_MVPA = round(mean(percent_MVPA), 2),
                     mets_hours_mvpa = round(mean(mets_hours_mvpa), 1),
+                    ratio_mvpa_sed = round(mean(ratio_mvpa_sed), 1),
                     pal = round(mean(pal), 2))
         })
     
