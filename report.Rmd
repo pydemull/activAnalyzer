@@ -1,6 +1,7 @@
 ---
 title: \vspace{-2cm} Results for the measurement of physical behavior
 output: pdf_document
+latex_engine: xelatex
 params:
   assessor_title: NA
   assessor_name: NA
@@ -31,20 +32,28 @@ params:
   minimum_wear_time_for_analysis: NA
   results_by_day: NA
   results_summary: NA
+  mvpa_lines: NA
+  sed_lines: NA
+  ratio_lines: NA
   rendered_by_shiny: FALSE
   geometry: "left=2cm, right=2cm, top=1cm, bottom=1cm"
-latex_engine: xelatex
 
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, echo = FALSE)
 library(tidyverse)
+library(modelr)
 library(patchwork)
 library(flextable)
 library(officer)
+library(scales)
+
 df <- params$results_summary
 df2 <- params$results_by_day
+mvpa_lines <- params$mvpa_lines
+sed_lines <- params$sed_lines
+ratio_lines <- params$ratio_lines
 ```
 
 # Information
@@ -87,7 +96,7 @@ flextable(
 ```
 
 
-```{r, fig.height=17, fig.width = 17}
+```{r, fig.height=18, fig.width = 17}
 
 ###################################################################################  
 # PAL
@@ -266,118 +275,231 @@ if (params$rendered_by_shiny)
 # MVPA
 #################################################################################### 
 
-# Data for figure
-table_mvpa <-
-tibble(
-  x = seq(1, 24, 0.5), 
-  start = seq(0, 11.5, 0.25),
-  end = seq(0.5, 12, 0.25)
-)
+# Building lines showing the estimate and the related confidence limits of mortality 
+# hazard ratio (Ekelund et al., 2020)
 
-# Figure
-library(ggpattern)
+   model_mvpa <- loess(y ~ x, data = mvpa_lines %>% filter(line == "mid"), 
+                       control = loess.control(surface = "direct"))
+     
+   model_mvpa_up <- loess(y ~ x, data = mvpa_lines %>% filter(line == "up"), 
+                       control = loess.control(surface = "direct")) 
+   
+   model_mvpa_low <- loess(y ~ x, data = mvpa_lines %>% filter(line == "low"), 
+                       control = loess.control(surface = "direct"))
+   
+   grid_mvpa <-
+     mvpa_lines %>%
+     data_grid(
+     x = seq(0, 100, 1),
+     ) %>%
+     spread_predictions(model_mvpa, model_mvpa_up, model_mvpa_low) %>%
+     rename(mid = model_mvpa, up = model_mvpa_up, low = model_mvpa_low)
 
-g_mvpa <-
-  ggplot(data = table_mvpa, aes(x = x, y = end)) +
-  geom_rect(aes(ymin = start, 
-                ymax = end, 
-                fill = start), 
-            xmin = -Inf, xmax = Inf) +
+# Getting data for plotting patient's result  
   
- #geom_rect_pattern(aes(color = "1 to 2.1 MET-hr"), 
- #                  xmin = -Inf, xmax = Inf, 
- #                  ymin = 150/7/60*3, 
- #                  ymax = 150/7/60*3*2, 
- #                  fill = "white",
- #                  pattern = "stripe", 
- #                  pattern_size = 0, 
- #                  pattern_fill = "grey30",
- #                  pattern_spacing = 0.05,
- #                  pattern_density = 0.08) +
- geom_rect(xmin = -Inf, xmax = Inf, 
-            #ymin = 150/7/60*3, 
-            #ymax = 150/7/60*3*2, 
-            ymin = 0, 
-            ymax = 150/7/60*3, 
-            fill = "#FC717F") +
-  geom_vline(aes(xintercept = 12), size = 0.5, color = "grey30", linetype ="dotted") +
-  geom_hline(aes(yintercept = df[["mets_hours_mvpa"]]), size = 0.5, color = "grey30", linetype ="dotted") +
-  geom_point(aes(x = 12, y =  df[["mets_hours_mvpa"]]), color ="red", size = 6, shape = 1) +
-  geom_point(aes(x = 12, y =  df[["mets_hours_mvpa"]]), color ="red", size = 3, shape = 16) +
-  geom_point(aes(x = 12, y =  df[["mets_hours_mvpa"]]), color ="red", size = 6, shape = 3) +
-  scale_y_continuous(labels = as.character(seq(0, 12, 1)), 
-                     breaks = seq(0, 12, 1)) +
-  scale_color_manual(values = c("grey30")) + 
-  scale_fill_gradient(low="springgreen", high="springgreen4") +
-  theme_bw() +
-  coord_flip(expand = FALSE) +
-  labs(x = NULL, y = NULL, fill = "2020 WHO guidelines") +
-  theme(axis.ticks = element_blank(),
-        axis.text.y = element_blank(),
-        axis.text.x = element_text(size = 13),
-        legend.position = "none",
-        legend.title = element_text(face = "bold" , size = 10),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        plot.background = element_rect(fill = "beige", color = "beige"),
-        plot.margin = margin(0, 1, 0.5, 1, "cm"),
-        plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-  guides(fill = "none") +
-  ggtitle("Daily MET-hours spent in MVPA")
-
-guidelines_status <- ifelse(df[["mets_hours_mvpa"]] < 150/7/60*3, "below the 2020 WHO physical activity guidelines",
-                            ifelse(df[["mets_hours_mvpa"]] >  150/7/60*3*2, "above the 2020 WHO physical activity guidelines", "within the 2020 WHO physical activity guidelines"))
+   score_mvpa <- data.frame(x = df[["minutes_MVPA"]]) %>% add_predictions(model_mvpa)
 
 
+# Plot
+
+ g_mvpa <-
+   ggplot() +
+   geom_ribbon(data = grid_mvpa, aes(x = x, y = up, 
+                                       ymin = low, ymax = up), fill = "grey95") +
+   geom_line(data = grid_mvpa, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+   geom_line(data = grid_mvpa, aes (x = x, y = up), size = 1, colour = "#3366FF", linetype = "dashed") +
+   geom_line(data = grid_mvpa, aes (x = x, y = low), size = 1, colour = "#3366FF", linetype = "dashed") +
+   geom_vline(aes(xintercept = 24), linetype = "dotted") +
+   geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 6, shape = 1) +
+   geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 3, shape = 16) +
+   geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 6, shape = 3) +
+   scale_y_continuous(trans = log2_trans()) +
+   scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 100, 25)) +
+   theme_bw() +
+   coord_cartesian(xlim = c(0, 100), ylim = c(0.25, 1), expand = FALSE) +
+   labs(title = "Daily MVPA minutes",
+        x = "",
+        y = NULL) +
+   theme(axis.ticks = element_blank(),
+         axis.text.x = element_text(size = 13),
+         axis.text.y = element_blank(),
+         legend.position = "none",
+         legend.title = element_text(face = "bold" , size = 10),
+         panel.grid.major = element_blank(),
+         panel.grid.minor = element_blank(),
+         plot.background = element_rect(fill = "beige", color = "beige"),
+         plot.margin = margin(0, 1, 0, 1, "cm"),
+         plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+   annotate("text", label = "Mortality hazard \nratio", 
+            x = 73, y = 0.57, hjust = 0, 
+            fontface = "bold.italic", colour = "#3366FF") +
+   annotate(geom = "curve", 
+         x = 73, 
+         y = 0.5, 
+         xend = 58, 
+         yend = 0.53, 
+         curvature = -.45, arrow = arrow(length = unit(2, "mm")),
+         colour = "#3366FF") +
+   annotate("text", label = "Uncertainty \nzone", 
+            x = 60, y = 0.80, hjust = 0.5, 
+            colour = "grey50", fontface = "bold.italic") +
+
+   annotate("text", label = "Threshold for the maximum \nof benefits", 
+            x = 35, y = 0.32, hjust = 0, vjust = 1,
+            colour = "black", fontface = "italic") +
+   annotate(geom = "curve", 
+         x = 35, 
+         y = 0.33, 
+         xend = 25, 
+         yend = 0.32, 
+         curvature = .5, arrow = arrow(length = unit(2, "mm")),
+         colour = "black")
+ 
+ 
 #################################################################################### 
 # SED
 #################################################################################### 
 
-# Data for figure
-table_sed <-
-tibble(
-  x = seq(1, 48, 0.5), 
-  start = seq(0, 23.5, 0.25),
-  end = seq(0.5, 24, 0.25)
-)
 
-# Figure
-g_sed <-
-  ggplot(data = table_sed, aes(x = x, y = end)) +
-  geom_rect(aes(ymin = start, 
-                ymax = end), 
-            fill = "white",
-            xmin = -Inf, 
-            xmax = Inf) +
-  geom_rect(data = table_sed %>% filter(start >= 9.5),
-            aes(ymin = start, 
-                ymax = end, 
-                fill = start), 
-            xmin = -Inf, 
-            xmax = Inf) +
-  geom_vline(aes(xintercept = 24), size = 0.5, color = "grey30", linetype ="dotted") +
-  geom_hline(aes(yintercept = df[["minutes_SED"]]/60,), size = 0.5, color = "grey30", linetype ="dotted") +
-  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged over valid days"), size = 6, shape = 1) +
-  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged over valid days"), size = 3, shape = 16) +
-  geom_point(aes(x = 24, y = df[["minutes_SED"]]/60, color = "Result averaged over valid days"), size = 6, shape = 3) +
-  scale_y_continuous(labels = as.character(seq(0, 24, 2)), 
-                     breaks = seq(0, 24, 2)) +
-  scale_fill_gradient(low="indianred1", high="indianred4") +
-  scale_color_manual(values = c("red")) +
-  theme_bw() +
-  coord_flip(expand = FALSE) +
-  labs(x = NULL, y = "") +
-  theme(axis.ticks = element_blank(),
-        axis.text.y = element_blank(),
-        axis.text.x = element_text(size = 13),
-        legend.position = "none",
-        legend.title = element_text(face = "bold" , size = 10),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        plot.background = element_rect(fill = "beige", color = "beige"),
-        plot.margin = margin(0, 1, 0, 1, "cm"),
-        plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-  ggtitle("Daily sedentary hours")
+# Building lines showing the estimate and the related confidence limits of mortality 
+# hazard ratio (Ekelund et al., 2020)
+
+   model_sed <- loess(y ~ x, data = sed_lines %>% filter(line == "mid"), 
+                       control = loess.control(surface = "direct"))
+     
+   model_sed_up <- loess(y ~ x, data = sed_lines %>% filter(line == "up"), 
+                       control = loess.control(surface = "direct")) 
+   
+   model_sed_low <- loess(y ~ x, data = sed_lines %>% filter(line == "low"), 
+                       control = loess.control(surface = "direct"))
+   
+   grid_sed <-
+     sed_lines %>%
+     data_grid(
+     x = seq(4, 14, 1),
+     ) %>%
+     spread_predictions(model_sed, model_sed_up, model_sed_low) %>%
+     rename(mid = model_sed, up = model_sed_up, low = model_sed_low)
+
+# Getting data for plotting patient's result  
+  
+   score_sed <- data.frame(x = df[["minutes_SED"]] / 60) %>% add_predictions(model_sed)
+
+# Plot
+
+ g_sed <-
+   ggplot() +
+   geom_ribbon(data = grid_sed, aes(x = x, y = up, 
+                                       ymin = low, ymax = up), fill = "grey95") +
+   geom_ribbon(data = grid_sed %>% filter(x < 6), aes(x = x, y = up, 
+                                       ymin = rep(0, 2), ymax = up), fill = "grey95") +
+   geom_line(data = grid_sed, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+   geom_line(data = grid_sed, aes (x = x, y = up), size = 1, colour = "#3366FF", linetype = "dashed") +
+   geom_line(data = grid_sed, aes (x = x, y = low), size = 1, colour = "#3366FF", linetype = "dashed") +
+   geom_vline(aes(xintercept = 9.5), linetype = "dotted") +
+   geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 6, shape = 1) +
+   geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 3, shape = 16) +
+   geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 6, shape = 3) +
+   scale_y_continuous(trans = log2_trans()) +
+   scale_x_continuous(limits = c(4, 14), breaks = seq(4, 14, 2)) +
+   coord_cartesian(xlim = c(4, 14), ylim = c(0.35, 5), expand = FALSE) +
+   labs(title = "Daily SED hours",
+        x = "",
+        y = NULL) +
+   theme_bw() +
+   theme(axis.ticks = element_blank(),
+         axis.text.x = element_text(size = 13),
+         #axis.text.y = element_blank(),
+         legend.position = "none",
+         legend.title = element_text(face = "bold" , size = 10),
+         panel.grid.major = element_blank(),
+         panel.grid.minor = element_blank(),
+         plot.background = element_rect(fill = "beige", color = "beige"),
+         plot.margin = margin(0, 1, 0, 1, "cm"),
+         plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+   annotate("text", 
+            label = "Threshold beyond \nwhich risk \nis significant",
+            x = 6.5, 
+            y = 0.5, 
+            hjust = 0,
+            colour = "black", fontface = "italic") +
+      annotate(geom = "curve", 
+         x = 8.6, 
+         y = 0.48, 
+         xend = 9.4, 
+         yend = 0.46, 
+         curvature = .5, arrow = arrow(length = unit(2, "mm")),
+         colour = "black")
+ 
+
+#################################################################################### 
+# RATIO MVPA / SED
+#################################################################################### 
+
+# Building lines showing the estimate and the related confidence limits of mortality 
+# hazard ratio (Ekelund et al., 2020)
+
+   model_ratio <- loess(y ~ x, data = ratio_lines %>% filter(line == "mid"), 
+                       control = loess.control(surface = "direct"))
+     
+   model_ratio_up <- loess(y ~ x, data = ratio_lines %>% filter(line == "up"), 
+                       control = loess.control(surface = "direct")) 
+   
+   model_ratio_low <- loess(y ~ x, data = ratio_lines %>% filter(line == "low"), 
+                       control = loess.control(surface = "direct"))
+   
+   grid_ratio <-
+     ratio_lines %>%
+     data_grid(
+     x = seq(0, 0.4, 0.05),
+     ) %>%
+     spread_predictions(model_ratio, model_ratio_up, model_ratio_low) %>%
+     rename(mid = model_ratio, up = model_ratio_up, low = model_ratio_low)
+
+# Getting data for plotting patient's result  
+  
+   score_ratio <- data.frame(x = df[["ratio_mvpa_sed"]]) %>% add_predictions(model_ratio)
+
+# Plot
+
+ g_ratio <-
+   ggplot() +
+   geom_ribbon(data = grid_ratio, aes(x = x, y = up, 
+                                       ymin = low, ymax = up), fill = "grey95") +
+   geom_line(data = grid_ratio, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+   geom_line(data = grid_ratio, aes (x = x, y = up), size = 1, colour = "#3366FF", linetype = "dashed") +
+   geom_line(data = grid_ratio, aes (x = x, y = low), size = 1, colour = "#3366FF", linetype = "dashed") +
+   geom_vline(aes(xintercept = 0.04), linetype = "dotted") +
+   geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 6, shape = 1) +
+   geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 3, shape = 16) +
+   geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 6, shape = 3) +
+   scale_x_continuous(limits = c(0, 0.4), breaks = seq(0, 0.4, 0.1)) +
+   coord_cartesian(xlim = c(0, 0.4), ylim = c(0.1, 1.3), expand = FALSE) +
+   labs(title = "Daily MVPA / SED ratio",
+        x = "",
+        y = NULL) +
+   theme_bw() +
+   theme(axis.ticks = element_blank(),
+         axis.text.x = element_text(size = 13),
+         axis.text.y = element_blank(),
+         legend.position = "none",
+         legend.title = element_text(face = "bold" , size = 10),
+         panel.grid.major = element_blank(),
+         panel.grid.minor = element_blank(),
+         plot.background = element_rect(fill = "beige", color = "beige"),
+         plot.margin = margin(0, 1, 0, 1, "cm"),
+         plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+  annotate("text", label = "Threshold for getting \nmost of the benefits", 
+            x = 0.068, y = 1.13, hjust = 0,
+            colour = "black", fontface = "italic") +
+   annotate(geom = "curve", 
+         x = 0.065, 
+         y = 1.17, 
+         xend = 0.043, 
+         yend = 1.15, 
+         curvature = .5, arrow = arrow(length = unit(2, "mm")),
+         colour = "black")
+ 
 
 
 ########################################################
@@ -438,7 +560,7 @@ g_week <-
 ########################################################
 
 library(patchwork)
-g_pal / g_steps / g_mvpa / g_sed / g_week + plot_layout(heights = c(0.8, 0.8, 0.3, 0.3, 4)) & theme(legend.justification = "center")
+g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_week + plot_layout(heights = c(0.8, 0.7, 1.5, 4)) & theme(legend.justification = "center")
 ```
 
 
@@ -446,6 +568,11 @@ g_pal / g_steps / g_mvpa / g_sed / g_week + plot_layout(heights = c(0.8, 0.8, 0.
 
 
 # Comments
+
+```{r}
+guidelines_status <- ifelse(df[["mets_hours_mvpa"]] < 150/7/60*3, "below the 2020 WHO physical activity guidelines",
+                            ifelse(df[["mets_hours_mvpa"]] >  150/7/60*3*2, "above the 2020 WHO physical activity guidelines", "within the 2020 WHO physical activity guidelines"))
+```
 
 ```{r, echo = F}
 pal_status <- ifelse(df[["pal"]] <1.40, "Insufficient",

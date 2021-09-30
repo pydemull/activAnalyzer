@@ -597,6 +597,12 @@ server <- function(input, output, session) {
             minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
             results_by_day = results_by_day(),
             results_summary =  results_summary(),
+            
+            # Loading some data used in figures
+            mvpa_lines = read_csv2("data/mvpa_lines.csv"),
+            sed_lines = read_csv2("data/sed_lines.csv"),
+            ratio_lines = read_csv2("data/ratio_lines.csv"),
+            
             rendered_by_shiny = TRUE
           )
     
