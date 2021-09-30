@@ -1,0 +1,575 @@
+---
+title: \vspace{-2cm} Results for the measurement of physical behavior
+output: pdf_document
+latex_engine: xelatex
+params:
+  assessor_title: NA
+  assessor_name: NA
+  assessor_surname: NA
+  patient_title: NA
+  patient_name: NA
+  patient_surname: NA
+  sex: NA
+  age: NA
+  weight: NA
+  start_date: NA
+  end_date: NA
+  device: NA
+  position: NA
+  side: NA
+  sampling_rate: NA
+  filter: NA
+  axis_weartime: NA
+  frame_size: NA
+  allowanceFrame_size: NA
+  equation_mets: NA
+  bmr_kcal_d: NA
+  axis_sed: NA
+  axis_mvpa: NA
+  sed_cutpoint: NA
+  mpa_cutpoint: NA
+  vpa_cutpoint: NA
+  minimum_wear_time_for_analysis: NA
+  results_by_day: NA
+  results_summary: NA
+  mvpa_lines: NA
+  sed_lines: NA
+  ratio_lines: NA
+  rendered_by_shiny: FALSE
+  geometry: "left=2cm, right=2cm, top=1cm, bottom=1cm"
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, echo = FALSE)
+library(tidyverse)
+library(modelr)
+library(patchwork)
+library(flextable)
+library(officer)
+library(scales)
+library(RColorBrewer)
+
+df <- params$results_summary
+df2 <- params$results_by_day
+mvpa_lines <- params$mvpa_lines
+sed_lines <- params$sed_lines
+ratio_lines <- params$ratio_lines
+```
+
+# Information
+
+***
+
+**Patient:** `r params$patient_surname` `r params$patient_name`  | **Date:**  `r Sys.Date()` | **Assessor:**  `r params$assessor_surname` `r params$assessor_name`
+
+**Age:** `r params$age` yr | **Sex:**  `r params$sex` | **Weight:** `r params$weight` kg | **Measurement period:** `r params$start_date` to `r params$end_date` | **Estimated Basal Metabolic Rate (BMR):** `r format(round(params$bmr_kcal_d, 2), nsmall = 2)` kcal/day (Estimation based on Henry equations [2005, doi: 10.1079/PHN2005801].)
+
+**Device:** `r params$device` | **Position:** `r params$position` | **Side:** `r params$side` | **Sampling rate:** `r params$sampling_rate` Hz | **Filter:** `r params$filter`.
+
+**Wear time:** Based on `r params$axis_weartime`, interval of `r params$frame_size` min for nonwear time detection, interval of `r params$allowanceFrame_size` min with nonzero counts allowed during a nonwear period | **MET equation:** `r params$equation_mets` | **Axis used for PA categorization:** `r params$axis_mvpa` | **Cut-points:** <`r params$sed_cutpoint` counts/min for SED, $\geqslant$ `r params$mpa_cutpoint` counts/min for MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min for VPA.
+
+***
+
+# Results
+
+```{r }
+flextable(
+ tribble(
+    ~Metric,                            ~"Result (daily average over valid days)",
+    "Wear time",                          paste0(round(df[["wear_time"]], 0), " min"),
+    "Number of valid days",               paste0(df[["valid_days"]], " day(s)"),
+    "Physical activity level (PAL)",      paste0(format(round(df[["pal"]], 2), nsmall = 2)),
+    "Total number of steps",              paste0(round(df[["total_steps"]], 0), " steps"),
+    "SED time",                           paste0(format(round(df[["minutes_SED"]], 1), nsmall = 1), " min"),
+    "LPA time",                           paste0(format(round(df[["minutes_LPA"]], 1), nsmall = 1), " min"),
+    "MVPA time",                          paste0(format(round(df[["minutes_MVPA"]], 1), nsmall = 1), " min"),
+    "SED wear time proportion",           paste0(format(round(df[["percent_SED"]], 1), nsmall = 1), " %"),
+    "LPA wear time proportion",           paste0(format(round(df[["percent_LPA"]], 1), nsmall = 1), " %"),
+    "MVPA wear time proportion",          paste0(format(round(df[["percent_MVPA"]], 1), nsmall = 1), " %"),
+    "MVPA dose",                          paste0(format(round(df[["mets_hours_mvpa"]], 1), nsmall = 1), " MET-hr"))
+  ) %>%
+  theme_zebra() %>%
+  align(align = "left", part = "all" ) %>%
+  hline_top(part = "all", border = fp_border(width = 1.5)) %>%
+  hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
+  width(width = 3.25)
+```
+
+
+```{r, fig.height=18, fig.width = 17}
+
+###################################################################################  
+# PAL
+###################################################################################  
+
+# Data for figure
+  table_pal <-
+  tibble(
+    x = c(0, 0.25, 0.5, 0.75, 1),
+    label = as.factor(c(
+              "Undefined", 
+              "Sedentary or light activity lifestyle", 
+              "Active or moderately active lifestyle", 
+              "Vigorous or vigorously active lifestyle",
+              "Difficult to maintain over a long period of time"
+              )),
+    start = c(1.1, 1.40, 1.70, 2.00, 2.40),
+    end = c(1.40, 1.70, 2.00, 2.40, 2.8)
+  ) %>%
+    mutate(label = fct_relevel(label,  "Undefined",
+                                       "Sedentary or light activity lifestyle", 
+                                       "Active or moderately active lifestyle", 
+                                       "Vigorous or vigorously active lifestyle",
+                                       "Difficult to maintain over a long period of time")) 
+# Figure
+  g_pal <-
+    ggplot(data = table_pal, aes(x = x, y = start)) +
+    geom_rect(aes(ymin = start,  ymax = end, fill = label), xmin = -Inf, xmax = Inf, alpha = 0.5) +
+    geom_vline(aes(xintercept = 0.51), size = 0.4, color = "grey30") +
+    geom_vline(aes(xintercept = 0.25), size = 0.5, color = "grey30", linetype ="dotted") +
+    geom_segment(x = 0, xend = 0.51, y = df[["pal"]], yend = df[["pal"]], size = 0.5, color = "grey30", linetype ="dotted") +
+    geom_point(aes(x = 0.25, y = df[["pal"]], color = "Patient's result"), size = 7, shape = 1) +
+    geom_point(aes(x = 0.25, y = df[["pal"]], color = "Patient's result"), size = 4, shape = 16) +
+    geom_point(aes(x = 0.25, y = df[["pal"]], color = "Patient's result"), size = 7, shape = 3) +
+    scale_y_continuous(labels = as.character(format(round(c(1.1, 1.4, 1.7, 2.0, 2.4, 2.8), 2), nsmall = 1)), 
+                       breaks = c(1.10, 1.40, 1.70, 2.00, 2.40, 2.80)) +
+    scale_fill_manual(values = c("lightgoldenrodyellow", "lightgoldenrod1", "yellow", "gold1", "gold2")) +
+    scale_color_manual(values = c("red")) +
+    theme_bw() +
+    coord_flip(expand = FALSE) +
+    labs(x = NULL, y = NULL, 
+         fill = "FAO/WHO/UNU categories", 
+         color = "") +
+    theme(axis.ticks = element_blank(),
+          axis.text.y = element_blank(),
+          axis.text.x = element_text(size = 13),
+          legend.position = c(0.5, 1.4),
+          legend.title = element_text(face = "bold" , size = 10),
+          legend.text = element_text(face = "bold", size = 17),
+          legend.background = element_rect(fill = "beige"),
+          legend.key = element_rect(fill = "beige", size = 15),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.background = element_rect(fill = "beige", color = "beige"),
+          plot.margin = margin(2, 1, 0.5, 1, "cm"),
+          plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+    guides(fill= "none") +
+    ggtitle("Daily PAL") +
+    annotate("text", label = "Sedentary \nor lightly active", x = 0.75, y = 1.55, size = 5) +
+    annotate("text", label = "Moderately \nactive", x = 0.75, y = 1.85, size = 5) +
+    annotate("text", label = "Vigorously \nactive", x = 0.75, y = 2.2, size = 5) +
+    annotate("text", label = "Difficult to maintain \nover a long period of time", x = 0.75, y = 2.6, size = 5)
+  
+
+
+
+#################################################################################### 
+# Steps
+#################################################################################### 
+
+# Data for figure / categories for all adults
+  table_steps1 <-
+  tibble(
+    x = c(0, 0, 0.25, 0.5, 0.75, 1),
+    label = as.factor(c(
+              "Sedentary, basal physical activity", 
+              "Sedentary, limited physical activity", 
+              "Low active", 
+              "Somewhat active",
+              "Active",
+              "Highly active"
+              )),
+    start = c(0, 2500, 5000, 7500, 10000, 12500),
+    end = c(2500, 5000, 7500, 10000, 12500, 18000)
+  ) %>%
+    mutate(label = fct_relevel(label, "Sedentary, basal physical activity", 
+                                      "Sedentary, limited physical activity",
+                                      "Low active", 
+                                      "Somewhat active",
+                                      "Active",
+                                      "Highly active")) 
+  
+# Data for figure / categories for specific populations
+  table_steps2 <-
+  tibble(
+    label = as.factor(c(
+              "Adults (20-65 ans)", 
+              "Healthy older adults (65+ yr)", 
+              "People with disability \n and/or chronic illness"
+              )),
+    y = c(7000, 7000, 6500),
+    yend = c(8000, 10000, 8500),
+    x = c(0.9, 0.70, 0.50),
+    xend = c(0.9, 0.70, 0.50),
+    xmin = x-0.03,
+    xmax = x+0.03
+  ) %>%
+    mutate(label = fct_relevel(label, "Adults (20-65 ans)", 
+                                      "Healthy older adults (65+ yr)", 
+                                      "People with disability \n and/or chronic illness")) 
+
+# Figure
+  g_steps <-
+    ggplot(data = table_steps1, aes(x = x, y = start)) +
+    geom_rect(aes(ymin = start, ymax = end, fill = label), xmin = -Inf, xmax = Inf, alpha = 0.5) +
+    geom_vline(aes(xintercept = 0.40), size = 0.4, color = "grey30") +
+    geom_vline(aes(xintercept = 0.20,), size = 0.5, color = "grey30", linetype ="dotted") +
+    geom_segment(x = 0, xend = 0.4, y = df[["total_steps"]], yend = df[["total_steps"]], 
+                 size = 0.5, color = "grey30", linetype ="dotted")   +
+    geom_point(aes(x = 0.2, y = df[["total_steps"]]), color = "red", size = 7, shape = 1) +
+    geom_point(aes(x = 0.2, y = df[["total_steps"]]), color = "red", size = 4, shape = 16) +
+    geom_point(aes(x = 0.2, y = df[["total_steps"]]), color = "red", size = 7, shape = 3) +
+    geom_segment(data = table_steps2, aes(x = x, xend = xend, y = y, yend = yend, color = label), size = 1, 
+                 arrow = arrow(length = unit(0.09, "inches"))) +
+    geom_errorbarh(data = table_steps2, aes(y = y, xmin = xmin, xmax = xmax, color = label), size = 1, height = 0) + 
+    scale_y_continuous(labels = as.character(c(0, 2500, 5000, 7500, 10000, 12500, 18000)), 
+                       breaks = c(0, 2500, 5000, 7500, 10000, 12500, 18000)) +
+    scale_fill_brewer(palette="Blues") +
+    scale_color_brewer(palette="Dark2") +
+    theme_bw() +
+    coord_flip(expand = FALSE) +
+    labs(x = NULL, y = NULL, 
+         fill = "Activity levels for healthy adults (Tudor-Locke et al., 2O11)", 
+         color = "Expected values when people reach \nMVPA guidelines (Tudor-Locke et al., 2011)") +
+    theme(axis.ticks = element_blank(),
+          axis.text.y = element_blank(),
+          axis.text.x = element_text(size = 13),
+          legend.position = "none",
+          legend.title = element_text(face = "bold", size = 10),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.background = element_rect(fill = "beige", color = "beige"),
+          plot.margin = margin(0, 1, 0.5, 1, "cm"),
+          plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+    guides(fill="none") +
+    ggtitle("Daily steps") +
+    annotate("text", label = "Expected values when \nmeeting MVPA guidelines:", x = 0.7, y = 1000, 
+             hjust = 0, fontface = "bold", size = 6,   color = "grey30") +
+    annotate("text", label = "Adults", x = 0.9, y = 8300, hjust = 0, fontface = "bold", size = 5) +
+    annotate("text", label = "Healthy older adults", x = 0.7, y = 10300, hjust = 0, fontface = "bold", size = 5) +
+    annotate("text", label = "People with disability and/or chronic disease", x = 0.5, y = 8800, hjust = 0, fontface = "bold", size = 5)
+  
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.5)  # set progress to 50%
+
+#################################################################################### 
+# MVPA
+#################################################################################### 
+
+# Building lines showing the estimate and the related confidence limits of mortality 
+# hazard ratio (Ekelund et al., 2020, http://dx.doi.org/10.1136/bmj.l4570)
+
+   model_mvpa <- loess(y ~ x, data = mvpa_lines %>% filter(line == "mid"), 
+                       control = loess.control(surface = "direct"))
+     
+   model_mvpa_up <- loess(y ~ x, data = mvpa_lines %>% filter(line == "up"), 
+                       control = loess.control(surface = "direct")) 
+   
+   model_mvpa_low <- loess(y ~ x, data = mvpa_lines %>% filter(line == "low"), 
+                       control = loess.control(surface = "direct"))
+   
+   grid_mvpa <-
+     mvpa_lines %>%
+     data_grid(
+     x = seq(0, 100, 1),
+     ) %>%
+     spread_predictions(model_mvpa, model_mvpa_up, model_mvpa_low) %>%
+     rename(mid = model_mvpa, up = model_mvpa_up, low = model_mvpa_low)
+
+# Getting data for plotting patient's result  
+  
+   score_mvpa <- data.frame(x = df[["minutes_MVPA"]]) %>% add_predictions(model_mvpa)
+
+
+# Plot
+
+ g_mvpa <-
+   ggplot() +
+   geom_ribbon(data = grid_mvpa, aes(x = x, y = up, ymin = low, ymax = up), fill = "grey95") +
+   geom_line(data = grid_mvpa, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+   geom_line(data = grid_mvpa, aes (x = x, y = up), size = 1, colour = "#3366FF", linetype = "dashed") +
+   geom_line(data = grid_mvpa, aes (x = x, y = low), size = 1, colour = "#3366FF", linetype = "dashed") +
+   geom_vline(aes(xintercept = 24), linetype = "dotted") +
+   geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
+   geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
+   geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 7, shape = 3) +
+   scale_y_continuous(trans = log2_trans()) +
+   scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 100, 25)) +
+   theme_bw() +
+   coord_cartesian(xlim = c(0, 100), ylim = c(0.25, 1), expand = FALSE) +
+   labs(title = "Daily MVPA minutes", x = "", y = NULL) +
+   theme(axis.ticks = element_blank(),
+         axis.text.x = element_text(size = 13),
+         axis.text.y = element_blank(),
+         legend.position = "none",
+         legend.title = element_text(face = "bold" , size = 10),
+         panel.grid.major = element_blank(),
+         panel.grid.minor = element_blank(),
+         plot.background = element_rect(fill = "beige", color = "beige"),
+         plot.margin = margin(0, 1, 0, 1, "cm"),
+         plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+   annotate("text", label = "Mortality hazard \nratio", 
+            x = 73, y = 0.57, hjust = 0, 
+            fontface = "bold.italic", colour = "#3366FF") +
+   annotate(geom = "curve", 
+         x = 73, 
+         y = 0.5, 
+         xend = 58, 
+         yend = 0.53, 
+         curvature = -.45, arrow = arrow(length = unit(2, "mm")),
+         colour = "#3366FF") +
+   annotate("text", label = "Uncertainty \nzone", 
+            x = 60, y = 0.80, hjust = 0.5, 
+            colour = "grey50", fontface = "bold.italic") +
+
+   annotate("text", label = "Threshold for the maximum \nof health benefits", 
+            x = 35, y = 0.32, hjust = 0, vjust = 1,
+            colour = "black", fontface = "italic") +
+   annotate(geom = "curve", 
+         x = 35, 
+         y = 0.33, 
+         xend = 25, 
+         yend = 0.32, 
+         curvature = .5, arrow = arrow(length = unit(2, "mm")),
+         colour = "black")
+ 
+ 
+#################################################################################### 
+# SED
+#################################################################################### 
+
+
+# Building lines showing the estimate and the related confidence limits of mortality 
+# hazard ratio (Ekelund et al., 2020, http://dx.doi.org/10.1136/bmj.l4570)
+
+   model_sed <- loess(y ~ x, data = sed_lines %>% filter(line == "mid"), 
+                       control = loess.control(surface = "direct"))
+     
+   model_sed_up <- loess(y ~ x, data = sed_lines %>% filter(line == "up"), 
+                       control = loess.control(surface = "direct")) 
+   
+   model_sed_low <- loess(y ~ x, data = sed_lines %>% filter(line == "low"), 
+                       control = loess.control(surface = "direct"))
+   
+   grid_sed <-
+     sed_lines %>%
+     data_grid(
+     x = seq(4, 14, 1),
+     ) %>%
+     spread_predictions(model_sed, model_sed_up, model_sed_low) %>%
+     rename(mid = model_sed, up = model_sed_up, low = model_sed_low)
+
+# Getting data for plotting patient's result  
+  
+   score_sed <- data.frame(x = df[["minutes_SED"]] / 60) %>% add_predictions(model_sed)
+
+# Plot
+
+ g_sed <-
+   ggplot() +
+   geom_ribbon(data = grid_sed, aes(x = x, y = up, ymin = low, ymax = up), fill = "grey95") +
+   geom_ribbon(data = grid_sed %>% filter(x < 6), 
+               aes(x = x, y = up, ymin = rep(0, 2), ymax = up), fill = "grey95") +
+   geom_line(data = grid_sed, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+   geom_line(data = grid_sed, aes (x = x, y = up), size = 1, colour = "#3366FF", linetype = "dashed") +
+   geom_line(data = grid_sed, aes (x = x, y = low), size = 1, colour = "#3366FF", linetype = "dashed") +
+   geom_vline(aes(xintercept = 9.5), linetype = "dotted") +
+   geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
+   geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
+   geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 7, shape = 3) +
+   scale_y_continuous(trans = log2_trans()) +
+   scale_x_continuous(limits = c(4, 14), breaks = seq(4, 14, 2)) +
+   coord_cartesian(xlim = c(4, 14), ylim = c(0.35, 5), expand = FALSE) +
+   labs(title = "Daily SED hours", x = "", y = NULL) +
+   theme_bw() +
+   theme(axis.ticks = element_blank(),
+         axis.text.x = element_text(size = 13),
+         axis.text.y = element_blank(),
+         legend.position = "none",
+         legend.title = element_text(face = "bold" , size = 10),
+         panel.grid.major = element_blank(),
+         panel.grid.minor = element_blank(),
+         plot.background = element_rect(fill = "beige", color = "beige"),
+         plot.margin = margin(0, 1, 0, 1, "cm"),
+         plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+   annotate("text", 
+            label = "Threshold beyond \nwhich risk \nis significant",
+            x = 6.5, 
+            y = 0.5, 
+            hjust = 0,
+            colour = "black", fontface = "italic") +
+      annotate(geom = "curve", 
+         x = 8.6, 
+         y = 0.48, 
+         xend = 9.4, 
+         yend = 0.46, 
+         curvature = .5, arrow = arrow(length = unit(2, "mm")),
+         colour = "black")
+ 
+
+#################################################################################### 
+# RATIO MVPA / SED
+#################################################################################### 
+
+# Building lines showing the estimate and the related confidence limits of mortality 
+# hazard ratio (Ekelund et al., 2020)
+
+   model_ratio <- loess(y ~ x, data = ratio_lines %>% filter(line == "mid"), 
+                       control = loess.control(surface = "direct"))
+     
+   model_ratio_up <- loess(y ~ x, data = ratio_lines %>% filter(line == "up"), 
+                       control = loess.control(surface = "direct")) 
+   
+   model_ratio_low <- loess(y ~ x, data = ratio_lines %>% filter(line == "low"), 
+                       control = loess.control(surface = "direct"))
+   
+   grid_ratio <-
+     ratio_lines %>%
+     data_grid(
+     x = seq(0, 0.4, 0.05),
+     ) %>%
+     spread_predictions(model_ratio, model_ratio_up, model_ratio_low) %>%
+     rename(mid = model_ratio, up = model_ratio_up, low = model_ratio_low)
+
+# Getting data for plotting patient's result  
+  
+   score_ratio <- data.frame(x = df[["ratio_mvpa_sed"]]) %>% add_predictions(model_ratio)
+
+# Plot
+
+ g_ratio <-
+   ggplot() +
+   geom_ribbon(data = grid_ratio, aes(x = x, y = up, 
+                                       ymin = low, ymax = up), fill = "grey95") +
+   geom_line(data = grid_ratio, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+   geom_line(data = grid_ratio, aes (x = x, y = up), size = 1, colour = "#3366FF", linetype = "dashed") +
+   geom_line(data = grid_ratio, aes (x = x, y = low), size = 1, colour = "#3366FF", linetype = "dashed") +
+   geom_vline(aes(xintercept = 0.04), linetype = "dotted") +
+   geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
+   geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
+   geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 7, shape = 3) +
+   scale_x_continuous(limits = c(0, 0.4), breaks = seq(0, 0.4, 0.1)) +
+   coord_cartesian(xlim = c(0, 0.4), ylim = c(0.1, 1.3), expand = FALSE) +
+   labs(title = "Daily MVPA / SED ratio", x = "", y = NULL) +
+   theme_bw() +
+   theme(axis.ticks = element_blank(),
+         axis.text.x = element_text(size = 13),
+         axis.text.y = element_blank(),
+         legend.position = "none",
+         legend.title = element_text(face = "bold" , size = 10),
+         panel.grid.major = element_blank(),
+         panel.grid.minor = element_blank(),
+         plot.background = element_rect(fill = "beige", color = "beige"),
+         plot.margin = margin(0, 1, 0, 1, "cm"),
+         plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+  annotate("text", label = "Threshold for getting \nmost of the health \nbenefits", 
+            x = 0.068, y = 1.13, hjust = 0,
+            colour = "black", fontface = "italic") +
+   annotate(geom = "curve", 
+         x = 0.065, 
+         y = 1.17, 
+         xend = 0.043, 
+         yend = 1.15, 
+         curvature = .5, arrow = arrow(length = unit(2, "mm")),
+         colour = "black")
+ 
+
+########################################################
+# Daily results
+#######################################################
+
+# Set text sizes
+  title_axis_size = 10
+  label_text_size = 5
+ 
+# Generate figure
+  g_week <-
+    df2 %>%
+    mutate(validity = ifelse(wear_time >= 600, "Valid day", "Non valid day"),
+           validity = fct_relevel(validity, "Valid day", "Non valid day")) %>%
+    pivot_longer(cols = c(wear_time, total_steps, pal, minutes_SED, minutes_LPA, minutes_MVPA, percent_SED, percent_LPA, percent_MVPA),
+                 names_to = "variable", values_to = "value") %>%
+    mutate(variable = fct_relevel(variable, "wear_time", "total_steps", "pal", 
+                                   "minutes_MVPA", "minutes_LPA","minutes_SED", 
+                                  "percent_MVPA", "percent_LPA", "percent_SED"),
+           variable = fct_recode(variable, 
+                                 "Wear time (min)" = "wear_time", 
+                                 "Total steps" = "total_steps", "PAL" = "pal",
+                                  "MVPA time (min)" = "minutes_MVPA",
+                                 "LPA time (min)" = "minutes_LPA", 
+                                  "SED time (min)" = "minutes_SED", 
+                                  "MVPA wear time proportion (%)" = "percent_MVPA",
+                                 "LPA wear time proportion (%)" = "percent_LPA",
+                                 "SED wear time proportion (%)" = "percent_SED"
+                                 )) %>%
+    ggplot(aes(x = date, y = value, fill = validity)) +
+    ggtitle("Results by day") +
+    geom_bar(stat = "identity") +
+    geom_point(size = 2, color = "red") +
+    geom_line(aes(group = 1), size = 0.7, color = "red") +
+    geom_text(aes(label = round(value, 1)), size = label_text_size, vjust = -0.8) +
+    labs(x = "Date", y = "", fill = "") +
+    scale_y_continuous(expand = expansion(mult = c(.05, .2))) +
+    scale_fill_manual(labels = c("Valid day", 
+                                 paste0("Non valid day (<= ", params$minimum_wear_time_for_analysis, " hours)")),
+                                        values = c("#00BE6C", "#FC717F")) +
+    theme_bw() + 
+    theme(legend.position = "bottom",
+          legend.text = element_text(size = 15),
+          legend.background = element_rect(fill = "beige", colour = "beige"),
+          axis.title.x = element_blank(),
+          axis.text.x = element_text(size = 12, angle = 45, hjust = 1),
+          axis.text.y = element_blank(),
+          axis.ticks = element_blank(),
+          plot.background = element_rect(fill = "beige", color = "beige"),
+          plot.margin = margin(0, 1, 0.5, 1, "cm"),
+          strip.text.x = element_text(size = 15),
+          plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+    facet_wrap(. ~ variable, scales = "free_y")
+
+########################################################
+# Whole figure
+########################################################
+
+g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_week + 
+    plot_layout(heights = c(0.8, 0.7, 1.5, 4)) & theme(legend.justification = "center")
+  
+```
+
+
+# Comments
+
+```{r}
+
+```
+
+```{r, echo = F}
+# Converting MVPA minutes to MET-hours
+  guidelines_status <- 
+    ifelse(df[["mets_hours_mvpa"]] < 150/7/60*3, "below the 2020 WHO physical activity guidelines",
+                              ifelse(df[["mets_hours_mvpa"]] >  150/7/60*3*2, "above the 2020 WHO physical activity guidelines", "within   the 2020 WHO physical activity guidelines"))
+  
+
+# Defining PAL status
+  pal_status <- ifelse(df[["pal"]] <1.40, "Insufficient",
+                      ifelse(df[["pal"]] <= 1.69, "Sedentary or light activity lifestyle",
+                                         ifelse(df[["pal"]] <= 1.99, "Active or moderately active lifestyle",
+                                              ifelse(df[["pal"]] <= 2.40, "Vigorous or vigorously active lifestyle", "Likely not sustainable"))))
+
+# ref: http://www.fao.org/3/y5686e/y5686e07.htm#bm07.3
+
+# Ratio MVPA / SED comment
+  comment_ratio <- 
+    ifelse(df[["ratio_mvpa_sed"]] >= 0.04, "the patient likely has already most of the health benefits from their physical behavior",
+           "the patient could get further health benefits by replacing more sedentary time by physical activity time.")
+
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(1)  # set progress to 100%
+```
+
+According to the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the PAL of the patient could be characterized as "**`r pal_status`**". After converting moderate and vigorous physical activity minutes to MET-hours, the estimate of MVPA volume for the patient was `r paste0(format(round(df[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hours, and thus falls **`r guidelines_status`**. Based on the MVPA / SED ratio, **`r paste(comment_ratio)`**.
+
+

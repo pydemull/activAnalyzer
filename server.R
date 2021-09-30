@@ -496,8 +496,8 @@ server <- function(input, output, session) {
   # Generate report
   #################
 
-    # Generating report
-      output$report <- downloadHandler(
+    # Generating report EN
+      output$report_en <- downloadHandler(
         
       
         filename = "report.pdf",
@@ -509,15 +509,13 @@ server <- function(input, output, session) {
           # Copy the report file to a temporary directory before processing it, in
           # case we don't have write permissions to the current working dir (which
           # can happen when deployed).
-          tempReport <- file.path(tempdir(), "report.Rmd")
-          file.copy("report.Rmd", tempReport, overwrite = TRUE)
+          tempReport <- file.path(tempdir(), "report_en.Rmd")
+          file.copy("report_en.Rmd", tempReport, overwrite = TRUE)
           
           # Set up parameters to pass to Rmd document
           params <- list(
-            assessor_title = input$assessor_title,
             assessor_name = input$assessor_name,
             assessor_surname = input$assessor_surname,
-            patient_title = input$patient_title,
             patient_name = input$patient_name,
             patient_surname = input$patient_surname,
             sex = input$sex,
@@ -563,6 +561,74 @@ server <- function(input, output, session) {
           
           })
 
+      }
+    )
+    
+    # Generating report EN
+    output$report_fr <- downloadHandler(
+      
+      
+      filename = "rapport.pdf",
+      content = function(file) {
+        
+        
+        withProgress(message = 'Please wait...', {
+          
+          # Copy the report file to a temporary directory before processing it, in
+          # case we don't have write permissions to the current working dir (which
+          # can happen when deployed).
+          tempReport <- file.path(tempdir(), "report_fr.Rmd")
+          file.copy("report_fr.Rmd", tempReport, overwrite = TRUE)
+          
+          # Set up parameters to pass to Rmd document
+          params <- list(
+            assessor_name = input$assessor_name,
+            assessor_surname = input$assessor_surname,
+            patient_name = input$patient_name,
+            patient_surname = input$patient_surname,
+            sex = input$sex,
+            age = input$age,
+            weight = input$weight,
+            start_date = attributes(file())$startdatetime,
+            end_date = attributes(file())$stopdatetime,
+            device = attributes(file())$devicename,
+            position = input$position,
+            side = input$side,
+            sampling_rate = attributes(file())$`original sample rate`,
+            filter = attributes(file())$filter,
+            axis_weartime = input$axis_weartime,
+            frame_size = input$frame_size,
+            allowanceFrame_size = input$allowanceFrame_size,
+            equation_mets = input$equation_mets,
+            bmr_kcal_d = bmr_kcal_d(),
+            axis_sed = axis_sed_chosen_name,
+            axis_mvpa = axis_mvpa_chosen_name,
+            sed_cutpoint = sed_cutpoint_chosen,
+            mpa_cutpoint = mpa_cutpoint_chosen,
+            vpa_cutpoint = vpa_cutpoint_chosen,
+            minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
+            results_by_day = results_by_day(),
+            results_summary =  results_summary(),
+            
+            # Loading some data used in figures
+            mvpa_lines = read_csv2("data/mvpa_lines.csv"),
+            sed_lines = read_csv2("data/sed_lines.csv"),
+            ratio_lines = read_csv2("data/ratio_lines.csv"),
+            
+            rendered_by_shiny = TRUE
+          )
+          
+          # Knit the document, passing in the `params` list, and eval it in a
+          # child of the global environment (this isolates the code in the document
+          # from the code in this app).
+          out <- rmarkdown::render(tempReport,
+                                   params = params,
+                                   envir = new.env(parent = globalenv())
+          )
+          out <- file.rename(out, file)
+          
+        })
+        
       }
     )
     

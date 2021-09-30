@@ -25,8 +25,6 @@ library(tidyr)
 sapply(list.files(pattern="[.]R$", path="R/", full.names=TRUE), source)
 
 # Setting lists of inputs
-assessor_title <- c("...", "Mr", "Ms", "Mrs", "Dr", "Pr")
-patient_title <- c("...", "Mr", "Ms", "Mrs")
 sex <- c("...", "male", "female", "undefined")
 device <- c("...", "7164", "GT1M", "GT3X", "GT3X+", "wGT3X+", "wGT3X-BT", "GT9X")
 position <- c("hip", "wrist", "thigh", "ankle")
@@ -110,9 +108,6 @@ ui <-
         ),
         fluidRow(
             column(2,
-                   selectInput("assessor_title", "Title", assessor_title)
-            ),
-            column(2,
                    textInput("assessor_name", "Name", placeholder = "")
             ),
             column(2,
@@ -130,9 +125,6 @@ ui <-
             ),
         ),
         fluidRow(
-            column(2,
-                   selectInput("patient_title", "Title", patient_title)
-            ),
             column(2,
                    textInput("patient_name", "Name", placeholder = "")
             ),
@@ -398,8 +390,9 @@ ui <-
                  h2("Export"),
                  downloadButton("ExpResultsByDays", "Export results by day (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
                  downloadButton("ExpDailySummary", "Export daily summary (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
-                 downloadButton("report", "Generate report (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33")
-               ),
+                 downloadButton("report_en", "Generate report (EN) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33"),
+                 downloadButton("report_fr", "Generate report (FR) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33")
+          ),
 
         ),
         fluidRow(
