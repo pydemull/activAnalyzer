@@ -3,7 +3,7 @@
 # Packages, functions, and lists of inputs
 #######################################################################################################
 
-# Packages
+# Loading packages
 library(shiny)
 library(shinydashboard)
 library(shinydashboardPlus)
@@ -12,19 +12,19 @@ library(shinycssloaders)
 library(ggplot2)
 library(dplyr)
 library(PhysicalActivity)
+library(RSQLite)
 library(actigraph.sleepr)
 library(assertthat)
 library(lubridate)
-library(RSQLite)
 library(hms)
 library(reactable)
 library(readr)
 library(tidyr)
 
-# Functions
+# Loading functions
 sapply(list.files(pattern="[.]R$", path="R/", full.names=TRUE), source)
 
-# Lists of inputs
+# Setting lists of inputs
 assessor_title <- c("...", "Mr", "Ms", "Mrs", "Dr", "Pr")
 patient_title <- c("...", "Mr", "Ms", "Mrs")
 sex <- c("...", "male", "female", "undefined")

@@ -2,24 +2,26 @@ options(shiny.maxRequestSize=30*1024^2)
 
 server <- function(input, output, session) {
   
-  ################
-  # Uploading data
-  ################
+  ##############################
+  # Uploading and preparing data
+  ##############################
   
-  # Getting reactive dataset
+  # Getting data file without modification (required for extracting attributes information when generating the report)
     file <- reactive({
       
       req(input$upload)
       read_agd(input$upload$datapath)
-
+      
     })
-
+  
+  # Getting reactive dataset
     data <- reactive({
-      
-      prepare_dataset(data = file())
-      
-    })
-    
+        
+        req(input$upload)
+        prepare_dataset(data = input$upload$datapath)
+
+      })
+
   ###########################################################################################
   # Getting dataframe with marks for wear/nonwear time when clicking on the "Validate" button
   ###########################################################################################
@@ -55,40 +57,30 @@ server <- function(input, output, session) {
     
     # Building reactive dataframe marked for nonwear/wear time
       
-      df <- eventReactive(input$validate, {
+        df <- eventReactive(input$validate, {
     
-      # Waiting for required conditions 
-        req(tools::file_ext(input$upload$name) == "agd" & 
-            is.numeric(input$frame_size) & 
-            input$frame_size >= 0 & 
-            is.numeric(input$allowanceFrame_size) & 
-            input$allowanceFrame_size >= 0)
-       
-      # Creating reactive dataframe
-        if (input$axis_weartime == "vector magnitude") {  
-          
-          df <- wearingMarking(dataset = data(), 
-                               TS = "timestamp", 
-                               cts = "vm", 
-                               frame = input$frame_size, 
-                               allowanceFrame = input$allowanceFrame_size) %>%
-            mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
-                   wearing_count = ifelse(wearing == "w", 1, 0)) 
-        } else {
-          
-          df <- wearingMarking(dataset = data(), 
-                               TS = "timestamp", 
-                               cts = "axis1", 
-                               frame = input$frame_size, 
-                               allowanceFrame = input$allowanceFrame_size) %>%
-            mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
-                   wearing_count = ifelse(wearing == "w", 1, 0)) 
-          
-        }
+        # Waiting for required conditions 
+          req(tools::file_ext(input$upload$name) == "agd" & 
+              is.numeric(input$frame_size) & 
+              input$frame_size >= 0 & 
+              is.numeric(input$allowanceFrame_size) & 
+              input$allowanceFrame_size >= 0)
+         
+        # Setting the axis to be used for detecting nonwear time
+          if (input$axis_weartime == "vector magnitude") {  
+            cts <- "vm"
+          } else {
+            cts <- "axis1"
+          }
         
-        return(df)
-       
-       })
+        # Creating reactive dataframe
+          df <- mark_weartime(dataset = data(),
+                              cts = cts, 
+                              frame = input$frame_size, 
+                              allowanceFrame = input$allowanceFrame_size)
+          return(df)
+         
+         })
   
   # Returning to default values for the wear time detection algorithm
     observeEvent(input$reset_nonwear, {
@@ -296,14 +288,15 @@ server <- function(input, output, session) {
       
     })
       
-  # Getting BMR (kcal/d)
-    bmr_kcal_d <- eventReactive(input$Run, {
-      
+  
+    # Getting BMR (kcal/d)
+      bmr_kcal_d <- eventReactive(input$Run, {
+        
         compute_bmr(age = input$age, sex = input$sex, weight = input$weight)
         
-        })
-  
-  
+      })
+      
+    
   # Getting results by day corresponding to valid wear time  (except for total kcal 
   # that also uses nonwear time with attribution of bmr to nonwear epochs)
     
@@ -391,55 +384,26 @@ server <- function(input, output, session) {
             }
           } else {
             NULL}
-      
 
-      # Computing BMR in kcal/min
-        bmr_kcal_min <- bmr_kcal_d() / (24*60)
       
-        
       # Adding variables of interest to the initial dataframe
         df_with_computed_metrics <-
           df() %>%
-          mutate(
-            METS = compute_mets(data = .data, equation = input$equation_mets, weight = input$weight, gender = input$sex),
-            kcal = METS * bmr_kcal_min,
-            SED = ifelse(axis_sed_chosen < sed_cutpoint_chosen, 1, 0),
-            LPA = ifelse(axis_mvpa_chosen >= sed_cutpoint_chosen & axis_mvpa_chosen < mpa_cutpoint_chosen, 1, 0),
-            MPA = ifelse(axis_mvpa_chosen >= mpa_cutpoint_chosen & axis_mvpa_chosen < vpa_cutpoint_chosen, 1, 0), 
-            VPA = ifelse(axis_mvpa_chosen >= vpa_cutpoint_chosen, 1, 0),
-            
-      # Computing MET-hr corresponding to MVPA only for each epoch
-        mets_hours_mvpa = ifelse(METS >=3, 1/60 * METS, 0))
-    
+          mark_intensity(axis = axis_mvpa_chosen, 
+                         sed_cutpoint = sed_cutpoint_chosen, 
+                         mpa_cutpoint = mpa_cutpoint_chosen, 
+                         vpa_cutpoint = vpa_cutpoint_chosen,
+                         equation = input$equation_mets,
+                         age = input$age,
+                         weight = input$weight,
+                         sex = input$sex)
       
+        
       # Creating a dataframe with results by day and corresponding to valid wear time only  
          results_by_day <-
+           
            df_with_computed_metrics %>%
-           group_by(date, .drop = FALSE) %>%
-           filter(wearing == "w") %>%
-           summarise(
-             wear_time = sum(wearing_count),
-             total_counts_axis1 = sum(axis1),
-             total_counts_vm = sum(vm),
-             total_steps = sum(steps),
-             total_kcal_wear_time = round(sum(kcal), 2),
-             minutes_SED = sum(SED),
-             minutes_LPA = sum(LPA),
-             minutes_MPA = sum(MPA),
-             minutes_VPA = sum(VPA),
-             minutes_MVPA = sum(MPA) + sum(VPA),
-             percent_SED = round(minutes_SED / wear_time * 100, 2),
-             percent_LPA = round(minutes_LPA / wear_time * 100, 2),
-             percent_MPA = round(minutes_MPA / wear_time * 100, 2),
-             percent_VPA = round(minutes_VPA / wear_time * 100, 2), 
-             percent_MVPA = round(minutes_MVPA / wear_time * 100, 2),
-             mets_hours_mvpa = round(sum(mets_hours_mvpa), 2),
-             ratio_mvpa_sed = round(minutes_MVPA / minutes_SED, 2),
-             
-             # Computing physical activity level (PAL), that is, total EE / BMR. BMR is assigned to nonwear time; 
-             # the term 10/9 is used to take into account the thermic effect of food
-               pal = round((total_kcal_wear_time + bmr_kcal_min * (24*60 - wear_time)) * 10/9 / bmr_kcal_d(), 2)) %>%
-           ungroup()
+           recap_by_day(age = input$age, weight = input$weight, sex = input$sex)
          
          return(results_by_day)
        
@@ -462,6 +426,7 @@ server <- function(input, output, session) {
                           percent_MPA = colDef(minWidth = 120),
                           percent_VPA = colDef(minWidth = 120),
                           percent_MVPA = colDef(minWidth = 120),
+                          ratio_mvpa_sed = colDef(minWidth = 125),
                           total_kcal_wear_time = colDef(minWidth = 160),
                           mets_hours_mvpa = colDef(minWidth = 160)))
          })
@@ -473,27 +438,7 @@ server <- function(input, output, session) {
 
       # Computing results averaged on valid days
         results_by_day() %>%
-          mutate(validity = ifelse(wear_time >= input$minimum_wear_time_for_analysis * 60, "valid", "invalid")) %>%
-          filter(validity == "valid") %>%
-          summarise(valid_days = n(),
-                    wear_time = mean(wear_time),
-                    total_counts_axis1 = round(mean(total_counts_axis1), 2),
-                    total_counts_vm = round(mean(total_counts_vm), 2),
-                    total_steps = round(mean(total_steps), 2),
-                    total_kcal_wear_time = round(mean(total_kcal_wear_time), 2),
-                    minutes_SED = round(mean(minutes_SED), 2),
-                    minutes_LPA = round(mean(minutes_LPA), 2),
-                    minutes_MPA = round(mean(minutes_MPA), 2),
-                    minutes_VPA = round(mean(minutes_VPA), 2),
-                    minutes_MVPA = round(mean(minutes_MVPA), 2),
-                    percent_SED = round(mean(percent_SED), 2),
-                    percent_LPA = round(mean(percent_LPA), 2),
-                    percent_MPA = round(mean(percent_MPA), 2),
-                    percent_VPA = round(mean(percent_VPA), 2),
-                    percent_MVPA = round(mean(percent_MVPA), 2),
-                    mets_hours_mvpa = round(mean(mets_hours_mvpa), 1),
-                    ratio_mvpa_sed = round(mean(ratio_mvpa_sed), 1),
-                    pal = round(mean(pal), 2))
+          average_results(minimum_wear_time = input$minimum_wear_time_for_analysis)
         })
     
       # Showing results averaged on valid days in a table
@@ -515,6 +460,7 @@ server <- function(input, output, session) {
                  percent_MPA = colDef(minWidth = 120),
                  percent_VPA = colDef(minWidth = 120),
                  percent_MVPA = colDef(minWidth = 120),
+                 ratio_mvpa_sed = colDef(minWidth = 125),
                  total_kcal_wear_time = colDef(minWidth = 160),
                  mets_hours_mvpa = colDef(minWidth = 160)),
             striped = TRUE
@@ -549,7 +495,7 @@ server <- function(input, output, session) {
   #################
   # Generate report
   #################
-    
+
     # Generating report
       output$report <- downloadHandler(
         

@@ -1,9 +1,9 @@
 
-compute_mets <- function(data = NULL, equation = NULL, weight = NULL, gender = NULL) {
+compute_mets <- function(data, equation, weight, sex) {
   
   BM <- weight
   
-  if (gender == "male") {G <- 2
+  if (sex == "male") {G <- 2
   } else { G <- 1}
   
 
