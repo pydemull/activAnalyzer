@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.10.1)  1 OCT 2021 11:21
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.10.1)  1 OCT 2021 22:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1200,6 +1200,12 @@ Chapitre 4.
 [13] [14
 
 ]
+Underfull \hbox (badness 5133) in paragraph at lines 390--392
+\TU/lmr/m/it/10 PhysicalActivity : process accelerometer data for physical acti
+vity measurement\TU/lmr/m/n/10 .
+ []
+
+[15]
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -1234,7 +1240,7 @@ braces):
 >  {french/babelname}  =>  {french}
 >  {french/localnumeral}  =>  {polyglossia@C@localnumeral}
 >  {french/Localnumeral}  =>  {polyglossia@C@localnumeral}.
-[15] (./user_guide_fr.aux
+[16] (./user_guide_fr.aux
 LaTeX Info: Redefining \rmfamily on input line 19.
 LaTeX Info: Redefining \sffamily on input line 19.
 LaTeX Info: Redefining \ttfamily on input line 19.
@@ -1245,10 +1251,10 @@ Package rerunfilecheck Info: File `user_guide_fr.out' has not changed.
 Here is how much of TeX's memory you used:
  17809 strings out of 478492
  322685 string characters out of 5859688
- 814960 words of memory out of 5000000
+ 813960 words of memory out of 5000000
  37837 multiletter control sequences out of 15000+600000
  409897 words of font info for 82 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 87i,11n,120p,1900b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 87i,11n,120p,1904b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on user_guide_fr.pdf (15 pages).
+Output written on user_guide_fr.pdf (16 pages).

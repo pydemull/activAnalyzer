@@ -15,7 +15,7 @@ mark_intensity <- function(data, axis = vm, sed_cutpoint = 200, mpa_cutpoint = 2
       MPA = ifelse({{ axis }} >= mpa_cutpoint & {{ axis }} < vpa_cutpoint, 1, 0), 
       VPA = ifelse({{ axis }} >= vpa_cutpoint, 1, 0),
       METS = compute_mets(data = .data, equation = equation, weight = weight, sex = sex),
-      kcal = METS * bmr_kcal_min,
+      kcal = ifelse(SED == 0, METS * bmr_kcal_min, bmr_kcal_min),
       
   # Computing MET-hr corresponding to MVPA only, for each epoch
     mets_hours_mvpa = ifelse(METS >=3, 1/60 * METS, 0))
