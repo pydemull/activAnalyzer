@@ -436,10 +436,10 @@ ui <-
                 ),
               ),
               fluidRow(
-                column(12,
-                       downloadButton("user_guide", "Download user's guide (.pdf)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
-                ),
-                
+                column(4,
+                       downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
+                       downloadButton("user_guide_fr", "Download user's guide (FR) (.pdf)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
+                       ),
               ),
               fluidRow(
                 column(12,

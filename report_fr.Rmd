@@ -543,7 +543,7 @@ g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_week +
 ```
 
 
-# Comments
+# Commentaires
 
 ```{r}
 

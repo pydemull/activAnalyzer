@@ -5,10 +5,10 @@ account: pydemull
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4107862
-bundleId: 5032293
+bundleId: 5091425
 url: https://pydemull.shinyapps.io/activAnalyzer/
-when: 1631631506.94561
-lastSyncTime: 1631631506.94561
+when: 1633041763.77711
+lastSyncTime: 1633041763.77711
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: acc.agd
+ignoredFiles: acc.agd|temp/chastin_2021_zones.csv|temp/GT3X-8 (2021-07-13)1sec.agd|temp/heatmap.R

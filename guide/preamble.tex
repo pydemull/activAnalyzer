@@ -1,0 +1,7 @@
+\AtBeginDocument{\renewcommand{\chaptername}{Section}}
+\usepackage{fancyhdr}% fancyhdr related command; details in its documentation
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\slshape\nouppercase{\leftmark}}
+\fancyhead[LO]{\slshape\nouppercase{\rightmark}}

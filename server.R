@@ -669,14 +669,25 @@ server <- function(input, output, session) {
   # Download user's guide
   #######################
     
-    output$user_guide <- downloadHandler(
-      filename = function() {
-        paste0(input$upload, "activanalyzer_manual.pdf")
-      },
-      content = function(file) {
-        file.copy("manual/user_guide.pdf", file)
-      }
-    )
+    # English
+      output$user_guide_en <- downloadHandler(
+        filename = function() {
+          paste0(input$upload, "activanalyzer_manual.pdf")
+        },
+        content = function(file) {
+          file.copy("guide/user_guide_en.pdf", file)
+        }
+      )
+    
+    # French
+      output$user_guide_fr <- downloadHandler(
+        filename = function() {
+          paste0(input$upload, "activanalyzer_manuel.pdf")
+        },
+        content = function(file) {
+          file.copy("guide/user_guide_fr.pdf", file)
+        }
+      )
     
     
 }
