@@ -5,6 +5,9 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Codecov test
+coverage](https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge.svg)](https://codecov.io/gh/pydemull/activAnalyzer?branch=master)
+[![R-CMD-check](https://github.com/pydemull/activAnalyzer/workflows/R-CMD-check/badge.svg)](https://github.com/pydemull/activAnalyzer/actions)
 <!-- badges: end -->
 
 # Overview
