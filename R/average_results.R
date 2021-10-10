@@ -1,10 +1,31 @@
-
+#' Average results over valid days
+#' 
+#' This function computes, using valid days only, the mean of each of the metrics 
+#'     obtained using the \code{\link{recap_by_day}} function.
+#'
+#' @param data A dataframe obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}} and \code{\link{recap_by_day}} functions.
+#' @param minimum_wear_time A numeric value (in hours) to set the minimum wear time duration for validating a day.
+#'
+#' @return A dataframe.
+#' @export
+#'
+#' @importFrom magrittr %>%
+#'
+#' @examples
+#' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
+#' mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
+#' mydata_with_wear_marks <- mark_wear_time(dataset = mydata)
+#' mydata_with_intensity_marks <- mark_intensity(data = mydata_with_wear_marks, 
+#'     equation = "Sasaki et al. (2011) [Adults]", sex = "male")
+#' summary_by_day <- recap_by_day(data = mydata_with_intensity_marks, col_date = "date",  sex = "male")
+#' average_results(data = summary_by_day)
+#' 
 average_results <- function(data, minimum_wear_time = 10) {
   
   data %>%
-  mutate(validity = ifelse(wear_time >= minimum_wear_time * 60, "valid", "invalid")) %>%
-  filter(validity == "valid") %>%
-  summarise(valid_days = n(),
+    dplyr::mutate(validity = ifelse(wear_time >= minimum_wear_time * 60, "valid", "invalid")) %>%
+    dplyr::filter(validity == "valid") %>%
+    dplyr::summarise(valid_days = dplyr::n(),
               wear_time = mean(wear_time),
               total_counts_axis1 = round(mean(total_counts_axis1), 2),
               total_counts_vm = round(mean(total_counts_vm), 2),

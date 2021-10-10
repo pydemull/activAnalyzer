@@ -98,7 +98,7 @@ If the patient considers their sex as "undefined", then an equation for females 
 * SED, LPA, MPA, VPA categories based on the axis and the cut-points configured by the user;
 * METs, by using the MET equation provided by the user;
 * Kilocalories, by multiplying the MET value by BMR expressed in kcal/min for non-SED epochs (for SED epochs, BMR expressed in kcal/min is directly used);
-* MET-hours related to MPVA, by multipling the MET value by the time (1/60e of an hour), only when the MET value is $\geqslant$ 3.
+* MET-hours related to MPVA, by multiplying the MET value by the time (1/60e of an hour), only when the MET value is $\geqslant$ 3.
 
 Once these new metrics added to the initial dataset, the app summarizes the results by day using valid wear time only, this for the following metrics: 
 

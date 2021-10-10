@@ -1,4 +1,23 @@
-compute_bmr <- function(age, sex, weight) {
+#' Compute Basal Metabolic Rate (BMR)
+#' 
+#' This function computes Basal Metabolic Rate using an Henry et al. 
+#'     (2005; doi: 10.1079/PHN2005801) equation. This function is wrapped within 
+#'     the \code{\link{mark_intensity}} function.
+#'
+#' @param age A numeric value in yr.
+#' @param weight A numeric value in kg.
+#' @param sex A character value.
+#'
+#' @return A numeric value.
+#' @export
+#'
+#' @examples
+#' compute_bmr(age = 32, sex = "male", weight = 67)
+#' 
+compute_bmr <- function(age = 40, sex = c("male", "female", "undefined"), weight = 70) {
+  
+sex <- match.arg(sex)
+  
 
 # BMR using sex and weight only (Henry, 2005; doi: 10.1079/PHN2005801)
 bmr <-
@@ -34,6 +53,11 @@ bmr <-
 #                                                                 ifelse(age >=18 & age <30 & (sex == "female" | sex == "undefined"), 10.4 * weight + 615 * height - 282,
 #                                                                        ifelse(age >=30 & age <60 & (sex == "female" | sex == "undefined"), 8.18 * weight + 502 * height - 11.6,
 #                                                                               ifelse(age >=60 & (sex == "female" | sex == "undefined"), 8.52 * weight + 421 * height + 10.7))))))))))))
+
+message(paste0("You have computed BMR using the following inputs: 
+    age = " , age, "
+    weight = ", weight, "
+    sex = ", sex))
 
 return(bmr)
 

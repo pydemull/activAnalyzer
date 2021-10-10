@@ -1,7 +1,8 @@
 ---
 title: \vspace{-2cm} Resultats de la mesure du comportement physique
-output: pdf_document
-latex_engine: xelatex
+output: 
+   pdf_document:
+     latex_engine: xelatex
 params:
   assessor_title: NA
   assessor_name: NA
@@ -40,14 +41,11 @@ params:
 
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, echo = FALSE)
-library(tidyverse)
-library(modelr)
+library(magrittr)
+library(ggplot2)
 library(patchwork)
-library(flextable)
-library(officer)
-library(scales)
 library(RColorBrewer)
 
 df <- params$results_summary
@@ -74,11 +72,12 @@ sex <- ifelse(params$sex == "male", "masculin",
 
 ***
 
-# Resultats
+# Résultats
 
 ```{r }
-flextable(
- tribble(
+flextable::set_flextable_defaults(fonts_ignore = TRUE)
+flextable::flextable(
+ tibble::tribble(
     ~Indicateur,                            ~"Résultat (moyenne journalière obtenue à partir des jours valides)",
     "Temps de port",                          paste0(round(df[["wear_time"]], 0), " min"),
     "Nombre de jours valides",               paste0(df[["valid_days"]], " jour(s)"),
@@ -92,15 +91,13 @@ flextable(
     "Proportion de temps de port MVPA",          paste0(format(round(df[["percent_MVPA"]], 1), nsmall = 1), " %"),
     "Dose MVPA",                          paste0(format(round(df[["mets_hours_mvpa"]], 1), nsmall = 1), " MET-hr"))
   ) %>%
-  theme_zebra() %>%
-  align(align = "left", part = "all" ) %>%
-  hline_top(part = "all", border = fp_border(width = 1.5)) %>%
-  hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
-  width(width = 3.25)
+  flextable::theme_zebra() %>%
+  flextable::align(align = "left", part = "all" ) %>%
+  flextable::width(width = 3.25)
 ```
 
 
-```{r, fig.height=18, fig.width = 17}
+```{r, fig.height=18, fig.width = 17, warning=FALSE, message=FALSE}
 
 ###################################################################################  
 # PAL
@@ -108,7 +105,7 @@ flextable(
 
 # Data for figure
   table_pal <-
-  tibble(
+  tibble::tibble(
     x = c(0, 0.25, 0.5, 0.75, 1),
     label = as.factor(c(
               "Undefined", 
@@ -120,7 +117,7 @@ flextable(
     start = c(1.1, 1.40, 1.70, 2.00, 2.40),
     end = c(1.40, 1.70, 2.00, 2.40, 2.8)
   ) %>%
-    mutate(label = fct_relevel(label,  "Undefined",
+    dplyr::mutate(label = forcats::fct_relevel(label,  "Undefined",
                                        "Sedentary or light activity lifestyle", 
                                        "Active or moderately active lifestyle", 
                                        "Vigorous or vigorously active lifestyle",
@@ -173,7 +170,7 @@ flextable(
 
 # Data for figure / categories for all adults
   table_steps1 <-
-  tibble(
+  tibble::tibble(
     x = c(0, 0, 0.25, 0.5, 0.75, 1),
     label = as.factor(c(
               "Sedentary, basal physical activity", 
@@ -186,7 +183,7 @@ flextable(
     start = c(0, 2500, 5000, 7500, 10000, 12500),
     end = c(2500, 5000, 7500, 10000, 12500, 18000)
   ) %>%
-    mutate(label = fct_relevel(label, "Sedentary, basal physical activity", 
+    dplyr::mutate(label = forcats::fct_relevel(label, "Sedentary, basal physical activity", 
                                       "Sedentary, limited physical activity",
                                       "Low active", 
                                       "Somewhat active",
@@ -195,7 +192,7 @@ flextable(
   
 # Data for figure / categories for specific populations
   table_steps2 <-
-  tibble(
+  tibble::tibble(
     label = as.factor(c(
               "Adults (20-65 ans)", 
               "Healthy older adults (65+ yr)", 
@@ -208,7 +205,7 @@ flextable(
     xmin = x-0.03,
     xmax = x+0.03
   ) %>%
-    mutate(label = fct_relevel(label, "Adults (20-65 ans)", 
+    dplyr::mutate(label = forcats::fct_relevel(label, "Adults (20-65 ans)", 
                                       "Healthy older adults (65+ yr)", 
                                       "People with disability \n and/or chronic illness")) 
 
@@ -264,26 +261,27 @@ if (params$rendered_by_shiny)
 # Building lines showing the estimate and the related confidence limits of mortality 
 # hazard ratio (Ekelund et al., 2020, http://dx.doi.org/10.1136/bmj.l4570)
 
-   model_mvpa <- loess(y ~ x, data = mvpa_lines %>% filter(line == "mid"), 
+   model_mvpa <- loess(y ~ x, data = mvpa_lines %>% dplyr::filter(line == "mid"), 
                        control = loess.control(surface = "direct"))
      
-   model_mvpa_up <- loess(y ~ x, data = mvpa_lines %>% filter(line == "up"), 
+   model_mvpa_up <- loess(y ~ x, data = mvpa_lines %>% dplyr::filter(line == "up"), 
                        control = loess.control(surface = "direct")) 
    
-   model_mvpa_low <- loess(y ~ x, data = mvpa_lines %>% filter(line == "low"), 
+   model_mvpa_low <- loess(y ~ x, data = mvpa_lines %>% dplyr::filter(line == "low"), 
                        control = loess.control(surface = "direct"))
    
    grid_mvpa <-
      mvpa_lines %>%
-     data_grid(
+     modelr::data_grid(
      x = seq(0, 100, 1),
      ) %>%
-     spread_predictions(model_mvpa, model_mvpa_up, model_mvpa_low) %>%
-     rename(mid = model_mvpa, up = model_mvpa_up, low = model_mvpa_low)
+     modelr::spread_predictions(model_mvpa, model_mvpa_up, model_mvpa_low) %>%
+     dplyr::rename(mid = model_mvpa, up = model_mvpa_up, low = model_mvpa_low)
 
 # Getting data for plotting patient's result  
   
-   score_mvpa <- data.frame(x = df[["minutes_MVPA"]]) %>% add_predictions(model_mvpa)
+   score_mvpa <- data.frame(x = df[["minutes_MVPA"]]) %>% 
+     modelr::add_predictions(model_mvpa)
 
 
 # Plot
@@ -298,7 +296,7 @@ if (params$rendered_by_shiny)
    geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
    geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
    geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 7, shape = 3) +
-   scale_y_continuous(trans = log2_trans()) +
+   scale_y_continuous(trans = scales::log2_trans()) +
    scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 100, 25)) +
    theme_bw() +
    coord_cartesian(xlim = c(0, 100), ylim = c(0.25, 1), expand = FALSE) +
@@ -347,33 +345,34 @@ if (params$rendered_by_shiny)
 # Building lines showing the estimate and the related confidence limits of mortality 
 # hazard ratio (Ekelund et al., 2020, http://dx.doi.org/10.1136/bmj.l4570)
 
-   model_sed <- loess(y ~ x, data = sed_lines %>% filter(line == "mid"), 
+   model_sed <- loess(y ~ x, data = sed_lines %>% dplyr::filter(line == "mid"), 
                        control = loess.control(surface = "direct"))
      
-   model_sed_up <- loess(y ~ x, data = sed_lines %>% filter(line == "up"), 
+   model_sed_up <- loess(y ~ x, data = sed_lines %>% dplyr::filter(line == "up"), 
                        control = loess.control(surface = "direct")) 
    
-   model_sed_low <- loess(y ~ x, data = sed_lines %>% filter(line == "low"), 
+   model_sed_low <- loess(y ~ x, data = sed_lines %>% dplyr::filter(line == "low"), 
                        control = loess.control(surface = "direct"))
    
    grid_sed <-
      sed_lines %>%
-     data_grid(
+     modelr::data_grid(
      x = seq(4, 14, 1),
      ) %>%
-     spread_predictions(model_sed, model_sed_up, model_sed_low) %>%
-     rename(mid = model_sed, up = model_sed_up, low = model_sed_low)
+     modelr::spread_predictions(model_sed, model_sed_up, model_sed_low) %>%
+     dplyr::rename(mid = model_sed, up = model_sed_up, low = model_sed_low)
 
 # Getting data for plotting patient's result  
   
-   score_sed <- data.frame(x = df[["minutes_SED"]] / 60) %>% add_predictions(model_sed)
+   score_sed <- data.frame(x = df[["minutes_SED"]] / 60) %>% 
+     modelr::add_predictions(model_sed)
 
 # Plot
 
  g_sed <-
    ggplot() +
    geom_ribbon(data = grid_sed, aes(x = x, y = up, ymin = low, ymax = up), fill = "grey95") +
-   geom_ribbon(data = grid_sed %>% filter(x < 6), 
+   geom_ribbon(data = grid_sed %>% dplyr::filter(x < 6), 
                aes(x = x, y = up, ymin = rep(0, 2), ymax = up), fill = "grey95") +
    geom_line(data = grid_sed, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
    geom_line(data = grid_sed, aes (x = x, y = up), size = 1, colour = "#3366FF", linetype = "dashed") +
@@ -382,7 +381,7 @@ if (params$rendered_by_shiny)
    geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
    geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
    geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 7, shape = 3) +
-   scale_y_continuous(trans = log2_trans()) +
+   scale_y_continuous(trans = scales::log2_trans()) +
    scale_x_continuous(limits = c(4, 14), breaks = seq(4, 14, 2)) +
    coord_cartesian(xlim = c(4, 14), ylim = c(0.35, 5), expand = FALSE) +
    labs(title = "Heures SED journalières", x = "", y = NULL) +
@@ -419,26 +418,27 @@ if (params$rendered_by_shiny)
 # Building lines showing the estimate and the related confidence limits of mortality 
 # hazard ratio (Ekelund et al., 2020)
 
-   model_ratio <- loess(y ~ x, data = ratio_lines %>% filter(line == "mid"), 
+   model_ratio <- loess(y ~ x, data = ratio_lines %>% dplyr::filter(line == "mid"), 
                        control = loess.control(surface = "direct"))
      
-   model_ratio_up <- loess(y ~ x, data = ratio_lines %>% filter(line == "up"), 
+   model_ratio_up <- loess(y ~ x, data = ratio_lines %>% dplyr::filter(line == "up"), 
                        control = loess.control(surface = "direct")) 
    
-   model_ratio_low <- loess(y ~ x, data = ratio_lines %>% filter(line == "low"), 
+   model_ratio_low <- loess(y ~ x, data = ratio_lines %>% dplyr::filter(line == "low"), 
                        control = loess.control(surface = "direct"))
    
    grid_ratio <-
      ratio_lines %>%
-     data_grid(
+     modelr::data_grid(
      x = seq(0, 0.4, 0.05),
      ) %>%
-     spread_predictions(model_ratio, model_ratio_up, model_ratio_low) %>%
-     rename(mid = model_ratio, up = model_ratio_up, low = model_ratio_low)
+     modelr::spread_predictions(model_ratio, model_ratio_up, model_ratio_low) %>%
+     dplyr::rename(mid = model_ratio, up = model_ratio_up, low = model_ratio_low)
 
 # Getting data for plotting patient's result  
   
-   score_ratio <- data.frame(x = df[["ratio_mvpa_sed"]]) %>% add_predictions(model_ratio)
+   score_ratio <- data.frame(x = df[["ratio_mvpa_sed"]]) %>% 
+     modelr::add_predictions(model_ratio)
 
 # Plot
 
@@ -470,7 +470,7 @@ if (params$rendered_by_shiny)
   annotate("text", label = "Seuil pour obtenir \nla plupart des bénéfices \nde santé", 
             x = 0.068, y = 1.13, hjust = 0,
             colour = "black", fontface = "italic") +
-   annotate(geom = "curve", 
+  annotate(geom = "curve", 
          x = 0.065, 
          y = 1.17, 
          xend = 0.043, 
@@ -490,14 +490,14 @@ if (params$rendered_by_shiny)
 # Generate figure
   g_week <-
     df2 %>%
-    mutate(validity = ifelse(wear_time >= 600, "Valid day", "Non valid day"),
-           validity = fct_relevel(validity, "Valid day", "Non valid day")) %>%
-    pivot_longer(cols = c(wear_time, total_steps, pal, minutes_SED, minutes_LPA, minutes_MVPA, percent_SED, percent_LPA, percent_MVPA),
-                 names_to = "variable", values_to = "value") %>%
-    mutate(variable = fct_relevel(variable, "wear_time", "total_steps", "pal", 
+    dplyr::mutate(validity = ifelse(wear_time >= 600, "Valid day", "Non valid day"),
+                  validity = forcats::fct_relevel(validity, "Valid day", "Non valid day")) %>%
+    tidyr::pivot_longer(cols = c(wear_time, total_steps, pal, minutes_SED, minutes_LPA, minutes_MVPA, percent_SED, percent_LPA, percent_MVPA),
+                        names_to = "variable", values_to = "value") %>%
+    dplyr::mutate(variable = forcats::fct_relevel(variable, "wear_time", "total_steps", "pal", 
                                    "minutes_MVPA", "minutes_LPA","minutes_SED", 
                                   "percent_MVPA", "percent_LPA", "percent_SED"),
-           variable = fct_recode(variable, 
+                  variable = forcats::fct_recode(variable, 
                                  "Temps de port (min)" = "wear_time", 
                                  "Nombre de pas" = "total_steps", 
                                  "NAP" = "pal",
@@ -544,10 +544,6 @@ g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_week +
 
 
 # Commentaires
-
-```{r}
-
-```
 
 ```{r, echo = F}
 # Converting MVPA minutes to MET-hours

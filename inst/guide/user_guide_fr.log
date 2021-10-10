@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.10.1)  1 OCT 2021 22:41
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.10.1)  9 OCT 2021 17:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1200,7 +1200,7 @@ Chapitre 4.
 [13] [14
 
 ]
-Underfull \hbox (badness 5133) in paragraph at lines 390--392
+Underfull \hbox (badness 5133) in paragraph at lines 391--393
 \TU/lmr/m/it/10 PhysicalActivity : process accelerometer data for physical acti
 vity measurement\TU/lmr/m/n/10 .
  []

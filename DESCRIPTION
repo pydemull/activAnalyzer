@@ -1,0 +1,54 @@
+Package: activAnalyzer
+Title: A shiny app to analyze ActiGraph accelerometer data recorded at the hip in adults
+Version: 0.0.0.9000
+Authors@R: person('Pierre-Yves', 'de Mülenheim', email = 'pydemull@uco.fr', role = c('cre', 'aut'))
+Description: This app was developed to analyse ActiGraph accelerometer data 
+    (.agd files) recorded at the hip in adults. Once analysis is completed,
+    the app allows to export results to .csv files and to generate a report of 
+    the measurement. All the configured inputs relevant for interpreting the 
+    results are recorded into the report.
+License: GPL (>= 3)
+Imports: 
+    actigraph.sleepr,
+    config (>= 0.3.1),
+    dplyr (>= 1.0.7),
+    DT,
+    flextable,
+    forcats,
+    ggplot2 (>= 3.3.5),
+    glue,
+    golem (>= 0.3.1),
+    hms,
+    htmltools,
+    lubridate,
+    magrittr,
+    modelr,
+    officer,
+    patchwork,
+    PhysicalActivity,
+    pkgload,
+    processx,
+    RColorBrewer,
+    reactable,
+    rlang,
+    rmarkdown,
+    scales,
+    shiny (>= 1.6.0),
+    shinycssloaders,
+    shinydashboard,
+    shinydashboardPlus,
+    shinyFeedback,
+    tibble,
+    tidyr
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+URL: https://github.com/pydemull/activAnalyzer
+BugReports: https://github.com/pydemull/activAnalyzer/issues
+Suggests: 
+    spelling,
+    testthat (>= 3.0.0)
+Language: en-US
+Depends: R (>= 2.10)
+Config/testthat/edition: 3
