@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The activAnalyzer package was primarily built for working through a shiny app. How using the app is explained in the related [user's guide](https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf). The functions used in this app can also be used to analyze data outside the app, as shown below.
+The activAnalyzer package was primarily built for working through a shiny app. The procedure for using the app is explained in the related [user's guide](https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf). The functions used in this app can also be used to analyze data outside the app, as shown below.
 
 ## Loading packages
 ```{r setup}
@@ -28,20 +28,30 @@ library(ggplot2)
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 ```
 
-## Getting results
+## Preparing dataset
 ```{r, warning=FALSE, message=FALSE}
 mydata <-
   prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp") %>%
-  mark_wear_time() 
-
-results <-
-  mydata %>%
-  mark_intensity( equation = "Sasaki et al. (2011) [Adults]", sex = "male") %>%
-  recap_by_day(col_date = "date",  sex = "male") %>%
-  average_results()
-
-results
+  mark_wear_time(frame = 90, allowanceFrame = 2)
 ```
+
+```{r}
+results_by_day <-
+  mydata %>%
+  mark_intensity(equation = "Sasaki et al. (2011) [Adults]", sex = "male") %>%
+  recap_by_day(col_date = "date",  sex = "male")
+
+results_by_day %>% flextable::flextable()
+```
+
+```{r}
+averaged_results <-
+  results_by_day %>%
+  average_results(minimum_wear_time = 10)
+
+averaged_results %>% flextable::flextable()
+```
+
 
 ## Plotting data
 ```{r, fig.width = 7, fig.height = 5, fig.align='center'}
