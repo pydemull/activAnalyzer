@@ -26,9 +26,9 @@ activAnalyzer is a shinny app that was developed to analyse ActiGraph accelerome
 
 # Usage
 
-For now, this app can be used following two different ways: (i) on the web via a [shinyapps.io plateform] (pydemull.shinyapps.io/activanalyzer); (ii) on PC after installing R software and the activAnalyzer package.
+For now, this app can be used following two different ways: (i) on the web via a [shinyapps.io plateform](pydemull.shinyapps.io/activanalyzer); (ii) on PC after installing R software and the activAnalyzer package.
 
-## Installation for using with R
+## Installation for R users
 
 You can install the development version from [GitHub](https://github.com/) with:
 
