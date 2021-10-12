@@ -20,10 +20,18 @@ configured inputs relevant for interpreting the results are recorded in
 the report. Be sure that the inputs that are configured when generating
 the report correspond to the analysis that was actually performed (in
 other words, avoid modifying the inputs after generating satisfactory
-results). Please read the user’s guide for details about how the app
-works.
+results). Please read the [user’s
+guide](https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf)
+for details about how the app works.
 
-## Installation
+# Usage
+
+For now, this app can be used following two different ways: (i) on the
+web via a \[shinyapps.io plateform\]
+(pydemull.shinyapps.io/activanalyzer); (ii) on PC after installing R
+software and the activAnalyzer package.
+
+## Installation for using with R
 
 You can install the development version from
 [GitHub](https://github.com/) with:
@@ -35,9 +43,9 @@ devtools::install_github("pydemull/activAnalyzer")
 
 ## Example
 
-To launch the app:
+To launch the app using R:
 
 ``` r
 library(activAnalyzer)
-run_app()
+activAnalyzer::run_app()
 ```
