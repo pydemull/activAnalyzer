@@ -14,6 +14,38 @@ knitr::opts_chunk$set(
 )
 ```
 
+The activAnalyzer package was primarily built for working through a shiny app. How using the app is explained in the user's guide. The functions used in this app can also be used to analyze data outside the app, as shown below.
+
+## Loading package
 ```{r setup}
 library(activAnalyzer)
+library(magrittr)
+library(ggplot2)
 ```
+
+## Getting file
+```{r}
+file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
+```
+
+## Getting results
+```{r, warning=FALSE, message=FALSE}
+mydata <-
+  prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp") %>%
+  mark_wear_time() 
+
+results <-
+  mydata %>%
+  mark_intensity( equation = "Sasaki et al. (2011) [Adults]", sex = "male") %>%
+  recap_by_day(col_date = "date",  sex = "male") %>%
+  average_results()
+
+results
+```
+
+## Plotting data
+```{r, fig.width = 7, fig.height = 5, fig.align='center'}
+plot_data(data = mydata, metric = "steps") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+```
+

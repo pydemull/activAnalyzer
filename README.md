@@ -27,8 +27,9 @@ for details about how the app works.
 # Usage
 
 For now, this app can be used following two different ways: (i) on the
-web via a [shinyapps.io plateform](pydemull.shinyapps.io/activanalyzer);
-(ii) on PC after installing R software and the activAnalyzer package.
+web via a [shinyapps.io
+plateform](https://pydemull.shinyapps.io/activAnalyzer/); (ii) on PC
+after installing R software and the activAnalyzer package.
 
 ## Installation for R users
 
