@@ -83,13 +83,61 @@
 
     
     
+<p>The activAnalyzer package was primarily built for working through a shiny app. How using the app is explained in the user’s guide. The functions used in this app can also be used to analyze data outside the app, as shown below.</p>
+<div id="loading-package" class="section level2">
+<h2 class="hasAnchor">
+<a href="#loading-package" class="anchor"></a>Loading package</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/pydemull/activAnalyzer">activAnalyzer</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/pydemull/activAnalyzer">activAnalyzer</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></code></pre></div>
+</div>
+<div id="getting-file" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-file" class="anchor"></a>Getting file</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"acc.agd"</span>, package <span class="op">=</span> <span class="st">"activAnalyzer"</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="getting-results" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-results" class="anchor"></a>Getting results</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mydata</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/prepare_dataset.html">prepare_dataset</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">file</span>, epoch_len_out <span class="op">=</span> <span class="fl">60</span>, col_time_stamp <span class="op">=</span> <span class="st">"timestamp"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/mark_wear_time.html">mark_wear_time</a></span><span class="op">(</span><span class="op">)</span> 
+
+<span class="va">results</span> <span class="op">&lt;-</span>
+  <span class="va">mydata</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/mark_intensity.html">mark_intensity</a></span><span class="op">(</span> equation <span class="op">=</span> <span class="st">"Sasaki et al. (2011) [Adults]"</span>, sex <span class="op">=</span> <span class="st">"male"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/recap_by_day.html">recap_by_day</a></span><span class="op">(</span>col_date <span class="op">=</span> <span class="st">"date"</span>,  sex <span class="op">=</span> <span class="st">"male"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/average_results.html">average_results</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">results</span>
+<span class="co">#&gt; # A tibble: 1 × 19</span>
+<span class="co">#&gt;   valid_days wear_time total_counts_axis1 total_counts_vm total_steps</span>
+<span class="co">#&gt;        &lt;int&gt;     &lt;dbl&gt;              &lt;dbl&gt;           &lt;dbl&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt; 1          5      768.            513109.         951483.       14869</span>
+<span class="co">#&gt; # … with 14 more variables: total_kcal_wear_time &lt;dbl&gt;, minutes_SED &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   minutes_LPA &lt;dbl&gt;, minutes_MPA &lt;dbl&gt;, minutes_VPA &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   minutes_MVPA &lt;dbl&gt;, percent_SED &lt;dbl&gt;, percent_LPA &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   percent_MPA &lt;dbl&gt;, percent_VPA &lt;dbl&gt;, percent_MVPA &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   mets_hours_mvpa &lt;dbl&gt;, ratio_mvpa_sed &lt;dbl&gt;, pal &lt;dbl&gt;</span></code></pre></div>
+</div>
+<div id="plotting-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plotting-data" class="anchor"></a>Plotting data</h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_data.html">plot_data</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mydata</span>, metric <span class="op">=</span> <span class="st">"steps"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span>, vjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;"></p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 
