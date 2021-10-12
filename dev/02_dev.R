@@ -52,7 +52,8 @@ devtools::build_vignettes()
 usethis::use_coverage()
 
 # Create a summary readme for the testthat subdirectory
-covrpage::covrpage()
+#covrpage::covrpage()
+pkgbuild::with_build_tools(covr::package_coverage())
 
 ## CI ----
 ## Use this part of the script if you need to set up a CI
