@@ -3,8 +3,5 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   activAnalyzer: activAnalyzer.html
-last_built: 2021-10-13T12:32Z
-urls:
-  reference: https://pydemull.github.io/activAnalyzer/reference
-  article: https://pydemull.github.io/activAnalyzer/articles
+last_built: 2021-10-13T16:31Z
 
