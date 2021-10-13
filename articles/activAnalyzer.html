@@ -70,8 +70,7 @@
 
       
 
-      </header><script src="activAnalyzer_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="activAnalyzer_files/tabwid-1.0.0/tabwid.css" rel="stylesheet">
-<div class="row">
+      </header><script src="activAnalyzer_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="activAnalyzer_files/core-js-2.5.3/shim.min.js"></script><script src="activAnalyzer_files/react-17.0.0/react.min.js"></script><script src="activAnalyzer_files/react-17.0.0/react-dom.min.js"></script><script src="activAnalyzer_files/reactwidget-1.0.0/react-tools.js"></script><script src="activAnalyzer_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="activAnalyzer_files/reactable-binding-0.2.3/reactable.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>activAnalyzer</h1>
@@ -106,6 +105,10 @@
 <code class="sourceCode R"><span class="va">mydata</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/prepare_dataset.html">prepare_dataset</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">file</span>, epoch_len_out <span class="op">=</span> <span class="fl">60</span>, col_time_stamp <span class="op">=</span> <span class="st">"timestamp"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/mark_wear_time.html">mark_wear_time</a></span><span class="op">(</span>frame <span class="op">=</span> <span class="fl">90</span>, allowanceFrame <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="getting-results-by-day" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-results-by-day" class="anchor"></a>Getting results by day</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">results_by_day</span> <span class="op">&lt;-</span>
   <span class="va">mydata</span> <span class="op">%&gt;%</span>
@@ -133,311 +136,21 @@
 <span class="co">#&gt;     weight = 70</span>
 <span class="co">#&gt;     sex = male</span>
 
-<span class="va">results_by_day</span> <span class="op">%&gt;%</span> <span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html">flextable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<template id="b85a8c7c-0520-4265-ace1-290dd7f5cc1b"><style>
-.tabwid table{
-  border-spacing:0px !important;
-  border-collapse:collapse;
-  line-height:1;
-  margin-left:auto;
-  margin-right:auto;
-  border-width: 0;
-  display: table;
-  margin-top: 1.275em;
-  margin-bottom: 1.275em;
-  border-color: transparent;
-}
-.tabwid_left table{
-  margin-left:0;
-}
-.tabwid_right table{
-  margin-right:0;
-}
-.tabwid td {
-    padding: 0;
-}
-.tabwid a {
-  text-decoration: none;
-}
-.tabwid thead {
-    background-color: transparent;
-}
-.tabwid tfoot {
-    background-color: transparent;
-}
-.tabwid table tr {
-background-color: transparent;
-}
-</style>
-<div class="tabwid">
-<style>.cl-db5f4c3e{}.cl-db523e72{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-db527a5e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-db527a90{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-db5335fc{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-db53362e{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-db533642{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-db53364c{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-db533660{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-db533674{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table class="table cl-db5f4c3e">
-<thead><tr style="overflow-wrap:break-word;">
-<td class="cl-db533660"><p class="cl-db527a5e"><span class="cl-db523e72">date</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">wear_time</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">total_counts_axis1</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">total_counts_vm</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">total_steps</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">total_kcal_wear_time</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">minutes_SED</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">minutes_LPA</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">minutes_MPA</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">minutes_VPA</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">minutes_MVPA</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">percent_SED</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">percent_LPA</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">percent_MPA</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">percent_VPA</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">percent_MVPA</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">mets_hours_mvpa</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">ratio_mvpa_sed</span></p></td>
-<td class="cl-db533674"><p class="cl-db527a90"><span class="cl-db523e72">pal</span></p></td>
-</tr></thead>
-<tbody>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-db53362e"><p class="cl-db527a5e"><span class="cl-db523e72">2021-04-07</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">720</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">359,125</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">706,251.9</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">14,056</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">1,298.83</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">288</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">362</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">66</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">4</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">70</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">40.00</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">50.28</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">9.17</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">0.56</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">9.72</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">5.16</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">0.24</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">1.46</span></p></td>
-</tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-db53362e"><p class="cl-db527a5e"><span class="cl-db523e72">2021-04-08</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">811</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">495,257</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">923,432.0</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">14,595</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">1,570.14</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">294</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">413</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">97</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">7</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">104</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">36.25</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">50.92</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">11.96</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">0.86</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">12.82</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">7.30</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">0.35</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">1.58</span></p></td>
-</tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-db53362e"><p class="cl-db527a5e"><span class="cl-db523e72">2021-04-09</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">718</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">1,222,315</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">1,930,804.8</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">21,635</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">2,465.52</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">297</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">207</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">50</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">164</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">214</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">41.36</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">28.83</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">6.96</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">22.84</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">29.81</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">25.99</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">0.72</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">2.28</span></p></td>
-</tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-db53362e"><p class="cl-db527a5e"><span class="cl-db523e72">2021-04-10</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">770</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">320,847</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">781,469.1</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">13,744</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">1,376.87</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">204</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">522</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">43</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">1</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">44</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">26.49</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">67.79</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">5.58</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">0.13</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">5.71</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">2.78</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">0.22</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">1.48</span></p></td>
-</tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-db53362e"><p class="cl-db527a5e"><span class="cl-db523e72">2021-04-11</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">820</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">167,999</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">415,457.4</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">10,315</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">1,104.03</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">350</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">461</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">9</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">0</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">9</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">42.68</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">56.22</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">1.10</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">0.00</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">1.10</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">0.44</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">0.03</span></p></td>
-<td class="cl-db5335fc"><p class="cl-db527a90"><span class="cl-db523e72">1.25</span></p></td>
-</tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-db533642"><p class="cl-db527a5e"><span class="cl-db523e72">2021-04-12</span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72">0</span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72">0</span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72">0.0</span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72">0</span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72">0.00</span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72">0</span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72">0</span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72">0</span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72">0</span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72">0</span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72"></span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72"></span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72"></span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72"></span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72"></span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72">0.00</span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72"></span></p></td>
-<td class="cl-db53364c"><p class="cl-db527a90"><span class="cl-db523e72">1.11</span></p></td>
-</tr>
-</tbody>
-</table>
-</div></template><div class="flextable-shadow-host" id="d0cb5aad-08d6-4f0a-820d-ff53e1abfd95"></div>
-<script>
-var dest = document.getElementById("d0cb5aad-08d6-4f0a-820d-ff53e1abfd95");
-var template = document.getElementById("b85a8c7c-0520-4265-ace1-290dd7f5cc1b");
-var caption = template.content.querySelector("caption");
-if(caption) {
-  caption.style.cssText = "display:block;text-align:center;";
-  var newcapt = document.createElement("p");
-  newcapt.appendChild(caption)
-  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
-}
-var fantome = dest.attachShadow({mode: 'open'});
-var templateContent = template.content;
-fantome.appendChild(templateContent);
-</script><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<span class="va">results_by_day</span> <span class="op">%&gt;%</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html">reactable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div id="htmlwidget-164711159afbd7912d19" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-164711159afbd7912d19">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"date":["2021-04-07","2021-04-08","2021-04-09","2021-04-10","2021-04-11","2021-04-12"],"wear_time":[720,811,718,770,820,0],"total_counts_axis1":[359125,495257,1222315,320847,167999,0],"total_counts_vm":[706251.89,923432.04,1930804.78,781469.07,415457.39,0],"total_steps":[14056,14595,21635,13744,10315,0],"total_kcal_wear_time":[1298.83,1570.14,2465.52,1376.87,1104.03,0],"minutes_SED":[288,294,297,204,350,0],"minutes_LPA":[362,413,207,522,461,0],"minutes_MPA":[66,97,50,43,9,0],"minutes_VPA":[4,7,164,1,0,0],"minutes_MVPA":[70,104,214,44,9,0],"percent_SED":[40,36.25,41.36,26.49,42.68,"NaN"],"percent_LPA":[50.28,50.92,28.83,67.79,56.22,"NaN"],"percent_MPA":[9.17,11.96,6.96,5.58,1.1,"NaN"],"percent_VPA":[0.56,0.86,22.84,0.13,0,"NaN"],"percent_MVPA":[9.72,12.82,29.81,5.71,1.1,"NaN"],"mets_hours_mvpa":[5.16,7.3,25.99,2.78,0.44,0],"ratio_mvpa_sed":[0.24,0.35,0.72,0.22,0.03,"NaN"],"pal":[1.46,1.58,2.28,1.48,1.25,1.11]},"columns":[{"accessor":"date","name":"date","type":"character"},{"accessor":"wear_time","name":"wear_time","type":"numeric"},{"accessor":"total_counts_axis1","name":"total_counts_axis1","type":"numeric"},{"accessor":"total_counts_vm","name":"total_counts_vm","type":"numeric"},{"accessor":"total_steps","name":"total_steps","type":"numeric"},{"accessor":"total_kcal_wear_time","name":"total_kcal_wear_time","type":"numeric"},{"accessor":"minutes_SED","name":"minutes_SED","type":"numeric"},{"accessor":"minutes_LPA","name":"minutes_LPA","type":"numeric"},{"accessor":"minutes_MPA","name":"minutes_MPA","type":"numeric"},{"accessor":"minutes_VPA","name":"minutes_VPA","type":"numeric"},{"accessor":"minutes_MVPA","name":"minutes_MVPA","type":"numeric"},{"accessor":"percent_SED","name":"percent_SED","type":"numeric"},{"accessor":"percent_LPA","name":"percent_LPA","type":"numeric"},{"accessor":"percent_MPA","name":"percent_MPA","type":"numeric"},{"accessor":"percent_VPA","name":"percent_VPA","type":"numeric"},{"accessor":"percent_MVPA","name":"percent_MVPA","type":"numeric"},{"accessor":"mets_hours_mvpa","name":"mets_hours_mvpa","type":"numeric"},{"accessor":"ratio_mvpa_sed","name":"ratio_mvpa_sed","type":"numeric"},{"accessor":"pal","name":"pal","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"17373ad80b12f788b643368b2c9518cf","key":"17373ad80b12f788b643368b2c9518cf"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="getting-results-over-valid-days" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-results-over-valid-days" class="anchor"></a>Getting results over valid days</h2>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">averaged_results</span> <span class="op">&lt;-</span>
   <span class="va">results_by_day</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/average_results.html">average_results</a></span><span class="op">(</span>minimum_wear_time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 
-<span class="va">averaged_results</span> <span class="op">%&gt;%</span> <span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html">flextable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<template id="6cc17ee1-beba-492f-aff2-851a85472451"><style>
-.tabwid table{
-  border-spacing:0px !important;
-  border-collapse:collapse;
-  line-height:1;
-  margin-left:auto;
-  margin-right:auto;
-  border-width: 0;
-  display: table;
-  margin-top: 1.275em;
-  margin-bottom: 1.275em;
-  border-color: transparent;
-}
-.tabwid_left table{
-  margin-left:0;
-}
-.tabwid_right table{
-  margin-right:0;
-}
-.tabwid td {
-    padding: 0;
-}
-.tabwid a {
-  text-decoration: none;
-}
-.tabwid thead {
-    background-color: transparent;
-}
-.tabwid tfoot {
-    background-color: transparent;
-}
-.tabwid table tr {
-background-color: transparent;
-}
-</style>
-<div class="tabwid">
-<style>.cl-db9b11ec{}.cl-db91c704{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-db91dd7a{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-db9221ea{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-db92221c{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table class="table cl-db9b11ec">
-<thead><tr style="overflow-wrap:break-word;">
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">valid_days</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">wear_time</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">total_counts_axis1</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">total_counts_vm</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">total_steps</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">total_kcal_wear_time</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">minutes_SED</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">minutes_LPA</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">minutes_MPA</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">minutes_VPA</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">minutes_MVPA</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">percent_SED</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">percent_LPA</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">percent_MPA</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">percent_VPA</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">percent_MVPA</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">mets_hours_mvpa</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">ratio_mvpa_sed</span></p></td>
-<td class="cl-db92221c"><p class="cl-db91dd7a"><span class="cl-db91c704">pal</span></p></td>
-</tr></thead>
-<tbody><tr style="overflow-wrap:break-word;">
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">5</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">767.8</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">513,108.6</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">951,483</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">14,869</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">1,563.08</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">286.6</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">393</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">53</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">35.2</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">88.2</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">37.36</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">50.81</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">6.95</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">4.88</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">11.83</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">8.3</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">0.3</span></p></td>
-<td class="cl-db9221ea"><p class="cl-db91dd7a"><span class="cl-db91c704">1.61</span></p></td>
-</tr></tbody>
-</table>
-</div></template><div class="flextable-shadow-host" id="380032df-4901-45be-b479-4dd9d491e50e"></div>
-<script>
-var dest = document.getElementById("380032df-4901-45be-b479-4dd9d491e50e");
-var template = document.getElementById("6cc17ee1-beba-492f-aff2-851a85472451");
-var caption = template.content.querySelector("caption");
-if(caption) {
-  caption.style.cssText = "display:block;text-align:center;";
-  var newcapt = document.createElement("p");
-  newcapt.appendChild(caption)
-  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
-}
-var fantome = dest.attachShadow({mode: 'open'});
-var templateContent = template.content;
-fantome.appendChild(templateContent);
-</script>
+<span class="va">averaged_results</span> <span class="op">%&gt;%</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html">reactable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div id="htmlwidget-f310ad5b62271015c228" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-f310ad5b62271015c228">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"valid_days":[5],"wear_time":[767.8],"total_counts_axis1":[513108.6],"total_counts_vm":[951483.03],"total_steps":[14869],"total_kcal_wear_time":[1563.08],"minutes_SED":[286.6],"minutes_LPA":[393],"minutes_MPA":[53],"minutes_VPA":[35.2],"minutes_MVPA":[88.2],"percent_SED":[37.36],"percent_LPA":[50.81],"percent_MPA":[6.95],"percent_VPA":[4.88],"percent_MVPA":[11.83],"mets_hours_mvpa":[8.3],"ratio_mvpa_sed":[0.3],"pal":[1.61]},"columns":[{"accessor":"valid_days","name":"valid_days","type":"numeric"},{"accessor":"wear_time","name":"wear_time","type":"numeric"},{"accessor":"total_counts_axis1","name":"total_counts_axis1","type":"numeric"},{"accessor":"total_counts_vm","name":"total_counts_vm","type":"numeric"},{"accessor":"total_steps","name":"total_steps","type":"numeric"},{"accessor":"total_kcal_wear_time","name":"total_kcal_wear_time","type":"numeric"},{"accessor":"minutes_SED","name":"minutes_SED","type":"numeric"},{"accessor":"minutes_LPA","name":"minutes_LPA","type":"numeric"},{"accessor":"minutes_MPA","name":"minutes_MPA","type":"numeric"},{"accessor":"minutes_VPA","name":"minutes_VPA","type":"numeric"},{"accessor":"minutes_MVPA","name":"minutes_MVPA","type":"numeric"},{"accessor":"percent_SED","name":"percent_SED","type":"numeric"},{"accessor":"percent_LPA","name":"percent_LPA","type":"numeric"},{"accessor":"percent_MPA","name":"percent_MPA","type":"numeric"},{"accessor":"percent_VPA","name":"percent_VPA","type":"numeric"},{"accessor":"percent_MVPA","name":"percent_MVPA","type":"numeric"},{"accessor":"mets_hours_mvpa","name":"mets_hours_mvpa","type":"numeric"},{"accessor":"ratio_mvpa_sed","name":"ratio_mvpa_sed","type":"numeric"},{"accessor":"pal","name":"pal","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"790cbede96b6655c088062a7377f9264","key":"790cbede96b6655c088062a7377f9264"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="plotting-data" class="section level2">
 <h2 class="hasAnchor">
