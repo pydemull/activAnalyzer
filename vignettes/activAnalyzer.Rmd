@@ -35,21 +35,22 @@ mydata <-
   mark_wear_time(frame = 90, allowanceFrame = 2)
 ```
 
+## Getting results by day
 ```{r}
 results_by_day <-
   mydata %>%
   mark_intensity(equation = "Sasaki et al. (2011) [Adults]", sex = "male") %>%
   recap_by_day(col_date = "date",  sex = "male")
 
-results_by_day %>% flextable::flextable()
+results_by_day %>% reactable::reactable()
 ```
-
+## Getting results over valid days
 ```{r}
 averaged_results <-
   results_by_day %>%
   average_results(minimum_wear_time = 10)
 
-averaged_results %>% flextable::flextable()
+averaged_results %>% reactable::reactable()
 ```
 
 
