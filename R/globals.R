@@ -50,10 +50,4 @@ utils::globalVariables(c(
   "vm",
   "steps",
   "kcal"
-  
-  
-  
-  
-  
-  
   ))
