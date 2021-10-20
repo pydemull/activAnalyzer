@@ -1,6 +1,6 @@
 ---
 title: |
-    | ActivAnalyzer
+    | activAnalyzer
     | user's guide
 author: "Pierre-Yves de Müllenheim"
 date: "`r Sys.Date()`"
