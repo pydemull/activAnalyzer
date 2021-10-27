@@ -1,11 +1,11 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.10.1)  9 OCT 2021 17:53
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.10.26)  27 OCT 2021 10:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **user_guide_fr.tex
 (./user_guide_fr.tex
 LaTeX2e <2021-06-01> patch level 1
-L3 programming layer <2021-08-27>
+L3 programming layer <2021-10-18>
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/book
 .cls
 Document Class: book 2021/02/12 v1.4n Standard LaTeX document class
@@ -155,11 +155,11 @@ Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 ath/unicode-math.sty
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3kernel/
 expl3.sty
-Package: expl3 2021-08-27 L3 programming layer (loader) 
+Package: expl3 2021-10-18 L3 programming layer (loader) 
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend
 /l3backend-xetex.def
-File: l3backend-xetex.def 2021-08-04 L3 backend support: XeTeX
+File: l3backend-xetex.def 2021-10-18 L3 backend support: XeTeX
 (|extractbb --version)
 \c__kernel_sys_dvipdfmx_version_int=\count199
 \l__color_backend_stack_int=\count266
@@ -1249,10 +1249,10 @@ Package rerunfilecheck Info: File `user_guide_fr.out' has not changed.
 (rerunfilecheck)             Checksum: 14A081F891B9B7230946007421CC5B2F;1309.
  ) 
 Here is how much of TeX's memory you used:
- 17809 strings out of 478492
- 322685 string characters out of 5859688
- 813960 words of memory out of 5000000
- 37837 multiletter control sequences out of 15000+600000
+ 17812 strings out of 478472
+ 322790 string characters out of 5859044
+ 815629 words of memory out of 5000000
+ 37860 multiletter control sequences out of 15000+600000
  409897 words of font info for 82 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  87i,11n,120p,1904b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
