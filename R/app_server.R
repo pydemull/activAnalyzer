@@ -104,8 +104,10 @@ app_server <- function(input, output, session) {
                          allowanceFrame = input$allowanceFrame_size)
     return(df)
     
+    
   })
   
+
   # Returning to default values for the wear time detection algorithm
   observeEvent(input$reset_nonwear, {
     axis_weartime <- c("vector magnitude", "vertical axis")
@@ -196,7 +198,7 @@ app_server <- function(input, output, session) {
       equations_mets %>% 
         dplyr::filter(Study == input$equation_mets) %>%
         reactable::reactable(striped = TRUE,
-                  list(Study = reactable::colDef(minWidth = 80),
+                  list('Study' = reactable::colDef(minWidth = 80),
                        'Population' = reactable::colDef(minWidth = 60),
                        'Activities performed' = reactable::colDef(minWidth = 60),
                        'Device used' = reactable::colDef(minWidth = 40),
@@ -221,7 +223,7 @@ app_server <- function(input, output, session) {
       sed_cutpoints %>% 
         dplyr::filter(Study == input$sed_cutpoint) %>%
         reactable::reactable(striped = TRUE,
-                  list(Study = reactable::colDef(minWidth = 80),
+                  list('Study' = reactable::colDef(minWidth = 80),
                        'Population' = reactable::colDef(minWidth = 70),
                        'Activities performed' = reactable::colDef(minWidth = 60),
                        'Device used' = reactable::colDef(minWidth = 40),
@@ -247,7 +249,7 @@ app_server <- function(input, output, session) {
       mvpa_cutpoints %>% 
         dplyr::filter(Study == input$mvpa_cutpoint) %>%
         reactable::reactable(striped = TRUE,
-                  list(Study = reactable::colDef(minWidth = 80),
+                  list('Study' = reactable::colDef(minWidth = 80),
                        'Population' = reactable::colDef(minWidth = 70),
                        'Activities performed' = reactable::colDef(minWidth = 60),
                        'Device used' = reactable::colDef(minWidth = 40),
@@ -267,7 +269,7 @@ app_server <- function(input, output, session) {
       mvpa_cutpoints %>% 
         dplyr::filter(Study == input$mvpa_cutpoint) %>%
         reactable::reactable(striped = TRUE,
-                  list(Study = reactable::colDef(minWidth = 80),
+                  list('Study' = reactable::colDef(minWidth = 80),
                        'Population' = reactable::colDef(minWidth = 70),
                        'Activities performed' = reactable::colDef(minWidth = 60),
                        'Device used' = reactable::colDef(minWidth = 40),
@@ -287,7 +289,7 @@ app_server <- function(input, output, session) {
       mvpa_cutpoints %>% 
         dplyr::filter(Study == input$mvpa_cutpoint) %>%
         reactable::reactable(striped = TRUE,
-                  list(Study = reactable::colDef(minWidth = 80),
+                  list('Study' = reactable::colDef(minWidth = 80),
                        'Population' = reactable::colDef(minWidth = 70),
                        'Activities performed' = reactable::colDef(minWidth = 60),
                        'Device used' = reactable::colDef(minWidth = 40),
@@ -709,6 +711,25 @@ app_server <- function(input, output, session) {
       file.copy(system.file("guide", "user_guide_fr.pdf", package = "activAnalyzer"), file)
     }
   )
+  
+  #################################################
+  # Exporting values/objects (required for testing)
+  #################################################
+  
+  # Exporting dataframe marked for wear time
+    observeEvent(input$validate, {
+      shiny::exportTestValues(df = df())
+    })
+  
+  # Exporting dataframe marked for wear time
+    observeEvent(input$Run, {
+      shiny::exportTestValues(results_by_day = results_by_day()$results_by_day)
+    })
+    
+  # Exporting dataframe marked for wear time
+    observeEvent(input$Run, {
+      shiny::exportTestValues(results_summary = results_summary())
+    })
   
 }
 
