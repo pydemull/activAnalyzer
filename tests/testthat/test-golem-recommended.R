@@ -36,23 +36,24 @@ test_that("app server", {
 
 test_that("The app correctly manages dataframes", {
   
-  # Loading app
-    devtools::load_all()
-  
-  # Getting need global objects
-     Study <<- "Study"
-  
+  # Preparing environment for shinytest
+    Study <<- "Study"
+    assign("equations_mets", activAnalyzer:::equations_mets, envir = .GlobalEnv)
+    assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = .GlobalEnv)
+    assign("sed_cutpoints", activAnalyzer:::sed_cutpoints, envir = .GlobalEnv)
+    assign("mvpa_lines", activAnalyzer:::mvpa_lines, envir = .GlobalEnv)
+    assign("sed_lines", activAnalyzer:::sed_lines, envir = .GlobalEnv)
+    assign("ratio_lines", activAnalyzer:::ratio_lines, envir = .GlobalEnv)
+
   # Creating shinyDriver object
-    app <- shinytest::ShinyDriver$new(activAnalyzer::run_app(),
+    app <- shinytest::ShinyDriver$new(run_app(),
                                     loadTimeout = 1e+05,
                                     shinyOptions = list(test.mode = TRUE))
  
-  # Loading file inside and outside the app
-    app$uploadFile(upload = "inst/extdata/acc.agd")
-    test_file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
-    
+  # Loading data file inside and outside the app
+    app$uploadFile(upload = "acc.agd")
+    test_file <- "acc.agd"
 
-  
   # Testing dataframe marked for wear time
       # Test n°1
         app$setInputs(axis_weartime = "vertical axis", 

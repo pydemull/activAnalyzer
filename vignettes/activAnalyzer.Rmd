@@ -36,7 +36,7 @@ mydata <-
 ```
 
 ## Getting results by day
-```{r}
+```{r, message = FALSE}
 results_by_day <-
   mydata %>%
   mark_intensity(equation = "Sasaki et al. (2011) [Adults]", sex = "male") %>%

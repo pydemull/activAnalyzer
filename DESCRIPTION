@@ -47,6 +47,7 @@ RoxygenNote: 7.1.2
 URL: https://pydemull.github.io/activAnalyzer, https://github.com/pydemull/activAnalyzer
 BugReports: https://github.com/pydemull/activAnalyzer/issues
 Suggests: 
+    shinytest,
     covr,
     knitr,
     spelling,
