@@ -137,16 +137,16 @@ app_ui <- function(request) {
                     ),
                   ),
                   fluidRow(
-                    column(2,
+                    column(3,
                            selectInput("axis_weartime", "Axis to be considered to detect nonwear time", axis_weartime)
                     ),  
-                    column(2,
+                    column(3,
                            numericInput("frame_size", "Time interval to be considered to detect nonwear time (min)", value = 90, min = 0)
                     ),
-                    column(2,
+                    column(3,
                            numericInput("allowanceFrame_size", "Time interval with nonzero counts allowed during a nonwear period (min)", value = 2, min = 0)
                     ),
-                    column(6,
+                    column(3,
                            numericInput("streamFrame_size", "Time interval with zero counts required around activity for nonwear time (min)", value = 30, min = 0)
                     ),
                   ),
