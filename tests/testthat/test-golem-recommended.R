@@ -58,28 +58,30 @@ test_that("The app correctly manages dataframes", {
       # Test n°1
         app$setInputs(axis_weartime = "vertical axis", 
                       frame_size = 60, 
-                      allowanceFrame_size = 1)
+                      allowanceFrame_size = 1, 
+                      streamFrame_size = 20)
         
         app$setInputs(validate = "click")
         
         actual_df <- app$getAllValues()$export[["df"]]
         test_df <- 
           prepare_dataset(data = test_file) %>%
-          mark_wear_time(cts  = "axis1", frame = 60, allowanceFrame = 1) 
+          mark_wear_time(cts  = "axis1", frame = 60, allowanceFrame = 1, streamFrame = 20) 
         
         expect_identical(actual_df, test_df)
      
      # Test n°2
        app$setInputs(axis_weartime = "vector magnitude", 
                      frame_size = 30, 
-                     allowanceFrame_size = 0)
+                     allowanceFrame_size = 0, 
+                     streamFrame_size = 0)
        
        app$setInputs(validate = "click")
        
        actual_df <- app$getAllValues()$export[["df"]]
        test_df <- 
          prepare_dataset(data = test_file) %>%
-         mark_wear_time(cts  = "vm", frame = 30, allowanceFrame = 0) 
+         mark_wear_time(cts  = "vm", frame = 30, allowanceFrame = 0, streamFrame = 0) 
        
        expect_identical(actual_df, test_df)
        

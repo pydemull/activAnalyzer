@@ -140,18 +140,24 @@ app_ui <- function(request) {
                     column(2,
                            selectInput("axis_weartime", "Axis to be considered to detect nonwear time", axis_weartime)
                     ),  
-                    column(3,
+                    column(2,
                            numericInput("frame_size", "Time interval to be considered to detect nonwear time (min)", value = 90, min = 0)
                     ),
-                    column(4,
+                    column(2,
                            numericInput("allowanceFrame_size", "Time interval with nonzero counts allowed during a nonwear period (min)", value = 2, min = 0)
                     ),
+                    column(6,
+                           numericInput("streamFrame_size", "Time interval with zero counts required around activity for nonwear time (min)", value = 30, min = 0)
+                    ),
+                  ),
+                  fluidRow(
                     column(3,
                            shiny::actionButton("reset_nonwear", "Return to default values", style = "border-color: #2e6da4")
                     ),
                   ),
                   fluidRow(
                     column(3,
+                           h3(""),
                            shiny::actionButton("validate", "Validate configuration", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
                     ),
                   ),

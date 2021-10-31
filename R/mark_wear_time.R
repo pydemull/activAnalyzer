@@ -12,6 +12,8 @@
 #' @param frame A numeric value for the length of the time window (in minutes) used to detect nonwear/wear time.
 #' @param allowanceFrame A numeric value for the length of the time window (in minutes) with nonzero counts allowed 
 #'     within the detected nonwear period.
+#' @param streamFrame A numeric value for the length of the time window required around the detected activity 
+#'     to validate nonwear time.
 #'
 #' @return A dataframe.
 #' @export
@@ -23,7 +25,7 @@
 #' mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
 #' mark_wear_time(dataset = mydata, TS = "timestamp", cts  = "vm", frame = 90, allowanceFrame = 2)
 #' 
-mark_wear_time <- function(dataset, TS = "timestamp", cts  = "vm", frame = 90, allowanceFrame = 2) {
+mark_wear_time <- function(dataset, TS = "timestamp", cts  = "vm", frame = 90, allowanceFrame = 2, streamFrame = 30) {
   
   df <-
     PhysicalActivity::wearingMarking(
@@ -31,7 +33,8 @@ mark_wear_time <- function(dataset, TS = "timestamp", cts  = "vm", frame = 90, a
                  TS = TS, 
                  cts = cts, 
                  frame = frame, 
-                 allowanceFrame = allowanceFrame) %>%
+                 allowanceFrame = allowanceFrame,
+                 streamFrame = streamFrame) %>%
     dplyr::mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
                   wearing_count = ifelse(wearing == "w", 1, 0))
   

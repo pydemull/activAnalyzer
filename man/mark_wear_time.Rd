@@ -9,7 +9,8 @@ mark_wear_time(
   TS = "timestamp",
   cts = "vm",
   frame = 90,
-  allowanceFrame = 2
+  allowanceFrame = 2,
+  streamFrame = 30
 )
 }
 \arguments{
@@ -23,6 +24,9 @@ mark_wear_time(
 
 \item{allowanceFrame}{A numeric value for the length of the time window (in minutes) with nonzero counts allowed
 within the detected nonwear period.}
+
+\item{streamFrame}{A numeric value for the length of the time window required around the detected activity
+to validate nonwear time.}
 }
 \value{
 A dataframe.

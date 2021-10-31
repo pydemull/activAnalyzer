@@ -23,6 +23,7 @@ params:
   axis_weartime: NA
   frame_size: NA
   allowanceFrame_size: NA
+  streamFrame_size: NA
   equation_mets: NA
   bmr_kcal_d: NA
   axis_sed: NA
@@ -65,7 +66,7 @@ ratio_lines <- params$ratio_lines
 
 **Device:** `r params$device` | **Position:** `r params$position` | **Side:** `r params$side` | **Sampling rate:** `r params$sampling_rate` Hz | **Filter:** `r params$filter`.
 
-**Wear time:** Based on `r params$axis_weartime`, interval of `r params$frame_size` min for nonwear time detection, interval of `r params$allowanceFrame_size` min with nonzero counts allowed during a nonwear period | **MET equation:** `r params$equation_mets` | **Axis used for PA categorization:** `r params$axis_mvpa` | **Cut-points:** <`r params$sed_cutpoint` counts/min for SED, $\geqslant$ `r params$mpa_cutpoint` counts/min for MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min for VPA.
+**Wear time:** Based on `r params$axis_weartime`, interval of `r params$frame_size` min for nonwear time detection, interval of `r params$allowanceFrame_size` min with nonzero counts allowed during a nonwear period, interval of `r params$streamFrame_size` min with zero counts around detected activity to confirm nonwear time | **MET equation:** `r params$equation_mets` | **Axis used for PA categorization:** `r params$axis_mvpa` | **Cut-points:** <`r params$sed_cutpoint` counts/min for SED, $\geqslant$ `r params$mpa_cutpoint` counts/min for MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min for VPA.
 
 ***
 

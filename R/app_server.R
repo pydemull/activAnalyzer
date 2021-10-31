@@ -114,6 +114,7 @@ app_server <- function(input, output, session) {
     updateSelectInput(inputId = "axis_weartime", choices = axis_weartime)
     updateNumericInput(inputId = "frame_size", value = 90)
     updateNumericInput(inputId = "allowanceFrame_size", value = 2)
+    updateNumericInput(inputId = "streamFrame_size", value = 30)
   })
   
   
@@ -552,6 +553,7 @@ app_server <- function(input, output, session) {
           axis_weartime = input$axis_weartime,
           frame_size = input$frame_size,
           allowanceFrame_size = input$allowanceFrame_size,
+          streamFrame_size = input$streamFrame_size,
           equation_mets = input$equation_mets,
           bmr_kcal_d = bmr_kcal_d(),
           axis_sed = results_by_day()$axis_sed_chosen_name,
@@ -622,6 +624,7 @@ app_server <- function(input, output, session) {
           axis_weartime = input$axis_weartime,
           frame_size = input$frame_size,
           allowanceFrame_size = input$allowanceFrame_size,
+          streamFrame_size = input$streamFrame_size,
           equation_mets = input$equation_mets,
           bmr_kcal_d = bmr_kcal_d(),
           axis_sed = results_by_day()$axis_sed_chosen_name,
