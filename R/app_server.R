@@ -79,6 +79,15 @@ app_server <- function(input, output, session) {
                )
   )
   
+  # Stream frame size
+  observeEvent(input$validate,
+               shinyFeedback::feedbackWarning(
+                 "streamFrame_size", 
+                 (is.numeric(input$streamFrame_size) == FALSE | input$streamFrame_size < 0),
+                 "Please choose a number >= 0."
+               )
+  )
+  
   # Building reactive dataframe marked for nonwear/wear time
   
   df <- eventReactive(input$validate, {
@@ -88,7 +97,9 @@ app_server <- function(input, output, session) {
           is.numeric(input$frame_size) & 
           input$frame_size >= 0 & 
           is.numeric(input$allowanceFrame_size) & 
-          input$allowanceFrame_size >= 0)
+          input$allowanceFrame_size >= 0,
+          input$streamFrame_size >= 0
+        )
     
     # Setting the axis to be used for detecting nonwear time
     if (input$axis_weartime == "vector magnitude") {  
