@@ -69,7 +69,7 @@ sex <- ifelse(params$sex == "male", "masculin",
 
 **Appareil :** `r params$device` | **Position :** `r params$position` | **Côté :** `r params$side` | **Fréquence d'échantillonnage :** `r params$sampling_rate` Hz | **Filtre :** `r params$filter`.
 
-**Temps de port :** Basé sur *`r params$axis_weartime`*, intervalle de `r params$frame_size` min pour la détection du temps de port, intervalle de `r params$allowanceFrame_size` min avec counts différents de 0 autorisé durant une période de port, intervalle de `r params$streamFrame_size` min autour de la période d'activité détectée pour confirmer le non-port | **Équation de prédiction des METs :** `r params$equation_mets` | **Axe utilisé pour catégoriser l'intensité d'activité physique :** `r params$axis_mvpa` | **Cut-points:** <`r params$sed_cutpoint` counts/min pour SED, $\geqslant$ `r params$mpa_cutpoint` counts/min pour MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min pour VPA.
+**Temps de non-port :** Basé sur *`r params$axis_weartime`*, intervalle de `r params$frame_size` min pour la détection du temps de non-port, intervalle de `r params$allowanceFrame_size` min avec counts différents de 0 autorisé durant une période de non-port, intervalle de `r params$streamFrame_size` min autour de la période d'activité détectée pour confirmer le non-port | **Équation de prédiction des METs :** `r params$equation_mets` | **Axe utilisé pour catégoriser l'intensité d'activité physique :** `r params$axis_mvpa` | **Cut-points:** <`r params$sed_cutpoint` counts/min pour SED, $\geqslant$ `r params$mpa_cutpoint` counts/min pour MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min pour VPA.
 
 ***
 
