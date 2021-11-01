@@ -49,7 +49,7 @@ BugReports: https://github.com/pydemull/activAnalyzer/issues
 Suggests: 
     shinytest,
     covr,
-    knitr (>= 1.36),
+    knitr,
     spelling,
     testthat (>= 3.0.0),
     globals
