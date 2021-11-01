@@ -39,6 +39,11 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
+          
+      - name: Install sessioninfo
+        run: |
+          install.packages("sessioninfo")
+        shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
