@@ -348,6 +348,7 @@ app_ui <- function(request) {
                   fluidRow(
                     column(12,
                            h2("Export"),
+                           downloadButton("ExpDataset", "Export marked dataset (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
                            downloadButton("ExpResultsByDays", "Export results by day (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
                            downloadButton("ExpDailySummary", "Export daily summary (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
                            downloadButton("report_en", "Generate report (EN) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33"),

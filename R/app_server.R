@@ -413,7 +413,7 @@ app_server <- function(input, output, session) {
     
     
     # Adding variables of interest to the initial dataframe
-    df_with_computed_metrics <-
+    df_with_computed_metrics <<-
       df() %>%
       mark_intensity(col_axis = axis_mvpa_chosen, 
                      sed_cutpoint = sed_cutpoint_chosen, 
@@ -502,6 +502,16 @@ app_server <- function(input, output, session) {
   ###################
   # Exporting results
   ###################
+  
+  # Exporting marked dataset
+  output$ExpDataset <- downloadHandler(
+    filename = function() {
+      paste0(input$upload, "_MarkedDataset.csv")
+    },
+    content = function(file) {
+      utils::write.csv2(df_with_computed_metrics, file, row.names = FALSE)
+    }
+  )
   
   # Exporting results by day 
   output$ExpResultsByDays <- downloadHandler(
