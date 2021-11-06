@@ -18,33 +18,33 @@ app_server <- function(input, output, session) {
   ##############################
   
   # Getting data file without modification (required for extracting attributes information when generating the report)
-  file <- reactive({
+    file <- reactive({
+      
+      req(input$upload)
+      actigraph.sleepr::read_agd(input$upload$datapath)
+      
+    })
     
-    req(input$upload)
-    actigraph.sleepr::read_agd(input$upload$datapath)
-    
-  })
-  
   # Getting reactive dataset
-  data <- reactive({
-    
-    req(input$upload)
-    
-    if(!(
-         "axis1" %in% names(file()) &&
-         "axis2" %in% names(file()) &&
-         "axis3" %in% names(file()) &&
-         "steps" %in% names(file()) &&
-         "inclinestanding" %in% names(file()) &&
-         "inclinesitting" %in% names(file()) &&
-         "inclinelying" %in% names(file()))
-       ){
-      validate("Please load an .agd file with at least the following variables: axis1, axis2, axis3, steps, inclinestanding, inclinesitting, inclinelying")
-    }
-    
-    prepare_dataset(data = input$upload$datapath)
-    
-  })
+    data <- reactive({
+      
+      req(input$upload)
+      
+      if(!(
+           "axis1" %in% names(file()) &&
+           "axis2" %in% names(file()) &&
+           "axis3" %in% names(file()) &&
+           "steps" %in% names(file()) &&
+           "inclinestanding" %in% names(file()) &&
+           "inclinesitting" %in% names(file()) &&
+           "inclinelying" %in% names(file()))
+         ){
+        validate("Please load an .agd file with at least the following variables: axis1, axis2, axis3, steps, inclinestanding, inclinesitting, inclinelying")
+      }
+      
+      prepare_dataset(data = input$upload$datapath)
+      
+    })
   
   ###########################################################################################
   # Getting dataframe with marks for wear/nonwear time when clicking on the "Validate" button
@@ -52,82 +52,82 @@ app_server <- function(input, output, session) {
   
   # Controlling for correct inputs
   
-  # File input
-  observeEvent(input$validate,
-               shinyFeedback::feedbackWarning(
-                 "upload", 
-                 ((tools::file_ext(input$upload$name) == "agd") == FALSE),
-                 "Invalid file format. Please choose a .agd file."
-               )
-  )
-  
-  # Frame size
-  observeEvent(input$validate,
-               shinyFeedback::feedbackWarning(
-                 "frame_size", 
-                 (is.numeric(input$frame_size) == FALSE | input$frame_size < 0),
-                 "Please choose a number >= 0."
-               )
-  )
-  
-  # Allowance frame size
-  observeEvent(input$validate,
-               shinyFeedback::feedbackWarning(
-                 "allowanceFrame_size", 
-                 (is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0),
-                 "Please choose a number >= 0."
-               )
-  )
-  
-  # Stream frame size
-  observeEvent(input$validate,
-               shinyFeedback::feedbackWarning(
-                 "streamFrame_size", 
-                 (is.numeric(input$streamFrame_size) == FALSE | input$streamFrame_size < 0),
-                 "Please choose a number >= 0."
-               )
-  )
-  
+    # File input
+      observeEvent(input$validate,
+                   shinyFeedback::feedbackWarning(
+                     "upload", 
+                     ((tools::file_ext(input$upload$name) == "agd") == FALSE),
+                     "Invalid file format. Please choose a .agd file."
+                   )
+      )
+    
+    # Frame size
+      observeEvent(input$validate,
+                   shinyFeedback::feedbackWarning(
+                     "frame_size", 
+                     (is.numeric(input$frame_size) == FALSE | input$frame_size < 0),
+                     "Please choose a number >= 0."
+                   )
+      )
+    
+    # Allowance frame size
+      observeEvent(input$validate,
+                   shinyFeedback::feedbackWarning(
+                     "allowanceFrame_size", 
+                     (is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0),
+                     "Please choose a number >= 0."
+                   )
+      )
+    
+    # Stream frame size
+      observeEvent(input$validate,
+                   shinyFeedback::feedbackWarning(
+                     "streamFrame_size", 
+                     (is.numeric(input$streamFrame_size) == FALSE | input$streamFrame_size < 0),
+                     "Please choose a number >= 0."
+                   )
+      )
+    
   # Building reactive dataframe marked for nonwear/wear time
   
-  df <- eventReactive(input$validate, {
-    
-    # Waiting for required conditions 
-    req(tools::file_ext(input$upload$name) == "agd" & 
-          is.numeric(input$frame_size) & 
-          input$frame_size >= 0 & 
-          is.numeric(input$allowanceFrame_size) & 
-          input$allowanceFrame_size >= 0,
-          input$streamFrame_size >= 0
-        )
-    
+    df <- eventReactive(input$validate, {
+      
+      # Waiting for required conditions 
+      req(tools::file_ext(input$upload$name) == "agd" & 
+            is.numeric(input$frame_size) & 
+            input$frame_size >= 0 & 
+            is.numeric(input$allowanceFrame_size) & 
+            input$allowanceFrame_size >= 0,
+            input$streamFrame_size >= 0
+          )
+      
     # Setting the axis to be used for detecting nonwear time
-    if (input$axis_weartime == "vector magnitude") {  
-      cts <- "vm"
-    } else {
-      cts <- "axis1"
-    }
+      if (input$axis_weartime == "vector magnitude") {  
+        cts <- "vm"
+      } else {
+        cts <- "axis1"
+      }
     
     # Creating reactive dataframe
-    df <- mark_wear_time(dataset = data(),
-                         cts = cts, 
-                         frame = input$frame_size, 
-                         allowanceFrame = input$allowanceFrame_size)
-    return(df)
-    
-    
-  })
+      df <- mark_wear_time(dataset = data(),
+                           cts = cts, 
+                           frame = input$frame_size, 
+                           allowanceFrame = input$allowanceFrame_size)
+      return(df)
+      
+      
+      })
   
 
   # Returning to default values for the wear time detection algorithm
-  observeEvent(input$reset_nonwear, {
-    axis_weartime <- c("vector magnitude", "vertical axis")
-    updateSelectInput(inputId = "axis_weartime", choices = axis_weartime)
-    updateNumericInput(inputId = "frame_size", value = 90)
-    updateNumericInput(inputId = "allowanceFrame_size", value = 2)
-    updateNumericInput(inputId = "streamFrame_size", value = 30)
-  })
-  
+    observeEvent(input$reset_nonwear, {
+      axis_weartime <- c("vector magnitude", "vertical axis")
+      updateSelectInput(inputId = "axis_weartime", choices = axis_weartime)
+      updateNumericInput(inputId = "frame_size", value = 90)
+      updateNumericInput(inputId = "allowanceFrame_size", value = 2)
+      updateNumericInput(inputId = "streamFrame_size", value = 30)
+    })
+    
   
   ########################################
   # Visualizing all data with nonwear time
@@ -145,107 +145,105 @@ app_server <- function(input, output, session) {
   
   # Controlling for correct inputs
   
-  # Sex
-  observeEvent(input$Run,
-               shinyFeedback::feedbackWarning(
-                 "sex", 
-                 (input$sex %in% c("male", "female", "undefined")) == FALSE,
-                 "Please provide a value for sex."
-               )
-  )
-  
-  # Age
-  observeEvent(input$Run,
-               shinyFeedback::feedbackWarning(
-                 "age", 
-                 ((is.numeric(input$age) == FALSE | input$age <= 0)),
-                 "Please provide a value >0 for age."
-               )
-  )
-  
-  # Weight
-  observeEvent(input$Run,
-               shinyFeedback::feedbackWarning(
-                 "weight", 
-                 ((is.numeric(input$weight) == FALSE | input$weight <= 0)),
-                 "Please provide a value >0 for weight."
-               )
-  )
-  
-  # MET equation
-  observeEvent(input$Run,
-               shinyFeedback::feedbackWarning(
-                 "equation_mets", 
-                 (input$equation_mets == "..."),
-                 "Please choose a MET equation."
-               )
-  )
-  
-  # SED cut-point
-  observeEvent(input$Run,
-               shinyFeedback::feedbackWarning(
-                 "sed_cutpoints", 
-                 (input$sed_cutpoint == "..."),
-                 "Please choose a value for the SED cut-point."
-               )
-  )
-  
-  # SED cut-points
-  observeEvent(input$Run,
-               shinyFeedback::feedbackWarning(
-                 "mvpa_cutpoints", 
-                 (input$sed_cutpoint == "..."),
-                 "Please choose values for the MPVA cut-points."
-               )
-  )
-  
-  
-  
-  
+    # Sex
+      observeEvent(input$Run,
+                  shinyFeedback::feedbackWarning(
+                    "sex", 
+                    (input$sex %in% c("male", "female", "undefined")) == FALSE,
+                    "Please provide a value for sex."
+                  )
+      )
+    
+    # Age
+      observeEvent(input$Run,
+                  shinyFeedback::feedbackWarning(
+                    "age", 
+                    ((is.numeric(input$age) == FALSE | input$age <= 0)),
+                    "Please provide a value >0 for age."
+                  )
+      )
+      
+    # Weight
+      observeEvent(input$Run,
+                 shinyFeedback::feedbackWarning(
+                   "weight", 
+                   ((is.numeric(input$weight) == FALSE | input$weight <= 0)),
+                   "Please provide a value >0 for weight."
+                 )
+     )
+     
+    # MET equation
+      observeEvent(input$Run,
+                  shinyFeedback::feedbackWarning(
+                    "equation_mets", 
+                    (input$equation_mets == "..."),
+                    "Please choose a MET equation."
+                  )
+      )
+    
+    # SED cut-point
+      observeEvent(input$Run,
+                  shinyFeedback::feedbackWarning(
+                    "sed_cutpoints", 
+                    (input$sed_cutpoint == "..."),
+                    "Please choose a value for the SED cut-point."
+                  )
+      )
+      
+    # SED cut-points
+      observeEvent(input$Run,
+                  shinyFeedback::feedbackWarning(
+                    "mvpa_cutpoints", 
+                    (input$sed_cutpoint == "..."),
+                    "Please choose values for the MPVA cut-points."
+                  )
+      )
+    
+    
   # Showing the table presenting the studies that validated METs equations
-  output$table_equations <- reactable::renderReactable({
-    
-    if(input$equation_mets == "...") {NULL
-    } else {
-      equations_mets %>% 
-        dplyr::filter(Study == input$equation_mets) %>%
-        reactable::reactable(striped = TRUE,
-                  list('Study' = reactable::colDef(minWidth = 80),
-                       'Population' = reactable::colDef(minWidth = 60),
-                       'Activities performed' = reactable::colDef(minWidth = 60),
-                       'Device used' = reactable::colDef(minWidth = 40),
-                       'Axis used' = reactable::colDef(minWidth = 40),
-                       'Filter enabled' = reactable::colDef(minWidth = 40))
-        )
-    }
-    
-  })
+    output$table_equations <- reactable::renderReactable({
+      
+      if(input$equation_mets == "...") {NULL
+      } else {
+        equations_mets %>% 
+          dplyr::filter(Study == input$equation_mets) %>%
+          reactable::reactable(striped = TRUE,
+                    list('Study' = reactable::colDef(minWidth = 80),
+                         'Population' = reactable::colDef(minWidth = 60),
+                         'Activities performed' = reactable::colDef(minWidth = 60),
+                         'Device used' = reactable::colDef(minWidth = 40),
+                         'Axis used' = reactable::colDef(minWidth = 40),
+                         'Filter enabled' = reactable::colDef(minWidth = 40))
+          )
+      }
+      
+    })
   
   # Switching to show appropriate choices for SED cut-points
-  observeEvent(input$sed_cutpoint, {
-    updateTabsetPanel(inputId = "switcher_sed", selected = input$sed_cutpoint)
-  })
+    observeEvent(input$sed_cutpoint, {
+      updateTabsetPanel(inputId = "switcher_sed", selected = input$sed_cutpoint)
+    })
   
   
   # Showing the table presenting the studies that validated SED cut-points
-  output$table_sed_cutpoints <- reactable::renderReactable({
-    
-    if(input$sed_cutpoint == "...") {NULL
-    } else {
-      sed_cutpoints %>% 
-        dplyr::filter(Study == input$sed_cutpoint) %>%
-        reactable::reactable(striped = TRUE,
-                  list('Study' = reactable::colDef(minWidth = 80),
-                       'Population' = reactable::colDef(minWidth = 70),
-                       'Activities performed' = reactable::colDef(minWidth = 60),
-                       'Device used' = reactable::colDef(minWidth = 40),
-                       'Axis used' = reactable::colDef(minWidth = 30),
-                       'Filter enabled' = reactable::colDef(minWidth = 40),
-                       'SED cut-point in counts/min' = reactable::colDef(minWidth = 60))
-        )
-    }
-    
-  })
+   output$table_sed_cutpoints <- reactable::renderReactable({
+     
+     if(input$sed_cutpoint == "...") {NULL
+     } else {
+       sed_cutpoints %>% 
+         dplyr::filter(Study == input$sed_cutpoint) %>%
+         reactable::reactable(striped = TRUE,
+                   list('Study' = reactable::colDef(minWidth = 80),
+                        'Population' = reactable::colDef(minWidth = 70),
+                        'Activities performed' = reactable::colDef(minWidth = 60),
+                        'Device used' = reactable::colDef(minWidth = 40),
+                        'Axis used' = reactable::colDef(minWidth = 30),
+                        'Filter enabled' = reactable::colDef(minWidth = 40),
+                        'SED cut-point in counts/min' = reactable::colDef(minWidth = 60))
+         )
+     }
+     
+   })
   
   # Switching to show appropriate choices for MVPA cut-points
   observeEvent(input$mvpa_cutpoint, {
@@ -316,49 +314,50 @@ app_server <- function(input, output, session) {
   
   
   # Getting BMR (kcal/d)
-  bmr_kcal_d <- eventReactive(input$Run, {
+    bmr_kcal_d <- eventReactive(input$Run, {
+      
+      compute_bmr(age = input$age, sex = input$sex, weight = input$weight)
+      
+    })
     
-    compute_bmr(age = input$age, sex = input$sex, weight = input$weight)
     
-  })
+  # Getting list of results: dataset with metrics; results by day corresponding 
+  # to valid wear time  (except for total kcal that also uses nonwear time with
+  # attribution of bmr to nonwear epochs); selected equations and cut-points
   
-  
-  # Getting results by day corresponding to valid wear time  (except for total kcal 
-  # that also uses nonwear time with attribution of bmr to nonwear epochs)
-  
-  results_by_day <- eventReactive(input$Run, {
-    
-    # Waiting for valid inputs
-    
-    if (!input$sex %in% c("male", "female", "undefined") | input$age <= 0 | input$weight <= 0) {
-      validate("Please provide valid values for the inputs shown in Patient's information section.")
-    }
-    
-    if (input$equation_mets == "...") {
-      validate("Please choose a MET equation.")
-    }
-    
-    if (input$sed_cutpoint == "..." | input$mvpa_cutpoint == "...") {
-      validate("Please provide values for the cut-points.")
-    }
-    
-    if (input$perso_sed_axis != input$perso_mvpa_axis) {
-      validate("Please use the same axis for both SED and MVPA cut-points.")
-    }
-    
-    if (input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]" && 
-        input$perso_mvpa_axis == "vertical axis") {
-      validate("Please use the same axis for both SED and MVPA cut-points.")
-    }
-    
-    if (input$perso_sed_axis == "vertical axis" &&
-        input$mvpa_cutpoint %in% c("Sasaki et al. (2011) [Adults]", 
-                                    "Santos-Lozano et al. (2013) [Adults]", 
-                                    "Santos-Lozano et al. (2013) [Older adults]")) {
-      validate("Please use the same axis for both SED and MVPA cut-points.")
-    }
-    
-    
+    results_list <- eventReactive(input$Run, {
+     
+     # Waiting for valid inputs
+     
+     if (!input$sex %in% c("male", "female", "undefined") | input$age <= 0 | input$weight <= 0) {
+       validate("Please provide valid values for the inputs shown in Patient's information section.")
+     }
+     
+     if (input$equation_mets == "...") {
+       validate("Please choose a MET equation.")
+     }
+     
+     if (input$sed_cutpoint == "..." | input$mvpa_cutpoint == "...") {
+       validate("Please provide values for the cut-points.")
+     }
+     
+     if (input$perso_sed_axis != input$perso_mvpa_axis) {
+       validate("Please use the same axis for both SED and MVPA cut-points.")
+     }
+     
+     if (input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]" && 
+         input$perso_mvpa_axis == "vertical axis") {
+       validate("Please use the same axis for both SED and MVPA cut-points.")
+     }
+     
+     if (input$perso_sed_axis == "vertical axis" &&
+         input$mvpa_cutpoint %in% c("Sasaki et al. (2011) [Adults]", 
+                                     "Santos-Lozano et al. (2013) [Adults]", 
+                                     "Santos-Lozano et al. (2013) [Older adults]")) {
+       validate("Please use the same axis for both SED and MVPA cut-points.")
+     }
+     
+     
     
     # Setting axis and cut-points to compute SED and MVPA times
     
@@ -413,7 +412,7 @@ app_server <- function(input, output, session) {
     
     
     # Adding variables of interest to the initial dataframe
-    df_with_computed_metrics <<-
+    df_with_computed_metrics <-
       df() %>%
       mark_intensity(col_axis = axis_mvpa_chosen, 
                      sed_cutpoint = sed_cutpoint_chosen, 
@@ -431,7 +430,8 @@ app_server <- function(input, output, session) {
       df_with_computed_metrics %>%
       recap_by_day(age = input$age, weight = input$weight, sex = input$sex)
     
-    return(list(results_by_day = results_by_day, 
+    return(list(df_with_computed_metrics = df_with_computed_metrics,
+                results_by_day = results_by_day, 
                 axis_sed_chosen_name = axis_sed_chosen_name, 
                 sed_cutpoint_chosen = sed_cutpoint_chosen, 
                 axis_mvpa_chosen_name = axis_mvpa_chosen_name,
@@ -443,7 +443,7 @@ app_server <- function(input, output, session) {
   # Showing results by day in a table
   output$results_by_day <- reactable::renderReactable({
     Sys.sleep(0.5)
-    reactable::reactable(results_by_day()$results_by_day,  
+    reactable::reactable(results_list()$results_by_day,  
               striped = TRUE,
               list(total_counts_axis1 = reactable::colDef(minWidth = 150),
                    total_counts_vm = reactable::colDef(minWidth = 150),
@@ -468,7 +468,7 @@ app_server <- function(input, output, session) {
     
     
     # Computing results averaged on valid days
-    results_by_day()$results_by_day %>%
+    results_list()$results_by_day %>%
       average_results(minimum_wear_time = input$minimum_wear_time_for_analysis)
   })
   
@@ -509,7 +509,7 @@ app_server <- function(input, output, session) {
       paste0(input$upload, "_MarkedDataset.csv")
     },
     content = function(file) {
-      utils::write.csv2(df_with_computed_metrics, file, row.names = FALSE)
+      utils::write.csv2(results_list()$df_with_computed_metrics, file, row.names = FALSE)
     }
   )
   
@@ -519,7 +519,7 @@ app_server <- function(input, output, session) {
       paste0(input$upload, "_ResultsByDay.csv")
     },
     content = function(file) {
-      utils::write.csv2(results_by_day()$results_by_day, file, row.names = FALSE)
+      utils::write.csv2(results_list()$results_by_day, file, row.names = FALSE)
     }
   )
   
@@ -577,13 +577,13 @@ app_server <- function(input, output, session) {
           streamFrame_size = input$streamFrame_size,
           equation_mets = input$equation_mets,
           bmr_kcal_d = bmr_kcal_d(),
-          axis_sed = results_by_day()$axis_sed_chosen_name,
-          axis_mvpa = results_by_day()$axis_mvpa_chosen_name,
-          sed_cutpoint = results_by_day()$sed_cutpoint_chosen,
-          mpa_cutpoint = results_by_day()$mpa_cutpoint_chosen,
-          vpa_cutpoint = results_by_day()$vpa_cutpoint_chosen,
+          axis_sed = results_list()$axis_sed_chosen_name,
+          axis_mvpa = results_list()$axis_mvpa_chosen_name,
+          sed_cutpoint = results_list()$sed_cutpoint_chosen,
+          mpa_cutpoint = results_list()$mpa_cutpoint_chosen,
+          vpa_cutpoint = results_list()$vpa_cutpoint_chosen,
           minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
-          results_by_day = results_by_day()$results_by_day,
+          results_by_day = results_list()$results_by_day,
           results_summary =  results_summary(),
           
           # Loading some data used in figures
@@ -648,13 +648,13 @@ app_server <- function(input, output, session) {
           streamFrame_size = input$streamFrame_size,
           equation_mets = input$equation_mets,
           bmr_kcal_d = bmr_kcal_d(),
-          axis_sed = results_by_day()$axis_sed_chosen_name,
-          axis_mvpa = results_by_day()$axis_mvpa_chosen_name,
-          sed_cutpoint = results_by_day()$sed_cutpoint_chosen,
-          mpa_cutpoint = results_by_day()$mpa_cutpoint_chosen,
-          vpa_cutpoint = results_by_day()$vpa_cutpoint_chosen,
+          axis_sed = results_list()$axis_sed_chosen_name,
+          axis_mvpa = results_list()$axis_mvpa_chosen_name,
+          sed_cutpoint = results_list()$sed_cutpoint_chosen,
+          mpa_cutpoint = results_list()$mpa_cutpoint_chosen,
+          vpa_cutpoint = results_list()$vpa_cutpoint_chosen,
           minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
-          results_by_day = results_by_day()$results_by_day,
+          results_by_day = results_list()$results_by_day,
           results_summary =  results_summary(),
           
           # Loading some data used in figures
@@ -747,7 +747,7 @@ app_server <- function(input, output, session) {
   
   # Exporting dataframe marked for wear time
     observeEvent(input$Run, {
-      shiny::exportTestValues(results_by_day = results_by_day()$results_by_day)
+      shiny::exportTestValues(results_by_day = results_list()$results_by_day)
     })
     
   # Exporting dataframe marked for wear time
