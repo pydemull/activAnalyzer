@@ -11,7 +11,14 @@ app_ui <- function(request) {
     shinyjs::useShinyjs(),
     # Your application UI logic 
     shinydashboardPlus::dashboardPage(
-      shinydashboard::dashboardHeader(title = "activAnalyzer"),
+      shinydashboard::dashboardHeader(
+        # Set height of dashboardHeader
+        tags$li(class = "dropdown",
+                tags$style(".main-header {vertical-align: middle;}"),
+                tags$style(".main-header .logo {vertical-align: middle;}")
+        ),
+        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.0.0.9000"), titleWidth = 310
+                                      ),
       shinydashboardPlus::dashboardSidebar(
         shinydashboard::sidebarMenu(
           shinydashboard::menuItem("App", tabName = "app", icon = icon("fas fa-tablet-alt")),
