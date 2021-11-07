@@ -573,7 +573,7 @@ app_server <- function(input, output, session) {
 
         # Copy the report file to a temporary directory before processing it, in
         # case we don't have write permissions to the current working dir (which
-        # can happen when deployed).
+        # can happen when deployed). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
         tempReport <- file.path(tempdir(), "report_en.Rmd")
         file.copy(report, tempReport, overwrite = TRUE)
         
@@ -618,7 +618,7 @@ app_server <- function(input, output, session) {
         
         # Knit the document, passing in the `params` list, and eval it in a
         # child of the global environment (this isolates the code in the document
-        # from the code in this app).
+        # from the code in this app). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
         out <- rmarkdown::render(tempReport,
                                  params = params,
                                  envir = new.env(parent = globalenv())
@@ -644,7 +644,7 @@ app_server <- function(input, output, session) {
         
         # Copy the report file to a temporary directory before processing it, in
         # case we don't have write permissions to the current working dir (which
-        # can happen when deployed).
+        # can happen when deployed). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
         tempReport <- file.path(tempdir(), "report_fr.Rmd")
         file.copy(report, tempReport, overwrite = TRUE)
         
@@ -689,7 +689,7 @@ app_server <- function(input, output, session) {
         
         # Knit the document, passing in the `params` list, and eval it in a
         # child of the global environment (this isolates the code in the document
-        # from the code in this app).
+        # from the code in this app). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
         out <- rmarkdown::render(tempReport,
                                  params = params,
                                  envir = new.env(parent = globalenv())
