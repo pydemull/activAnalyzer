@@ -17,9 +17,14 @@ app_ui <- function(request) {
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
         ),
-        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.0.1"), titleWidth = 310
+        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.0.1"), titleWidth = 235
                                       ),
       shinydashboardPlus::dashboardSidebar(
+        tags$style(HTML("
+      .main-sidebar{
+        width: 235px;
+      }
+    ")),
         shinydashboard::sidebarMenu(
           shinydashboard::menuItem("App", tabName = "app", icon = icon("fas fa-tablet-alt")),
           shinydashboard::menuItem("User's guide", tabName = "guide", icon = icon("far fa-file-alt"))
