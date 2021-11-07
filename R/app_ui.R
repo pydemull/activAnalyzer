@@ -17,7 +17,7 @@ app_ui <- function(request) {
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
         ),
-        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.0.0.9000"), titleWidth = 310
+        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.0.1"), titleWidth = 310
                                       ),
       shinydashboardPlus::dashboardSidebar(
         shinydashboard::sidebarMenu(
