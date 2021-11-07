@@ -51,3 +51,10 @@ To launch the app using R:
 library(activAnalyzer)
 activAnalyzer::run_app()
 ```
+
+## Code of Conduct
+
+Please note that the activAnalyzer project is released with a
+[Contributor Code of
+Conduct](https://pydemull.github.io/activAnalyzer/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
