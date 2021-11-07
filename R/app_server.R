@@ -500,7 +500,7 @@ app_server <- function(input, output, session) {
   })
   
   ###############################
-  # Hide / shown Download buttons
+  # Hide / show Download buttons
   ###############################
   
   observe({
