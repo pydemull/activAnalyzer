@@ -38,6 +38,7 @@ Imports:
     shinydashboard,
     shinydashboardPlus,
     shinyFeedback,
+    shinyjs,
     tibble,
     tidyr
 Encoding: UTF-8

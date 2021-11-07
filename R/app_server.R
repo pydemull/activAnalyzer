@@ -499,6 +499,28 @@ app_server <- function(input, output, session) {
     
   })
   
+  ###############################
+  # Hide / shown Download buttons
+  ###############################
+  
+  observe({
+      shinyjs::hide("ExpDataset")
+      shinyjs::hide("ExpResultsByDays")
+      shinyjs::hide("ExpDailySummary")
+      shinyjs::hide("report_en")
+      shinyjs::hide("report_fr")
+      
+    if(nrow(results_list()$df_with_computed_metrics) >=1) {
+      
+      shinyjs::show("ExpDataset")
+      shinyjs::show("ExpResultsByDays")
+      shinyjs::show("ExpDailySummary")
+      shinyjs::show("report_en")
+      shinyjs::show("report_fr")
+    }
+  })
+  
+  
   ###################
   # Exporting results
   ###################
