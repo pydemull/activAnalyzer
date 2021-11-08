@@ -402,7 +402,8 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12, 
-                           h4("Welcome to the activAnalyzer app. This app was developed to analyse ActiGraph accelerometer data (.agd files) recorded at the hip in adults. Once analysis is completed,
+                           h4("Welcome to the activAnalyzer app. activAnalyzer is a shinny app that was developed to analyze physical behavior data recorded at the hip 
+                   in adults using an ActiGraph accelerometer (.agd files). Once analysis is completed,
                    the app allows to export results to .csv files and to generate a report of the measurement. All the configured inputs
                    relevant for interpreting the results are recorded into the report. Be sure that the inputs that are configured
                    when generating the report correspond to the analysis that was actually performed (in other words, avoid modifying the inputs
