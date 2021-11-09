@@ -1,4 +1,5 @@
 # activAnalyzer (development version)
+* Add alert message when closing the web window.
 
 # activAnalyzer 0.0.2
 
