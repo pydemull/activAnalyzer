@@ -32,7 +32,8 @@ app_ui <- function(request) {
       shinydashboard::dashboardBody(
         
         
-        # Providing alert message when closing the web window  
+        # Providing alert message when closing the web window  (code from 
+        # https://stackoverflow.com/questions/56369796/adding-a-are-you-sure-you-want-to-leave-this-page-alert-message-when-exiting-a)
         tags$head(tags$script(htmltools::HTML("
              // Enable navigation prompt
              window.onbeforeunload = function() {
