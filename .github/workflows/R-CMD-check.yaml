@@ -20,7 +20,6 @@ jobs:
         config:
           - {os: macOS-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
-          - {os: windows-latest, r: '4.1.0'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
           - {os: ubuntu-latest,   r: 'oldrel-1'}
@@ -60,6 +59,7 @@ jobs:
           path: ${{ steps.phantomjs.outputs.path }}
           key: ${{ matrix.config.os }}-phantomjs
           restore-keys: ${{ matrix.config.os }}-phantomjs
+          
       - name: Install PhantomJS
         run: >
           Rscript
