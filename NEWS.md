@@ -1,3 +1,5 @@
+# activAnalyzer (development version)
+
 # activAnalyzer 0.0.2
 
 * Add code to stop process when closing app when used on desktop.
