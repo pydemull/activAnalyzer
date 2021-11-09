@@ -12,8 +12,8 @@ coverage](https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge
 
 # Overview
 
-activAnalyzer is a shinny app that was developed to analyze physical
-behavior data recorded at the hip in adults using an ActiGraph
+activAnalyzer is a shinny app that was developed to analyze daily
+physical behavior data recorded at the hip in adults using an ActiGraph
 accelerometer (.agd files). Once analysis is completed, the app allows
 to export results (summarized by day and averaged over valid days) to
 .csv files and to generate a report of the measurement (.pdf file). All
