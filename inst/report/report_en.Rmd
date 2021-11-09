@@ -87,7 +87,8 @@ flextable::flextable(
     "SED wear time proportion",           paste0(format(round(df[["percent_SED"]], 1), nsmall = 1), " %"),
     "LPA wear time proportion",           paste0(format(round(df[["percent_LPA"]], 1), nsmall = 1), " %"),
     "MVPA wear time proportion",          paste0(format(round(df[["percent_MVPA"]], 1), nsmall = 1), " %"),
-    "MVPA dose",                          paste0(format(round(df[["mets_hours_mvpa"]], 1), nsmall = 1), " MET-hr"))
+    "Dose MVPA",                          paste0(format(round(df[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr"),
+    "MVPA/SB ratio",                         paste0(format(round(df[["ratio_mvpa_sed"]], 2), nsmall = 2)))
   ) %>%
   flextable::theme_zebra() %>%
   flextable::align(align = "left", part = "all" ) %>%

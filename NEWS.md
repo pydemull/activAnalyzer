@@ -1,6 +1,9 @@
 # activAnalyzer (development version)
 
 * Add code to stop process when closing app when used on desktop.
+* Round wear time result averaged on valid days.
+* Round PA/SB ratio and MET-hr results with 2 digits into the summary table.
+* Add a line for the ratio MVPA/SB into the table of the report.
 
 # activAnalyzer 0.0.1
 

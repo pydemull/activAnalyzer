@@ -26,7 +26,7 @@ average_results <- function(data, minimum_wear_time = 10) {
     dplyr::mutate(validity = ifelse(wear_time >= minimum_wear_time * 60, "valid", "invalid")) %>%
     dplyr::filter(validity == "valid") %>%
     dplyr::summarise(valid_days = dplyr::n(),
-              wear_time = mean(wear_time),
+              wear_time = round(mean(wear_time), 2),
               total_counts_axis1 = round(mean(total_counts_axis1), 2),
               total_counts_vm = round(mean(total_counts_vm), 2),
               total_steps = round(mean(total_steps), 2),
@@ -41,8 +41,8 @@ average_results <- function(data, minimum_wear_time = 10) {
               percent_MPA = round(mean(percent_MPA), 2),
               percent_VPA = round(mean(percent_VPA), 2),
               percent_MVPA = round(mean(percent_MVPA), 2),
-              mets_hours_mvpa = round(mean(mets_hours_mvpa), 1),
-              ratio_mvpa_sed = round(mean(ratio_mvpa_sed), 1),
+              mets_hours_mvpa = round(mean(mets_hours_mvpa), 2),
+              ratio_mvpa_sed = round(mean(ratio_mvpa_sed), 2),
               pal = round(mean(pal), 2))
   
 }
