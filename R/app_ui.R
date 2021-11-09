@@ -31,6 +31,15 @@ app_ui <- function(request) {
         )),
       shinydashboard::dashboardBody(
         
+        
+        # Providing alert message when closing the web window  
+        tags$head(tags$script(htmltools::HTML("
+             // Enable navigation prompt
+             window.onbeforeunload = function() {
+                return 'Your changes will be lost!';
+             };
+             "))),
+        
         shinydashboard::tabItems(
           
           # $$$$$$$$$$$$$$$$$
