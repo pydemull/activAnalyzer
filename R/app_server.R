@@ -776,16 +776,6 @@ app_server <- function(input, output, session) {
     observeEvent(input$Run, {
       shiny::exportTestValues(results_summary = results_summary())
     })
-    
-  ##################################################################
-  # Stopping process when closing the app (required for desktop app)
-  ##################################################################
-    
-    shiny::shinyServer(function(input, output, session){
-      session$onSessionEnded(function() {
-        stopApp()
-      })
-    })
   
 }
 
