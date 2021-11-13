@@ -57,7 +57,7 @@ app_server <- function(input, output, session) {
                    shinyFeedback::feedbackWarning(
                      "upload", 
                      ((tools::file_ext(input$upload$name) == "agd") == FALSE),
-                     "Invalid file format. Please choose a .agd file."
+                     "Invalid file format. Please choose an .agd file."
                    )
       )
     
