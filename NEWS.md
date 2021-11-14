@@ -1,5 +1,6 @@
-# activAnalyzer (development version)
+# activAnalyzer 0.0.3
 * Add alert message when closing the web window.
+* Finally deleted the block of code initially introduced to stop the websocket server when the app is used as a desktop application. Indeed, this code led to close the app for all users when one user left the app on the shinyapps.io plateform.
 
 # activAnalyzer 0.0.2
 
