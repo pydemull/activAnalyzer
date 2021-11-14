@@ -9,6 +9,7 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     shinyjs::useShinyjs(),
+
     # Your application UI logic 
     shinydashboardPlus::dashboardPage(
       shinydashboard::dashboardHeader(
@@ -30,8 +31,7 @@ app_ui <- function(request) {
           shinydashboard::menuItem("User's guide", tabName = "guide", icon = icon("far fa-file-alt"))
         )),
       shinydashboard::dashboardBody(
-        
-        
+
         # Providing alert message when closing the web window  (code from 
         # https://stackoverflow.com/questions/56369796/adding-a-are-you-sure-you-want-to-leave-this-page-alert-message-when-exiting-a)
         tags$head(tags$script(htmltools::HTML("
@@ -70,7 +70,7 @@ app_ui <- function(request) {
                   fluidRow(
                     column(12,
                            h3("Section 1. Information", style="font-weight: bold; font-size: 30px; color: #337ab7;"),
-                           tags$hr(style="border-color: #337ab7;")
+                           tags$hr(style="border-color: #337ab7;"),
                     ),
                   ),
                   

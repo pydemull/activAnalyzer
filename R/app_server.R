@@ -6,17 +6,11 @@
 #' @noRd
 app_server <- function(input, output, session) {
   
-  # IMPORTANT! (only when used as a desktop application)
-  # this is needed to terminate the R process when the
-  # shiny app session ends. Otherwise, you end up with a zombie process
-  session$onSessionEnded(function() {
-    stopApp()
-  })
   
   ##############################
   # Uploading and preparing data
   ##############################
-  
+
   # Getting data file without modification (required for extracting attributes information when generating the report)
     file <- reactive({
       
