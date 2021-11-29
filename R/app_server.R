@@ -147,7 +147,7 @@ app_server <- function(input, output, session) {
 
     plot_data(data = df(), metric = input$Metric)
 
-  })
+  }, res = 140)
   
   ###################################################
   # Getting results when clicking on the "Run" button

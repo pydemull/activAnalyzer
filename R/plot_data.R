@@ -28,15 +28,26 @@ plot_data <- function(data, metric = "axis1", col_time = "time", col_nonwear = "
   max_metric <- max(data[[metric]], na.rm = TRUE)
   
   # Plotting data
-  ggplot(data = data, aes(x = .data[[col_time]])) +
-    geom_ribbon(aes(ymin = 0, ymax = .data[[col_nonwear]] / .data[[col_nonwear]] * max_metric, fill = "Nonwear time"), alpha = 0.5) +
-    geom_line(aes(y = .data[[metric]])) +
-    scale_x_time(breaks = hms::hms(seq(0, 24*3600, 6*3600))) +
+    format_hm <- function(sec) stringr::str_sub(format(sec), end = -4L)
+    data$date  <- format(lubridate::as_date(data$date) , "%d-%m")
+   
+    ggplot() +
+    geom_ribbon(data = data,
+                aes(x = .data[[col_time]],
+                    ymin = 0, ymax = .data[[col_nonwear]] / .data[[col_nonwear]] * max_metric, 
+                    fill = "Nonwear time"), alpha = 0.5) +
+    geom_line(data = data,
+              aes(x = .data[[col_time]],
+                  y = .data[[metric]])) +
+    scale_y_continuous(position = "right", expand = c(0, 0)) +
+    scale_x_time(breaks = hms::hms(seq(3600, 23*3600, 2*3600)), expand = c(0, 0), labels = format_hm) +
     scale_fill_manual(values = "red") +
     labs(x = "Time (hh:mm:ss)", y = metric, fill = "") +
     theme_bw() +
-    theme(legend.position = "bottom") + 
-    facet_wrap(.~ .data[[col_date]])
+    theme(legend.position = "bottom",
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank()) + 
+    facet_grid(data[[col_date]] ~ ., switch = "y")
   
 }
   
