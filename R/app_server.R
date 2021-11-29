@@ -6,6 +6,22 @@
 #' @noRd
 app_server <- function(input, output, session) {
   
+  ######################
+  # Managing app closing
+  ######################
+  
+  # Increasing users count when starting new session
+  isolate({users$count <- users$count + 1 
+  })
+  
+  # Decreasing users count when closing session
+  # Stopping App when count is 0 without planned reloading
+  session$onSessionEnded(function() {
+    isolate({
+      users$count = users$count - 1
+      if (users$count == 0 && is.null(input$ok)) stopApp()
+    })
+  })
   
   ##############################
   # Uploading and preparing data
