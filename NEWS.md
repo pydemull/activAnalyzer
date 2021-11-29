@@ -1,4 +1,5 @@
 # activAnalyzer (development version)
+* Add a block of code to stop the app when the last user leaves the app.
 
 # activAnalyzer 0.0.3
 * Add alert message when closing the web window.
