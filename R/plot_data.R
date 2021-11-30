@@ -29,7 +29,7 @@ plot_data <- function(data, metric = "axis1", col_time = "time", col_nonwear = "
   
   # Plotting data
     format_hm <- function(sec) stringr::str_sub(format(sec), end = -4L)
-    data$date  <- format(lubridate::as_date(data$date) , "%d-%m")
+    data$date  <- format(lubridate::as_date(data$date) , "%d-%m-%y")
    
     ggplot() +
     geom_ribbon(data = data,

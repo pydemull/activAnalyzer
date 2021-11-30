@@ -191,7 +191,8 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     h3(""),
-                    shinydashboardPlus::box(shinycssloaders::withSpinner(plotOutput("graph", height = "700px")), width = 12)
+                    shinydashboardPlus::box(id = "myBox", 
+                                            shinycssloaders::withSpinner(plotOutput("graph", height = "auto")), width = 12, height = "auto")
                   ),
                   fluidRow(
                     align = "center",

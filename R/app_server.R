@@ -143,11 +143,28 @@ app_server <- function(input, output, session) {
   # Visualizing all data with nonwear time
   ########################################
   
+  # Code below is adapted fro from https://stackoverflow.com/questions/50914398/increase-plot-size-in-shiny-when-using-ggplot-facets
+  
+  # Creating function to capture the number of facets within a ggplot object using facet_grid()
+  gg_facet_nrow <- function(p){
+      p %>% ggplot2::ggplot_build()  %>%
+        magrittr::extract2('layout')       %>%
+        magrittr::extract2('layout') %>%
+        magrittr::extract2('ROW')          %>%
+        unique()                           %>%
+        length()
+    }
+  
+  # Creating plot showing data
+  plot <- reactive(plot_data(data = df(), metric = input$Metric))
+  
+  # Getting the number of facets from the plot
+  he <- reactive(gg_facet_nrow(p = plot()))
+  
+  # Rendering the plot
   output$graph <- renderPlot({
-
-    plot_data(data = df(), metric = input$Metric)
-
-  }, res = 140)
+    plot()
+ }, height = function(){he() * 90}, res = 120)
   
   ###################################################
   # Getting results when clicking on the "Run" button
