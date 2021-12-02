@@ -19,11 +19,16 @@
 #'   \item \strong{percent_MPA:} proportion of wear time spent in MPA behavior
 #'   \item \strong{percent_VPA:} proportion of wear time spent in VPA behavior
 #'   \item \strong{percent_MVPA:} proportion of wear time spent in MPVA behavior
-#'   \item \strong{Max_steps_60min:} maximum step accumulation within a window of 60 continuous minutes
-#'   \item \strong{Max_steps_30min:} maximum step accumulation within a window of 30 continuous minutes
-#'   \item \strong{Max_steps_20min:} maximum step accumulation within a window of 20 continuous minutes
-#'   \item \strong{Max_steps_5min:} maximum step accumulation within a window of 5 continuous minutes
-#'   \item \strong{Max_steps_1min:} maximum step accumulation within a window of 1 minute
+#'   \item \strong{max_steps_60min:} maximum average step accumulation per minute over a window of 60 continuous minutes
+#'   \item \strong{max_steps_30min:} maximum average step accumulation per minute over a window of 30 continuous minutes
+#'   \item \strong{max_steps_20min:} maximum average step accumulation per minute over a window of 20 continuous minutes
+#'   \item \strong{max_steps_5min:} maximum average step accumulation per minute over a window of 5 continuous minutes
+#'   \item \strong{max_steps_1min:} maximum average step accumulation per minute over a window of 1 minute
+#'   \item \strong{peak_steps_60min:} maximum average step accumulation per minute over the best 60 continuous or discontinuous minutes
+#'   \item \strong{peak_steps_30min:} maximum average step accumulation per minute over the best 30 continuous or discontinuous minutes
+#'   \item \strong{peak_steps_20min:} maximum average step accumulation per minute over the best 20 continuous or discontinuous minutes
+#'   \item \strong{peak_steps_5min:} maximum average step accumulation per minute over the best 5 continuous or discontinuous minutes
+#'   \item \strong{peak_steps_1min:} maximum average step accumulation per minute over the best 1 minute (same result as for `Max_steps_1min`)
 #'   \item \strong{mets_hours_mvpa:} total MET-hours spent during MPVA behavior
 #'   \item \strong{ratio_mvpa_sed:} ratio between MVPA and SED times (minutes_MVPA / minutes_SED)
 #'}
@@ -88,11 +93,16 @@ recap_by_day <- function(data, col_date = "date", age = 40, weight = 70, sex = c
       percent_MPA = round(minutes_MPA / wear_time * 100, 2),
       percent_VPA = round(minutes_VPA / wear_time * 100, 2), 
       percent_MVPA = round(minutes_MVPA / wear_time * 100, 2),
-      max_steps_60min =  my_max(accum_steps_60min),
-      max_steps_30min =  my_max(accum_steps_30min),
-      max_steps_20min =  my_max(accum_steps_20min),
-      max_steps_5min =   my_max(accum_steps_5min),
-      max_steps_1min =   my_max(accum_steps_1min),
+      max_steps_60min =  round(my_max(accum_steps_60min), 2),
+      max_steps_30min =  round(my_max(accum_steps_30min), 2),
+      max_steps_20min =  round(my_max(accum_steps_20min), 2),
+      max_steps_5min =   round(my_max(accum_steps_5min), 2),
+      max_steps_1min =   round(my_max(accum_steps_1min), 2),
+      peak_steps_60min = mean(head(sort(steps, decreasing = TRUE), n = 60L), na.rm = TRUE),
+      peak_steps_30min = mean(head(sort(steps, decreasing = TRUE), n = 30L), na.rm = TRUE),
+      peak_steps_20min = mean(head(sort(steps, decreasing = TRUE), n = 20L), na.rm = TRUE),
+      peak_steps_5min = mean(head(sort(steps, decreasing = TRUE), n = 5L), na.rm = TRUE),  
+      peak_steps_1min = mean(head(sort(steps, decreasing = TRUE), n = 1L), na.rm = TRUE), 
       mets_hours_mvpa = round(sum(mets_hours_mvpa, na.rm = TRUE), 2),
       ratio_mvpa_sed = round(minutes_MVPA / minutes_SED, 2),
       
