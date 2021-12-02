@@ -3,8 +3,8 @@
 #' This function adds several columns to a dataset that contains accelerometer counts data. 
 #'     These columns concern respectively sedentary time (SED), light physical activity time (LPA), 
 #'     moderate physical activity time (MPA), vigorous physical activity time (VPA), 
-#'     metabolic equivalent of task (METs), kilocalories (kcal), and MET-hours when 
-#'     time is spent in moderate-to-vigorous physical activity. For the SED, LPA, MPA, 
+#'     metabolic equivalent of task (METs), kilocalories (kcal), MET-hours when 
+#'     time is spent in moderate-to-vigorous physical activity, and step-based metrics. For the SED, LPA, MPA, 
 #'     and VPA columns, the function provides, for each epoch, the numeric value 1 when 
 #'     the value of the configured counts variable corresponds to the criteria of the 
 #'     considered category (e.g., <150 counts/min for sedentary behavior); if not, 0 
@@ -41,7 +41,8 @@
 #'     vpa_cutpoint = 6167, 
 #'     age = 32,
 #'     weight = 67,
-#'     sex = "male")
+#'     sex = "male",
+#'     col_steps = "steps")
 #' 
 mark_intensity <- function(data, 
                            col_axis = "vm", 
@@ -54,7 +55,8 @@ mark_intensity <- function(data,
                                         "Santos-Lozano et al. (2013) [Older adults]"),
                            age = 40, 
                            weight = 70, 
-                           sex = c("male", "female", "undefined")) {
+                           sex = c("male", "female", "undefined"),
+                           col_steps = "steps") {
   
   equation <- match.arg(equation)
   sex <- match.arg(sex)
@@ -74,7 +76,16 @@ mark_intensity <- function(data,
       kcal = ifelse(SED == 0, METS * bmr_kcal_min, bmr_kcal_min),
       
   # Computing MET-hr corresponding to MVPA only, for each epoch
-    mets_hours_mvpa = ifelse(METS >=3, 1/60 * METS, 0))
+    mets_hours_mvpa = ifelse(METS >= 3, 1/60 * METS, 0),
+  
+  # Applying moving averages for future computations fo step-based metrics
+    accum_steps_60min = zoo::rollmean(data[[col_steps]], align = "center", k = 60L, fill = NA),
+    accum_steps_30min = zoo::rollmean(data[[col_steps]], align = "center", k = 30L, fill = NA),
+    accum_steps_20min = zoo::rollmean(data[[col_steps]], align = "center", k = 20L, fill = NA),
+    accum_steps_5min  = zoo::rollmean(data[[col_steps]], align = "center", k = 5L,  fill = NA),
+    accum_steps_1min  = zoo::rollmean(data[[col_steps]], align = "center", k = 1L,  fill = NA)
+  
+  )
     
     message(paste0("You have computed intensity metrics using the following inputs: 
     axis = ", col_axis, "

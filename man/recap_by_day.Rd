@@ -47,6 +47,11 @@ The following metrics are computed:
 \item \strong{percent_MPA:} proportion of wear time spent in MPA behavior
 \item \strong{percent_VPA:} proportion of wear time spent in VPA behavior
 \item \strong{percent_MVPA:} proportion of wear time spent in MPVA behavior
+\item \strong{Max_steps_60min:} maximum step accumulation within a window of 60 continuous minutes
+\item \strong{Max_steps_30min:} maximum step accumulation within a window of 30 continuous minutes
+\item \strong{Max_steps_20min:} maximum step accumulation within a window of 20 continuous minutes
+\item \strong{Max_steps_5min:} maximum step accumulation within a window of 5 continuous minutes
+\item \strong{Max_steps_1min:} maximum step accumulation within a window of 1 minute
 \item \strong{mets_hours_mvpa:} total MET-hours spent during MPVA behavior
 \item \strong{ratio_mvpa_sed:} ratio between MVPA and SED times (minutes_MVPA / minutes_SED)
 }

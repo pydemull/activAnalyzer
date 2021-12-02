@@ -19,6 +19,11 @@
 #'   \item \strong{percent_MPA:} proportion of wear time spent in MPA behavior
 #'   \item \strong{percent_VPA:} proportion of wear time spent in VPA behavior
 #'   \item \strong{percent_MVPA:} proportion of wear time spent in MPVA behavior
+#'   \item \strong{Max_steps_60min:} maximum step accumulation within a window of 60 continuous minutes
+#'   \item \strong{Max_steps_30min:} maximum step accumulation within a window of 30 continuous minutes
+#'   \item \strong{Max_steps_20min:} maximum step accumulation within a window of 20 continuous minutes
+#'   \item \strong{Max_steps_5min:} maximum step accumulation within a window of 5 continuous minutes
+#'   \item \strong{Max_steps_1min:} maximum step accumulation within a window of 1 minute
 #'   \item \strong{mets_hours_mvpa:} total MET-hours spent during MPVA behavior
 #'   \item \strong{ratio_mvpa_sed:} ratio between MVPA and SED times (minutes_MVPA / minutes_SED)
 #'}
@@ -58,27 +63,37 @@ recap_by_day <- function(data, col_date = "date", age = 40, weight = 70, sex = c
     bmr_kcal_min <- compute_bmr(age = age, sex = sex, weight = weight) / (24*60)
   
   # getting results by day
+    
+       # Defining a function for getting a NA value when computing a step-based metric
+       # from a vector with no non-missing values and the max() function
+       # Retrieved from: https://stackoverflow.com/questions/24519794/r-max-function-ignore-na
+         my_max <- function(x) ifelse( !all(is.na(x)), max(x, na.rm = TRUE), NA)
   df <-
     data %>%
     dplyr::group_by( .data[[col_date]], .drop = FALSE) %>%
     dplyr::filter(wearing == "w") %>%
     dplyr::summarise(
-      wear_time = sum(wearing_count),
-      total_counts_axis1 = sum(axis1),
-      total_counts_vm = sum(vm),
-      total_steps = sum(steps),
-      total_kcal_wear_time = round(sum(kcal), 2),
-      minutes_SED = sum(SED),
-      minutes_LPA = sum(LPA),
-      minutes_MPA = sum(MPA),
-      minutes_VPA = sum(VPA),
-      minutes_MVPA = sum(MPA) + sum(VPA),
+      wear_time = sum(wearing_count, na.rm = TRUE),
+      total_counts_axis1 = sum(axis1, na.rm = TRUE),
+      total_counts_vm = sum(vm, na.rm = TRUE),
+      total_steps = sum(steps, na.rm = TRUE),
+      total_kcal_wear_time = round(sum(kcal, na.rm = TRUE), 2),
+      minutes_SED = sum(SED, na.rm = TRUE),
+      minutes_LPA = sum(LPA, na.rm = TRUE),
+      minutes_MPA = sum(MPA, na.rm = TRUE),
+      minutes_VPA = sum(VPA, na.rm = TRUE),
+      minutes_MVPA = sum(MPA, na.rm = TRUE) + sum(VPA, na.rm = TRUE),
       percent_SED = round(minutes_SED / wear_time * 100, 2),
       percent_LPA = round(minutes_LPA / wear_time * 100, 2),
       percent_MPA = round(minutes_MPA / wear_time * 100, 2),
       percent_VPA = round(minutes_VPA / wear_time * 100, 2), 
       percent_MVPA = round(minutes_MVPA / wear_time * 100, 2),
-      mets_hours_mvpa = round(sum(mets_hours_mvpa), 2),
+      max_steps_60min =  my_max(accum_steps_60min),
+      max_steps_30min =  my_max(accum_steps_30min),
+      max_steps_20min =  my_max(accum_steps_20min),
+      max_steps_5min =   my_max(accum_steps_5min),
+      max_steps_1min =   my_max(accum_steps_1min),
+      mets_hours_mvpa = round(sum(mets_hours_mvpa, na.rm = TRUE), 2),
       ratio_mvpa_sed = round(minutes_MVPA / minutes_SED, 2),
       
       # Computing physical activity level (PAL), that is, total EE / BMR. BMR is assigned to nonwear time; 

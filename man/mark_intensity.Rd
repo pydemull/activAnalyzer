@@ -14,7 +14,8 @@ mark_intensity(
     "Freedson et al. (1998) [Adults]", "Santos-Lozano et al. (2013) [Older adults]"),
   age = 40,
   weight = 70,
-  sex = c("male", "female", "undefined")
+  sex = c("male", "female", "undefined"),
+  col_steps = "steps"
 )
 }
 \arguments{
@@ -43,8 +44,8 @@ A dataframe.
 This function adds several columns to a dataset that contains accelerometer counts data.
 These columns concern respectively sedentary time (SED), light physical activity time (LPA),
 moderate physical activity time (MPA), vigorous physical activity time (VPA),
-metabolic equivalent of task (METs), kilocalories (kcal), and MET-hours when
-time is spent in moderate-to-vigorous physical activity. For the SED, LPA, MPA,
+metabolic equivalent of task (METs), kilocalories (kcal), MET-hours when
+time is spent in moderate-to-vigorous physical activity, and step-based metrics. For the SED, LPA, MPA,
 and VPA columns, the function provides, for each epoch, the numeric value 1 when
 the value of the configured counts variable corresponds to the criteria of the
 considered category (e.g., <150 counts/min for sedentary behavior); if not, 0
@@ -69,6 +70,7 @@ mark_intensity(
     vpa_cutpoint = 6167, 
     age = 32,
     weight = 67,
-    sex = "male")
+    sex = "male",
+    col_steps = "steps")
 
 }

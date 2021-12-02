@@ -39,6 +39,6 @@ mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "tim
 mydata_with_wear_marks <- mark_wear_time(dataset = mydata, TS = "timestamp", 
     cts  = "vm", frame = 90, allowanceFrame = 2)
 plot_data(data = mydata_with_wear_marks, metric = "steps", col_time = "time", 
-    col_nonwear = "non_wearing_count", col_date = "date")
+    col_nonwear = "non_wearing_count", col_wear = "wearing_count", col_date = "date")
 
 }
