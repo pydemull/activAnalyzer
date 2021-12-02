@@ -1,7 +1,7 @@
 #' Mark dataset for nonwear/wear time
 #' 
-#' This function wraps the \code{\link[PhysicalActivity]{wearingMarking}}
-#'     function, and adds two variables to the dataset: the variable `non_wearing_count` 
+#' This function wraps the \code{\link[PhysicalActivity]{wearingMarking}} function
+#'     from the `PhysicalActivity` package, and adds two variables to the dataset: the variable `non_wearing_count` 
 #'     that contains the number 1 when the device was *not* worn (otherwise, 0 is used), 
 #'     and the variable `wearing_count` that contains the number 1 when the device 
 #'     was worn (otherwise, 0 is used).

@@ -19,15 +19,15 @@ mark_intensity(
 )
 }
 \arguments{
-\item{data}{A dataframe obtained using the \code{\link{prepare_dataset}} function.}
+\item{data}{A dataframe obtained using the \code{\link{prepare_dataset}} and then the \code{\link{mark_wear_time}} functions.}
 
 \item{col_axis}{A character value to indicate the name of the variable to be used for determining intensity categories.}
 
 \item{sed_cutpoint}{A numeric value below which time is considered as spent in sedentary behavior.}
 
-\item{mpa_cutpoint}{A numeric value above which time is considered as spent in moderate physical activity.}
+\item{mpa_cutpoint}{A numeric value at and above which time is considered as spent in moderate physical activity.}
 
-\item{vpa_cutpoint}{A numeric value above which time is considered as spent in vigorous physical activity.}
+\item{vpa_cutpoint}{A numeric value at and above which time is considered as spent in vigorous physical activity.}
 
 \item{equation}{A character string to indicate the equation to be used for estimating METs.}
 
@@ -45,7 +45,8 @@ This function adds several columns to a dataset that contains accelerometer coun
 These columns concern respectively sedentary time (SED), light physical activity time (LPA),
 moderate physical activity time (MPA), vigorous physical activity time (VPA),
 metabolic equivalent of task (METs), kilocalories (kcal), MET-hours when
-time is spent in moderate-to-vigorous physical activity, and step-based metrics. For the SED, LPA, MPA,
+time is spent in moderate-to-vigorous physical activity, and step-based metrics (maximum step accumulation
+and peak step accumulation metrics). For the SED, LPA, MPA,
 and VPA columns, the function provides, for each epoch, the numeric value 1 when
 the value of the configured counts variable corresponds to the criteria of the
 considered category (e.g., <150 counts/min for sedentary behavior); if not, 0
@@ -61,8 +62,9 @@ MET-hours are obtained by multiplying METs by time related to each epoch (here 1
 \examples{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
+mydata_with_wear_marks <- mark_wear_time(dataset = mydata)
 mark_intensity(
-    data = mydata, 
+    data = mydata_with_wear_marks, 
     col_axis = "vm", 
     equation = "Sasaki et al. (2011) [Adults]",
     sed_cutpoint = 200, 

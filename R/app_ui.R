@@ -337,10 +337,30 @@ app_ui <- function(request) {
                   #********
                   # Results
                   #********
-                  
+              
+                           #*************************
+                           # Box showing monitor data
+                           #*************************
+                           
+                           fluidRow(
+                             column(12,
+                             h2("Results"),
+                             h3("")
+                             )
+                             ),
+                           fluidRow(
+                             shinydashboardPlus::box(id = "myBox2", 
+                                                     shinycssloaders::withSpinner(plotOutput("graph_int", height = "auto")), 
+                                                     width = 12, 
+                                                     height = "auto")
+                           ),
+                           fluidRow(
+                             align = "center",
+                             selectInput("Metric2", "Metric to visualize", metrics),
+                           ),
+                 
                   fluidRow(
                     column(12,
-                           h2("Results"),
                            
                            #************************
                            # Table of results by day

@@ -1,6 +1,6 @@
 #' Summarize results by day
 #' 
-#' This function summarizes results for each day of the measurement period.
+#' This function summarizes accelerometer results for each day of the measurement period.
 #' 
 #' The following metrics are computed: 
 #' \itemize{
@@ -19,16 +19,16 @@
 #'   \item \strong{percent_MPA:} proportion of wear time spent in MPA behavior
 #'   \item \strong{percent_VPA:} proportion of wear time spent in VPA behavior
 #'   \item \strong{percent_MVPA:} proportion of wear time spent in MPVA behavior
-#'   \item \strong{max_steps_60min:} maximum average step accumulation per minute over a window of 60 continuous minutes
-#'   \item \strong{max_steps_30min:} maximum average step accumulation per minute over a window of 30 continuous minutes
-#'   \item \strong{max_steps_20min:} maximum average step accumulation per minute over a window of 20 continuous minutes
-#'   \item \strong{max_steps_5min:} maximum average step accumulation per minute over a window of 5 continuous minutes
-#'   \item \strong{max_steps_1min:} maximum average step accumulation per minute over a window of 1 minute
-#'   \item \strong{peak_steps_60min:} maximum average step accumulation per minute over the best 60 continuous or discontinuous minutes
-#'   \item \strong{peak_steps_30min:} maximum average step accumulation per minute over the best 30 continuous or discontinuous minutes
-#'   \item \strong{peak_steps_20min:} maximum average step accumulation per minute over the best 20 continuous or discontinuous minutes
-#'   \item \strong{peak_steps_5min:} maximum average step accumulation per minute over the best 5 continuous or discontinuous minutes
-#'   \item \strong{peak_steps_1min:} maximum average step accumulation per minute over the best 1 minute (same result as for `Max_steps_1min`)
+#'   \item \strong{max_steps_60min:} best step accumulation per minute averaged over a window of 60 continuous minutes
+#'   \item \strong{max_steps_30min:} best step accumulation per minute averaged over a window of 30 continuous minutes
+#'   \item \strong{max_steps_20min:} best step accumulation per minute averaged over a window of 20 continuous minutes
+#'   \item \strong{max_steps_5min:} best step accumulation per minute averaged over a window of 5 continuous minutes
+#'   \item \strong{max_steps_1min:} best step accumulation per minute over a window of 1 minute
+#'   \item \strong{peak_steps_60min:} step accumulation per minute averaged over the best 60 continuous or discontinuous minutes
+#'   \item \strong{peak_steps_30min:} step accumulation per minute averaged over the best 30 continuous or discontinuous minutes
+#'   \item \strong{peak_steps_20min:} step accumulation per minute averaged over the best 20 continuous or discontinuous minutes
+#'   \item \strong{peak_steps_5min:} step accumulation per minute averaged over the best 5 continuous or discontinuous minutes
+#'   \item \strong{peak_steps_1min:} step accumulation per minute over the best minute (same result as for `max_steps_1min`)
 #'   \item \strong{mets_hours_mvpa:} total MET-hours spent during MPVA behavior
 #'   \item \strong{ratio_mvpa_sed:} ratio between MVPA and SED times (minutes_MVPA / minutes_SED)
 #'}
@@ -43,7 +43,7 @@
 #'    approximate since both BMR and kilocalories related to wear time are estimated using methods
 #'    that may not be accurate at the individual level.
 #'   
-#' @param data A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and \code{\link{mark_intensity}} functions.
+#' @param data A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then \code{\link{mark_intensity}} functions.
 #' @param col_date A character value to indicate the name of the date variable.
 #' @param age A numeric value in yr.
 #' @param weight A numeric value in kg.

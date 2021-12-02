@@ -3,7 +3,7 @@
 #' This function computes, using valid days only, the mean of each of the metrics 
 #'     obtained using the \code{\link{recap_by_day}} function.
 #'
-#' @param data A dataframe obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}} and \code{\link{recap_by_day}} functions.
+#' @param data A dataframe obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}} and then \code{\link{recap_by_day}} functions.
 #' @param minimum_wear_time A numeric value (in hours) to set the minimum wear time duration for validating a day.
 #'
 #' @return A dataframe.
