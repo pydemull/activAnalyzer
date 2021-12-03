@@ -30,33 +30,85 @@ file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 
 ## Preparing dataset
 ```{r, warning=FALSE, message=FALSE}
-mydata <-
-  prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp") %>%
-  mark_wear_time(frame = 90, allowanceFrame = 2)
+mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
 ```
 
-## Getting results by day
+## Getting nonwear/wear time marks
+```{r, fig.width = 7, fig.height = 5, fig.align='center'}
+mydata_with_wear_marks <- 
+  mydata %>%
+  mark_wear_time(frame = 90, allowanceFrame = 2, streamFrame = 30)
+
+plot_data(data = mydata, metric = "vm")
+```
+
+## Getting physical activity intensity marks
+```{r, message = FALSE}
+mydata_with_intensity_marks <- 
+  mark_intensity(data = mydata_with_wear_marks, 
+    equation = "Sasaki et al. (2011) [Adults]", 
+    age = 32, 
+    weight = 67, 
+    sex = "male")
+
+plot_data_with_intensity(mydata_with_intensity_marks)
+```
+# Getting results by day
 ```{r, message = FALSE}
 results_by_day <-
-  mydata %>%
-  mark_intensity(equation = "Sasaki et al. (2011) [Adults]", sex = "male") %>%
-  recap_by_day(col_date = "date",  sex = "male")
+  mydata_with_intensity_marks %>%
+  recap_by_day(age = 32, weight = 67, sex = "male")
 
-results_by_day %>% reactable::reactable()
+results_by_day %>%  
+  reactable::reactable(  
+           striped = TRUE,
+           list(total_counts_axis1 = reactable::colDef(minWidth = 150),
+                total_counts_vm = reactable::colDef(minWidth = 150),
+                minutes_SED = reactable::colDef(minWidth = 120),
+                minutes_LPA = reactable::colDef(minWidth = 120),
+                minutes_MPA = reactable::colDef(minWidth = 120),
+                minutes_VPA = reactable::colDef(minWidth = 120),
+                minutes_MVPA = reactable::colDef(minWidth = 125),
+                percent_SED = reactable::colDef(minWidth = 120),
+                percent_LPA = reactable::colDef(minWidth = 120),
+                percent_MPA = reactable::colDef(minWidth = 120),
+                percent_VPA = reactable::colDef(minWidth = 120),
+                percent_MVPA = reactable::colDef(minWidth = 125),
+                ratio_mvpa_sed = reactable::colDef(minWidth = 130),
+                total_kcal_wear_time = reactable::colDef(minWidth = 165),
+                mets_hours_mvpa = reactable::colDef(minWidth = 160))
+           )
 ```
-## Getting results over valid days
+
+## Getting results averaged over valid days
 ```{r}
 averaged_results <-
   results_by_day %>%
   average_results(minimum_wear_time = 10)
 
-averaged_results %>% reactable::reactable()
+averaged_results %>% 
+    reactable::reactable(
+    list(valid_days = reactable::colDef(minWidth = 90),
+         wear_time = reactable::colDef(minWidth = 90),
+         total_counts_axis1 = reactable::colDef(minWidth = 150),
+         total_counts_vm = reactable::colDef(minWidth = 150),
+         minutes_SED = reactable::colDef(minWidth = 120),
+         minutes_LPA = reactable::colDef(minWidth = 120),
+         minutes_MPA = reactable::colDef(minWidth = 120),
+         minutes_VPA = reactable::colDef(minWidth = 120),
+         minutes_MVPA = reactable::colDef(minWidth = 125),
+         percent_SED = reactable::colDef(minWidth = 120),
+         percent_LPA = reactable::colDef(minWidth = 120),
+         percent_MPA = reactable::colDef(minWidth = 120),
+         percent_VPA = reactable::colDef(minWidth = 120),
+         percent_MVPA = reactable::colDef(minWidth = 125),
+         ratio_mvpa_sed = reactable::colDef(minWidth = 130),
+         total_kcal_wear_time = reactable::colDef(minWidth = 165),
+         mets_hours_mvpa = reactable::colDef(minWidth = 160)),
+    striped = TRUE
+  )
 ```
 
 
-## Plotting data
-```{r, fig.width = 7, fig.height = 5, fig.align='center'}
-plot_data(data = mydata, metric = "steps") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
-```
+
 
