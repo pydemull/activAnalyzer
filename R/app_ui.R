@@ -18,7 +18,7 @@ app_ui <- function(request) {
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
         ),
-        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.0.3"), titleWidth = 235
+        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.1.0"), titleWidth = 235
                                       ),
       shinydashboardPlus::dashboardSidebar(
         tags$style(HTML("
@@ -44,7 +44,7 @@ app_ui <- function(request) {
         shinydashboard::tabItems(
           
           # $$$$$$$$$$$$$$$$$
-          # First tab content
+          # First tab content ----
           # $$$$$$$$$$$$$$$$$
           
           shinydashboard::tabItem(tabName = "app",
@@ -64,7 +64,7 @@ app_ui <- function(request) {
                   tags$head(tags$style('h2 {color:#337ab7;}')),
                   
                   ########################
-                  # Section 1. Information
+                  # Section 1. Information ----
                   ########################
                   
                   fluidRow(
@@ -141,7 +141,7 @@ app_ui <- function(request) {
                   ),
                   
                   ###########################################################################
-                  # Section 2. Data uploading, nonwear time detection, and data visualization
+                  # Section 2. Data uploading, nonwear time detection, and data visualization ----
                   ###########################################################################
                   
                   #******************
@@ -203,7 +203,7 @@ app_ui <- function(request) {
                   
                   
                   ###################################
-                  # Section 3. Computation of metrics
+                  # Section 3. Computation of metrics ----
                   ###################################
                   
                   fluidRow(
@@ -324,7 +324,7 @@ app_ui <- function(request) {
                   ),
                   
                   #######################################
-                  # Section 4. Results, Export, and Reset
+                  # Section 4. Results, Export, and Reset ----
                   #######################################
                   
                   fluidRow(
@@ -423,14 +423,14 @@ app_ui <- function(request) {
           
           
           # $$$$$$$$$$$$$$$$$$
-          # Second tab content
+          # Second tab content ----
           # $$$$$$$$$$$$$$$$$$
           
           shinydashboard::tabItem(tabName = "guide",
                   h2("User's guide"),
                   
                   ################
-                  # Notes to users
+                  # Notes to users ----
                   ################
                   
                   fluidRow(
