@@ -14,7 +14,7 @@ plot_data_with_intensity(
 )
 }
 \arguments{
-\item{data}{A dataframe obtained using the \code{\link{mark_wear_time}} AND THEN the \code{\link{mark_intensity}} functions.}
+\item{data}{A dataframe obtained using the \code{\link{mark_wear_time}} and then the \code{\link{mark_intensity}} functions.}
 
 \item{metric}{A character value to indicate the name of the variable to be plotted against time.}
 
@@ -30,7 +30,7 @@ plot_data_with_intensity(
 A \code{ggplot} object.
 }
 \description{
-This function plots accelerometer data against time for each day of measurement,
+This function plots accelerometer data with intensity categories against time for each day of measurement,
 with the possibility to specify the metric to visualize.
 }
 \examples{

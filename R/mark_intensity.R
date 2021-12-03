@@ -27,6 +27,8 @@
 #' @param age A numeric value in yr.
 #' @param weight A numeric value in kg.
 #' @param sex A character value.
+#' @param col_steps A character value to indicate the name of the variable to be used for analyzing steps. 
+
 #' @return A dataframe.
 #' @export
 #'

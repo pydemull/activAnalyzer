@@ -36,6 +36,8 @@ mark_intensity(
 \item{weight}{A numeric value in kg.}
 
 \item{sex}{A character value.}
+
+\item{col_steps}{A character value to indicate the name of the variable to be used for analyzing steps.}
 }
 \value{
 A dataframe.
