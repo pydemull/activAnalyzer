@@ -36,9 +36,21 @@ with the possibility to specify the metric to visualize.
 \examples{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
-mydata_with_wear_marks <- mark_wear_time(dataset = mydata, TS = "timestamp", 
-    cts  = "vm", frame = 90, allowanceFrame = 2)
-plot_data(data = mydata_with_wear_marks, metric = "steps", col_time = "time", 
-    col_nonwear = "non_wearing_count", col_wear = "wearing_count", col_date = "date")
+mydata_with_wear_marks <- mark_wear_time(
+    dataset = mydata, 
+    TS = "timestamp", 
+    cts  = "vm", 
+    frame = 90, 
+    allowanceFrame = 2, 
+    streamFrame = 30
+    )
+plot_data(
+    data = mydata_with_wear_marks, 
+    metric = "vm", 
+    col_time = "time", 
+    col_nonwear = "non_wearing_count", 
+    col_wear = "wearing_count", 
+    col_date = "date"
+    )
 
 }

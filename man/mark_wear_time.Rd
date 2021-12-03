@@ -41,6 +41,13 @@ was worn (otherwise, 0 is used).
 \examples{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
-mark_wear_time(dataset = mydata, TS = "timestamp", cts  = "vm", frame = 90, allowanceFrame = 2)
+mark_wear_time(
+    dataset = mydata, 
+    TS = "timestamp", 
+    cts  = "vm", 
+    frame = 90, 
+    allowanceFrame = 2, 
+    streamFrame = 30
+    )
 
 }

@@ -14,11 +14,31 @@
 #' @examples
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 #' mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
-#' mydata_with_wear_marks <- mark_wear_time(dataset = mydata)
-#' mydata_with_intensity_marks <- mark_intensity(data = mydata_with_wear_marks, 
-#'     equation = "Sasaki et al. (2011) [Adults]", sex = "male")
-#' summary_by_day <- recap_by_day(data = mydata_with_intensity_marks, col_date = "date",  sex = "male")
-#' average_results(data = summary_by_day)
+#' mydata_with_wear_marks <- mark_wear_time(
+#'     dataset = mydata, 
+#'     TS = "timestamp", 
+#'     cts  = "vm", frame = 90, 
+#'     allowanceFrame = 2, 
+#'     streamFrame = 30
+#'     )
+#' mydata_with_intensity_marks <- mark_intensity(
+#'     data = mydata_with_wear_marks, 
+#'     col_axis = "vm", 
+#'     equation = "Sasaki et al. (2011) [Adults]",
+#'     sed_cutpoint = 200, 
+#'     mpa_cutpoint = 2690, 
+#'     vpa_cutpoint = 6167, 
+#'     age = 32,
+#'     weight = 67,
+#'     sex = "male",
+#'     col_steps = "steps"
+#'     )
+#' summary_by_day <- recap_by_day(
+#'     data = mydata_with_intensity_marks, 
+#'     age = 40, weight = 70, 
+#'     sex = "male"
+#'     )
+#' average_results(data = summary_by_day, minimum_wear_time = 10)
 #' 
 average_results <- function(data, minimum_wear_time = 10) {
   

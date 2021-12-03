@@ -35,7 +35,14 @@
 #' @examples
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 #' mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
-#' mydata_with_wear_marks <- mark_wear_time(dataset = mydata)
+#' mydata_with_wear_marks <- mark_wear_time(
+#'     dataset = mydata, 
+#'     TS = "timestamp", 
+#'     cts  = "vm",
+#'     frame = 90, 
+#'     allowanceFrame = 2, 
+#'     streamFrame = 30
+#'     )
 #' mark_intensity(
 #'     data = mydata_with_wear_marks, 
 #'     col_axis = "vm", 
@@ -46,7 +53,8 @@
 #'     age = 32,
 #'     weight = 67,
 #'     sex = "male",
-#'     col_steps = "steps")
+#'     col_steps = "steps"
+#'     )
 #' 
 mark_intensity <- function(data, 
                            col_axis = "vm", 

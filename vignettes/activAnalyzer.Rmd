@@ -45,20 +45,33 @@ plot_data(data = mydata_with_wear_marks, metric = "vm")
 ## Getting physical activity intensity marks
 ```{r, message = FALSE, fig.width = 7, fig.height = 5, fig.align='center'}
 mydata_with_intensity_marks <- 
-  mark_intensity(data = mydata_with_wear_marks, 
-    equation = "Sasaki et al. (2011) [Adults]", 
-    age = 32, 
-    weight = 67, 
-    sex = "male")
+  mark_intensity(
+     data = mydata_with_wear_marks, 
+     col_axis = "vm", 
+     equation = "Sasaki et al. (2011) [Adults]",
+     sed_cutpoint = 200, 
+     mpa_cutpoint = 2690, 
+     vpa_cutpoint = 6167, 
+     age = 32,
+     weight = 67,
+     sex = "male",
+    )
 
-plot_data_with_intensity(mydata_with_intensity_marks)
+plot_data_with_intensity(
+  mydata_with_intensity_marks,
+  metric = "vm"
+  )
 ```
 
 ## Getting results by day
 ```{r, message = FALSE}
 results_by_day <-
   mydata_with_intensity_marks %>%
-  recap_by_day(age = 32, weight = 67, sex = "male")
+  recap_by_day(
+    age = 32, 
+    weight = 67, 
+    sex = "male"
+    )
 
 results_by_day %>%  
   reactable::reactable(  
