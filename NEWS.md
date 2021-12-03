@@ -1,7 +1,9 @@
-# activAnalyzer (development version)
+# activAnalyzer 0.1.0
 * Add a block of code to stop the app when the last user leaves the app.
 * Modify the plot for visualizing data with wear time so that each day of measurement be on one line.
 * Add step-based metrics to the results.
+* Add a graph to visualize time spent in the different activity intensity categories.
+* Update users guides with step-based metrics information.
 
 # activAnalyzer 0.0.3
 * Add alert message when closing the web window.
