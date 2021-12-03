@@ -3,7 +3,7 @@
 #' This function computes, using valid days only, the mean of each of the metrics 
 #'     obtained using the \code{\link{recap_by_day}} function.
 #'
-#' @param data A dataframe obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}} and \code{\link{recap_by_day}} functions.
+#' @param data A dataframe obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}} and then \code{\link{recap_by_day}} functions.
 #' @param minimum_wear_time A numeric value (in hours) to set the minimum wear time duration for validating a day.
 #'
 #' @return A dataframe.
@@ -41,6 +41,16 @@ average_results <- function(data, minimum_wear_time = 10) {
               percent_MPA = round(mean(percent_MPA), 2),
               percent_VPA = round(mean(percent_VPA), 2),
               percent_MVPA = round(mean(percent_MVPA), 2),
+              max_steps_60min = round(mean(max_steps_60min), 2),
+              max_steps_30min = round(mean(max_steps_30min), 2),
+              max_steps_20min = round(mean(max_steps_20min), 2),
+              max_steps_5min = round(mean(max_steps_5min), 2),
+              max_steps_1min = round(mean(max_steps_1min), 2),
+              peak_steps_60min = round(mean(peak_steps_60min), 2),
+              peak_steps_30min = round(mean(peak_steps_30min), 2),
+              peak_steps_20min = round(mean(peak_steps_20min), 2),
+              peak_steps_5min = round(mean(peak_steps_5min), 2),
+              peak_steps_1min = round(mean(peak_steps_1min), 2),
               mets_hours_mvpa = round(mean(mets_hours_mvpa), 2),
               ratio_mvpa_sed = round(mean(ratio_mvpa_sed), 2),
               pal = round(mean(pal), 2))

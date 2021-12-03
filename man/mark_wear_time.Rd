@@ -32,8 +32,8 @@ to validate nonwear time.}
 A dataframe.
 }
 \description{
-This function wraps the \code{\link[PhysicalActivity]{wearingMarking}}
-function, and adds two variables to the dataset: the variable \code{non_wearing_count}
+This function wraps the \code{\link[PhysicalActivity]{wearingMarking}} function
+from the \code{PhysicalActivity} package, and adds two variables to the dataset: the variable \code{non_wearing_count}
 that contains the number 1 when the device was \emph{not} worn (otherwise, 0 is used),
 and the variable \code{wearing_count} that contains the number 1 when the device
 was worn (otherwise, 0 is used).

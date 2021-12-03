@@ -7,7 +7,7 @@
 app_server <- function(input, output, session) {
   
   ######################
-  # Managing app closing
+  # Managing app closing ----
   ######################
   
   # Increasing users count when starting new session
@@ -24,7 +24,7 @@ app_server <- function(input, output, session) {
   })
   
   ##############################
-  # Uploading and preparing data
+  # Uploading and preparing data ----
   ##############################
 
   # Getting data file without modification (required for extracting attributes information when generating the report)
@@ -57,7 +57,7 @@ app_server <- function(input, output, session) {
     })
   
   ###########################################################################################
-  # Getting dataframe with marks for wear/nonwear time when clicking on the "Validate" button
+  # Getting dataframe with marks for wear/nonwear time when clicking on the "Validate" button ----
   ###########################################################################################
   
   # Controlling for correct inputs
@@ -140,17 +140,15 @@ app_server <- function(input, output, session) {
     
   
   ########################################
-  # Visualizing all data with nonwear time
+  # Visualizing all data with nonwear time ----
   ########################################
   
   output$graph <- renderPlot({
-
     plot_data(data = df(), metric = input$Metric)
-
-  })
+  }, height = function(){nlevels(as.factor(df()$date)) * 90}, res = 120)
   
   ###################################################
-  # Getting results when clicking on the "Run" button
+  # Getting results when clicking on the "Run" button ----
   ###################################################
   
   # Controlling for correct inputs
@@ -433,22 +431,26 @@ app_server <- function(input, output, session) {
                      weight = input$weight,
                      sex = input$sex)
     
-    
-    # Creating a dataframe with results by day and corresponding to valid wear time only  
-    results_by_day <-
-      
-      df_with_computed_metrics %>%
-      recap_by_day(age = input$age, weight = input$weight, sex = input$sex)
-    
-    return(list(df_with_computed_metrics = df_with_computed_metrics,
-                results_by_day = results_by_day, 
-                axis_sed_chosen_name = axis_sed_chosen_name, 
-                sed_cutpoint_chosen = sed_cutpoint_chosen, 
-                axis_mvpa_chosen_name = axis_mvpa_chosen_name,
-                mpa_cutpoint_chosen = mpa_cutpoint_chosen,
-                vpa_cutpoint_chosen = vpa_cutpoint_chosen))
+   # Creating a dataframe with results by day and corresponding to valid wear time only  
+   results_by_day <-
+     df_with_computed_metrics %>%
+     recap_by_day(age = input$age, weight = input$weight, sex = input$sex)
+   
+   # Returning a list of the results and parameters
+   return(list(df_with_computed_metrics = df_with_computed_metrics,
+               results_by_day = results_by_day, 
+               axis_sed_chosen_name = axis_sed_chosen_name, 
+               sed_cutpoint_chosen = sed_cutpoint_chosen, 
+               axis_mvpa_chosen_name = axis_mvpa_chosen_name,
+               mpa_cutpoint_chosen = mpa_cutpoint_chosen,
+               vpa_cutpoint_chosen = vpa_cutpoint_chosen))
     
   })
+    
+  # Plotting data with intensity categories
+    output$graph_int <- renderPlot({
+      plot_data_with_intensity(data = results_list()$df_with_computed_metrics, metric = input$Metric2)
+    }, height = function(){nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 90}, res = 120)
   
   # Showing results by day in a table
   output$results_by_day <- reactable::renderReactable({
@@ -477,10 +479,10 @@ app_server <- function(input, output, session) {
   results_summary <- eventReactive(input$Run, {
     
     
-    # Computing results averaged on valid days
-    results_list()$results_by_day %>%
-      average_results(minimum_wear_time = input$minimum_wear_time_for_analysis)
-  })
+      # Computing results averaged on valid days
+      results_list()$results_by_day %>%
+        average_results(minimum_wear_time = input$minimum_wear_time_for_analysis)
+    })
   
   # Showing results averaged on valid days in a table
   output$results_summary <- reactable::renderReactable({
@@ -509,9 +511,9 @@ app_server <- function(input, output, session) {
     
   })
   
-  ###############################
-  # Hide / show Download buttons
-  ###############################
+  ##############################
+  # Hide / show Download buttons ----
+  ##############################
   
   observe({
       shinyjs::hide("ExpDataset")
@@ -532,7 +534,7 @@ app_server <- function(input, output, session) {
   
   
   ###################
-  # Exporting results
+  # Exporting results ----
   ###################
   
   # Exporting marked dataset
@@ -566,7 +568,7 @@ app_server <- function(input, output, session) {
   )
   
   #################
-  # Generate report
+  # Generate report ----
   #################
   
   # Generating report EN
@@ -714,7 +716,7 @@ app_server <- function(input, output, session) {
   
   
   ########### 
-  # Reset app
+  # Reset app ----
   ########### 
   
   observeEvent(input$reset, {
@@ -745,7 +747,7 @@ app_server <- function(input, output, session) {
   })
   
   ####################### 
-  # Download user's guide
+  # Download user's guide ----
   #######################
   
   # English
@@ -769,7 +771,7 @@ app_server <- function(input, output, session) {
   )
   
   #################################################
-  # Exporting values/objects (required for testing)
+  # Exporting values/objects (required for testing) ----
   #################################################
   
   # Exporting dataframe marked for wear time

@@ -1,41 +1,41 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.10.26)  7 NOV 2021 00:03
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.11.27)  2 DEC 2021 22:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **user_guide_fr.tex
 (./user_guide_fr.tex
-LaTeX2e <2021-06-01> patch level 1
-L3 programming layer <2021-10-18>
+LaTeX2e <2021-11-15>
+L3 programming layer <2021-11-22>
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/book
 .cls
-Document Class: book 2021/02/12 v1.4n Standard LaTeX document class
+Document Class: book 2021/10/04 v1.4n Standard LaTeX document class
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/bk10
 .clo
-File: bk10.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
+File: bk10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count178
-\c@chapter=\count179
-\c@section=\count180
-\c@subsection=\count181
-\c@subsubsection=\count182
-\c@paragraph=\count183
-\c@subparagraph=\count184
-\c@figure=\count185
-\c@table=\count186
+\c@part=\count179
+\c@chapter=\count180
+\c@section=\count181
+\c@subsection=\count182
+\c@subsubsection=\count183
+\c@paragraph=\count184
+\c@subparagraph=\count185
+\c@figure=\count186
+\c@table=\count187
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/a
 msmath.sty
-Package: amsmath 2021/04/20 v2.17j AMS math features
+Package: amsmath 2021/10/15 v2.17l AMS math features
 \@mathmargin=\skip49
 For additional information on amsmath, use the `?' option.
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/a
 mstext.sty
-Package: amstext 2000/06/29 v2.01 AMS text
+Package: amstext 2021/08/26 v2.01 AMS text
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/a
 msgen.sty
@@ -50,15 +50,15 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/a
 msopn.sty
-Package: amsopn 2016/03/08 v2.02 operator names
+Package: amsopn 2021/08/26 v2.02 operator names
 )
-\inf@bad=\count187
+\inf@bad=\count188
 LaTeX Info: Redefining \frac on input line 234.
-\uproot@=\count188
-\leftroot@=\count189
+\uproot@=\count189
+\leftroot@=\count190
 LaTeX Info: Redefining \overline on input line 399.
-\classnum@=\count190
-\DOTSCASE@=\count191
+\classnum@=\count191
+\DOTSCASE@=\count192
 LaTeX Info: Redefining \ldots on input line 496.
 LaTeX Info: Redefining \dots on input line 499.
 LaTeX Info: Redefining \cdots on input line 620.
@@ -67,15 +67,15 @@ LaTeX Info: Redefining \cdots on input line 620.
 \big@size=\dimen141
 LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
-\macc@depth=\count192
-\c@MaxMatrixCols=\count193
+\macc@depth=\count193
+\c@MaxMatrixCols=\count194
 \dotsspace@=\muskip16
-\c@parentequation=\count194
-\dspbrk@lvl=\count195
+\c@parentequation=\count195
+\dspbrk@lvl=\count196
 \tag@help=\toks17
-\row@=\count196
-\column@=\count197
-\maxfields@=\count198
+\row@=\count197
+\column@=\count198
+\maxfields@=\count199
 \andhelp@=\toks18
 \eqnshift@=\dimen142
 \alignsep@=\dimen143
@@ -87,8 +87,8 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 \multlinegap=\skip50
 \multlinetaggap=\skip51
 \mathdisplay@stack=\toks20
-LaTeX Info: Redefining \[ on input line 2923.
-LaTeX Info: Redefining \] on input line 2924.
+LaTeX Info: Redefining \[ on input line 2938.
+LaTeX Info: Redefining \] on input line 2939.
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/
 amssymb.sty
@@ -155,20 +155,20 @@ Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 ath/unicode-math.sty
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3kernel/
 expl3.sty
-Package: expl3 2021-10-18 L3 programming layer (loader) 
+Package: expl3 2021-11-22 L3 programming layer (loader) 
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend
 /l3backend-xetex.def
 File: l3backend-xetex.def 2021-10-18 L3 backend support: XeTeX
 (|extractbb --version)
-\c__kernel_sys_dvipdfmx_version_int=\count199
-\l__color_backend_stack_int=\count266
-\g__color_backend_stack_int=\count267
-\g__graphics_track_int=\count268
+\c__kernel_sys_dvipdfmx_version_int=\count266
+\l__color_backend_stack_int=\count267
+\g__color_backend_stack_int=\count268
+\g__graphics_track_int=\count269
 \l__pdf_internal_box=\box52
-\g__pdf_backend_object_int=\count269
-\g__pdf_backend_annotation_int=\count270
-\g__pdf_backend_link_int=\count271
+\g__pdf_backend_object_int=\count270
+\g__pdf_backend_annotation_int=\count271
+\g__pdf_backend_link_int=\count272
 ))
 Package: unicode-math 2020/01/31 v0.8q Unicode maths in XeLaTeX and LuaLaTeX
 
@@ -179,11 +179,11 @@ TeX
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3package
 s/xparse/xparse.sty
-Package: xparse 2021-08-27 L3 Experimental document command parser
+Package: xparse 2021-11-12 L3 Experimental document command parser
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3package
 s/l3keys2e/l3keys2e.sty
-Package: l3keys2e 2021-08-27 LaTeX2e option processing using LaTeX3 keys
+Package: l3keys2e 2021-11-12 LaTeX2e option processing using LaTeX3 keys
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fontspec/
 fontspec.sty
@@ -193,17 +193,17 @@ Package: fontspec 2020/02/21 v2.7i Font selection for XeLaTeX and LuaLaTeX
 fontspec-xetex.sty
 Package: fontspec-xetex 2020/02/21 v2.7i Font selection for XeLaTeX and LuaLaTe
 X
-\l__fontspec_script_int=\count272
-\l__fontspec_language_int=\count273
-\l__fontspec_strnum_int=\count274
-\l__fontspec_tmp_int=\count275
-\l__fontspec_tmpa_int=\count276
-\l__fontspec_tmpb_int=\count277
-\l__fontspec_tmpc_int=\count278
-\l__fontspec_em_int=\count279
-\l__fontspec_emdef_int=\count280
-\l__fontspec_strong_int=\count281
-\l__fontspec_strongdef_int=\count282
+\l__fontspec_script_int=\count273
+\l__fontspec_language_int=\count274
+\l__fontspec_strnum_int=\count275
+\l__fontspec_tmp_int=\count276
+\l__fontspec_tmpa_int=\count277
+\l__fontspec_tmpb_int=\count278
+\l__fontspec_tmpc_int=\count279
+\l__fontspec_em_int=\count280
+\l__fontspec_emdef_int=\count281
+\l__fontspec_strong_int=\count282
+\l__fontspec_strongdef_int=\count283
 \l__fontspec_tmpa_dim=\dimen148
 \l__fontspec_tmpb_dim=\dimen149
 \l__fontspec_tmpc_dim=\dimen150
@@ -223,35 +223,35 @@ nc.def
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
 ))
-\g__um_fam_int=\count283
-\g__um_fonts_used_int=\count284
-\l__um_primecount_int=\count285
+\g__um_fam_int=\count284
+\g__um_fonts_used_int=\count285
+\l__um_primecount_int=\count286
 \g__um_primekern_muskip=\muskip17
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/unicode-m
 ath/unicode-math-table.tex)))
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/xc
 olor.sty
-Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-
 cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
-Package xcolor Info: Driver file: xetex.def on input line 225.
+Package xcolor Info: Driver file: xetex.def on input line 227.
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-
 def/xetex.def
 File: xetex.def 2021/03/18 v5.0k Graphics/color driver for xetex
 )
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
-Package xcolor Info: Model `RGB' extended on input line 1364.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1368.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/
 hyperref.sty
@@ -308,8 +308,8 @@ Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 )
 \@linkdim=\dimen151
-\Hy@linkcounter=\count286
-\Hy@pagecounter=\count287
+\Hy@linkcounter=\count287
+\Hy@pagecounter=\count288
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/
 pd1enc.def
@@ -328,7 +328,7 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 s/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count288
+\Hy@SavedSpaceFactor=\count289
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/
 puenc.def
@@ -342,7 +342,7 @@ Package hyperref Info: Plain pages OFF on input line 4207.
 Package hyperref Info: Backreferencing OFF on input line 4212.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4445.
-\c@Hy@tempcnt=\count289
+\c@Hy@tempcnt=\count290
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.s
 ty
@@ -361,7 +361,7 @@ alc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count290
+\Fld@menulength=\count291
 \Field@Width=\dimen153
 \Fld@charsize=\dimen154
 Package hyperref Info: Hyper figures OFF on input line 6076.
@@ -379,9 +379,9 @@ gshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count291
-\c@Item=\count292
-\c@Hfootnote=\count293
+\Hy@abspage=\count292
+\c@Item=\count293
+\c@Hfootnote=\count294
 )
 Package hyperref Info: Driver (autodetected): hxetex.
 
@@ -395,10 +395,10 @@ Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
 )
 )
 \pdfm@box=\box53
-\c@Hy@AnnotLevel=\count294
-\HyField@AnnotCount=\count295
-\Fld@listcount=\count296
-\c@bookmark@seq@number=\count297
+\c@Hy@AnnotLevel=\count295
+\HyField@AnnotCount=\count296
+\Fld@listcount=\count297
+\c@bookmark@seq@number=\count298
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfile
 check/rerunfilecheck.sty
@@ -406,8 +406,8 @@ Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atve
 ryend-ltx.sty
-Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
-e
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
 with kernel methods
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquec
@@ -427,9 +427,9 @@ Package: geometry 2020/01/02 v5.9 Page Geometry
 fvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count298
-\Gm@cntv=\count299
-\c@Gm@tempcnt=\count300
+\Gm@cnth=\count299
+\Gm@cntv=\count300
+\c@Gm@tempcnt=\count301
 \Gm@bindingoffset=\dimen155
 \Gm@wd@mp=\dimen156
 \Gm@odd@mp=\dimen157
@@ -442,22 +442,22 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/lon
 gtable.sty
-Package: longtable 2021-05-07 v4.16 Multi-page Table package (DPC)
+Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
 \LTleft=\skip53
 \LTright=\skip54
 \LTpre=\skip55
 \LTpost=\skip56
-\LTchunksize=\count301
+\LTchunksize=\count302
 \LTcapwidth=\dimen163
 \LT@head=\box54
 \LT@firsthead=\box55
 \LT@foot=\box56
 \LT@lastfoot=\box57
 \LT@gbox=\box58
-\LT@cols=\count302
-\LT@rows=\count303
-\c@LT@tables=\count304
-\c@LT@chunks=\count305
+\LT@cols=\count303
+\LT@rows=\count304
+\c@LT@tables=\count305
+\c@LT@chunks=\count306
 \LT@p@ftn=\toks23
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/
@@ -473,17 +473,17 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen171
 \cmidrulekern=\dimen172
 \defaultaddspace=\dimen173
-\@cmidla=\count306
-\@cmidlb=\count307
+\@cmidla=\count307
+\@cmidlb=\count308
 \@aboverulesep=\dimen174
 \@belowrulesep=\dimen175
-\@thisruleclass=\count308
-\@lastruleclass=\count309
+\@thisruleclass=\count309
+\@lastruleclass=\count310
 \@thisrulewidth=\dimen176
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/arr
 ay.sty
-Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
+Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
 \col@sep=\dimen177
 \ar@mcellbox=\box59
 \extrarowheight=\dimen178
@@ -495,21 +495,21 @@ Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/cal
 c.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count310
-\calc@Bcount=\count311
+\calc@Acount=\count311
+\calc@Bcount=\count312
 \calc@Adimen=\dimen179
 \calc@Bdimen=\dimen180
 \calc@Askip=\skip59
 \calc@Bskip=\skip60
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count312
+\calc@Ccount=\count313
 \calc@Cskip=\skip61
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etoolbox/
 etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count313
+\etb@tempcnta=\count314
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/mdwtools/
 footnote.sty
@@ -519,7 +519,7 @@ Package: footnote 1997/01/28 1.13 Save footnotes around boxes
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/
 graphicx.sty
-Package: graphicx 2020/12/05 v1.2c Enhanced LaTeX Graphics (DPC,SPQR)
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/
 graphics.sty
@@ -527,7 +527,7 @@ Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/
 trig.sty
-Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-
 cfg/graphics.cfg
@@ -556,21 +556,21 @@ rs
 multirow.sty
 Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
 \multirow@colwidth=\skip71
-\multirow@cntb=\count314
+\multirow@cntb=\count315
 \multirow@dima=\skip72
 \bigstrutjot=\dimen184
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/mul
 ticol.sty
-Package: multicol 2019/12/09 v1.8y multicolumn formatting (FMi)
-\c@tracingmulticols=\count315
+Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
+\c@tracingmulticols=\count316
 \mult@box=\box62
 \multicol@leftmargin=\dimen185
-\c@unbalance=\count316
-\c@collectmore=\count317
-\doublecol@number=\count318
-\multicoltolerance=\count319
-\multicolpretolerance=\count320
+\c@unbalance=\count317
+\c@collectmore=\count318
+\doublecol@number=\count319
+\multicoltolerance=\count320
+\multicolpretolerance=\count321
 \full@width=\dimen186
 \page@free=\dimen187
 \premulticols=\dimen188
@@ -582,8 +582,8 @@ Package: multicol 2019/12/09 v1.8y multicolumn formatting (FMi)
 \maxbalancingoverflow=\dimen190
 \mult@rightbox=\box65
 \mult@grightbox=\box66
-\mult@gfirstbox=\box67
-\mult@firstbox=\box68
+\mult@firstbox=\box67
+\mult@gfirstbox=\box68
 \@tempa=\box69
 \@tempa=\box70
 \@tempa=\box71
@@ -620,16 +620,15 @@ Package: multicol 2019/12/09 v1.8y multicolumn formatting (FMi)
 \@tempa=\box102
 \@tempa=\box103
 \@tempa=\box104
-\@tempa=\box105
-\c@minrows=\count321
-\c@columnbadness=\count322
-\c@finalcolumnbadness=\count323
+\c@minrows=\count322
+\c@columnbadness=\count323
+\c@finalcolumnbadness=\count324
 \last@try=\dimen191
 \multicolovershoot=\dimen192
 \multicolundershoot=\dimen193
-\mult@nat@firstbox=\box106
-\colbreak@box=\box107
-\mc@col@check@num=\count324
+\mult@nat@firstbox=\box105
+\colbreak@box=\box106
+\mc@col@check@num=\count325
 )
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/colortbl/
 colortbl.sty
@@ -661,9 +660,21 @@ Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
 \XKV@toks=\toks26
 \XKV@tempa@toks=\toks27
 )
-\XKV@depth=\count325
+\XKV@depth=\count326
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
+
+LaTeX hooks Warning: Generic hook 'file/after/tracklang.sty' is deprecated.
+(hooks)              Use hook 'file/tracklang.sty/after' instead.
+
+
+LaTeX hooks Warning: Generic hook 'package/after/bidi' is deprecated.
+(hooks)              Use hook 'package/bidi/after' instead.
+
+
+LaTeX hooks Warning: Generic hook 'package/after/luabidi' is deprecated.
+(hooks)              Use hook 'package/luabidi/after' instead.
+
 \xpg@normalclass=\XeTeXcharclass1
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/polygloss
@@ -727,12 +738,6 @@ braces):
 >  {french/babelname}  =>  {french}
 >  {french/localnumeral}  =>  {polyglossia@C@localnumeral}
 >  {french/Localnumeral}  =>  {polyglossia@C@localnumeral}.
-
-Package polyglossia Warning: No hyphenation patterns were loaded for `french'
-(polyglossia)                I will use \language=\l@nohyphenation instead on i
-nput line 12.
-
-\l@french = a dialect from \language\l@nohyphenation 
 \french@openbrackets=\XeTeXcharclass2
 \french@closebrackets=\XeTeXcharclass3
 \french@questionexclamation=\XeTeXcharclass4
@@ -1053,7 +1058,7 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 estring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count326
+\c@section@level=\count327
 )
 LaTeX Info: Redefining \ref on input line 127.
 LaTeX Info: Redefining \pageref on input line 127.
@@ -1199,13 +1204,7 @@ adults] \TU/lmr/m/n/10 ([]Santos-Lozano et al.,
 Chapitre 4.
 [13] [14
 
-]
-Underfull \hbox (badness 5133) in paragraph at lines 391--393
-\TU/lmr/m/it/10 PhysicalActivity : process accelerometer data for physical acti
-vity measurement\TU/lmr/m/n/10 .
- []
-
-[15]
+] [15]
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -1249,12 +1248,12 @@ Package rerunfilecheck Info: File `user_guide_fr.out' has not changed.
 (rerunfilecheck)             Checksum: 14A081F891B9B7230946007421CC5B2F;1309.
  ) 
 Here is how much of TeX's memory you used:
- 17812 strings out of 478472
- 322790 string characters out of 5859044
- 815629 words of memory out of 5000000
- 37860 multiletter control sequences out of 15000+600000
+ 18478 strings out of 478236
+ 347499 string characters out of 5852660
+ 820485 words of memory out of 5000000
+ 38750 multiletter control sequences out of 15000+600000
  409897 words of font info for 82 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 87i,11n,120p,2070b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 86i,11n,121p,2070b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on user_guide_fr.pdf (16 pages).

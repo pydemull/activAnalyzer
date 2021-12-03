@@ -117,8 +117,18 @@ Once these new metrics added to the initial dataset, the app summarizes the resu
 * `percent_MPA`: proportion of wear time spent in MPA behavior.
 * `percent_VPA`: proportion of wear time spent in VPA behavior. 
 * `percent_MVPA`: proportion of wear time spent in MPVA behavior.
+* `max_steps_60min`: best step accumulation per minute averaged over a window of 60 continuous minutes.
+* `max_steps_30min`: best step accumulation per minute averaged over a window of 30 continuous minutes.
+* `max_steps_20min`: best step accumulation per minute averaged over a window of 20 continuous minutes.
+* `max_steps_5min`: best step accumulation per minute averaged over a window of 5 continuous minutes.
+* `max_steps_1min`: best step accumulation per minute over a window of 1 minute.
+* `peak_steps_60min`: step accumulation per minute averaged over the best 60 continuous or discontinuous minutes.
+* `peak_steps_30min`: step accumulation per minute averaged over the best 30 continuous or discontinuous minutes.
+* `peak_steps_20min`: step accumulation per minute averaged over the best 20 continuous or discontinuous minutes.
+* `peak_steps_5min`: step accumulation per minute averaged over the best 5 continuous or discontinuous minutes.
+* `peak_steps_1min`: step accumulation per minute over the best minute (same result as for `max_steps_1min`).
 * `mets_hours_mvpa`: total MET-hours spent during MPVA behavior.
-* `ratio_mvpa_sed` : ratio between MVPA and SED times (`minutes_MVPA` / `minutes_SED`).
+* `ratio_mvpa_sed`: ratio between MVPA and SED times (`minutes_MVPA` / `minutes_SED`).
 
 
 Then, the app computes the PAL for each day. To do this, total energy expenditure (TEE) is divided by BMR. TEE is obtained by summing the kilocalories measured during wear time epochs and the kilocalories likely expended during nonwear time epochs (that is, kilocalories associated to BMR, as it is assumed that the device was mainly not worn during sleeping periods if any, periods during which energy expenditure is near of BMR), and by multiplying this sum by 10/9 to take into account the thermic effect of food. Of course, such calculations may conduct to underestimate TEE and PAL if the device was removed during prolonged periods of physical activity. Moreover, even if the device was correctly worn, the estimate of PAL is very approximate since both BMR and kilocalories related to wear time are estimated using methods that may not be accurate at the individual level.

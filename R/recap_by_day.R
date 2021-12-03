@@ -1,6 +1,6 @@
 #' Summarize results by day
 #' 
-#' This function summarizes results for each day of the measurement period.
+#' This function summarizes accelerometer results for each day of the measurement period.
 #' 
 #' The following metrics are computed: 
 #' \itemize{
@@ -19,6 +19,16 @@
 #'   \item \strong{percent_MPA:} proportion of wear time spent in MPA behavior
 #'   \item \strong{percent_VPA:} proportion of wear time spent in VPA behavior
 #'   \item \strong{percent_MVPA:} proportion of wear time spent in MPVA behavior
+#'   \item \strong{max_steps_60min:} best step accumulation per minute averaged over a window of 60 continuous minutes
+#'   \item \strong{max_steps_30min:} best step accumulation per minute averaged over a window of 30 continuous minutes
+#'   \item \strong{max_steps_20min:} best step accumulation per minute averaged over a window of 20 continuous minutes
+#'   \item \strong{max_steps_5min:} best step accumulation per minute averaged over a window of 5 continuous minutes
+#'   \item \strong{max_steps_1min:} best step accumulation per minute over a window of 1 minute
+#'   \item \strong{peak_steps_60min:} step accumulation per minute averaged over the best 60 continuous or discontinuous minutes
+#'   \item \strong{peak_steps_30min:} step accumulation per minute averaged over the best 30 continuous or discontinuous minutes
+#'   \item \strong{peak_steps_20min:} step accumulation per minute averaged over the best 20 continuous or discontinuous minutes
+#'   \item \strong{peak_steps_5min:} step accumulation per minute averaged over the best 5 continuous or discontinuous minutes
+#'   \item \strong{peak_steps_1min:} step accumulation per minute over the best minute (same result as for `max_steps_1min`)
 #'   \item \strong{mets_hours_mvpa:} total MET-hours spent during MPVA behavior
 #'   \item \strong{ratio_mvpa_sed:} ratio between MVPA and SED times (minutes_MVPA / minutes_SED)
 #'}
@@ -33,7 +43,7 @@
 #'    approximate since both BMR and kilocalories related to wear time are estimated using methods
 #'    that may not be accurate at the individual level.
 #'   
-#' @param data A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and \code{\link{mark_intensity}} functions.
+#' @param data A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then \code{\link{mark_intensity}} functions.
 #' @param col_date A character value to indicate the name of the date variable.
 #' @param age A numeric value in yr.
 #' @param weight A numeric value in kg.
@@ -58,27 +68,42 @@ recap_by_day <- function(data, col_date = "date", age = 40, weight = 70, sex = c
     bmr_kcal_min <- compute_bmr(age = age, sex = sex, weight = weight) / (24*60)
   
   # getting results by day
+    
+       # Defining a function for getting a NA value when computing a step-based metric
+       # from a vector with no non-missing values and the max() function
+       # Retrieved from: https://stackoverflow.com/questions/24519794/r-max-function-ignore-na
+         my_max <- function(x) ifelse( !all(is.na(x)), max(x, na.rm = TRUE), NA)
   df <-
     data %>%
     dplyr::group_by( .data[[col_date]], .drop = FALSE) %>%
     dplyr::filter(wearing == "w") %>%
     dplyr::summarise(
-      wear_time = sum(wearing_count),
-      total_counts_axis1 = sum(axis1),
-      total_counts_vm = sum(vm),
-      total_steps = sum(steps),
-      total_kcal_wear_time = round(sum(kcal), 2),
-      minutes_SED = sum(SED),
-      minutes_LPA = sum(LPA),
-      minutes_MPA = sum(MPA),
-      minutes_VPA = sum(VPA),
-      minutes_MVPA = sum(MPA) + sum(VPA),
+      wear_time = sum(wearing_count, na.rm = TRUE),
+      total_counts_axis1 = sum(axis1, na.rm = TRUE),
+      total_counts_vm = sum(vm, na.rm = TRUE),
+      total_steps = sum(steps, na.rm = TRUE),
+      total_kcal_wear_time = round(sum(kcal, na.rm = TRUE), 2),
+      minutes_SED = sum(SED, na.rm = TRUE),
+      minutes_LPA = sum(LPA, na.rm = TRUE),
+      minutes_MPA = sum(MPA, na.rm = TRUE),
+      minutes_VPA = sum(VPA, na.rm = TRUE),
+      minutes_MVPA = sum(MPA, na.rm = TRUE) + sum(VPA, na.rm = TRUE),
       percent_SED = round(minutes_SED / wear_time * 100, 2),
       percent_LPA = round(minutes_LPA / wear_time * 100, 2),
       percent_MPA = round(minutes_MPA / wear_time * 100, 2),
       percent_VPA = round(minutes_VPA / wear_time * 100, 2), 
       percent_MVPA = round(minutes_MVPA / wear_time * 100, 2),
-      mets_hours_mvpa = round(sum(mets_hours_mvpa), 2),
+      max_steps_60min = round(my_max(accum_steps_60min), 2),
+      max_steps_30min = round(my_max(accum_steps_30min), 2),
+      max_steps_20min = round(my_max(accum_steps_20min), 2),
+      max_steps_5min = round(my_max(accum_steps_5min), 2),
+      max_steps_1min = round(my_max(accum_steps_1min), 2),
+      peak_steps_60min = round(mean(head(sort(steps, decreasing = TRUE), n = 60L), na.rm = TRUE), 2),
+      peak_steps_30min = round(mean(head(sort(steps, decreasing = TRUE), n = 30L), na.rm = TRUE), 2),
+      peak_steps_20min = round(mean(head(sort(steps, decreasing = TRUE), n = 20L), na.rm = TRUE), 2),
+      peak_steps_5min = round(mean(head(sort(steps, decreasing = TRUE), n = 5L), na.rm = TRUE), 2), 
+      peak_steps_1min = round(mean(head(sort(steps, decreasing = TRUE), n = 1L), na.rm = TRUE), 2),
+      mets_hours_mvpa = round(sum(mets_hours_mvpa, na.rm = TRUE), 2),
       ratio_mvpa_sed = round(minutes_MVPA / minutes_SED, 2),
       
       # Computing physical activity level (PAL), that is, total EE / BMR. BMR is assigned to nonwear time; 

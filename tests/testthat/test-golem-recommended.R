@@ -46,9 +46,12 @@ test_that("The app correctly manages dataframes", {
     assign("ratio_lines", activAnalyzer:::ratio_lines, envir = .GlobalEnv)
 
   # Creating shinyDriver object
-    app <- shinytest::ShinyDriver$new(run_app(),
+    app <- shinytest::ShinyDriver$new(run_app(
+      onStart = function() {users <<- shiny::reactiveValues(count = 0)}
+    ),
                                     loadTimeout = 1e+05,
                                     shinyOptions = list(test.mode = TRUE))
+
     
   # Loading data file inside and outside the app
     app$uploadFile(upload = "acc.agd")

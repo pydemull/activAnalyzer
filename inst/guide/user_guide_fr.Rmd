@@ -122,8 +122,18 @@ Une fois ces nouveaux indicateurs ajoutés au jeu de données initial, l'applica
 * `percent_MPA`: proportion du temps de port passée dans un comportement MPA
 * `percent_VPA`: proportion du temps de port passée dans un comportement VPA 
 * `percent_MVPA`: proportion du temps de port passé dans un comportement MVPA.
+* `max_steps_60min`: meilleure accumulation de pas par minute moyennée sur une fenêtre de 60 minutes consécutives.
+* `max_steps_30min`: meilleure accumulation de pas par minute moyennée sur une fenêtre de 30 minutes consécutives.
+* `max_steps_20min`: meilleure accumulation de pas par minute moyennée sur une fenêtre de 20 minutes consécutives.
+* `max_steps_5min`: meilleure accumulation de pas par minute moyennée sur une fenêtre de 5 minutes consécutives.
+* `max_steps_1min`: meilleure accumulation de pas par minute sur une fenêtre de 1 minute.
+* `peak_steps_60min`: accumulation de pas par minute moyennée sur les meilleures 60 minutes, consécutives ou non.
+* `peak_steps_30min`: accumulation de pas par minute moyennée sur les meilleures 30 minutes, consécutives ou non.
+* `peak_steps_20min`: accumulation de pas par minute moyennée sur les meilleures 20 minutes, consécutives ou non.
+* `peak_steps_5min`: accumulation de pas par minute moyennée sur les meilleures 5 minutes, consécutives ou non.
+* `peak_steps_1min`: accumulation de pas par minute sur la meilleure minute (même résultat que pour `max_steps_1min`).
 * `mets_hours_mvpa`: nombre total de MET-heures dans un comportement MVPA.
-* `ratio_mvpa_sed` : rapport entre le temps MVPA et le temps SED (`minutes_MVPA` / `minutes_SED`).
+* `ratio_mvpa_sed`: rapport entre le temps MVPA et le temps SED (`minutes_MVPA` / `minutes_SED`).
 
 Ensuite, l'application calcule le NAP pour chaque jour de mesure. Pour faire cela, la dépense énergétique totale (DET) est divisée par le MB. La DET est obtenue en faisant la somme des kilocalories mesurées durant le temps de port et des kilocalories probablement dépensées durant les périodes de non-port (c'est-à-dire, les kilocalories associées au MB, car il est supposé que l'appareil était principalement non porté durant les périodes de sommeil le cas échéant, périodes durant lesquelles la dépense énergétique était proche du MB), et en multipliant cette somme par 10/9 afin de prendre en compte l'effet thermique des aliments. Bien sûr, de tels calculs peuvent conduire à sous-estimer la DET et le NAP si l'appareil était enlevé pendant des périodes prolongées d'activité physique. De plus, même si l'appareil était correctement porté, l'estimation du NAP reste très approximative étant donné qu'à la fois le MB et les kilocalories liées au temps de port étaient estimées à partir de méthodes qui peuvent ne pas être exactes au niveau individuel.
 
