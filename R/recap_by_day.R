@@ -75,7 +75,7 @@ recap_by_day <- function(data, col_date = "date", age = 40, weight = 70, sex = c
          my_max <- function(x) ifelse( !all(is.na(x)), max(x, na.rm = TRUE), NA)
   df <-
     data %>%
-    dplyr::group_by( .data[[col_date]], .drop = FALSE) %>%
+    dplyr::group_by(.data[[col_date]], .drop = FALSE) %>%
     dplyr::filter(wearing == "w") %>%
     dplyr::summarise(
       wear_time = sum(wearing_count, na.rm = TRUE),

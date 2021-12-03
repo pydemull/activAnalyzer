@@ -34,16 +34,16 @@ mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "tim
 ```
 
 ## Getting nonwear/wear time marks
-```{r, fig.width = 7, fig.height = 5, fig.align='center'}
+```{r, message = FALSE, fig.width = 7, fig.height = 5, fig.align='center'}
 mydata_with_wear_marks <- 
   mydata %>%
   mark_wear_time(frame = 90, allowanceFrame = 2, streamFrame = 30)
 
-plot_data(data = mydata, metric = "vm")
+plot_data(data = mydata_with_wear_marks, metric = "vm")
 ```
 
 ## Getting physical activity intensity marks
-```{r, message = FALSE}
+```{r, message = FALSE, fig.width = 7, fig.height = 5, fig.align='center'}
 mydata_with_intensity_marks <- 
   mark_intensity(data = mydata_with_wear_marks, 
     equation = "Sasaki et al. (2011) [Adults]", 
@@ -53,7 +53,8 @@ mydata_with_intensity_marks <-
 
 plot_data_with_intensity(mydata_with_intensity_marks)
 ```
-# Getting results by day
+
+## Getting results by day
 ```{r, message = FALSE}
 results_by_day <-
   mydata_with_intensity_marks %>%
