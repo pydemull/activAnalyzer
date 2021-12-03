@@ -1,4 +1,5 @@
 utils::globalVariables(c(
+  "users",
   "equations_mets", 
   "Study",
   "sed_cutpoints",
@@ -49,5 +50,22 @@ utils::globalVariables(c(
   "wearing_count",
   "vm",
   "steps",
-  "kcal"
+  "kcal",
+  "max_steps_60min",
+  "max_steps_30min",
+  "max_steps_20min",
+  "max_steps_5min",
+  "max_steps_1min",
+  "peak_steps_60min",
+  "peak_steps_30min",
+  "peak_steps_20min",
+  "peak_steps_5min",
+  "peak_steps_1min",
+  "accum_steps_60min",
+  "accum_steps_30min",
+  "accum_steps_20min",
+  "accum_steps_5min",
+  "accum_steps_1min",
+  "head"
+  
   ))
