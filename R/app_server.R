@@ -15,7 +15,7 @@ app_server <- function(input, output, session) {
   })
   
   # Decreasing users count when closing session
-  # Stopping App when count is 0 without planned reloading
+  # Stopping app when count is 0 without planned reloading
   session$onSessionEnded(function() {
     isolate({
       users$count = users$count - 1
@@ -27,7 +27,8 @@ app_server <- function(input, output, session) {
   # Uploading and preparing data ----
   ##############################
 
-  # Getting data file without modification (required for extracting attributes information when generating the report)
+  # Getting data file without modification (required for extracting device attributes 
+  # information when generating the report)
     file <- reactive({
       
       req(input$upload)
@@ -111,19 +112,19 @@ app_server <- function(input, output, session) {
             input$streamFrame_size >= 0
           )
       
-    # Setting the axis to be used for detecting nonwear time
-      if (input$axis_weartime == "vector magnitude") {  
-        cts <- "vm"
-      } else {
-        cts <- "axis1"
-      }
-    
-    # Creating reactive dataframe
-      df <- mark_wear_time(dataset = data(),
-                           cts = cts, 
-                           frame = input$frame_size, 
-                           allowanceFrame = input$allowanceFrame_size)
-      return(df)
+     # Setting the axis to be used for detecting nonwear time
+       if (input$axis_weartime == "vector magnitude") {  
+         cts <- "vm"
+       } else {
+         cts <- "axis1"
+       }
+     
+     # Creating reactive dataframe
+       df <- mark_wear_time(dataset = data(),
+                            cts = cts, 
+                            frame = input$frame_size, 
+                            allowanceFrame = input$allowanceFrame_size)
+       return(df)
       
       
       })
@@ -451,6 +452,7 @@ app_server <- function(input, output, session) {
     output$graph_int <- renderPlot({
       plot_data_with_intensity(data = results_list()$df_with_computed_metrics, metric = input$Metric2)
     }, height = function(){nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 90}, res = 120)
+    
   
   # Showing results by day in a table
   output$results_by_day <- reactable::renderReactable({
