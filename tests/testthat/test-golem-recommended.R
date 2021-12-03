@@ -38,6 +38,7 @@ test_that("The app correctly manages dataframes", {
   
   # Preparing environment for shinytest
     Study <<- "Study"
+    assign("users", shiny::reactiveValues(count = 0), envir = .GlobalEnv)
     assign("equations_mets", activAnalyzer:::equations_mets, envir = .GlobalEnv)
     assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = .GlobalEnv)
     assign("sed_cutpoints", activAnalyzer:::sed_cutpoints, envir = .GlobalEnv)
@@ -46,9 +47,7 @@ test_that("The app correctly manages dataframes", {
     assign("ratio_lines", activAnalyzer:::ratio_lines, envir = .GlobalEnv)
 
   # Creating shinyDriver object
-    app <- shinytest::ShinyDriver$new(run_app(
-      onStart = function() {users <<- shiny::reactiveValues(count = 0)}
-    ),
+    app <- shinytest::ShinyDriver$new(run_app(),
                                     loadTimeout = 1e+05,
                                     shinyOptions = list(test.mode = TRUE))
 
@@ -58,7 +57,7 @@ test_that("The app correctly manages dataframes", {
     test_file <- "acc.agd"
 
   # Testing dataframe marked for wear time
-      # Test n°1
+      # Test 1
         app$setInputs(axis_weartime = "vertical axis", 
                       frame_size = 60, 
                       allowanceFrame_size = 1, 
@@ -73,7 +72,7 @@ test_that("The app correctly manages dataframes", {
         
         expect_identical(actual_df, test_df)
      
-     # Test n°2
+     # Test 2
        app$setInputs(axis_weartime = "vector magnitude", 
                      frame_size = 30, 
                      allowanceFrame_size = 0, 
