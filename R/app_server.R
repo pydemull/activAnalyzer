@@ -143,33 +143,9 @@ app_server <- function(input, output, session) {
   # Visualizing all data with nonwear time ----
   ########################################
   
-  # Code below is adapted from https://stackoverflow.com/questions/50914398/increase-plot-size-in-shiny-when-using-ggplot-facets
-  
-  # Creating a function to capture the number of facets within a ggplot object that uses facet_grid()
-  gg_facet_nrow <- function(p){
-      p %>% ggplot2::ggplot_build()  %>%
-        magrittr::extract2('layout') %>%
-        magrittr::extract2('layout') %>%
-        magrittr::extract2('ROW') %>%
-        unique() %>%
-        length()
-    }
-  
-  # Creating plot
-  plot <- reactive({
-    req(df())
-    plot_data(data = df(), metric = input$Metric)
-    })
-  
-  # Getting the number of facets from the plot
-  he <- reactive({
-    gg_facet_nrow(p = plot())
-    })
-  
-  # Rendering the plot
   output$graph <- renderPlot({
-    plot()
- }, height = function(){he() * 90}, res = 120)
+    plot_data(data = df(), metric = input$Metric)
+  }, height = function(){nlevels(as.factor(df()$date)) * 90}, res = 120)
   
   ###################################################
   # Getting results when clicking on the "Run" button ----
@@ -472,21 +448,9 @@ app_server <- function(input, output, session) {
   })
     
   # Plotting data with intensity categories
-       # Creating plot
-       plot_int <- reactive({
-         req(results_list()$df_with_computed_metrics)
-         plot_data_with_intensity(data = results_list()$df_with_computed_metrics, metric = input$Metric2)
-       })
-       
-       # Getting the number of facets from the plot
-       he_int <- reactive({
-         gg_facet_nrow(p = plot_int())
-       })
-       
-       # Rendering the plot
-       output$graph_int <- renderPlot({
-         plot_int()
-       }, height = function(){he_int() * 90}, res = 120)
+    output$graph_int <- renderPlot({
+      plot_data_with_intensity(data = results_list()$df_with_computed_metrics, metric = input$Metric2)
+    }, height = function(){nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 90}, res = 120)
   
   # Showing results by day in a table
   output$results_by_day <- reactable::renderReactable({

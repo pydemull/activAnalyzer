@@ -35,10 +35,9 @@ plot_data <- function(data,
     data[[col_date]] <- format(lubridate::as_date(data[[col_date]]) , "%d-%m-%y")
 
   # Creating the plot
-    ggplot(data = data) +
+    ggplot(data = data, aes(x = .data[[col_time]])) +
     geom_ribbon(
       aes(
-      x = .data[[col_time]],
       ymin = 0, 
       ymax = ifelse(.data[[col_nonwear]] == 1, Inf, 0),
       fill = "Nonwear"
@@ -47,7 +46,6 @@ plot_data <- function(data,
       ) +
     geom_ribbon(
       aes(
-      x = .data[[col_time]],
       ymin = 0, 
       ymax = ifelse(.data[[col_wear]] == 1, Inf, 0),
       fill = "Wear"
@@ -55,9 +53,9 @@ plot_data <- function(data,
       alpha = 0.5) +
     geom_line(
       aes(
-      x = .data[[col_time]],
-      y = .data[[metric]])
-      ) +
+        y = .data[[metric]]
+      )
+    ) +
     scale_x_time(breaks = hms::hms(seq(3600, 23*3600, 2*3600)), 
                 expand = c(0, 0), 
                 labels = format_hm
