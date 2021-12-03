@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot accelerometer data for each day — plot_data • activAnalyzer</title>
+<title>Plot accelerometer data for each day with both nonwear time and physical intensity categories — plot_data_with_intensity • activAnalyzer</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Plot accelerometer data for each day — plot_data" />
+<meta property="og:title" content="Plot accelerometer data for each day with both nonwear time and physical intensity categories — plot_data_with_intensity" />
 <meta property="og:description" content="This function plots accelerometer data against time for each day of measurement,
 with the possibility to specify the metric to visualize." />
 <meta property="og:image" content="https://pydemull.github.io/activAnalyzer/logo.png" />
@@ -123,9 +123,9 @@ with the possibility to specify the metric to visualize." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot accelerometer data for each day</h1>
-    <small class="dont-index">Source: <a href='https://github.com/pydemull/activAnalyzer/blob/master/R/plot_data.R'><code>R/plot_data.R</code></a></small>
-    <div class="hidden name"><code>plot_data.Rd</code></div>
+    <h1>Plot accelerometer data for each day with both nonwear time and physical intensity categories</h1>
+    <small class="dont-index">Source: <a href='https://github.com/pydemull/activAnalyzer/blob/master/R/plot_data_with_intensity.R'><code>R/plot_data_with_intensity.R</code></a></small>
+    <div class="hidden name"><code>plot_data_with_intensity.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -133,7 +133,7 @@ with the possibility to specify the metric to visualize." />
 with the possibility to specify the metric to visualize.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_data</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>plot_data_with_intensity</span><span class='op'>(</span>
   <span class='va'>data</span>,
   metric <span class='op'>=</span> <span class='st'>"axis1"</span>,
   col_time <span class='op'>=</span> <span class='st'>"time"</span>,
@@ -147,7 +147,7 @@ with the possibility to specify the metric to visualize.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A dataframe obtained using the <code><a href='prepare_dataset.html'>prepare_dataset</a></code> and <code><a href='mark_wear_time.html'>mark_wear_time</a></code> functions.</p></td>
+      <td><p>A dataframe obtained using the <code><a href='mark_wear_time.html'>mark_wear_time</a></code> AND THEN the <code><a href='mark_intensity.html'>mark_intensity</a></code> functions.</p></td>
     </tr>
     <tr>
       <th>metric</th>
@@ -178,14 +178,31 @@ with the possibility to specify the metric to visualize.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='r-in'><span class='va'>file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"acc.agd"</span>, package <span class='op'>=</span> <span class='st'>"activAnalyzer"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>mydata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prepare_dataset.html'>prepare_dataset</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>file</span>, epoch_len_out <span class='op'>=</span> <span class='fl'>60</span>, col_time_stamp <span class='op'>=</span> <span class='st'>"timestamp"</span><span class='op'>)</span></span>
-<span class='r-in'><span class='va'>mydata_with_wear_marks</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mark_wear_time.html'>mark_wear_time</a></span><span class='op'>(</span>dataset <span class='op'>=</span> <span class='va'>mydata</span>, TS <span class='op'>=</span> <span class='st'>"timestamp"</span>, </span>
-<span class='r-in'>    cts  <span class='op'>=</span> <span class='st'>"vm"</span>, frame <span class='op'>=</span> <span class='fl'>90</span>, allowanceFrame <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mydata_with_wear_marks</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mark_wear_time.html'>mark_wear_time</a></span><span class='op'>(</span>dataset <span class='op'>=</span> <span class='va'>mydata</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> frame is 90</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> streamFrame is 30</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> allowanceFrame is 2</span>
-<span class='r-in'><span class='fu'>plot_data</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>mydata_with_wear_marks</span>, metric <span class='op'>=</span> <span class='st'>"steps"</span>, col_time <span class='op'>=</span> <span class='st'>"time"</span>, </span>
-<span class='r-in'>    col_nonwear <span class='op'>=</span> <span class='st'>"non_wearing_count"</span>, col_wear <span class='op'>=</span> <span class='st'>"wearing_count"</span>, col_date <span class='op'>=</span> <span class='st'>"date"</span><span class='op'>)</span></span>
-<span class='r-plt img'><img src='plot_data-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='va'>mydata_with_intensity_marks</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mark_intensity.html'>mark_intensity</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>mydata_with_wear_marks</span>, </span>
+<span class='r-in'>    equation <span class='op'>=</span> <span class='st'>"Sasaki et al. (2011) [Adults]"</span>, age <span class='op'>=</span> <span class='fl'>32</span>, weight <span class='op'>=</span> <span class='fl'>67</span>, sex <span class='op'>=</span> <span class='st'>"male"</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> You have computed BMR using the following inputs: </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     age = 32</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     weight = 67</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     sex = male</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> You have computed METs using the following inputs: </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     equation = Sasaki et al. (2011) [Adults]</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     weight = 67</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     sex = male</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> You have computed intensity metrics using the following inputs: </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     axis = vm</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     sed_cutpoint = 200</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     mpa_cutpoint = 2690</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     vpa_cutpoint = 6167</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     equation = Sasaki et al. (2011) [Adults]</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     age = 32</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     weight = 67</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     sex = male</span>
+<span class='r-in'><span class='fu'>plot_data_with_intensity</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>mydata_with_intensity_marks</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='plot_data_with_intensity-1.png' alt='' width='700' height='433' /></span>
 <span class='r-in'></span>
 </pre>
   </div>

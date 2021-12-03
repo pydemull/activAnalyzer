@@ -140,7 +140,7 @@ obtained using the <code><a href='recap_by_day.html'>recap_by_day</a></code> fun
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A dataframe obtained using the <code><a href='prepare_dataset.html'>prepare_dataset</a></code>,  <code><a href='mark_wear_time.html'>mark_wear_time</a></code>, <code><a href='mark_intensity.html'>mark_intensity</a></code> and <code><a href='recap_by_day.html'>recap_by_day</a></code> functions.</p></td>
+      <td><p>A dataframe obtained using the <code><a href='prepare_dataset.html'>prepare_dataset</a></code>,  <code><a href='mark_wear_time.html'>mark_wear_time</a></code>, <code><a href='mark_intensity.html'>mark_intensity</a></code> and then <code><a href='recap_by_day.html'>recap_by_day</a></code> functions.</p></td>
     </tr>
     <tr>
       <th>minimum_wear_time</th>
@@ -184,15 +184,17 @@ obtained using the <code><a href='recap_by_day.html'>recap_by_day</a></code> fun
 <span class='r-msg co'><span class='r-pr'>#&gt;</span>     weight = 70</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span>     sex = male</span>
 <span class='r-in'><span class='fu'>average_results</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>summary_by_day</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1 × 19</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1 × 29</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   valid_days wear_time total_counts_axis1 total_counts_vm total_steps</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>          5      768.            <span style='text-decoration: underline;'>513</span>109.         <span style='text-decoration: underline;'>951</span>483.       <span style='text-decoration: underline;'>14</span>869</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 14 more variables: total_kcal_wear_time &lt;dbl&gt;, minutes_SED &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 24 more variables: total_kcal_wear_time &lt;dbl&gt;, minutes_SED &lt;dbl&gt;,</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   minutes_LPA &lt;dbl&gt;, minutes_MPA &lt;dbl&gt;, minutes_VPA &lt;dbl&gt;,</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   minutes_MVPA &lt;dbl&gt;, percent_SED &lt;dbl&gt;, percent_LPA &lt;dbl&gt;,</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   percent_MPA &lt;dbl&gt;, percent_VPA &lt;dbl&gt;, percent_MVPA &lt;dbl&gt;,</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   mets_hours_mvpa &lt;dbl&gt;, ratio_mvpa_sed &lt;dbl&gt;, pal &lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   max_steps_60min &lt;dbl&gt;, max_steps_30min &lt;dbl&gt;, max_steps_20min &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   max_steps_5min &lt;dbl&gt;, max_steps_1min &lt;dbl&gt;, peak_steps_60min &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   peak_steps_30min &lt;dbl&gt;, peak_steps_20min &lt;dbl&gt;, peak_steps_5min &lt;dbl&gt;, …</span></span>
 <span class='r-in'></span>
 </pre>
   </div>

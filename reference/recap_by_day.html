@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Summarize results by day — recap_by_day" />
-<meta property="og:description" content="This function summarizes results for each day of the measurement period." />
+<meta property="og:description" content="This function summarizes accelerometer results for each day of the measurement period." />
 <meta property="og:image" content="https://pydemull.github.io/activAnalyzer/logo.png" />
 
 
@@ -128,7 +128,7 @@
     </div>
 
     <div class="ref-description">
-    <p>This function summarizes results for each day of the measurement period.</p>
+    <p>This function summarizes accelerometer results for each day of the measurement period.</p>
     </div>
 
     <pre class="usage"><span class='fu'>recap_by_day</span><span class='op'>(</span>
@@ -144,7 +144,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A dataframe obtained using the <code><a href='prepare_dataset.html'>prepare_dataset</a></code>, <code><a href='mark_wear_time.html'>mark_wear_time</a></code>, and <code><a href='mark_intensity.html'>mark_intensity</a></code> functions.</p></td>
+      <td><p>A dataframe obtained using the <code><a href='prepare_dataset.html'>prepare_dataset</a></code>, <code><a href='mark_wear_time.html'>mark_wear_time</a></code>, and then <code><a href='mark_intensity.html'>mark_intensity</a></code> functions.</p></td>
     </tr>
     <tr>
       <th>col_date</th>
@@ -185,6 +185,16 @@
 <li><p><strong>percent_MPA:</strong> proportion of wear time spent in MPA behavior</p></li>
 <li><p><strong>percent_VPA:</strong> proportion of wear time spent in VPA behavior</p></li>
 <li><p><strong>percent_MVPA:</strong> proportion of wear time spent in MPVA behavior</p></li>
+<li><p><strong>max_steps_60min:</strong> best step accumulation per minute averaged over a window of 60 continuous minutes</p></li>
+<li><p><strong>max_steps_30min:</strong> best step accumulation per minute averaged over a window of 30 continuous minutes</p></li>
+<li><p><strong>max_steps_20min:</strong> best step accumulation per minute averaged over a window of 20 continuous minutes</p></li>
+<li><p><strong>max_steps_5min:</strong> best step accumulation per minute averaged over a window of 5 continuous minutes</p></li>
+<li><p><strong>max_steps_1min:</strong> best step accumulation per minute over a window of 1 minute</p></li>
+<li><p><strong>peak_steps_60min:</strong> step accumulation per minute averaged over the best 60 continuous or discontinuous minutes</p></li>
+<li><p><strong>peak_steps_30min:</strong> step accumulation per minute averaged over the best 30 continuous or discontinuous minutes</p></li>
+<li><p><strong>peak_steps_20min:</strong> step accumulation per minute averaged over the best 20 continuous or discontinuous minutes</p></li>
+<li><p><strong>peak_steps_5min:</strong> step accumulation per minute averaged over the best 5 continuous or discontinuous minutes</p></li>
+<li><p><strong>peak_steps_1min:</strong> step accumulation per minute over the best minute (same result as for <code>max_steps_1min</code>)</p></li>
 <li><p><strong>mets_hours_mvpa:</strong> total MET-hours spent during MPVA behavior</p></li>
 <li><p><strong>ratio_mvpa_sed:</strong> ratio between MVPA and SED times (minutes_MVPA / minutes_SED)</p></li>
 </ul>
@@ -230,7 +240,7 @@ that may not be accurate at the individual level.</p>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span>     age = 40</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span>     weight = 70</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span>     sex = male</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 × 19</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 × 29</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   date   wear_time total_counts_ax… total_counts_vm total_steps total_kcal_wear…</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> 2021-…       720           <span style='text-decoration: underline;'>359</span>125         <span style='text-decoration: underline;'>706</span>252.       <span style='text-decoration: underline;'>14</span>056            <span style='text-decoration: underline;'>1</span>264.</span>
@@ -239,10 +249,13 @@ that may not be accurate at the individual level.</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> 2021-…       770           <span style='text-decoration: underline;'>320</span>847         <span style='text-decoration: underline;'>781</span>469.       <span style='text-decoration: underline;'>13</span>744            <span style='text-decoration: underline;'>1</span>340.</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> 2021-…       820           <span style='text-decoration: underline;'>167</span>999         <span style='text-decoration: underline;'>415</span>457.       <span style='text-decoration: underline;'>10</span>315            <span style='text-decoration: underline;'>1</span>074.</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> 2021-…         0                0              0            0               0 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 13 more variables: minutes_SED &lt;dbl&gt;, minutes_LPA &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 23 more variables: minutes_SED &lt;dbl&gt;, minutes_LPA &lt;dbl&gt;,</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   minutes_MPA &lt;dbl&gt;, minutes_VPA &lt;dbl&gt;, minutes_MVPA &lt;dbl&gt;,</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   percent_SED &lt;dbl&gt;, percent_LPA &lt;dbl&gt;, percent_MPA &lt;dbl&gt;, percent_VPA &lt;dbl&gt;,</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   percent_MVPA &lt;dbl&gt;, mets_hours_mvpa &lt;dbl&gt;, ratio_mvpa_sed &lt;dbl&gt;, pal &lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   percent_MVPA &lt;dbl&gt;, max_steps_60min &lt;dbl&gt;, max_steps_30min &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   max_steps_20min &lt;dbl&gt;, max_steps_5min &lt;dbl&gt;, max_steps_1min &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   peak_steps_60min &lt;dbl&gt;, peak_steps_30min &lt;dbl&gt;, peak_steps_20min &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   peak_steps_5min &lt;dbl&gt;, peak_steps_1min &lt;dbl&gt;, mets_hours_mvpa &lt;dbl&gt;, …</span></span>
 <span class='r-in'></span>
 </pre>
   </div>
