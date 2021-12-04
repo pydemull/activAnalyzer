@@ -2,7 +2,6 @@
 title: |
     | activAnalyzer
     | user's guide
-author: "Pierre-Yves de Müllenheim"
 date: "`r Sys.Date()`"
 description: "activAnalyzer"
 documentclass: book
@@ -36,9 +35,9 @@ It is possible to provide the name and surname related to the patient, as well a
 It is possible to indicate where the device was placed on the body during the measurement period. Several options are available for the position but for now, the app is designed to work with data recorded at the hip only. Device information must be provided to have a complete document after generating the report at the end of the app. Other relevant information regarding the device (i.e., ActiGraph model, sampling rate, filter enabled when the .agd file was generated from .gt3x data with Actilife® software) are silently captured when uploading the data file.  
 
 # Data uploading, nonwear time detection, and data visualization
-The user must upload an .agd file previously generated using Actilife<span>&#174;</span> software. The length of the epoch used in the .agd file (e.g., 10 s, 60 s) has no importance. Once an .agd file is uploaded, behind the scene, the app reads the file and collapses data to get a dataframe with 1-min epochs thanks to R functions provided in the `actigraph.sleepr` R package [@petkovaActigraphSleeprDetect2021]. Then, the app computes the vector magnitude ($VM = \sqrt{x^2 + y^2 + z^2}$). After this step, it is possible to configure the analysis to be performed to detect nonwear time. It consists of choosing the activity data (vector magnitude counts or vertical axis counts) and the time interval with zero count to be considered to detect nonwear time, as well as the time interval with nonzero counts allowed during a nonwear period along with the period duration with zero count required back and forward the detected activity to validate nonwear time. The default values provided in the app for configuring nonwear time detection are based on the paper by Choi et al. [-@choiAssessmentWearNonwear2012]. Finally, when all inputs are configured as required, the user must click on the "Validate configuration" button. If all inputs are valid, the app detects nonwear time thanks to a function from the `PhysicalActivity` R package [@choiPhysicalActivityProcessAccelerometer2021]. The app then provides a graphic allowing the user to visualize different metrics among those contained in the data file. Completing this step is required before going further in the app.
+The user must upload an .agd file previously generated using Actilife<span>&#174;</span> software with at least the data related to the three axes and to the inclinometer function of the device  (time spent in standing, sitting, and lying postures). The length of the epoch used in the .agd file (e.g., 10 s, 60 s) has no importance. Once an .agd file is uploaded, behind the scene, the app reads the file and collapses data to get a dataframe with 1-min epochs thanks to R functions provided in the `actigraph.sleepr` R package [@petkovaActigraphSleeprDetect2021]. Then, the app computes the vector magnitude ($VM = \sqrt{x^2 + y^2 + z^2}$). After this step, it is possible to configure the analysis to be performed to detect nonwear time. It consists of choosing the activity data (vector magnitude counts or vertical axis counts) and the time interval with zero count to be considered to detect nonwear time, as well as the time interval with nonzero counts allowed during a nonwear period along with the period duration with zero count required back and forward the detected activity to validate nonwear time. The default values provided in the app for configuring nonwear time detection are based on the paper by Choi et al. [-@choiAssessmentWearNonwear2012]. Finally, when all inputs are configured as required, the user must click on the "Validate configuration" button. If all inputs are valid, the app detects nonwear time thanks to a function from the `PhysicalActivity` R package [@choiPhysicalActivityProcessAccelerometer2021]. The app then provides a graphic allowing the user to visualize different data among those contained in the data file. Completing this step is required before going further in the app.
 
-# Computation of metrics
+# Configuration for metrics computation
 The user must select an equation to compute METs and the axis and cut-points to be used to compute time spent in sedentary behavior (SED), light physical activity (LPA), moderate physical activity (MPA), vigorous physical activity (VPA), and moderate-to-vigorous physical activity (MVPA). 
 
 The equations provided in the app for computing METs can be retrieved from scientific articles:
@@ -50,10 +49,10 @@ The equations provided in the app for computing METs can be retrieved from scien
 
 The cut-points provided can also be retrieved from scientific articles:
 
-* Aguilar-Farias et al. [-@aguilar-fariasActiGraphGT3XCutpoints2014] SED cut-points in older adults : <200 counts/min [Vector magnitude];
-* Sasaki et al. [-@sasakiValidationComparisonActiGraph2011] MPA and VPA cut-points in adults: $\geqslant$ 2 690 counts/min (MPA) and $\geqslant$ 6 167 counts/min (VPA) [Vector magnitude];
-* Santos-Lozano et al. [-@santos-lozanoActigraphGT3XValidation2013] MPA and VPA cut-points in adults: $\geqslant$ 3 208 counts/min (MPA) and $\geqslant$ 8 565 counts/min (VPA) [Vector magnitude];
-* Santos-Lozano et al. [-@santos-lozanoActigraphGT3XValidation2013] MPA and VPA cut-points in older adults: $\geqslant$ 2 751 counts/min (MPA) and $\geqslant$ 9 359 counts/min (VPA) [Vector magnitude]. 
+* Aguilar-Farias et al. [-@aguilar-fariasActiGraphGT3XCutpoints2014] SED cut-points for older adults : <200 counts/min [Vector magnitude];
+* Sasaki et al. [-@sasakiValidationComparisonActiGraph2011] MPA and VPA cut-points for adults: $\geqslant$ 2 690 counts/min (MPA) and $\geqslant$ 6 167 counts/min (VPA) [Vector magnitude];
+* Santos-Lozano et al. [-@santos-lozanoActigraphGT3XValidation2013] MPA and VPA cut-points for adults: $\geqslant$ 3 208 counts/min (MPA) and $\geqslant$ 8 565 counts/min (VPA) [Vector magnitude];
+* Santos-Lozano et al. [-@santos-lozanoActigraphGT3XValidation2013] MPA and VPA cut-points for older adults: $\geqslant$ 2 751 counts/min (MPA) and $\geqslant$ 9 359 counts/min (VPA) [Vector magnitude]. 
 
 These cut-points have been recommended by Migueles et al. [-@miguelesAccelerometerDataCollection2017]. However, in the case where none of them would be satisfactory for the user, the app allows to define personalized cut-points.
 
@@ -93,14 +92,14 @@ tribble(
   autofit()
 ```
 
-If the patient considers their sex as "undefined", then an equation for females is used. These equations provide BMR in kcal/day, but the app also silently computes BMR in kcal/min to use it in specific calculations. Then, the following metrics are computed for each 60-s epoch of the dataset:
+If the patient considers their sex as "undefined", then an equation for females is used. These equations provide BMR in kcal/day, but the app also silently computes BMR in kcal/min to use it in specific calculations. Then, the following variables are computed for each 60-s epoch of the dataset:
 
 * SED, LPA, MPA, VPA categories based on the axis and the cut-points configured by the user;
 * METs, by using the MET equation provided by the user;
 * Kilocalories, by multiplying the MET value by BMR expressed in kcal/min for non-SED epochs (for SED epochs, BMR expressed in kcal/min is directly used);
 * MET-hours related to MPVA, by multiplying the MET value by the time (1/60e of an hour), only when the MET value is $\geqslant$ 3.
 
-Once these new metrics added to the initial dataset, the app summarizes the results by day using valid wear time only, this for the following metrics: 
+Once these new variables added to the initial dataset, the app summarizes the results by day using valid wear time only, this for the following metrics: 
 
 * `wear_time`: total wear time.
 * `total_counts_axis1`: total counts for the vertical axis.
@@ -141,7 +140,7 @@ In the app, the results by day and those averaged using valid days are shown in 
 
 Importantly, the comparison of the daily results with normative values or guidelines should be used with caution. Regarding the total number of steps, the values proposed in the figure were obtained using classical pedometers. Be aware of the fact that if the ActiGraph accelerometer that was used was a GT3X generation device, the final result is likely to be underestimated or overestimated in comparison with classical pedometers if the normal filter or the low frequency extension filter was enabled, respectively, when generating the .agd file with Actilife® software.
 
-The daily results for MVPA and SED times are shown in relation to a mortality hazard ratio that has been estimated from accelerometer data from +40 yr old adults by Ekelund et al. [-@ekelundDoseresponseAssociationsAccelerometry2019]. In a similar manner, the daily ratio MVPA / SED is shown in relation to a mortality hazard ratio that has been estimated from accelerometer data from 50-79 yr old adults by Chastin et al. [-@chastinStrikingRightBalance2021]. The statistical information (i.e., hazard ratios and corresponding 95% confidence interval limits) shown in the figures were obtained as follows: first, the web platform [WebPlotDigitizer](https://automeris.io/WebPlotDigitizer) was used to capture the coordinates of several points that constituted the curves showing the hazard ratios and corresponding confidence limits in the original articles. Then, a local polynomial regression fitting procedure was used on the coordinates data in R using default settings. The fitted data were finally used for plotting the figures of the report. Of note, the hazard ratios and confidence limits shown in the figures in relation to the lower and/or upper extremities of the abscissae axis were extrapolated beyond the original data.
+The daily results for MVPA and SED times are shown in relation to a mortality hazard ratio that has been estimated from accelerometer data from +40 yr old adults by Ekelund et al. [-@ekelundDoseresponseAssociationsAccelerometry2019]. In a similar manner, the daily ratio MVPA / SED is shown in relation to a mortality hazard ratio that has been estimated from accelerometer data from 50-79 yr old adults by Chastin et al. [-@chastinStrikingRightBalance2021]. The statistical information (i.e., hazard ratios and corresponding 95% confidence interval limits) shown in the figures were obtained as follows: first, the web platform [WebPlotDigitizer](https://automeris.io/WebPlotDigitizer) was used to capture the coordinates of several points that constituted the curves showing the hazard ratios and corresponding confidence limits in the original articles. Then, a local polynomial regression fitting procedure was used on the coordinates data in R software using default settings. The fitted data were finally used for plotting the figures of the report. Of note, the hazard ratios and confidence limits shown in the figures in relation to the lower and/or upper extremities of the abscissae axis were extrapolated beyond the original data.
 
 
 

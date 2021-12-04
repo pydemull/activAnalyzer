@@ -18,7 +18,7 @@ app_ui <- function(request) {
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
         ),
-        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.1.0"), titleWidth = 235
+        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.1.1"), titleWidth = 235
                                       ),
       shinydashboardPlus::dashboardSidebar(
         tags$style(HTML("
@@ -198,17 +198,17 @@ app_ui <- function(request) {
                   ),
                   fluidRow(
                     align = "center",
-                    selectInput("Metric", "Metric to visualize", metrics),
+                    selectInput("Metric", "Data to visualize", metrics),
                   ),
                   
                   
-                  ###################################
-                  # Section 3. Computation of metrics ----
-                  ###################################
+                  ##################################################
+                  # Section 3. Configuration for metrics computation ----
+                  ##################################################
                   
                   fluidRow(
                     column(12,
-                           h3("Section 3. Computation of metrics", style="font-weight: bold; font-size: 30px; color: #337ab7;"),
+                           h3("Section 3. Configuration for metrics computation", style="font-weight: bold; font-size: 30px; color: #337ab7;"),
                            tags$hr(style="border-color: #337ab7;")
                     ),
                   ),    
@@ -356,7 +356,7 @@ app_ui <- function(request) {
                            ),
                            fluidRow(
                              align = "center",
-                             selectInput("Metric2", "Metric to visualize", metrics),
+                             selectInput("Metric2", "Data to visualize", metrics),
                            ),
                  
                   fluidRow(
