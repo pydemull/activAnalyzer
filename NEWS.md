@@ -1,3 +1,5 @@
+# activAnalyzer 0.1.1
+
 # activAnalyzer 0.1.0
 * Add a block of code to stop the app when the last user leaves the app.
 * Modify the plot for visualizing data with wear time so that each day of measurement be on one line.
