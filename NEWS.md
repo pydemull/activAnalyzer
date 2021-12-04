@@ -1,4 +1,5 @@
 # activAnalyzer 0.1.1
+* Replace the term "metric" by "variable" or "data" in the ui and the guides of the app.
 
 # activAnalyzer 0.1.0
 * Add a block of code to stop the app when the last user leaves the app.
