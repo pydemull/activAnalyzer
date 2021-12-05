@@ -30,6 +30,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -42,18 +44,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">activAnalyzer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/activAnalyzer.html">Get started</a>
 </li>
@@ -66,7 +62,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/pydemull/activAnalyzer/">
+  <a href="https://github.com/pydemull/activAnalyzer/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -84,36 +80,35 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="activanalyzer-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#activanalyzer-" class="anchor"></a>activAnalyzer <img src="inst/app/www/favicon.png" align="right" height="138.5">
+<div class="section level1">
+<div class="page-header"><h1 id="activanalyzer-">activAnalyzer <img src="inst/app/www/favicon.png" align="right" height="138.5"><a class="anchor" aria-label="anchor" href="#activanalyzer-"></a>
 </h1></div>
 <!-- badges: start -->
 
 </div>
-<div id="overview" class="section level1">
-<h1 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h1>
-<p>activAnalyzer is a shinny app that was developed to analyze daily physical behavior data recorded at the hip in adults using an ActiGraph accelerometer (.agd files). Once analysis is completed, the app allows to export results (summarized by day and averaged over valid days) to .csv files and to generate a report of the measurement (.pdf file). All the configured inputs relevant for interpreting the results are recorded in the report. Be sure that the inputs that are configured when generating the report correspond to the analysis that was actually performed (in other words, avoid modifying the inputs after generating satisfactory results). Please read the <a href="https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf">user’s guide</a> for details about how the app works.</p>
+<div class="section level1">
+<h1 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h1>
+<p>activAnalyzer is a shinny app that was developed to analyze daily physical behavior data recorded at the hip in adults using an ActiGraph accelerometer (.agd files). Once analysis is completed, the app allows to export results (summarized by day and averaged over valid days) to .csv files and to generate a report of the measurement (.pdf file). All the configured inputs relevant for interpreting the results are recorded in the report. Be sure that the inputs that are configured when generating the report correspond to the analysis that was actually performed (in other words, avoid modifying the inputs after generating satisfactory results). Please read the <a href="https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf" class="external-link">user’s guide</a> for details about how the app works.</p>
 </div>
-<div id="usage" class="section level1">
-<h1 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h1>
-<p>You can use a stable release of the app via a <a href="https://pydemull.shinyapps.io/activAnalyzer/">shinyapps.io plateform</a>. You can also use the development version on your PC after installing <a href="https://cran.rstudio.com/">R software</a> and the <a href="https://github.com/pydemull/activAnalyzer">activAnalyzer</a> package from <a href="https://github.com/">GitHub</a>:</p>
+<div class="section level1">
+<h1 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h1>
+<p>You can use a stable release of the app via a <a href="https://pydemull.shinyapps.io/activAnalyzer/" class="external-link">shinyapps.io plateform</a>. You can also use the development version on your PC after installing <a href="https://cran.rstudio.com/" class="external-link">R software</a> and the <a href="https://github.com/pydemull/activAnalyzer" class="external-link">activAnalyzer</a> package from <a href="https://github.com/" class="external-link">GitHub</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"pydemull/activAnalyzer"</span><span class="op">)</span></code></pre></div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
 <p>To launch the app using R:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://pydemull.github.io/activAnalyzer">activAnalyzer</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pydemull.github.io/activAnalyzer">activAnalyzer</a></span><span class="op">)</span>
 <span class="fu">activAnalyzer</span><span class="fu">::</span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="code-of-conduct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
+<div class="section level2">
+<h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
+</h2>
 <p>Please note that the activAnalyzer project is released with a <a href="https://pydemull.github.io/activAnalyzer/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
@@ -122,52 +117,63 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/pydemull/activAnalyzer/">https://​github.com/​pydemull/​activAnalyzer/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/pydemull/activAnalyzer/issues">https://​github.com/​pydemull/​activAnalyzer/​issues</a>
-</li>
+<li><a href="https://github.com/pydemull/activAnalyzer/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/pydemull/activAnalyzer/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
 <li><small>GPL (&gt;= 3)</small></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing activAnalyzer</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Pierre-Yves de Mülenheim <br><small class="roles"> Maintainer, author </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://codecov.io/gh/pydemull/activAnalyzer?branch=master"><img src="https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/pydemull/activAnalyzer/actions"><img src="https://github.com/pydemull/activAnalyzer/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://codecov.io/gh/pydemull/activAnalyzer?branch=master" class="external-link"><img src="https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/pydemull/activAnalyzer/actions" class="external-link"><img src="https://github.com/pydemull/activAnalyzer/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Pierre-Yves de Mülenheim.</p>
+  <p></p>
+<p>Developed by Pierre-Yves de Mülenheim.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -175,6 +181,8 @@
 
   
 
+
+  
 
   </body>
 </html>

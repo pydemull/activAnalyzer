@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,18 +40,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">activAnalyzer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/activAnalyzer.html">Get started</a>
 </li>
@@ -62,7 +58,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/pydemull/activAnalyzer/">
+  <a href="https://github.com/pydemull/activAnalyzer/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -83,40 +79,40 @@
       <h1 data-toc-skip>activAnalyzer</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/pydemull/activAnalyzer/blob/master/vignettes/activAnalyzer.Rmd"><code>vignettes/activAnalyzer.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pydemull/activAnalyzer/blob/HEAD/vignettes/activAnalyzer.Rmd" class="external-link"><code>vignettes/activAnalyzer.Rmd</code></a></small>
       <div class="hidden name"><code>activAnalyzer.Rmd</code></div>
 
     </div>
 
     
     
-<p>The activAnalyzer package was primarily built for working through a shiny app. The procedure for using the app is explained in the related <a href="https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf">user’s guide</a>. The functions used in this app can also be used to analyze data outside the app, as shown below.</p>
-<div id="loading-packages" class="section level2">
-<h2 class="hasAnchor">
-<a href="#loading-packages" class="anchor"></a>Loading packages</h2>
+<p>The activAnalyzer package was primarily built for working through a shiny app. The procedure for using the app is explained in the related <a href="https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf" class="external-link">user’s guide</a>. The functions used in this app can also be used to analyze data outside the app, as shown below.</p>
+<div class="section level2">
+<h2 id="loading-packages">Loading packages<a class="anchor" aria-label="anchor" href="#loading-packages"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://pydemull.github.io/activAnalyzer">activAnalyzer</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pydemull.github.io/activAnalyzer">activAnalyzer</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></code></pre></div>
 </div>
-<div id="getting-file" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-file" class="anchor"></a>Getting file</h2>
+<div class="section level2">
+<h2 id="getting-file">Getting file<a class="anchor" aria-label="anchor" href="#getting-file"></a>
+</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"acc.agd"</span>, package <span class="op">=</span> <span class="st">"activAnalyzer"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"acc.agd"</span>, package <span class="op">=</span> <span class="st">"activAnalyzer"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="preparing-dataset" class="section level2">
-<h2 class="hasAnchor">
-<a href="#preparing-dataset" class="anchor"></a>Preparing dataset</h2>
+<div class="section level2">
+<h2 id="preparing-dataset">Preparing dataset<a class="anchor" aria-label="anchor" href="#preparing-dataset"></a>
+</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_dataset.html">prepare_dataset</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">file</span>, epoch_len_out <span class="op">=</span> <span class="fl">60</span>, col_time_stamp <span class="op">=</span> <span class="st">"timestamp"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="getting-nonwearwear-time-marks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-nonwearwear-time-marks" class="anchor"></a>Getting nonwear/wear time marks</h2>
+<div class="section level2">
+<h2 id="getting-nonwearwear-time-marks">Getting nonwear/wear time marks<a class="anchor" aria-label="anchor" href="#getting-nonwearwear-time-marks"></a>
+</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mydata_with_wear_marks</span> <span class="op">&lt;-</span> 
-  <span class="va">mydata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="va">mydata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/mark_wear_time.html">mark_wear_time</a></span><span class="op">(</span>frame <span class="op">=</span> <span class="fl">90</span>, allowanceFrame <span class="op">=</span> <span class="fl">2</span>, streamFrame <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>
 <span class="co">#&gt; frame is 90</span>
 <span class="co">#&gt; streamFrame is 30</span>
@@ -125,9 +121,9 @@
 <span class="fu"><a href="../reference/plot_data.html">plot_data</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mydata_with_wear_marks</span>, metric <span class="op">=</span> <span class="st">"vm"</span><span class="op">)</span></code></pre></div>
 <p><img src="activAnalyzer_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
-<div id="getting-physical-activity-intensity-marks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-physical-activity-intensity-marks" class="anchor"></a>Getting physical activity intensity marks</h2>
+<div class="section level2">
+<h2 id="getting-physical-activity-intensity-marks">Getting physical activity intensity marks<a class="anchor" aria-label="anchor" href="#getting-physical-activity-intensity-marks"></a>
+</h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mydata_with_intensity_marks</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/mark_intensity.html">mark_intensity</a></span><span class="op">(</span>
@@ -148,71 +144,71 @@
   <span class="op">)</span></code></pre></div>
 <p><img src="activAnalyzer_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
-<div id="getting-results-by-day" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-results-by-day" class="anchor"></a>Getting results by day</h2>
+<div class="section level2">
+<h2 id="getting-results-by-day">Getting results by day<a class="anchor" aria-label="anchor" href="#getting-results-by-day"></a>
+</h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">results_by_day</span> <span class="op">&lt;-</span>
-  <span class="va">mydata_with_intensity_marks</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="va">mydata_with_intensity_marks</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/recap_by_day.html">recap_by_day</a></span><span class="op">(</span>
     age <span class="op">=</span> <span class="fl">32</span>, 
     weight <span class="op">=</span> <span class="fl">67</span>, 
     sex <span class="op">=</span> <span class="st">"male"</span>
     <span class="op">)</span>
 
-<span class="va">results_by_day</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  
-  <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html">reactable</a></span><span class="op">(</span>  
+<span class="va">results_by_day</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  
+  <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html" class="external-link">reactable</a></span><span class="op">(</span>  
            striped <span class="op">=</span> <span class="cn">TRUE</span>,
-           <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>total_counts_axis1 <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>,
-                total_counts_vm <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>,
-                minutes_SED <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-                minutes_LPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-                minutes_MPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-                minutes_VPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-                minutes_MVPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">125</span><span class="op">)</span>,
-                percent_SED <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-                percent_LPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-                percent_MPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-                percent_VPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-                percent_MVPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">125</span><span class="op">)</span>,
-                ratio_mvpa_sed <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">130</span><span class="op">)</span>,
-                total_kcal_wear_time <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">165</span><span class="op">)</span>,
-                mets_hours_mvpa <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">160</span><span class="op">)</span><span class="op">)</span>
+           <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>total_counts_axis1 <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>,
+                total_counts_vm <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>,
+                minutes_SED <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+                minutes_LPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+                minutes_MPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+                minutes_VPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+                minutes_MVPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">125</span><span class="op">)</span>,
+                percent_SED <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+                percent_LPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+                percent_MPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+                percent_VPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+                percent_MVPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">125</span><span class="op">)</span>,
+                ratio_mvpa_sed <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">130</span><span class="op">)</span>,
+                total_kcal_wear_time <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">165</span><span class="op">)</span>,
+                mets_hours_mvpa <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">160</span><span class="op">)</span><span class="op">)</span>
            <span class="op">)</span></code></pre></div>
-<div id="htmlwidget-679137063b3e7f43a15f" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-679137063b3e7f43a15f">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"date":["2021-04-07","2021-04-08","2021-04-09","2021-04-10","2021-04-11","2021-04-12"],"wear_time":[720,811,718,770,820,0],"total_counts_axis1":[359125,495257,1222315,320847,167999,0],"total_counts_vm":[706251.89,923432.04,1930804.78,781469.07,415457.39,0],"total_steps":[14056,14595,21635,13744,10315,0],"total_kcal_wear_time":[1263.97,1527.99,2399.34,1339.91,1074.39,0],"minutes_SED":[288,294,297,204,350,0],"minutes_LPA":[362,413,207,522,461,0],"minutes_MPA":[66,97,50,43,9,0],"minutes_VPA":[4,7,164,1,0,0],"minutes_MVPA":[70,104,214,44,9,0],"percent_SED":[40,36.25,41.36,26.49,42.68,"NaN"],"percent_LPA":[50.28,50.92,28.83,67.79,56.22,"NaN"],"percent_MPA":[9.17,11.96,6.96,5.58,1.1,"NaN"],"percent_VPA":[0.56,0.86,22.84,0.13,0,"NaN"],"percent_MVPA":[9.72,12.82,29.81,5.71,1.1,"NaN"],"max_steps_60min":[75.18,50.9,101.33,38.85,23,"NA"],"max_steps_30min":[100.93,71.63,104.9,43.9,28.9,"NA"],"max_steps_20min":[102.8,83.05,107.55,47.5,30.55,"NA"],"max_steps_5min":[119,116.8,112.8,85.6,41.8,"NA"],"max_steps_1min":[121,120,118,118,68,"NA"],"peak_steps_60min":[89.03,70.88,110.07,57.73,45.3,"NaN"],"peak_steps_30min":[114.33,86.73,112.23,68.7,51,"NaN"],"peak_steps_20min":[117.55,97.7,113.4,76.15,53.95,"NaN"],"peak_steps_5min":[120,117.6,117.2,109.6,61.8,"NaN"],"peak_steps_1min":[121,120,118,118,68,"NaN"],"mets_hours_mvpa":[5.16,7.3,25.99,2.78,0.44,0],"ratio_mvpa_sed":[0.24,0.35,0.72,0.22,0.03,"NaN"],"pal":[1.46,1.58,2.28,1.48,1.25,1.11]},"columns":[{"accessor":"date","name":"date","type":"character"},{"accessor":"wear_time","name":"wear_time","type":"numeric"},{"accessor":"total_counts_axis1","name":"total_counts_axis1","type":"numeric","minWidth":150},{"accessor":"total_counts_vm","name":"total_counts_vm","type":"numeric","minWidth":150},{"accessor":"total_steps","name":"total_steps","type":"numeric"},{"accessor":"total_kcal_wear_time","name":"total_kcal_wear_time","type":"numeric","minWidth":165},{"accessor":"minutes_SED","name":"minutes_SED","type":"numeric","minWidth":120},{"accessor":"minutes_LPA","name":"minutes_LPA","type":"numeric","minWidth":120},{"accessor":"minutes_MPA","name":"minutes_MPA","type":"numeric","minWidth":120},{"accessor":"minutes_VPA","name":"minutes_VPA","type":"numeric","minWidth":120},{"accessor":"minutes_MVPA","name":"minutes_MVPA","type":"numeric","minWidth":125},{"accessor":"percent_SED","name":"percent_SED","type":"numeric","minWidth":120},{"accessor":"percent_LPA","name":"percent_LPA","type":"numeric","minWidth":120},{"accessor":"percent_MPA","name":"percent_MPA","type":"numeric","minWidth":120},{"accessor":"percent_VPA","name":"percent_VPA","type":"numeric","minWidth":120},{"accessor":"percent_MVPA","name":"percent_MVPA","type":"numeric","minWidth":125},{"accessor":"max_steps_60min","name":"max_steps_60min","type":"numeric"},{"accessor":"max_steps_30min","name":"max_steps_30min","type":"numeric"},{"accessor":"max_steps_20min","name":"max_steps_20min","type":"numeric"},{"accessor":"max_steps_5min","name":"max_steps_5min","type":"numeric"},{"accessor":"max_steps_1min","name":"max_steps_1min","type":"numeric"},{"accessor":"peak_steps_60min","name":"peak_steps_60min","type":"numeric"},{"accessor":"peak_steps_30min","name":"peak_steps_30min","type":"numeric"},{"accessor":"peak_steps_20min","name":"peak_steps_20min","type":"numeric"},{"accessor":"peak_steps_5min","name":"peak_steps_5min","type":"numeric"},{"accessor":"peak_steps_1min","name":"peak_steps_1min","type":"numeric"},{"accessor":"mets_hours_mvpa","name":"mets_hours_mvpa","type":"numeric","minWidth":160},{"accessor":"ratio_mvpa_sed","name":"ratio_mvpa_sed","type":"numeric","minWidth":130},{"accessor":"pal","name":"pal","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"striped":true,"dataKey":"8699756ae7f35a5809ca5a491af28d8c","key":"8699756ae7f35a5809ca5a491af28d8c"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e77f48d46c8157a0e29f" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e77f48d46c8157a0e29f">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"date":["2021-04-07","2021-04-08","2021-04-09","2021-04-10","2021-04-11","2021-04-12"],"wear_time":[720,811,718,770,820,0],"total_counts_axis1":[359125,495257,1222315,320847,167999,0],"total_counts_vm":[706251.89,923432.04,1930804.78,781469.07,415457.39,0],"total_steps":[14056,14595,21635,13744,10315,0],"total_kcal_wear_time":[1263.97,1527.99,2399.34,1339.91,1074.39,0],"minutes_SED":[288,294,297,204,350,0],"minutes_LPA":[362,413,207,522,461,0],"minutes_MPA":[66,97,50,43,9,0],"minutes_VPA":[4,7,164,1,0,0],"minutes_MVPA":[70,104,214,44,9,0],"percent_SED":[40,36.25,41.36,26.49,42.68,"NaN"],"percent_LPA":[50.28,50.92,28.83,67.79,56.22,"NaN"],"percent_MPA":[9.17,11.96,6.96,5.58,1.1,"NaN"],"percent_VPA":[0.56,0.86,22.84,0.13,0,"NaN"],"percent_MVPA":[9.72,12.82,29.81,5.71,1.1,"NaN"],"max_steps_60min":[75.18,50.9,101.33,38.85,23,"NA"],"max_steps_30min":[100.93,71.63,104.9,43.9,28.9,"NA"],"max_steps_20min":[102.8,83.05,107.55,47.5,30.55,"NA"],"max_steps_5min":[119,116.8,112.8,85.6,41.8,"NA"],"max_steps_1min":[121,120,118,118,68,"NA"],"peak_steps_60min":[89.03,70.88,110.07,57.73,45.3,"NaN"],"peak_steps_30min":[114.33,86.73,112.23,68.7,51,"NaN"],"peak_steps_20min":[117.55,97.7,113.4,76.15,53.95,"NaN"],"peak_steps_5min":[120,117.6,117.2,109.6,61.8,"NaN"],"peak_steps_1min":[121,120,118,118,68,"NaN"],"mets_hours_mvpa":[5.16,7.3,25.99,2.78,0.44,0],"ratio_mvpa_sed":[0.24,0.35,0.72,0.22,0.03,"NaN"],"pal":[1.46,1.58,2.28,1.48,1.25,1.11]},"columns":[{"accessor":"date","name":"date","type":"character"},{"accessor":"wear_time","name":"wear_time","type":"numeric"},{"accessor":"total_counts_axis1","name":"total_counts_axis1","type":"numeric","minWidth":150},{"accessor":"total_counts_vm","name":"total_counts_vm","type":"numeric","minWidth":150},{"accessor":"total_steps","name":"total_steps","type":"numeric"},{"accessor":"total_kcal_wear_time","name":"total_kcal_wear_time","type":"numeric","minWidth":165},{"accessor":"minutes_SED","name":"minutes_SED","type":"numeric","minWidth":120},{"accessor":"minutes_LPA","name":"minutes_LPA","type":"numeric","minWidth":120},{"accessor":"minutes_MPA","name":"minutes_MPA","type":"numeric","minWidth":120},{"accessor":"minutes_VPA","name":"minutes_VPA","type":"numeric","minWidth":120},{"accessor":"minutes_MVPA","name":"minutes_MVPA","type":"numeric","minWidth":125},{"accessor":"percent_SED","name":"percent_SED","type":"numeric","minWidth":120},{"accessor":"percent_LPA","name":"percent_LPA","type":"numeric","minWidth":120},{"accessor":"percent_MPA","name":"percent_MPA","type":"numeric","minWidth":120},{"accessor":"percent_VPA","name":"percent_VPA","type":"numeric","minWidth":120},{"accessor":"percent_MVPA","name":"percent_MVPA","type":"numeric","minWidth":125},{"accessor":"max_steps_60min","name":"max_steps_60min","type":"numeric"},{"accessor":"max_steps_30min","name":"max_steps_30min","type":"numeric"},{"accessor":"max_steps_20min","name":"max_steps_20min","type":"numeric"},{"accessor":"max_steps_5min","name":"max_steps_5min","type":"numeric"},{"accessor":"max_steps_1min","name":"max_steps_1min","type":"numeric"},{"accessor":"peak_steps_60min","name":"peak_steps_60min","type":"numeric"},{"accessor":"peak_steps_30min","name":"peak_steps_30min","type":"numeric"},{"accessor":"peak_steps_20min","name":"peak_steps_20min","type":"numeric"},{"accessor":"peak_steps_5min","name":"peak_steps_5min","type":"numeric"},{"accessor":"peak_steps_1min","name":"peak_steps_1min","type":"numeric"},{"accessor":"mets_hours_mvpa","name":"mets_hours_mvpa","type":"numeric","minWidth":160},{"accessor":"ratio_mvpa_sed","name":"ratio_mvpa_sed","type":"numeric","minWidth":130},{"accessor":"pal","name":"pal","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"striped":true,"dataKey":"8699756ae7f35a5809ca5a491af28d8c","key":"8699756ae7f35a5809ca5a491af28d8c"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="getting-results-averaged-over-valid-days" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-results-averaged-over-valid-days" class="anchor"></a>Getting results averaged over valid days</h2>
+<div class="section level2">
+<h2 id="getting-results-averaged-over-valid-days">Getting results averaged over valid days<a class="anchor" aria-label="anchor" href="#getting-results-averaged-over-valid-days"></a>
+</h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">averaged_results</span> <span class="op">&lt;-</span>
-  <span class="va">results_by_day</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="va">results_by_day</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/average_results.html">average_results</a></span><span class="op">(</span>minimum_wear_time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 
-<span class="va">averaged_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-    <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html">reactable</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>valid_days <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">90</span><span class="op">)</span>,
-         wear_time <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">90</span><span class="op">)</span>,
-         total_counts_axis1 <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>,
-         total_counts_vm <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>,
-         minutes_SED <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-         minutes_LPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-         minutes_MPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-         minutes_VPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-         minutes_MVPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">125</span><span class="op">)</span>,
-         percent_SED <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-         percent_LPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-         percent_MPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-         percent_VPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
-         percent_MVPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">125</span><span class="op">)</span>,
-         ratio_mvpa_sed <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">130</span><span class="op">)</span>,
-         total_kcal_wear_time <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">165</span><span class="op">)</span>,
-         mets_hours_mvpa <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">160</span><span class="op">)</span><span class="op">)</span>,
+<span class="va">averaged_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html" class="external-link">reactable</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>valid_days <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">90</span><span class="op">)</span>,
+         wear_time <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">90</span><span class="op">)</span>,
+         total_counts_axis1 <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>,
+         total_counts_vm <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>,
+         minutes_SED <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+         minutes_LPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+         minutes_MPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+         minutes_VPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+         minutes_MVPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">125</span><span class="op">)</span>,
+         percent_SED <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+         percent_LPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+         percent_MPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+         percent_VPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>,
+         percent_MVPA <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">125</span><span class="op">)</span>,
+         ratio_mvpa_sed <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">130</span><span class="op">)</span>,
+         total_kcal_wear_time <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">165</span><span class="op">)</span>,
+         mets_hours_mvpa <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>minWidth <span class="op">=</span> <span class="fl">160</span><span class="op">)</span><span class="op">)</span>,
     striped <span class="op">=</span> <span class="cn">TRUE</span>
   <span class="op">)</span></code></pre></div>
-<div id="htmlwidget-1515d5375be69746e753" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1515d5375be69746e753">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"valid_days":[5],"wear_time":[767.8],"total_counts_axis1":[513108.6],"total_counts_vm":[951483.03],"total_steps":[14869],"total_kcal_wear_time":[1521.12],"minutes_SED":[286.6],"minutes_LPA":[393],"minutes_MPA":[53],"minutes_VPA":[35.2],"minutes_MVPA":[88.2],"percent_SED":[37.36],"percent_LPA":[50.81],"percent_MPA":[6.95],"percent_VPA":[4.88],"percent_MVPA":[11.83],"max_steps_60min":[57.85],"max_steps_30min":[70.05],"max_steps_20min":[74.29],"max_steps_5min":[95.2],"max_steps_1min":[109],"peak_steps_60min":[74.6],"peak_steps_30min":[86.6],"peak_steps_20min":[91.75],"peak_steps_5min":[105.24],"peak_steps_1min":[109],"mets_hours_mvpa":[8.33],"ratio_mvpa_sed":[0.31],"pal":[1.61]},"columns":[{"accessor":"valid_days","name":"valid_days","type":"numeric","minWidth":90},{"accessor":"wear_time","name":"wear_time","type":"numeric","minWidth":90},{"accessor":"total_counts_axis1","name":"total_counts_axis1","type":"numeric","minWidth":150},{"accessor":"total_counts_vm","name":"total_counts_vm","type":"numeric","minWidth":150},{"accessor":"total_steps","name":"total_steps","type":"numeric"},{"accessor":"total_kcal_wear_time","name":"total_kcal_wear_time","type":"numeric","minWidth":165},{"accessor":"minutes_SED","name":"minutes_SED","type":"numeric","minWidth":120},{"accessor":"minutes_LPA","name":"minutes_LPA","type":"numeric","minWidth":120},{"accessor":"minutes_MPA","name":"minutes_MPA","type":"numeric","minWidth":120},{"accessor":"minutes_VPA","name":"minutes_VPA","type":"numeric","minWidth":120},{"accessor":"minutes_MVPA","name":"minutes_MVPA","type":"numeric","minWidth":125},{"accessor":"percent_SED","name":"percent_SED","type":"numeric","minWidth":120},{"accessor":"percent_LPA","name":"percent_LPA","type":"numeric","minWidth":120},{"accessor":"percent_MPA","name":"percent_MPA","type":"numeric","minWidth":120},{"accessor":"percent_VPA","name":"percent_VPA","type":"numeric","minWidth":120},{"accessor":"percent_MVPA","name":"percent_MVPA","type":"numeric","minWidth":125},{"accessor":"max_steps_60min","name":"max_steps_60min","type":"numeric"},{"accessor":"max_steps_30min","name":"max_steps_30min","type":"numeric"},{"accessor":"max_steps_20min","name":"max_steps_20min","type":"numeric"},{"accessor":"max_steps_5min","name":"max_steps_5min","type":"numeric"},{"accessor":"max_steps_1min","name":"max_steps_1min","type":"numeric"},{"accessor":"peak_steps_60min","name":"peak_steps_60min","type":"numeric"},{"accessor":"peak_steps_30min","name":"peak_steps_30min","type":"numeric"},{"accessor":"peak_steps_20min","name":"peak_steps_20min","type":"numeric"},{"accessor":"peak_steps_5min","name":"peak_steps_5min","type":"numeric"},{"accessor":"peak_steps_1min","name":"peak_steps_1min","type":"numeric"},{"accessor":"mets_hours_mvpa","name":"mets_hours_mvpa","type":"numeric","minWidth":160},{"accessor":"ratio_mvpa_sed","name":"ratio_mvpa_sed","type":"numeric","minWidth":130},{"accessor":"pal","name":"pal","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"striped":true,"dataKey":"d2ca03e8f37b007a5aa1d191b25d347e","key":"d2ca03e8f37b007a5aa1d191b25d347e"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-33b6f9799441160d8076" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-33b6f9799441160d8076">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"valid_days":[5],"wear_time":[767.8],"total_counts_axis1":[513108.6],"total_counts_vm":[951483.03],"total_steps":[14869],"total_kcal_wear_time":[1521.12],"minutes_SED":[286.6],"minutes_LPA":[393],"minutes_MPA":[53],"minutes_VPA":[35.2],"minutes_MVPA":[88.2],"percent_SED":[37.36],"percent_LPA":[50.81],"percent_MPA":[6.95],"percent_VPA":[4.88],"percent_MVPA":[11.83],"max_steps_60min":[57.85],"max_steps_30min":[70.05],"max_steps_20min":[74.29],"max_steps_5min":[95.2],"max_steps_1min":[109],"peak_steps_60min":[74.6],"peak_steps_30min":[86.6],"peak_steps_20min":[91.75],"peak_steps_5min":[105.24],"peak_steps_1min":[109],"mets_hours_mvpa":[8.33],"ratio_mvpa_sed":[0.31],"pal":[1.61]},"columns":[{"accessor":"valid_days","name":"valid_days","type":"numeric","minWidth":90},{"accessor":"wear_time","name":"wear_time","type":"numeric","minWidth":90},{"accessor":"total_counts_axis1","name":"total_counts_axis1","type":"numeric","minWidth":150},{"accessor":"total_counts_vm","name":"total_counts_vm","type":"numeric","minWidth":150},{"accessor":"total_steps","name":"total_steps","type":"numeric"},{"accessor":"total_kcal_wear_time","name":"total_kcal_wear_time","type":"numeric","minWidth":165},{"accessor":"minutes_SED","name":"minutes_SED","type":"numeric","minWidth":120},{"accessor":"minutes_LPA","name":"minutes_LPA","type":"numeric","minWidth":120},{"accessor":"minutes_MPA","name":"minutes_MPA","type":"numeric","minWidth":120},{"accessor":"minutes_VPA","name":"minutes_VPA","type":"numeric","minWidth":120},{"accessor":"minutes_MVPA","name":"minutes_MVPA","type":"numeric","minWidth":125},{"accessor":"percent_SED","name":"percent_SED","type":"numeric","minWidth":120},{"accessor":"percent_LPA","name":"percent_LPA","type":"numeric","minWidth":120},{"accessor":"percent_MPA","name":"percent_MPA","type":"numeric","minWidth":120},{"accessor":"percent_VPA","name":"percent_VPA","type":"numeric","minWidth":120},{"accessor":"percent_MVPA","name":"percent_MVPA","type":"numeric","minWidth":125},{"accessor":"max_steps_60min","name":"max_steps_60min","type":"numeric"},{"accessor":"max_steps_30min","name":"max_steps_30min","type":"numeric"},{"accessor":"max_steps_20min","name":"max_steps_20min","type":"numeric"},{"accessor":"max_steps_5min","name":"max_steps_5min","type":"numeric"},{"accessor":"max_steps_1min","name":"max_steps_1min","type":"numeric"},{"accessor":"peak_steps_60min","name":"peak_steps_60min","type":"numeric"},{"accessor":"peak_steps_30min","name":"peak_steps_30min","type":"numeric"},{"accessor":"peak_steps_20min","name":"peak_steps_20min","type":"numeric"},{"accessor":"peak_steps_5min","name":"peak_steps_5min","type":"numeric"},{"accessor":"peak_steps_1min","name":"peak_steps_1min","type":"numeric"},{"accessor":"mets_hours_mvpa","name":"mets_hours_mvpa","type":"numeric","minWidth":160},{"accessor":"ratio_mvpa_sed","name":"ratio_mvpa_sed","type":"numeric","minWidth":130},{"accessor":"pal","name":"pal","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"striped":true,"dataKey":"d2ca03e8f37b007a5aa1d191b25d347e","key":"d2ca03e8f37b007a5aa1d191b25d347e"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
   </div>
 
@@ -227,11 +223,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Pierre-Yves de Mülenheim.</p>
+  <p></p>
+<p>Developed by Pierre-Yves de Mülenheim.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -239,6 +237,8 @@
 
   
 
+
+  
 
   </body>
 </html>

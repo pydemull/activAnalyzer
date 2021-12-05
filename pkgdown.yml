@@ -1,10 +1,10 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1
+pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
   activAnalyzer: activAnalyzer.html
-last_built: 2021-12-04T11:04Z
+last_built: 2021-12-05T22:07Z
 urls:
-  reference: https://pydemull.github.io/activAnalyzer//reference
-  article: https://pydemull.github.io/activAnalyzer//articles
+  reference: https://pydemull.github.io/activAnalyzer/reference
+  article: https://pydemull.github.io/activAnalyzer/articles
 

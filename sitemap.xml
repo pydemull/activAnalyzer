@@ -1,39 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://pydemull.github.io/activAnalyzer//index.html</loc>
+    <loc>https://pydemull.github.io/activAnalyzer/404.html</loc>
   </url>
   <url>
-    <loc>https://pydemull.github.io/activAnalyzer//reference/average_results.html</loc>
+    <loc>https://pydemull.github.io/activAnalyzer/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://pydemull.github.io/activAnalyzer//reference/compute_bmr.html</loc>
+    <loc>https://pydemull.github.io/activAnalyzer/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://pydemull.github.io/activAnalyzer//reference/compute_mets.html</loc>
+    <loc>https://pydemull.github.io/activAnalyzer/articles/activAnalyzer.html</loc>
   </url>
   <url>
-    <loc>https://pydemull.github.io/activAnalyzer//reference/mark_intensity.html</loc>
+    <loc>https://pydemull.github.io/activAnalyzer/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://pydemull.github.io/activAnalyzer//reference/mark_wear_time.html</loc>
+    <loc>https://pydemull.github.io/activAnalyzer/authors.html</loc>
   </url>
   <url>
-    <loc>https://pydemull.github.io/activAnalyzer//reference/plot_data.html</loc>
+    <loc>https://pydemull.github.io/activAnalyzer/index.html</loc>
   </url>
   <url>
-    <loc>https://pydemull.github.io/activAnalyzer//reference/plot_data_with_intensity.html</loc>
+    <loc>https://pydemull.github.io/activAnalyzer/news/index.html</loc>
   </url>
   <url>
-    <loc>https://pydemull.github.io/activAnalyzer//reference/prepare_dataset.html</loc>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/average_results.html</loc>
   </url>
   <url>
-    <loc>https://pydemull.github.io/activAnalyzer//reference/recap_by_day.html</loc>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/compute_bmr.html</loc>
   </url>
   <url>
-    <loc>https://pydemull.github.io/activAnalyzer//reference/run_app.html</loc>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/compute_mets.html</loc>
   </url>
   <url>
-    <loc>https://pydemull.github.io/activAnalyzer//articles/activAnalyzer.html</loc>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/mark_intensity.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/mark_wear_time.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/plot_data.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/plot_data_with_intensity.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/prepare_dataset.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/recap_by_day.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/run_app.html</loc>
   </url>
 </urlset>
