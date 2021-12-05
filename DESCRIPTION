@@ -1,7 +1,7 @@
 Package: activAnalyzer
 Title: A shiny app to analyze ActiGraph accelerometer data recorded at the hip in adults
 Version: 0.1.2
-Authors@R: person('Pierre-Yves', 'de Mülenheim', email = 'pydemull@uco.fr', role = c('cre', 'aut'))
+Authors@R: person('Pierre-Yves', 'de Müllenheim', email = 'pydemull@uco.fr', role = c('cre', 'aut'))
 Description: This app was developed to analyse ActiGraph accelerometer data 
     (.agd files) recorded at the hip in adults. Once analysis is completed,
     the app allows to export results to .csv files and to generate a report of 
