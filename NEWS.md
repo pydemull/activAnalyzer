@@ -1,5 +1,7 @@
 # activAnalyzer 0.1.2
 
+* Provided the default value of 0 for age and weight inputs as it caused bugs during the validation process when no value (initial state of the app) were provided.
+
 # activAnalyzer 0.1.1
 
 * Replaced the term "metric" by "variable" or "data" in the ui and the guides of the app.
