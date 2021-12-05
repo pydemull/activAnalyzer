@@ -114,10 +114,10 @@ app_ui <- function(request) {
                            selectInput("sex", with_red_star("Sex"), sex)
                     ),
                     column(2,
-                           numericInput("age", with_red_star("Age (yr)"), value = "", min = 0)
+                           numericInput("age", with_red_star("Age (yr)"), value = 0, min = 0)
                     ),
                     column(2,
-                           numericInput("weight", with_red_star("Weight (kg)"), value = "", min = 0)
+                           numericInput("weight", with_red_star("Weight (kg)"), value = 0, min = 0)
                     ),
                   ),
                   
