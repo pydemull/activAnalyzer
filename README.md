@@ -27,12 +27,44 @@ for details about how the app works.
 
 # Usage
 
-You can use a stable release of the app via a [shinyapps.io
-plateform](https://pydemull.shinyapps.io/activAnalyzer/). You can also
-use the development version on your PC after installing [R
-software](https://cran.rstudio.com/) and the
-[activAnalyzer](https://github.com/pydemull/activAnalyzer) package from
-[GitHub](https://github.com/):
+There are three different ways to use the activAnalyzer app:
+
+-   [On the web via a shinyapps.io
+    plateform](https://pydemull.shinyapps.io/activAnalyzer/) (stable
+    release). For information, as indicated by
+    [RStudio](https://www.shinyapps.io/), “*shinyapps.io is
+    secure-by-design. Each Shiny application runs in its own protected
+    environment and access is always SSL encrypted*”. Importantly, the
+    app is hosted using a free account that allows to run apps for 25
+    hours per month. Thus, the availability of the app on the web is
+    very dependent on the number of users that will use the app as well
+    as the time spent by each user on the app. That’s why the second
+    option available to use the app is recommended (for Windows users
+    only).
+-   [Locally on PC via a standalone desktop
+    app](https://sourceforge.net/projects/activanalyzer) that is
+    downloadable from the SourceForge website (stable release, for
+    Windows machines only). The standalone app has been developped using
+    the framework *DesktopDeployR* made kindly available by [W. Lee
+    Pang](https://github.com/wleepang). Explanations related to this
+    framework can be retrieved from [a dedicated GitHub
+    repository](https://github.com/wleepang/DesktopDeployR). Once the
+    app is installed on your PC, you will have to double-click on the
+    desktop app icon (if you have chosen this option during the
+    installation process), which will run the R-portable version
+    embedded in the app and then will launch the app in your default web
+    browser with 127.0.0.1 as the value for the host parameter. This
+    means that only your current machine will can access the app. You
+    will can open only one session. Google Chrome and Microsoft Edge
+    seem to allow the app to work as expected but Mozilla Firefox seems
+    not to properly reset all the inputs when needed (nevertheless, the
+    app works correctly).
+-   Locally on your machine via [R software](https://cran.rstudio.com/)
+    and the [activAnalyzer
+    package](https://github.com/pydemull/activAnalyzer) installable from
+    [GitHub](https://github.com/pydemull/activAnalyzer) (development
+    release). The activAnalyzer package can be installed by running the
+    following command lines in R:
 
 ``` r
 # install.packages("devtools")
