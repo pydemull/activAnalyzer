@@ -1,3 +1,5 @@
+# activAnalyzer 0.1.2
+
 # activAnalyzer 0.1.1
 
 * Replaced the term "metric" by "variable" or "data" in the ui and the guides of the app.
