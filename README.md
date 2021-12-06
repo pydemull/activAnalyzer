@@ -1,6 +1,4 @@
 
-# activAnalyzer <img src="inst/app/www/favicon.png" align="right" height="138.5" />
-
 <!-- badges: start -->
 
 [![Lifecycle:
@@ -55,10 +53,10 @@ There are three different ways to use the activAnalyzer app:
     embedded in the app and then will launch the app in your default web
     browser with 127.0.0.1 as the value for the host parameter. This
     means that only your current machine will can access the app. You
-    will can open only one session. Google Chrome and Microsoft Edge
-    seem to allow the app to work as expected but Mozilla Firefox seems
-    not to properly reset all the inputs when needed (nevertheless, the
-    app works correctly).
+    will can open only one session at a time. Google Chrome and
+    Microsoft Edge browsers allow the app to work as expected but
+    Mozilla Firefox does not seem to allow reseting all the inputs when
+    required.
 -   Locally on your machine via [R software](https://cran.rstudio.com/)
     and the [activAnalyzer
     package](https://github.com/pydemull/activAnalyzer) installable from
@@ -67,7 +65,7 @@ There are three different ways to use the activAnalyzer app:
     following command lines in R:
 
 ``` r
-# install.packages("devtools")
+install.packages("devtools")
 devtools::install_github("pydemull/activAnalyzer")
 ```
 
