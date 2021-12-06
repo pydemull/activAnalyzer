@@ -1,1 +1,5 @@
 url: https://pydemull.github.io/activAnalyzer/
+
+template:
+  bootstrap: 5
+  bootswatch: yeti

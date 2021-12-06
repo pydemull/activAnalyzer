@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.dcf
+inst/doc
+rsconnect
+/doc/
+/Meta/
+docs
+desktop
