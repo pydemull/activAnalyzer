@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.12.4)  4 DEC 2021 11:57
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.12.8)  8 DEC 2021 20:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **user_guide_fr.tex
 (./user_guide_fr.tex
-LaTeX2e <2021-11-15>
+LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2021-11-22>
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/book
 .cls
@@ -1202,9 +1202,9 @@ adults] \TU/lmr/m/n/10 ([]Santos-Lozano et al.,
 
 ]
 Chapitre 4.
-[13] [14
+[13] [14] [15
 
-] [15]
+]
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -1248,12 +1248,12 @@ Package rerunfilecheck Info: File `user_guide_fr.out' has not changed.
 (rerunfilecheck)             Checksum: 7E0432D8B7FC2F82B1CB54FCC3BD0092;1428.
  ) 
 Here is how much of TeX's memory you used:
- 18478 strings out of 478236
- 347521 string characters out of 5852661
- 819309 words of memory out of 5000000
- 38750 multiletter control sequences out of 15000+600000
+ 18480 strings out of 478236
+ 347547 string characters out of 5852661
+ 819494 words of memory out of 5000000
+ 38752 multiletter control sequences out of 15000+600000
  409897 words of font info for 82 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 86i,11n,121p,2235b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 86i,11n,121p,3627b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on user_guide_fr.pdf (16 pages).
