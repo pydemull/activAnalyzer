@@ -1,4 +1,4 @@
-# activAnalyzer (development version)
+# activAnalyzer 0.1.3
 
 * Added pieces of advice into the guides about caution when interpreting patient's scores in relation to hazard ratios.
 * Updated DESCRIPTION file to set minimum version numbers for the packages and to place appropriate packages names into Suggest section.
