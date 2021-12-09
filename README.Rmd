@@ -34,7 +34,7 @@ install.packages("devtools")
 devtools::install_github("pydemull/activAnalyzer")
 ```
 
-## Example
+# Example
 
 To launch the app using R:
 
@@ -51,6 +51,6 @@ devtools::build_readme()
 You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/master/examples>.
 ```
 
-## Code of Conduct
+# Code of Conduct
 
 Please note that the activAnalyzer project is released with a [Contributor Code of Conduct](https://pydemull.github.io/activAnalyzer/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

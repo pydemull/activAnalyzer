@@ -1,3 +1,8 @@
+# activAnalyzer (development version)
+
+* Added pieces of advice into the guides about caution when interpreting patient's scores in relation to hazard ratios.
+* Updated DESCRIPTION file to set minimum version numbers for the packages and to place appropriate packages names into Suggest section.
+
 # activAnalyzer 0.1.2
 
 * Provided the default value of 0 for age and weight inputs as it caused bugs during the validation process when no value (initial state of the app) were provided.
