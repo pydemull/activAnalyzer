@@ -471,7 +471,7 @@ app_ui <- function(request) {
       ), # End dashboardBody 
       
       footer = shinydashboardPlus::dashboardFooter(
-        left = "\u00a9 2021 Pierre-Yves de M\u00fcllenheim",
+        left = "\u00a9 2021 Developed by Pierre-Yves de M\u00fcllenheim - GNU General Public License Version 3.0",
       )
     )
   )
