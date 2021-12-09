@@ -1,7 +1,7 @@
 Package: activAnalyzer
 Title: A shiny app to analyze ActiGraph accelerometer data recorded at the hip in adults
-Version: 0.1.2
-Authors@R: person('Pierre-Yves', 'de Müllenheim', email = 'pydemull@uco.fr', role = c('cre', 'aut'))
+Version: 0.1.2.9000
+Authors@R: person('Pierre-Yves', 'de Müllenheim', email = 'pydemull@uco.fr', role = c('cre', 'aut'), comment = c(ORCID = "000-0001-9157-7371"))
 Description: This app was developed to analyse ActiGraph accelerometer data 
     (.agd files) recorded at the hip in adults. Once analysis is completed,
     the app allows to export results to .csv files and to generate a report of 
@@ -9,39 +9,35 @@ Description: This app was developed to analyse ActiGraph accelerometer data
     results are recorded into the report.
 License: GPL (>= 3)
 Imports: 
-    actigraph.sleepr,
+    actigraph.sleepr (>= 0.2.0),
     config (>= 0.3.1),
     dplyr (>= 1.0.7),
-    DT,
-    flextable,
-    forcats,
+    flextable (>= 0.6.10),
+    forcats (>= 0.5.1),
     ggplot2 (>= 3.3.5),
-    glue,
     golem (>= 0.3.1),
-    hms,
-    htmltools,
-    lubridate,
-    magrittr,
-    modelr,
-    officer,
-    patchwork,
+    hms (>= 1.1.1),
+    htmltools (>= 0.5.2),
+    lubridate (>= 1.8.0),
+    magrittr (>= 1.5),
+    modelr (>= 0.1.8),
+    officer (>= 0.4.1),
+    patchwork (>= 1.1.1),
     PhysicalActivity,
-    pkgload,
-    processx,
     RColorBrewer,
-    reactable,
-    rlang,
-    rmarkdown,
-    scales,
+    reactable (>= 0.2.3),
+    rlang (>= 0.4.12),
+    rmarkdown (>= 2.11),
+    scales (>= 1.1.1),
     shiny (>= 1.6.0),
-    shinycssloaders,
-    shinydashboard,
-    shinydashboardPlus,
-    shinyFeedback,
-    shinyjs,
-    stringr,
-    tibble,
-    tidyr,
+    shinycssloaders (>= 1.0.0),
+    shinydashboard (>= 0.7.2),
+    shinydashboardPlus(>= 2.0.3),
+    shinyFeedback (>= 0.4.0),
+    shinyjs (>= 2.0.0),
+    stringr (>= 1.4.0),
+    tibble (>= 3.1.6),
+    tidyr (>= 1.1.4),
     zoo
 Encoding: UTF-8
 LazyData: true
@@ -55,9 +51,10 @@ Suggests:
     knitr,
     spelling,
     testthat (>= 3.0.0),
+    processx,
     globals
 Language: en-US
-Depends: R (>= 2.10)
+Depends: R (>= 3.4.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Remotes: dipetkov/actigraph.sleepr
