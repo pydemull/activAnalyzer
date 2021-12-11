@@ -35,9 +35,9 @@ There are three different ways to use the activAnalyzer app:
     environment and access is always SSL encrypted*”. Importantly, the
     app is hosted using a free account that allows to run apps for 25
     hours per month. Thus, the availability of the app on the web is
-    very dependent on the number of users that will use the app as well
-    as the time spent by each user on the app. That’s why the second
-    option available to use the app is recommended (for Windows users
+    very dependent on the number of users as well as the time spent by
+    each user on the app. That’s why the second option available to use
+    the app (see below) may be more appropriate (for Windows users
     only).
 -   [Locally on PC via a standalone desktop
     app](https://sourceforge.net/projects/activanalyzer) that is
@@ -57,16 +57,22 @@ There are three different ways to use the activAnalyzer app:
     Microsoft Edge browsers allow the app to work as expected but
     Mozilla Firefox does not seem to allow reseting all the inputs when
     required.
--   Locally on your machine via [R software](https://cran.rstudio.com/)
-    and the [activAnalyzer
-    package](https://github.com/pydemull/activAnalyzer) installable from
-    [GitHub](https://github.com/pydemull/activAnalyzer) (development
-    version). The activAnalyzer package can be installed by running the
-    following command lines in R:
+-   Locally on your machine via [R software](https://cran.rstudio.com/),
+    the [RStudio environment](https://www.rstudio.com/), and the
+    [activAnalyzer package](https://github.com/pydemull/activAnalyzer)
+    installable from [GitHub](https://github.com/pydemull/activAnalyzer)
+    (development version). To be able to generate the .pdf reports, you
+    will also have to install the [TinyTeX
+    distribution](https://yihui.org/tinytex/). In short, after
+    installing R and RStudio, you can run the following command lines in
+    the RStudio console:
 
 ``` r
-install.packages("devtools")
+# Code for installing the activAnalyzer package
 devtools::install_github("pydemull/activAnalyzer")
+
+# Code for installing the TinyTex distribution 
+tinytex::install_tinytex() # the tinytex package is imported along with the activAnalyzer package
 ```
 
 ## Example
