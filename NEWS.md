@@ -17,7 +17,7 @@
 * Modified the plot for visualizing data with wear time so that data related to each day of measurement be on one line.
 * Added step-based metrics to the results (only in the app, not in the report).
 * Added a graph to visualize time spent in the different activity intensity categories.
-* Update users guides with step-based metrics information.
+* Updated user's guide with step-based metrics information.
 
 # activAnalyzer 0.0.3
 

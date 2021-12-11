@@ -8,7 +8,9 @@ coverage](https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge
 [![R-CMD-check](https://github.com/pydemull/activAnalyzer/workflows/R-CMD-check/badge.svg)](https://github.com/pydemull/activAnalyzer/actions)
 <!-- badges: end -->
 
-# Overview
+# activAnalyzer
+
+## Overview
 
 activAnalyzer is a shinny app that was developed to analyze daily
 physical behavior data recorded at the hip in adults using an ActiGraph
@@ -23,13 +25,13 @@ satisfactory results). Please read the [user’s
 guide](https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf)
 for details about how the app works.
 
-# Usage
+## Usage
 
 There are three different ways to use the activAnalyzer app:
 
 -   [On the web via a shinyapps.io
     plateform](https://pydemull.shinyapps.io/activAnalyzer/) (stable
-    release). For information, as indicated by
+    version). For information, as indicated by
     [RStudio](https://www.shinyapps.io/), “*shinyapps.io is
     secure-by-design. Each Shiny application runs in its own protected
     environment and access is always SSL encrypted*”. Importantly, the
@@ -41,7 +43,7 @@ There are three different ways to use the activAnalyzer app:
     only).
 -   [Locally on PC via a standalone desktop
     app](https://sourceforge.net/projects/activanalyzer) that is
-    downloadable from the SourceForge website (stable release, for
+    downloadable from the SourceForge website (stable version, for
     Windows machines only). The standalone app has been developped using
     the framework *DesktopDeployR* made kindly available by [W. Lee
     Pang](https://github.com/wleepang). Explanations related to this
@@ -61,7 +63,7 @@ There are three different ways to use the activAnalyzer app:
     and the [activAnalyzer
     package](https://github.com/pydemull/activAnalyzer) installable from
     [GitHub](https://github.com/pydemull/activAnalyzer) (development
-    release). The activAnalyzer package can be installed by running the
+    version). The activAnalyzer package can be installed by running the
     following command lines in R:
 
 ``` r

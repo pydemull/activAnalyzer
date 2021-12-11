@@ -3,4 +3,10 @@ url: https://pydemull.github.io/activAnalyzer/
 template:
   bootstrap: 5
   bootswatch: yeti
-  
+  bslib:
+    bg: "#FEF9E7"
+    fg: "#34495E"
+
+development:
+  destination: docs
+  version_label: version

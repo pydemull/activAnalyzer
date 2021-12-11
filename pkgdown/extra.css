@@ -1,0 +1,30 @@
+/* App title */
+.navbar-brand.me-2 {
+  font-size: 100%;
+}
+
+
+/* Version number */
+.text-version { /* code is from https://imos-animaltracking.github.io/remora/ */
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 80%;
+    font-weight: 700;
+    line-height: 1;
+    color: "#FDFEFE";
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: red;
+    border-radius: .25em;
+}
+
+
+/* Section titles */
+h1 {
+  font-weight: 600;
+}
+
+h2 {
+  font-weight: 400;
+}
