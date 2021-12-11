@@ -1,3 +1,7 @@
+# activAnalyzer (development version)
+
+* Added the tinytex package to the list of the packages imported during the installation of the activAnalyzer package.
+
 # activAnalyzer 0.1.3
 
 * Added pieces of advice into the guides about caution when interpreting patient's scores in relation to hazard ratios.
