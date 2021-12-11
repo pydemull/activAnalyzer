@@ -1,4 +1,6 @@
 
+# activAnalyzer
+
 <!-- badges: start -->
 
 [![Lifecycle:
@@ -7,10 +9,6 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 coverage](https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge.svg)](https://codecov.io/gh/pydemull/activAnalyzer?branch=master)
 [![R-CMD-check](https://github.com/pydemull/activAnalyzer/workflows/R-CMD-check/badge.svg)](https://github.com/pydemull/activAnalyzer/actions)
 <!-- badges: end -->
-
-# activAnalyzer
-
-## Overview
 
 activAnalyzer is a shinny app that was developed to analyze daily
 physical behavior data recorded at the hip in adults using an ActiGraph
