@@ -36,15 +36,24 @@ prepare_dataset <- function(data, epoch_len_out = 60, col_time_stamp = "timestam
     data %>%
     actigraph.sleepr::read_agd() %>%
     actigraph.sleepr::collapse_epochs(epoch_len_out = epoch_len_out) %>%
-    dplyr::mutate(vm = round(sqrt(axis1^2 + axis2^2 + axis3^2), 2),
-           col_time_stamp = as.character(.data[[col_time_stamp]]),
-           timeStamp2 = col_time_stamp) %>%
+    dplyr::mutate(
+      vm = round(sqrt(axis1^2 + axis2^2 + axis3^2), 2),
+      col_time_stamp = as.character(.data[[col_time_stamp]]),
+      timeStamp2 = col_time_stamp
+      ) %>%
     tidyr::separate("timeStamp2", c("date", "time"), sep = " ") %>%
     dplyr::mutate(time = hms::as_hms(time)) %>%
-    dplyr::rename(inclineStanding = inclinestanding, 
-                  inclineSitting = inclinesitting,
-                  inclineLying = inclinelying) %>%
-    dplyr::select(col_time_stamp, date, time, everything()) %>%
+    dplyr::rename(
+      inclineStanding = inclinestanding, 
+      inclineSitting = inclinesitting,
+      inclineLying = inclinelying
+      ) %>%
+    dplyr::select(
+      col_time_stamp, 
+      date, 
+      time, 
+      everything()
+      ) %>%
     as.data.frame()
   
   return(df)

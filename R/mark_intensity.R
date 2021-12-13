@@ -96,7 +96,7 @@ mark_intensity <- function(data,
         accum_steps_20min = zoo::rollmean(data[[col_steps]], align = "center", k = 20L, fill = NA),
         accum_steps_5min  = zoo::rollmean(data[[col_steps]], align = "center", k = 5L,  fill = NA),
         accum_steps_1min  = zoo::rollmean(data[[col_steps]], align = "center", k = 1L,  fill = NA)
-  )
+      )
     
   # Marking the bouts based on intensity categories
     df$intensity_category <- ifelse(df$SED == 1, "SED", ifelse(df$LPA == 1, "LPA", ifelse(df$MPA == 1 | df$VPA == 1, "MVPA", "none")))

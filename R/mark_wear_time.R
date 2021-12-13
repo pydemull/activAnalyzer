@@ -36,14 +36,17 @@ mark_wear_time <- function(dataset, TS = "timestamp", cts  = "vm", frame = 90, a
   
   df <-
     PhysicalActivity::wearingMarking(
-                 dataset = dataset, 
-                 TS = TS, 
-                 cts = cts, 
-                 frame = frame, 
-                 allowanceFrame = allowanceFrame,
-                 streamFrame = streamFrame) %>%
-    dplyr::mutate(non_wearing_count = ifelse(wearing == "nw", 1, 0),
-                  wearing_count = ifelse(wearing == "w", 1, 0))
+      dataset = dataset, 
+      TS = TS, 
+      cts = cts, 
+      frame = frame, 
+      allowanceFrame = allowanceFrame,
+      streamFrame = streamFrame
+      ) %>%
+    dplyr::mutate(
+      non_wearing_count = ifelse(wearing == "nw", 1, 0),
+      wearing_count = ifelse(wearing == "w", 1, 0)
+      )
   
   return(df)
   

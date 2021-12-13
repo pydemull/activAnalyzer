@@ -16,7 +16,12 @@
 #' @examples
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 #' mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
-#' compute_mets(data = mydata, equation = "Sasaki et al. (2011) [Adults]", weight = 67, sex = "male")
+#' compute_mets(
+#'     data = mydata, 
+#'     equation = "Sasaki et al. (2011) [Adults]", 
+#'     weight = 67, 
+#'     sex = "male"
+#'     )
 #' 
 compute_mets <- function(data, 
                          equation = c("Sasaki et al. (2011) [Adults]",
