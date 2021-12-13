@@ -96,8 +96,8 @@ mydata_with_intensity_marks <- mark_intensity(
     )
 recap_by_day(
     data = mydata_with_intensity_marks, 
-    age = 40, 
-    weight = 70, 
+    age = 32, 
+    weight = 67, 
     sex = "male"
     )
 
