@@ -92,7 +92,12 @@ within the <code><a href="mark_intensity.html">mark_intensity</a></code> functio
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"acc.agd"</span>, package <span class="op">=</span> <span class="st">"activAnalyzer"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_dataset.html">prepare_dataset</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">file</span>, epoch_len_out <span class="op">=</span> <span class="fl">60</span>, col_time_stamp <span class="op">=</span> <span class="st">"timestamp"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">compute_mets</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mydata</span>, equation <span class="op">=</span> <span class="st">"Sasaki et al. (2011) [Adults]"</span>, weight <span class="op">=</span> <span class="fl">67</span>, sex <span class="op">=</span> <span class="st">"male"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">compute_mets</span><span class="op">(</span></span>
+<span class="r-in">    data <span class="op">=</span> <span class="va">mydata</span>, </span>
+<span class="r-in">    equation <span class="op">=</span> <span class="st">"Sasaki et al. (2011) [Adults]"</span>, </span>
+<span class="r-in">    weight <span class="op">=</span> <span class="fl">67</span>, </span>
+<span class="r-in">    sex <span class="op">=</span> <span class="st">"male"</span></span>
+<span class="r-in">    <span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You have computed METs using the following inputs: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     equation = Sasaki et al. (2011) [Adults]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     weight = 67</span>
