@@ -829,6 +829,28 @@ app_server <- function(input, output, session) {
     observeEvent(input$Run, {
       shiny::exportTestValues(gg_plot_data = plot_data(data = df(), metric = input$Metric))
     })
+    
+    # Exporting inputs after setting proactive inputs for data analysis
+    observeEvent(input$pro_active_period, {
+      shiny::exportTestValues(start_day_analysis = input$start_day_analysis)
+      shiny::exportTestValues(end_day_analysis = input$end_day_analysis)
+    })
+    
+    # Exporting inputs after resetting inputs for nonwear/wear time analysis
+    observeEvent(input$validate, {
+      shiny::exportTestValues(axis_weartime = input$axis_weartime)
+      shiny::exportTestValues(frame_size = input$frame_size)
+      shiny::exportTestValues(allowanceFrame_size = input$allowanceFrame_size)
+      shiny::exportTestValues(streamFrame_size = input$streamFrame_size)
+      shiny::exportTestValues(start_day_analysis = input$start_day_analysis)
+      shiny::exportTestValues(end_day_analysis = input$end_day_analysis)
+    })
+    
+    # Exporting BMR
+    observeEvent(input$Run, {
+      shiny::exportTestValues(BMR = bmr_kcal_d())
+    })
+    
   
 }
 

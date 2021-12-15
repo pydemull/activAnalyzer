@@ -76,16 +76,65 @@ test_that("The app correctly manages dataframes", {
        app$setInputs(axis_weartime = "vector magnitude", 
                      frame_size = 30, 
                      allowanceFrame_size = 0, 
-                     streamFrame_size = 0)
+                     streamFrame_size = 0,
+                     start_day_analysis = hms::as_hms(60*60*6),
+                     end_day_analysis = hms::as_hms(60*60*21)
+                     )
        
        app$setInputs(validate = "click")
        
        actual_df <- app$getAllValues()$export[["df"]]
        test_df <- 
          prepare_dataset(data = test_file) %>%
-         mark_wear_time(cts  = "vm", frame = 30, allowanceFrame = 0, streamFrame = 0) 
+         mark_wear_time(cts  = "vm", frame = 30, allowanceFrame = 0, streamFrame = 0) %>%
+         dplyr::filter(time >= hms::as_hms(60*60*6) & time <= hms::as_hms(60*60*21))
        
        expect_equal(actual_df, test_df)
+       
+       
+    # Testing for setting proactive period
+       app$setInputs(pro_active_period = "click")
+       
+       test_set_proactive <-
+         list(
+           "07:00:00",
+           "20:00:00"
+           )
+       
+       actual_set_proactive <- 
+         list(
+           app$getAllValues()$export[["start_day_analysis"]],
+           app$getAllValues()$export[["end_day_analysis"]]
+         )
+       
+       expect_equal(actual_set_proactive, test_set_proactive)
+       
+       
+    # Testing for reseting inputs for the configuration of nonwear/wear time analysis
+       app$setInputs(reset_nonwear = "click")
+       
+       test_list <-
+         list(
+           "vector magnitude",
+           90,
+           2,
+           30,
+           "00:00:00",
+           "23:59:00"
+           )
+       
+       actual_list <-
+         list(
+           app$getAllValues()$export[["axis_weartime"]],
+           app$getAllValues()$export[["frame_size"]],
+           app$getAllValues()$export[["allowanceFrame_size"]],
+           app$getAllValues()$export[["streamFrame_size"]],
+           app$getAllValues()$export[["start_day_analysis"]],
+           app$getAllValues()$export[["end_day_analysis"]]
+           )
+       
+       expect_equal(actual_list, test_list)
+       
     
     # Testing plot showing nonwear/wear time
       
@@ -195,6 +244,13 @@ test_that("The app correctly manages dataframes", {
          average_results(minimum_wear_time = 12)
        
        expect_equal(actual_results_summary, test_results_summary)
+       
+       
+    # Testing BMR computation
+      test_bmr <- 9.74 * 78 + 694
+      actual_bmr <- app$getAllValues()$export[["BMR"]]
+      
+      expect_equal(actual_bmr, test_bmr)
        
 })      
     
