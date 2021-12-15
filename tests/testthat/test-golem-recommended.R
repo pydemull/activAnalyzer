@@ -70,7 +70,7 @@ test_that("The app correctly manages dataframes", {
           prepare_dataset(data = test_file) %>%
           mark_wear_time(cts  = "axis1", frame = 60, allowanceFrame = 1, streamFrame = 20) 
         
-        expect_identical(actual_df, test_df)
+        expect_equal(actual_df, test_df)
      
      # Test 2
        app$setInputs(axis_weartime = "vector magnitude", 
@@ -85,7 +85,14 @@ test_that("The app correctly manages dataframes", {
          prepare_dataset(data = test_file) %>%
          mark_wear_time(cts  = "vm", frame = 30, allowanceFrame = 0, streamFrame = 0) 
        
-       expect_identical(actual_df, test_df)
+       expect_equal(actual_df, test_df)
+    
+    # Testing plot showing nonwear/wear time
+      
+       test_gg_nonwear <- str(plot_data(test_df))
+       actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data"]])
+       expect_equal(actual_gg_nonwear, test_gg_nonwear)
+       
        
     # Testing dataframe with results by day
        
@@ -107,7 +114,7 @@ test_that("The app correctly manages dataframes", {
                             equation = "Sasaki et al. (2011) [Adults]", age = 32, weight = 67, sex = "male") %>%
              recap_by_day( age = 32, weight = 67, sex = "male")
            
-           expect_identical(actual_results_by_day, test_results_by_day)
+           expect_equal(actual_results_by_day, test_results_by_day)
            
        # Test 2 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
        # SED cut-point: Aguilar-Farias et al. (2014) [Older adults]
@@ -127,7 +134,7 @@ test_that("The app correctly manages dataframes", {
                           equation = "Santos-Lozano et al. (2013) [Older adults]", age = 64, weight = 67, sex = "male") %>%
            recap_by_day( age = 64, weight = 67, sex = "male")
          
-         expect_identical(actual_results_by_day, test_results_by_day)
+         expect_equal(actual_results_by_day, test_results_by_day)
          
       # Test 3 / Equation: Santos-Lozano et al. (2013) [Adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Adults];
       # SED cut-point: Personalized
@@ -149,7 +156,7 @@ test_that("The app correctly manages dataframes", {
                           equation = "Santos-Lozano et al. (2013) [Adults]", age = 47, weight = 78, sex = "undefined") %>%
            recap_by_day(age = 47, weight = 78, sex = "undefined")
          
-         expect_identical(actual_results_by_day, test_results_by_day)
+         expect_equal(actual_results_by_day, test_results_by_day)
          
       # Test 4 / Equation: Freedson et al. (1998) [Adults]; MVPA cut-points: Personalized;
       # SED cut-point: Personalized
@@ -174,7 +181,7 @@ test_that("The app correctly manages dataframes", {
                          equation = "Freedson et al. (1998) [Adults]", age = 47, weight = 78, sex = "female") %>%
           recap_by_day(age = 47, weight = 78, sex = "female")
        
-       expect_identical(actual_results_by_day, test_results_by_day)
+       expect_equal(actual_results_by_day, test_results_by_day)
        
        
     # Testing dataframe with averaged results
@@ -187,7 +194,7 @@ test_that("The app correctly manages dataframes", {
          test_results_by_day %>%
          average_results(minimum_wear_time = 12)
        
-       expect_identical(actual_results_summary, test_results_summary)
+       expect_equal(actual_results_summary, test_results_summary)
        
 })      
     

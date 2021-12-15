@@ -815,14 +815,19 @@ app_server <- function(input, output, session) {
       shiny::exportTestValues(df = df())
     })
   
-  # Exporting dataframe marked for wear time
+  # Exporting dataframe for the results by day
     observeEvent(input$Run, {
       shiny::exportTestValues(results_by_day = results_list()$results_by_day)
     })
     
-  # Exporting dataframe marked for wear time
+  # Exporting dataframe for the daily averages
     observeEvent(input$Run, {
       shiny::exportTestValues(results_summary = results_summary())
+    })
+    
+    # Exporting plot showing nonwear/wear time
+    observeEvent(input$Run, {
+      shiny::exportTestValues(gg_plot_data = plot_data(data = df(), metric = input$Metric))
     })
   
 }
