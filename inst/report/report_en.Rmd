@@ -20,6 +20,8 @@ params:
   side: NA
   sampling_rate: NA
   filter: NA
+  start_day_analysis: NA
+  end_day_analysis: NA
   axis_weartime: NA
   frame_size: NA
   allowanceFrame_size: NA
@@ -65,6 +67,8 @@ ratio_lines <- params$ratio_lines
 **Age:** `r params$age` yr | **Sex:**  `r params$sex` | **Weight:** `r params$weight` kg | **Measurement period:** `r params$start_date` to `r params$end_date` | **Estimated Basal Metabolic Rate (BMR):** `r format(round(params$bmr_kcal_d, 2), nsmall = 2)` kcal/day (Estimation based on Henry equations [2005, doi: 10.1079/PHN2005801].)
 
 **Device:** `r params$device` | **Position:** `r params$position` | **Side:** `r params$side` | **Sampling rate:** `r params$sampling_rate` Hz | **Filter:** `r params$filter`.
+
+**Analyzed daily epochs:** from `r params$start_day_analysis` to `r params$end_day_analysis`.
 
 **Nonwear time:** Based on `r params$axis_weartime`, interval of `r params$frame_size` min with zero count for nonwear time detection, interval of `r params$allowanceFrame_size` min with nonzero counts allowed during a nonwear period, interval of `r params$streamFrame_size` min with zero count around detected activity to confirm nonwear time | **MET equation:** `r params$equation_mets` | **Axis used for PA intensity categorization:** `r params$axis_mvpa` | **Cut-points:** <`r params$sed_cutpoint` counts/min for SED, $\geqslant$ `r params$mpa_cutpoint` counts/min for MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min for VPA.
 

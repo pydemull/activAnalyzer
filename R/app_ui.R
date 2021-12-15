@@ -161,6 +161,23 @@ app_ui <- function(request) {
                   ),
                   fluidRow(
                     column(3,
+                           selectInput("start_day_analysis", "Start of the period to analyze each day", 
+                                       choices = c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59)),
+                                       selectize=FALSE
+                                       )
+                           ),
+                    column(3,
+                           selectInput("end_day_analysis", "End of the period to analyze each day", 
+                                       choices = rev(c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59))),
+                                       selectize=FALSE
+                           )
+                    ),
+                    column(3,
+                           shiny::actionButton("pro_active_period", "Set PROactive period", style = "margin-top: 25px; background-color: #9933CC; color: white; border-color: #330066")
+                    ),
+                  ),
+                  fluidRow(
+                    column(3,
                            selectInput("axis_weartime", "Axis to be considered to detect nonwear time", axis_weartime)
                     ),  
                     column(3,
