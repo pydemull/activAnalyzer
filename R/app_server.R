@@ -72,6 +72,30 @@ app_server <- function(input, output, session) {
                    )
       )
     
+    # Period selected to analyze data
+      observeEvent(input$validate,
+                 shinyFeedback::feedbackWarning(
+                   "start_day_analysis", 
+                   input$end_day_analysis <= input$start_day_analysis,
+                   "End time should be superior to start time."
+                 )
+    )
+      
+      observeEvent(input$validate,
+                   shinyFeedback::feedbackWarning(
+                     "end_day_analysis", 
+                     input$end_day_analysis <= input$start_day_analysis,
+                     "End time should be superior to start time."
+                   )
+      )
+      
+    # Setting PROactive default values for the period to analyse 
+      observeEvent(input$pro_active_period, {
+        updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*7))
+        updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*20))
+      })
+    
+    
     # Frame size
       observeEvent(input$validate,
                    shinyFeedback::feedbackWarning(
@@ -108,8 +132,9 @@ app_server <- function(input, output, session) {
             is.numeric(input$frame_size) & 
             input$frame_size >= 0 & 
             is.numeric(input$allowanceFrame_size) & 
-            input$allowanceFrame_size >= 0,
-            input$streamFrame_size >= 0
+            input$allowanceFrame_size >= 0 &
+            input$streamFrame_size >= 0 &
+            input$end_day_analysis > input$start_day_analysis
           )
       
      # Setting the axis to be used for detecting nonwear time
@@ -120,10 +145,13 @@ app_server <- function(input, output, session) {
        }
      
      # Creating reactive dataframe
-       df <- mark_wear_time(dataset = data(),
-                            cts = cts, 
-                            frame = input$frame_size, 
-                            allowanceFrame = input$allowanceFrame_size)
+       df <- 
+         mark_wear_time(dataset = data(),
+                        cts = cts, 
+                        frame = input$frame_size, 
+                        allowanceFrame = input$allowanceFrame_size) %>%
+         dplyr::filter(time >= hms::as_hms(input$start_day_analysis) & time <= hms::as_hms(input$end_day_analysis))
+         
        return(df)
       
       
@@ -137,6 +165,8 @@ app_server <- function(input, output, session) {
       updateNumericInput(inputId = "frame_size", value = 90)
       updateNumericInput(inputId = "allowanceFrame_size", value = 2)
       updateNumericInput(inputId = "streamFrame_size", value = 30)
+      updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(0))
+      updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*23+60*59))
     })
     
   
@@ -607,6 +637,8 @@ app_server <- function(input, output, session) {
           side = input$side,
           sampling_rate = attributes(file())$`original sample rate`,
           filter = attributes(file())$filter,
+          start_day_analysis = input$start_day_analysis,
+          end_day_analysis = input$end_day_analysis,
           axis_weartime = input$axis_weartime,
           frame_size = input$frame_size,
           allowanceFrame_size = input$allowanceFrame_size,
@@ -678,6 +710,8 @@ app_server <- function(input, output, session) {
           side = input$side,
           sampling_rate = attributes(file())$`original sample rate`,
           filter = attributes(file())$filter,
+          start_day_analysis = input$start_day_analysis,
+          end_day_analysis = input$end_day_analysis,
           axis_weartime = input$axis_weartime,
           frame_size = input$frame_size,
           allowanceFrame_size = input$allowanceFrame_size,
