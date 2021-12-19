@@ -20,6 +20,7 @@ sed_cutpoint <- c("...",
 mvpa_cutpoint <- c("...", 
                     "Sasaki et al. (2011) [Adults]", 
                     "Santos-Lozano et al. (2013) [Adults]", 
+                    "Freedson et al. (1998) [Adults]",
                     "Santos-Lozano et al. (2013) [Older adults]", 
                     "Personalized...")
 perso_sed_axis <- c("vector magnitude", "vertical axis")

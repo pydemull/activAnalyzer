@@ -47,11 +47,12 @@ The equations provided in the app for computing METs can be retrieved from scien
 * `Freedson et al. (1998) [Adults]` equation [@freedsonCalibrationComputerScience1998].
 * `Santos-Lozano et al. (2013) [Older adults]` equation [@santos-lozanoActigraphGT3XValidation2013].
 
-The cut-points provided can also be retrieved from scientific articles:
+The provided cut-points can also be retrieved from scientific articles:
 
 * Aguilar-Farias et al. [-@aguilar-fariasActiGraphGT3XCutpoints2014] SED cut-points for older adults : <200 counts/min [Vector magnitude];
 * Sasaki et al. [-@sasakiValidationComparisonActiGraph2011] MPA and VPA cut-points for adults: $\geqslant$ 2 690 counts/min (MPA) and $\geqslant$ 6 167 counts/min (VPA) [Vector magnitude];
 * Santos-Lozano et al. [-@santos-lozanoActigraphGT3XValidation2013] MPA and VPA cut-points for adults: $\geqslant$ 3 208 counts/min (MPA) and $\geqslant$ 8 565 counts/min (VPA) [Vector magnitude];
+* Freedson et al. [-@freedsonCalibrationComputerScience1998] MPA and VPA cut-points for adults: $\geqslant$ 1 952 counts/min (MPA) and $\geqslant$ 5 725 counts/min (VPA) [Vertical axis];
 * Santos-Lozano et al. [-@santos-lozanoActigraphGT3XValidation2013] MPA and VPA cut-points for older adults: $\geqslant$ 2 751 counts/min (MPA) and $\geqslant$ 9 359 counts/min (VPA) [Vector magnitude]. 
 
 These cut-points have been recommended by Migueles et al. [-@miguelesAccelerometerDataCollection2017]. However, in the case where none of them would be satisfactory for the user, the app allows to define personalized cut-points.
@@ -96,7 +97,7 @@ If the patient considers their sex as "undefined", then an equation for females 
 
 * SED, LPA, MPA, VPA categories based on the axis and the cut-points configured by the user;
 * METs, by using the MET equation provided by the user;
-* Kilocalories, by multiplying the MET value by BMR expressed in kcal/min for non-SED epochs (for SED epochs, BMR expressed in kcal/min is directly used);
+* Kilocalories. For non-SED epochs, MET values are multiplied by BMR expressed in kcal/min when using the Santos-Lozano et al. [-@santos-lozanoActigraphGT3XValidation2013] equations. When using the  Sasaki et al. [-@sasakiValidationComparisonActiGraph2011] and Freedson et al. [-@freedsonCalibrationComputerScience1998] equations, the MET values are multiplied by weight and 1/60. For SED epochs, BMR expressed in kcal/min is directly used;
 * MET-hours related to MPVA, by multiplying the MET value by the time (1/60e of an hour), only when the MET value is $\geqslant$ 3.
 
 Once these new variables added to the initial dataset, the app summarizes the results by day using valid wear time only, this for the following metrics: 

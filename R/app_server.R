@@ -366,39 +366,7 @@ app_server <- function(input, output, session) {
   
     results_list <- eventReactive(input$Run, {
      
-     # Waiting for valid inputs
-     
-     if (!input$sex %in% c("male", "female", "undefined") | input$age <= 0 | input$weight <= 0) {
-       validate("Please provide valid values for the inputs shown in Patient's information section.")
-     }
-     
-     if (input$equation_mets == "...") {
-       validate("Please choose a MET equation.")
-     }
-     
-     if (input$sed_cutpoint == "..." | input$mvpa_cutpoint == "...") {
-       validate("Please provide values for the cut-points.")
-     }
-     
-     if (input$perso_sed_axis != input$perso_mvpa_axis) {
-       validate("Please use the same axis for both SED and MVPA cut-points.")
-     }
-     
-     if (input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]" && 
-         input$perso_mvpa_axis == "vertical axis") {
-       validate("Please use the same axis for both SED and MVPA cut-points.")
-     }
-     
-     if (input$perso_sed_axis == "vertical axis" &&
-         input$mvpa_cutpoint %in% c("Sasaki et al. (2011) [Adults]", 
-                                     "Santos-Lozano et al. (2013) [Adults]", 
-                                     "Santos-Lozano et al. (2013) [Older adults]")) {
-       validate("Please use the same axis for both SED and MVPA cut-points.")
-     }
-     
-     
-    
-    # Setting axis and cut-points to compute SED and MVPA times
+  # Setting axis and cut-points to compute SED and MVPA times
     
     # SED
     if(input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]") { 
@@ -426,9 +394,14 @@ app_server <- function(input, output, session) {
       vpa_cutpoint_chosen <- 6167
     } else if (input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Adults]"){
       axis_mvpa_chosen <- "vm"
-      axis_mvpa_chosen_name <<- "vector magnitude"
+      axis_mvpa_chosen_name <- "vector magnitude"
       mpa_cutpoint_chosen <- 3208 
       vpa_cutpoint_chosen <- 8565 
+    } else if (input$mvpa_cutpoint == "Freedson et al. (1998) [Adults]"){
+      axis_mvpa_chosen <- "axis1"
+      axis_mvpa_chosen_name <- "vertical axis"
+      mpa_cutpoint_chosen <- 1952 
+      vpa_cutpoint_chosen <- 5725 
     } else if (input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Older adults]"){
       axis_mvpa_chosen <- "vm"
       axis_mvpa_chosen_name <- "vector magnitude"
@@ -448,7 +421,30 @@ app_server <- function(input, output, session) {
       }
     } else {
       NULL}
+      
+      
+    # Waiting for valid inputs
     
+      if (!input$sex %in% c("male", "female", "undefined") | input$age <= 0 | input$weight <= 0) {
+        validate("Please provide valid values for the inputs shown in Patient's information section.")
+      }
+      
+      if (input$equation_mets == "...") {
+        validate("Please choose a MET equation.")
+      }
+      
+      if (input$sed_cutpoint == "..." | input$mvpa_cutpoint == "...") {
+        validate("Please provide values for the cut-points.")
+      }
+      
+      if (axis_mvpa_chosen != axis_sed_chosen) {
+        validate("Please use the same axis for both SED and MVPA cut-points.")
+      }
+      
+      if (sed_cutpoint_chosen >= mpa_cutpoint_chosen) {
+        validate("Please choose a SED cut-point that is strictly lower than the MVPA cut-point.")
+      }
+   
     
     # Adding variables of interest to the initial dataframe
     df_with_computed_metrics <-

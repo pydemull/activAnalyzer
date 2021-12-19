@@ -215,18 +215,18 @@ test_that("The app correctly manages dataframes", {
                       equation_mets = "Freedson et al. (1998) [Adults]",
                       mvpa_cutpoint = "Personalized...",
                       perso_mvpa_axis = "vertical axis",
-                      perso_mpa_cutpoint = 2990,
-                      perso_vpa_cutpoint = 7000,
+                      perso_mpa_cutpoint = 1952,
+                      perso_vpa_cutpoint = 5725,
                       sed_cutpoint = "Personalized...",
                       perso_sed_axis = "vertical axis",
-                      perso_sed_cutpoint = 150)
+                      perso_sed_cutpoint = 100)
         
         app$setInputs(Run = "click")
         
         actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
         test_results_by_day <-
           test_df %>%
-          mark_intensity(col_axis = "axis1", sed_cutpoint = 150, mpa_cutpoint = 2990, vpa_cutpoint = 7000,
+          mark_intensity(col_axis = "axis1", sed_cutpoint = 100, mpa_cutpoint = 1952, vpa_cutpoint = 5725,
                          equation = "Freedson et al. (1998) [Adults]", age = 47, weight = 78, sex = "female") %>%
           recap_by_day(age = 47, weight = 78, sex = "female")
        

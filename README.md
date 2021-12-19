@@ -43,7 +43,7 @@ There are three different ways to use the activAnalyzer app:
     app](https://sourceforge.net/projects/activanalyzer) that is
     downloadable from the SourceForge website (stable version, for
     Windows machines only). The standalone app has been developped using
-    the framework *DesktopDeployR* made kindly available by [W. Lee
+    the framework *DesktopDeployR* kindly made available by [W. Lee
     Pang](https://github.com/wleepang). Explanations related to this
     framework can be retrieved from [a dedicated GitHub
     repository](https://github.com/wleepang/DesktopDeployR). Once the
@@ -60,9 +60,8 @@ There are three different ways to use the activAnalyzer app:
 -   Locally on your machine via [R software](https://cran.rstudio.com/),
     the [RStudio environment](https://www.rstudio.com/), and the
     [activAnalyzer package](https://github.com/pydemull/activAnalyzer)
-    installable from [GitHub](https://github.com/pydemull/activAnalyzer)
-    (development version). To be able to generate the .pdf reports, you
-    will also have to install the [TinyTeX
+    installable from GitHub (development version). To be able to
+    generate the .pdf reports, you will have to install the [TinyTeX
     distribution](https://yihui.org/tinytex/). In short, after
     installing R and RStudio, you can run the following command lines in
     the RStudio console:

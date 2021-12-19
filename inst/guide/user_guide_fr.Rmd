@@ -54,8 +54,9 @@ Les équations fournies dans l'application pour calculer les METs peuvent être 
 Les valeurs seuils de counts/min peuvent être aussi retrouvées dans des articles scientifiques : 
 
 * Les valeurs seuils d'Aguilar-Farias et al. [-@aguilar-fariasActiGraphGT3XCutpoints2014] pour SED chez les personnes âgées : <200 counts/min [Vecteur magnitude];
-* Les valeurs seuils de Sasaki et al. [-@sasakiValidationComparisonActiGraph2011] pour MPA chez les adultes : $\geqslant$ 2 690 counts/min (MPA) et $\geqslant$ 6 167 counts/min (VPA) [Vecteur magnitude];
+* Les valeurs seuils de Sasaki et al. [-@sasakiValidationComparisonActiGraph2011] pour MPA et VPA chez les adultes : $\geqslant$ 2 690 counts/min (MPA) et $\geqslant$ 6 167 counts/min (VPA) [Vecteur magnitude];
 * Les valeurs seuils de Santos-Lozano et al. [-@santos-lozanoActigraphGT3XValidation2013] pour MPA et VPA chez les adultes : $\geqslant$ 3 208 counts/min (MPA) et $\geqslant$ 8 565 counts/min (VPA) [Vecteur magnitude];
+* Les valeurs seuils de Freedson et al. [-@freedsonCalibrationComputerScience1998] pour MPA et VPA chez les adultes : $\geqslant$ 1 952 counts/min (MPA) et $\geqslant$ 5 725 counts/min (VPA) [Axe vertical];
 * Les valeurs seuils de Santos-Lozano et al. [-@santos-lozanoActigraphGT3XValidation2013] pour MPA et VPA chez les personnes âgées : $\geqslant$ 2 751 counts/min (MPA) et $\geqslant$ 9 359 counts/min (VPA) [Vecteur magnitude]. 
 
 Ces valeurs seuils ont été recommandées par Migueles et al. [-@miguelesAccelerometerDataCollection2017]. Cependant, dans le cas où aucune de ces valeurs ne serait satisfaisante pour l'utilisateur, l'application permet de personnaliser les valeurs seuils.
@@ -101,7 +102,7 @@ Si le patient considère que son sexe est indéfini ("undefined" dans l'applicat
 
 * Les catégories SED, LPA, MPA, VPA en s'appuyant sur l'axe et les valeurs seuils configurés par l'utilisateur ;
 * Les METs, en utilisant l'équation de MET choisie par l'utilisateur ;
-* Les kilocalories, en multipliant la valeur de MET par le MB exprimé en kcal/min pour les périodes non-SED (pour les périodes SED, le MB en kcal/min est directement utilisé) ;
+* Les kilocalories. Pour les périodes non-SED, les valeurs de MET sont multipliées par le MB exprimé en kcal/min lorsque les équations de Santos-Lozano et al. [-@santos-lozanoActigraphGT3XValidation2013] sont utilisées. Lorsque les équations de Sasaki et al. [-@sasakiValidationComparisonActiGraph2011] et de Freedson et al. [-@freedsonCalibrationComputerScience1998] sont utilisées, les valeurs de MET sont multipliées par le poids et 1/60. Pour les périodes SED, le MB en kcal/min est directement utilisé ;
 * Les MET-heures liés à MPVA, en multipliant la valeur de MET par le temps (1/60e d'heure), cela seulement lorsque la valeur de MET est $\geqslant$ 3.
 
 Une fois ces nouvelles variables ajoutées au jeu de données initial, l'application résume les résultats pour chaque jour de mesure à partir des données correspondant à du temps de port, cela pour les indicateurs suivants :

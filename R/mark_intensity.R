@@ -85,8 +85,13 @@ mark_intensity <- function(data,
         MPA = ifelse(.data[[col_axis]] >= mpa_cutpoint & .data[[col_axis]] < vpa_cutpoint, 1, 0), 
         VPA = ifelse(.data[[col_axis]] >= vpa_cutpoint, 1, 0),
         METS = compute_mets(data = .data, equation = equation, weight = weight, sex = sex),
-        kcal = ifelse(SED == 0, METS * bmr_kcal_min, bmr_kcal_min),
-      
+        kcal = dplyr::case_when(
+          SED == 1 ~ bmr_kcal_min,
+          equation == "Sasaki et al. (2011) [Adults]" | equation == "Freedson et al. (1998) [Adults]" ~ METS * 1 * weight / 60,
+          equation == "Santos-Lozano et al. (2013) [Adults]" | equation == "Santos-Lozano et al. (2013) [Older adults]" ~ METS * bmr_kcal_min
+        ),
+          
+
       # Computing MET-hr corresponding to MVPA only, for each epoch
         mets_hours_mvpa = ifelse(METS >= 3, 1/60 * METS, 0),
       
