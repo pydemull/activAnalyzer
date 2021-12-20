@@ -2,7 +2,7 @@
 #' 
 #' This function computes Basal Metabolic Rate using an Henry et al. 
 #'     (2005; doi: 10.1079/PHN2005801) equation. This function is wrapped within 
-#'     the \code{\link{mark_intensity}} function.
+#'     the \code{\link{mark_intensity}} and \code{\link{recap_by_day}} function.
 #'
 #' @param age A numeric value in yr.
 #' @param weight A numeric value in kg.
