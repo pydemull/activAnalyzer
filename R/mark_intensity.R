@@ -13,10 +13,11 @@
 #'     METs are computed using the \code{\link{compute_mets}} function. METs are computed from weight, sex, accelerometer counts, and a published equation from one 
 #'     of the following scientific articles: Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003); Santos-Lozano et al. 
 #'     (2013; 10.1055/s-0033-1337945); Freedson et al. (1998; doi: 10.1097/00005768-199805000-00021).
-#'     Kilocalories are computed by multiplying METs by basal metabolic rate (BMR) expressed in kcal/min for non-SED epochs 
-#'     (for SED epochs, BMR expressed in kcal/min is directly used). BMR is computed using the \code{\link{compute_bmr}} function
-#'     that uses sex, age, and weight inputs, and one of the equations retrieved from the paper by Henry et al. (2005; doi: 10.1079/PHN2005801).
-#'     MET-hours are obtained by multiplying METs by time related to each epoch (here 1/60e of an hour), only when the MET value is  >=3.
+#'     Kilocalories are computed as follows. For non-SED epochs, MET values are multiplied by BMR expressed in kcal/min when using the Santos-Lozano et al. 
+#'     (2013) equations. When using the  Sasaki et al. (2011) and Freedson et al. (1998) equations, the MET values are multiplied by weight and 1/60.  
+#'     For SED epochs, BMR expressed in kcal/min is directly used. BMR is computed using the \code{\link{compute_bmr}} function that uses sex, age, and weight 
+#'     inputs, and one of the equations retrieved from the paper by Henry et al. (2005; doi: 10.1079/PHN2005801). MET-hours are obtained by multiplying METs by time 
+#'     related to each epoch (here 1/60e of an hour), only when the MET value is  >=3.
 #'
 #' @param data A dataframe obtained using the \code{\link{prepare_dataset}} and then the \code{\link{mark_wear_time}} functions.
 #' @param col_axis A character value to indicate the name of the variable to be used for determining intensity categories. 
