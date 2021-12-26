@@ -71,31 +71,7 @@ app_server <- function(input, output, session) {
                      "Invalid file format. Please choose an .agd file."
                    )
       )
-    
-    # Period selected to analyze data
-      observeEvent(input$validate,
-                 shinyFeedback::feedbackWarning(
-                   "start_day_analysis", 
-                   input$end_day_analysis <= input$start_day_analysis,
-                   "End time should be superior to start time."
-                 )
-    )
-      
-      observeEvent(input$validate,
-                   shinyFeedback::feedbackWarning(
-                     "end_day_analysis", 
-                     input$end_day_analysis <= input$start_day_analysis,
-                     "End time should be superior to start time."
-                   )
-      )
-      
-    # Setting PROactive default values for the period to analyse 
-      observeEvent(input$pro_active_period, {
-        updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*7))
-        updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*20))
-      })
-    
-    
+
     # Frame size
       observeEvent(input$validate,
                    shinyFeedback::feedbackWarning(
@@ -149,9 +125,7 @@ app_server <- function(input, output, session) {
          mark_wear_time(dataset = data(),
                         cts = cts, 
                         frame = input$frame_size, 
-                        allowanceFrame = input$allowanceFrame_size) %>%
-         dplyr::filter(time >= hms::as_hms(input$start_day_analysis) & time <= hms::as_hms(input$end_day_analysis))
-         
+                        allowanceFrame = input$allowanceFrame_size)  
        return(df)
       
       
@@ -352,18 +326,44 @@ app_server <- function(input, output, session) {
   })
   
   
+  
+  # Setting PROactive default values to valid a day based on wear time
+  observeEvent(input$pro_active_period, {
+    updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*7))
+    updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*20))
+    updateNumericInput(inputId = "minimum_wear_time_for_analysis", value = 8)
+  })
+  
+
+  # Controlling PROactive settings
+  observeEvent(input$validate,
+               shinyFeedback::feedbackWarning(
+                 "start_day_analysis", 
+                 input$end_day_analysis <= input$start_day_analysis,
+                 "End time should be superior to start time."
+               )
+  )
+  
+  observeEvent(input$validate,
+               shinyFeedback::feedbackWarning(
+                 "end_day_analysis", 
+                 input$end_day_analysis <= input$start_day_analysis,
+                 "End time should be superior to start time."
+               )
+  )
+        
   # Getting BMR (kcal/d)
-    bmr_kcal_d <- eventReactive(input$Run, {
-      
-      compute_bmr(age = input$age, sex = input$sex, weight = input$weight)
-      
-    })
-    
+  bmr_kcal_d <- eventReactive(input$Run, {
+   
+   compute_bmr(age = input$age, sex = input$sex, weight = input$weight)
+   
+  })
+  
     
   # Getting list of results: dataset with metrics; results by day corresponding 
   # to valid wear time  (except for total kcal that also uses nonwear time with
   # attribution of bmr to nonwear epochs); selected equations and cut-points
-  
+
     results_list <- eventReactive(input$Run, {
      
   # Setting axis and cut-points to compute SED and MVPA times
@@ -461,7 +461,13 @@ app_server <- function(input, output, session) {
    # Creating a dataframe with results by day and corresponding to valid wear time only  
    results_by_day <-
      df_with_computed_metrics %>%
-     recap_by_day(age = input$age, weight = input$weight, sex = input$sex)
+     recap_by_day(
+       age = input$age, 
+       weight = input$weight, 
+       sex = input$sex,
+       valid_wear_time_start = input$start_day_analysis,
+       valid_wear_time_end = input$end_day_analysis
+     )
    
    # Returning a list of the results and parameters
    return(list(df_with_computed_metrics = df_with_computed_metrics,
@@ -519,6 +525,7 @@ app_server <- function(input, output, session) {
       results_summary(), 
       list(valid_days = reactable::colDef(minWidth = 90),
            wear_time = reactable::colDef(minWidth = 90),
+           wear_time_revised = reactable::colDef(minWidth = 160),
            total_counts_axis1 = reactable::colDef(minWidth = 150),
            total_counts_vm = reactable::colDef(minWidth = 150),
            minutes_SED = reactable::colDef(minWidth = 120),
@@ -571,7 +578,9 @@ app_server <- function(input, output, session) {
       paste0(input$upload, "_MarkedDataset.csv")
     },
     content = function(file) {
-      utils::write.csv2(results_list()$df_with_computed_metrics, file, row.names = FALSE)
+      utils::write.csv2(results_list()$df_with_computed_metrics %>%
+                          dplyr::select(-col_time_stamp, -timestamp), 
+                        file, row.names = FALSE)
     }
   )
   

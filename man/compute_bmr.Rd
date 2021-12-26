@@ -19,7 +19,7 @@ A numeric value.
 \description{
 This function computes Basal Metabolic Rate using an Henry et al.
 (2005; doi: 10.1079/PHN2005801) equation. This function is wrapped within
-the \code{\link{mark_intensity}} and \code{\link{recap_by_day}} function.
+the \code{\link{mark_intensity}} and \code{\link{recap_by_day}} functions.
 }
 \examples{
 compute_bmr(age = 32, sex = "male", weight = 67)

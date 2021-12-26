@@ -7,6 +7,9 @@
 recap_by_day(
   data,
   col_date = "date",
+  col_time = "time",
+  valid_wear_time_start = "00:00:00",
+  valid_wear_time_end = "23:59:00",
   age = 40,
   weight = 70,
   sex = c("male", "female", "undefined")
@@ -16,6 +19,12 @@ recap_by_day(
 \item{data}{A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then \code{\link{mark_intensity}} functions.}
 
 \item{col_date}{A character value to indicate the name of the date variable.}
+
+\item{col_time}{A character value indicating the name of the variable where time information is provided.}
+
+\item{valid_wear_time_start}{A character value with the format HH:MM:SS to set the start of the daily period to consider to compute valid wear time.}
+
+\item{valid_wear_time_end}{A character value with the format HH:MM:SS to set the end of the daily period to consider to compute valid wear time.}
 
 \item{age}{A numeric value in yr.}
 

@@ -45,6 +45,9 @@
 #'   
 #' @param data A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then \code{\link{mark_intensity}} functions.
 #' @param col_date A character value to indicate the name of the date variable.
+#' @param col_time A character value indicating the name of the variable where time information is provided.
+#' @param valid_wear_time_start A character value with the format HH:MM:SS to set the start of the daily period to consider to compute valid wear time.
+#' @param valid_wear_time_end A character value with the format HH:MM:SS to set the end of the daily period to consider to compute valid wear time.
 #' @param age A numeric value in yr.
 #' @param weight A numeric value in kg.
 #' @param sex A character value.
@@ -81,58 +84,84 @@
 #'     data = mydata_with_intensity_marks, 
 #'     age = 32, 
 #'     weight = 67, 
-#'     sex = "male"
+#'     sex = "male",
+#'     valid_wear_time_start = "07:00:00",
+#'     valid_wear_time_end = "20:00:00"
 #'     )
 #' 
-recap_by_day <- function(data, col_date = "date", age = 40, weight = 70, sex = c("male", "female", "undefined")) {
+recap_by_day <- function(data, 
+                         col_date = "date", 
+                         col_time = "time",
+                         valid_wear_time_start = "00:00:00",
+                         valid_wear_time_end = "23:59:00",
+                         age = 40, 
+                         weight = 70, 
+                         sex = c("male", "female", "undefined")) {
   
   # Computing basal metabolic rate
     bmr_kcal_min <- compute_bmr(age = age, sex = sex, weight = weight) / (24*60)
   
   # getting results by day
-    
-       # Defining a function for getting a NA value when computing a step-based metric
-       # from a vector with no non-missing values and the max() function
-       # Retrieved from: https://stackoverflow.com/questions/24519794/r-max-function-ignore-na
-         my_max <- function(x) ifelse( !all(is.na(x)), max(x, na.rm = TRUE), NA)
-  df <-
-    data %>%
-    dplyr::group_by(.data[[col_date]], .drop = FALSE) %>%
-    dplyr::filter(wearing == "w") %>%
-    dplyr::summarise(
-      wear_time = sum(wearing_count, na.rm = TRUE),
-      total_counts_axis1 = sum(axis1, na.rm = TRUE),
-      total_counts_vm = sum(vm, na.rm = TRUE),
-      total_steps = sum(steps, na.rm = TRUE),
-      total_kcal_wear_time = round(sum(kcal, na.rm = TRUE), 2),
-      minutes_SED = sum(SED, na.rm = TRUE),
-      minutes_LPA = sum(LPA, na.rm = TRUE),
-      minutes_MPA = sum(MPA, na.rm = TRUE),
-      minutes_VPA = sum(VPA, na.rm = TRUE),
-      minutes_MVPA = sum(MPA, na.rm = TRUE) + sum(VPA, na.rm = TRUE),
-      percent_SED = round(minutes_SED / wear_time * 100, 2),
-      percent_LPA = round(minutes_LPA / wear_time * 100, 2),
-      percent_MPA = round(minutes_MPA / wear_time * 100, 2),
-      percent_VPA = round(minutes_VPA / wear_time * 100, 2), 
-      percent_MVPA = round(minutes_MVPA / wear_time * 100, 2),
-      max_steps_60min = round(my_max(accum_steps_60min), 2),
-      max_steps_30min = round(my_max(accum_steps_30min), 2),
-      max_steps_20min = round(my_max(accum_steps_20min), 2),
-      max_steps_5min = round(my_max(accum_steps_5min), 2),
-      max_steps_1min = round(my_max(accum_steps_1min), 2),
-      peak_steps_60min = round(mean(head(sort(steps, decreasing = TRUE), n = 60L), na.rm = TRUE), 2),
-      peak_steps_30min = round(mean(head(sort(steps, decreasing = TRUE), n = 30L), na.rm = TRUE), 2),
-      peak_steps_20min = round(mean(head(sort(steps, decreasing = TRUE), n = 20L), na.rm = TRUE), 2),
-      peak_steps_5min = round(mean(head(sort(steps, decreasing = TRUE), n = 5L), na.rm = TRUE), 2), 
-      peak_steps_1min = round(mean(head(sort(steps, decreasing = TRUE), n = 1L), na.rm = TRUE), 2),
-      mets_hours_mvpa = round(sum(mets_hours_mvpa, na.rm = TRUE), 2),
-      ratio_mvpa_sed = round(minutes_MVPA / minutes_SED, 2),
       
-      # Computing physical activity level (PAL), that is, total EE / BMR. BMR is assigned to nonwear time; 
-      # the term 10/9 is used to take into account the thermic effect of food
-      pal = round((total_kcal_wear_time + bmr_kcal_min * (24*60 - wear_time)) * (10/9) / (bmr_kcal_min * (24*60)), 2)) %>%
-    dplyr::ungroup()
-  
+         # Defining a function for getting a NA value when computing a step-based metric
+         # from a vector with no non-missing values and the max() function
+         # Retrieved from: https://stackoverflow.com/questions/24519794/r-max-function-ignore-na
+           my_max <- function(x) ifelse( !all(is.na(x)), max(x, na.rm = TRUE), NA)
+   
+    # Summarising results by day without the wear time variable               
+    df <-
+      data %>%
+      dplyr::group_by(.data[[col_date]], .drop = FALSE) %>%
+      dplyr::filter(wearing == "w") %>%
+      dplyr::summarise(
+        wear_time = sum(wearing_count, na.rm = TRUE),
+        total_counts_axis1 = sum(axis1, na.rm = TRUE),
+        total_counts_vm = sum(vm, na.rm = TRUE),
+        total_steps = sum(steps, na.rm = TRUE),
+        total_kcal_wear_time = round(sum(kcal, na.rm = TRUE), 2),
+        minutes_SED = sum(SED, na.rm = TRUE),
+        minutes_LPA = sum(LPA, na.rm = TRUE),
+        minutes_MPA = sum(MPA, na.rm = TRUE),
+        minutes_VPA = sum(VPA, na.rm = TRUE),
+        minutes_MVPA = sum(MPA, na.rm = TRUE) + sum(VPA, na.rm = TRUE),
+        percent_SED = round(minutes_SED / wear_time * 100, 2),
+        percent_LPA = round(minutes_LPA / wear_time * 100, 2),
+        percent_MPA = round(minutes_MPA / wear_time * 100, 2),
+        percent_VPA = round(minutes_VPA / wear_time * 100, 2), 
+        percent_MVPA = round(minutes_MVPA / wear_time * 100, 2),
+        max_steps_60min = round(my_max(accum_steps_60min), 2),
+        max_steps_30min = round(my_max(accum_steps_30min), 2),
+        max_steps_20min = round(my_max(accum_steps_20min), 2),
+        max_steps_5min = round(my_max(accum_steps_5min), 2),
+        max_steps_1min = round(my_max(accum_steps_1min), 2),
+        peak_steps_60min = round(mean(head(sort(steps, decreasing = TRUE), n = 60L), na.rm = TRUE), 2),
+        peak_steps_30min = round(mean(head(sort(steps, decreasing = TRUE), n = 30L), na.rm = TRUE), 2),
+        peak_steps_20min = round(mean(head(sort(steps, decreasing = TRUE), n = 20L), na.rm = TRUE), 2),
+        peak_steps_5min = round(mean(head(sort(steps, decreasing = TRUE), n = 5L), na.rm = TRUE), 2), 
+        peak_steps_1min = round(mean(head(sort(steps, decreasing = TRUE), n = 1L), na.rm = TRUE), 2),
+        mets_hours_mvpa = round(sum(mets_hours_mvpa, na.rm = TRUE), 2),
+        ratio_mvpa_sed = round(minutes_MVPA / minutes_SED, 2),
+        
+        # Computing physical activity level (PAL), that is, total EE / BMR. BMR is assigned to nonwear time; 
+        # the term 10/9 is used to take into account the thermic effect of food
+        pal = round((total_kcal_wear_time + bmr_kcal_min * (24*60 - wear_time)) * (10/9) / (bmr_kcal_min * (24*60)), 2)) %>%
+      dplyr::ungroup()
+    
+    # Summarise wear time by day based on the set inputs
+    df_set_wear_time_period <-
+      data %>%
+      dplyr::group_by(.data[["date"]], .drop = FALSE) %>%
+      dplyr::filter(
+        .data[[col_time]] >= hms::as_hms(valid_wear_time_start) &
+          .data[[col_time]] <= hms::as_hms(valid_wear_time_end) &
+          wearing == "w") %>%
+      dplyr::summarise(wear_time_revised = sum(wearing_count, na.rm = TRUE))
+    
+    # Binding the two last dataframes
+    df <-
+      dplyr::left_join(df, df_set_wear_time_period, key = "date") %>%
+      dplyr::select(date, wear_time, wear_time_revised, everything())
+    
   return(df)
 }
 

@@ -44,10 +44,11 @@
 average_results <- function(data, minimum_wear_time = 10) {
   
   data %>%
-    dplyr::mutate(validity = ifelse(wear_time >= minimum_wear_time * 60, "valid", "invalid")) %>%
+    dplyr::mutate(validity = ifelse(wear_time_revised >= minimum_wear_time * 60, "valid", "invalid")) %>%
     dplyr::filter(validity == "valid") %>%
     dplyr::summarise(valid_days = dplyr::n(),
               wear_time = round(mean(wear_time), 2),
+              wear_time_revised = round(mean(wear_time_revised), 2),
               total_counts_axis1 = round(mean(total_counts_axis1), 2),
               total_counts_vm = round(mean(total_counts_vm), 2),
               total_steps = round(mean(total_steps), 2),
