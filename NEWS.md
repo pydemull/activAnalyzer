@@ -1,4 +1,4 @@
-# activAnalyzer (development version)
+# activAnalyzer 0.2.0
 
 * Added the tinytex package to the list of the packages imported during the installation of the activAnalyzer package.
 * Updated the table showing the description of the studies related to the MET equations (for the study by Sasaki et al. (2011), the number of 50 participants was replaced by the number 36, that is the number of participants that actually completed the study).
