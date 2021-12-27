@@ -91,7 +91,7 @@ axis_mvpa <- ifelse(params$axis_mvpa == "vertical axis", "axe vertical",
 
 **Période journalière considérée pour évaluer le temps de port valide :** de `r params$start_day_analysis` à `r params$end_day_analysis`.
 
-**Nombre minimum d'heures avec temps de port valide pour valider un jour de mesure** : `r params$minimum_wear_time_for_analysis` heures.
+**Nombre minimum d'heures avec temps de port valide pour valider un jour** : `r params$minimum_wear_time_for_analysis` heures.
 
 ***
 
