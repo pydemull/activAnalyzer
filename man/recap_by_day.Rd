@@ -22,9 +22,9 @@ recap_by_day(
 
 \item{col_time}{A character value indicating the name of the variable where time information is provided.}
 
-\item{valid_wear_time_start}{A character value with the format HH:MM:SS to set the start of the daily period to consider to compute valid wear time.}
+\item{valid_wear_time_start}{A character value with the HH:MM:SS format to set the start of the daily period to consider for computing valid wear time.}
 
-\item{valid_wear_time_end}{A character value with the format HH:MM:SS to set the end of the daily period to consider to compute valid wear time.}
+\item{valid_wear_time_end}{A character value with the HH:MM:SS format to set the end of the daily period to consider for computing valid wear time.}
 
 \item{age}{A numeric value in yr.}
 
@@ -41,20 +41,21 @@ This function summarizes accelerometer results for each day of the measurement p
 \details{
 The following metrics are computed:
 \itemize{
-\item \strong{wear_time:} total wear time
+\item \strong{wear_time:} total wear time computed using the whole day
+\item \strong{wear_time_revised:} total wear time computed using the daily period defined in the function
 \item \strong{total_counts_axis1}: total counts for the vertical axis
 \item \strong{total_counts_vm:} total counts for the vector magnitude
 \item \strong{total_steps:} total step count
-\item \strong{total_kcal_wear_time:} total kilocalories
+\item \strong{total_kcal:} total kilocalories
 \item \strong{minutes_SED:} total minutes spent in SED behavior
 \item \strong{minutes_LPA:} total minutes spent in LPA behavior
 \item \strong{minutes_MPA:} total minutes spent in MPA behavior
 \item \strong{minutes_VPA:} total minutes spent in VPA behavior
 \item \strong{minutes_MVPA:} total minutes spent in MVPA behavior
-\item \strong{percent_SED:} proportion of wear time spent in SED behavior
-\item \strong{percent_LPA:} proportion of wear time spent in LPA behavior
-\item \strong{percent_MPA:} proportion of wear time spent in MPA behavior
-\item \strong{percent_VPA:} proportion of wear time spent in VPA behavior
+\item \strong{percent_SED:} proportion of wear time (whole day) spent in SED behavior
+\item \strong{percent_LPA:} proportion of wear time (whole day) spent in LPA behavior
+\item \strong{percent_MPA:} proportion of wear time (whole day) spent in MPA behavior
+\item \strong{percent_VPA:} proportion of wear time (whole day) spent in VPA behavior
 \item \strong{percent_MVPA:} proportion of wear time spent in MPVA behavior
 \item \strong{max_steps_60min:} best step accumulation per minute averaged over a window of 60 continuous minutes
 \item \strong{max_steps_30min:} best step accumulation per minute averaged over a window of 30 continuous minutes
@@ -67,17 +68,17 @@ The following metrics are computed:
 \item \strong{peak_steps_5min:} step accumulation per minute averaged over the best 5 continuous or discontinuous minutes
 \item \strong{peak_steps_1min:} step accumulation per minute over the best minute (same result as for \code{max_steps_1min})
 \item \strong{mets_hours_mvpa:} total MET-hours spent during MPVA behavior
-\item \strong{ratio_mvpa_sed:} ratio between MVPA and SED times (minutes_MVPA / minutes_SED)
+\item \strong{ratio_mvpa_sed:} ratio between MVPA and SED times (\code{minutes_MVPA} / \code{minutes_SED})
 }
 
-PAL is computed as follows: total energy expenditure (TEE) is divided by BMR. TEE is obtained by summing
-the kilocalories measured during wear time epochs and the kilocalories likely expended during nonwear time
-epochs (that is, kilocalories associated to BMR, as it is assumed that the device was mainly not worn during
-sleeping periods if any, periods during which energy expenditure is near of BMR), and by multiplying this sum
+PAL is computed by dividing total energy expenditure (TEE) by BMR. TEE is obtained by summing
+the kilocalories measured during wear time epochs and the kilocalories related to BMR expended during nonwear time
+epochs (it is assumed that the periods where the device was not worn corresponded to
+sleeping periods, during which energy expenditure is near of BMR), and by multiplying this sum
 by 10/9 to take into account the thermic effect of food. Of course, such calculations may
 conduct to underestimate TEE and PAL if the device was removed during prolonged periods of
 physical activity. Moreover, even if the device was correctly worn, the estimate of PAL is very
-approximate since both BMR and kilocalories related to wear time are estimated using methods
+approximate since both BMR and kilocalories are estimated using methods
 that may not be accurate at the individual level.
 }
 \examples{
@@ -107,7 +108,9 @@ recap_by_day(
     data = mydata_with_intensity_marks, 
     age = 32, 
     weight = 67, 
-    sex = "male"
+    sex = "male",
+    valid_wear_time_start = "07:00:00",
+    valid_wear_time_end = "20:00:00"
     )
 
 }

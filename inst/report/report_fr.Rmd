@@ -87,9 +87,11 @@ axis_mvpa <- ifelse(params$axis_mvpa == "vertical axis", "axe vertical",
 
 **Appareil :** `r params$device` | **Position :** `r position` | **Côté :** `r side` | **Fréquence d'échantillonnage :** `r params$sampling_rate` Hz | **Filtre :** `r params$filter`.
 
-**Période journalière analysée :** de `r params$start_day_analysis` à `r params$end_day_analysis`.
-
 **Temps de non-port :** Basé sur `r axis_weartime`, intervalle de `r params$frame_size` min avec zéro count pour la détection du temps de non-port, intervalle de `r params$allowanceFrame_size` min avec counts différents de 0 autorisé durant une période de non-port, intervalle de `r params$streamFrame_size` min avec zéro count autour de la période d'activité détectée pour confirmer le non-port | **Équation de prédiction des METs :** `r params$equation_mets` | **Axe utilisé pour catégoriser l'intensité d'activité physique :** `r axis_mvpa` | **Valeurs seuils :** <`r params$sed_cutpoint` counts/min pour SED, $\geqslant$ `r params$mpa_cutpoint` counts/min pour MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min pour VPA.
+
+**Période journalière considérée pour évaluer le temps de port valide :** de `r params$start_day_analysis` à `r params$end_day_analysis`.
+
+**Nombre minimum d'heures avec temps de port valide pour valider un jour de mesure** : `r params$minimum_wear_time_for_analysis` heures.
 
 ***
 
@@ -100,8 +102,9 @@ flextable::set_flextable_defaults(fonts_ignore = TRUE)
 flextable::flextable(
  tibble::tribble(
     ~Indicateur,                            ~"Résultat (moyenne journalière obtenue à partir des jours valides)",
-    "Temps de port",                          paste0(round(df[["wear_time"]], 0), " min"),
+    "Temps de port",                          paste0(round(df[["wear_time_revised"]], 0), " min"),
     "Nombre de jours valides",               paste0(df[["valid_days"]], " jour(s)"),
+    "Kilocalories",                 paste0(format(round(df[["total_kcal"]], 2), nsmall = 2), " kcal"),
     "Niveau d'activité physique (NAP)",      paste0(format(round(df[["pal"]], 2), nsmall = 2)),
     "Nombre total de pas",              paste0(round(df[["total_steps"]], 0), " pas"),
     "Temps SED",                           paste0(format(round(df[["minutes_SED"]], 1), nsmall = 1), " min"),
@@ -539,7 +542,7 @@ if (params$rendered_by_shiny)
     labs(x = "Date", y = "", fill = "") +
     scale_y_continuous(expand = expansion(mult = c(.05, .2))) +
     scale_fill_manual(labels = c("Jour valide", 
-                                 paste0("Jour non valide (<", params$minimum_wear_time_for_analysis, " heures)")),
+                                 paste0("Jour non valide (<", params$minimum_wear_time_for_analysis, " heures entre ", params$start_day_analysis, " et ", params$end_day_analysis, ")")),
                                         values = c("#00BE6C", "#FC717F")) +
     theme_bw() + 
     theme(legend.position = "bottom",

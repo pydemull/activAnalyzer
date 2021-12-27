@@ -491,7 +491,9 @@ app_server <- function(input, output, session) {
     Sys.sleep(0.5)
     reactable::reactable(results_list()$results_by_day,  
               striped = TRUE,
-              list(total_counts_axis1 = reactable::colDef(minWidth = 150),
+              list(
+                   wear_time_revised = reactable::colDef(minWidth = 160),
+                   total_counts_axis1 = reactable::colDef(minWidth = 150),
                    total_counts_vm = reactable::colDef(minWidth = 150),
                    minutes_SED = reactable::colDef(minWidth = 120),
                    minutes_LPA = reactable::colDef(minWidth = 120),
@@ -504,7 +506,7 @@ app_server <- function(input, output, session) {
                    percent_VPA = reactable::colDef(minWidth = 120),
                    percent_MVPA = reactable::colDef(minWidth = 120),
                    ratio_mvpa_sed = reactable::colDef(minWidth = 125),
-                   total_kcal_wear_time = reactable::colDef(minWidth = 160),
+                   total_kcal = reactable::colDef(minWidth = 120),
                    mets_hours_mvpa = reactable::colDef(minWidth = 160)))
   })
   
@@ -539,7 +541,7 @@ app_server <- function(input, output, session) {
            percent_VPA = reactable::colDef(minWidth = 120),
            percent_MVPA = reactable::colDef(minWidth = 120),
            ratio_mvpa_sed = reactable::colDef(minWidth = 125),
-           total_kcal_wear_time = reactable::colDef(minWidth = 160),
+           total_kcal = reactable::colDef(minWidth = 120),
            mets_hours_mvpa = reactable::colDef(minWidth = 160)),
       striped = TRUE
     )

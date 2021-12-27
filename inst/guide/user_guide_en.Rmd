@@ -57,7 +57,7 @@ The provided cut-points can also be retrieved from scientific articles:
 
 These cut-points have been recommended by Migueles et al. [-@miguelesAccelerometerDataCollection2017]. However, in the case where none of them would be satisfactory for the user, the app allows to define personalized cut-points.
 
-Finally, this section allows the user to determine the minimum wear time required to get a valid day. The default value is set to 10 hours (i.e., 600 minutes), as previously recommended [@miguelesAccelerometerDataCollection2017]. Of note, the validation of the whole measurement is left to the appreciation of the user. In the literature, it is commonly accepted to require at least 4 valid days to consider the measurement as a reliable picture of what has been actually performed during a week of measurement. Whatever the number of valid days obtained, keep in mind that one week of measurement may not reflect the average behavior over a longer period of time (e.g., a year).
+Finally, this section allows the user to determine the minimum wear time required to get a valid day and the period over which wear time should be obtained during the day. The default value is set to 10 hours (i.e., 600 minutes) over the whole day, as previously recommended [@miguelesAccelerometerDataCollection2017]. To automatically get a recommended configuration (established in COPD patients) in the case where the device would have also been worn during the night [@demeyerStandardizingAnalysisPhysical2014], the user can click on the "Set PROactive configuration" button". Of note, the validation of the whole measurement is left to the appreciation of the user. In the literature, it is commonly accepted to require at least 4 valid days to consider the measurement as a reliable picture of what has been actually performed during a week of measurement. Whatever the number of valid days obtained, keep in mind that one week of measurement may not reflect the average behavior over a longer period of time (e.g., a year).
 
 Once all inputs have been correctly fulfilled, the user must click on the "Run analysis" button. This action triggers several calculations. Firstly, the app computes basal metabolic rate (BMR), based on the sex, age, and weight inputs, and on one of the equations retrieved from the paper by Henry et al. [-@henryBasalMetabolicRate2005]. These equations are shown in Table \@ref(tab:METsEquations).
 
@@ -102,11 +102,12 @@ If the patient considers their sex as "undefined", then an equation for females 
 
 Once these new variables added to the initial dataset, the app summarizes the results by day using valid wear time only, this for the following metrics: 
 
-* `wear_time`: total wear time.
+* `wear_time`: total wear time computed using the whole day.
+* `wear_time_revised`: total wear time computed using the daily period defined in the app.
 * `total_counts_axis1`: total counts for the vertical axis.
 * `total_counts_vm`: total counts for the vector magnitude.
 * `total_steps`: total step count.
-* `total_kcal_wear_time`: total kilocalories.
+* `total_kcal`: total kilocalories.
 * `minutes_SED`: total minutes spent in SED behavior.
 * `minutes_LPA`: total minutes spent in LPA behavior.
 * `minutes_MPA`: total minutes spent in MPA behavior.
@@ -131,7 +132,7 @@ Once these new variables added to the initial dataset, the app summarizes the re
 * `ratio_mvpa_sed`: ratio between MVPA and SED times (`minutes_MVPA` / `minutes_SED`).
 
 
-Then, the app computes the PAL for each day. To do this, total energy expenditure (TEE) is divided by BMR. TEE is obtained by summing the kilocalories measured during wear time epochs and the kilocalories likely expended during nonwear time epochs (that is, kilocalories associated to BMR, as it is assumed that the device was mainly not worn during sleeping periods if any, periods during which energy expenditure is near of BMR), and by multiplying this sum by 10/9 to take into account the thermic effect of food. Of course, such calculations may conduct to underestimate TEE and PAL if the device was removed during prolonged periods of physical activity. Moreover, even if the device was correctly worn, the estimate of PAL is very approximate since both BMR and kilocalories related to wear time are estimated using methods that may not be accurate at the individual level.
+Then, the app computes the PAL for each day. To do this, total energy expenditure (TEE) is divided by BMR. TEE is obtained by summing the kilocalories measured during wear time epochs and the kilocalories related to BMR expended during nonwear time epochs (it is assumed that the periods where the device was not worn corresponded to sleeping periods, during which energy expenditure is near of BMR), and by multiplying this sum by 10/9 to take into account the thermic effect of food. Of course, such calculations may conduct to underestimate TEE and PAL if the device was removed during prolonged periods of physical activity. Moreover, even if the device was correctly worn, the estimate of PAL is very approximate since both BMR and kilocalories are estimated using methods that may not be accurate at the individual level.
 
 Finally, the app computes daily averages of the computed metrics using the days considered as valid.
 

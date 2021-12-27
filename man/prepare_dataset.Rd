@@ -19,7 +19,8 @@ A dataframe.
 \description{
 This function performs the following actions: it reads the .agd file, then it collapses
 accelerometer data based on the configured epoch length (for now, only 60 s can be used),
-then it creates the vector magnitude variable, creates \code{date} and \code{time} columns, and finally organizes columns in a given order.
+then it creates the vector magnitude variable, creates \code{date} and \code{time} columns, and finally organizes columns
+in a predefined order.
 
 The .agd file must contain at least the following columns:
 \itemize{

@@ -7,9 +7,9 @@
 #'     time is spent in moderate-to-vigorous physical activity, and step-based metrics (maximum step accumulation  
 #'     and peak step accumulation metrics). For the SED, LPA, MPA, 
 #'     and VPA columns, the function provides, for each epoch, the numeric value 1 when 
-#'     the value of the configured counts variable corresponds to the criteria of the 
-#'     considered category (e.g., <150 counts/min for sedentary behavior); if not, 0 
-#'     is provided.
+#'     the value of the configured counts variable respectively fulfills the criteria of the 
+#'     SED, LPA, MPA, and VPA category (e.g., for the SED column, 1 may be provided if VM counts are <150 counts/min); 
+#'     otherwise 0 is provided.
 #'     METs are computed using the \code{\link{compute_mets}} function. METs are computed from weight, sex, accelerometer counts, and a published equation from one 
 #'     of the following scientific articles: Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003); Santos-Lozano et al. 
 #'     (2013; 10.1055/s-0033-1337945); Freedson et al. (1998; doi: 10.1097/00005768-199805000-00021).
@@ -88,13 +88,13 @@ mark_intensity <- function(data,
         METS = compute_mets(data = .data, equation = equation, weight = weight, sex = sex),
         kcal = dplyr::case_when(
           SED == 1 ~ bmr_kcal_min,
-          equation == "Sasaki et al. (2011) [Adults]" | equation == "Freedson et al. (1998) [Adults]" ~ METS * 1 * weight / 60,
+          equation == "Sasaki et al. (2011) [Adults]" | equation == "Freedson et al. (1998) [Adults]" ~ METS * weight * 1/60,
           equation == "Santos-Lozano et al. (2013) [Adults]" | equation == "Santos-Lozano et al. (2013) [Older adults]" ~ METS * bmr_kcal_min
         ),
           
 
       # Computing MET-hr corresponding to MVPA only, for each epoch
-        mets_hours_mvpa = ifelse(METS >= 3, 1/60 * METS, 0),
+        mets_hours_mvpa = ifelse(METS >= 3, METS * 1/60, 0),
       
       # Applying moving averages for future computations of step-based metrics
         accum_steps_60min = zoo::rollmean(data[[col_steps]], align = "center", k = 60L, fill = NA),
