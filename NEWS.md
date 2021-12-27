@@ -3,8 +3,8 @@
 * Added the tinytex package to the list of the packages imported during the installation of the activAnalyzer package.
 * Updated the table showing the description of the studies related to the MET equations (for the study by Sasaki et al. (2011), the number of 50 participants was replaced by the number 36, that is the number of participants that actually completed the study).
 * Added the possibility to use Freedson MVPA cut-points.
-* When using the Sasaki et al. and the Freedson et al. equations, the kilocalories are at present computed by multiplying MET values by weight and 1/60 to better correspond to the context of the original studies (where METs were computed by dividing VO2 by 3.5, i.e., the default BMR value in ml/min/kg). For the Santos-Lozano et al. equations, kilocalories are still computed by multiplying  MET values by BMR (in kcal/min) because in the original study, METs were obtained by dividing VO2 by measured resting metabolic rate, i.e., a personalized BMR value in ml/min/kg.
-* Add the possibility to set the period of the day (e.g., from 07:00:00 to 20:00:00) during wich a given duration of wear time should be obtained to validate a day.
+* When using the Sasaki et al. and the Freedson et al. equations, the kilocalories are at present computed by multiplying MET values by weight and 1/60 to better correspond to the context of the original studies (where METs were computed by dividing VO2 by 3.5, i.e., the default BMR value in ml/min/kg; this assumes that 1 MET  = 1 kcal/kg/min). For the Santos-Lozano et al. equations, kilocalories are still computed by multiplying  MET values by BMR (in kcal/min) because in the original study, METs were obtained by dividing VO2 by measured resting metabolic rate, i.e., a personalized BMR value in ml/min/kg.
+* Added the possibility to set the period of the day (e.g., from 07:00:00 to 20:00:00) during which a given duration of wear time should be obtained to validate a day.
 
 # activAnalyzer 0.1.3
 
