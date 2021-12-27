@@ -38,6 +38,7 @@ test_that("The app correctly manages dataframes", {
   
   # Preparing environment for shinytest
     Study <<- "Study"
+    col_time_stamp <<- "col_time_stamp"
     assign("users", shiny::reactiveValues(count = 0), envir = .GlobalEnv)
     assign("equations_mets", activAnalyzer:::equations_mets, envir = .GlobalEnv)
     assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = .GlobalEnv)
@@ -76,9 +77,7 @@ test_that("The app correctly manages dataframes", {
        app$setInputs(axis_weartime = "vector magnitude", 
                      frame_size = 30, 
                      allowanceFrame_size = 0, 
-                     streamFrame_size = 0,
-                     start_day_analysis = hms::as_hms(60*60*6),
-                     end_day_analysis = hms::as_hms(60*60*21)
+                     streamFrame_size = 0
                      )
        
        app$setInputs(validate = "click")
@@ -86,28 +85,9 @@ test_that("The app correctly manages dataframes", {
        actual_df <- app$getAllValues()$export[["df"]]
        test_df <- 
          prepare_dataset(data = test_file) %>%
-         mark_wear_time(cts  = "vm", frame = 30, allowanceFrame = 0, streamFrame = 0) %>%
-         dplyr::filter(time >= hms::as_hms(60*60*6) & time <= hms::as_hms(60*60*21))
+         mark_wear_time(cts  = "vm", frame = 30, allowanceFrame = 0, streamFrame = 0)
        
        expect_equal(actual_df, test_df)
-       
-       
-    # Testing for setting proactive period
-       app$setInputs(pro_active_period = "click")
-       
-       test_set_proactive <-
-         list(
-           "07:00:00",
-           "20:00:00"
-           )
-       
-       actual_set_proactive <- 
-         list(
-           app$getAllValues()$export[["start_day_analysis"]],
-           app$getAllValues()$export[["end_day_analysis"]]
-         )
-       
-       expect_equal(actual_set_proactive, test_set_proactive)
        
        
     # Testing for reseting inputs for the configuration of nonwear/wear time analysis
@@ -232,6 +212,23 @@ test_that("The app correctly manages dataframes", {
        
        expect_equal(actual_results_by_day, test_results_by_day)
        
+    # Testing for setting proactive period
+    app$setInputs(pro_active_period = "click")
+    
+    test_set_proactive <-
+      list(
+        "07:00:00",
+        "20:00:00"
+      )
+    
+    actual_set_proactive <- 
+      list(
+        app$getAllValues()$export[["start_day_analysis"]],
+        app$getAllValues()$export[["end_day_analysis"]]
+      )
+    
+    expect_equal(actual_set_proactive, test_set_proactive)
+       
        
     # Testing dataframe with averaged results
        app$setInputs(minimum_wear_time_for_analysis = 12)
@@ -240,8 +237,13 @@ test_that("The app correctly manages dataframes", {
        
        actual_results_summary <- app$getAllValues()$export[["results_summary"]]
        test_results_summary <- 
-         test_results_by_day %>%
+         test_df %>%
+         mark_intensity(col_axis = "axis1", sed_cutpoint = 100, mpa_cutpoint = 1952, vpa_cutpoint = 5725,
+                        equation = "Freedson et al. (1998) [Adults]", age = 47, weight = 78, sex = "female") %>%
+         recap_by_day(age = 47, weight = 78, sex = "female", valid_wear_time_start = "07:00:00", valid_wear_time_end = "20:00:00") %>%
          average_results(minimum_wear_time = 12)
+       
+
        
        expect_equal(actual_results_summary, test_results_summary)
        
