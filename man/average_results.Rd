@@ -44,7 +44,9 @@ summary_by_day <- recap_by_day(
     data = mydata_with_intensity_marks, 
     age = 32, 
     weight = 67, 
-    sex = "male"
+    sex = "male",
+    valid_wear_time_start = "07:00:00",
+    valid_wear_time_end = "20:00:00"
     )
 average_results(data = summary_by_day, minimum_wear_time = 10)
 

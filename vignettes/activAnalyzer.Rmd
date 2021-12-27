@@ -125,7 +125,9 @@ results_by_day <-
   recap_by_day(
     age = 32, 
     weight = 67, 
-    sex = "male"
+    sex = "male",
+    valid_wear_time_start = "07:00:00",
+    valid_wear_time_end = "20:0:00"
     )
 
 results_by_day %>%  
@@ -148,7 +150,7 @@ results_by_day %>%
                 percent_VPA = reactable::colDef(minWidth = 150),
                 percent_MVPA = reactable::colDef(minWidth = 155),
                 ratio_mvpa_sed = reactable::colDef(minWidth = 160),
-                total_kcal_wear_time = reactable::colDef(minWidth = 205),
+                total_kcal = reactable::colDef(minWidth = 205),
                 mets_hours_mvpa = reactable::colDef(minWidth = 205),
                 max_steps_60min = reactable::colDef(minWidth = 205),
                 max_steps_30min = reactable::colDef(minWidth = 205),
@@ -197,7 +199,7 @@ averaged_results %>%
          percent_VPA = reactable::colDef(minWidth = 150),
          percent_MVPA = reactable::colDef(minWidth = 155),
          ratio_mvpa_sed = reactable::colDef(minWidth = 160),
-         total_kcal_wear_time = reactable::colDef(minWidth = 205),
+         total_kcal = reactable::colDef(minWidth = 205),
          mets_hours_mvpa = reactable::colDef(minWidth = 195),
          max_steps_60min = reactable::colDef(minWidth = 205),
          max_steps_30min = reactable::colDef(minWidth = 205),

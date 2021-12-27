@@ -37,7 +37,7 @@
 #'     data = mydata_with_intensity_marks, 
 #'     age = 32, 
 #'     weight = 67, 
-#'     sex = "male"
+#'     sex = "male",
 #'     valid_wear_time_start = "07:00:00",
 #'     valid_wear_time_end = "20:00:00"
 #'     )

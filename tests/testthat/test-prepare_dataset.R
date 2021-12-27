@@ -7,8 +7,8 @@ test_that("Dataset is properly prepared", {
     expect_s3_class(my_data, "data.frame")
   
   # Testing the order of the lines and the length of the epochs of the dataset
-    expect_condition(my_data[1, col_time_stamp] < my_data[2, col_time_stamp])
-    expect_condition((as_hms(my_data[2, col_time_stamp]) - as_hms(my_data[1, col_time_stamp])) == 60)
+    expect_condition(my_data[1, time] < my_data[2, time])
+    expect_condition((hms::as_hms(my_data[2, time]) - hms::as_hms(my_data[1, time])) == 60)
   
   # Testing if activity data are correctly collapsed (sum of the counts over the defined epoch length)
     ref <-

@@ -66,6 +66,9 @@ utils::globalVariables(c(
   "accum_steps_20min",
   "accum_steps_5min",
   "accum_steps_1min",
-  "head"
+  "head",
+  "col_time_stamp",
+  "wear_time_revised",
+  "total_kcal"
   
   ))
