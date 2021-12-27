@@ -70,9 +70,9 @@ ratio_lines <- params$ratio_lines
 
 **Nonwear time:** Based on `r params$axis_weartime`, interval of `r params$frame_size` min with zero count for nonwear time detection, interval of `r params$allowanceFrame_size` min with nonzero counts allowed during a nonwear period, interval of `r params$streamFrame_size` min with zero count around detected activity to confirm nonwear time | **MET equation:** `r params$equation_mets` | **Axis used for PA intensity categorization:** `r params$axis_mvpa` | **Cut-points:** <`r params$sed_cutpoint` counts/min for SED, $\geqslant$ `r params$mpa_cutpoint` counts/min for MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min for VPA.
 
-**Period analyzed to assess valid wear time each day:** from `r params$start_day_analysis` to `r params$end_day_analysis`.
+**Period analyzed to assess wear time each day:** from `r params$start_day_analysis` to `r params$end_day_analysis`.
 
-**Minimum number of hours with valid wear time to validate a day**: `r params$minimum_wear_time_for_analysis` hours.
+**Minimum number of hours with wear time to validate a day**: `r params$minimum_wear_time_for_analysis` hours.
 
 ***
 
@@ -496,15 +496,15 @@ if (params$rendered_by_shiny)
 # Generate figure
   g_week <-
     df2 %>%
-    dplyr::mutate(validity = ifelse(wear_time >= 600, "Valid day", "Non valid day"),
+    dplyr::mutate(validity = ifelse(wear_time_revised >= params$minimum_wear_time_for_analysis * 60, "Valid day", "Non valid day"),
                   validity =  forcats::fct_relevel(validity, "Valid day", "Non valid day")) %>%
-    tidyr::pivot_longer(cols = c(wear_time, total_steps, pal, minutes_SED, minutes_LPA, minutes_MVPA, percent_SED, percent_LPA, percent_MVPA),
+    tidyr::pivot_longer(cols = c(wear_time_revised, total_steps, pal, minutes_SED, minutes_LPA, minutes_MVPA, percent_SED, percent_LPA, percent_MVPA),
                  names_to = "variable", values_to = "value") %>%
-    dplyr::mutate(variable =  forcats::fct_relevel(variable, "wear_time", "total_steps", "pal", 
+    dplyr::mutate(variable =  forcats::fct_relevel(variable, "wear_time_revised", "total_steps", "pal", 
                                    "minutes_MVPA", "minutes_LPA","minutes_SED", 
                                   "percent_MVPA", "percent_LPA", "percent_SED"),
                   variable = forcats::fct_recode(variable, 
-                                 "Wear time (min)" = "wear_time", 
+                                 "Wear time (min)" = "wear_time_revised", 
                                  "Total steps" = "total_steps", "PAL" = "pal",
                                   "MVPA time (min)" = "minutes_MVPA",
                                  "LPA time (min)" = "minutes_LPA", 
