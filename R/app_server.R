@@ -351,6 +351,13 @@ app_server <- function(input, output, session) {
                  "End time should be superior to start time."
                )
   )
+  
+  # Returning to default settings for the minimum wear time duration
+  observeEvent(input$reset_period, {
+    updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*0))
+    updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*23+60*59))
+    updateNumericInput(inputId = "minimum_wear_time_for_analysis", value = 10)
+  })
         
   # Getting BMR (kcal/d)
   bmr_kcal_d <- eventReactive(input$Run, {

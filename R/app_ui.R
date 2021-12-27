@@ -322,14 +322,17 @@ app_ui <- function(request) {
                                        selectize=FALSE
                            )
                     ),
+                    column(2,
+                           numericInput("minimum_wear_time_for_analysis", "Minimum wear time (hours)", value = 10)
+                    ),
                     column(3,
                            shiny::actionButton("pro_active_period", "Set PROactive configuration", style = "margin-top: 25px; background-color: #9933CC; color: white; border-color: #330066")
                     ),
                   ),
                   fluidRow(
-                    column(2,
-                           numericInput("minimum_wear_time_for_analysis", "Minimum wear time (hours)", value = 10)
-                    )
+                    column(3,
+                           shiny::actionButton("reset_period", "Return to default values", style = "border-color: #2e6da4")
+                    ),
                   ),
                   
                   #*****************
@@ -338,6 +341,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(3,
+                           h3(""),
                            shiny::actionButton("Run", "Run Analysis", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
                     ),
                   ),
