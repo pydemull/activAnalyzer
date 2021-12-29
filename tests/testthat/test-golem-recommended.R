@@ -34,7 +34,7 @@ test_that("app server", {
 #)
 
 
-test_that("The app correctly manages dataframes", {
+test_that("The server functions correctly work", {
   
   # Preparing environment for shinytest
     Study <<- "Study"
@@ -98,9 +98,7 @@ test_that("The app correctly manages dataframes", {
            "vector magnitude",
            90,
            2,
-           30,
-           "00:00:00",
-           "23:59:00"
+           30
            )
        
        actual_list <-
@@ -108,9 +106,7 @@ test_that("The app correctly manages dataframes", {
            app$getAllValues()$export[["axis_weartime"]],
            app$getAllValues()$export[["frame_size"]],
            app$getAllValues()$export[["allowanceFrame_size"]],
-           app$getAllValues()$export[["streamFrame_size"]],
-           app$getAllValues()$export[["start_day_analysis"]],
-           app$getAllValues()$export[["end_day_analysis"]]
+           app$getAllValues()$export[["streamFrame_size"]]
            )
        
        expect_equal(actual_list, test_list)
@@ -213,22 +209,22 @@ test_that("The app correctly manages dataframes", {
        expect_equal(actual_results_by_day, test_results_by_day)
        
     # Testing for setting proactive period
-    app$setInputs(pro_active_period = "click")
-    
-    test_set_proactive <-
-      list(
-        "07:00:00",
-        "20:00:00"
-      )
-    
-    actual_set_proactive <- 
-      list(
-        app$getAllValues()$export[["start_day_analysis"]],
-        app$getAllValues()$export[["end_day_analysis"]]
-      )
-    
-    expect_equal(actual_set_proactive, test_set_proactive)
-       
+      app$setInputs(pro_active_period = "click")
+      
+      test_set_proactive <-
+        list(
+          "07:00:00",
+          "20:00:00"
+        )
+      
+      actual_set_proactive <- 
+        list(
+          app$getAllValues()$export[["start_day_analysis"]],
+          app$getAllValues()$export[["end_day_analysis"]]
+        )
+      
+      expect_equal(actual_set_proactive, test_set_proactive)
+         
        
     # Testing dataframe with averaged results
        app$setInputs(minimum_wear_time_for_analysis = 12)
