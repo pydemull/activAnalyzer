@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">activAnalyzer</a>
 
-    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.9000</small>
+    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,9 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">recap_by_day</span><span class="op">(</span>
   <span class="va">data</span>,
   col_date <span class="op">=</span> <span class="st">"date"</span>,
+  col_time <span class="op">=</span> <span class="st">"time"</span>,
+  valid_wear_time_start <span class="op">=</span> <span class="st">"00:00:00"</span>,
+  valid_wear_time_end <span class="op">=</span> <span class="st">"23:59:00"</span>,
   age <span class="op">=</span> <span class="fl">40</span>,
   weight <span class="op">=</span> <span class="fl">70</span>,
   sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"undefined"</span><span class="op">)</span>
@@ -69,6 +72,12 @@
 <dd><p>A dataframe obtained using the <code><a href="prepare_dataset.html">prepare_dataset</a></code>, <code><a href="mark_wear_time.html">mark_wear_time</a></code>, and then <code><a href="mark_intensity.html">mark_intensity</a></code> functions.</p></dd>
 <dt>col_date</dt>
 <dd><p>A character value to indicate the name of the date variable.</p></dd>
+<dt>col_time</dt>
+<dd><p>A character value indicating the name of the variable where time information is provided.</p></dd>
+<dt>valid_wear_time_start</dt>
+<dd><p>A character value with the HH:MM:SS format to set the start of the daily period to consider for computing valid wear time.</p></dd>
+<dt>valid_wear_time_end</dt>
+<dd><p>A character value with the HH:MM:SS format to set the end of the daily period to consider for computing valid wear time.</p></dd>
 <dt>age</dt>
 <dd><p>A numeric value in yr.</p></dd>
 <dt>weight</dt>
@@ -82,20 +91,21 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The following metrics are computed:</p><ul><li><p><strong>wear_time:</strong> total wear time</p></li>
+    <p>The following metrics are computed:</p><ul><li><p><strong>wear_time:</strong> total wear time computed using the whole day</p></li>
+<li><p><strong>wear_time_revised:</strong> total wear time computed using the daily period defined in the function</p></li>
 <li><p><strong>total_counts_axis1</strong>: total counts for the vertical axis</p></li>
 <li><p><strong>total_counts_vm:</strong> total counts for the vector magnitude</p></li>
 <li><p><strong>total_steps:</strong> total step count</p></li>
-<li><p><strong>total_kcal_wear_time:</strong> total kilocalories</p></li>
+<li><p><strong>total_kcal:</strong> total kilocalories</p></li>
 <li><p><strong>minutes_SED:</strong> total minutes spent in SED behavior</p></li>
 <li><p><strong>minutes_LPA:</strong> total minutes spent in LPA behavior</p></li>
 <li><p><strong>minutes_MPA:</strong> total minutes spent in MPA behavior</p></li>
 <li><p><strong>minutes_VPA:</strong> total minutes spent in VPA behavior</p></li>
 <li><p><strong>minutes_MVPA:</strong> total minutes spent in MVPA behavior</p></li>
-<li><p><strong>percent_SED:</strong> proportion of wear time spent in SED behavior</p></li>
-<li><p><strong>percent_LPA:</strong> proportion of wear time spent in LPA behavior</p></li>
-<li><p><strong>percent_MPA:</strong> proportion of wear time spent in MPA behavior</p></li>
-<li><p><strong>percent_VPA:</strong> proportion of wear time spent in VPA behavior</p></li>
+<li><p><strong>percent_SED:</strong> proportion of wear time (whole day) spent in SED behavior</p></li>
+<li><p><strong>percent_LPA:</strong> proportion of wear time (whole day) spent in LPA behavior</p></li>
+<li><p><strong>percent_MPA:</strong> proportion of wear time (whole day) spent in MPA behavior</p></li>
+<li><p><strong>percent_VPA:</strong> proportion of wear time (whole day) spent in VPA behavior</p></li>
 <li><p><strong>percent_MVPA:</strong> proportion of wear time spent in MPVA behavior</p></li>
 <li><p><strong>max_steps_60min:</strong> best step accumulation per minute averaged over a window of 60 continuous minutes</p></li>
 <li><p><strong>max_steps_30min:</strong> best step accumulation per minute averaged over a window of 30 continuous minutes</p></li>
@@ -108,15 +118,15 @@
 <li><p><strong>peak_steps_5min:</strong> step accumulation per minute averaged over the best 5 continuous or discontinuous minutes</p></li>
 <li><p><strong>peak_steps_1min:</strong> step accumulation per minute over the best minute (same result as for <code>max_steps_1min</code>)</p></li>
 <li><p><strong>mets_hours_mvpa:</strong> total MET-hours spent during MPVA behavior</p></li>
-<li><p><strong>ratio_mvpa_sed:</strong> ratio between MVPA and SED times (minutes_MVPA / minutes_SED)</p></li>
-</ul><p>PAL is computed as follows: total energy expenditure (TEE) is divided by BMR. TEE is obtained by summing
-the kilocalories measured during wear time epochs and the kilocalories likely expended during nonwear time
-epochs (that is, kilocalories associated to BMR, as it is assumed that the device was mainly not worn during
-sleeping periods if any, periods during which energy expenditure is near of BMR), and by multiplying this sum
+<li><p><strong>ratio_mvpa_sed:</strong> ratio between MVPA and SED times (<code>minutes_MVPA</code> / <code>minutes_SED</code>)</p></li>
+</ul><p>PAL is computed by dividing total energy expenditure (TEE) by BMR. TEE is obtained by summing
+the kilocalories measured during wear time epochs and the kilocalories related to BMR expended during nonwear time
+epochs (it is assumed that the periods where the device was not worn corresponded to
+sleeping periods, during which energy expenditure is near of BMR), and by multiplying this sum
 by 10/9 to take into account the thermic effect of food. Of course, such calculations may
 conduct to underestimate TEE and PAL if the device was removed during prolonged periods of
 physical activity. Moreover, even if the device was correctly worn, the estimate of PAL is very
-approximate since both BMR and kilocalories related to wear time are estimated using methods
+approximate since both BMR and kilocalories are estimated using methods
 that may not be accurate at the individual level.</p>
     </div>
 
@@ -168,28 +178,31 @@ that may not be accurate at the individual level.</p>
 <span class="r-in">    data <span class="op">=</span> <span class="va">mydata_with_intensity_marks</span>, </span>
 <span class="r-in">    age <span class="op">=</span> <span class="fl">32</span>, </span>
 <span class="r-in">    weight <span class="op">=</span> <span class="fl">67</span>, </span>
-<span class="r-in">    sex <span class="op">=</span> <span class="st">"male"</span></span>
+<span class="r-in">    sex <span class="op">=</span> <span class="st">"male"</span>,</span>
+<span class="r-in">    valid_wear_time_start <span class="op">=</span> <span class="st">"07:00:00"</span>,</span>
+<span class="r-in">    valid_wear_time_end <span class="op">=</span> <span class="st">"20:00:00"</span></span>
 <span class="r-in">    <span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You have computed BMR using the following inputs: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     age = 32</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     weight = 67</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     sex = male</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 29</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   date   wear_time total_counts_ax… total_counts_vm total_steps total_kcal_wear…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2021-…       720           <span style="text-decoration: underline;">359</span>125         <span style="text-decoration: underline;">706</span>252.       <span style="text-decoration: underline;">14</span>056            <span style="text-decoration: underline;">1</span>303.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2021-…       811           <span style="text-decoration: underline;">495</span>257         <span style="text-decoration: underline;">923</span>432.       <span style="text-decoration: underline;">14</span>595            <span style="text-decoration: underline;">1</span>578.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2021-…       718          1<span style="text-decoration: underline;">222</span>315        1<span style="text-decoration: underline;">930</span>805.       <span style="text-decoration: underline;">21</span>635            <span style="text-decoration: underline;">2</span>485.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2021-…       770           <span style="text-decoration: underline;">320</span>847         <span style="text-decoration: underline;">781</span>469.       <span style="text-decoration: underline;">13</span>744            <span style="text-decoration: underline;">1</span>386.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2021-…       820           <span style="text-decoration: underline;">167</span>999         <span style="text-decoration: underline;">415</span>457.       <span style="text-decoration: underline;">10</span>315            <span style="text-decoration: underline;">1</span>103.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2021-…         0                0              0            0               0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 23 more variables: minutes_SED &lt;dbl&gt;, minutes_LPA &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   minutes_MPA &lt;dbl&gt;, minutes_VPA &lt;dbl&gt;, minutes_MVPA &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percent_SED &lt;dbl&gt;, percent_LPA &lt;dbl&gt;, percent_MPA &lt;dbl&gt;, percent_VPA &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percent_MVPA &lt;dbl&gt;, max_steps_60min &lt;dbl&gt;, max_steps_30min &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   max_steps_20min &lt;dbl&gt;, max_steps_5min &lt;dbl&gt;, max_steps_1min &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   peak_steps_60min &lt;dbl&gt;, peak_steps_30min &lt;dbl&gt;, peak_steps_20min &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   peak_steps_5min &lt;dbl&gt;, peak_steps_1min &lt;dbl&gt;, mets_hours_mvpa &lt;dbl&gt;, …</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = "date"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 30</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   date   wear_time wear_time_revis… total_counts_ax… total_counts_vm total_steps</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2021-…       720              650           <span style="text-decoration: underline;">359</span>125         <span style="text-decoration: underline;">706</span>252.       <span style="text-decoration: underline;">14</span>056</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2021-…       811              756           <span style="text-decoration: underline;">495</span>257         <span style="text-decoration: underline;">923</span>432.       <span style="text-decoration: underline;">14</span>595</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2021-…       718              642          1<span style="text-decoration: underline;">222</span>315        1<span style="text-decoration: underline;">930</span>805.       <span style="text-decoration: underline;">21</span>635</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2021-…       770              666           <span style="text-decoration: underline;">320</span>847         <span style="text-decoration: underline;">781</span>469.       <span style="text-decoration: underline;">13</span>744</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2021-…       820              737           <span style="text-decoration: underline;">167</span>999         <span style="text-decoration: underline;">415</span>457.       <span style="text-decoration: underline;">10</span>315</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2021-…         0                0                0              0            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 24 more variables: total_kcal &lt;dbl&gt;, minutes_SED &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   minutes_LPA &lt;dbl&gt;, minutes_MPA &lt;dbl&gt;, minutes_VPA &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   minutes_MVPA &lt;dbl&gt;, percent_SED &lt;dbl&gt;, percent_LPA &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percent_MPA &lt;dbl&gt;, percent_VPA &lt;dbl&gt;, percent_MVPA &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   max_steps_60min &lt;dbl&gt;, max_steps_30min &lt;dbl&gt;, max_steps_20min &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   max_steps_5min &lt;dbl&gt;, max_steps_1min &lt;dbl&gt;, peak_steps_60min &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   peak_steps_30min &lt;dbl&gt;, peak_steps_20min &lt;dbl&gt;, peak_steps_5min &lt;dbl&gt;, …</span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
