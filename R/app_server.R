@@ -109,8 +109,8 @@ app_server <- function(input, output, session) {
             input$frame_size >= 0 & 
             is.numeric(input$allowanceFrame_size) & 
             input$allowanceFrame_size >= 0 &
-            input$streamFrame_size >= 0 &
-            input$end_day_analysis > input$start_day_analysis
+            is.numeric(input$streamFrame_size) & 
+            input$streamFrame_size >= 0
           )
       
      # Setting the axis to be used for detecting nonwear time
@@ -125,7 +125,8 @@ app_server <- function(input, output, session) {
          mark_wear_time(dataset = data(),
                         cts = cts, 
                         frame = input$frame_size, 
-                        allowanceFrame = input$allowanceFrame_size)  
+                        allowanceFrame = input$allowanceFrame_size,
+                        streamFrame = input$streamFrame_size)  
        return(df)
       
       
@@ -203,11 +204,11 @@ app_server <- function(input, output, session) {
                   )
       )
       
-    # SED cut-points
+    # MVPA cut-points
       observeEvent(input$Run,
                   shinyFeedback::feedbackWarning(
                     "mvpa_cutpoints", 
-                    (input$sed_cutpoint == "..."),
+                    (input$mvpa_cutpoint == "..."),
                     "Please choose values for the MPVA cut-points."
                   )
       )
