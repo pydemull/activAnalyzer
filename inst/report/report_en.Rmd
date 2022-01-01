@@ -363,7 +363,7 @@ if (params$rendered_by_shiny)
    grid_sed <-
      sed_lines %>%
      modelr::data_grid(
-     x = seq(4, 14, 1),
+     x = seq(1, 15, 2),
      ) %>%
      modelr::spread_predictions(model_sed, model_sed_up, model_sed_low) %>%
      dplyr::rename(mid = model_sed, up = model_sed_up, low = model_sed_low)
@@ -379,7 +379,7 @@ if (params$rendered_by_shiny)
    ggplot() +
    geom_ribbon(data = grid_sed, aes(x = x, y = up, ymin = low, ymax = up), fill = "grey95") +
    geom_ribbon(data = grid_sed %>% dplyr::filter(x < 6), 
-               aes(x = x, y = up, ymin = rep(0, 2), ymax = up), fill = "grey95") +
+               aes(x = x, y = up, ymin = rep(0, 3), ymax = up), fill = "grey95") +
    geom_line(data = grid_sed, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
    geom_line(data = grid_sed, aes (x = x, y = up), size = 1, colour = "#3366FF", linetype = "dashed") +
    geom_line(data = grid_sed, aes (x = x, y = low), size = 1, colour = "#3366FF", linetype = "dashed") +
@@ -388,8 +388,8 @@ if (params$rendered_by_shiny)
    geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
    geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 7, shape = 3) +
    scale_y_continuous(trans = scales::log2_trans()) +
-   scale_x_continuous(limits = c(4, 14), breaks = seq(4, 14, 2)) +
-   coord_cartesian(xlim = c(4, 14), ylim = c(0.35, 5), expand = FALSE) +
+   scale_x_continuous(limits = c(1, 15), breaks = seq(1, 15, 2)) +
+   coord_cartesian(xlim = c(1, 15), ylim = c(0.35, 5), expand = FALSE) +
    labs(title = "Daily SED hours", x = "", y = NULL) +
    theme_bw() +
    theme(axis.ticks = element_blank(),
