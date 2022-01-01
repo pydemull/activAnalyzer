@@ -38,12 +38,14 @@ There are three different ways to use the activAnalyzer app:
     very dependent on the number of users as well as the time spent by
     each user on the app. That’s why the second option available to use
     the app (see below) may be more appropriate (for Windows users
-    only).
+    only). Google Chrome and Microsoft Edge browsers allow the app to
+    work as expected but Mozilla Firefox does not seem to allow reseting
+    all the inputs when required.
 -   [Locally on PC via a standalone desktop
     app](https://sourceforge.net/projects/activanalyzer) that is
     downloadable from the SourceForge website (stable version, for
     Windows machines only). The standalone app has been developped using
-    the framework *DesktopDeployR* kindly made available by [W. Lee
+    the framework *DesktopDeployR* made available by [W. Lee
     Pang](https://github.com/wleepang). Explanations related to this
     framework can be retrieved from [a dedicated GitHub
     repository](https://github.com/wleepang/DesktopDeployR). Once the
@@ -53,10 +55,10 @@ There are three different ways to use the activAnalyzer app:
     embedded in the app and then will launch the app in your default web
     browser with 127.0.0.1 as the value for the host parameter. This
     means that only your current machine will can access the app. You
-    will can open only one session at a time. Google Chrome and
-    Microsoft Edge browsers allow the app to work as expected but
-    Mozilla Firefox does not seem to allow reseting all the inputs when
-    required.
+    will can open only one session at a time. As written above, Google
+    Chrome and Microsoft Edge browsers allow the app to work as expected
+    but Mozilla Firefox does not seem to allow reseting all the inputs
+    when required.
 -   Locally on your machine via [R software](https://cran.rstudio.com/),
     the [RStudio environment](https://www.rstudio.com/), and the
     [activAnalyzer package](https://github.com/pydemull/activAnalyzer)
