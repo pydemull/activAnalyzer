@@ -101,20 +101,20 @@ axis_mvpa <- ifelse(params$axis_mvpa == "vertical axis", "axe vertical",
 flextable::set_flextable_defaults(fonts_ignore = TRUE)
 flextable::flextable(
  tibble::tribble(
-    ~Indicateur,                            ~"Résultat (moyenne journalière obtenue à partir des jours valides)",
-    "Temps de port",                          paste0(round(df[["wear_time_revised"]], 0), " min"),
-    "Nombre de jours valides",               paste0(df[["valid_days"]], " jour(s)"),
-    "Kilocalories",                 paste0(format(round(df[["total_kcal"]], 2), nsmall = 2), " kcal"),
-    "Niveau d'activité physique (NAP)",      paste0(format(round(df[["pal"]], 2), nsmall = 2)),
-    "Nombre total de pas",              paste0(round(df[["total_steps"]], 0), " pas"),
-    "Temps SED",                           paste0(format(round(df[["minutes_SED"]], 1), nsmall = 1), " min"),
-    "Temps LPA",                           paste0(format(round(df[["minutes_LPA"]], 1), nsmall = 1), " min"),
-    "Temps MVPA",                          paste0(format(round(df[["minutes_MVPA"]], 1), nsmall = 1), " min"),
-    "Proportion de temps de port SED",           paste0(format(round(df[["percent_SED"]], 1), nsmall = 1), " %"),
-    "Proportion de temps de port LPA",           paste0(format(round(df[["percent_LPA"]], 1), nsmall = 1), " %"),
-    "Proportion de temps de port MVPA",          paste0(format(round(df[["percent_MVPA"]], 1), nsmall = 1), " %"),
-    "Dose MVPA",                          paste0(format(round(df[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr"),
-    "MVPA/SB ratio",                         paste0(format(round(df[["ratio_mvpa_sed"]], 2), nsmall = 2)))
+    ~Indicateur,                               ~"Résultat (moyenne journalière obtenue à partir des jours valides)",
+    "Temps de port (sur la journée entière)",  paste0(round(df[["wear_time"]], 0), " min"),
+    "Nombre de jours valides",                 paste0(df[["valid_days"]], " jour(s)"),
+    "Kilocalories",                            paste0(format(round(df[["total_kcal"]], 2), nsmall = 2), " kcal"),
+    "Niveau d'activité physique (NAP)",        paste0(format(round(df[["pal"]], 2), nsmall = 2)),
+    "Nombre total de pas",                     paste0(round(df[["total_steps"]], 0), " pas"),
+    "Temps SED",                               paste0(format(round(df[["minutes_SED"]], 1), nsmall = 1), " min"),
+    "Temps LPA",                               paste0(format(round(df[["minutes_LPA"]], 1), nsmall = 1), " min"),
+    "Temps MVPA",                              paste0(format(round(df[["minutes_MVPA"]], 1), nsmall = 1), " min"),
+    "Proportion de temps de port SED",         paste0(format(round(df[["percent_SED"]], 1), nsmall = 1), " %"),
+    "Proportion de temps de port LPA",         paste0(format(round(df[["percent_LPA"]], 1), nsmall = 1), " %"),
+    "Proportion de temps de port MVPA",        paste0(format(round(df[["percent_MVPA"]], 1), nsmall = 1), " %"),
+    "Dose MVPA",                               paste0(format(round(df[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr"),
+    "MVPA/SB ratio",                           paste0(format(round(df[["ratio_mvpa_sed"]], 2), nsmall = 2)))
   ) %>%
   flextable::theme_zebra() %>%
   flextable::align(align = "left", part = "all" ) %>%
@@ -517,22 +517,32 @@ if (params$rendered_by_shiny)
     df2 %>%
     dplyr::mutate(validity = ifelse(wear_time_revised >= params$minimum_wear_time_for_analysis * 60, "Valid day", "Non valid day"),
                   validity = forcats::fct_relevel(validity, "Valid day", "Non valid day")) %>%
-    tidyr::pivot_longer(cols = c(wear_time_revised, total_steps, pal, minutes_SED, minutes_LPA, minutes_MVPA, percent_SED, percent_LPA, percent_MVPA),
+    tidyr::pivot_longer(cols = c(wear_time, total_steps, pal, minutes_SED, minutes_LPA, minutes_MVPA, percent_SED, percent_LPA, percent_MVPA),
                         names_to = "variable", values_to = "value") %>%
-    dplyr::mutate(variable = forcats::fct_relevel(variable, "wear_time_revised", "total_steps", "pal", 
-                                   "minutes_MVPA", "minutes_LPA","minutes_SED", 
-                                  "percent_MVPA", "percent_LPA", "percent_SED"),
-                  variable = forcats::fct_recode(variable, 
-                                 "Temps de port (min)" = "wear_time_revised", 
-                                 "Nombre de pas" = "total_steps", 
-                                 "NAP" = "pal",
-                                  "Temps MVPA (min)" = "minutes_MVPA",
-                                 "Temps LPA (min)" = "minutes_LPA", 
-                                  "Temps SED (min)" = "minutes_SED", 
-                                  "Proportion de temps MVPA (%)" = "percent_MVPA",
-                                 "Proportion de temps LPA (%)" = "percent_LPA",
-                                 "Proportion de temps SED (%)" = "percent_SED"
-                                 )) %>%
+    dplyr::mutate(variable = forcats::fct_relevel(
+      variable, 
+      "wear_time", 
+      "total_steps", 
+      "pal",
+      "minutes_MVPA", 
+      "minutes_LPA",
+      "minutes_SED", 
+      "percent_MVPA", 
+      "percent_LPA", 
+      "percent_SED"),
+      variable = forcats::fct_recode(
+        variable, 
+        "Temps de port (min)" = "wear_time", 
+        "Nombre de pas" = "total_steps",
+        "NAP" = "pal",
+        "Temps MVPA (min)" = "minutes_MVPA",
+        "Temps LPA (min)" = "minutes_LPA", 
+        "Temps SED (min)" = "minutes_SED", 
+        "Proportion de temps MVPA (%)" = "percent_MVPA",
+        "Proportion de temps LPA (%)" = "percent_LPA",
+        "Proportion de temps SED (%)" = "percent_SED"
+        )
+      ) %>%
     ggplot(aes(x = date, y = value, fill = validity)) +
     ggtitle("Résultats par jour") +
     geom_bar(stat = "identity") +

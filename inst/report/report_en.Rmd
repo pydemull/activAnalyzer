@@ -83,7 +83,7 @@ flextable::set_flextable_defaults(fonts_ignore = TRUE)
 flextable::flextable(
  tibble::tribble(
     ~Metric,                            ~"Result (daily average over valid days)",
-    "Wear time",                          paste0(round(df[["wear_time_revised"]], 0), " min"),
+    "Wear time (over the whole day)",     paste0(round(df[["wear_time"]], 0), " min"),
     "Number of valid days",               paste0(df[["valid_days"]], " day(s)"),
     "Total kilocalories",                 paste0(format(round(df[["total_kcal"]], 2), nsmall = 2), " kcal"),
     "Physical activity level (PAL)",      paste0(format(round(df[["pal"]], 2), nsmall = 2)),
@@ -498,21 +498,32 @@ if (params$rendered_by_shiny)
     df2 %>%
     dplyr::mutate(validity = ifelse(wear_time_revised >= params$minimum_wear_time_for_analysis * 60, "Valid day", "Non valid day"),
                   validity =  forcats::fct_relevel(validity, "Valid day", "Non valid day")) %>%
-    tidyr::pivot_longer(cols = c(wear_time_revised, total_steps, pal, minutes_SED, minutes_LPA, minutes_MVPA, percent_SED, percent_LPA, percent_MVPA),
+    tidyr::pivot_longer(cols = c(wear_time, total_steps, pal, minutes_SED, minutes_LPA, minutes_MVPA, percent_SED, percent_LPA, percent_MVPA),
                  names_to = "variable", values_to = "value") %>%
-    dplyr::mutate(variable =  forcats::fct_relevel(variable, "wear_time_revised", "total_steps", "pal", 
-                                   "minutes_MVPA", "minutes_LPA","minutes_SED", 
-                                  "percent_MVPA", "percent_LPA", "percent_SED"),
-                  variable = forcats::fct_recode(variable, 
-                                 "Wear time (min)" = "wear_time_revised", 
-                                 "Total steps" = "total_steps", "PAL" = "pal",
-                                  "MVPA time (min)" = "minutes_MVPA",
-                                 "LPA time (min)" = "minutes_LPA", 
-                                  "SED time (min)" = "minutes_SED", 
-                                  "MVPA wear time proportion (%)" = "percent_MVPA",
-                                 "LPA wear time proportion (%)" = "percent_LPA",
-                                 "SED wear time proportion (%)" = "percent_SED"
-                                 )) %>%
+    dplyr::mutate(variable =  forcats::fct_relevel(
+      variable, 
+      "wear_time", 
+      "total_steps", 
+      "pal", 
+      "minutes_MVPA", 
+      "minutes_LPA",
+      "minutes_SED", 
+      "percent_MVPA", 
+      "percent_LPA", 
+      "percent_SED"
+      ),
+      variable = forcats::fct_recode(
+        variable, 
+        "Wear time (min)" = "wear_time", 
+        "Total steps" = "total_steps", "PAL" = "pal",
+         "MVPA time (min)" = "minutes_MVPA",
+        "LPA time (min)" = "minutes_LPA", 
+         "SED time (min)" = "minutes_SED", 
+         "MVPA wear time proportion (%)" = "percent_MVPA",
+        "LPA wear time proportion (%)" = "percent_LPA",
+        "SED wear time proportion (%)" = "percent_SED"
+        )
+      ) %>%
     ggplot(aes(x = date, y = value, fill = validity)) +
     ggtitle("Results by day") +
     geom_bar(stat = "identity") +
