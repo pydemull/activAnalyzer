@@ -363,7 +363,7 @@ if (params$rendered_by_shiny)
    grid_sed <-
      sed_lines %>%
      modelr::data_grid(
-     x = seq(1, 15, 2),
+     x = seq(1, 15, 0.1),
      ) %>%
      modelr::spread_predictions(model_sed, model_sed_up, model_sed_low) %>%
      dplyr::rename(mid = model_sed, up = model_sed_up, low = model_sed_low)
@@ -378,8 +378,8 @@ if (params$rendered_by_shiny)
  g_sed <-
    ggplot() +
    geom_ribbon(data = grid_sed, aes(x = x, y = up, ymin = low, ymax = up), fill = "grey95") +
-   geom_ribbon(data = grid_sed %>% dplyr::filter(x < 6), 
-               aes(x = x, y = up, ymin = rep(0, 3), ymax = up), fill = "grey95") +
+   geom_ribbon(data = grid_sed %>% dplyr::filter(x < 5), 
+               aes(x = x, y = up, ymin = rep(0, 40), ymax = up), fill = "grey95") +
    geom_line(data = grid_sed, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
    geom_line(data = grid_sed, aes (x = x, y = up), size = 1, colour = "#3366FF", linetype = "dashed") +
    geom_line(data = grid_sed, aes (x = x, y = low), size = 1, colour = "#3366FF", linetype = "dashed") +
@@ -425,18 +425,18 @@ if (params$rendered_by_shiny)
 # hazard ratio (Ekelund et al., 2020)
 
    model_ratio <- loess(y ~ x, data = ratio_lines %>% dplyr::filter(line == "mid"), 
-                       control = loess.control(surface = "direct"))
+                       span = 0.35, control = loess.control(surface = "direct"))
      
    model_ratio_up <- loess(y ~ x, data = ratio_lines %>% dplyr::filter(line == "up"), 
-                       control = loess.control(surface = "direct")) 
+                        span = 0.35, control = loess.control(surface = "direct")) 
    
    model_ratio_low <- loess(y ~ x, data = ratio_lines %>% dplyr::filter(line == "low"), 
-                       control = loess.control(surface = "direct"))
+                        span = 0.35, control = loess.control(surface = "direct"))
    
    grid_ratio <-
      ratio_lines %>%
      modelr::data_grid(
-     x = seq(0, 0.4, 0.05),
+     x = seq(0, 0.4, 0.001),
      ) %>%
      modelr::spread_predictions(model_ratio, model_ratio_up, model_ratio_low) %>%
      dplyr::rename(mid = model_ratio, up = model_ratio_up, low = model_ratio_low)
