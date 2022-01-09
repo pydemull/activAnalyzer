@@ -1,0 +1,37 @@
+#' Compute PROactive monitor-based physical activity score
+#'
+#' @param x A numeric value that should be the median of the daily steps counted during the measurement period (see Gimeno-Santos et al., 2015; doi: 10.1183/09031936.00183014).
+#' @param metric A character value to indicate the metric for which the PROactive score should be obtained.
+#'
+#' @return A numeric value.
+#' @export
+#'
+#' @examples
+#' compute_pro_actigraph_score(x= 3500, metric = "steps")
+#' 
+#' compute_pro_actigraph_score(x= 340, metric = "vmu")
+#' 
+compute_pro_actigraph_score <- function(x, metric = c("steps", "vmu")) {
+  
+  metric = match.arg(metric)
+  
+  if (metric == "steps") {
+    dplyr::case_when(
+      x >= 6000 ~ 4,
+      x >= 4000 ~ 3,
+      x >= 2000 ~ 2,
+      x >= 1000 ~ 1,
+      x < 1000 ~ 0
+    )
+  } else if (metric == "vmu") {
+    dplyr::case_when(
+      x >= 500 ~ 4,
+      x >= 300 ~ 3,
+      x >= 200 ~ 2,
+      x >= 100 ~ 1,
+      x < 100 ~ 0 
+    )
+  } else {
+    NULL
+  }
+}

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.12.8)  1 JAN 2022 21:16
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2022.1.9)  9 JAN 2022 14:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -159,7 +159,7 @@ Package: expl3 2021-11-22 L3 programming layer (loader)
 
 (c:/Users/pydemullenheim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend
 /l3backend-xetex.def
-File: l3backend-xetex.def 2021-10-18 L3 backend support: XeTeX
+File: l3backend-xetex.def 2021-12-14 L3 backend support: XeTeX
 (|extractbb --version)
 \c__kernel_sys_dvipdfmx_version_int=\count266
 \l__color_backend_stack_int=\count267
@@ -1198,7 +1198,13 @@ Underfull \hbox (badness 3108) in paragraph at lines 175--176
 adults] \TU/lmr/m/n/10 ([]Santos-Lozano et al.,
  []
 
-[9] [10] [11] [12]
+[9] [10]
+Overfull \hbox (2.67763pt too wide) in paragraph at lines 342--344
+[]\TU/lmtt/m/n/10 vm_per_min: \TU/lmr/m/n/10 moyenne des counts par minute pour
+ le vecteur magnitude (\TU/lmtt/m/n/10 total_counts_vm
+ []
+
+[11] [12]
 Chapitre 4.
 [13
 
@@ -1249,7 +1255,7 @@ Package rerunfilecheck Info: File `user_guide_fr.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  18480 strings out of 478236
- 347547 string characters out of 5852661
+ 347547 string characters out of 5852662
  820494 words of memory out of 5000000
  38752 multiletter control sequences out of 15000+600000
  409897 words of font info for 82 fonts, out of 8000000 for 9000

@@ -3,6 +3,7 @@
 export(average_results)
 export(compute_bmr)
 export(compute_mets)
+export(compute_pro_actigraph_score)
 export(mark_intensity)
 export(mark_wear_time)
 export(plot_data)

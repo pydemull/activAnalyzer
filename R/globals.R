@@ -17,7 +17,6 @@ utils::globalVariables(c(
   "total_counts_axis1",
   "total_counts_vm",
   "total_steps",
-  "total_kcal_wear_time",
   "minutes_SED",
   "minutes_LPA",
   "minutes_MPA",

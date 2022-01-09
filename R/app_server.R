@@ -503,6 +503,8 @@ app_server <- function(input, output, session) {
                    wear_time_revised = reactable::colDef(minWidth = 160),
                    total_counts_axis1 = reactable::colDef(minWidth = 150),
                    total_counts_vm = reactable::colDef(minWidth = 150),
+                   axis1_per_min = reactable::colDef(minWidth = 210),
+                   vm_per_min = reactable::colDef(minWidth = 210),
                    minutes_SED = reactable::colDef(minWidth = 120),
                    minutes_LPA = reactable::colDef(minWidth = 120),
                    minutes_MPA = reactable::colDef(minWidth = 120),
@@ -519,25 +521,30 @@ app_server <- function(input, output, session) {
   })
   
   
-  # Getting results averaged on valid days
-  results_summary <- eventReactive(input$Run, {
-    
-    
-      # Computing results averaged on valid days
+  # Getting results summarized over valid days (means)
+  results_summary_means <- eventReactive(input$Run, {
       results_list()$results_by_day %>%
-        average_results(minimum_wear_time = input$minimum_wear_time_for_analysis)
+        average_results(minimum_wear_time = input$minimum_wear_time_for_analysis, fun = "mean")
     })
   
-  # Showing results averaged on valid days in a table
-  output$results_summary <- reactable::renderReactable({
+  # Getting results summarized over valid days (medians)
+  results_summary_medians <- eventReactive(input$Run, {
+    results_list()$results_by_day %>%
+      average_results(minimum_wear_time = input$minimum_wear_time_for_analysis, fun = "median")
+  })
+  
+  # Showing results summarized over valid days in a table (means)
+  output$results_summary_means <- reactable::renderReactable({
     
     reactable::reactable(
-      results_summary(), 
+      results_summary_means(), 
       list(valid_days = reactable::colDef(minWidth = 90),
            wear_time = reactable::colDef(minWidth = 90),
            wear_time_revised = reactable::colDef(minWidth = 160),
            total_counts_axis1 = reactable::colDef(minWidth = 150),
            total_counts_vm = reactable::colDef(minWidth = 150),
+           axis1_per_min = reactable::colDef(minWidth = 210),
+           vm_per_min = reactable::colDef(minWidth = 210),
            minutes_SED = reactable::colDef(minWidth = 120),
            minutes_LPA = reactable::colDef(minWidth = 120),
            minutes_MPA = reactable::colDef(minWidth = 120),
@@ -556,6 +563,57 @@ app_server <- function(input, output, session) {
     
   })
   
+  # Showing results summarized over valid days in a table (medians)
+  output$results_summary_medians <- reactable::renderReactable({
+    
+    reactable::reactable(
+      results_summary_medians(), 
+      list(valid_days = reactable::colDef(minWidth = 90),
+           wear_time = reactable::colDef(minWidth = 90),
+           wear_time_revised = reactable::colDef(minWidth = 160),
+           total_counts_axis1 = reactable::colDef(minWidth = 150),
+           total_counts_vm = reactable::colDef(minWidth = 150),
+           axis1_per_min = reactable::colDef(minWidth = 210),
+           vm_per_min = reactable::colDef(minWidth = 210),
+           minutes_SED = reactable::colDef(minWidth = 120),
+           minutes_LPA = reactable::colDef(minWidth = 120),
+           minutes_MPA = reactable::colDef(minWidth = 120),
+           minutes_VPA = reactable::colDef(minWidth = 120),
+           minutes_MVPA = reactable::colDef(minWidth = 120),
+           percent_SED = reactable::colDef(minWidth = 120),
+           percent_LPA = reactable::colDef(minWidth = 120),
+           percent_MPA = reactable::colDef(minWidth = 120),
+           percent_VPA = reactable::colDef(minWidth = 120),
+           percent_MVPA = reactable::colDef(minWidth = 120),
+           ratio_mvpa_sed = reactable::colDef(minWidth = 125),
+           total_kcal = reactable::colDef(minWidth = 120),
+           mets_hours_mvpa = reactable::colDef(minWidth = 160)),
+      striped = TRUE
+    )
+    
+  })
+  
+  
+  # Showing PROactive scores
+  
+  output$PROactive_scores <- reactable::renderReactable({
+    
+    steps_score <- compute_pro_actigraph_score(results_summary_medians()[["total_steps"]], metric = "steps")
+    vmu_score <- compute_pro_actigraph_score(results_summary_medians()[["vm_per_min"]], metric = "vm")
+    
+    reactable::reactable(
+      tibble::tribble(
+        ~Metric,              ~Score,
+        "Daily steps score",   paste(steps_score),
+        "Daily VMU score",     paste(vmu_score)
+      ),
+      striped = TRUE,
+      list(Score = reactable::colDef(align = "center"))
+    )
+  
+    
+  })
+  
   ##############################
   # Hide / show Download buttons ----
   ##############################
@@ -563,7 +621,8 @@ app_server <- function(input, output, session) {
   observe({
       shinyjs::hide("ExpDataset")
       shinyjs::hide("ExpResultsByDays")
-      shinyjs::hide("ExpDailySummary")
+      shinyjs::hide("ExpDailySummaryMeans")
+      shinyjs::hide("ExpDailySummaryMedians")
       shinyjs::hide("report_en")
       shinyjs::hide("report_fr")
       
@@ -571,7 +630,8 @@ app_server <- function(input, output, session) {
       
       shinyjs::show("ExpDataset")
       shinyjs::show("ExpResultsByDays")
-      shinyjs::show("ExpDailySummary")
+      shinyjs::show("ExpDailySummaryMeans")
+      shinyjs::show("ExpDailySummaryMedians")
       shinyjs::show("report_en")
       shinyjs::show("report_fr")
     }
@@ -604,13 +664,23 @@ app_server <- function(input, output, session) {
     }
   )
   
-  # Exporting daily summary  
-  output$ExpDailySummary <- downloadHandler(
+  # Exporting daily summary (means)
+  output$ExpDailySummaryMeans <- downloadHandler(
     filename = function() {
-      paste0(input$upload, "_DailySummary.csv")
+      paste0(input$upload, "_DailySummaryMeans.csv")
     },
     content = function(file) {
-      utils::write.csv2(results_summary(), file, row.names = FALSE)
+      utils::write.csv2(results_summary_means(), file, row.names = FALSE)
+    }
+  )
+  
+  # Exporting daily summary (medians)
+  output$ExpDailySummaryMedians <- downloadHandler(
+    filename = function() {
+      paste0(input$upload, "_DailySummaryMedians.csv")
+    },
+    content = function(file) {
+      utils::write.csv2(results_summary_medians(), file, row.names = FALSE)
     }
   )
   
@@ -667,7 +737,8 @@ app_server <- function(input, output, session) {
           vpa_cutpoint = results_list()$vpa_cutpoint_chosen,
           minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
           results_by_day = results_list()$results_by_day,
-          results_summary =  results_summary(),
+          results_summary_means =  results_summary_means(),
+          results_summary_medians =  results_summary_medians(),
           
           # Loading some data used in figures
           mvpa_lines = mvpa_lines,
@@ -740,7 +811,8 @@ app_server <- function(input, output, session) {
           vpa_cutpoint = results_list()$vpa_cutpoint_chosen,
           minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
           results_by_day = results_list()$results_by_day,
-          results_summary =  results_summary(),
+          results_summary_means =  results_summary_means(),
+          results_summary_medians =  results_summary_medians(),
           
           # Loading some data used in figures
           mvpa_lines = mvpa_lines,
@@ -835,9 +907,14 @@ app_server <- function(input, output, session) {
       shiny::exportTestValues(results_by_day = results_list()$results_by_day)
     })
     
-  # Exporting dataframe for the daily averages
+  # Exporting dataframe for the daily means
     observeEvent(input$Run, {
-      shiny::exportTestValues(results_summary = results_summary())
+      shiny::exportTestValues(results_summary_means = results_summary_means())
+    })
+    
+    # Exporting dataframe for the daily medians
+    observeEvent(input$Run, {
+      shiny::exportTestValues(results_summary_medians = results_summary_medians())
     })
     
     # Exporting plot showing nonwear/wear time

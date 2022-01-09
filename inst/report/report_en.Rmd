@@ -35,7 +35,8 @@ params:
   vpa_cutpoint: NA
   minimum_wear_time_for_analysis: NA
   results_by_day: NA
-  results_summary: NA
+  results_summary_means: NA
+  results_summary_medians: NA
   mvpa_lines: NA
   sed_lines: NA
   ratio_lines: NA
@@ -51,16 +52,16 @@ library(ggplot2)
 library(patchwork)
 library(RColorBrewer)
 
-df <- params$results_summary
+df1_means <- params$results_summary_means
+df1_medians <- params$results_summary_medians
 df2 <- params$results_by_day
 mvpa_lines <- params$mvpa_lines
 sed_lines <- params$sed_lines
 ratio_lines <- params$ratio_lines
 ```
 
-# Information
 
-***
+# Information
 
 **Patient:** `r params$patient_surname` `r params$patient_name`  | **Date:**  `r Sys.Date()` | **Assessor:**  `r params$assessor_surname` `r params$assessor_name`
 
@@ -70,38 +71,60 @@ ratio_lines <- params$ratio_lines
 
 **Nonwear time:** Based on `r params$axis_weartime`, interval of `r params$frame_size` min with zero count for nonwear time detection, interval of `r params$allowanceFrame_size` min with nonzero counts allowed during a nonwear period, interval of `r params$streamFrame_size` min with zero count around detected activity to confirm nonwear time | **MET equation:** `r params$equation_mets` | **Axis used for PA intensity categorization:** `r params$axis_mvpa` | **Cut-points:** <`r params$sed_cutpoint` counts/min for SED, $\geqslant$ `r params$mpa_cutpoint` counts/min for MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min for VPA.
 
-**Period analyzed to assess wear time each day:** from `r params$start_day_analysis` to `r params$end_day_analysis`.
+**Period considered to validate a day based on wear time:** from `r params$start_day_analysis` to `r params$end_day_analysis`.
 
 **Minimum number of hours with wear time to validate a day**: `r params$minimum_wear_time_for_analysis` hours.
 
-***
+**Abbreviations:** SED = sedentary, LPA =  light physical activity, VPA = vigorous physical activity, MVPA = moderate-to-vigorous physical activity, PAL = physical activity level.
+
 
 # Results
 
 ```{r }
 flextable::set_flextable_defaults(fonts_ignore = TRUE)
 flextable::flextable(
- tibble::tribble(
-    ~Metric,                            ~"Result (daily average over valid days)",
-    "Wear time (over the whole day)",     paste0(round(df[["wear_time"]], 0), " min"),
-    "Number of valid days",               paste0(df[["valid_days"]], " day(s)"),
-    "Total kilocalories",                 paste0(format(round(df[["total_kcal"]], 2), nsmall = 2), " kcal"),
-    "Physical activity level (PAL)",      paste0(format(round(df[["pal"]], 2), nsmall = 2)),
-    "Total number of steps",              paste0(round(df[["total_steps"]], 0), " steps"),
-    "SED time",                           paste0(format(round(df[["minutes_SED"]], 1), nsmall = 1), " min"),
-    "LPA time",                           paste0(format(round(df[["minutes_LPA"]], 1), nsmall = 1), " min"),
-    "MVPA time",                          paste0(format(round(df[["minutes_MVPA"]], 1), nsmall = 1), " min"),
-    "SED wear time proportion",           paste0(format(round(df[["percent_SED"]], 1), nsmall = 1), " %"),
-    "LPA wear time proportion",           paste0(format(round(df[["percent_LPA"]], 1), nsmall = 1), " %"),
-    "MVPA wear time proportion",          paste0(format(round(df[["percent_MVPA"]], 1), nsmall = 1), " %"),
-    "Dose MVPA",                          paste0(format(round(df[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr"),
-    "MVPA/SB ratio",                         paste0(format(round(df[["ratio_mvpa_sed"]], 2), nsmall = 2)))
-  ) %>%
+ tibble::tibble(
+   Metric = c("Number of valid days",
+              "Wear time (over the whole day)",
+              "Total kilocalories",
+              "Physical activity level (PAL)",
+              "Total number of steps",
+               "SED time",
+              "LPA time",
+              "MVPA time",
+              "SED wear time proportion",     
+              "LPA wear time proportion",     
+              "MVPA wear time proportion",    
+              "Dose MVPA",                        
+              "MVPA/SED ratio"
+              ),
+   
+   "Daily mean | median over valid days" = c(
+     paste0(df1_means[["valid_days"]], " day(s)"),
+     paste0(format(round(df1_means[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["wear_time"]]), ") | ",  
+            format(round(df1_medians[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["wear_time"]]), ")"),  
+     paste0(format(round(df1_means[["total_kcal"]], 2), nsmall = 2),   " kcal | ", format(round(df1_medians[["total_kcal"]], 2), nsmall = 2), " kcal"),
+     paste0(format(round(df1_means[["pal"]], 2), nsmall = 2),  " | ", format(round(df1_medians[["pal"]], 2), nsmall = 2)),  
+     paste0(round(df1_means[["total_steps"]], 0), " steps | ", round(df1_medians[["total_steps"]], 0), " steps"), 
+     paste0(format(round(df1_means[["minutes_SED"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_SED"]]), ") | ",  
+            format(round(df1_medians[["minutes_SED"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_SED"]]), ")"),  
+     paste0(format(round(df1_means[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_LPA"]]), ") | ",  
+            format(round(df1_medians[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_LPA"]]), ")"), 
+     paste0(format(round(df1_means[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_MVPA"]]), ") | ",
+             format(round(df1_medians[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_MVPA"]]), ")"),  
+     paste0(format(round(df1_means[["percent_SED"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_SED"]], 1), nsmall = 1), " %"),
+     paste0(format(round(df1_means[["percent_LPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_LPA"]], 1), nsmall = 1), " %"),        
+     paste0(format(round(df1_means[["percent_MVPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_MVPA"]], 1), nsmall = 1), " %"),                 
+     paste0(format(round(df1_means[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr | ", format(round(df1_medians[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr"),         
+     paste0(format(round(df1_means[["ratio_mvpa_sed"]], 2), nsmall = 2), " | ", format(round(df1_medians[["ratio_mvpa_sed"]], 2), nsmall = 2)))
+ )
+) %>%
   flextable::theme_zebra() %>%
   flextable::align(align = "left", part = "all" ) %>%
   flextable::width(width = 3.25)
 ```
 
+**PROactive scores (for COPD patients):** Step count score = `r compute_pro_actigraph_score(df1_medians[["total_steps"]], metric = "steps")` (daily median of `r df1_medians[["total_steps"]]` steps);  VMU score = `r compute_pro_actigraph_score(df1_medians[["vm_per_min"]], metric = "vm")` (daily median of `r df1_medians[["vm_per_min"]]` counts/min).
 
 ```{r, fig.height=18, fig.width = 17, warning=FALSE, message=FALSE}
 
@@ -134,10 +157,10 @@ flextable::flextable(
     geom_rect(aes(ymin = start,  ymax = end, fill = label), xmin = -Inf, xmax = Inf, alpha = 0.5) +
     geom_vline(aes(xintercept = 0.51), size = 0.4, color = "grey30") +
     geom_vline(aes(xintercept = 0.25), size = 0.5, color = "grey30", linetype ="dotted") +
-    geom_segment(x = 0, xend = 0.51, y = df[["pal"]], yend = df[["pal"]], size = 0.5, color = "grey30", linetype ="dotted") +
-    geom_point(aes(x = 0.25, y = df[["pal"]], color = "Patient's result"), size = 7, shape = 1) +
-    geom_point(aes(x = 0.25, y = df[["pal"]], color = "Patient's result"), size = 4, shape = 16) +
-    geom_point(aes(x = 0.25, y = df[["pal"]], color = "Patient's result"), size = 7, shape = 3) +
+    geom_segment(x = 0, xend = 0.51, y = df1_means[["pal"]], yend = df1_means[["pal"]], size = 0.5, color = "grey30", linetype ="dotted") +
+    geom_point(aes(x = 0.25, y = df1_means[["pal"]], color = "Patient's result (daily mean)"), size = 7, shape = 1) +
+    geom_point(aes(x = 0.25, y = df1_means[["pal"]], color = "Patient's result (daily mean)"), size = 4, shape = 16) +
+    geom_point(aes(x = 0.25, y = df1_means[["pal"]], color = "Patient's result (daily mean)"), size = 7, shape = 3) +
     scale_y_continuous(labels = as.character(format(round(c(1.1, 1.4, 1.7, 2.0, 2.4, 2.8), 2), nsmall = 1)), 
                        breaks = c(1.10, 1.40, 1.70, 2.00, 2.40, 2.80)) +
     scale_fill_manual(values = c("lightgoldenrodyellow", "lightgoldenrod1", "yellow", "gold1", "gold2")) +
@@ -165,7 +188,8 @@ flextable::flextable(
     annotate("text", label = "Sedentary \nor lightly active", x = 0.75, y = 1.55, size = 5) +
     annotate("text", label = "Moderately \nactive", x = 0.75, y = 1.85, size = 5) +
     annotate("text", label = "Vigorously \nactive", x = 0.75, y = 2.2, size = 5) +
-    annotate("text", label = "Difficult to maintain \nover a long period of time", x = 0.75, y = 2.6, size = 5)
+    annotate("text", label = "Difficult to maintain \nover a long period of time", x = 0.75, y = 2.6, size = 5) +
+    annotate("text", label = "Ref: FAO 2004 | http://www.fao.org/3/y5686e/y5686e07.htm#bm07.3", hjust = 1, x = 0.1, y = 2.79)
   
 
 
@@ -221,11 +245,11 @@ flextable::flextable(
     geom_rect(aes(ymin = start, ymax = end, fill = label), xmin = -Inf, xmax = Inf, alpha = 0.5) +
     geom_vline(aes(xintercept = 0.40), size = 0.4, color = "grey30") +
     geom_vline(aes(xintercept = 0.20,), size = 0.5, color = "grey30", linetype ="dotted") +
-    geom_segment(x = 0, xend = 0.4, y = df[["total_steps"]], yend = df[["total_steps"]], 
+    geom_segment(x = 0, xend = 0.4, y = df1_means[["total_steps"]], yend = df1_means[["total_steps"]], 
                  size = 0.5, color = "grey30", linetype ="dotted")   +
-    geom_point(aes(x = 0.2, y = df[["total_steps"]]), color = "red", size = 7, shape = 1) +
-    geom_point(aes(x = 0.2, y = df[["total_steps"]]), color = "red", size = 4, shape = 16) +
-    geom_point(aes(x = 0.2, y = df[["total_steps"]]), color = "red", size = 7, shape = 3) +
+    geom_point(aes(x = 0.2, y = df1_means[["total_steps"]]), color = "red", size = 7, shape = 1) +
+    geom_point(aes(x = 0.2, y = df1_means[["total_steps"]]), color = "red", size = 4, shape = 16) +
+    geom_point(aes(x = 0.2, y = df1_means[["total_steps"]]), color = "red", size = 7, shape = 3) +
     geom_segment(data = table_steps2, aes(x = x, xend = xend, y = y, yend = yend, color = label), size = 1, 
                  arrow = arrow(length = unit(0.09, "inches"))) +
     geom_errorbarh(data = table_steps2, aes(y = y, xmin = xmin, xmax = xmax, color = label), size = 1, height = 0) + 
@@ -254,7 +278,8 @@ flextable::flextable(
              hjust = 0, fontface = "bold", size = 6,   color = "grey30") +
     annotate("text", label = "Adults", x = 0.9, y = 8300, hjust = 0, fontface = "bold", size = 5) +
     annotate("text", label = "Healthy older adults", x = 0.7, y = 10300, hjust = 0, fontface = "bold", size = 5) +
-    annotate("text", label = "People with disability and/or chronic disease", x = 0.5, y = 8800, hjust = 0, fontface = "bold", size = 5)
+    annotate("text", label = "People with disability and/or chronic disease", x = 0.5, y = 8800, hjust = 0, fontface = "bold", size = 5) +
+    annotate("text", label = "Ref: Tudor-Locke et al. Int J Behav Nutr Phys Act 2011, 8 (1), 79", x = 0.9, y = 17900, hjust = 1)
   
 
 if (params$rendered_by_shiny)
@@ -286,7 +311,7 @@ if (params$rendered_by_shiny)
 
 # Getting data for plotting patient's result  
   
-   score_mvpa <- data.frame(x = df[["minutes_MVPA"]]) %>% 
+   score_mvpa <- data.frame(x = df1_means[["minutes_MVPA"]]) %>% 
      modelr::add_predictions(model_mvpa)
 
 
@@ -332,15 +357,16 @@ if (params$rendered_by_shiny)
             colour = "grey50", fontface = "bold.italic") +
 
    annotate("text", label = "Threshold for the maximum \nof health benefits", 
-            x = 35, y = 0.32, hjust = 0, vjust = 1,
+            x = 37, y = 0.37, hjust = 0, vjust = 1,
             colour = "black", fontface = "italic") +
    annotate(geom = "curve", 
-         x = 35, 
-         y = 0.33, 
-         xend = 25, 
-         yend = 0.32, 
-         curvature = .5, arrow = arrow(length = unit(2, "mm")),
-         colour = "black")
+         x = 37, 
+         y = 0.34, 
+         xend = 24, 
+         yend = 0.36, 
+         curvature = -.4, arrow = arrow(length = unit(2, "mm")),
+         colour = "black") +
+   annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1, y = 0.265)
  
  
 #################################################################################### 
@@ -370,7 +396,7 @@ if (params$rendered_by_shiny)
 
 # Getting data for plotting patient's result  
   
-   score_sed <- data.frame(x = df[["minutes_SED"]] / 60) %>% 
+   score_sed <- data.frame(x = df1_means[["minutes_SED"]] / 60) %>% 
      modelr::add_predictions(model_sed)
 
 # Plot
@@ -404,17 +430,18 @@ if (params$rendered_by_shiny)
          plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
    annotate("text", 
             label = "Threshold beyond \nwhich risk \nis significant",
-            x = 6.5, 
+            x = 11, 
             y = 0.5, 
             hjust = 0,
             colour = "black", fontface = "italic") +
    annotate(geom = "curve", 
-         x = 8.6, 
-         y = 0.48, 
-         xend = 9.4, 
-         yend = 0.46, 
+         x = 10.8, 
+         y = 0.68, 
+         xend = 9.5, 
+         yend = 0.66, 
          curvature = .5, arrow = arrow(length = unit(2, "mm")),
-         colour = "black")
+         colour = "black") +
+   annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1.2, y = 0.387)
  
 
 #################################################################################### 
@@ -443,7 +470,7 @@ if (params$rendered_by_shiny)
 
 # Getting data for plotting patient's result  
   
-   score_ratio <- data.frame(x = df[["ratio_mvpa_sed"]]) %>% 
+   score_ratio <- data.frame(x = df1_means[["ratio_mvpa_sed"]]) %>% 
      modelr::add_predictions(model_ratio)
 
 # Plot
@@ -461,7 +488,7 @@ if (params$rendered_by_shiny)
    geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 7, shape = 3) +
    scale_x_continuous(limits = c(0, 0.4), breaks = seq(0, 0.4, 0.1)) +
    coord_cartesian(xlim = c(0, 0.4), ylim = c(0.1, 1.3), expand = FALSE) +
-   labs(title = "Daily MVPA / SED ratio", x = "", y = NULL) +
+   labs(title = "Daily MVPA/SED ratio", x = "", y = NULL) +
    theme_bw() +
    theme(axis.ticks = element_blank(),
          axis.text.x = element_text(size = 13),
@@ -482,7 +509,8 @@ if (params$rendered_by_shiny)
          xend = 0.043, 
          yend = 1.15, 
          curvature = .5, arrow = arrow(length = unit(2, "mm")),
-         colour = "black")
+         colour = "black") +
+  annotate("text", label = "Ref: Chastin et al. J Phys Act Health 2021, 18 (6), 631–637", hjust = 0, x = 0.005, y = 0.15)
  
 
 ########################################################
@@ -564,21 +592,21 @@ g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_week +
 ```{r, echo = F}
 # Converting MVPA minutes to MET-hours
   guidelines_status <- 
-    ifelse(df[["mets_hours_mvpa"]] < 150/7/60*3, "below the 2020 WHO physical activity guidelines",
-                              ifelse(df[["mets_hours_mvpa"]] >  150/7/60*3*2, "above the 2020 WHO physical activity guidelines", "within   the 2020 WHO physical activity guidelines"))
+    ifelse(df1_means[["mets_hours_mvpa"]] < 150/7/60*3, "below the 2020 WHO physical activity guidelines",
+                              ifelse(df1_means[["mets_hours_mvpa"]] >  150/7/60*3*2, "above the 2020 WHO physical activity guidelines", "within   the 2020 WHO physical activity guidelines"))
   
 
 # Defining PAL status
-  pal_status <- ifelse(df[["pal"]] <1.40, "Insufficient",
-                      ifelse(df[["pal"]] <= 1.69, "Sedentary or light activity lifestyle",
-                                         ifelse(df[["pal"]] <= 1.99, "Active or moderately active lifestyle",
-                                              ifelse(df[["pal"]] <= 2.40, "Vigorous or vigorously active lifestyle", "Likely not sustainable"))))
+  pal_status <- ifelse(df1_means[["pal"]] <1.40, "Insufficient",
+                      ifelse(df1_means[["pal"]] <= 1.69, "Sedentary or light activity lifestyle",
+                                         ifelse(df1_means[["pal"]] <= 1.99, "Active or moderately active lifestyle",
+                                              ifelse(df1_means[["pal"]] <= 2.40, "Vigorous or vigorously active lifestyle", "Likely not sustainable"))))
 
 # ref: http://www.fao.org/3/y5686e/y5686e07.htm#bm07.3
 
 # Ratio MVPA / SED comment
   comment_ratio <- 
-    ifelse(df[["ratio_mvpa_sed"]] >= 0.04, "the patient likely has already most of the health benefits from their physical behavior",
+    ifelse(df1_means[["ratio_mvpa_sed"]] >= 0.04, "the patient likely has already most of the health benefits from their physical behavior",
            "the patient could get further health benefits by replacing more sedentary time by physical activity time.")
 
 
@@ -586,6 +614,6 @@ if (params$rendered_by_shiny)
   shiny::setProgress(1)  # set progress to 100%
 ```
 
-According to the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the PAL of the patient could be characterized as "**`r pal_status`**". After converting moderate and vigorous physical activity minutes to MET-hours, the estimate of MVPA volume for the patient was `r paste0(format(round(df[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hours, and thus falls **`r guidelines_status`**. Based on the MVPA / SED ratio, **`r paste(comment_ratio)`**.
+According to the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the PAL of the patient could be characterized as "**`r pal_status`**". After converting moderate and vigorous physical activity minutes to MET-hours, the estimate of the daily mean of MVPA volume for the patient is `r paste0(format(round(df1_means[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hr, which could correspond to falling **`r guidelines_status`** (i.e., 7.5-15.0 MET-hr a week, or 1.07-2.14 MET-hr a day). Based on the MVPA/SED ratio, **`r paste(comment_ratio)`**.
 
 

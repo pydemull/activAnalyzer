@@ -361,74 +361,87 @@ app_ui <- function(request) {
                   # Results
                   #********
               
-                           #*************************
-                           # Box showing monitor data
-                           #*************************
+                       #*************************
+                       # Box showing monitor data
+                       #*************************
+                       
+                       fluidRow(
+                         column(12,
+                         h2("Results"),
+                         h3("")
+                         )
+                         ),
+                       fluidRow(
+                         shinydashboardPlus::box(id = "myBox2", 
+                                                 shinycssloaders::withSpinner(plotOutput("graph_int", height = "auto")), 
+                                                 width = 12, 
+                                                 height = "auto")
+                       ),
+                       fluidRow(
+                         align = "center",
+                         selectInput("Metric2", "Data to visualize", metrics),
+                       ),
+                      
+                       #************************
+                       # Table of results by day
+                       #************************
+                      
+                       fluidRow(
+                         column(12,
+                                h3("Results by day"),
+                                shinycssloaders::withSpinner(reactable::reactableOutput("results_by_day"))
+                         ),
+                       ),
+                      
+                       #****************************************************
+                       # Table of results summarized over valid days (means)
+                       #****************************************************
+                       
+                       fluidRow(
+                         column(12,
+                                h3("Results summarized over valid days (means)"),
+                                shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_means"))
+                         ),
+                       ),
+                       
+                       #******************************************************
+                       # Table of results summarized over valid days (medians)
+                       #******************************************************
+                       
+                       fluidRow(
+                         column(12,
+                                h3("Results summarized over valid days (medians)"),
+                                shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_medians"))
+                         ),
+                       ),
+                       
+                       #******************************************************
+                       # Proactive scores
+                       #******************************************************
+                       
+                       fluidRow(
+                         column(3,
+                                h3("PROactive scores"),
+                                shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores"))
+                         ),
+                       ),
                            
-                           fluidRow(
-                             column(12,
-                             h2("Results"),
-                             h3("")
-                             )
-                             ),
-                           fluidRow(
-                             shinydashboardPlus::box(id = "myBox2", 
-                                                     shinycssloaders::withSpinner(plotOutput("graph_int", height = "auto")), 
-                                                     width = 12, 
-                                                     height = "auto")
-                           ),
-                           fluidRow(
-                             align = "center",
-                             selectInput("Metric2", "Data to visualize", metrics),
-                           ),
-                 
-                  fluidRow(
-                    column(12,
-                           
-                           #************************
-                           # Table of results by day
-                           #************************
-                           
-                           h3("Results by day"),
-                           shinycssloaders::withSpinner(reactable::reactableOutput("results_by_day"))
-                    ),
-                  ),
-                  
-                  #******************************************
-                  # Table of results averaged over valid days
-                  #******************************************
-                  
-                  fluidRow(
-                    column(12,
-                           h3("Results averaged over valid days"),
-                           shinycssloaders::withSpinner(reactable::reactableOutput("results_summary"))
-                    ),
-                  ),
-                  fluidRow(
-                    column(12,
-                           tags$hr(style="border-color: #337ab7;")
-                    ),
-                  ),
-                  
                   #******************
                   # Export
                   #******************
                   
                   fluidRow(
                     column(12,
+                           h2(""),
                            h2("Export"),
                            downloadButton("ExpDataset", "Export marked dataset (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
                            downloadButton("ExpResultsByDays", "Export results by day (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
-                           downloadButton("ExpDailySummary", "Export daily summary (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
+                           downloadButton("ExpDailySummaryMeans", "Export daily summary (means) (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
+                           downloadButton("ExpDailySummaryMedians", "Export daily summary (medians) (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
                            downloadButton("report_en", "Generate report (EN) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33"),
                            downloadButton("report_fr", "Generate report (FR) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33")
                     ),
                     
-                  ),
-                  fluidRow(
-                    column(12,
-                           tags$hr(style="border-color: #337ab7;")
-                    ),
                   ),
                   
                   #******************
@@ -480,11 +493,16 @@ app_ui <- function(request) {
                   fluidRow(
                     column(12,
                            h2(""),
-                           h2("Contact"),
+                           h2("Authors"),
                            h4("Pierre-Yves de M\u00fcllenheim", style = "font-weight: bold; font-size: 20px"),
                            h4("Associate professor"),
-                           h4("Institute of Physical Education and Sport Sciences (IFEPSA), UCO, Les Ponts-de-C\u00e9, France"),
-                           h4("Email: pydemull@uco.fr")
+                           h4("Institut de formation en éducation physique et en sport d'Angers/Les Ponts-de-Cé (IFEPSA), UCO, Les Ponts-de-C\u00e9, France"),
+                           h4("Email: pydemull@uco.fr"),
+                           h2(""),
+                           h4("Arnaud Chambellan", style = "font-weight: bold; font-size: 20px"),
+                           h4("Pulmonologist, hospital practitioner"),
+                           h4("Groupement des hôpitaux de l'Institut catholique de Lille, Saint Philibert - Saint Vincent de Paul, France"),
+                           h4("Email: chambellan.arnaud@ghicl.net")
                            
                     ),
                   ),
@@ -494,7 +512,7 @@ app_ui <- function(request) {
       ), # End dashboardBody 
       
       footer = shinydashboardPlus::dashboardFooter(
-        left = "\u00a9 2021 Developed by Pierre-Yves de M\u00fcllenheim - GNU General Public License Version 3.0",
+        left = "\u00a9 2021-2022 Conceived by Pierre-Yves de M\u00fcllenheim and Arnaud Chambellan. Developed by Pierre-Yves de M\u00fcllenheim - GNU General Public License Version 3.0",
       )
     )
   )

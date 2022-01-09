@@ -4,19 +4,22 @@
 \alias{average_results}
 \title{Average results over valid days}
 \usage{
-average_results(data, minimum_wear_time = 10)
+average_results(data, minimum_wear_time = 10, fun = c("mean", "median"))
 }
 \arguments{
 \item{data}{A dataframe obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}} and then \code{\link{recap_by_day}} functions.}
 
 \item{minimum_wear_time}{A numeric value (in hours) to set the minimum wear time duration for validating a day.}
+
+\item{fun}{A character value indicating whether means or medians should be computed.}
 }
 \value{
 A dataframe.
 }
 \description{
 This function computes, using valid days only, the mean of each of the metrics
-obtained using the \code{\link{recap_by_day}} function.
+obtained using the \code{\link{recap_by_day}} function. The median can also
+be obtained with an appropriate configuration of the function.
 }
 \examples{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")

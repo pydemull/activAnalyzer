@@ -170,7 +170,7 @@ results_by_day %>%
 ```{r, eval = FALSE}
 averaged_results <-
   results_by_day %>%
-  average_results(minimum_wear_time = 10)
+  average_results(minimum_wear_time = 10, fun = "mean")
 
 averaged_results
 ```

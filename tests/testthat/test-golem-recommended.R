@@ -195,7 +195,7 @@ test_that("The server functions correctly work", {
              sex = "male"
              ) %>%
            recap_by_day( 
-             ge = 64, 
+             age = 64, 
              weight = 67,
              sex = "male"
              )
@@ -293,14 +293,14 @@ test_that("The server functions correctly work", {
       expect_equal(actual_set_proactive, test_set_proactive)
          
        
-    # Testing dataframe with averaged results
+    # Testing dataframe with daily means
        app$setInputs(minimum_wear_time_for_analysis = 12)
        app$setInputs(Run = "click")
        
+       # With means
+       actual_results_summary_means <- app$getAllValues()$export[["results_summary_means"]]
        
-       actual_results_summary <- app$getAllValues()$export[["results_summary"]]
-       
-       test_results_summary <- 
+       test_results_summary_means <- 
          test_df %>%
          mark_intensity(
            col_axis = "axis1", 
@@ -318,9 +318,36 @@ test_that("The server functions correctly work", {
            sex = "female", 
            valid_wear_time_start = "07:00:00", 
            valid_wear_time_end = "20:00:00") %>%
-         average_results(minimum_wear_time = 12)
+         average_results(minimum_wear_time = 12, fun = "mean")
        
-       expect_equal(actual_results_summary, test_results_summary)
+       expect_equal(actual_results_summary_means, test_results_summary_means)
+       
+       
+       # With medians
+       actual_results_summary_medians <- app$getAllValues()$export[["results_summary_medians"]]
+       
+       test_results_summary_medians <- 
+         test_df %>%
+         mark_intensity(
+           col_axis = "axis1", 
+           sed_cutpoint = 100, 
+           mpa_cutpoint = 1952, 
+           vpa_cutpoint = 5725,
+           equation = "Freedson et al. (1998) [Adults]", 
+           age = 47, 
+           weight = 78, 
+           sex = "female"
+         ) %>%
+         recap_by_day(
+           age = 47, 
+           weight = 78, 
+           sex = "female", 
+           valid_wear_time_start = "07:00:00", 
+           valid_wear_time_end = "20:00:00") %>%
+         average_results(minimum_wear_time = 12, fun = "median")
+       
+       expect_equal(actual_results_summary_medians, test_results_summary_medians)
+       
        
        
     # Testing BMR computation

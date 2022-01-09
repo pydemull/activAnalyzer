@@ -45,6 +45,8 @@ The following metrics are computed:
 \item \strong{wear_time_revised:} total wear time computed using the daily period defined in the function
 \item \strong{total_counts_axis1}: total counts for the vertical axis
 \item \strong{total_counts_vm:} total counts for the vector magnitude
+\item \strong{axis1_per_min}: mean of the counts per minute for the vertical axis (total_counts_axis1 / 1440)
+\item \strong{vm_per_min}: mean of the counts per minute for the vector magnitude (total_counts_vm / 1440)
 \item \strong{total_steps:} total step count
 \item \strong{total_kcal:} total kilocalories
 \item \strong{minutes_SED:} total minutes spent in SED behavior

@@ -75,18 +75,21 @@ mark_intensity <- function(data,
   sex <- match.arg(sex)
   
   # Computing basal metabolic rate
-    bmr_kcal_min <- compute_bmr(age = age, sex = sex, weight = weight) / (24*60)
+  
+    bmr_kcal_min <- suppressMessages(
+      compute_bmr(age = age, sex = sex, weight = weight) / (24*60)
+  )
   
   # Adding metrics
     df <-
-      data %>%
-      dplyr::mutate(
-        SED = ifelse(.data[[col_axis]] < sed_cutpoint, 1, 0),
-        LPA = ifelse(.data[[col_axis]] >= sed_cutpoint & .data[[col_axis]] < mpa_cutpoint, 1, 0),
-        MPA = ifelse(.data[[col_axis]] >= mpa_cutpoint & .data[[col_axis]] < vpa_cutpoint, 1, 0), 
-        VPA = ifelse(.data[[col_axis]] >= vpa_cutpoint, 1, 0),
-        METS = compute_mets(data = .data, equation = equation, weight = weight, sex = sex),
-        kcal = dplyr::case_when(
+        data %>%
+        dplyr::mutate(
+         SED = ifelse(.data[[col_axis]] < sed_cutpoint, 1, 0),
+         LPA = ifelse(.data[[col_axis]] >= sed_cutpoint & .data[[col_axis]] < mpa_cutpoint, 1, 0),
+         MPA = ifelse(.data[[col_axis]] >= mpa_cutpoint & .data[[col_axis]] < vpa_cutpoint, 1, 0), 
+         VPA = ifelse(.data[[col_axis]] >= vpa_cutpoint, 1, 0),
+         METS = suppressMessages(compute_mets(data = .data, equation = equation, weight = weight, sex = sex)),
+         kcal = dplyr::case_when(
           SED == 1 ~ bmr_kcal_min,
           equation == "Sasaki et al. (2011) [Adults]" | equation == "Freedson et al. (1998) [Adults]" ~ METS * weight * 1/60,
           equation == "Santos-Lozano et al. (2013) [Adults]" | equation == "Santos-Lozano et al. (2013) [Older adults]" ~ METS * bmr_kcal_min
@@ -103,7 +106,7 @@ mark_intensity <- function(data,
         accum_steps_5min  = zoo::rollmean(data[[col_steps]], align = "center", k = 5L,  fill = NA),
         accum_steps_1min  = zoo::rollmean(data[[col_steps]], align = "center", k = 1L,  fill = NA)
       )
-    
+
   # Marking the bouts based on intensity categories
     df$intensity_category <- ifelse(df$SED == 1, "SED", ifelse(df$LPA == 1, "LPA", ifelse(df$MPA == 1 | df$VPA == 1, "MVPA", "none")))
     df$bout <- vector("double", length = nrow(df))
@@ -119,7 +122,7 @@ mark_intensity <- function(data,
     
     
   # Providing information about the parameters used for computing results
-    message(paste0("You have computed intensity metrics using the following inputs: 
+    message(paste0("You have computed intensity metrics with the mark_intensity() function using the following inputs: 
     axis = ", col_axis, "
     sed_cutpoint = ", sed_cutpoint, "
     mpa_cutpoint = ", mpa_cutpoint, "

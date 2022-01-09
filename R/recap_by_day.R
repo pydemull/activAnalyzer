@@ -8,6 +8,8 @@
 #'   \item \strong{wear_time_revised:} total wear time computed using the daily period defined in the function
 #'   \item \strong{total_counts_axis1}: total counts for the vertical axis
 #'   \item \strong{total_counts_vm:} total counts for the vector magnitude
+#'   \item \strong{axis1_per_min}: mean of the counts per minute for the vertical axis (total_counts_axis1 / 1440)
+#'   \item \strong{vm_per_min}: mean of the counts per minute for the vector magnitude (total_counts_vm / 1440)
 #'   \item \strong{total_steps:} total step count
 #'   \item \strong{total_kcal:} total kilocalories
 #'   \item \strong{minutes_SED:} total minutes spent in SED behavior
@@ -100,7 +102,9 @@ recap_by_day <- function(data,
                          sex = c("male", "female", "undefined")) {
   
   # Computing basal metabolic rate
-    bmr_kcal_min <- compute_bmr(age = age, sex = sex, weight = weight) / (24*60)
+    bmr_kcal_min <- suppressMessages(
+      compute_bmr(age = age, sex = sex, weight = weight) / (24*60)
+    )
   
   # Getting results by day
       
@@ -118,6 +122,8 @@ recap_by_day <- function(data,
         wear_time = sum(wearing_count, na.rm = TRUE),
         total_counts_axis1 = sum(axis1, na.rm = TRUE),
         total_counts_vm = sum(vm, na.rm = TRUE),
+        axis1_per_min = round(total_counts_axis1 / 1440, 2),
+        vm_per_min = round(total_counts_vm / 1440, 2),
         total_steps = sum(steps, na.rm = TRUE),
         total_kcal = round(sum(kcal, na.rm = TRUE) + bmr_kcal_min * (24*60 - wear_time), 2),
         minutes_SED = sum(SED, na.rm = TRUE),
@@ -163,6 +169,12 @@ recap_by_day <- function(data,
     df <-
       dplyr::left_join(df, df_set_wear_time_period, key = "date") %>%
       dplyr::select(date, wear_time, wear_time_revised, everything())
+    
+    # Providing information about the parameters used for computing results
+    message(paste0("You have computed results with the recap_by_day() function using the following inputs: 
+    age = ", age, "
+    weight = ", weight, "
+    sex = ", sex))
     
   return(df)
 }

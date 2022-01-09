@@ -106,6 +106,8 @@ Once these new variables added to the initial dataset, the app summarizes the re
 * `wear_time_revised`: total wear time computed using the daily period defined in the app.
 * `total_counts_axis1`: total counts for the vertical axis.
 * `total_counts_vm`: total counts for the vector magnitude.
+* `axis1_per_min`: mean of the counts per minute for the vertical axis (`total_counts_axis1` / 1440).
+* `vm_per_min`: mean of the counts per minute for the vector magnitude (`total_counts_vm` / 1440).
 * `total_steps`: total step count.
 * `total_kcal`: total kilocalories.
 * `minutes_SED`: total minutes spent in SED behavior.
@@ -138,7 +140,7 @@ Finally, the app computes daily averages of the computed metrics using the days 
 
 
 # Results and export
-In the app, the results by day and those averaged using valid days are shown in tables. The user can click on specific buttons to export to .csv files either the marked dataset, the results by day, or the results averaged using valid days. Two last buttons allow the user to generate a report (in either english or french) where all the inputs of the app are recorded, as well as the results. Some comments are provided at the end of the document to help positioning the patient in relation to normative values or guidelines. In the report, some daily results are displayed using figures. This is the case for the PAL, the total number of steps, the times spent in MVPA and SED, and the ratio MVPA / SED. Most of the metrics are also shown for each day of the measurement. 
+In the app, the results by day and those averaged using valid days are shown in tables. The user can click on specific buttons to export to .csv files either the marked dataset, the results by day, or the results averaged using valid days. Two last buttons allow the user to generate a report (in either english or french) where all the inputs of the app are recorded, as well as the results. Some comments are provided at the end of the document to help positioning the patient in relation to normative values or guidelines. In the report, some daily results are displayed using figures. This is the case for the PAL, the total number of steps, the times spent in MVPA and SED, and the ratio MVPA/SED. Most of the metrics are also shown for each day of the measurement. The app also provides the PROactive scores related to the amount of physical activity based on the medians of the daily step count and the vector magnitude per minute [@gimeno-santosPROactiveInstrumentsMeasure2015]. These scores can be useful when the measurement of physical activity was performed in a patient with chronic obstructive pulmonary disease with the goal of using the PROactive tool as described elsewhere [@gimeno-santosPROactiveInstrumentsMeasure2015].
 
 Importantly, the comparison of the daily results with normative values or guidelines should be used with caution. Regarding the total number of steps, the values proposed in the figure were obtained using classical pedometers. Be aware of the fact that if the ActiGraph accelerometer that was used was a GT3X generation device, the final result is likely to be underestimated or overestimated in comparison with classical pedometers if the normal filter or the low frequency extension filter was enabled, respectively, when generating the .agd file with Actilife® software.
 

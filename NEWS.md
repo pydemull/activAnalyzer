@@ -1,3 +1,14 @@
+# activAnalyzer (development version)
+* Modified wear time information shown in the report (whole day wear time is now shown; in the previous version, this was wear time over the predefined perdiod that was shown).
+* Updated the graphics of the reports (those showing hazard ratios) which now provide more appropriate shapes for HR curves in comparison with the figures from the original articles (thanks to a better configuration of the R function to fit the data).
+* Added daily medians into the final results.
+* Added definitions of abbreviations into the report.
+* Added references on the figures of the report.
+* Added daily axis1 counts per minute to the list of the computed metrics.
+* Added daily vm counts per minute to the list of the computed metrics.
+* Added PROactive monitor-based physical activity score to the report.
+* Updated the users guides.
+
 # activAnalyzer 0.2.0
 
 * Added the tinytex package to the list of the packages imported during the installation of the activAnalyzer package.
