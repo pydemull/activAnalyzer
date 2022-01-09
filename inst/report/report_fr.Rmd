@@ -622,7 +622,7 @@ g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_week +
   
 
 # Defining PAL status
-  pal_status <- ifelse(df1_means[["pal"]] <1.40, "en-dessous la catégorie 'Style de vie sédentaire ou légèrement actif'",
+  pal_status <- ifelse(df1_means[["pal"]] <1.40, "en-dessous de la catégorie 'Style de vie sédentaire ou légèrement actif'",
                       ifelse(df1_means[["pal"]] <= 1.69, "'Style de vie sédentaire ou légèrement actif'",
                                          ifelse(df1_means[["pal"]] <= 1.99, "'Style de vie actif ou modérément actif'",
                                               ifelse(df1_means[["pal"]] <= 2.40, "'Style de vie vigoureusement actif'", "'Susceptible de ne pas pouvoir être maintenu'"))))

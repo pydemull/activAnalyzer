@@ -609,7 +609,7 @@ g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_week +
 # Ratio MVPA / SED comment
   comment_ratio <- 
     ifelse(df1_means[["ratio_mvpa_sed"]] >= 0.04, "the patient likely already has most of the health benefits from their physical behavior",
-           "the patient could get further health benefits by replacing more sedentary time by physical activity time.")
+           "the patient could get further health benefits by replacing more sedentary time by physical activity time")
 
 
 if (params$rendered_by_shiny)
