@@ -1,4 +1,4 @@
-# activAnalyzer (development version)
+# activAnalyzer 0.2.1
 * Modified wear time information shown in the report (whole day wear time is now shown; in the previous version, this was wear time over the predefined perdiod that was shown).
 * Updated the graphics of the reports (those showing hazard ratios) which now provide more appropriate shapes for HR curves in comparison with the figures from the original articles (thanks to a better configuration of the R function to fit the data).
 * Added daily medians into the final results.
