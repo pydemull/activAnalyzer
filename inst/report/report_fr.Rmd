@@ -85,7 +85,7 @@ axis_mvpa <- ifelse(params$axis_mvpa == "vertical axis", "axe vertical",
 
 **Patient :** `r params$patient_surname` `r params$patient_name`  | **Date :**  `r Sys.Date()` | **Évaluateur :** `r params$assessor_surname` `r params$assessor_name`
 
-**Age :** `r params$age` ans | **Sexe :**  `r sex` | **Masse :** `r params$weight` kg | **Période de mesure :** `r params$start_date` to `r params$end_date` | **Estimation du métabolisme de base :** `r format(round(params$bmr_kcal_d, 2), nsmall = 2)` kcal/jour (Estimation à partir des équations de Henry [2005, doi: 10.1079/PHN2005801].)
+**Age :** `r params$age` ans | **Sexe :**  `r sex` | **Masse :** `r params$weight` kg | **Période de mesure :** `r params$start_date` à `r params$end_date` | **Estimation du métabolisme de base :** `r format(round(params$bmr_kcal_d, 2), nsmall = 2)` kcal/jour (Estimation à partir des équations de Henry [2005, doi: 10.1079/PHN2005801].)
 
 **Appareil :** `r params$device` | **Position :** `r position` | **Côté :** `r side` | **Fréquence d'échantillonnage :** `r params$sampling_rate` Hz | **Filtre :** `r params$filter`.
 
@@ -95,7 +95,7 @@ axis_mvpa <- ifelse(params$axis_mvpa == "vertical axis", "axe vertical",
 
 **Nombre minimum d'heures avec temps de port pour valider un jour** : `r params$minimum_wear_time_for_analysis` heures.
 
-**Abréviations:** SED = sédentaire, LPA =  activité physique légère, VPA = activité physique vigoureuse, MVPA = activité physique modérée à vigoureuse, NAP = niveau d'activité physique.
+**Abréviations:** SED = sédentaire, LPA =  activité physique légère, MPA = activité physique modérée, VPA = activité physique vigoureuse, MVPA = activité physique modérée à vigoureuse, NAP = niveau d'activité physique.
 
 
 # Résultats
@@ -121,7 +121,7 @@ flextable::flextable(
    ),
    
    "Moyenne | médiane journalière obtenue à partir des jours valides" = c(
-     paste0(df1_means[["valid_days"]], " day(s)"),
+     paste0(df1_means[["valid_days"]], " jour(s)"),
      paste0(format(round(df1_means[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["wear_time"]]), ") | ",  
             format(round(df1_medians[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["wear_time"]]), ")"),  
      paste0(format(round(df1_means[["total_kcal"]], 2), nsmall = 2),   " kcal | ", format(round(df1_medians[["total_kcal"]], 2), nsmall = 2), " kcal"),
@@ -376,11 +376,11 @@ if (params$rendered_by_shiny)
             x = 60, y = 0.80, hjust = 0.5, 
             colour = "grey50", fontface = "bold.italic") +
 
-   annotate("text", label = "Seuil pour le maximum \nde bénéfices de santé", 
-            x = 37, y = 0.37, hjust = 0, vjust = 1,
+   annotate("text", label = "Seuil au-dessus duquel le max. \nde bénéfices de santé \npourrait être obtenu", 
+            x = 38, y = 0.42, hjust = 0, vjust = 1, size = 5,
             colour = "black", fontface = "italic") +
    annotate(geom = "curve", 
-         x = 37, 
+         x = 36.5, 
          y = 0.34, 
          xend = 24, 
          yend = 0.36, 
@@ -450,16 +450,18 @@ if (params$rendered_by_shiny)
          plot.margin = margin(0, 1, 0, 1, "cm"),
          plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
    annotate("text", 
-            label = "Seuil au-delà \nduquel le risque \nest significatif",
-            x = 11, 
-            y = 0.5, 
+            label = "Seuil au-dessus \nduquel le risque \nest significatif",
+            x = 10.3, 
+            y = 0.55, 
             hjust = 0,
-            colour = "black", fontface = "italic") +
+            size = 5, 
+            colour = "black", 
+            fontface = "italic") +
    annotate(geom = "curve", 
-         x = 10.8, 
-         y = 0.68, 
+         x = 10.2, 
+         y = 0.76, 
          xend = 9.5, 
-         yend = 0.66, 
+         yend = 0.71, 
          curvature = .5, arrow = arrow(length = unit(2, "mm")),
          colour = "black") +
   annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1.2, y = 0.387)
@@ -521,9 +523,11 @@ if (params$rendered_by_shiny)
          plot.background = element_rect(fill = "beige", color = "beige"),
          plot.margin = margin(0, 1, 0, 1, "cm"),
          plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-  annotate("text", label = "Seuil pour obtenir \nla plupart des bénéfices \nde santé", 
+  annotate("text", label = "Seuil au-dessus duquel la plupart des \nbénéfices de santé pourraient être obtenus", 
             x = 0.068, y = 1.13, hjust = 0,
-            colour = "black", fontface = "italic") +
+            size = 5,
+           colour = "black", 
+           fontface = "italic") +
   annotate(geom = "curve", 
          x = 0.065, 
          y = 1.17, 
@@ -627,8 +631,8 @@ g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_week +
 
 # Ratio MVPA / SED comment
   comment_ratio <- 
-    ifelse(df1_means[["ratio_mvpa_sed"]] >= 0.04, "le patient obtient déjà la plupart des bénéfices de santé liés à son comportement physique",
-           "le patient pourrait obtenir davantage de bénéfices de santé en replaçant du temps sédentaire par du temps d'activité physique")
+    ifelse(df1_means[["ratio_mvpa_sed"]] >= 0.04, "le patient obtient déjà probablement la plupart des bénéfices de santé liés à son comportement physique",
+           "le patient pourrait probablement obtenir davantage de bénéfices de santé en replaçant du temps sédentaire par du temps d'activité physique")
 
 if (params$rendered_by_shiny)
   shiny::setProgress(1)  # set progress to 100%

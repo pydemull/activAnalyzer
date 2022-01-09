@@ -420,7 +420,7 @@ app_ui <- function(request) {
                        #******************************************************
                        
                        fluidRow(
-                         column(3,
+                         column(2,
                                 h3("PROactive scores"),
                                 shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores"))
                          ),

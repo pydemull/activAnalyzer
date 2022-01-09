@@ -75,7 +75,7 @@ ratio_lines <- params$ratio_lines
 
 **Minimum number of hours with wear time to validate a day**: `r params$minimum_wear_time_for_analysis` hours.
 
-**Abbreviations:** SED = sedentary, LPA =  light physical activity, VPA = vigorous physical activity, MVPA = moderate-to-vigorous physical activity, PAL = physical activity level.
+**Abbreviations:** SED = sedentary, LPA =  light physical activity, MPA = moderate physical activity, VPA = vigorous physical activity, MVPA = moderate-to-vigorous physical activity, PAL = physical activity level.
 
 
 # Results
@@ -95,7 +95,7 @@ flextable::flextable(
               "SED wear time proportion",     
               "LPA wear time proportion",     
               "MVPA wear time proportion",    
-              "Dose MVPA",                        
+              "MVPA dose",                        
               "MVPA/SED ratio"
               ),
    
@@ -356,11 +356,11 @@ if (params$rendered_by_shiny)
             x = 60, y = 0.80, hjust = 0.5, 
             colour = "grey50", fontface = "bold.italic") +
 
-   annotate("text", label = "Threshold for the maximum \nof health benefits", 
-            x = 37, y = 0.37, hjust = 0, vjust = 1,
+   annotate("text", label = "Threshold above which maximum \nof health benefits may be obtained", 
+            x = 35, y = 0.37, hjust = 0, vjust = 1, size = 5,
             colour = "black", fontface = "italic") +
    annotate(geom = "curve", 
-         x = 37, 
+         x = 35, 
          y = 0.34, 
          xend = 24, 
          yend = 0.36, 
@@ -429,16 +429,18 @@ if (params$rendered_by_shiny)
          plot.margin = margin(0, 1, 0, 1, "cm"),
          plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
    annotate("text", 
-            label = "Threshold beyond \nwhich risk \nis significant",
-            x = 11, 
-            y = 0.5, 
+            label = "Threshold above \nwhich risk \nis significant",
+            x = 10.3, 
+            y = 0.55, 
             hjust = 0,
-            colour = "black", fontface = "italic") +
+            size = 5,
+            colour = "black", 
+            fontface = "italic") +
    annotate(geom = "curve", 
-         x = 10.8, 
-         y = 0.68, 
+         x = 10.2, 
+         y = 0.76, 
          xend = 9.5, 
-         yend = 0.66, 
+         yend = 0.71, 
          curvature = .5, arrow = arrow(length = unit(2, "mm")),
          colour = "black") +
    annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1.2, y = 0.387)
@@ -500,8 +502,8 @@ if (params$rendered_by_shiny)
          plot.background = element_rect(fill = "beige", color = "beige"),
          plot.margin = margin(0, 1, 0, 1, "cm"),
          plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-  annotate("text", label = "Threshold for getting \nmost of the health \nbenefits", 
-            x = 0.068, y = 1.13, hjust = 0,
+  annotate("text", label = "Threshold above which most of \nhealth benefits may be obtained", 
+            x = 0.068, y = 1.12, hjust = 0, size = 5,
             colour = "black", fontface = "italic") +
   annotate(geom = "curve", 
          x = 0.065, 
@@ -606,7 +608,7 @@ g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_week +
 
 # Ratio MVPA / SED comment
   comment_ratio <- 
-    ifelse(df1_means[["ratio_mvpa_sed"]] >= 0.04, "the patient likely has already most of the health benefits from their physical behavior",
+    ifelse(df1_means[["ratio_mvpa_sed"]] >= 0.04, "the patient likely already has most of the health benefits from their physical behavior",
            "the patient could get further health benefits by replacing more sedentary time by physical activity time.")
 
 
