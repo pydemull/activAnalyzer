@@ -642,11 +642,13 @@ app_server <- function(input, output, session) {
   observe({
     shinyjs::hide("myBox")
     shinyjs::hide("Metric")
+    shinyjs::hide("graph")
     
     if(nrow(df()) >=1) {
       
       shinyjs::show("myBox")
       shinyjs::show("Metric")
+      shinyjs::show("graph")
     }
   })
   
@@ -654,12 +656,14 @@ app_server <- function(input, output, session) {
   observe({
     shinyjs::hide("myBox2")
     shinyjs::hide("Metric2")
+    shinyjs::hide("graph_int")
 
     
     if(nrow(results_list()$df_with_computed_metrics) >=1) {
       
     shinyjs::show("myBox2")
     shinyjs::show("Metric2")
+    shinyjs::show("graph_int")
 
     }
   })
