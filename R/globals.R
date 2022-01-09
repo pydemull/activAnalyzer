@@ -68,6 +68,10 @@ utils::globalVariables(c(
   "head",
   "col_time_stamp",
   "wear_time_revised",
-  "total_kcal"
+  "total_kcal",
+  "axis1_per_min",
+  "vm_per_min",
+  "median"
+  
   
   ))

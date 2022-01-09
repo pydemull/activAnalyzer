@@ -18,7 +18,7 @@ app_ui <- function(request) {
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
         ),
-        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.2.0"), titleWidth = 235
+        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.3.0"), titleWidth = 235
                                       ),
       shinydashboardPlus::dashboardSidebar(
         tags$style(HTML("
@@ -496,12 +496,12 @@ app_ui <- function(request) {
                            h2("Authors"),
                            h4("Pierre-Yves de M\u00fcllenheim", style = "font-weight: bold; font-size: 20px"),
                            h4("Associate professor"),
-                           h4("Institut de formation en éducation physique et en sport d'Angers/Les Ponts-de-Cé (IFEPSA), UCO, Les Ponts-de-C\u00e9, France"),
+                           h4("Institut de formation en \u00e9ducation physique et en sport d\u0027Angers\u002FLes Ponts-de-C\u00e9 \u0028IFEPSA\u0029, UCO, Les Ponts-de-C\u00e9, France"),
                            h4("Email: pydemull@uco.fr"),
                            h2(""),
                            h4("Arnaud Chambellan", style = "font-weight: bold; font-size: 20px"),
                            h4("Pulmonologist, hospital practitioner"),
-                           h4("Groupement des hôpitaux de l'Institut catholique de Lille, Saint Philibert - Saint Vincent de Paul, France"),
+                           h4("Groupement des h\u00f4pitaux de l'Institut catholique de Lille, Saint Philibert - Saint Vincent de Paul, France"),
                            h4("Email: chambellan.arnaud@ghicl.net")
                            
                     ),

@@ -38,6 +38,8 @@ test_that("The server functions correctly work", {
   
   # Preparing environment for shinytest
     Study <<- "Study"
+    Metric <<- "Metric"
+    Score <<- "Score"
     col_time_stamp <<- "col_time_stamp"
     assign("users", shiny::reactiveValues(count = 0), envir = .GlobalEnv)
     assign("equations_mets", activAnalyzer:::equations_mets, envir = .GlobalEnv)

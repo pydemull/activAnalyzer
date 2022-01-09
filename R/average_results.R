@@ -12,6 +12,7 @@
 #' @export
 #'
 #' @importFrom magrittr %>%
+#' @importFrom stats median
 #'
 #' @examples
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
