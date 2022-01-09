@@ -614,6 +614,32 @@ app_server <- function(input, output, session) {
     
   })
   
+  
+  ##########################
+  # Hide / show boxes ----
+  ##########################
+  
+  # Box for graph with wear time
+  observe({
+    shinyjs::hide("myBox")
+    shinyjs::hide("Metric")
+    if(nrow(df()) >=1) {
+      shinyjs::show("myBox")
+      shinyjs::hide("Metric")
+    }
+  })
+  
+  # Box for graph with P1 categories
+  observe({
+    shinyjs::hide("myBox2")
+    shinyjs::hide("Metric2")
+    if(nrow(results_list()$df_with_computed_metrics) >=1) {
+      shinyjs::show("myBox2")
+      shinyjs::hide("Metric2")
+    }
+  })
+  
+  
   ##############################
   # Hide / show Download buttons ----
   ##############################
