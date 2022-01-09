@@ -286,6 +286,7 @@ app_ui <- function(request) {
                              tabPanelBody("...", ""),
                              tabPanelBody("Sasaki et al. (2011) [Adults]", reactable::reactableOutput("table_mvpa_cutpoints_sasaki")),
                              tabPanelBody("Santos-Lozano et al. (2013) [Adults]", reactable::reactableOutput("table_mvpa_cutpoints_santos_adults")),
+                             tabPanelBody("Freedson et al. (1998) [Adults]", reactable::reactableOutput("table_mvpa_cutpoints_freedson_adults")),
                              tabPanelBody("Santos-Lozano et al. (2013) [Older adults]", reactable::reactableOutput("table_mvpa_cutpoints_santos_older")),
                              tabPanelBody("Personalized...", 
                                           fluidRow(

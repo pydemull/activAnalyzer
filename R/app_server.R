@@ -306,6 +306,26 @@ app_server <- function(input, output, session) {
     
   })
   
+  output$table_mvpa_cutpoints_freedson_adults <- reactable::renderReactable({
+    
+    if(input$mvpa_cutpoint == "...") {NULL
+    } else {
+      mvpa_cutpoints %>% 
+        dplyr::filter(Study == input$mvpa_cutpoint) %>%
+        reactable::reactable(striped = TRUE,
+                             list('Study' = reactable::colDef(minWidth = 80),
+                                  'Population' = reactable::colDef(minWidth = 70),
+                                  'Activities performed' = reactable::colDef(minWidth = 60),
+                                  'Device used' = reactable::colDef(minWidth = 40),
+                                  'Axis used' = reactable::colDef(minWidth = 30),
+                                  'Filter enabled' = reactable::colDef(minWidth = 40),
+                                  'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 60),
+                                  'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 60))
+        )
+    }
+    
+  })
+  
   output$table_mvpa_cutpoints_santos_older <- reactable::renderReactable({
     
     if(input$mvpa_cutpoint == "...") {NULL
@@ -595,7 +615,6 @@ app_server <- function(input, output, session) {
   
   
   # Showing PROactive scores
-  
   output$PROactive_scores <- reactable::renderReactable({
     
     steps_score <- compute_pro_actigraph_score(results_summary_medians()[["total_steps"]], metric = "steps")
@@ -623,19 +642,25 @@ app_server <- function(input, output, session) {
   observe({
     shinyjs::hide("myBox")
     shinyjs::hide("Metric")
+    
     if(nrow(df()) >=1) {
+      
       shinyjs::show("myBox")
-      shinyjs::hide("Metric")
+      shinyjs::show("Metric")
     }
   })
   
-  # Box for graph with P1 categories
+  # Boxes for graph with PA categories
   observe({
     shinyjs::hide("myBox2")
     shinyjs::hide("Metric2")
+
+    
     if(nrow(results_list()$df_with_computed_metrics) >=1) {
-      shinyjs::show("myBox2")
-      shinyjs::hide("Metric2")
+      
+    shinyjs::show("myBox2")
+    shinyjs::show("Metric2")
+
     }
   })
   

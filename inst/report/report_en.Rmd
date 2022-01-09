@@ -599,10 +599,10 @@ g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_week +
   
 
 # Defining PAL status
-  pal_status <- ifelse(df1_means[["pal"]] <1.40, "Insufficient",
-                      ifelse(df1_means[["pal"]] <= 1.69, "Sedentary or light activity lifestyle",
-                                         ifelse(df1_means[["pal"]] <= 1.99, "Active or moderately active lifestyle",
-                                              ifelse(df1_means[["pal"]] <= 2.40, "Vigorous or vigorously active lifestyle", "Likely not sustainable"))))
+  pal_status <- ifelse(df1_means[["pal"]] <1.40, "below the 'Sedentary or light activity lifestyle' category",
+                      ifelse(df1_means[["pal"]] <= 1.69, "'Sedentary or light activity lifestyle'",
+                                         ifelse(df1_means[["pal"]] <= 1.99, "'Active or moderately active lifestyle'",
+                                              ifelse(df1_means[["pal"]] <= 2.40, "'Vigorous or vigorously active lifestyle'", "'Likely not sustainable'"))))
 
 # ref: http://www.fao.org/3/y5686e/y5686e07.htm#bm07.3
 
@@ -616,6 +616,6 @@ if (params$rendered_by_shiny)
   shiny::setProgress(1)  # set progress to 100%
 ```
 
-According to the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the PAL of the patient could be characterized as "**`r pal_status`**". After converting moderate and vigorous physical activity minutes to MET-hours, the estimate of the daily mean of MVPA volume for the patient is `r paste0(format(round(df1_means[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hr, which could correspond to falling **`r guidelines_status`** (i.e., 7.5-15.0 MET-hr a week, or 1.07-2.14 MET-hr a day). Based on the MVPA/SED ratio, **`r paste(comment_ratio)`**.
+According to the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the PAL of the patient could be characterized as **`r pal_status`**. After converting moderate and vigorous physical activity minutes to MET-hours, the estimate of the daily mean of MVPA volume for the patient is `r paste0(format(round(df1_means[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hr, which could correspond to falling **`r guidelines_status`** (i.e., 7.5-15.0 MET-hr a week, or 1.07-2.14 MET-hr a day). Based on the MVPA/SED ratio, **`r paste(comment_ratio)`**.
 
 
