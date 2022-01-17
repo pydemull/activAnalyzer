@@ -6,10 +6,10 @@
 #' \itemize{
 #'   \item \strong{wear_time:} total wear time computed using the whole day
 #'   \item \strong{wear_time_revised:} total wear time computed using the daily period defined in the function
-#'   \item \strong{total_counts_axis1}: total counts for the vertical axis
+#'   \item \strong{total_counts_axis1:} total counts for the vertical axis
 #'   \item \strong{total_counts_vm:} total counts for the vector magnitude
-#'   \item \strong{axis1_per_min}: mean of the counts per minute for the vertical axis (total_counts_axis1 / 1440)
-#'   \item \strong{vm_per_min}: mean of the counts per minute for the vector magnitude (total_counts_vm / 1440)
+#'   \item \strong{axis1_per_min:} mean of the counts per minute for the vertical axis (during wear time only)
+#'   \item \strong{vm_per_min:} mean of the counts per minute for the vector magnitude (during wear time only)
 #'   \item \strong{total_steps:} total step count
 #'   \item \strong{total_kcal:} total kilocalories
 #'   \item \strong{minutes_SED:} total minutes spent in SED behavior
@@ -17,11 +17,11 @@
 #'   \item \strong{minutes_MPA:} total minutes spent in MPA behavior
 #'   \item \strong{minutes_VPA:} total minutes spent in VPA behavior
 #'   \item \strong{minutes_MVPA:} total minutes spent in MVPA behavior
-#'   \item \strong{percent_SED:} proportion of wear time (whole day) spent in SED behavior
-#'   \item \strong{percent_LPA:} proportion of wear time (whole day) spent in LPA behavior
-#'   \item \strong{percent_MPA:} proportion of wear time (whole day) spent in MPA behavior
-#'   \item \strong{percent_VPA:} proportion of wear time (whole day) spent in VPA behavior
-#'   \item \strong{percent_MVPA:} proportion of wear time spent in MPVA behavior
+#'   \item \strong{percent_SED:} proportion of wear time (over the 24-h cycle) spent in SED behavior
+#'   \item \strong{percent_LPA:} proportion of wear time (over the 24-h cycle) spent in LPA behavior
+#'   \item \strong{percent_MPA:} proportion of wear time (over the 24-h cycle) spent in MPA behavior
+#'   \item \strong{percent_VPA:} proportion of wear time (over the 24-h cycle) spent in VPA behavior
+#'   \item \strong{percent_MVPA:} proportion of wear time (over the 24-h cycle) spent in MPVA behavior
 #'   \item \strong{max_steps_60min:} best step accumulation per minute averaged over a window of 60 continuous minutes
 #'   \item \strong{max_steps_30min:} best step accumulation per minute averaged over a window of 30 continuous minutes
 #'   \item \strong{max_steps_20min:} best step accumulation per minute averaged over a window of 20 continuous minutes
@@ -122,8 +122,8 @@ recap_by_day <- function(data,
         wear_time = sum(wearing_count, na.rm = TRUE),
         total_counts_axis1 = sum(axis1, na.rm = TRUE),
         total_counts_vm = sum(vm, na.rm = TRUE),
-        axis1_per_min = round(total_counts_axis1 / 1440, 2),
-        vm_per_min = round(total_counts_vm / 1440, 2),
+        axis1_per_min = round(mean(axis1, na.rm = TRUE), 2),
+        vm_per_min = round(mean(vm, na.rm = TRUE), 2),
         total_steps = sum(steps, na.rm = TRUE),
         total_kcal = round(sum(kcal, na.rm = TRUE) + bmr_kcal_min * (24*60 - wear_time), 2),
         minutes_SED = sum(SED, na.rm = TRUE),

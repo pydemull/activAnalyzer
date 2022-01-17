@@ -25,7 +25,7 @@ mark_intensity(
 
 \item{sed_cutpoint}{A numeric value below which time is considered as spent in sedentary behavior.}
 
-\item{mpa_cutpoint}{A numeric value at and above which time is considered as spent in moderate physical activity.}
+\item{mpa_cutpoint}{A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity.}
 
 \item{vpa_cutpoint}{A numeric value at and above which time is considered as spent in vigorous physical activity.}
 

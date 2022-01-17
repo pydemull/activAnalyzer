@@ -23,7 +23,7 @@
 #' @param col_axis A character value to indicate the name of the variable to be used for determining intensity categories. 
 #' @param equation A character string to indicate the equation to be used for estimating METs.
 #' @param sed_cutpoint A numeric value below which time is considered as spent in sedentary behavior.
-#' @param mpa_cutpoint A numeric value at and above which time is considered as spent in moderate physical activity.
+#' @param mpa_cutpoint A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity.
 #' @param vpa_cutpoint A numeric value at and above which time is considered as spent in vigorous physical activity.
 #' @param age A numeric value in yr.
 #' @param weight A numeric value in kg.

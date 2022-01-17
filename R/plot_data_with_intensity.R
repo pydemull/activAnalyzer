@@ -1,4 +1,4 @@
-#' Plot accelerometer data for each day with both nonwear time and physical intensity categories
+#' Plot accelerometer data for each day with both nonwear time and physical activity intensity categories
 #' 
 #' This function plots accelerometer data with intensity categories against time for each day of measurement, 
 #'     with the possibility to specify the metric to visualize.

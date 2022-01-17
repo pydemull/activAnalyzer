@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_data_with_intensity.R
 \name{plot_data_with_intensity}
 \alias{plot_data_with_intensity}
-\title{Plot accelerometer data for each day with both nonwear time and physical intensity categories}
+\title{Plot accelerometer data for each day with both nonwear time and physical activity intensity categories}
 \usage{
 plot_data_with_intensity(
   data,
