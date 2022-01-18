@@ -71,7 +71,7 @@ ratio_lines <- params$ratio_lines
 
 **Nonwear time:** Based on `r params$axis_weartime`, interval of `r params$frame_size` min with zero count for nonwear time detection, interval of `r params$allowanceFrame_size` min with nonzero counts allowed during a nonwear period, interval of `r params$streamFrame_size` min with zero count around detected activity to confirm nonwear time | **MET equation:** `r params$equation_mets` | **Axis used for PA intensity categorization:** `r params$axis_mvpa` | **Cut-points:** <`r params$sed_cutpoint` counts/min for SED, $\geqslant$ `r params$mpa_cutpoint` counts/min for MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min for VPA.
 
-**Period considered to validate a day based on wear time:** from `r params$start_day_analysis` to `r params$end_day_analysis`.
+**Period of the day considered to count wear time:** from `r params$start_day_analysis` to `r params$end_day_analysis`.
 
 **Minimum number of hours with wear time to validate a day**: `r params$minimum_wear_time_for_analysis` hours.
 
@@ -85,7 +85,7 @@ flextable::set_flextable_defaults(fonts_ignore = TRUE)
 flextable::flextable(
  tibble::tibble(
    Metric = c("Number of valid days",
-              "Wear time (over the whole day)",
+              "Wear time",
               "Total kilocalories",
               "Physical activity level (PAL)",
               "Total number of steps",

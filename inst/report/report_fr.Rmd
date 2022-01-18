@@ -91,7 +91,7 @@ axis_mvpa <- ifelse(params$axis_mvpa == "vertical axis", "axe vertical",
 
 **Temps de non-port :** Basé sur `r axis_weartime`, intervalle de `r params$frame_size` min avec zéro count pour la détection du temps de non-port, intervalle de `r params$allowanceFrame_size` min avec counts différents de 0 autorisé durant une période de non-port, intervalle de `r params$streamFrame_size` min avec zéro count autour de la période d'activité détectée pour confirmer le non-port | **Équation de prédiction des METs :** `r params$equation_mets` | **Axe utilisé pour catégoriser l'intensité d'activité physique :** `r axis_mvpa` | **Valeurs seuils :** <`r params$sed_cutpoint` counts/min pour SED, $\geqslant$ `r params$mpa_cutpoint` counts/min pour MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min pour VPA.
 
-**Période journalière considérée pour valider un jour avec le temps de port :** de `r params$start_day_analysis` à `r params$end_day_analysis`.
+**Période journalière considérée pour compter le temps de port :** de `r params$start_day_analysis` à `r params$end_day_analysis`.
 
 **Nombre minimum d'heures avec temps de port pour valider un jour** : `r params$minimum_wear_time_for_analysis` heures.
 
@@ -106,7 +106,7 @@ flextable::flextable(
  tibble::tibble(
    Indicateur = c(
      "Nombre de jours valides",                
-     "Temps de port (sur la journée entière)", 
+     "Temps de port", 
      "Kilocalories",                           
      "NAP",       
      "Nombre total de pas", 
