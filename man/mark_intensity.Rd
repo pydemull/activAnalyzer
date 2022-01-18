@@ -84,6 +84,7 @@ mark_intensity(
     weight = 67,
     sex = "male",
     col_steps = "steps"
-    )
+    ) \%>\%
+    head()
 
 }

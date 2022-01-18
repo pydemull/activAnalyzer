@@ -53,8 +53,8 @@ mydata_with_wear_marks <-
   mark_wear_time(frame = 90, allowanceFrame = 2, streamFrame = 30)
 
 p <- plot_data(data = mydata_with_wear_marks, metric = "vm")
-p$theme$plot.background$fill <- "#FEF9E7"
-p$theme$legend.background$fill <- "#FEF9E7"
+#p$theme$plot.background$fill <- "#FEF9E7"
+#p$theme$legend.background$fill <- "#FEF9E7"
 p
 ```
 
@@ -98,8 +98,8 @@ p <- plot_data_with_intensity(
   metric = "vm"
   )
 
-p$theme$plot.background$fill <- "#FEF9E7"
-p$theme$legend.background$fill <- "#FEF9E7"
+#p$theme$plot.background$fill <- "#FEF9E7"
+#p$theme$legend.background$fill <- "#FEF9E7"
 p
 ```
 

@@ -32,6 +32,7 @@ app_server <- function(input, output, session) {
     file <- reactive({
       
       req(input$upload)
+      
       actigraph.sleepr::read_agd(input$upload$datapath)
       
     })
@@ -152,6 +153,7 @@ app_server <- function(input, output, session) {
   output$graph <- renderPlot({
     plot_data(data = df(), metric = input$Metric)
   }, height = function(){nlevels(as.factor(df()$date)) * 90}, res = 120)
+    
   
   ###################################################
   # Getting results when clicking on the "Run" button ----
@@ -351,7 +353,7 @@ app_server <- function(input, output, session) {
   # Setting PROactive default values to valid a day based on wear time
   observeEvent(input$pro_active_period, {
     updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*7))
-    updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*20))
+    updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*22))
     updateNumericInput(inputId = "minimum_wear_time_for_analysis", value = 8)
   })
   
@@ -520,7 +522,6 @@ app_server <- function(input, output, session) {
     reactable::reactable(results_list()$results_by_day,  
               striped = TRUE,
               list(
-                   wear_time_revised = reactable::colDef(minWidth = 160),
                    total_counts_axis1 = reactable::colDef(minWidth = 150),
                    total_counts_vm = reactable::colDef(minWidth = 150),
                    axis1_per_min = reactable::colDef(minWidth = 150),
@@ -560,7 +561,6 @@ app_server <- function(input, output, session) {
       results_summary_means(), 
       list(valid_days = reactable::colDef(minWidth = 90),
            wear_time = reactable::colDef(minWidth = 90),
-           wear_time_revised = reactable::colDef(minWidth = 160),
            total_counts_axis1 = reactable::colDef(minWidth = 150),
            total_counts_vm = reactable::colDef(minWidth = 150),
            axis1_per_min = reactable::colDef(minWidth = 150),
@@ -590,7 +590,6 @@ app_server <- function(input, output, session) {
       results_summary_medians(), 
       list(valid_days = reactable::colDef(minWidth = 90),
            wear_time = reactable::colDef(minWidth = 90),
-           wear_time_revised = reactable::colDef(minWidth = 160),
            total_counts_axis1 = reactable::colDef(minWidth = 150),
            total_counts_vm = reactable::colDef(minWidth = 150),
            axis1_per_min = reactable::colDef(minWidth = 150),

@@ -4,12 +4,11 @@
 #' 
 #' The following metrics are computed: 
 #' \itemize{
-#'   \item \strong{wear_time:} total wear time computed using the whole day
-#'   \item \strong{wear_time_revised:} total wear time computed using the daily period defined in the function
+#'   \item \strong{wear_time:} total wear time computed using the daily period defined in the function
 #'   \item \strong{total_counts_axis1:} total counts for the vertical axis
 #'   \item \strong{total_counts_vm:} total counts for the vector magnitude
-#'   \item \strong{axis1_per_min:} mean of the counts per minute for the vertical axis (during wear time only)
-#'   \item \strong{vm_per_min:} mean of the counts per minute for the vector magnitude (during wear time only)
+#'   \item \strong{axis1_per_min:} mean of the counts per minute for the vertical axis (during the considered wear time only)
+#'   \item \strong{vm_per_min:} mean of the counts per minute for the vector magnitude (during the considered wear time only)
 #'   \item \strong{total_steps:} total step count
 #'   \item \strong{total_kcal:} total kilocalories
 #'   \item \strong{minutes_SED:} total minutes spent in SED behavior
@@ -117,13 +116,16 @@ recap_by_day <- function(data,
     df <-
       data %>%
       dplyr::group_by(.data[[col_date]], .drop = FALSE) %>%
-      dplyr::filter(wearing == "w") %>%
+      dplyr::filter(
+        .data[[col_time]] >= hms::as_hms(valid_wear_time_start) &
+          .data[[col_time]] <= hms::as_hms(valid_wear_time_end) &
+          wearing == "w") %>%
       dplyr::summarise(
         wear_time = sum(wearing_count, na.rm = TRUE),
         total_counts_axis1 = sum(axis1, na.rm = TRUE),
         total_counts_vm = sum(vm, na.rm = TRUE),
-        axis1_per_min = round(mean(axis1, na.rm = TRUE), 2),
-        vm_per_min = round(mean(vm, na.rm = TRUE), 2),
+        axis1_per_min = round(sum(axis1, na.rm = TRUE) / wear_time, 2),
+        vm_per_min = round(sum(vm, na.rm = TRUE) / wear_time, 2),
         total_steps = sum(steps, na.rm = TRUE),
         total_kcal = round(sum(kcal, na.rm = TRUE) + bmr_kcal_min * (24*60 - wear_time), 2),
         minutes_SED = sum(SED, na.rm = TRUE),
@@ -153,22 +155,7 @@ recap_by_day <- function(data,
         # the term 10/9 is used to take into account the thermic effect of food
         pal = round(total_kcal * (10/9) / (bmr_kcal_min * (24*60)), 2)) %>%
       dplyr::ungroup()
-    
-    # Summarise wear time by day based on the set inputs
-    df_set_wear_time_period <-
-      data %>%
-      dplyr::group_by(.data[["date"]], .drop = FALSE) %>%
-      dplyr::filter(
-        .data[[col_time]] >= hms::as_hms(valid_wear_time_start) &
-          .data[[col_time]] <= hms::as_hms(valid_wear_time_end) &
-          wearing == "w") %>%
-      dplyr::summarise(wear_time_revised = sum(wearing_count, na.rm = TRUE)) %>%
-      dplyr::ungroup()
-    
-    # Binding the two last dataframes
-    df <-
-      dplyr::left_join(df, df_set_wear_time_period, key = "date") %>%
-      dplyr::select(date, wear_time, wear_time_revised, everything())
+
     
     # Providing information about the parameters used for computing results
     message(paste0("You have computed results with the recap_by_day() function using the following inputs: 

@@ -13,11 +13,11 @@ coverage](https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge
 activAnalyzer is a shinny app that was developed to analyze daily
 physical behavior data recorded at the hip in adults using an ActiGraph
 accelerometer (.agd files). Once analysis is completed, the app allows
-to export results (summarized by day and averaged over valid days) to
-.csv files and to generate a report of the measurement (.pdf file). All
-the configured inputs relevant for interpreting the results are recorded
-in the report. Be sure that the inputs that are configured when
-generating the report correspond to the analysis that was actually
+to export results (summarized by day and with means/medians of the valid
+days) to .csv files and to generate a report of the measurement (.pdf
+file). All the configured inputs relevant for interpreting the results
+are recorded in the report. Be sure that the inputs that are configured
+when generating the report correspond to the analysis that was actually
 performed (in other words, avoid modifying the inputs after generating
 satisfactory results). Please read the [user’s
 guide](https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf)

@@ -283,7 +283,7 @@ test_that("The server functions correctly work", {
       test_set_proactive <-
         list(
           "07:00:00",
-          "20:00:00"
+          "22:00:00"
         )
       
       actual_set_proactive <- 
@@ -319,7 +319,7 @@ test_that("The server functions correctly work", {
            weight = 78, 
            sex = "female", 
            valid_wear_time_start = "07:00:00", 
-           valid_wear_time_end = "20:00:00") %>%
+           valid_wear_time_end = "22:00:00") %>%
          average_results(minimum_wear_time = 12, fun = "mean")
        
        expect_equal(actual_results_summary_means, test_results_summary_means)
@@ -345,7 +345,7 @@ test_that("The server functions correctly work", {
            weight = 78, 
            sex = "female", 
            valid_wear_time_start = "07:00:00", 
-           valid_wear_time_end = "20:00:00") %>%
+           valid_wear_time_end = "22:00:00") %>%
          average_results(minimum_wear_time = 12, fun = "median")
        
        expect_equal(actual_results_summary_medians, test_results_summary_medians)

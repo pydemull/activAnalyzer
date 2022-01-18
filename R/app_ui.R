@@ -307,7 +307,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12,
-                           h3("Configure inputs to be taken into account to valid a day based on wear time"),
+                           h3("Configure the inputs required to define the period of the day to be considered to count wear time and to validate a day based on wear time"),
                     ),
                   ),
                   fluidRow(
@@ -318,16 +318,16 @@ app_ui <- function(request) {
                            )
                     ),
                     column(3,
-                           selectInput("end_day_analysis", "End of the period to analyze each day", 
+                           selectInput("end_day_analysis", "End of the period to consider each day", 
                                        choices = rev(c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59))),
                                        selectize=FALSE
                            )
                     ),
                     column(2,
-                           numericInput("minimum_wear_time_for_analysis", "Minimum wear time (hours)", value = 10)
+                           numericInput("minimum_wear_time_for_analysis", "Minimum wear time to validate a day (hours)", value = 10)
                     ),
                     column(3,
-                           shiny::actionButton("pro_active_period", "Set PROactive configuration", style = "margin-top: 25px; background-color: #9933CC; color: white; border-color: #330066")
+                           shiny::actionButton("pro_active_period", "Set PROactive configuration for 24-h recording", style = "margin-top: 25px; background-color: #9933CC; color: white; border-color: #330066")
                     ),
                   ),
                   fluidRow(
@@ -495,14 +495,14 @@ app_ui <- function(request) {
                     column(12,
                            h2(""),
                            h2("Authors"),
-                           h4("Pierre-Yves de M\u00fcllenheim", style = "font-weight: bold; font-size: 20px"),
+                           h4("Pierre-Yves de M\u00fcllenheim, PhD", style = "font-weight: bold; font-size: 20px"),
                            h4("Associate professor"),
-                           h4("Institut de formation en \u00e9ducation physique et en sport d\u0027Angers\u002FLes Ponts-de-C\u00e9 \u0028IFEPSA\u0029, UCO, Les Ponts-de-C\u00e9, France"),
+                           h4("Institut de formation en \u00e9ducation physique et en sport d\u0027Angers \u0028IFEPSA\u0029, UCO, France"),
                            h4("Email: pydemull@uco.fr"),
                            h2(""),
-                           h4("Arnaud Chambellan", style = "font-weight: bold; font-size: 20px"),
-                           h4("Pulmonologist, hospital practitioner"),
-                           h4("Groupement des h\u00f4pitaux de l'Institut catholique de Lille, Saint Philibert - Saint Vincent de Paul, France"),
+                           h4("Arnaud Chambellan, MD, PhD", style = "font-weight: bold; font-size: 20px"),
+                           h4("Pulmonology Department, H\u00f4pital Saint Philibert, GHICL, France"),
+                           h4("Professor of Physiology, Universit\u00e9 Catholique de Lille, France"),
                            h4("Email: chambellan.arnaud@ghicl.net")
                            
                     ),

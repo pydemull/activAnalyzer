@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2022.1.9)  9 JAN 2022 14:13
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2022.1.9)  18 JAN 2022 18:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1198,13 +1198,7 @@ Underfull \hbox (badness 3108) in paragraph at lines 175--176
 adults] \TU/lmr/m/n/10 ([]Santos-Lozano et al.,
  []
 
-[9] [10]
-Overfull \hbox (2.67763pt too wide) in paragraph at lines 342--344
-[]\TU/lmtt/m/n/10 vm_per_min: \TU/lmr/m/n/10 moyenne des counts par minute pour
- le vecteur magnitude (\TU/lmtt/m/n/10 total_counts_vm
- []
-
-[11] [12]
+[9] [10] [11] [12]
 Chapitre 4.
 [13
 
@@ -1260,6 +1254,6 @@ Here is how much of TeX's memory you used:
  38752 multiletter control sequences out of 15000+600000
  409897 words of font info for 82 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 86i,11n,121p,3598b,395s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 86i,11n,121p,3596b,395s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on user_guide_fr.pdf (16 pages).

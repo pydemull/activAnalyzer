@@ -41,12 +41,11 @@ This function summarizes accelerometer results for each day of the measurement p
 \details{
 The following metrics are computed:
 \itemize{
-\item \strong{wear_time:} total wear time computed using the whole day
-\item \strong{wear_time_revised:} total wear time computed using the daily period defined in the function
+\item \strong{wear_time:} total wear time computed using the daily period defined in the function
 \item \strong{total_counts_axis1:} total counts for the vertical axis
 \item \strong{total_counts_vm:} total counts for the vector magnitude
-\item \strong{axis1_per_min:} mean of the counts per minute for the vertical axis (during wear time only)
-\item \strong{vm_per_min:} mean of the counts per minute for the vector magnitude (during wear time only)
+\item \strong{axis1_per_min:} mean of the counts per minute for the vertical axis (during the considered wear time only)
+\item \strong{vm_per_min:} mean of the counts per minute for the vector magnitude (during the considered wear time only)
 \item \strong{total_steps:} total step count
 \item \strong{total_kcal:} total kilocalories
 \item \strong{minutes_SED:} total minutes spent in SED behavior

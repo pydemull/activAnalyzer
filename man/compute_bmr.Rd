@@ -17,7 +17,7 @@ compute_bmr(age = 40, sex = c("male", "female", "undefined"), weight = 70)
 A numeric value.
 }
 \description{
-This function computes Basal Metabolic Rate using an Henry et al.
+This function computes Basal Metabolic Rate using a Henry et al.
 (2005; doi: 10.1079/PHN2005801) equation. This function is wrapped within
 the \code{\link{mark_intensity}} and \code{\link{recap_by_day}} functions.
 }

@@ -35,6 +35,7 @@ The .agd file must contain at least the following columns:
 }
 \examples{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
-prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
+prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp") \%>\%
+head()
 
 }

@@ -48,6 +48,7 @@ mark_wear_time(
     frame = 90, 
     allowanceFrame = 2, 
     streamFrame = 30
-    )
+    ) \%>\%
+    head()
 
 }

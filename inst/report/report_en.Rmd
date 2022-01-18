@@ -526,7 +526,7 @@ if (params$rendered_by_shiny)
 # Generate figure
   g_week <-
     df2 %>%
-    dplyr::mutate(validity = ifelse(wear_time_revised >= params$minimum_wear_time_for_analysis * 60, "Valid day", "Non valid day"),
+    dplyr::mutate(validity = ifelse(wear_time >= params$minimum_wear_time_for_analysis * 60, "Valid day", "Non valid day"),
                   validity =  forcats::fct_relevel(validity, "Valid day", "Non valid day")) %>%
     tidyr::pivot_longer(cols = c(wear_time, total_steps, pal, minutes_SED, minutes_LPA, minutes_MVPA, percent_SED, percent_LPA, percent_MVPA),
                  names_to = "variable", values_to = "value") %>%
