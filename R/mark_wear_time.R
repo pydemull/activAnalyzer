@@ -30,7 +30,8 @@
 #'     frame = 90, 
 #'     allowanceFrame = 2, 
 #'     streamFrame = 30
-#'     )
+#'     ) %>%
+#'     head()
 #' 
 mark_wear_time <- function(dataset, TS = "timestamp", cts  = "vm", frame = 90, allowanceFrame = 2, streamFrame = 30) {
   

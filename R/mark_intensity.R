@@ -55,7 +55,8 @@
 #'     weight = 67,
 #'     sex = "male",
 #'     col_steps = "steps"
-#'     )
+#'     ) %>%
+#'     head()
 #' 
 mark_intensity <- function(data, 
                            col_axis = "vm", 
