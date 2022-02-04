@@ -1,12 +1,12 @@
 Package: activAnalyzer
-Title: A shiny app to analyze ActiGraph accelerometer data
+Title: A Shiny app to analyze accelerometer-measured daily physical behavior data
 Version: 0.2.9000
 Authors@R: person('Pierre-Yves', 'de Müllenheim', email = 'pydemull@uco.fr', role = c('cre', 'aut'), comment = c(ORCID = "000-0001-9157-7371"))
-Description: This app was developed to analyse ActiGraph accelerometer data 
-    (.agd files) recorded at the hip in adults. Once analysis is completed,
+Description: This app was developed to analyze daily physical behavior data recorded
+    at the hip in adults using an ActiGraph accelerometer. Once analysis is completed,
     the app allows to export results to .csv files and to generate a report of 
     the measurement. All the configured inputs relevant for interpreting the 
-    results are recorded into the report.
+    results are recorded in the report.
 License: GPL (>= 3)
 Imports: 
     actigraph.sleepr (>= 0.2.0),
