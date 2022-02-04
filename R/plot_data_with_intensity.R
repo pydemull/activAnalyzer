@@ -9,6 +9,9 @@
 #' @param col_nonwear A character value to indicate the name of the variable used to count nonwear time.
 #' @param col_wear A character value to indicate the name of the variable used to count wear time.
 #' @param col_date A character value to indicate the name of the variable to plot date data.
+#' @param valid_wear_time_start A character value with the HH:MM:SS format to set the start of the daily period that will be considered for computing valid wear time.
+#' @param valid_wear_time_end A character value with the HH:MM:SS format to set the end of the daily period that will be considered for computing valid wear time.
+
 #'
 #' @return
 #' A `ggplot` object.
@@ -40,7 +43,9 @@
 #'     )
 #' plot_data_with_intensity(
 #'     data = mydata_with_intensity_marks,
-#'     metric = "vm"
+#'     metric = "vm",
+#'     valid_wear_time_start = "00:00:00",
+#'     valid_wear_time_end = "23:59:00"
 #'     )
 #' 
 plot_data_with_intensity <- function(data, 
@@ -48,7 +53,9 @@ plot_data_with_intensity <- function(data,
                       col_time = "time", 
                       col_nonwear = "non_wearing_count",
                       col_wear = "wearing_count",
-                      col_date = "date"){
+                      col_date = "date",
+                      valid_wear_time_start = "00:00:00",
+                      valid_wear_time_end = "23:59:00"){
 
   # Setting the format of the time variable
     format_hm <- function(sec) stringr::str_sub(format(sec), end = -4L)
@@ -62,12 +69,29 @@ plot_data_with_intensity <- function(data,
       ymin = -Inf, 
       ymax = Inf, 
       color = intensity_category,
-      fill = intensity_category)) +
+      fill = intensity_category)
+      ) +
     geom_line(
       aes(
       x = .data[[col_time]],
       y = .data[[metric]])
       ) +
+    geom_rect(aes(
+      xmin = hms::as_hms(0), 
+      xmax =  hms::as_hms(valid_wear_time_start), 
+      ymin = -Inf, 
+      ymax = Inf), 
+      color = "grey",
+      fill = "grey"
+    ) +
+    geom_rect(aes(
+      xmin = hms::as_hms(valid_wear_time_end), 
+      xmax =  hms::as_hms("23:59:59"),
+      ymin = -Inf, 
+      ymax = Inf), 
+      color = "grey",
+      fill = "grey"
+    ) +
    scale_x_time(breaks = hms::hms(seq(3600, 23*3600, 2*3600)), 
                expand = c(0, 0), 
                labels = format_hm

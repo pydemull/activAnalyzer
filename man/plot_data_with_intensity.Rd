@@ -10,7 +10,9 @@ plot_data_with_intensity(
   col_time = "time",
   col_nonwear = "non_wearing_count",
   col_wear = "wearing_count",
-  col_date = "date"
+  col_date = "date",
+  valid_wear_time_start = "00:00:00",
+  valid_wear_time_end = "23:59:00"
 )
 }
 \arguments{
@@ -25,6 +27,10 @@ plot_data_with_intensity(
 \item{col_wear}{A character value to indicate the name of the variable used to count wear time.}
 
 \item{col_date}{A character value to indicate the name of the variable to plot date data.}
+
+\item{valid_wear_time_start}{A character value with the HH:MM:SS format to set the start of the daily period that will be considered for computing valid wear time.}
+
+\item{valid_wear_time_end}{A character value with the HH:MM:SS format to set the end of the daily period that will be considered for computing valid wear time.}
 }
 \value{
 A \code{ggplot} object.
@@ -58,7 +64,9 @@ mydata_with_intensity_marks <- mark_intensity(
     )
 plot_data_with_intensity(
     data = mydata_with_intensity_marks,
-    metric = "vm"
+    metric = "vm",
+    valid_wear_time_start = "00:00:00",
+    valid_wear_time_end = "23:59:00"
     )
 
 }

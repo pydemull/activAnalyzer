@@ -152,7 +152,7 @@ app_server <- function(input, output, session) {
   
   output$graph <- renderPlot({
     plot_data(data = df(), metric = input$Metric)
-  }, height = function(){nlevels(as.factor(df()$date)) * 90}, res = 120)
+  }, height = function(){nlevels(as.factor(df()$date)) * 92}, res = 120)
     
   
   ###################################################
@@ -507,12 +507,22 @@ app_server <- function(input, output, session) {
                axis_mvpa_chosen_name = axis_mvpa_chosen_name,
                mpa_cutpoint_chosen = mpa_cutpoint_chosen,
                vpa_cutpoint_chosen = vpa_cutpoint_chosen))
-    
   })
+    
+    
+  # Creating reactive time filters used for the plot with intensity metrics
+    analysis_filters <- eventReactive(input$Run, {
+      list(start_day_analysis = input$start_day_analysis,
+           end_day_analysis = input$end_day_analysis
+           )
+      })
     
   # Plotting data with intensity categories
     output$graph_int <- renderPlot({
-      plot_data_with_intensity(data = results_list()$df_with_computed_metrics, metric = input$Metric2)
+      plot_data_with_intensity(data = results_list()$df_with_computed_metrics, 
+                               metric = input$Metric2,
+                               valid_wear_time_start = analysis_filters()$start_day_analysis,
+                               valid_wear_time_end = analysis_filters()$end_day_analysis)
     }, height = function(){nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 90}, res = 120)
     
   
