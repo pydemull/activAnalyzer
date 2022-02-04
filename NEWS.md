@@ -10,6 +10,7 @@
 * Added PROactive monitor-based physical activity score to the report.
 * Updated the users guides.
 * Updated the title in the DESCRIPTION file.
+* Updated plot functions.
 
 # activAnalyzer 0.2.0
 

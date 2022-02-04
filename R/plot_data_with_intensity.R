@@ -56,51 +56,13 @@ plot_data_with_intensity <- function(data,
     
   # Creating the plot
     ggplot(data = data) +
-    geom_ribbon(
-      aes(
-        x = .data[[col_time]],
-        ymin = 0, 
-        ymax = ifelse(.data[[col_nonwear]] == 1, Inf, 0),
-        fill = "Nonwear"
-      ), 
-      alpha = 0.5
-    ) +
-    geom_ribbon(
-     aes(
-       x = .data[[col_time]],
-       ymin = 0, 
-       ymax = ifelse(.data[[col_wear]] == 1 & SED == 1, Inf, 0),
-       fill = "SED"
-     ), 
-     alpha = 0.5
-    ) +
-    geom_ribbon(
-      aes(
-        x = .data[[col_time]],
-        ymin = 0, 
-        ymax = ifelse(.data[[col_wear]] == 1 & LPA == 1, Inf, 0),
-        fill = "LPA"
-      ), 
-      alpha = 0.5
-    ) +
-   geom_ribbon(
-     aes(
-       x = .data[[col_time]],
-       ymin = 0, 
-       ymax = ifelse(.data[[col_wear]] == 1 & MPA == 1, Inf, 0),
-       fill = "MVPA"
-     ), 
-     alpha = 0.5
-   ) +
-   geom_ribbon(
-     aes(
-       x = .data[[col_time]],
-       ymin = 0, 
-       ymax = ifelse(.data[[col_wear]] == 1 & VPA == 1, Inf, 0),
-       fill = "MVPA"
-     ), 
-     alpha = 0.5
-   ) +
+    geom_rect(aes(
+      xmin = time, 
+      xmax =  time + hms::as_hms(60), 
+      ymin = -Inf, 
+      ymax = Inf, 
+      color = intensity_category,
+      fill = intensity_category)) +
     geom_line(
       aes(
       x = .data[[col_time]],
@@ -111,14 +73,14 @@ plot_data_with_intensity <- function(data,
                labels = format_hm
                ) +
    scale_y_continuous(position = "right", expand = c(0, 0)) +
-   scale_fill_manual(breaks = c("Nonwear", "SED", "LPA", "MVPA"), values = c("red", "blue", "green", "yellow")) +
-   labs(x = "Time (hh:mm)", y = metric, fill = "") +
+   scale_fill_manual(breaks = c("Nonwear", "SED", "LPA", "MVPA"), values = c("#FF6666", "#0066FF", "green", "yellow")) +
+   scale_color_manual(breaks = c("Nonwear", "SED", "LPA", "MVPA"), values = c("#FF6666", "#0066FF", "green", "yellow")) +
+   labs(x = "Time (hh:mm)", y = metric, fill = "", color = "") +
    theme_bw() +
    theme(legend.position = "bottom",
          legend.key = element_rect(color = "grey"),
          panel.grid.major = element_blank(), 
          panel.grid.minor = element_blank()) +
-    guides(fill = guide_legend(override.aes = list(alpha = c(0.1)))) +
     facet_grid(data[[col_date]] ~ ., switch = "y") +
     geom_vline(aes(xintercept = 3600*1),    linetype = "dotted", color = "grey50") +
     geom_vline(aes(xintercept = 3600*2),    linetype = "dotted", color = "grey50") +

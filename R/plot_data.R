@@ -53,16 +53,15 @@ plot_data <- function(data,
       ymin = 0, 
       ymax = ifelse(.data[[col_nonwear]] == 1, Inf, 0),
       fill = "Nonwear"
-      ), 
-      alpha = 0.5
-      ) +
+      )
+    ) +
     geom_ribbon(
       aes(
       ymin = 0, 
       ymax = ifelse(.data[[col_wear]] == 1, Inf, 0),
       fill = "Wear"
-      ),
-      alpha = 0.5) +
+      )
+    ) +
     geom_line(
       aes(
         y = .data[[metric]]
@@ -73,14 +72,13 @@ plot_data <- function(data,
                 labels = format_hm
                  ) +
     scale_y_continuous(position = "right", expand = c(0, 0)) +
-    scale_fill_manual(values = c("red", "lemonchiffon1")) +
+    scale_fill_manual(values = c("#FF6666", "lemonchiffon1")) +
     labs(x = "Time (hh:mm)", y = metric, fill = "") +
     theme_bw() +
     theme(legend.position = "bottom",
           legend.key = element_rect(color = "grey"),
           panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank()) +
-    guides(fill = guide_legend(override.aes = list(alpha = 0.3))) +
     facet_grid(data[[col_date]] ~ ., switch = "y") +
     geom_vline(aes(xintercept = 3600*1),    linetype = "dotted", color = "grey50") +
     geom_vline(aes(xintercept = 3600*2),    linetype = "dotted", color = "grey50") +
