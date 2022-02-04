@@ -7,7 +7,7 @@
 average_results(data, minimum_wear_time = 10, fun = c("mean", "median"))
 }
 \arguments{
-\item{data}{A dataframe obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}} and then \code{\link{recap_by_day}} functions.}
+\item{data}{A dataframe obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, and then the \code{\link{recap_by_day}} functions.}
 
 \item{minimum_wear_time}{A numeric value (in hours) to set the minimum wear time duration for validating a day.}
 
@@ -49,7 +49,7 @@ summary_by_day <- recap_by_day(
     weight = 67, 
     sex = "male",
     valid_wear_time_start = "07:00:00",
-    valid_wear_time_end = "20:00:00"
+    valid_wear_time_end = "22:00:00"
     )
 average_results(data = summary_by_day, minimum_wear_time = 10)
 

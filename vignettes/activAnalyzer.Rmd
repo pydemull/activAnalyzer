@@ -113,7 +113,7 @@ results_by_day <-
     weight = 67, 
     sex = "male",
     valid_wear_time_start = "07:00:00",
-    valid_wear_time_end = "20:0:00"
+    valid_wear_time_end = "22:00:00"
     )
 
 results_by_day
@@ -127,7 +127,7 @@ results_by_day <-
     weight = 67, 
     sex = "male",
     valid_wear_time_start = "07:00:00",
-    valid_wear_time_end = "20:0:00"
+    valid_wear_time_end = "22:00:00"
     )
 
 results_by_day %>%  
@@ -135,9 +135,10 @@ results_by_day %>%
            striped = TRUE,
            list(date = reactable::colDef(minWidth = 140),
                 wear_time = reactable::colDef(minWidth = 150),
-                wear_time_revised = reactable::colDef(minWidth = 190),
                 total_counts_axis1 = reactable::colDef(minWidth = 190),
                 total_counts_vm = reactable::colDef(minWidth = 170),
+                axis1_per_min = reactable::colDef(minWidth = 170),
+                vm_per_min = reactable::colDef(minWidth = 170),
                 total_steps = reactable::colDef(minWidth = 170),
                 minutes_SED = reactable::colDef(minWidth = 150),
                 minutes_LPA = reactable::colDef(minWidth = 150),
@@ -184,9 +185,10 @@ averaged_results %>%
     reactable::reactable(
     list(valid_days = reactable::colDef(minWidth = 150),
          wear_time = reactable::colDef(minWidth = 150),
-         wear_time_revised = reactable::colDef(minWidth = 190),
          total_counts_axis1 = reactable::colDef(minWidth = 190),
          total_counts_vm = reactable::colDef(minWidth = 170),
+         axis1_per_min = reactable::colDef(minWidth = 170),
+         vm_per_min = reactable::colDef(minWidth = 170),
          total_steps = reactable::colDef(minWidth = 170),
          minutes_SED = reactable::colDef(minWidth = 150),
          minutes_LPA = reactable::colDef(minWidth = 150),

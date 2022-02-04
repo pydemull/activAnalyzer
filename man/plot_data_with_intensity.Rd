@@ -14,7 +14,7 @@ plot_data_with_intensity(
 )
 }
 \arguments{
-\item{data}{A dataframe obtained using the \code{\link{mark_wear_time}} and then the \code{\link{mark_intensity}} functions.}
+\item{data}{A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then the \code{\link{mark_intensity}} functions.}
 
 \item{metric}{A character value to indicate the name of the variable to be plotted against time.}
 

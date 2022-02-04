@@ -14,7 +14,7 @@ plot_data(
 )
 }
 \arguments{
-\item{data}{A dataframe obtained using the \code{\link{prepare_dataset}} and \code{\link{mark_wear_time}} functions.}
+\item{data}{A dataframe obtained using the \code{\link{prepare_dataset}} and then the \code{\link{mark_wear_time}} functions.}
 
 \item{metric}{A character value to indicate the name of the variable to be plotted against time.}
 

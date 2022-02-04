@@ -15,7 +15,8 @@ compute_pro_actigraph_score(x, metric = c("steps", "vmu"))
 A numeric value.
 }
 \description{
-This function computes the PROactive activity score based on the daily median of step count or vector magnitude unit obtained using an ActiGraph accelerometer.
+This function computes the PROactive activity score based on the daily median of
+step count or vector magnitude unit (in counts/min) obtained using an ActiGraph accelerometer.
 }
 \examples{
 compute_pro_actigraph_score(x= 3500, metric = "steps")

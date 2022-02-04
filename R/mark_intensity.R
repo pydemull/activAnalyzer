@@ -4,8 +4,7 @@
 #'     These columns concern respectively sedentary time (SED), light physical activity time (LPA), 
 #'     moderate physical activity time (MPA), vigorous physical activity time (VPA), 
 #'     metabolic equivalent of task (METs), kilocalories (kcal), MET-hours when 
-#'     time is spent in moderate-to-vigorous physical activity, and step-based metrics (maximum step accumulation  
-#'     and peak step accumulation metrics). For the SED, LPA, MPA, 
+#'     time is spent in moderate-to-vigorous physical activity, and step-based metrics (based on step accumulation per minute). For the SED, LPA, MPA, 
 #'     and VPA columns, the function provides, for each epoch, the numeric value 1 when 
 #'     the value of the configured counts variable respectively fulfills the criteria of the 
 #'     SED, LPA, MPA, and VPA category (e.g., for the SED column, 1 may be provided if VM counts are <150 counts/min); 
@@ -14,7 +13,9 @@
 #'     of the following scientific articles: Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003); Santos-Lozano et al. 
 #'     (2013; 10.1055/s-0033-1337945); Freedson et al. (1998; doi: 10.1097/00005768-199805000-00021).
 #'     Kilocalories are computed as follows. For non-SED epochs, MET values are multiplied by BMR expressed in kcal/min when using the Santos-Lozano et al. 
-#'     (2013) equations. When using the  Sasaki et al. (2011) and Freedson et al. (1998) equations, the MET values are multiplied by weight and 1/60.  
+#'     (2013) equations since, in that study, METs were multiples of the measured (not standard) resting metabolic rate. When using the  Sasaki et al. (2011) 
+#'     and Freedson et al. (1998) equations, the MET values are multiplied by weight and 1/60 since, in those studies, METs were multiples of standard resting 
+#'     metabolic rate (i.e., 3.5 mLO2/min/kg) and a standard MET is approximately equivalent to 1 kcal/kg/h (Butte et al., 2012; doi: 10.1249/MSS.0b013e3182399c0e).  
 #'     For SED epochs, BMR expressed in kcal/min is directly used. BMR is computed using the \code{\link{compute_bmr}} function that uses sex, age, and weight 
 #'     inputs, and one of the equations retrieved from the paper by Henry et al. (2005; doi: 10.1079/PHN2005801). MET-hours are obtained by multiplying METs by time 
 #'     related to each epoch (here 1/60e of an hour), only when the MET value is  >=3.
@@ -44,7 +45,7 @@
 #'     allowanceFrame = 2, 
 #'     streamFrame = 30
 #'     )
-#' mark_intensity(
+#' mydata_with_intensity_marks <- mark_intensity(
 #'     data = mydata_with_wear_marks, 
 #'     col_axis = "vm", 
 #'     equation = "Sasaki et al. (2011) [Adults]",
@@ -55,8 +56,8 @@
 #'     weight = 67,
 #'     sex = "male",
 #'     col_steps = "steps"
-#'     ) %>%
-#'     head()
+#'     )
+#' head(mydata_with_intensity_marks)
 #' 
 mark_intensity <- function(data, 
                            col_axis = "vm", 

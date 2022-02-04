@@ -16,7 +16,7 @@ recap_by_day(
 )
 }
 \arguments{
-\item{data}{A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then \code{\link{mark_intensity}} functions.}
+\item{data}{A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then the \code{\link{mark_intensity}} functions.}
 
 \item{col_date}{A character value to indicate the name of the date variable.}
 
@@ -111,7 +111,7 @@ recap_by_day(
     weight = 67, 
     sex = "male",
     valid_wear_time_start = "07:00:00",
-    valid_wear_time_end = "20:00:00"
+    valid_wear_time_end = "22:00:00"
     )
 
 }

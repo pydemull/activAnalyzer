@@ -23,15 +23,15 @@
 #' @examples
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 #' mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
-#' mark_wear_time(
+#' mydata_with_wear_marks <- mark_wear_time(
 #'     dataset = mydata, 
 #'     TS = "timestamp", 
 #'     cts  = "vm", 
 #'     frame = 90, 
 #'     allowanceFrame = 2, 
 #'     streamFrame = 30
-#'     ) %>%
-#'     head()
+#'     )
+#' head(mydata_with_wear_marks)
 #' 
 mark_wear_time <- function(dataset, TS = "timestamp", cts  = "vm", frame = 90, allowanceFrame = 2, streamFrame = 30) {
   

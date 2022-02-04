@@ -45,7 +45,7 @@
 #'    approximate since both BMR and kilocalories are estimated using methods
 #'    that may not be accurate at the individual level.
 #'   
-#' @param data A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then \code{\link{mark_intensity}} functions.
+#' @param data A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then the \code{\link{mark_intensity}} functions.
 #' @param col_date A character value to indicate the name of the date variable.
 #' @param col_time A character value indicating the name of the variable where time information is provided.
 #' @param valid_wear_time_start A character value with the HH:MM:SS format to set the start of the daily period to consider for computing valid wear time.
@@ -88,7 +88,7 @@
 #'     weight = 67, 
 #'     sex = "male",
 #'     valid_wear_time_start = "07:00:00",
-#'     valid_wear_time_end = "20:00:00"
+#'     valid_wear_time_end = "22:00:00"
 #'     )
 #' 
 recap_by_day <- function(data, 

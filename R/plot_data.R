@@ -3,7 +3,7 @@
 #' This function plots accelerometer data against time for each day of measurement, 
 #'     with the possibility to specify the metric to visualize.
 #'
-#' @param data A dataframe obtained using the \code{\link{prepare_dataset}} and \code{\link{mark_wear_time}} functions.
+#' @param data A dataframe obtained using the \code{\link{prepare_dataset}} and then the \code{\link{mark_wear_time}} functions.
 #' @param metric A character value to indicate the name of the variable to be plotted against time.
 #' @param col_time A character value to indicate the name of the variable to plot time data.
 #' @param col_nonwear A character value to indicate the name of the variable used to count nonwear time.
