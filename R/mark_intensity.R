@@ -110,7 +110,10 @@ mark_intensity <- function(data,
       )
 
   # Marking the bouts based on intensity categories
-    df$intensity_category <- ifelse(df$SED == 1, "SED", ifelse(df$LPA == 1, "LPA", ifelse(df$MPA == 1 | df$VPA == 1, "MVPA", "none")))
+    df$intensity_category <- ifelse(df$non_wearing_count == 1, "Nonwear", 
+                                    ifelse(df$SED == 1, "SED", 
+                                           ifelse(df$LPA == 1, "LPA", 
+                                                  ifelse(df$MPA == 1 | df$VPA == 1, "MVPA", "none"))))
     df$bout <- vector("double", length = nrow(df))
     df$bout[1] <- 1
     for (i in 2:(nrow(df) - 1)) {
