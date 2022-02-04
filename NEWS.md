@@ -1,6 +1,6 @@
-# activAnalyzer 0.2.9000
+# activAnalyzer 0.2.0.9000
 
-* There is now only one information about wear time, that is, wear time related to the period of day considered by the user (before, there was also wear time over the 24-h cycle).
+* There is now only one information about wear time, that is, wear time related to the period of the day considered by the user (before, there was also wear time over the 24-h cycle).
 * Updated the graphics of the reports (those showing hazard ratios) which now provide more appropriate shapes for HR curves in comparison with the figures from the original articles (thanks to a better configuration of the R function to fit the data).
 * Added daily medians into the final results.
 * Added definitions of abbreviations into the report.
@@ -9,7 +9,7 @@
 * Added daily vm counts per minute to the list of the computed metrics.
 * Added PROactive monitor-based physical activity score to the report.
 * Updated the users guides.
-* Provided a shorter title in the DESCRIPTION file.
+* Updated the title in the DESCRIPTION file.
 
 # activAnalyzer 0.2.0
 
