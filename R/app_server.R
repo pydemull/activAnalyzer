@@ -804,11 +804,6 @@ app_server <- function(input, output, session) {
           results_summary_means =  results_summary_means(),
           results_summary_medians =  results_summary_medians(),
           
-          # Loading some data used in figures
-          mvpa_lines = mvpa_lines,
-          sed_lines = sed_lines,
-          ratio_lines = ratio_lines,
-          
           rendered_by_shiny = TRUE
         )
         
@@ -877,11 +872,6 @@ app_server <- function(input, output, session) {
           results_by_day = results_list()$results_by_day,
           results_summary_means =  results_summary_means(),
           results_summary_medians =  results_summary_medians(),
-          
-          # Loading some data used in figures
-          mvpa_lines = mvpa_lines,
-          sed_lines = sed_lines,
-          ratio_lines = ratio_lines,
           
           rendered_by_shiny = TRUE
         )
