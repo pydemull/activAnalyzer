@@ -52,7 +52,7 @@ average_results <- function(data, minimum_wear_time = 10, fun = c("mean", "media
   
   if (fun == "mean") {
     
-  data %>%
+  results <- data %>%
     dplyr::mutate(validity = ifelse(wear_time >= minimum_wear_time * 60, "valid", "invalid")) %>%
     dplyr::filter(validity == "valid") %>%
     dplyr::summarise(valid_days = dplyr::n(),
@@ -86,11 +86,14 @@ average_results <- function(data, minimum_wear_time = 10, fun = c("mean", "media
               mets_hours_mvpa = round(mean(mets_hours_mvpa), 2),
               ratio_mvpa_sed = round(mean(ratio_mvpa_sed), 2),
               pal = round(mean(pal), 2))
+  
+  return(results)
+  
   }
   
-  else if (fun == "median") {
+ if (fun == "median") {
     
-    data %>%
+   results <-  data %>%
       dplyr::mutate(validity = ifelse(wear_time >= minimum_wear_time * 60, "valid", "invalid")) %>%
       dplyr::filter(validity == "valid") %>%
       dplyr::summarise(valid_days = dplyr::n(),
@@ -124,10 +127,9 @@ average_results <- function(data, minimum_wear_time = 10, fun = c("mean", "media
                        mets_hours_mvpa = round(median(mets_hours_mvpa), 2),
                        ratio_mvpa_sed = round(median(ratio_mvpa_sed), 2),
                        pal = round(median(pal), 2))
-  } else {
-    
-    NULL
-    
-  }
+   
+   return(results)
+   
+  } 
   
 }

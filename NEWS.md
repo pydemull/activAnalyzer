@@ -11,6 +11,7 @@
 * Updated the users guides.
 * Updated the title in the DESCRIPTION file.
 * Updated plot functions.
+* Converted blocks of code of the reports to R functions.
 
 # activAnalyzer 0.2.0
 

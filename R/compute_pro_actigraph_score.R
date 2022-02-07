@@ -16,25 +16,34 @@
 #' 
 compute_pro_actigraph_score <- function(x, metric = c("steps", "vmu")) {
   
-  metric = match.arg(metric)
+metric = match.arg(metric)
   
-  if (metric == "steps") {
-    dplyr::case_when(
+if (metric == "steps") {
+  
+    score <- dplyr::case_when(
       x >= 6000 ~ 4,
       x >= 4000 ~ 3,
       x >= 2000 ~ 2,
       x >= 1000 ~ 1,
       x < 1000 ~ 0
     )
-  } else if (metric == "vmu") {
-    dplyr::case_when(
+    
+    return(score)
+    
+   }
+
+if (metric == "vmu") {
+    
+  score <- dplyr::case_when(
       x >= 500 ~ 4,
       x >= 300 ~ 3,
       x >= 200 ~ 2,
       x >= 100 ~ 1,
       x < 100 ~ 0 
     )
-  } else {
-    NULL
-  }
+  
+  return(score)
+  
+   }
+
 }
