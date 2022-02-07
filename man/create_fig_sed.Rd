@@ -7,15 +7,15 @@
 create_fig_sed(score, language = c("en", "fr"))
 }
 \arguments{
-\item{score}{A numeric value for daily SED time in minutes.}
+\item{score}{A numeric value for mean daily SED time in minutes.}
 
-\item{language}{A character value for setting the language with which the figure should be created: "en" for english; "fr" for french.}
+\item{language}{A character value for setting the language with which the figure should be created: \code{en} for english; \code{fr} for french.}
 }
 \value{
 A ggplot object.
 }
 \description{
-The function generates a figure showing the mean of the SED hours in correspondance with the Ekelund et al. (2019; doi: 10.1136/bmj.l4570)
+The function generates a figure showing the daily mean of SED time in correspondence with the Ekelund et al. (2019; doi: 10.1136/bmj.l4570)
 mortality hazard ratios.
 }
 \examples{

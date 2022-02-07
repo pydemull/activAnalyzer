@@ -9,7 +9,7 @@ get_pal_status(value, language = c("en", "fr"))
 \arguments{
 \item{value}{A numeric value to indicate the daily mean of PAL.}
 
-\item{language}{A character value for setting the language with which the table should be created: "en" for english; "fr" for french.}
+\item{language}{A character value for setting the language with which the table should be created: \code{en} for english; \code{fr} for french.}
 }
 \value{
 A character string.

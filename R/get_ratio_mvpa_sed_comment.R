@@ -1,7 +1,7 @@
 #' Get comment about the MPVA/SED ratio
 #'
 #' @param value A numeric value to indicate the daily mean of MVPA/SED ratio.
-#' @param language A character value for setting the language with which the table should be created: "en" for english; "fr" for french.
+#' @param language A character value for setting the language with which the table should be created: `en` for english; `fr` for french.
 #'
 #' @return A character string.
 #' @export
@@ -21,8 +21,8 @@ if (language == "en") {
   
   if (language == "fr") {
     comment_ratio <- 
-    ifelse(value >= 0.04, "le patient obtient déjà probablement la plupart des bénéfices de santé liés à son comportement physique",
-           "le patient pourrait probablement obtenir davantage de bénéfices de santé en replaçant du temps sédentaire par du temps d'activité physique")
+    ifelse(value >= 0.04, "le patient obtient d\u00e9j\u00e0 probablement la plupart des b\u00e9n\u00e9fices de sant\u00e9 li\u00e9s \u00e0 son comportement physique",
+           "le patient pourrait probablement obtenir davantage de b\u00e9n\u00e9fices de sant\u00e9 en repla\u00e7ant du temps s\u00e9dentaire par du temps d'activit\u00e9 physique")
     return(comment_ratio)
   }
 

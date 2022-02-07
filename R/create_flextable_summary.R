@@ -4,7 +4,7 @@
 #'
 #' @param results_summary_means A dataframe with mean results obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, \code{\link{recap_by_day}}, and then the \code{\link{average_results}} functions.
 #' @param results_summary_medians A dataframe with meadian results obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, \code{\link{recap_by_day}}, and then the \code{\link{average_results}} functions.
-#' @param language A character value for setting the language with which the table should be created: "en" for english; "fr" for french.
+#' @param language A character value for setting the language with which the table should be created: `en` for english; `fr` for french.
 #'
 #' @return A flextable object
 #' @export
@@ -40,9 +40,21 @@
 #'     valid_wear_time_start = "07:00:00",
 #'     valid_wear_time_end = "22:00:00"
 #'     )
-#' results_summary_means <- average_results(data = summary_by_day, minimum_wear_time = 10, fun = "mean")
-#' results_summary_medians <- average_results(data = summary_by_day, minimum_wear_time = 10, fun = "median")
-#' create_flextable_summary(results_summary_means, results_summary_medians, language = "en")
+#' results_summary_means <- average_results(
+#'     data = summary_by_day, 
+#'     minimum_wear_time = 10, 
+#'     fun = "mean"
+#'     )
+#' results_summary_medians <- average_results(
+#'     data = summary_by_day, 
+#'     minimum_wear_time = 10, 
+#'     fun = "median"
+#'     )
+#' create_flextable_summary(
+#'     results_summary_means,
+#'     results_summary_medians, 
+#'     language = "en"
+#'     )
 #' 
 create_flextable_summary <- function(results_summary_means, results_summary_medians, language = c("en", "fr")) {
   
@@ -119,7 +131,7 @@ if (language == "fr") {
           "Ratio MVPA/SED"                       
         ),
         
-        "Moyenne | médiane journalière obtenue à partir des jours valides" = c(
+        "Moyenne | m\u00e9diane journali\u00e8re obtenue \u00e0 partir des jours valides" = c(
           paste0(results_summary_means[["valid_days"]], " jour(s)"),
           paste0(format(round(results_summary_means[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["wear_time"]]), ") | ",  
                  format(round(results_summary_medians[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["wear_time"]]), ")"),  

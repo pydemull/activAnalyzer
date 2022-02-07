@@ -1,10 +1,10 @@
-#' Create a figure showing the mean daily steps count
+#' Create a figure showing the mean daily step count
 #' 
-#' The function generates a figure showing the mean of the daily step count in correspondance with the Tudor-Locke et al. 
+#' The function generates a figure showing the daily mean of the daily step count in correspondence with the Tudor-Locke et al. 
 #'     (2011; doi: 10.1186/1479-5868-8-79) categories.
 #'
-#' @param score A numeric value for daily step count.
-#' @param language A character value for setting the language with which the figure should be created: "en" for english; "fr" for french.
+#' @param score A numeric value for mean daily step count.
+#' @param language A character value for setting the language with which the figure should be created: `en` for english; `fr` for french.
 #'
 #' @return A ggplot object.
 #' @export
@@ -144,9 +144,9 @@ language <- match.arg(language)
       annotate("text", label = "Valeurs attendues lorsque \nles personnes atteignent les recommandations d'AP :", x = 0.68, y = 300, 
                hjust = 0, vjust = 0.5, fontface = "bold", size = 5.2,   color = "grey30") +
       annotate("text", label = "Adultes", x = 0.9, y = 8300, hjust = 0, fontface = "bold", size = 5) +
-      annotate("text", label = "Personnes âgées en bonne santé", x = 0.7, y = 10300, hjust = 0, fontface = "bold", size = 5) +
-      annotate("text", label = "Personnes avec incapacité et/ou maladie chronique", x = 0.5, y = 8800, hjust = 0, fontface = "bold", size = 5) +
-      annotate("text", label = "Réf: Tudor-Locke et al. Int J Behav Nutr Phys Act 2011, 8 (1), 79", x = 0.9, y = 17900, hjust = 1)
+      annotate("text", label = "Personnes \u00e2g\u00e9es en bonne sant\u00e9", x = 0.7, y = 10300, hjust = 0, fontface = "bold", size = 5) +
+      annotate("text", label = "Personnes avec incapacit\u00e9 et/ou maladie chronique", x = 0.5, y = 8800, hjust = 0, fontface = "bold", size = 5) +
+      annotate("text", label = "R\u00e9f: Tudor-Locke et al. Int J Behav Nutr Phys Act 2011, 8 (1), 79", x = 0.9, y = 17900, hjust = 1)
     
     return(g_steps)
     

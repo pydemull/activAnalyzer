@@ -1,10 +1,10 @@
 #' Create a figure showing the mean daily MVPA/SED ratio
 #' 
-#' The function generates a figure showing the mean of the MVPA/SED ratio in correspondance with the Chastin et al. (2021; doi: 10.1123/jpah.2020-0635)
+#' The function generates a figure showing the daily mean of the MVPA/SED ratio in correspondence with the Chastin et al. (2021; doi: 10.1123/jpah.2020-0635)
 #'     mortality hazard ratios.
 #'
-#' @param score A numeric value for daily MVPA/SED ratio.
-#' @param language A character value for setting the language with which the figure should be created: "en" for english; "fr" for french.
+#' @param score A numeric value for mean daily MVPA/SED ratio.
+#' @param language A character value for setting the language with which the figure should be created: `en` for english; `fr` for french.
 #'
 #' @return A ggplot object.
 #' @export
@@ -79,7 +79,7 @@ if (language == "en") {
              yend = 1.15, 
              curvature = .5, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
-    annotate("text", label = "Ref: Chastin et al. J Phys Act Health 2021, 18 (6), 631–637", hjust = 0, x = 0.005, y = 0.15)
+    annotate("text", label = "Ref: Chastin et al. J Phys Act Health 2021, 18 (6), 631\u2013637", hjust = 0, x = 0.005, y = 0.15)
   
   return(g_ratio)
 }
@@ -111,7 +111,7 @@ if (language == "fr") {
           plot.background = element_rect(fill = "beige", color = "beige"),
           plot.margin = margin(0, 1, 0, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-    annotate("text", label = "Seuil au-dessus duquel la plupart des \nbénéfices de santé pourraient être obtenus", 
+    annotate("text", label = "Seuil au-dessus duquel la plupart des \nb\u00e9n\u00e9fices de sant\u00e9 pourraient \u00eAtre obtenus", 
              x = 0.068, y = 1.13, hjust = 0,
              size = 5,
              colour = "black", 
@@ -123,7 +123,7 @@ if (language == "fr") {
              yend = 1.15, 
              curvature = .5, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
-    annotate("text", label = "Réf: Chastin et al. J Phys Act Health 2021, 18 (6), 631–637", hjust = 0, x = 0.005, y = 0.15)
+    annotate("text", label = "R\u00e9f: Chastin et al. J Phys Act Health 2021, 18 (6), 631\u2013637", hjust = 0, x = 0.005, y = 0.15)
   
   return(g_ratio)
   

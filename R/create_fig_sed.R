@@ -1,10 +1,10 @@
 #' Create a figure showing the mean daily sedentary (SED) time
 #' 
-#' The function generates a figure showing the mean of the SED hours in correspondance with the Ekelund et al. (2019; doi: 10.1136/bmj.l4570)
+#' The function generates a figure showing the daily mean of SED time in correspondence with the Ekelund et al. (2019; doi: 10.1136/bmj.l4570)
 #'     mortality hazard ratios.
 #'
-#' @param score A numeric value for daily SED time in minutes.
-#' @param language A character value for setting the language with which the figure should be created: "en" for english; "fr" for french.
+#' @param score A numeric value for mean daily SED time in minutes.
+#' @param language A character value for setting the language with which the figure should be created: `en` for english; `fr` for french.
 #'
 #' @return A ggplot object.
 #' @export
@@ -109,7 +109,7 @@ if (language == "fr") {
     scale_y_continuous(trans = scales::log2_trans()) +
     scale_x_continuous(limits = c(1, 15), breaks = seq(1, 15, 2)) +
     coord_cartesian(xlim = c(1, 15), ylim = c(0.35, 5), expand = FALSE) +
-    labs(title = "Heures SED journalières", x = "", y = NULL) +
+    labs(title = "Heures SED journali\u00e8res", x = "", y = NULL) +
     theme_bw() +
     theme(axis.ticks = element_blank(),
           axis.text.x = element_text(size = 13),
@@ -136,7 +136,7 @@ if (language == "fr") {
              yend = 0.71, 
              curvature = .5, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
-    annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1.2, y = 0.387)
+    annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1.2, y = 0.387)
   
   return(g_sed)
   

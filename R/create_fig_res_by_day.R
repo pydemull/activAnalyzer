@@ -1,12 +1,12 @@
 #' Create a figure with metrics shown for each day
 #' 
-#' The function generates a figure with several common metrics shown for each day following the physical behavior measurement.
+#' The function generates a figure with several common metrics shown for each day of the physical behavior measurement.
 #'
-#' @param data A dataframe with mean results obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, and then the \code{\link{recap_by_day}} functions.
-#' @param minimum_wear_time_for_analysis A numeric value to indicate the minimum number of hours of wear time that was configured to valid a day.
+#' @param data A dataframe with results obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, and then the \code{\link{recap_by_day}} functions.
+#' @param minimum_wear_time_for_analysis A numeric value to indicate the minimum number of hours of wear time that was considered to valid a day.
 #' @param start_day_analysis A character value to indicate the start of the period that was considered to valid a day based on wear time.
 #' @param end_day_analysis A character value to indicate the end of the period that was considered to valid a day based on wear time.
-#' @param language A character value for setting the language with which the table should be created: "en" for english; "fr" for french.
+#' @param language A character value for setting the language with which the figure should be created: `en` for english; `fr` for french.
 #'
 #' @return A ggplot object
 #' @export
@@ -179,7 +179,7 @@ if (language == "fr") {
       )
     ) %>%
     ggplot(aes(x = date, y = value, fill = validity)) +
-    ggtitle("Résultats par jour") +
+    ggtitle("R\u00e9sultats par jour") +
     geom_bar(stat = "identity") +
     geom_point(size = 2, color = "red") +
     geom_line(aes(group = 1), size = 0.7, color = "red") +

@@ -1,12 +1,13 @@
 #' Get WHO physical activity guidelines status
 #'
 #' @param value A numeric value to indicate the daily mean of MET-hours spent at moderate-to-vigorous physical activity intensity.
-#' @param language A character value for setting the language with which the table should be created: "en" for english; "fr" for french.
+#' @param language A character value for setting the language with which the table should be created: `en` for english; `fr` for french.
 #'
 #' @return A character string.
 #' @export
 #'
 #' @examples get_guidelines_status(value = 5)
+#' 
 get_guidelines_status <- function(value, language = c("en", "fr")) {
   
 language <- match.arg(language)

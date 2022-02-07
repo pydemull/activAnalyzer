@@ -15,7 +15,7 @@ create_flextable_summary(
 
 \item{results_summary_medians}{A dataframe with meadian results obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, \code{\link{recap_by_day}}, and then the \code{\link{average_results}} functions.}
 
-\item{language}{A character value for setting the language with which the table should be created: "en" for english; "fr" for french.}
+\item{language}{A character value for setting the language with which the table should be created: \code{en} for english; \code{fr} for french.}
 }
 \value{
 A flextable object
@@ -54,8 +54,20 @@ summary_by_day <- recap_by_day(
     valid_wear_time_start = "07:00:00",
     valid_wear_time_end = "22:00:00"
     )
-results_summary_means <- average_results(data = summary_by_day, minimum_wear_time = 10, fun = "mean")
-results_summary_medians <- average_results(data = summary_by_day, minimum_wear_time = 10, fun = "median")
-create_flextable_summary(results_summary_means, results_summary_medians, language = "en")
+results_summary_means <- average_results(
+    data = summary_by_day, 
+    minimum_wear_time = 10, 
+    fun = "mean"
+    )
+results_summary_medians <- average_results(
+    data = summary_by_day, 
+    minimum_wear_time = 10, 
+    fun = "median"
+    )
+create_flextable_summary(
+    results_summary_means,
+    results_summary_medians, 
+    language = "en"
+    )
 
 }

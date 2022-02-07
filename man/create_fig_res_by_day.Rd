@@ -13,21 +13,21 @@ create_fig_res_by_day(
 )
 }
 \arguments{
-\item{data}{A dataframe with mean results obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, and then the \code{\link{recap_by_day}} functions.}
+\item{data}{A dataframe with results obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, and then the \code{\link{recap_by_day}} functions.}
 
-\item{minimum_wear_time_for_analysis}{A numeric value to indicate the minimum number of hours of wear time that was configured to valid a day.}
+\item{minimum_wear_time_for_analysis}{A numeric value to indicate the minimum number of hours of wear time that was considered to valid a day.}
 
 \item{start_day_analysis}{A character value to indicate the start of the period that was considered to valid a day based on wear time.}
 
 \item{end_day_analysis}{A character value to indicate the end of the period that was considered to valid a day based on wear time.}
 
-\item{language}{A character value for setting the language with which the table should be created: "en" for english; "fr" for french.}
+\item{language}{A character value for setting the language with which the figure should be created: \code{en} for english; \code{fr} for french.}
 }
 \value{
 A ggplot object
 }
 \description{
-The function generates a figure with several common metrics shown for each day following the physical behavior measurement.
+The function generates a figure with several common metrics shown for each day of the physical behavior measurement.
 }
 \examples{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")

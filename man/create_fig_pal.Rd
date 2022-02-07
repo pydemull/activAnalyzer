@@ -7,15 +7,15 @@
 create_fig_pal(score, language = c("en", "fr"))
 }
 \arguments{
-\item{score}{A numeric value for daily PAL.}
+\item{score}{A numeric value for mean daily PAL.}
 
-\item{language}{A character value for setting the language with which the figure should be created: "en" for english; "fr" for french.}
+\item{language}{A character value for setting the language with which the figure should be created: \code{en} for english; \code{fr} for french.}
 }
 \value{
 A ggplot object.
 }
 \description{
-The function generates a figure showing the daily mean of PAL in correspondance with the FAO
+The function generates a figure showing the daily mean of PAL in correspondence with the FAO
 (2004; http://www.fao.org/3/y5686e/y5686e07.htm#bm07.3) categories.
 }
 \examples{

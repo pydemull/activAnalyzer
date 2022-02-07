@@ -2,20 +2,20 @@
 % Please edit documentation in R/create_fig_mvpa.R
 \name{create_fig_mvpa}
 \alias{create_fig_mvpa}
-\title{Create a figure showing the mean daily MPVA minutes}
+\title{Create a figure showing the mean daily MVPA time}
 \usage{
 create_fig_mvpa(score, language = c("en", "fr"))
 }
 \arguments{
-\item{score}{A numeric value for daily MVPA time in minutes.}
+\item{score}{A numeric value for mean daily MVPA time in minutes.}
 
-\item{language}{A character value for setting the language with which the figure should be created: "en" for english; "fr" for french.}
+\item{language}{A character value for setting the language with which the figure should be created: \code{en} for english; \code{fr} for french.}
 }
 \value{
 A ggplot object.
 }
 \description{
-The function generates a figure showing the mean of the MVPA minutes in correspondance with the Ekelund et al. (2019; doi: 10.1136/bmj.l4570)
+The function generates a figure showing the daily mean of MVPA time in correspondence with the Ekelund et al. (2019; doi: 10.1136/bmj.l4570)
 mortality hazard ratios.
 }
 \examples{

@@ -1,10 +1,10 @@
-#' Create a figure showing the mean daily MPVA minutes
+#' Create a figure showing the mean daily MVPA time
 #' 
-#' The function generates a figure showing the mean of the MVPA minutes in correspondance with the Ekelund et al. (2019; doi: 10.1136/bmj.l4570)
+#' The function generates a figure showing the daily mean of MVPA time in correspondence with the Ekelund et al. (2019; doi: 10.1136/bmj.l4570)
 #'     mortality hazard ratios.
 #'
-#' @param score A numeric value for daily MVPA time in minutes.
-#' @param language A character value for setting the language with which the figure should be created: "en" for english; "fr" for french.
+#' @param score A numeric value for mean daily MVPA time in minutes.
+#' @param language A character value for setting the language with which the figure should be created: `en` for english; `fr` for french.
 #'
 #' @return A ggplot object.
 #' @export
@@ -114,7 +114,7 @@ if (language == "fr") {
     scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 100, 25)) +
     theme_bw() +
     coord_cartesian(xlim = c(0, 100), ylim = c(0.25, 1), expand = FALSE) +
-    labs(title = "Minutes MVPA journalières", x = "", y = NULL) +
+    labs(title = "Minutes MVPA journali\u00e8res", x = "", y = NULL) +
     theme(axis.ticks = element_blank(),
           axis.text.x = element_text(size = 13),
           axis.text.y = element_blank(),
@@ -125,7 +125,7 @@ if (language == "fr") {
           plot.background = element_rect(fill = "beige", color = "beige"),
           plot.margin = margin(0, 1, 0, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-    annotate("text", label = "Rapport de risque \npour la mortalité", 
+    annotate("text", label = "Rapport de risque \npour la mortalit\u00e9", 
              x = 70, y = 0.57, hjust = 0, 
              fontface = "bold.italic", colour = "#3366FF") +
     annotate(geom = "curve", 
@@ -139,7 +139,7 @@ if (language == "fr") {
              x = 60, y = 0.80, hjust = 0.5, 
              colour = "grey50", fontface = "bold.italic") +
     
-    annotate("text", label = "Seuil au-dessus duquel le max. \nde bénéfices de santé \npourrait être obtenu", 
+    annotate("text", label = "Seuil au-dessus duquel le max. \nde b\u00e9n\u00e9fices de sant\u00e9 \npourrait \u00eAtre obtenu", 
              x = 38, y = 0.42, hjust = 0, vjust = 1, size = 5,
              colour = "black", fontface = "italic") +
     annotate(geom = "curve", 
@@ -149,7 +149,7 @@ if (language == "fr") {
              yend = 0.36, 
              curvature = -.4, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
-    annotate("text", label = "Réf: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1, y = 0.265)
+    annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1, y = 0.265)
   
   return(g_mvpa)
   

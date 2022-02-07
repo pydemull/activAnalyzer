@@ -1,10 +1,10 @@
 #' Create a figure showing the mean daily Physical Activity Level (PAL)
 #' 
-#' The function generates a figure showing the daily mean of PAL in correspondance with the FAO 
+#' The function generates a figure showing the daily mean of PAL in correspondence with the FAO 
 #'     (2004; http://www.fao.org/3/y5686e/y5686e07.htm#bm07.3) categories. 
 #'
-#' @param score A numeric value for daily PAL.
-#' @param language A character value for setting the language with which the figure should be created: "en" for english; "fr" for french.
+#' @param score A numeric value for mean daily PAL.
+#' @param language A character value for setting the language with which the figure should be created: `en` for english; `fr` for french.
 #'
 #' @return A ggplot object.
 #' @export
@@ -90,9 +90,9 @@ if (language == "fr") {
     geom_vline(aes(xintercept = 0.51), size = 0.4, color = "grey30") +
     geom_vline(aes(xintercept = 0.25), size = 0.5, color = "grey30", linetype ="dotted") +
     geom_segment(x = 0, xend = 0.51, y = score, yend = score, size = 0.5, color = "grey30", linetype ="dotted") +
-    geom_point(aes(x = 0.25, y = score, color = "Résultat du patient (moyenne journalière)"), size = 7, shape = 1) +
-    geom_point(aes(x = 0.25, y = score, color = "Résultat du patient (moyenne journalière)"), size = 4, shape = 16) +
-    geom_point(aes(x = 0.25, y = score, color = "Résultat du patient (moyenne journalière)"), size = 7, shape = 3) +
+    geom_point(aes(x = 0.25, y = score, color = "R\u00e9sultat du patient (moyenne journali\u00e8re)"), size = 7, shape = 1) +
+    geom_point(aes(x = 0.25, y = score, color = "R\u00e9sultat du patient (moyenne journali\u00e8re)"), size = 4, shape = 16) +
+    geom_point(aes(x = 0.25, y = score, color = "R\u00e9sultat du patient (moyenne journali\u00e8re)"), size = 7, shape = 3) +
     scale_y_continuous(labels = as.character(format(round(c(1.1, 1.4, 1.7, 2.0, 2.4, 2.8), 2), nsmall = 1)), 
                        breaks = c(1.10, 1.40, 1.70, 2.00, 2.40, 2.80)) +
     scale_fill_manual(values = c("lightgoldenrodyellow", "lightgoldenrod1", "yellow", "gold1", "gold2")) +
@@ -117,11 +117,11 @@ if (language == "fr") {
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
     guides(fill= "none") +
     ggtitle("NAP journalier") +
-    annotate("text", label = "Sédentaire \nou légèrement actif", x = 0.75, y = 1.55, size = 5) +
-    annotate("text", label = "Modérément \nactif", x = 0.75, y = 1.85, size = 5) +
+    annotate("text", label = "S\u00e9dentaire \nou l\u00e9g\u00e8rement actif", x = 0.75, y = 1.55, size = 5) +
+    annotate("text", label = "Mod\u00e9r\u00e9ment \nactif", x = 0.75, y = 1.85, size = 5) +
     annotate("text", label = "Vigoureusement \nactif", x = 0.75, y = 2.2, size = 5) +
-    annotate("text", label = "Difficile à maintenir \nsur une longue période de temps", x = 0.75, y = 2.6, size = 5) +
-    annotate("text", label = "Réf: FAO 2004 | http://www.fao.org/3/y5686e/y5686e07.htm#bm07.3", hjust = 1, x = 0.1, y = 2.79)
+    annotate("text", label = "Difficile \u00e0 maintenir \nsur une longue p\u00e9riode de temps", x = 0.75, y = 2.6, size = 5) +
+    annotate("text", label = "R\u00e9f: FAO 2004 | http://www.fao.org/3/y5686e/y5686e07.htm#bm07.3", hjust = 1, x = 0.1, y = 2.79)
   
   return(g_pal)
   
