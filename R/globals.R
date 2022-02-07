@@ -71,7 +71,25 @@ utils::globalVariables(c(
   "total_kcal",
   "axis1_per_min",
   "vm_per_min",
-  "median"
-  
+  "median",
+  "end",
+  "intensity_category",
+  "label",
+  "line",
+  "loess",
+  "loess.control",
+  "low",
+  "mid",
+  "pred",
+  "start",
+  "up",
+  "value",
+  "variable",
+  "x",
+  "xend",
+  "xmax",
+  "xmin",
+  "y",
+  "yend"
   
   ))
