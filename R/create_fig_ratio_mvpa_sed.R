@@ -41,7 +41,7 @@ language <- match.arg(language)
   score_ratio <- data.frame(x = score) %>% 
     modelr::add_predictions(model_ratio)
   
-# Creating 
+# Creating figure
 if (language == "en") { 
   
   g_ratio <-

@@ -60,7 +60,7 @@ language <- match.arg(language)
 title_axis_size = 10
 label_text_size = 5
 
-# Generate figure
+# Creating figure
 if (language == "en") {
   
 all_days <-
