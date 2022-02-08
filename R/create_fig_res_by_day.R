@@ -124,7 +124,7 @@ all_days <-
         axis.text.y = element_blank(),
         axis.ticks = element_blank(),
         plot.background = element_rect(fill = "beige", color = "beige"),
-        plot.margin = margin(0, 1, 0.5, 1, "cm"),
+        plot.margin = margin(1, 1, 0.5, 1, "cm"),
         strip.text.x = element_text(size = 15),
         plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
   facet_wrap(. ~ variable, scales = "free_y")
@@ -201,7 +201,7 @@ if (language == "fr") {
           axis.text.y = element_blank(),
           axis.ticks = element_blank(),
           plot.background = element_rect(fill = "beige", color = "beige"),
-          plot.margin = margin(0, 1, 0.5, 1, "cm"),
+          plot.margin = margin(1, 1, 0.5, 1, "cm"),
           strip.text.x = element_text(size = 15),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
     facet_wrap(. ~ variable, scales = "free_y")

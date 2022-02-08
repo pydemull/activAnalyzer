@@ -87,22 +87,22 @@ create_flextable_summary(df1_means, df1_medians, language = "en")
 
 ```{r, fig.height=18, fig.width = 17, warning=FALSE, message=FALSE}
 # PAL
-g_pal <- create_fig_pal(score = df1_means[["pal"]], "en")
+g_pal <- create_fig_pal(score = df1_means[["pal"]], "en") + theme(plot.margin = margin(2, 1, 0.5, 1, "cm"))
   
 # Steps
-g_steps <- create_fig_steps(score = df1_means[["total_steps"]], "en")
+g_steps <- create_fig_steps(score = df1_means[["total_steps"]], "en") + theme(plot.margin = margin(0, 1, 0.5, 1, "cm"))
 
 if (params$rendered_by_shiny)
   shiny::setProgress(0.5)  # set progress to 50%
 
 # MVPA
-g_mvpa <- create_fig_mvpa(score = df1_means[["minutes_MVPA"]], "en")
+g_mvpa <- create_fig_mvpa(score = df1_means[["minutes_MVPA"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
 
 # SED
-g_sed <- create_fig_sed(score = df1_means[["minutes_SED"]], "en")
+g_sed <- create_fig_sed(score = df1_means[["minutes_SED"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
 
 # MVPA/SED ratio
-g_ratio <- create_fig_ratio_mvpa_sed(score = df1_means[["ratio_mvpa_sed"]], "en")
+g_ratio <- create_fig_ratio_mvpa_sed(score = df1_means[["ratio_mvpa_sed"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
 
 # Daily results
 g_all_days <- create_fig_res_by_day(
@@ -111,7 +111,7 @@ g_all_days <- create_fig_res_by_day(
   params$start_day_analysis, 
   params$end_day_analysis, 
   language = "en"
-  )
+  ) + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
 
 # Whole figure
 g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_all_days + 

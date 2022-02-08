@@ -68,7 +68,7 @@ if (language == "en") {
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           plot.background = element_rect(fill = "beige", color = "beige"),
-          plot.margin = margin(2, 1, 0.5, 1, "cm"),
+          plot.margin = margin(1, 1, 0.5, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
     guides(fill= "none") +
     ggtitle("Daily PAL") +
@@ -113,7 +113,7 @@ if (language == "fr") {
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           plot.background = element_rect(fill = "beige", color = "beige"),
-          plot.margin = margin(2, 1, 0.5, 1, "cm"),
+          plot.margin = margin(1, 1, 0.5, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
     guides(fill= "none") +
     ggtitle("NAP journalier") +

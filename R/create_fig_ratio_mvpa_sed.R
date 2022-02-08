@@ -67,7 +67,7 @@ if (language == "en") {
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           plot.background = element_rect(fill = "beige", color = "beige"),
-          plot.margin = margin(0, 1, 0, 1, "cm"),
+          plot.margin = margin(1, 1, 0, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
     annotate("text", label = "Threshold above which most of \nhealth benefits may be obtained", 
              x = 0.068, y = 1.12, hjust = 0, size = 5,
@@ -109,7 +109,7 @@ if (language == "fr") {
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           plot.background = element_rect(fill = "beige", color = "beige"),
-          plot.margin = margin(0, 1, 0, 1, "cm"),
+          plot.margin = margin(1, 1, 0, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
     annotate("text", label = "Seuil au-dessus duquel la plupart des \nb\u00e9n\u00e9fices de sant\u00e9 pourraient \u00eAtre obtenus", 
              x = 0.068, y = 1.13, hjust = 0,

@@ -67,7 +67,7 @@ if (language == "en") {
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           plot.background = element_rect(fill = "beige", color = "beige"),
-          plot.margin = margin(0, 1, 0, 1, "cm"),
+          plot.margin = margin(1, 1, 0, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
     annotate("text", label = "Mortality hazard \nratio", 
              x = 73, y = 0.57, hjust = 0, 
@@ -123,7 +123,7 @@ if (language == "fr") {
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           plot.background = element_rect(fill = "beige", color = "beige"),
-          plot.margin = margin(0, 1, 0, 1, "cm"),
+          plot.margin = margin(1, 1, 0, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
     annotate("text", label = "Rapport de risque \npour la mortalit\u00e9", 
              x = 70, y = 0.57, hjust = 0, 
