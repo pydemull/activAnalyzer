@@ -22,7 +22,7 @@ if (language == "en") {
   if (language == "fr") {
     comment_ratio <- 
     ifelse(value >= 0.04, "le patient obtient d\u00e9j\u00e0 probablement la plupart des b\u00e9n\u00e9fices de sant\u00e9 li\u00e9s \u00e0 son comportement physique",
-           "le patient pourrait probablement obtenir davantage de b\u00e9n\u00e9fices de sant\u00e9 en repla\u00e7ant du temps s\u00e9dentaire par du temps d'activit\u00e9 physique")
+           "le patient pourrait probablement obtenir davantage de b\u00e9n\u00e9fices de sant\u00e9 en rempla\u00e7ant du temps s\u00e9dentaire par du temps d'activit\u00e9 physique")
     return(comment_ratio)
   }
 
