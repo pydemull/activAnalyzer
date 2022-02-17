@@ -1,6 +1,6 @@
 Package: activAnalyzer
 Title: A Shiny app to analyze accelerometer-measured daily physical behavior
-Version: 0.2.0.9000
+Version: 0.3.0
 Authors@R: person('Pierre-Yves', 'de Müllenheim', email = 'pydemull@uco.fr', role = c('cre', 'aut'), comment = c(ORCID = "000-0001-9157-7371"))
 Description: This app was developed to analyze daily physical behavior data recorded
     at the hip in adults using an ActiGraph accelerometer. Once analysis is completed,
