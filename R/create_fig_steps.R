@@ -73,7 +73,8 @@ language <- match.arg(language)
     geom_segment(data = table_steps2, aes(x = x, xend = xend, y = y, yend = yend, color = label), size = 1, 
                  arrow = arrow(length = unit(0.09, "inches"))) +
     geom_errorbarh(data = table_steps2, aes(y = y, xmin = xmin, xmax = xmax, color = label), size = 1, height = 0) + 
-    scale_y_continuous(labels = as.character(c(0, 2500, 5000, 7500, 10000, 12500, 18000)), 
+    scale_y_continuous(limits = c(0, 18000),
+                       labels = as.character(c(0, 2500, 5000, 7500, 10000, 12500, 18000)), 
                        breaks = c(0, 2500, 5000, 7500, 10000, 12500, 18000)) +
     scale_fill_brewer(palette="Blues") +
     scale_color_brewer(palette="Dark2") +
@@ -120,7 +121,8 @@ language <- match.arg(language)
       geom_segment(data = table_steps2, aes(x = x, xend = xend, y = y, yend = yend, color = label), size = 1, 
                    arrow = arrow(length = unit(0.09, "inches"))) +
       geom_errorbarh(data = table_steps2, aes(y = y, xmin = xmin, xmax = xmax, color = label), size = 1, height = 0) + 
-      scale_y_continuous(labels = as.character(c(0, 2500, 5000, 7500, 10000, 12500, 18000)), 
+      scale_y_continuous(limits = c(0, 18000),
+                         labels = as.character(c(0, 2500, 5000, 7500, 10000, 12500, 18000)), 
                          breaks = c(0, 2500, 5000, 7500, 10000, 12500, 18000)) +
       scale_fill_brewer(palette="Blues") +
       scale_color_brewer(palette="Dark2") +

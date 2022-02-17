@@ -91,18 +91,22 @@ g_pal <- create_fig_pal(score = df1_means[["pal"]], "en") + theme(plot.margin = 
   
 # Steps
 g_steps <- create_fig_steps(score = df1_means[["total_steps"]], "en") + theme(plot.margin = margin(0, 1, 0.5, 1, "cm"))
+if (df1_means[["total_steps"]] > 18000) {g_steps <- g_steps + annotate("text", label = "The score is \nbeyond the limits!", x = 0.25, y = 9000, size = 7, color = "red", fontface = "bold")}
 
 if (params$rendered_by_shiny)
   shiny::setProgress(0.5)  # set progress to 50%
 
 # MVPA
 g_mvpa <- create_fig_mvpa(score = df1_means[["minutes_MVPA"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+if (df1_means[["minutes_MVPA"]] > 100) {g_mvpa <- g_mvpa + annotate("text", label = "The score is \nbeyond the limits!", x = 50, y = 0.5, size = 7, color = "red", fontface = "bold")}
 
 # SED
 g_sed <- create_fig_sed(score = df1_means[["minutes_SED"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+if (df1_means[["minutes_SED"]] > 15*60) {g_sed <- g_sed + annotate("text", label = "The score is \nbeyond the limits!", x = 7.5, y = 2, size = 7, color = "red", fontface = "bold")}
 
 # MVPA/SED ratio
 g_ratio <- create_fig_ratio_mvpa_sed(score = df1_means[["ratio_mvpa_sed"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+if (df1_means[["ratio_mvpa_sed"]] > 0.4) {g_ratio <- g_ratio + annotate("text", label = "The score is \nbeyond the limits!", x = 0.2, y = 0.8, size = 7, color = "red", fontface = "bold")}
 
 # Daily results
 g_all_days <- create_fig_res_by_day(
