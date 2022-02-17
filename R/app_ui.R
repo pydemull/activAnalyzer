@@ -18,7 +18,7 @@ app_ui <- function(request) {
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
         ),
-        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.2.X"), titleWidth = 237
+        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.3.0"), titleWidth = 237
                                       ),
       shinydashboardPlus::dashboardSidebar(
         tags$style(HTML("
@@ -423,7 +423,7 @@ app_ui <- function(request) {
                        
                        fluidRow(
                          column(2,
-                                h3("PROactive scores"),
+                                h3("PROactive scores (C-PPAC)"),
                                 shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores"))
                          ),
                        ),
@@ -473,7 +473,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12, 
-                           h4("Welcome to the activAnalyzer app. activAnalyzer is a shinny app that was developed to analyze daily physical behavior data recorded at the hip 
+                           h4("Welcome to the activAnalyzer app. activAnalyzer is a Shinny app that was developed to analyze daily physical behavior data recorded at the hip 
                    in adults using an ActiGraph accelerometer (.agd files). Once analysis is completed,
                    the app allows to export results to .csv files and to generate a report of the measurement. All the configured inputs
                    relevant for interpreting the results are recorded into the report. Be sure that the inputs that are configured

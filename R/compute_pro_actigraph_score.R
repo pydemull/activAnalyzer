@@ -21,11 +21,11 @@ metric = match.arg(metric)
 if (metric == "steps") {
   
     score <- dplyr::case_when(
-      x >= 6000 ~ 4,
-      x >= 4000 ~ 3,
-      x >= 2000 ~ 2,
-      x >= 1000 ~ 1,
-      x < 1000 ~ 0
+      x >  5700 ~ 4,
+      x >= 4001 ~ 3,
+      x >= 2201 ~ 2,
+      x >= 1301 ~ 1,
+      x <  1301 ~ 0
     )
     
     return(score)
@@ -35,11 +35,11 @@ if (metric == "steps") {
 if (metric == "vmu") {
     
   score <- dplyr::case_when(
-      x >= 500 ~ 4,
-      x >= 300 ~ 3,
-      x >= 200 ~ 2,
-      x >= 100 ~ 1,
-      x < 100 ~ 0 
+      x >  490 ~ 4,
+      x >= 351 ~ 3,
+      x >= 261 ~ 2,
+      x >= 181 ~ 1,
+      x <  181 ~ 0 
     )
   
   return(score)

@@ -643,9 +643,9 @@ app_server <- function(input, output, session) {
   })
   
   
-  ##########################
-  # Hide / show boxes ----
-  ##########################
+  #########################
+  # Hiding / showing boxes ----
+  #########################
   
   # Box for graph with wear time
   observe({
@@ -678,9 +678,9 @@ app_server <- function(input, output, session) {
   })
   
   
-  ##############################
-  # Hide / show Download buttons ----
-  ##############################
+  ##################################
+  # Hiding/ showing Download buttons ----
+  ##################################
   
   observe({
       shinyjs::hide("ExpDataset")
@@ -748,9 +748,9 @@ app_server <- function(input, output, session) {
     }
   )
   
-  #################
-  # Generate report ----
-  #################
+  ###################
+  # Generating report ----
+  ###################
   
   # Generating report EN
   output$report_en <- downloadHandler(
@@ -892,9 +892,9 @@ app_server <- function(input, output, session) {
   
   
   
-  ########### 
-  # Reset app ----
-  ########### 
+  ############### 
+  # Resetting app ----
+  ###############
   
   observeEvent(input$reset, {
     
@@ -923,9 +923,9 @@ app_server <- function(input, output, session) {
     removeModal()
   })
   
-  ####################### 
-  # Download user's guide ----
-  #######################
+  ########################## 
+  # Downloading user's guide ----
+  ##########################
   
   # English
   output$user_guide_en <- downloadHandler(

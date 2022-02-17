@@ -10,18 +10,19 @@ filter <- c("...", "normal", "LFE")
 axis_weartime <- c("vector magnitude", "vertical axis")
 metrics <- c("axis1", "axis2", "axis3", "vm", "steps", "inclineStanding", "inclineSitting", "inclineLying")
 equations <- c("...",
-               "Sasaki et al. (2011) [Adults]",
-               "Santos-Lozano et al. (2013) [Adults]",
                "Freedson et al. (1998) [Adults]",
-               "Santos-Lozano et al. (2013) [Older adults]")
+               "Santos-Lozano et al. (2013) [Adults]",
+               "Santos-Lozano et al. (2013) [Older adults]",
+               "Sasaki et al. (2011) [Adults]"
+               )
 sed_cutpoint <- c("...", 
                    "Aguilar-Farias et al. (2014) [Older adults]", 
                    "Personalized...")
 mvpa_cutpoint <- c("...", 
-                    "Sasaki et al. (2011) [Adults]", 
-                    "Santos-Lozano et al. (2013) [Adults]", 
-                    "Freedson et al. (1998) [Adults]",
-                    "Santos-Lozano et al. (2013) [Older adults]", 
+                   "Freedson et al. (1998) [Adults]",
+                   "Santos-Lozano et al. (2013) [Adults]",
+                   "Santos-Lozano et al. (2013) [Older adults]",
+                   "Sasaki et al. (2011) [Adults]", 
                     "Personalized...")
 perso_sed_axis <- c("vector magnitude", "vertical axis")
 perso_mvpa_axis <- c("vector magnitude", "vertical axis")
