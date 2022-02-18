@@ -15,6 +15,7 @@
 * Updated plot functions.
 * Converted blocks of code of the reports to R functions.
 * Changed the algorithm to provide the PROactive scores (the previous algorithm was actually suited for the use of the D-PPAC, not for the use of the C-PPAC as expected).
+* Minor changes in the ui.
 
 # activAnalyzer 0.2.0
 

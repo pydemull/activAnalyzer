@@ -327,12 +327,12 @@ app_ui <- function(request) {
                     column(2,
                            numericInput("minimum_wear_time_for_analysis", "Minimum wear time to validate a day (hours)", value = 10)
                     ),
-                    column(3,
-                           shiny::actionButton("pro_active_period", "Set PROactive configuration for 24-h recording", style = "margin-top: 25px; background-color: #9933CC; color: white; border-color: #330066")
-                    ),
                   ),
                   fluidRow(
-                    column(3,
+                    column(2,
+                           shiny::actionButton("pro_active_period", "PROactive configuration for 24-h recording", style = "background-color: #9933CC; color: white; border-color: #330066"),
+                           ),
+                    column(1,
                            shiny::actionButton("reset_period", "Return to default values", style = "border-color: #2e6da4")
                     ),
                   ),
