@@ -658,14 +658,19 @@ app_server <- function(input, output, session) {
       shinyjs::show("myBox")
       shinyjs::show("Metric")
       shinyjs::show("graph")
+      
     }
   })
   
-  # Boxes for graph with PA categories
+  # Boxes for graph with PA categories and results
   observe({
     shinyjs::hide("myBox2")
     shinyjs::hide("Metric2")
     shinyjs::hide("graph_int")
+    shinyjs::hide("BoxResByDay")
+    shinyjs::hide("BoxResMeans")
+    shinyjs::hide("BoxResMedians")
+    shinyjs::hide("PROactive")
 
     
     if(nrow(results_list()$df_with_computed_metrics) >=1) {
@@ -673,6 +678,10 @@ app_server <- function(input, output, session) {
     shinyjs::show("myBox2")
     shinyjs::show("Metric2")
     shinyjs::show("graph_int")
+    shinyjs::show("BoxResByDay")
+    shinyjs::show("BoxResMeans")
+    shinyjs::show("BoxResMedians")
+    shinyjs::show("PROactive")
 
     }
   })
@@ -689,6 +698,7 @@ app_server <- function(input, output, session) {
       shinyjs::hide("ExpDailySummaryMedians")
       shinyjs::hide("report_en")
       shinyjs::hide("report_fr")
+      shinyjs::hide("reset")
       
     if(nrow(results_list()$df_with_computed_metrics) >=1) {
       
@@ -698,6 +708,7 @@ app_server <- function(input, output, session) {
       shinyjs::show("ExpDailySummaryMedians")
       shinyjs::show("report_en")
       shinyjs::show("report_fr")
+      shinyjs::show("reset")
     }
   })
   

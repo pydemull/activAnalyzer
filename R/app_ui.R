@@ -34,7 +34,9 @@ app_ui <- function(request) {
 
         # Providing alert message when closing the web window  (code from 
         # https://stackoverflow.com/questions/56369796/adding-a-are-you-sure-you-want-to-leave-this-page-alert-message-when-exiting-a)
-        tags$head(tags$script(htmltools::HTML("
+        tags$head(
+          tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
+          tags$script(htmltools::HTML("
              // Enable navigation prompt
              window.onbeforeunload = function() {
                 return 'Your changes will be lost!';
@@ -59,9 +61,7 @@ app_ui <- function(request) {
             }
           "))
                   ),
-                  
-                  # Setting color for section titles
-                  tags$head(tags$style('h2 {color:#337ab7;}')),
+
                   
                   ########################
                   # Section 1. Information ----
@@ -69,8 +69,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12,
-                           h3("Section 1. Information", style="font-weight: bold; font-size: 30px; color: #337ab7;"),
-                           tags$hr(style="border-color: #337ab7;"),
+                           h2("Section 1. Information"),
                     ),
                   ),
                   
@@ -80,7 +79,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(6,                   
-                           h2("Assessor"),
+                           h3("Assessor"),
                     ),
                   ),
                   fluidRow(
@@ -98,7 +97,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(6,                   
-                           h2("Patient")
+                           h3("Patient")
                     ),
                   ),
                   fluidRow(
@@ -127,7 +126,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(6,                   
-                           h2("Device")
+                           h3("Device")
                     ),
                   ),
                   fluidRow(
@@ -150,8 +149,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12,
-                           h3("Section 2. Data uploading, nonwear time detection, and data visualization", style="font-weight: bold; font-size: 30px; color: #337ab7;"),
-                           tags$hr(style="border-color: #337ab7;")
+                           h2("Section 2. Data uploading, nonwear time detection, and data visualization"),
                     ),
                   ),
                   fluidRow(
@@ -181,7 +179,7 @@ app_ui <- function(request) {
                   fluidRow(
                     column(3,
                            h3(""),
-                           shiny::actionButton("validate", "Validate configuration", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
+                           shiny::actionButton("validate", "Validate configuration", style="color: #fff; background-color: #00CC66; border-color: #336600"),
                     ),
                   ),
                   
@@ -192,6 +190,7 @@ app_ui <- function(request) {
                   fluidRow(
                     h3(""),
                     shinydashboardPlus::box(id = "myBox", 
+                                            title = "Wear time analysis",
                                             shinycssloaders::withSpinner(plotOutput("graph", height = "auto")), 
                                             width = 12, 
                                             height = "auto")
@@ -208,8 +207,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12,
-                           h3("Section 3. Configuration for metrics computation", style="font-weight: bold; font-size: 30px; color: #337ab7;"),
-                           tags$hr(style="border-color: #337ab7;")
+                           h2("Section 3. Configuration for metrics computation"),
                     ),
                   ),    
                   
@@ -344,7 +342,8 @@ app_ui <- function(request) {
                   fluidRow(
                     column(3,
                            h3(""),
-                           shiny::actionButton("Run", "Run Analysis", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
+                           shiny::actionButton("Run", "Run Analysis", style="color: #fff; background-color: #00CC66; border-color: #336600"),
+                           h3("")
                     ),
                   ),
                   
@@ -354,8 +353,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12,
-                           h3("Section 4. Results, Export, and Reset", style="font-weight: bold; font-size: 30px; color: #337ab7;"),
-                           tags$hr(style="border-color: #337ab7;")
+                           h2("Section 4. Results, Export, and Reset"),
                     ),
                   ),  
                   
@@ -366,15 +364,10 @@ app_ui <- function(request) {
                        #*************************
                        # Box showing monitor data
                        #*************************
-                       
-                       fluidRow(
-                         column(12,
-                         h2("Results"),
-                         h3("")
-                         )
-                         ),
+
                        fluidRow(
                          shinydashboardPlus::box(id = "myBox2", 
+                                                 title = "Physical behavior intensity analysis",
                                                  shinycssloaders::withSpinner(plotOutput("graph_int", height = "auto")), 
                                                  width = 12, 
                                                  height = "auto")
@@ -389,10 +382,12 @@ app_ui <- function(request) {
                        #************************
                       
                        fluidRow(
-                         column(12,
-                                h3("Results by day"),
-                                shinycssloaders::withSpinner(reactable::reactableOutput("results_by_day"))
-                         ),
+                         shinydashboardPlus::box(
+                           id = "BoxResByDay", 
+                           title = "Results by day",
+                           shinycssloaders::withSpinner(reactable::reactableOutput("results_by_day")),
+                           width = 12, 
+                           height = "auto")
                        ),
                       
                        #****************************************************
@@ -400,10 +395,12 @@ app_ui <- function(request) {
                        #****************************************************
                        
                        fluidRow(
-                         column(12,
-                                h3("Results summarized over valid days (means)"),
-                                shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_means"))
-                         ),
+                         shinydashboardPlus::box(
+                           id = "BoxResMeans",
+                           title = "Results summarized over valid days (means)",
+                                shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_means")),
+                           width = 12, 
+                           height = "auto")
                        ),
                        
                        #******************************************************
@@ -411,10 +408,12 @@ app_ui <- function(request) {
                        #******************************************************
                        
                        fluidRow(
-                         column(12,
-                                h3("Results summarized over valid days (medians)"),
-                                shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_medians"))
-                         ),
+                         shinydashboardPlus::box(
+                           id = "BoxResMedians",
+                           title = "Results summarized over valid days (medians)",
+                                shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_medians")),
+                           width = 12, 
+                           height = "auto")
                        ),
                        
                        #******************************************************
@@ -422,10 +421,12 @@ app_ui <- function(request) {
                        #******************************************************
                        
                        fluidRow(
-                         column(2,
-                                h3("PROactive scores (C-PPAC)"),
-                                shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores"))
-                         ),
+                         shinydashboardPlus::box(
+                           id = "PROactive",
+                           title = "PROactive scores (C-PPAC)",
+                                shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores")),
+                           width = 12, 
+                           height = "auto")
                        ),
                            
                   #******************
@@ -434,8 +435,6 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12,
-                           h2(""),
-                           h2("Export"),
                            downloadButton("ExpDataset", "Export marked dataset (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
                            downloadButton("ExpResultsByDays", "Export results by day (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
                            downloadButton("ExpDailySummaryMeans", "Export daily summary (means) (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
@@ -452,8 +451,8 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(4,
-                           h2("Reset app"),
-                           shiny::actionButton('reset',"Reset App",  style="color: #fff; background-color: #F8766D; border-color: #FC717F")
+                           h3(""),
+                           shiny::actionButton('reset',"Reset App",  style="color: #fff; background-color: #FF3333; border-color: black")
                     )
                   )
           ), # End first tab
@@ -483,24 +482,19 @@ app_ui <- function(request) {
                   ),
                   fluidRow(
                     column(4,
-                           downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
-                           downloadButton("user_guide_fr", "Download user's guide (FR) (.pdf)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
+                           downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33"),
+                           downloadButton("user_guide_fr", "Download user's guide (FR) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33")
                     ),
                   ),
+
                   fluidRow(
                     column(12,
-                           tags$hr(style="border-color: #337ab7;")
-                    ),
-                  ),
-                  fluidRow(
-                    column(12,
-                           h2(""),
                            h2("Authors"),
                            h4("Pierre-Yves de M\u00fcllenheim, PhD", style = "font-weight: bold; font-size: 20px"),
                            h4("Associate professor"),
                            h4("Institut de formation en \u00e9ducation physique et en sport d\u0027Angers \u0028IFEPSA\u0029, UCO, France"),
                            h4("Email: pydemull@uco.fr"),
-                           h2(""),
+                           h3(""),
                            h4("Arnaud Chambellan, MD, PhD", style = "font-weight: bold; font-size: 20px"),
                            h4("Pulmonology Department, H\u00f4pital Saint Philibert, GHICL, France"),
                            h4("Professor of Physiology, Universit\u00e9 Catholique de Lille, France"),

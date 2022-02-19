@@ -1,0 +1,23 @@
+/* navbar */
+.skin-blue .main-header .navbar {
+    background-color: #337ab7;
+}
+
+.skin-blue .main-header .logo {
+    background-color: #337ab7;
+}
+
+/* Section titles */
+h2 {
+  font-weight: bold; 
+  font-size: 30px; 
+  color: #FDFEFE;
+  background-color: #337ab7;
+  padding: 0.3em;
+}
+
+h3 {
+  font-weight: bold; 
+  font-size: 20px; 
+  color: #337ab7;
+}

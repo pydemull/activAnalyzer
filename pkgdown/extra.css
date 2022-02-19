@@ -3,6 +3,9 @@
   font-size: 100%;
 }
 
+:root{
+  --bs-primary-rgb: 51, 122, 183;
+}
 
 /* Version number */
 .text-version { /* code is from https://imos-animaltracking.github.io/remora/ */
