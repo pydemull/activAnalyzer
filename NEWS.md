@@ -1,3 +1,7 @@
+# activAnalyzer (development version)
+
+* Updated UI appearance.
+
 # activAnalyzer 0.3.0
 
 * There is now only one information about wear time, that is, wear time related to the period of the day considered by the user (before, there was also wear time over the 24-h cycle).
