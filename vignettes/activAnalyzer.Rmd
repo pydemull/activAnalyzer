@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The activAnalyzer package was primarily built for working through a shiny app. The procedure for using the app is explained in the related [user's guide](https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf). The functions used in this app can also be used to analyze data outside the app, as shown below.
+The activAnalyzer package was primarily built for working through a Shiny app. The procedure for using the app is explained in the related [user's guide](https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf). The functions used in this app can also be used to analyze data outside the app, as shown below.
 
 ## Loading packages
 ```{r setup}

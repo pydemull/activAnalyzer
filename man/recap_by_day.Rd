@@ -39,13 +39,13 @@ A dataframe.
 This function summarizes accelerometer results for each day of the measurement period.
 }
 \details{
-The following metrics are computed:
+The following metrics are computed from epochs corresponding to valid wear time:
 \itemize{
 \item \strong{wear_time:} total wear time computed using the daily period defined in the function
 \item \strong{total_counts_axis1:} total counts for the vertical axis
 \item \strong{total_counts_vm:} total counts for the vector magnitude
-\item \strong{axis1_per_min:} mean of the counts per minute for the vertical axis (during the considered wear time only)
-\item \strong{vm_per_min:} mean of the counts per minute for the vector magnitude (during the considered wear time only)
+\item \strong{axis1_per_min:} mean of the counts per minute for the vertical axis
+\item \strong{vm_per_min:} mean of the counts per minute for the vector magnitude
 \item \strong{total_steps:} total step count
 \item \strong{total_kcal:} total kilocalories
 \item \strong{minutes_SED:} total minutes spent in SED behavior
@@ -53,11 +53,11 @@ The following metrics are computed:
 \item \strong{minutes_MPA:} total minutes spent in MPA behavior
 \item \strong{minutes_VPA:} total minutes spent in VPA behavior
 \item \strong{minutes_MVPA:} total minutes spent in MVPA behavior
-\item \strong{percent_SED:} proportion of wear time (over the 24-h cycle) spent in SED behavior
-\item \strong{percent_LPA:} proportion of wear time (over the 24-h cycle) spent in LPA behavior
-\item \strong{percent_MPA:} proportion of wear time (over the 24-h cycle) spent in MPA behavior
-\item \strong{percent_VPA:} proportion of wear time (over the 24-h cycle) spent in VPA behavior
-\item \strong{percent_MVPA:} proportion of wear time (over the 24-h cycle) spent in MPVA behavior
+\item \strong{percent_SED:} proportion of wear time spent in SED behavior
+\item \strong{percent_LPA:} proportion of wear time spent in LPA behavior
+\item \strong{percent_MPA:} proportion of wear time spent in MPA behavior
+\item \strong{percent_VPA:} proportion of wear time spent in VPA behavior
+\item \strong{percent_MVPA:} proportion of wear time spent in MPVA behavior
 \item \strong{max_steps_60min:} best step accumulation per minute averaged over a window of 60 continuous minutes
 \item \strong{max_steps_30min:} best step accumulation per minute averaged over a window of 30 continuous minutes
 \item \strong{max_steps_20min:} best step accumulation per minute averaged over a window of 20 continuous minutes
@@ -73,8 +73,8 @@ The following metrics are computed:
 }
 
 PAL is computed by dividing total energy expenditure (TEE) by BMR. TEE is obtained by summing
-the kilocalories measured during wear time epochs and the kilocalories related to BMR expended during nonwear time
-epochs (it is assumed that the periods where the device was not worn corresponded to
+the kilocalories measured during valid wear time epochs and the kilocalories related to BMR expended
+during nonwear time epochs (it is assumed that the periods where the device was not worn corresponded to
 sleeping periods, during which energy expenditure is near of BMR), and by multiplying this sum
 by 10/9 to take into account the thermic effect of food. Of course, such calculations may
 conduct to underestimate TEE and PAL if the device was removed during prolonged periods of

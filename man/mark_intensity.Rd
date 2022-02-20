@@ -52,7 +52,7 @@ and VPA columns, the function provides, for each epoch, the numeric value 1 when
 the value of the configured counts variable respectively fulfills the criteria of the
 SED, LPA, MPA, and VPA category (e.g., for the SED column, 1 may be provided if VM counts are <150 counts/min);
 otherwise 0 is provided.
-METs are computed using the \code{\link{compute_mets}} function. METs are computed from weight, sex, accelerometer counts, and a published equation from one
+METs are computed using the \code{\link{compute_mets}} function. METs are computed using a published equation from one
 of the following scientific articles: Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003); Santos-Lozano et al.
 (2013; 10.1055/s-0033-1337945); Freedson et al. (1998; doi: 10.1097/00005768-199805000-00021).
 Kilocalories are computed as follows. For non-SED epochs, MET values are multiplied by BMR expressed in kcal/min when using the Santos-Lozano et al.

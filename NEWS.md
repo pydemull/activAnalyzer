@@ -1,6 +1,7 @@
 # activAnalyzer (development version)
 
 * Updated UI appearance.
+* Updated documentation: it is now more clear that metrics are computed using valid wear time only.
 
 # activAnalyzer 0.3.0
 
