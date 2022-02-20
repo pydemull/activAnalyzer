@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">activAnalyzer</a>
 
-    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,11 +91,11 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The following metrics are computed:</p><ul><li><p><strong>wear_time:</strong> total wear time computed using the daily period defined in the function</p></li>
+    <p>The following metrics are computed from epochs corresponding to valid wear time:</p><ul><li><p><strong>wear_time:</strong> total wear time computed using the daily period defined in the function</p></li>
 <li><p><strong>total_counts_axis1:</strong> total counts for the vertical axis</p></li>
 <li><p><strong>total_counts_vm:</strong> total counts for the vector magnitude</p></li>
-<li><p><strong>axis1_per_min:</strong> mean of the counts per minute for the vertical axis (during the considered wear time only)</p></li>
-<li><p><strong>vm_per_min:</strong> mean of the counts per minute for the vector magnitude (during the considered wear time only)</p></li>
+<li><p><strong>axis1_per_min:</strong> mean of the counts per minute for the vertical axis</p></li>
+<li><p><strong>vm_per_min:</strong> mean of the counts per minute for the vector magnitude</p></li>
 <li><p><strong>total_steps:</strong> total step count</p></li>
 <li><p><strong>total_kcal:</strong> total kilocalories</p></li>
 <li><p><strong>minutes_SED:</strong> total minutes spent in SED behavior</p></li>
@@ -103,11 +103,11 @@
 <li><p><strong>minutes_MPA:</strong> total minutes spent in MPA behavior</p></li>
 <li><p><strong>minutes_VPA:</strong> total minutes spent in VPA behavior</p></li>
 <li><p><strong>minutes_MVPA:</strong> total minutes spent in MVPA behavior</p></li>
-<li><p><strong>percent_SED:</strong> proportion of wear time (over the 24-h cycle) spent in SED behavior</p></li>
-<li><p><strong>percent_LPA:</strong> proportion of wear time (over the 24-h cycle) spent in LPA behavior</p></li>
-<li><p><strong>percent_MPA:</strong> proportion of wear time (over the 24-h cycle) spent in MPA behavior</p></li>
-<li><p><strong>percent_VPA:</strong> proportion of wear time (over the 24-h cycle) spent in VPA behavior</p></li>
-<li><p><strong>percent_MVPA:</strong> proportion of wear time (over the 24-h cycle) spent in MPVA behavior</p></li>
+<li><p><strong>percent_SED:</strong> proportion of wear time spent in SED behavior</p></li>
+<li><p><strong>percent_LPA:</strong> proportion of wear time spent in LPA behavior</p></li>
+<li><p><strong>percent_MPA:</strong> proportion of wear time spent in MPA behavior</p></li>
+<li><p><strong>percent_VPA:</strong> proportion of wear time spent in VPA behavior</p></li>
+<li><p><strong>percent_MVPA:</strong> proportion of wear time spent in MPVA behavior</p></li>
 <li><p><strong>max_steps_60min:</strong> best step accumulation per minute averaged over a window of 60 continuous minutes</p></li>
 <li><p><strong>max_steps_30min:</strong> best step accumulation per minute averaged over a window of 30 continuous minutes</p></li>
 <li><p><strong>max_steps_20min:</strong> best step accumulation per minute averaged over a window of 20 continuous minutes</p></li>
@@ -121,8 +121,8 @@
 <li><p><strong>mets_hours_mvpa:</strong> total MET-hours spent during MPVA behavior</p></li>
 <li><p><strong>ratio_mvpa_sed:</strong> ratio between MVPA and SED times (<code>minutes_MVPA</code> / <code>minutes_SED</code>)</p></li>
 </ul><p>PAL is computed by dividing total energy expenditure (TEE) by BMR. TEE is obtained by summing
-the kilocalories measured during wear time epochs and the kilocalories related to BMR expended during nonwear time
-epochs (it is assumed that the periods where the device was not worn corresponded to
+the kilocalories measured during valid wear time epochs and the kilocalories related to BMR expended
+during nonwear time epochs (it is assumed that the periods where the device was not worn corresponded to
 sleeping periods, during which energy expenditure is near of BMR), and by multiplying this sum
 by 10/9 to take into account the thermic effect of food. Of course, such calculations may
 conduct to underestimate TEE and PAL if the device was removed during prolonged periods of
