@@ -425,7 +425,7 @@ app_ui <- function(request) {
                            id = "PROactive",
                            title = "PROactive scores (C-PPAC)",
                                 shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores")),
-                           width = 12, 
+                           width = 2, 
                            height = "auto")
                        ),
                            

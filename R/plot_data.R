@@ -44,7 +44,9 @@ plot_data <- function(data,
 
   # Setting the format of the time variable
     format_hm <- function(sec) stringr::str_sub(format(sec), end = -4L)
-    data[[col_date]] <- format(lubridate::as_date(data[[col_date]]) , "%d-%m-%y")
+    date_labs <- format(data[[col_date]], "%d-%m-%y")
+    names(date_labs) <- data$days
+    
 
   # Creating the plot
     ggplot(data = data, aes(x = .data[[col_time]])) +
@@ -79,7 +81,7 @@ plot_data <- function(data,
           legend.key = element_rect(color = "grey"),
           panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank()) +
-    facet_grid(data[[col_date]] ~ ., switch = "y") +
+    facet_grid(days ~ ., switch = "y", labeller = labeller(days = date_labs)) +
     geom_vline(aes(xintercept = 3600*1),    linetype = "dotted", color = "grey50") +
     geom_vline(aes(xintercept = 3600*2),    linetype = "dotted", color = "grey50") +
     geom_vline(aes(xintercept = 3600*3),    linetype = "dotted", color = "grey50") +

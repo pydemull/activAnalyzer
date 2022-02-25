@@ -44,7 +44,7 @@ prepare_dataset <- function(data, epoch_len_out = 60, col_time_stamp = "timestam
       timeStamp2 = col_time_stamp
       ) %>%
     tidyr::separate("timeStamp2", c("date", "time"), sep = " ") %>%
-    dplyr::mutate(time = hms::as_hms(time)) %>%
+    dplyr::mutate(date = as.Date(date), time = hms::as_hms(time)) %>%
     dplyr::rename(
       inclineStanding = inclinestanding, 
       inclineSitting = inclinesitting,
