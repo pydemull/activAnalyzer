@@ -196,25 +196,120 @@ app_server <- function(input, output, session) {
                     "Please choose a MET equation."
                   )
       )
+      
+      observeEvent(input$Run,
+                   shinyFeedback::feedbackWarning(
+                     "equation_mets", 
+                     (!input$sex %in% c("male", "female", "undefined") | input$age <= 0 | input$weight <= 0),
+                     "Please provide valid values for the inputs shown in Patient's information section."
+                   )
+      )
+      
     
+         
     # SED cut-point
       observeEvent(input$Run,
-                  shinyFeedback::feedbackWarning(
-                    "sed_cutpoints", 
-                    (input$sed_cutpoint == "..."),
-                    "Please choose a value for the SED cut-point."
-                  )
+                   shinyFeedback::feedbackWarning(
+                     "sed_cutpoint", 
+                     (
+                       (input$sed_cutpoint == "...")
+                       | # OR
+                         (
+                           (input$mvpa_cutpoint == "Freedson et al. (1998) [Adults]" | (input$mvpa_cutpoint == "Personalized..." & input$perso_mvpa_axis == "vertical axis")) & 
+                             (input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]" | (input$sed_cutpoint == "Personalized..." & input$perso_sed_axis == "vector magnitude"))
+                         ) 
+                       | # OR
+                         (
+                           (input$mvpa_cutpoint %in% c("Santos-Lozano et al. (2013) [Adults]",
+                                                       "Santos-Lozano et al. (2013) [Older adults]",
+                                                       "Sasaki et al. (2011) [Adults]") | (input$mvpa_cutpoint == "Personalized..." & input$perso_mvpa_axis == "vector magnitude")) & 
+                             (input$sed_cutpoint == "Personalized..." & input$perso_sed_axis == "vertical axis")
+                         )
+                       | # OR
+                         (
+                           input$mvpa_cutpoint == "Personalized..." &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= input$perso_mpa_cutpoint
+                         )
+                       | # OR
+                         (
+                           input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]" &  input$mvpa_cutpoint == "Personalized..." & input$perso_mpa_cutpoint <= 200
+                         )
+                       | # OR
+                         (
+                           input$mvpa_cutpoint == "Freedson et al. (1998) [Adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 1952
+                         )
+                       | # OR
+                         (
+                           input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 3208
+                         )
+                       | # OR
+                         (
+                           input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Older adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 2751
+                         )
+                       | # OR
+                         (
+                           input$mvpa_cutpoint == "Sasaki et al. (2011) [Adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 2690
+                         )
+                     ),
+                     "Please choose a SED cut-point that uses the same axis as for the MVPA cut-points. The value must be as follows: SED < MPA < VPA."
+                   
+                   )
       )
+      
+
       
     # MVPA cut-points
       observeEvent(input$Run,
-                  shinyFeedback::feedbackWarning(
-                    "mvpa_cutpoints", 
-                    (input$mvpa_cutpoint == "..."),
-                    "Please choose values for the MPVA cut-points."
-                  )
+                   shinyFeedback::feedbackWarning(
+                     "mvpa_cutpoint", 
+                     (    
+                         (input$mvpa_cutpoint == "...")
+                         | # OR
+                           (
+                             (input$mvpa_cutpoint == "Freedson et al. (1998) [Adults]" | (input$mvpa_cutpoint == "Personalized..." & input$perso_mvpa_axis == "vertical axis")) & 
+                               (input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]" | (input$sed_cutpoint == "Personalized..." & input$perso_sed_axis == "vector magnitude"))
+                           ) 
+                         | # OR
+                           (
+                             (input$mvpa_cutpoint %in% c("Santos-Lozano et al. (2013) [Adults]",
+                                                         "Santos-Lozano et al. (2013) [Older adults]",
+                                                         "Sasaki et al. (2011) [Adults]") | (input$mvpa_cutpoint == "Personalized..." & input$perso_mvpa_axis == "vector magnitude")) & 
+                             (input$sed_cutpoint == "Personalized..." & input$perso_sed_axis == "vertical axis")
+                           )
+                         | # OR
+                          (
+                            input$mvpa_cutpoint == "Personalized..." &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= input$perso_mpa_cutpoint
+                          )
+                         | # OR
+                          (
+                            input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]" &  input$mvpa_cutpoint == "Personalized..." & input$perso_mpa_cutpoint <= 200
+                          )
+                         | # OR
+                          (
+                            input$mvpa_cutpoint == "Freedson et al. (1998) [Adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 1952
+                          )
+                         | # OR
+                          (
+                            input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 3208
+                          )
+                         | # OR
+                          (
+                            input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Older adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 2751
+                          )
+                         | # OR
+                          (
+                             input$mvpa_cutpoint == "Sasaki et al. (2011) [Adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 2690
+                           )
+                         | # OR
+                          (
+                            input$mvpa_cutpoint == "Personalized..." & input$perso_mpa_cutpoint >= input$perso_vpa_cutpoint
+                          )
+                     ),
+                     "Please choose MVPA cut-points that use the same axis as for the SED cut-point. The values must be as follows: SED < MPA < VPA."
+                     
+                   )
       )
-    
+      
+   
     
   # Showing the table presenting the studies that validated METs equations
     output$table_equations <- reactable::renderReactable({
@@ -473,6 +568,10 @@ app_server <- function(input, output, session) {
       
       if (sed_cutpoint_chosen >= mpa_cutpoint_chosen) {
         validate("Please choose a SED cut-point that is strictly lower than the MVPA cut-point.")
+      }
+      
+      if (mpa_cutpoint_chosen >= vpa_cutpoint_chosen) {
+        validate("Please choose a MPA cut-point that is strictly lower than the VPA cut-point.")
       }
    
     
