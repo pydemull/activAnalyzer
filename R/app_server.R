@@ -223,20 +223,11 @@ app_server <- function(input, output, session) {
         observeEvent(input$Run,
                     shinyFeedback::feedbackWarning(
                       "equation_mets", 
-                      (input$equation_mets == "..."),
-                      "Please choose a MET equation."
+                      ((!input$sex %in% c("male", "female", "undefined") | input$age <= 0 | input$weight <= 0) | input$equation_mets == "..."),
+                      "Please provide valid values for the inputs shown in Patient's information section and choose a MET equation."
                     )
         )
-        
-        observeEvent(input$Run,
-                     shinyFeedback::feedbackWarning(
-                       "equation_mets", 
-                       (!input$sex %in% c("male", "female", "undefined") | input$age <= 0 | input$weight <= 0),
-                       "Please provide valid values for the inputs shown in Patient's information section."
-                     )
-        )
-        
-    
+
          
     # SED cut-point
       observeEvent(input$Run,
