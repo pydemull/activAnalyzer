@@ -1,10 +1,10 @@
-# activAnalyzer (development version)
+# activAnalyzer 0.4.0
 
 * Updated UI appearance.
 * Updated documentation: it is now more clear that metrics are computed using valid wear time only.
-* Updated feedbacks when setting cut-points.
 * Updated graphics with activity data shown by day (the order of the dates was not systematically respected).
 * Added the possibility to select the days to analyze.
+* Updated feedbacks to be provided when inputs are not properly set.
 
 # activAnalyzer 0.3.0
 
