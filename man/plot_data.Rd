@@ -9,8 +9,7 @@ plot_data(
   metric = "axis1",
   col_time = "time",
   col_nonwear = "non_wearing_count",
-  col_wear = "wearing_count",
-  col_date = "date"
+  col_wear = "wearing_count"
 )
 }
 \arguments{
@@ -23,8 +22,6 @@ plot_data(
 \item{col_nonwear}{A character value to indicate the name of the variable used to count nonwear time.}
 
 \item{col_wear}{A character value to indicate the name of the variable used to count wear time.}
-
-\item{col_date}{A character value to indicate the name of the variable to plot date data.}
 }
 \value{
 A \code{ggplot} object.
@@ -49,8 +46,7 @@ plot_data(
     metric = "vm", 
     col_time = "time", 
     col_nonwear = "non_wearing_count", 
-    col_wear = "wearing_count", 
-    col_date = "date"
+    col_wear = "wearing_count"
     )
 
 }

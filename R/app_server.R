@@ -57,6 +57,27 @@ app_server <- function(input, output, session) {
       prepare_dataset(data = input$upload$datapath)
       
     })
+    
+  # Controlling appearance of the "Validate configuration" button
+    observe({
+      shinyjs::hide("validate")
+      if(nrow(data()) >=1) {
+      shinyjs::show("validate")
+        
+      }
+    })
+    
+    
+    
+  ################
+  # Days selection ----
+  ################
+    
+    output$select_days <- renderUI({
+      dates <- attributes(as.factor(df()$date))$levels
+      checkboxGroupInput("selected_days", h3("Select the days to keep for analysis"), dates, selected = dates, inline = TRUE)
+    })  
+    
   
   ###########################################################################################
   # Getting dataframe with marks for wear/nonwear time when clicking on the "Validate" button ----
@@ -64,75 +85,75 @@ app_server <- function(input, output, session) {
   
   # Controlling for correct inputs
   
-    # File input
-      observeEvent(input$validate,
-                   shinyFeedback::feedbackWarning(
-                     "upload", 
-                     ((tools::file_ext(input$upload$name) == "agd") == FALSE),
-                     "Invalid file format. Please choose an .agd file."
-                   )
-      )
-
-    # Frame size
-      observeEvent(input$validate,
-                   shinyFeedback::feedbackWarning(
-                     "frame_size", 
-                     (is.numeric(input$frame_size) == FALSE | input$frame_size < 0),
-                     "Please choose a number >= 0."
-                   )
-      )
-    
-    # Allowance frame size
-      observeEvent(input$validate,
-                   shinyFeedback::feedbackWarning(
-                     "allowanceFrame_size", 
-                     (is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0),
-                     "Please choose a number >= 0."
-                   )
-      )
-    
-    # Stream frame size
-      observeEvent(input$validate,
-                   shinyFeedback::feedbackWarning(
-                     "streamFrame_size", 
-                     (is.numeric(input$streamFrame_size) == FALSE | input$streamFrame_size < 0),
-                     "Please choose a number >= 0."
-                   )
-      )
-    
+      # File input
+        observeEvent(input$validate,
+                     shinyFeedback::feedbackWarning(
+                       "upload", 
+                       ((tools::file_ext(input$upload$name) == "agd") == FALSE),
+                       "Invalid file format. Please choose an .agd file."
+                     )
+        )
+  
+      # Frame size
+        observeEvent(input$validate,
+                     shinyFeedback::feedbackWarning(
+                       "frame_size", 
+                       (is.numeric(input$frame_size) == FALSE | input$frame_size < 0),
+                       "Please choose a number >= 0."
+                     )
+        )
+      
+      # Allowance frame size
+        observeEvent(input$validate,
+                     shinyFeedback::feedbackWarning(
+                       "allowanceFrame_size", 
+                       (is.numeric(input$allowanceFrame_size) == FALSE | input$allowanceFrame_size < 0),
+                       "Please choose a number >= 0."
+                     )
+        )
+      
+      # Stream frame size
+        observeEvent(input$validate,
+                     shinyFeedback::feedbackWarning(
+                       "streamFrame_size", 
+                       (is.numeric(input$streamFrame_size) == FALSE | input$streamFrame_size < 0),
+                       "Please choose a number >= 0."
+                     )
+        )
+      
   # Building reactive dataframe marked for nonwear/wear time
   
     df <- eventReactive(input$validate, {
       
-      # Waiting for required conditions 
-      req(tools::file_ext(input$upload$name) == "agd" & 
-            is.numeric(input$frame_size) & 
-            input$frame_size >= 0 & 
-            is.numeric(input$allowanceFrame_size) & 
-            input$allowanceFrame_size >= 0 &
-            is.numeric(input$streamFrame_size) & 
-            input$streamFrame_size >= 0
-          )
-      
-     # Setting the axis to be used for detecting nonwear time
-       if (input$axis_weartime == "vector magnitude") {  
-         cts <- "vm"
-       } else {
-         cts <- "axis1"
-       }
-     
-     # Creating reactive dataframe
-       df <- 
-         mark_wear_time(dataset = data(),
-                        cts = cts, 
-                        frame = input$frame_size, 
-                        allowanceFrame = input$allowanceFrame_size,
-                        streamFrame = input$streamFrame_size)  
-       return(df)
-      
-      
-      })
-  
+         # Waiting for required conditions 
+           req(tools::file_ext(input$upload$name) == "agd" & 
+                 is.numeric(input$frame_size) & 
+                 input$frame_size >= 0 & 
+                 is.numeric(input$allowanceFrame_size) & 
+                 input$allowanceFrame_size >= 0 &
+                 is.numeric(input$streamFrame_size) & 
+                 input$streamFrame_size >= 0
+               )
+           
+        # Setting the axis to be used for detecting nonwear time
+          if (input$axis_weartime == "vector magnitude") {  
+            cts <- "vm"
+          } else {
+            cts <- "axis1"
+          }
+        
+        # Creating reactive dataframe
+          df <- 
+            mark_wear_time(dataset = data(),
+                           cts = cts, 
+                           frame = input$frame_size, 
+                           allowanceFrame = input$allowanceFrame_size,
+                           streamFrame = input$streamFrame_size)  
+          return(df)
+         
+         
+         })
+        
 
   # Returning to default values for the wear time detection algorithm
     observeEvent(input$reset_nonwear, {
@@ -158,53 +179,63 @@ app_server <- function(input, output, session) {
   ###################################################
   # Getting results when clicking on the "Run" button ----
   ###################################################
+    
+  # Controlling the appearance of the "Run analysis" button
+    observe({
+      shinyjs::hide("Run")
+      if(nrow(df()) >=1) {
+        shinyjs::show("Run")
+        
+      }
+    })
+    
   
   # Controlling for correct inputs
-  
-    # Sex
-      observeEvent(input$Run,
-                  shinyFeedback::feedbackWarning(
-                    "sex", 
-                    (input$sex %in% c("male", "female", "undefined")) == FALSE,
-                    "Please provide a value for sex."
-                  )
-      )
-    
-    # Age
-      observeEvent(input$Run,
-                  shinyFeedback::feedbackWarning(
-                    "age", 
-                    ((is.numeric(input$age) == FALSE | input$age <= 0)),
-                    "Please provide a value >0 for age."
-                  )
-      )
-      
-    # Weight
-      observeEvent(input$Run,
-                 shinyFeedback::feedbackWarning(
-                   "weight", 
-                   ((is.numeric(input$weight) == FALSE | input$weight <= 0)),
-                   "Please provide a value >0 for weight."
-                 )
-     )
      
-    # MET equation
-      observeEvent(input$Run,
-                  shinyFeedback::feedbackWarning(
-                    "equation_mets", 
-                    (input$equation_mets == "..."),
-                    "Please choose a MET equation."
-                  )
-      )
+      # Sex
+        observeEvent(input$Run,
+                    shinyFeedback::feedbackWarning(
+                      "sex", 
+                      (input$sex %in% c("male", "female", "undefined")) == FALSE,
+                      "Please provide a value for sex."
+                    )
+        )
       
-      observeEvent(input$Run,
+      # Age
+        observeEvent(input$Run,
+                    shinyFeedback::feedbackWarning(
+                      "age", 
+                      ((is.numeric(input$age) == FALSE | input$age <= 0)),
+                      "Please provide a value >0 for age."
+                    )
+        )
+        
+      # Weight
+        observeEvent(input$Run,
                    shinyFeedback::feedbackWarning(
-                     "equation_mets", 
-                     (!input$sex %in% c("male", "female", "undefined") | input$age <= 0 | input$weight <= 0),
-                     "Please provide valid values for the inputs shown in Patient's information section."
+                     "weight", 
+                     ((is.numeric(input$weight) == FALSE | input$weight <= 0)),
+                     "Please provide a value >0 for weight."
                    )
-      )
-      
+       )
+       
+      # MET equation
+        observeEvent(input$Run,
+                    shinyFeedback::feedbackWarning(
+                      "equation_mets", 
+                      (input$equation_mets == "..."),
+                      "Please choose a MET equation."
+                    )
+        )
+        
+        observeEvent(input$Run,
+                     shinyFeedback::feedbackWarning(
+                       "equation_mets", 
+                       (!input$sex %in% c("male", "female", "undefined") | input$age <= 0 | input$weight <= 0),
+                       "Please provide valid values for the inputs shown in Patient's information section."
+                     )
+        )
+        
     
          
     # SED cut-point
@@ -337,7 +368,7 @@ app_server <- function(input, output, session) {
   
   
   # Showing the table presenting the studies that validated SED cut-points
-   output$table_sed_cutpoints <- reactable::renderReactable({
+    output$table_sed_cutpoints <- reactable::renderReactable({
      
      if(input$sed_cutpoint == "...") {NULL
      } else {
@@ -357,132 +388,132 @@ app_server <- function(input, output, session) {
    })
   
   # Switching to show appropriate choices for MVPA cut-points
-  observeEvent(input$mvpa_cutpoint, {
-    updateTabsetPanel(inputId = "switcher_mvpa", selected = input$mvpa_cutpoint)
-  })
-  
+    observeEvent(input$mvpa_cutpoint, {
+      updateTabsetPanel(inputId = "switcher_mvpa", selected = input$mvpa_cutpoint)
+    })
+    
   
   # Showing the table presenting the studies that validated MVPA cut-points
-  output$table_mvpa_cutpoints_sasaki <- reactable::renderReactable({
+    output$table_mvpa_cutpoints_sasaki <- reactable::renderReactable({
+      
+      if(input$mvpa_cutpoint == "...") {NULL
+      } else {
+        mvpa_cutpoints %>% 
+          dplyr::filter(Study == input$mvpa_cutpoint) %>%
+          reactable::reactable(striped = TRUE,
+                    list('Study' = reactable::colDef(minWidth = 80),
+                         'Population' = reactable::colDef(minWidth = 70),
+                         'Activities performed' = reactable::colDef(minWidth = 60),
+                         'Device used' = reactable::colDef(minWidth = 40),
+                         'Axis used' = reactable::colDef(minWidth = 30),
+                         'Filter enabled' = reactable::colDef(minWidth = 40),
+                         'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 60),
+                         'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 60))
+          )
+      }
+      
+    })
     
-    if(input$mvpa_cutpoint == "...") {NULL
-    } else {
-      mvpa_cutpoints %>% 
-        dplyr::filter(Study == input$mvpa_cutpoint) %>%
-        reactable::reactable(striped = TRUE,
-                  list('Study' = reactable::colDef(minWidth = 80),
-                       'Population' = reactable::colDef(minWidth = 70),
-                       'Activities performed' = reactable::colDef(minWidth = 60),
-                       'Device used' = reactable::colDef(minWidth = 40),
-                       'Axis used' = reactable::colDef(minWidth = 30),
-                       'Filter enabled' = reactable::colDef(minWidth = 40),
-                       'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 60),
-                       'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 60))
-        )
-    }
+    output$table_mvpa_cutpoints_santos_adults <- reactable::renderReactable({
+      
+      if(input$mvpa_cutpoint == "...") {NULL
+      } else {
+        mvpa_cutpoints %>% 
+          dplyr::filter(Study == input$mvpa_cutpoint) %>%
+          reactable::reactable(striped = TRUE,
+                    list('Study' = reactable::colDef(minWidth = 80),
+                         'Population' = reactable::colDef(minWidth = 70),
+                         'Activities performed' = reactable::colDef(minWidth = 60),
+                         'Device used' = reactable::colDef(minWidth = 40),
+                         'Axis used' = reactable::colDef(minWidth = 30),
+                         'Filter enabled' = reactable::colDef(minWidth = 40),
+                         'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 60),
+                         'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 60))
+          )
+      }
+      
+    })
     
-  })
-  
-  output$table_mvpa_cutpoints_santos_adults <- reactable::renderReactable({
+    output$table_mvpa_cutpoints_freedson_adults <- reactable::renderReactable({
+      
+      if(input$mvpa_cutpoint == "...") {NULL
+      } else {
+        mvpa_cutpoints %>% 
+          dplyr::filter(Study == input$mvpa_cutpoint) %>%
+          reactable::reactable(striped = TRUE,
+                               list('Study' = reactable::colDef(minWidth = 80),
+                                    'Population' = reactable::colDef(minWidth = 70),
+                                    'Activities performed' = reactable::colDef(minWidth = 60),
+                                    'Device used' = reactable::colDef(minWidth = 40),
+                                    'Axis used' = reactable::colDef(minWidth = 30),
+                                    'Filter enabled' = reactable::colDef(minWidth = 40),
+                                    'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 60),
+                                    'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 60))
+          )
+      }
+      
+    })
     
-    if(input$mvpa_cutpoint == "...") {NULL
-    } else {
-      mvpa_cutpoints %>% 
-        dplyr::filter(Study == input$mvpa_cutpoint) %>%
-        reactable::reactable(striped = TRUE,
-                  list('Study' = reactable::colDef(minWidth = 80),
-                       'Population' = reactable::colDef(minWidth = 70),
-                       'Activities performed' = reactable::colDef(minWidth = 60),
-                       'Device used' = reactable::colDef(minWidth = 40),
-                       'Axis used' = reactable::colDef(minWidth = 30),
-                       'Filter enabled' = reactable::colDef(minWidth = 40),
-                       'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 60),
-                       'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 60))
-        )
-    }
+    output$table_mvpa_cutpoints_santos_older <- reactable::renderReactable({
+      
+      if(input$mvpa_cutpoint == "...") {NULL
+      } else {
+        mvpa_cutpoints %>% 
+          dplyr::filter(Study == input$mvpa_cutpoint) %>%
+          reactable::reactable(striped = TRUE,
+                    list('Study' = reactable::colDef(minWidth = 80),
+                         'Population' = reactable::colDef(minWidth = 70),
+                         'Activities performed' = reactable::colDef(minWidth = 60),
+                         'Device used' = reactable::colDef(minWidth = 40),
+                         'Axis used' = reactable::colDef(minWidth = 30),
+                         'Filter enabled' = reactable::colDef(minWidth = 40),
+                         'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 60),
+                         'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 60))
+          )
+      }
+      
+    })
     
-  })
-  
-  output$table_mvpa_cutpoints_freedson_adults <- reactable::renderReactable({
-    
-    if(input$mvpa_cutpoint == "...") {NULL
-    } else {
-      mvpa_cutpoints %>% 
-        dplyr::filter(Study == input$mvpa_cutpoint) %>%
-        reactable::reactable(striped = TRUE,
-                             list('Study' = reactable::colDef(minWidth = 80),
-                                  'Population' = reactable::colDef(minWidth = 70),
-                                  'Activities performed' = reactable::colDef(minWidth = 60),
-                                  'Device used' = reactable::colDef(minWidth = 40),
-                                  'Axis used' = reactable::colDef(minWidth = 30),
-                                  'Filter enabled' = reactable::colDef(minWidth = 40),
-                                  'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 60),
-                                  'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 60))
-        )
-    }
-    
-  })
-  
-  output$table_mvpa_cutpoints_santos_older <- reactable::renderReactable({
-    
-    if(input$mvpa_cutpoint == "...") {NULL
-    } else {
-      mvpa_cutpoints %>% 
-        dplyr::filter(Study == input$mvpa_cutpoint) %>%
-        reactable::reactable(striped = TRUE,
-                  list('Study' = reactable::colDef(minWidth = 80),
-                       'Population' = reactable::colDef(minWidth = 70),
-                       'Activities performed' = reactable::colDef(minWidth = 60),
-                       'Device used' = reactable::colDef(minWidth = 40),
-                       'Axis used' = reactable::colDef(minWidth = 30),
-                       'Filter enabled' = reactable::colDef(minWidth = 40),
-                       'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 60),
-                       'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 60))
-        )
-    }
-    
-  })
-  
   
   
   # Setting PROactive default values to valid a day based on wear time
-  observeEvent(input$pro_active_period, {
-    updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*7))
-    updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*22))
-    updateNumericInput(inputId = "minimum_wear_time_for_analysis", value = 8)
-  })
-  
+    observeEvent(input$pro_active_period, {
+      updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*7))
+      updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*22))
+      updateNumericInput(inputId = "minimum_wear_time_for_analysis", value = 8)
+    })
+    
 
   # Controlling PROactive settings
-  observeEvent(input$validate,
-               shinyFeedback::feedbackWarning(
-                 "start_day_analysis", 
-                 input$end_day_analysis <= input$start_day_analysis,
-                 "End time should be superior to start time."
-               )
-  )
-  
-  observeEvent(input$validate,
-               shinyFeedback::feedbackWarning(
-                 "end_day_analysis", 
-                 input$end_day_analysis <= input$start_day_analysis,
-                 "End time should be superior to start time."
-               )
-  )
-  
+    observeEvent(input$validate,
+                 shinyFeedback::feedbackWarning(
+                   "start_day_analysis", 
+                   input$end_day_analysis <= input$start_day_analysis,
+                   "End time should be superior to start time."
+                 )
+    )
+    
+    observeEvent(input$validate,
+                 shinyFeedback::feedbackWarning(
+                   "end_day_analysis", 
+                   input$end_day_analysis <= input$start_day_analysis,
+                   "End time should be superior to start time."
+                 )
+    )
+    
   # Returning to default settings for the minimum wear time duration
-  observeEvent(input$reset_period, {
-    updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*0))
-    updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*23+60*59))
-    updateNumericInput(inputId = "minimum_wear_time_for_analysis", value = 10)
-  })
-        
+    observeEvent(input$reset_period, {
+      updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*0))
+      updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*23+60*59))
+      updateNumericInput(inputId = "minimum_wear_time_for_analysis", value = 10)
+    })
+          
   # Getting BMR (kcal/d)
-  bmr_kcal_d <- eventReactive(input$Run, {
-   
-   compute_bmr(age = input$age, sex = input$sex, weight = input$weight)
-   
-  })
+    bmr_kcal_d <- eventReactive(input$Run, {
+     
+     compute_bmr(age = input$age, sex = input$sex, weight = input$weight)
+     
+    })
   
     
   # Getting list of results: dataset with metrics; results by day corresponding 
@@ -494,58 +525,58 @@ app_server <- function(input, output, session) {
   # Setting axis and cut-points to compute SED and MVPA times
     
     # SED
-    if(input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]") { 
-      axis_sed_chosen <- "vm"
-      axis_sed_chosen_name <- "vector magnitude"
-      sed_cutpoint_chosen <- 200
-    } else if (input$sed_cutpoint == "Personalized...") {
-      if(input$perso_sed_axis == "vector magnitude") {
+      if(input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]") { 
         axis_sed_chosen <- "vm"
         axis_sed_chosen_name <- "vector magnitude"
-        sed_cutpoint_chosen <- input$perso_sed_cutpoint
+        sed_cutpoint_chosen <- 200
+      } else if (input$sed_cutpoint == "Personalized...") {
+        if(input$perso_sed_axis == "vector magnitude") {
+          axis_sed_chosen <- "vm"
+          axis_sed_chosen_name <- "vector magnitude"
+          sed_cutpoint_chosen <- input$perso_sed_cutpoint
+        } else {
+          axis_sed_chosen <- "axis1"
+          axis_sed_chosen_name <- "vertical axis"
+          sed_cutpoint_chosen <- input$perso_sed_cutpoint
+        }
       } else {
-        axis_sed_chosen <- "axis1"
-        axis_sed_chosen_name <- "vertical axis"
-        sed_cutpoint_chosen <- input$perso_sed_cutpoint
-      }
-    } else {
-      NULL}
+        NULL}
     
     # MVPA
-    if(input$mvpa_cutpoint == "Sasaki et al. (2011) [Adults]") { 
-      axis_mvpa_chosen <- "vm"
-      axis_mvpa_chosen_name <- "vector magnitude"
-      mpa_cutpoint_chosen <- 2690
-      vpa_cutpoint_chosen <- 6167
-    } else if (input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Adults]"){
-      axis_mvpa_chosen <- "vm"
-      axis_mvpa_chosen_name <- "vector magnitude"
-      mpa_cutpoint_chosen <- 3208 
-      vpa_cutpoint_chosen <- 8565 
-    } else if (input$mvpa_cutpoint == "Freedson et al. (1998) [Adults]"){
-      axis_mvpa_chosen <- "axis1"
-      axis_mvpa_chosen_name <- "vertical axis"
-      mpa_cutpoint_chosen <- 1952 
-      vpa_cutpoint_chosen <- 5725 
-    } else if (input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Older adults]"){
-      axis_mvpa_chosen <- "vm"
-      axis_mvpa_chosen_name <- "vector magnitude"
-      mpa_cutpoint_chosen <- 2751 
-      vpa_cutpoint_chosen <- 9359  
-    } else if (input$mvpa_cutpoint == "Personalized...") {
-      if(input$perso_mvpa_axis == "vector magnitude") {
+      if(input$mvpa_cutpoint == "Sasaki et al. (2011) [Adults]") { 
         axis_mvpa_chosen <- "vm"
         axis_mvpa_chosen_name <- "vector magnitude"
-        mpa_cutpoint_chosen <- input$perso_mpa_cutpoint
-        vpa_cutpoint_chosen <- input$perso_vpa_cutpoint
-      } else {
+        mpa_cutpoint_chosen <- 2690
+        vpa_cutpoint_chosen <- 6167
+      } else if (input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Adults]"){
+        axis_mvpa_chosen <- "vm"
+        axis_mvpa_chosen_name <- "vector magnitude"
+        mpa_cutpoint_chosen <- 3208 
+        vpa_cutpoint_chosen <- 8565 
+      } else if (input$mvpa_cutpoint == "Freedson et al. (1998) [Adults]"){
         axis_mvpa_chosen <- "axis1"
         axis_mvpa_chosen_name <- "vertical axis"
-        mpa_cutpoint_chosen <- input$perso_mpa_cutpoint
-        vpa_cutpoint_chosen <- input$perso_vpa_cutpoint
-      }
-    } else {
-      NULL}
+        mpa_cutpoint_chosen <- 1952 
+        vpa_cutpoint_chosen <- 5725 
+      } else if (input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Older adults]"){
+        axis_mvpa_chosen <- "vm"
+        axis_mvpa_chosen_name <- "vector magnitude"
+        mpa_cutpoint_chosen <- 2751 
+        vpa_cutpoint_chosen <- 9359  
+      } else if (input$mvpa_cutpoint == "Personalized...") {
+        if(input$perso_mvpa_axis == "vector magnitude") {
+          axis_mvpa_chosen <- "vm"
+          axis_mvpa_chosen_name <- "vector magnitude"
+          mpa_cutpoint_chosen <- input$perso_mpa_cutpoint
+          vpa_cutpoint_chosen <- input$perso_vpa_cutpoint
+        } else {
+          axis_mvpa_chosen <- "axis1"
+          axis_mvpa_chosen_name <- "vertical axis"
+          mpa_cutpoint_chosen <- input$perso_mpa_cutpoint
+          vpa_cutpoint_chosen <- input$perso_vpa_cutpoint
+        }
+      } else {
+        NULL}
       
       
     # Waiting for valid inputs
@@ -576,39 +607,40 @@ app_server <- function(input, output, session) {
    
     
     # Adding variables of interest to the initial dataframe
-    df_with_computed_metrics <-
-      df() %>%
-      mark_intensity(col_axis = axis_mvpa_chosen, 
-                     sed_cutpoint = sed_cutpoint_chosen, 
-                     mpa_cutpoint = mpa_cutpoint_chosen, 
-                     vpa_cutpoint = vpa_cutpoint_chosen,
-                     equation = input$equation_mets,
-                     age = input$age,
-                     weight = input$weight,
-                     sex = input$sex)
-    
+      df_with_computed_metrics <-
+        df() %>%
+        mark_intensity(col_axis = axis_mvpa_chosen, 
+                       sed_cutpoint = sed_cutpoint_chosen, 
+                       mpa_cutpoint = mpa_cutpoint_chosen, 
+                       vpa_cutpoint = vpa_cutpoint_chosen,
+                       equation = input$equation_mets,
+                       age = input$age,
+                       weight = input$weight,
+                       sex = input$sex,
+                       dates = input$selected_days)
+      
    # Creating a dataframe with results by day and corresponding to valid wear time only  
-   results_by_day <-
-     df_with_computed_metrics %>%
-     recap_by_day(
-       age = input$age, 
-       weight = input$weight, 
-       sex = input$sex,
-       valid_wear_time_start = input$start_day_analysis,
-       valid_wear_time_end = input$end_day_analysis
-     )
-   
+     results_by_day <-
+       df_with_computed_metrics %>%
+       recap_by_day(
+         age = input$age, 
+         weight = input$weight, 
+         sex = input$sex,
+         valid_wear_time_start = input$start_day_analysis,
+         valid_wear_time_end = input$end_day_analysis
+       )
+     
    # Returning a list of the results and parameters
-   return(list(df_with_computed_metrics = df_with_computed_metrics,
-               results_by_day = results_by_day, 
-               axis_sed_chosen_name = axis_sed_chosen_name, 
-               sed_cutpoint_chosen = sed_cutpoint_chosen, 
-               axis_mvpa_chosen_name = axis_mvpa_chosen_name,
-               mpa_cutpoint_chosen = mpa_cutpoint_chosen,
-               vpa_cutpoint_chosen = vpa_cutpoint_chosen))
-  })
-    
-    
+     return(list(df_with_computed_metrics = df_with_computed_metrics,
+                 results_by_day = results_by_day, 
+                 axis_sed_chosen_name = axis_sed_chosen_name, 
+                 sed_cutpoint_chosen = sed_cutpoint_chosen, 
+                 axis_mvpa_chosen_name = axis_mvpa_chosen_name,
+                 mpa_cutpoint_chosen = mpa_cutpoint_chosen,
+                 vpa_cutpoint_chosen = vpa_cutpoint_chosen))
+    })
+      
+      
   # Creating reactive time filters used for the plot with intensity metrics
     analysis_filters <- eventReactive(input$Run, {
       list(start_day_analysis = input$start_day_analysis,
@@ -626,165 +658,165 @@ app_server <- function(input, output, session) {
     
   
   # Showing results by day in a table
-  output$results_by_day <- reactable::renderReactable({
-    Sys.sleep(0.5)
-    reactable::reactable(results_list()$results_by_day,  
-              striped = TRUE,
-              list(
-                   total_counts_axis1 = reactable::colDef(minWidth = 150),
-                   total_counts_vm = reactable::colDef(minWidth = 150),
-                   axis1_per_min = reactable::colDef(minWidth = 150),
-                   vm_per_min = reactable::colDef(minWidth = 150),
-                   minutes_SED = reactable::colDef(minWidth = 120),
-                   minutes_LPA = reactable::colDef(minWidth = 120),
-                   minutes_MPA = reactable::colDef(minWidth = 120),
-                   minutes_VPA = reactable::colDef(minWidth = 120),
-                   minutes_MVPA = reactable::colDef(minWidth = 120),
-                   percent_SED = reactable::colDef(minWidth = 120),
-                   percent_LPA = reactable::colDef(minWidth = 120),
-                   percent_MPA = reactable::colDef(minWidth = 120),
-                   percent_VPA = reactable::colDef(minWidth = 120),
-                   percent_MVPA = reactable::colDef(minWidth = 120),
-                   ratio_mvpa_sed = reactable::colDef(minWidth = 125),
-                   total_kcal = reactable::colDef(minWidth = 120),
-                   mets_hours_mvpa = reactable::colDef(minWidth = 160)))
-  })
-  
+    output$results_by_day <- reactable::renderReactable({
+      Sys.sleep(0.5)
+      reactable::reactable(results_list()$results_by_day,  
+                striped = TRUE,
+                list(
+                     total_counts_axis1 = reactable::colDef(minWidth = 150),
+                     total_counts_vm = reactable::colDef(minWidth = 150),
+                     axis1_per_min = reactable::colDef(minWidth = 150),
+                     vm_per_min = reactable::colDef(minWidth = 150),
+                     minutes_SED = reactable::colDef(minWidth = 120),
+                     minutes_LPA = reactable::colDef(minWidth = 120),
+                     minutes_MPA = reactable::colDef(minWidth = 120),
+                     minutes_VPA = reactable::colDef(minWidth = 120),
+                     minutes_MVPA = reactable::colDef(minWidth = 120),
+                     percent_SED = reactable::colDef(minWidth = 120),
+                     percent_LPA = reactable::colDef(minWidth = 120),
+                     percent_MPA = reactable::colDef(minWidth = 120),
+                     percent_VPA = reactable::colDef(minWidth = 120),
+                     percent_MVPA = reactable::colDef(minWidth = 120),
+                     ratio_mvpa_sed = reactable::colDef(minWidth = 125),
+                     total_kcal = reactable::colDef(minWidth = 120),
+                     mets_hours_mvpa = reactable::colDef(minWidth = 160)))
+    })
+    
   
   # Getting results summarized over valid days (means)
-  results_summary_means <- eventReactive(input$Run, {
-      results_list()$results_by_day %>%
-        average_results(minimum_wear_time = input$minimum_wear_time_for_analysis, fun = "mean")
-    })
+    results_summary_means <- eventReactive(input$Run, {
+        results_list()$results_by_day %>%
+          average_results(minimum_wear_time = input$minimum_wear_time_for_analysis, fun = "mean")
+      })
   
   # Getting results summarized over valid days (medians)
-  results_summary_medians <- eventReactive(input$Run, {
-    results_list()$results_by_day %>%
-      average_results(minimum_wear_time = input$minimum_wear_time_for_analysis, fun = "median")
-  })
+    results_summary_medians <- eventReactive(input$Run, {
+      results_list()$results_by_day %>%
+        average_results(minimum_wear_time = input$minimum_wear_time_for_analysis, fun = "median")
+    })
   
   # Showing results summarized over valid days in a table (means)
-  output$results_summary_means <- reactable::renderReactable({
+    output$results_summary_means <- reactable::renderReactable({
+      
+      reactable::reactable(
+        results_summary_means(), 
+        list(valid_days = reactable::colDef(minWidth = 90),
+             wear_time = reactable::colDef(minWidth = 90),
+             total_counts_axis1 = reactable::colDef(minWidth = 150),
+             total_counts_vm = reactable::colDef(minWidth = 150),
+             axis1_per_min = reactable::colDef(minWidth = 150),
+             vm_per_min = reactable::colDef(minWidth = 150),
+             minutes_SED = reactable::colDef(minWidth = 120),
+             minutes_LPA = reactable::colDef(minWidth = 120),
+             minutes_MPA = reactable::colDef(minWidth = 120),
+             minutes_VPA = reactable::colDef(minWidth = 120),
+             minutes_MVPA = reactable::colDef(minWidth = 120),
+             percent_SED = reactable::colDef(minWidth = 120),
+             percent_LPA = reactable::colDef(minWidth = 120),
+             percent_MPA = reactable::colDef(minWidth = 120),
+             percent_VPA = reactable::colDef(minWidth = 120),
+             percent_MVPA = reactable::colDef(minWidth = 120),
+             ratio_mvpa_sed = reactable::colDef(minWidth = 125),
+             total_kcal = reactable::colDef(minWidth = 120),
+             mets_hours_mvpa = reactable::colDef(minWidth = 160)),
+        striped = TRUE
+      )
+      
+    })
     
-    reactable::reactable(
-      results_summary_means(), 
-      list(valid_days = reactable::colDef(minWidth = 90),
-           wear_time = reactable::colDef(minWidth = 90),
-           total_counts_axis1 = reactable::colDef(minWidth = 150),
-           total_counts_vm = reactable::colDef(minWidth = 150),
-           axis1_per_min = reactable::colDef(minWidth = 150),
-           vm_per_min = reactable::colDef(minWidth = 150),
-           minutes_SED = reactable::colDef(minWidth = 120),
-           minutes_LPA = reactable::colDef(minWidth = 120),
-           minutes_MPA = reactable::colDef(minWidth = 120),
-           minutes_VPA = reactable::colDef(minWidth = 120),
-           minutes_MVPA = reactable::colDef(minWidth = 120),
-           percent_SED = reactable::colDef(minWidth = 120),
-           percent_LPA = reactable::colDef(minWidth = 120),
-           percent_MPA = reactable::colDef(minWidth = 120),
-           percent_VPA = reactable::colDef(minWidth = 120),
-           percent_MVPA = reactable::colDef(minWidth = 120),
-           ratio_mvpa_sed = reactable::colDef(minWidth = 125),
-           total_kcal = reactable::colDef(minWidth = 120),
-           mets_hours_mvpa = reactable::colDef(minWidth = 160)),
-      striped = TRUE
-    )
-    
-  })
-  
   # Showing results summarized over valid days in a table (medians)
-  output$results_summary_medians <- reactable::renderReactable({
+    output$results_summary_medians <- reactable::renderReactable({
+      
+      reactable::reactable(
+        results_summary_medians(), 
+        list(valid_days = reactable::colDef(minWidth = 90),
+             wear_time = reactable::colDef(minWidth = 90),
+             total_counts_axis1 = reactable::colDef(minWidth = 150),
+             total_counts_vm = reactable::colDef(minWidth = 150),
+             axis1_per_min = reactable::colDef(minWidth = 150),
+             vm_per_min = reactable::colDef(minWidth = 150),
+             minutes_SED = reactable::colDef(minWidth = 120),
+             minutes_LPA = reactable::colDef(minWidth = 120),
+             minutes_MPA = reactable::colDef(minWidth = 120),
+             minutes_VPA = reactable::colDef(minWidth = 120),
+             minutes_MVPA = reactable::colDef(minWidth = 120),
+             percent_SED = reactable::colDef(minWidth = 120),
+             percent_LPA = reactable::colDef(minWidth = 120),
+             percent_MPA = reactable::colDef(minWidth = 120),
+             percent_VPA = reactable::colDef(minWidth = 120),
+             percent_MVPA = reactable::colDef(minWidth = 120),
+             ratio_mvpa_sed = reactable::colDef(minWidth = 125),
+             total_kcal = reactable::colDef(minWidth = 120),
+             mets_hours_mvpa = reactable::colDef(minWidth = 160)),
+        striped = TRUE
+      )
+      
+    })
     
-    reactable::reactable(
-      results_summary_medians(), 
-      list(valid_days = reactable::colDef(minWidth = 90),
-           wear_time = reactable::colDef(minWidth = 90),
-           total_counts_axis1 = reactable::colDef(minWidth = 150),
-           total_counts_vm = reactable::colDef(minWidth = 150),
-           axis1_per_min = reactable::colDef(minWidth = 150),
-           vm_per_min = reactable::colDef(minWidth = 150),
-           minutes_SED = reactable::colDef(minWidth = 120),
-           minutes_LPA = reactable::colDef(minWidth = 120),
-           minutes_MPA = reactable::colDef(minWidth = 120),
-           minutes_VPA = reactable::colDef(minWidth = 120),
-           minutes_MVPA = reactable::colDef(minWidth = 120),
-           percent_SED = reactable::colDef(minWidth = 120),
-           percent_LPA = reactable::colDef(minWidth = 120),
-           percent_MPA = reactable::colDef(minWidth = 120),
-           percent_VPA = reactable::colDef(minWidth = 120),
-           percent_MVPA = reactable::colDef(minWidth = 120),
-           ratio_mvpa_sed = reactable::colDef(minWidth = 125),
-           total_kcal = reactable::colDef(minWidth = 120),
-           mets_hours_mvpa = reactable::colDef(minWidth = 160)),
-      striped = TRUE
-    )
-    
-  })
-  
   
   # Showing PROactive scores
-  output$PROactive_scores <- reactable::renderReactable({
+    output$PROactive_scores <- reactable::renderReactable({
+      
+      steps_score <- compute_pro_actigraph_score(results_summary_medians()[["total_steps"]], metric = "steps")
+      vmu_score <- compute_pro_actigraph_score(results_summary_medians()[["vm_per_min"]], metric = "vm")
+      
+      reactable::reactable(
+        tibble::tribble(
+          ~Metric,              ~Score,
+          "Daily steps score",   paste(steps_score),
+          "Daily VMU score",     paste(vmu_score)
+        ),
+        striped = TRUE,
+        list(Score = reactable::colDef(align = "center"))
+      )
     
-    steps_score <- compute_pro_actigraph_score(results_summary_medians()[["total_steps"]], metric = "steps")
-    vmu_score <- compute_pro_actigraph_score(results_summary_medians()[["vm_per_min"]], metric = "vm")
+      
+    })
     
-    reactable::reactable(
-      tibble::tribble(
-        ~Metric,              ~Score,
-        "Daily steps score",   paste(steps_score),
-        "Daily VMU score",     paste(vmu_score)
-      ),
-      striped = TRUE,
-      list(Score = reactable::colDef(align = "center"))
-    )
-  
-    
-  })
-  
   
   #########################
   # Hiding / showing boxes ----
   #########################
   
   # Box for graph with wear time
-  observe({
-    shinyjs::hide("myBox")
-    shinyjs::hide("Metric")
-    shinyjs::hide("graph")
-    
-    if(nrow(df()) >=1) {
+    observe({
+      shinyjs::hide("myBox")
+      shinyjs::hide("Metric")
+      shinyjs::hide("graph")
       
-      shinyjs::show("myBox")
-      shinyjs::show("Metric")
-      shinyjs::show("graph")
-      
-    }
-  })
+      if(nrow(df()) >=1) {
+        
+        shinyjs::show("myBox")
+        shinyjs::show("Metric")
+        shinyjs::show("graph")
+        
+      }
+    })
   
   # Boxes for graph with PA categories and results
-  observe({
-    shinyjs::hide("myBox2")
-    shinyjs::hide("Metric2")
-    shinyjs::hide("graph_int")
-    shinyjs::hide("BoxResByDay")
-    shinyjs::hide("BoxResMeans")
-    shinyjs::hide("BoxResMedians")
-    shinyjs::hide("PROactive")
+    observe({
+      shinyjs::hide("myBox2")
+      shinyjs::hide("Metric2")
+      shinyjs::hide("graph_int")
+      shinyjs::hide("BoxResByDay")
+      shinyjs::hide("BoxResMeans")
+      shinyjs::hide("BoxResMedians")
+      shinyjs::hide("PROactive")
 
-    
-    if(nrow(results_list()$df_with_computed_metrics) >=1) {
       
-    shinyjs::show("myBox2")
-    shinyjs::show("Metric2")
-    shinyjs::show("graph_int")
-    shinyjs::show("BoxResByDay")
-    shinyjs::show("BoxResMeans")
-    shinyjs::show("BoxResMedians")
-    shinyjs::show("PROactive")
+      if(nrow(results_list()$df_with_computed_metrics) >=1) {
+        
+      shinyjs::show("myBox2")
+      shinyjs::show("Metric2")
+      shinyjs::show("graph_int")
+      shinyjs::show("BoxResByDay")
+      shinyjs::show("BoxResMeans")
+      shinyjs::show("BoxResMedians")
+      shinyjs::show("PROactive")
 
-    }
-  })
-  
+      }
+    })
+    
   
   ##################################
   # Hiding/ showing Download buttons ----
@@ -817,53 +849,53 @@ app_server <- function(input, output, session) {
   ###################
   
   # Exporting marked dataset
-  output$ExpDataset <- downloadHandler(
-    filename = function() {
-      paste0(input$upload, "_MarkedDataset.csv")
-    },
-    content = function(file) {
-      utils::write.csv2(results_list()$df_with_computed_metrics %>%
-                          dplyr::select(-col_time_stamp, -timestamp), 
-                        file, row.names = FALSE)
-    }
-  )
-  
+    output$ExpDataset <- downloadHandler(
+      filename = function() {
+        paste0(input$upload, "_MarkedDataset.csv")
+      },
+      content = function(file) {
+        utils::write.csv2(results_list()$df_with_computed_metrics %>%
+                            dplyr::select(-col_time_stamp, -timestamp), 
+                          file, row.names = FALSE)
+      }
+    )
+    
   # Exporting results by day 
-  output$ExpResultsByDays <- downloadHandler(
-    filename = function() {
-      paste0(input$upload, "_ResultsByDay.csv")
-    },
-    content = function(file) {
-      utils::write.csv2(results_list()$results_by_day, file, row.names = FALSE)
-    }
-  )
+    output$ExpResultsByDays <- downloadHandler(
+      filename = function() {
+        paste0(input$upload, "_ResultsByDay.csv")
+      },
+      content = function(file) {
+        utils::write.csv2(results_list()$results_by_day, file, row.names = FALSE)
+      }
+    )
   
   # Exporting daily summary (means)
-  output$ExpDailySummaryMeans <- downloadHandler(
-    filename = function() {
-      paste0(input$upload, "_DailySummaryMeans.csv")
-    },
-    content = function(file) {
-      utils::write.csv2(results_summary_means(), file, row.names = FALSE)
-    }
-  )
+    output$ExpDailySummaryMeans <- downloadHandler(
+      filename = function() {
+        paste0(input$upload, "_DailySummaryMeans.csv")
+      },
+      content = function(file) {
+        utils::write.csv2(results_summary_means(), file, row.names = FALSE)
+      }
+    )
   
   # Exporting daily summary (medians)
-  output$ExpDailySummaryMedians <- downloadHandler(
-    filename = function() {
-      paste0(input$upload, "_DailySummaryMedians.csv")
-    },
-    content = function(file) {
-      utils::write.csv2(results_summary_medians(), file, row.names = FALSE)
-    }
-  )
+    output$ExpDailySummaryMedians <- downloadHandler(
+      filename = function() {
+        paste0(input$upload, "_DailySummaryMedians.csv")
+      },
+      content = function(file) {
+        utils::write.csv2(results_summary_medians(), file, row.names = FALSE)
+      }
+    )
   
   ###################
   # Generating report ----
   ###################
   
   # Generating report EN
-  output$report_en <- downloadHandler(
+    output$report_en <- downloadHandler(
     
     
     filename = "report.pdf",
@@ -932,7 +964,7 @@ app_server <- function(input, output, session) {
   )
   
   # Generating report FR
-  output$report_fr <- downloadHandler(
+    output$report_fr <- downloadHandler(
     
     
     filename = "rapport.pdf",
@@ -1038,25 +1070,25 @@ app_server <- function(input, output, session) {
   ##########################
   
   # English
-  output$user_guide_en <- downloadHandler(
-    filename = function() {
-      paste0(input$upload, "activanalyzer_manual.pdf")
-    },
-    content = function(file) {
-      file.copy(system.file("guide", "user_guide_en.pdf", package = "activAnalyzer"), file)
-    }
-  )
+    output$user_guide_en <- downloadHandler(
+      filename = function() {
+        paste0(input$upload, "activanalyzer_manual.pdf")
+      },
+      content = function(file) {
+        file.copy(system.file("guide", "user_guide_en.pdf", package = "activAnalyzer"), file)
+      }
+    )
   
   # French
-  output$user_guide_fr <- downloadHandler(
-    filename = function() {
-      paste0(input$upload, "activanalyzer_manuel.pdf")
-    },
-    content = function(file) {
-      file.copy(system.file("guide", "user_guide_fr.pdf", package = "activAnalyzer"), file)
-    }
-  )
-  
+    output$user_guide_fr <- downloadHandler(
+      filename = function() {
+        paste0(input$upload, "activanalyzer_manuel.pdf")
+      },
+      content = function(file) {
+        file.copy(system.file("guide", "user_guide_fr.pdf", package = "activAnalyzer"), file)
+      }
+    )
+    
   #################################################
   # Exporting values/objects (required for testing) ----
   #################################################
@@ -1087,26 +1119,26 @@ app_server <- function(input, output, session) {
     })
     
     # Exporting inputs after setting proactive inputs for data analysis
-    observeEvent(input$pro_active_period, {
-      shiny::exportTestValues(start_day_analysis = input$start_day_analysis)
-      shiny::exportTestValues(end_day_analysis = input$end_day_analysis)
-    })
-    
+      observeEvent(input$pro_active_period, {
+        shiny::exportTestValues(start_day_analysis = input$start_day_analysis)
+        shiny::exportTestValues(end_day_analysis = input$end_day_analysis)
+      })
+      
     # Exporting inputs after resetting inputs for nonwear/wear time analysis
-    observeEvent(input$validate, {
-      shiny::exportTestValues(axis_weartime = input$axis_weartime)
-      shiny::exportTestValues(frame_size = input$frame_size)
-      shiny::exportTestValues(allowanceFrame_size = input$allowanceFrame_size)
-      shiny::exportTestValues(streamFrame_size = input$streamFrame_size)
-      shiny::exportTestValues(start_day_analysis = input$start_day_analysis)
-      shiny::exportTestValues(end_day_analysis = input$end_day_analysis)
-    })
+      observeEvent(input$validate, {
+        shiny::exportTestValues(axis_weartime = input$axis_weartime)
+        shiny::exportTestValues(frame_size = input$frame_size)
+        shiny::exportTestValues(allowanceFrame_size = input$allowanceFrame_size)
+        shiny::exportTestValues(streamFrame_size = input$streamFrame_size)
+        shiny::exportTestValues(start_day_analysis = input$start_day_analysis)
+        shiny::exportTestValues(end_day_analysis = input$end_day_analysis)
+      })
     
     # Exporting BMR
-    observeEvent(input$Run, {
-      shiny::exportTestValues(BMR = bmr_kcal_d())
-    })
-    
+      observeEvent(input$Run, {
+        shiny::exportTestValues(BMR = bmr_kcal_d())
+      })
+      
   
 }
 

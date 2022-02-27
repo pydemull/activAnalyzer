@@ -65,7 +65,8 @@ if (language == "en") {
   
 all_days <-
   data %>%
-  dplyr::mutate(validity = ifelse(wear_time >= minimum_wear_time_for_analysis * 60, "Valid day", "Non valid day"),
+  dplyr::mutate(date = as.factor(date),
+                validity = ifelse(wear_time >= minimum_wear_time_for_analysis * 60, "Valid day", "Non valid day"),
                 validity =  forcats::fct_relevel(validity, "Valid day", "Non valid day")) %>%
   tidyr::pivot_longer(cols = c(wear_time, 
                                total_steps, 
@@ -142,7 +143,8 @@ if (language == "fr") {
   # Generate figure
   all_days <-
     data %>%
-    dplyr::mutate(validity = ifelse(wear_time >= minimum_wear_time_for_analysis * 60, "Valid day", "Non valid day"),
+    dplyr::mutate(date = as.factor(date),
+                  validity = ifelse(wear_time >= minimum_wear_time_for_analysis * 60, "Valid day", "Non valid day"),
                   validity = forcats::fct_relevel(validity, "Valid day", "Non valid day")) %>%
     tidyr::pivot_longer(cols = c(wear_time, 
                                  total_steps, 

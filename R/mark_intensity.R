@@ -30,6 +30,7 @@
 #' @param weight A numeric value in kg.
 #' @param sex A character value.
 #' @param col_steps A character value to indicate the name of the variable to be used for analyzing steps. 
+#' @param dates A character vector containing the dates to be retained for analyzis. The dates must be with the "YYYY-MM-DD" format.
 
 #' @return A dataframe.
 #' @export
@@ -71,7 +72,12 @@ mark_intensity <- function(data,
                            age = 40, 
                            weight = 70, 
                            sex = c("male", "female", "undefined"),
-                           col_steps = "steps") {
+                           col_steps = "steps",
+                           dates = NULL) {
+  
+  
+  if (is.null(dates)) {selected_dates <- attributes(as.factor(data$date))$levels}
+  else {selected_dates <- attributes(as.factor(dates))$levels}
   
   equation <- match.arg(equation)
   sex <- match.arg(sex)
@@ -107,7 +113,11 @@ mark_intensity <- function(data,
         accum_steps_20min = zoo::rollmean(data[[col_steps]], align = "center", k = 20L, fill = NA),
         accum_steps_5min  = zoo::rollmean(data[[col_steps]], align = "center", k = 5L,  fill = NA),
         accum_steps_1min  = zoo::rollmean(data[[col_steps]], align = "center", k = 1L,  fill = NA)
-      )
+      ) %>%
+      
+      # Filtering data based on selected dates 
+      dplyr::filter(date %in% as.Date(selected_dates))
+      
 
   # Marking the bouts based on intensity categories
     df$intensity_category <- ifelse(df$non_wearing_count == 1, "Nonwear", 

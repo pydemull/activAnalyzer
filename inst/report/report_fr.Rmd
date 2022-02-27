@@ -79,13 +79,14 @@ axis_mvpa <- ifelse(params$axis_mvpa == "vertical axis", "axe vertical",
 options("scipen"=100, "digits"=4)
 ```
 
+\vspace{-1cm} 
 
 # Informations
 
 
 **Patient :** `r params$patient_surname` `r params$patient_name`  | **Date :**  `r Sys.Date()` | **Évaluateur :** `r params$assessor_surname` `r params$assessor_name`
 
-**Age :** `r params$age` ans | **Sexe :**  `r sex` | **Masse :** `r params$weight` kg | **Période de mesure :** `r params$start_date` à `r params$end_date` | **Estimation du métabolisme de base :** `r format(round(params$bmr_kcal_d, 2), nsmall = 2)` kcal/jour (Estimation à partir des équations de Henry [2005, doi: 10.1079/PHN2005801].)
+**Age :** `r params$age` ans | **Sexe :**  `r sex` | **Masse :** `r params$weight` kg | **Période de mesure :** `r format(params$start_date, "%d/%m/%Y %H:%M:%S")` au `r format(params$end_date, "%d/%m/%Y %H:%M:%S")` | **Estimation du métabolisme de base :** `r format(round(params$bmr_kcal_d, 2), nsmall = 2)` kcal/jour (Estimation à partir des équations de Henry [2005, doi: 10.1079/PHN2005801].)
 
 **Appareil :** `r params$device` | **Position :** `r position` | **Côté :** `r side` | **Fréquence d'échantillonnage :** `r params$sampling_rate` Hz | **Filtre :** `r params$filter`.
 

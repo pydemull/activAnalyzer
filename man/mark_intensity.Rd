@@ -15,7 +15,8 @@ mark_intensity(
   age = 40,
   weight = 70,
   sex = c("male", "female", "undefined"),
-  col_steps = "steps"
+  col_steps = "steps",
+  dates = NULL
 )
 }
 \arguments{
@@ -38,6 +39,8 @@ mark_intensity(
 \item{sex}{A character value.}
 
 \item{col_steps}{A character value to indicate the name of the variable to be used for analyzing steps.}
+
+\item{dates}{A character vector containing the dates to be retained for analyzis. The dates must be with the "YYYY-MM-DD" format.}
 }
 \value{
 A dataframe.

@@ -6,7 +6,6 @@
 \usage{
 recap_by_day(
   data,
-  col_date = "date",
   col_time = "time",
   valid_wear_time_start = "00:00:00",
   valid_wear_time_end = "23:59:00",
@@ -17,8 +16,6 @@ recap_by_day(
 }
 \arguments{
 \item{data}{A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then the \code{\link{mark_intensity}} functions.}
-
-\item{col_date}{A character value to indicate the name of the date variable.}
 
 \item{col_time}{A character value indicating the name of the variable where time information is provided.}
 

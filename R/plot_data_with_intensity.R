@@ -8,7 +8,6 @@
 #' @param col_time A character value to indicate the name of the variable to plot time data.
 #' @param col_nonwear A character value to indicate the name of the variable used to count nonwear time.
 #' @param col_wear A character value to indicate the name of the variable used to count wear time.
-#' @param col_date A character value to indicate the name of the variable to plot date data.
 #' @param valid_wear_time_start A character value with the HH:MM:SS format to set the start of the daily period that will be considered for computing valid wear time.
 #' @param valid_wear_time_end A character value with the HH:MM:SS format to set the end of the daily period that will be considered for computing valid wear time.
 
@@ -53,13 +52,12 @@ plot_data_with_intensity <- function(data,
                       col_time = "time", 
                       col_nonwear = "non_wearing_count",
                       col_wear = "wearing_count",
-                      col_date = "date",
                       valid_wear_time_start = "00:00:00",
                       valid_wear_time_end = "23:59:00"){
 
   # Setting the format of the time variable
     format_hm <- function(sec) stringr::str_sub(format(sec), end = -4L)
-    date_labs <- format(data[[col_date]], "%d-%m-%y")
+    date_labs <- format(data$date, "%d-%m-%y")
     names(date_labs) <- data$days
     
   # Creating the plot

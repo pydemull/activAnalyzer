@@ -59,7 +59,8 @@ app_ui <- function(request) {
               color: #ff0000;
               font-weight: bold;
             }
-          "))
+          ")),
+                 tags$style(".checkbox-inline {margin: 0 !important;}")
                   ),
 
                   
@@ -154,7 +155,7 @@ app_ui <- function(request) {
                   ),
                   fluidRow(
                     column(12,
-                           fileInput("upload", "Upload file (please wait until seeing 'Upload complete' before continuing)", placeholder = ".agd")
+                           fileInput("upload", "Upload file (please wait until seeing the 'Validate configuration' green button below)", placeholder = ".agd")
                     ),
                   ),
                   fluidRow(
@@ -209,7 +210,19 @@ app_ui <- function(request) {
                     column(12,
                            h2("Section 3. Configuration for metrics computation"),
                     ),
-                  ),    
+                  ),
+                  
+                  #***************************************
+                  # Choosing days to consider for analysis
+                  #***************************************
+
+                  fluidRow(
+                    column(12,
+                           tags$div(align = "left",
+                           uiOutput("select_days")
+                           )
+                    ),
+                  ),
                   
                   #******************
                   # Choosing Equation

@@ -8,7 +8,6 @@
 #' @param col_time A character value to indicate the name of the variable to plot time data.
 #' @param col_nonwear A character value to indicate the name of the variable used to count nonwear time.
 #' @param col_wear A character value to indicate the name of the variable used to count wear time.
-#' @param col_date A character value to indicate the name of the variable to plot date data.
 #'
 #' @return
 #' A `ggplot` object.
@@ -31,20 +30,18 @@
 #'     metric = "vm", 
 #'     col_time = "time", 
 #'     col_nonwear = "non_wearing_count", 
-#'     col_wear = "wearing_count", 
-#'     col_date = "date"
+#'     col_wear = "wearing_count"
 #'     )
 #' 
 plot_data <- function(data, 
                       metric = "axis1", 
                       col_time = "time", 
                       col_nonwear = "non_wearing_count",
-                      col_wear = "wearing_count",
-                      col_date = "date"){
+                      col_wear = "wearing_count"){
 
   # Setting the format of the time variable
     format_hm <- function(sec) stringr::str_sub(format(sec), end = -4L)
-    date_labs <- format(data[[col_date]], "%d-%m-%y")
+    date_labs <- format(data$date, "%d-%m-%y")
     names(date_labs) <- data$days
     
 
