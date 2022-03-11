@@ -2,25 +2,28 @@
 % Please edit documentation in R/compute_pro_actigraph_score.R
 \name{compute_pro_actigraph_score}
 \alias{compute_pro_actigraph_score}
-\title{Compute PROactive monitor-based physical activity score}
+\title{Compute PROactive monitor-based physical activity score for C-PPAC tool}
 \usage{
-compute_pro_actigraph_score(x, metric = c("steps", "vmu"))
+compute_pro_actigraph_score(x, metric = c("steps", "vmu"), fun = "median")
 }
 \arguments{
-\item{x}{A numeric value that should be the daily median of step count or vector magnitude unit following a measurement of physical activity (see Gimeno-Santos et al., 2015; doi: 10.1183/09031936.00183014).}
+\item{x}{A numeric value that should be the daily median or the daily mean of step count or vector magnitude unit following a measurement of physical activity;
+see Gimeno-Santos et al. (2015, online supplement, p.71, doi: 10.1183/09031936.00183014) and Garcia-Aymerich et al. (2021, supplemental material, p.17; doi: 10.1136/thoraxjnl-2020-214554).}
 
 \item{metric}{A character value to indicate the metric for which the PROactive score should be obtained.}
+
+\item{fun}{A character value to indicate if the metric used in the function is the median or the mean of the results obtained each day of the measurement.}
 }
 \value{
 A numeric value.
 }
 \description{
-This function computes the PROactive activity score based on the daily median of
+This function computes the PROactive activity score based on the daily median or mean of
 step count or vector magnitude unit (in counts/min) obtained using an ActiGraph accelerometer.
 }
 \examples{
-compute_pro_actigraph_score(x= 3500, metric = "steps")
+compute_pro_actigraph_score(x = 3500, metric = "steps")
 
-compute_pro_actigraph_score(x= 340, metric = "vmu")
+compute_pro_actigraph_score(x = 340, metric = "vmu")
 
 }

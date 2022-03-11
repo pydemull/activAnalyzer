@@ -1,3 +1,5 @@
+# activAnalyzer (development version)
+
 # activAnalyzer 0.4.0
 
 * Updated UI appearance.

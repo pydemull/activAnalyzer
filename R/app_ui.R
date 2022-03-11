@@ -194,7 +194,7 @@ app_ui <- function(request) {
                                             title = "Wear time analysis",
                                             shinycssloaders::withSpinner(plotOutput("graph", height = "auto")), 
                                             width = 12, 
-                                            height = "auto")
+                                            height = NULL)
                   ),
                   fluidRow(
                     align = "center",
@@ -383,7 +383,7 @@ app_ui <- function(request) {
                                                  title = "Physical behavior intensity analysis",
                                                  shinycssloaders::withSpinner(plotOutput("graph_int", height = "auto")), 
                                                  width = 12, 
-                                                 height = "auto")
+                                                 height = NULL)
                        ),
                        fluidRow(
                          align = "center",
@@ -434,12 +434,23 @@ app_ui <- function(request) {
                        #******************************************************
                        
                        fluidRow(
+                         column(3,
                          shinydashboardPlus::box(
-                           id = "PROactive",
-                           title = "PROactive scores (C-PPAC)",
-                                shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores")),
-                           width = 2, 
+                           id = "PROactive_medians",
+                           title = "PROactive scores based on medians (C-PPAC)",
+                                shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_medians")),
+                           width = NULL, 
                            height = "auto")
+                         ),
+                         column(3,
+                                shinydashboardPlus::box(
+                                  id = "PROactive_means",
+                                  title = "PROactive scores based on means (C-PPAC)",
+                                  shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_means")),
+                                  width = NULL, 
+                                  height = "auto")
+                         ),
+                         
                        ),
                            
                   #******************

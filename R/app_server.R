@@ -173,7 +173,21 @@ app_server <- function(input, output, session) {
   
   output$graph <- renderPlot({
     plot_data(data = df(), metric = input$Metric)
-  }, height = function(){nlevels(as.factor(df()$date)) * 92}, res = 120)
+  }, 
+  width = "auto", 
+  height = function(){
+    height <- dplyr::case_when(
+      nlevels(as.factor(df()$date)) >= 7 ~ nlevels(as.factor(df()$date)) * 100,
+      nlevels(as.factor(df()$date)) == 6 ~ nlevels(as.factor(df()$date)) * 110,
+      nlevels(as.factor(df()$date)) == 5 ~ nlevels(as.factor(df()$date)) * 120,
+      nlevels(as.factor(df()$date)) == 4 ~ nlevels(as.factor(df()$date)) * 140,
+      nlevels(as.factor(df()$date)) == 3 ~ nlevels(as.factor(df()$date)) * 160,
+      nlevels(as.factor(df()$date)) == 2 ~ nlevels(as.factor(df()$date)) * 180,
+      nlevels(as.factor(df()$date)) == 1 ~ nlevels(as.factor(df()$date)) * 210
+    )
+   return(height)
+    }, 
+  res = 120)
     
   
   ###################################################
@@ -683,7 +697,23 @@ app_server <- function(input, output, session) {
                                metric = input$Metric2,
                                valid_wear_time_start = analysis_filters()$start_day_analysis,
                                valid_wear_time_end = analysis_filters()$end_day_analysis)
-    }, height = function(){nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 90}, res = 120)
+    }, 
+    width = "auto", 
+    height = function(){
+      height <- dplyr::case_when(
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) >= 7 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 100,
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 6 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 110,
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 5 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 120,
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 4 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 140,
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 3 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 160,
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 2 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 180,
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 1 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 210
+      )
+      return(height)
+    }, 
+    res = 120)
+    
+
     
   
   # Showing results by day in a table
@@ -784,10 +814,12 @@ app_server <- function(input, output, session) {
     
   
   # Showing PROactive scores
-    output$PROactive_scores <- reactable::renderReactable({
+    
+    # Medians
+    output$PROactive_scores_medians <- reactable::renderReactable({
       
-      steps_score <- compute_pro_actigraph_score(results_summary_medians()[["total_steps"]], metric = "steps")
-      vmu_score <- compute_pro_actigraph_score(results_summary_medians()[["vm_per_min"]], metric = "vm")
+      steps_score <- compute_pro_actigraph_score(results_summary_medians()[["total_steps"]], metric = "steps", fun = "median")
+      vmu_score <- compute_pro_actigraph_score(results_summary_medians()[["vm_per_min"]], metric = "vm", fun = "median")
       
       reactable::reactable(
         tibble::tribble(
@@ -799,6 +831,25 @@ app_server <- function(input, output, session) {
         list(Score = reactable::colDef(align = "center"))
       )
     
+      
+    })
+    
+    # Means
+    output$PROactive_scores_means <- reactable::renderReactable({
+      
+      steps_score <- compute_pro_actigraph_score(results_summary_means()[["total_steps"]], metric = "steps", fun = "mean")
+      vmu_score <- compute_pro_actigraph_score(results_summary_means()[["vm_per_min"]], metric = "vm", fun = "mean")
+      
+      reactable::reactable(
+        tibble::tribble(
+          ~Metric,              ~Score,
+          "Daily steps score",   paste(steps_score),
+          "Daily VMU score",     paste(vmu_score)
+        ),
+        striped = TRUE,
+        list(Score = reactable::colDef(align = "center"))
+      )
+      
       
     })
     
@@ -830,7 +881,8 @@ app_server <- function(input, output, session) {
       shinyjs::hide("BoxResByDay")
       shinyjs::hide("BoxResMeans")
       shinyjs::hide("BoxResMedians")
-      shinyjs::hide("PROactive")
+      shinyjs::hide("PROactive_medians")
+      shinyjs::hide("PROactive_means")
 
       
       if(nrow(results_list()$df_with_computed_metrics) >=1) {
@@ -841,7 +893,8 @@ app_server <- function(input, output, session) {
       shinyjs::show("BoxResByDay")
       shinyjs::show("BoxResMeans")
       shinyjs::show("BoxResMedians")
-      shinyjs::show("PROactive")
+      shinyjs::show("PROactive_medians")
+      shinyjs::show("PROactive_means")
 
       }
     })
