@@ -82,7 +82,7 @@ options("scipen"=100, "digits"=4)
 create_flextable_summary(df1_means, df1_medians, language = "en")
 ```
 
-**PROactive scores (for COPD patients):** Step count score = `r compute_pro_actigraph_score(df1_medians[["total_steps"]], metric = "steps")` (daily median of `r df1_medians[["total_steps"]]` steps);  VMU score = `r compute_pro_actigraph_score(df1_medians[["vm_per_min"]], metric = "vm")` (daily median of `r df1_medians[["vm_per_min"]]` counts/min).
+**PROactive amount scores (for COPD patients):** Step count score = `r compute_pro_actigraph_score(df1_medians[["total_steps"]], metric = "steps")` (daily median of `r df1_medians[["total_steps"]]` steps);  VMU score = `r compute_pro_actigraph_score(df1_medians[["vm_per_min"]], metric = "vm")` (daily median of `r df1_medians[["vm_per_min"]]` counts/min).
 
 ```{r, fig.height=18, fig.width = 17, warning=FALSE, message=FALSE}
 # PAL

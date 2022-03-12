@@ -18,7 +18,7 @@ app_ui <- function(request) {
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
         ),
-        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.4.0"), titleWidth = 237
+        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.4.1"), titleWidth = 237
                                       ),
       shinydashboardPlus::dashboardSidebar(
         tags$style(HTML("
@@ -437,7 +437,7 @@ app_ui <- function(request) {
                          column(3,
                          shinydashboardPlus::box(
                            id = "PROactive_medians",
-                           title = "PROactive scores based on medians (C-PPAC)",
+                           title = "PROactive scores based on daily medians (C-PPAC)",
                                 shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_medians")),
                            width = NULL, 
                            height = "auto")
@@ -445,7 +445,7 @@ app_ui <- function(request) {
                          column(3,
                                 shinydashboardPlus::box(
                                   id = "PROactive_means",
-                                  title = "PROactive scores based on means (C-PPAC)",
+                                  title = "PROactive scores based on daily means (C-PPAC)",
                                   shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_means")),
                                   width = NULL, 
                                   height = "auto")

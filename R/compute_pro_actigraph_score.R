@@ -26,10 +26,10 @@ if (metric == "steps" && fun == "median") {
   
   score <- dplyr::case_when(
     x >  6000 ~ 4,
-    x >= 4000 ~ 3,
-    x >= 2000 ~ 2,
-    x >= 1000 ~ 1,
-    x <  1000 ~ 0
+    x >= 4001 ~ 3,
+    x >= 2001 ~ 2,
+    x >= 1001 ~ 1,
+    x <  1001 ~ 0
   )
   
   return(score)
@@ -40,10 +40,10 @@ if (metric == "vmu" && fun == "median") {
   
   score <- dplyr::case_when(
     x >  500 ~ 4,
-    x >= 300 ~ 3,
-    x >= 200 ~ 2,
-    x >= 100 ~ 1,
-    x <  100 ~ 0 
+    x >= 301 ~ 3,
+    x >= 201 ~ 2,
+    x >= 101 ~ 1,
+    x <  101 ~ 0 
   )
   
   return(score)

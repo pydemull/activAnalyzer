@@ -105,7 +105,7 @@ options("scipen"=100, "digits"=4)
 create_flextable_summary(df1_means, df1_medians, language = "fr")
 ```
 
-**Scores PROactive (pour patients BPCO) :** Score de pas = `r compute_pro_actigraph_score(df1_medians[["total_steps"]], metric = "steps")` (médiane journalière de `r df1_medians[["total_steps"]]` pas) ;  Score VMU = `r compute_pro_actigraph_score(df1_medians[["vm_per_min"]], metric = "vm")` (médiane journalière de `r df1_medians[["vm_per_min"]]` counts/min).
+**Scores de quantité PROactive (pour patients BPCO) :** Score de pas = `r compute_pro_actigraph_score(df1_medians[["total_steps"]], metric = "steps")` (médiane journalière de `r df1_medians[["total_steps"]]` pas) ;  Score VMU = `r compute_pro_actigraph_score(df1_medians[["vm_per_min"]], metric = "vm")` (médiane journalière de `r df1_medians[["vm_per_min"]]` counts/min).
 
 ```{r, fig.height=18, fig.width = 17, warning=FALSE, message=FALSE}
 # PAL

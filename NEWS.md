@@ -1,4 +1,7 @@
 # activAnalyzer (development version)
+* Updated calculations for PROactive accelerometer scores (previous calculations actually were appropriate when using the means of the days of the measurement, not the medians). Now the app allows to compute scores from both medians and means of the days of the measurement (see references in the documentation for further details).
+* Updated plots algorithms so that plots are correctly displayed in the app when a few days were recorded.
+* Hidden the download buttons for the reports when there is not enough valid days.
 
 # activAnalyzer 0.4.0
 

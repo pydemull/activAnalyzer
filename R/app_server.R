@@ -177,13 +177,14 @@ app_server <- function(input, output, session) {
   width = "auto", 
   height = function(){
     height <- dplyr::case_when(
-      nlevels(as.factor(df()$date)) >= 7 ~ nlevels(as.factor(df()$date)) * 100,
-      nlevels(as.factor(df()$date)) == 6 ~ nlevels(as.factor(df()$date)) * 110,
-      nlevels(as.factor(df()$date)) == 5 ~ nlevels(as.factor(df()$date)) * 120,
-      nlevels(as.factor(df()$date)) == 4 ~ nlevels(as.factor(df()$date)) * 140,
-      nlevels(as.factor(df()$date)) == 3 ~ nlevels(as.factor(df()$date)) * 160,
-      nlevels(as.factor(df()$date)) == 2 ~ nlevels(as.factor(df()$date)) * 180,
-      nlevels(as.factor(df()$date)) == 1 ~ nlevels(as.factor(df()$date)) * 210
+      nlevels(as.factor(df()$date)) >= 8 ~ nlevels(as.factor(df()$date)) * 95,
+      nlevels(as.factor(df()$date)) == 7 ~ nlevels(as.factor(df()$date)) * 105,
+      nlevels(as.factor(df()$date)) == 6 ~ nlevels(as.factor(df()$date)) * 107,
+      nlevels(as.factor(df()$date)) == 5 ~ nlevels(as.factor(df()$date)) * 110,
+      nlevels(as.factor(df()$date)) == 4 ~ nlevels(as.factor(df()$date)) * 115,
+      nlevels(as.factor(df()$date)) == 3 ~ nlevels(as.factor(df()$date)) * 130,
+      nlevels(as.factor(df()$date)) == 2 ~ nlevels(as.factor(df()$date)) * 150,
+      nlevels(as.factor(df()$date)) == 1 ~ nlevels(as.factor(df()$date)) * 205
     )
    return(height)
     }, 
@@ -701,13 +702,14 @@ app_server <- function(input, output, session) {
     width = "auto", 
     height = function(){
       height <- dplyr::case_when(
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) >= 7 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 100,
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 6 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 110,
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 5 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 120,
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 4 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 140,
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 3 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 160,
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 2 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 180,
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 1 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 210
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) >= 8 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 95,
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 7 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 105,
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 6 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 107,
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 5 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 110,
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 4 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 115,
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 3 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 130,
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 2 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 150,
+        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 1 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 205
       )
       return(height)
     }, 
@@ -914,15 +916,18 @@ app_server <- function(input, output, session) {
       shinyjs::hide("reset")
       
     if(nrow(results_list()$df_with_computed_metrics) >=1) {
-      
       shinyjs::show("ExpDataset")
       shinyjs::show("ExpResultsByDays")
       shinyjs::show("ExpDailySummaryMeans")
       shinyjs::show("ExpDailySummaryMedians")
-      shinyjs::show("report_en")
-      shinyjs::show("report_fr")
       shinyjs::show("reset")
     }
+      
+    if(results_summary_means()$valid_days >=1 | results_summary_medians()$valid_days >=1) {
+      shinyjs::show("report_en")
+      shinyjs::show("report_fr")
+    }
+
   })
   
   
@@ -1048,7 +1053,7 @@ app_server <- function(input, output, session) {
   # Generating report FR
     output$report_fr <- downloadHandler(
     
-    
+      
     filename = "rapport.pdf",
     content = function(file) {
       
