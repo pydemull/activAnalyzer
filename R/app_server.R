@@ -817,8 +817,8 @@ app_server <- function(input, output, session) {
   
   # Showing PROactive scores
     
-    # Medians
-    output$PROactive_scores_medians <- reactable::renderReactable({
+    # C-PPAC: Based on medians
+    output$PROactive_scores_cppac_medians <- reactable::renderReactable({
       
       steps_score <- compute_pro_actigraph_score(results_summary_medians()[["total_steps"]], metric = "steps", fun = "median")
       vmu_score <- compute_pro_actigraph_score(results_summary_medians()[["vm_per_min"]], metric = "vm", fun = "median")
@@ -836,8 +836,8 @@ app_server <- function(input, output, session) {
       
     })
     
-    # Means
-    output$PROactive_scores_means <- reactable::renderReactable({
+    # C-PPAC: Based on means
+    output$PROactive_scores_cppac_means <- reactable::renderReactable({
       
       steps_score <- compute_pro_actigraph_score(results_summary_means()[["total_steps"]], metric = "steps", fun = "mean")
       vmu_score <- compute_pro_actigraph_score(results_summary_means()[["vm_per_min"]], metric = "vm", fun = "mean")
@@ -853,6 +853,29 @@ app_server <- function(input, output, session) {
       )
       
       
+    })
+    
+    # D-PPAC
+    output$PROactive_scores_dppac <-  reactable::renderReactable({
+      reactable::reactable(
+      results_list()$results_by_day %>%
+        dplyr::mutate(Date = date,
+                      "Daily steps score" = compute_pro_actigraph_score(
+                                               x = .data$total_steps,
+                                               quest = "D-PPAC",
+                                               metric = "steps"
+                                              ),
+                      "Daily VMU score" = compute_pro_actigraph_score(
+                                               x = .data$vm_per_min,
+                                               quest = "D-PPAC",
+                                               metric = "vmu"
+                                             ),
+                      ) %>%
+        dplyr::select(Date, "Daily steps score", "Daily VMU score" )
+      ),
+      striped = TRUE,
+      list(Score = reactable::colDef(align = "center"))
+      )
     })
     
   
@@ -883,8 +906,9 @@ app_server <- function(input, output, session) {
       shinyjs::hide("BoxResByDay")
       shinyjs::hide("BoxResMeans")
       shinyjs::hide("BoxResMedians")
-      shinyjs::hide("PROactive_medians")
-      shinyjs::hide("PROactive_means")
+      shinyjs::hide("CPPAC_PROactive_medians")
+      shinyjs::hide("CPPAC_PROactive_means")
+      shinyjs::hide("DPPAC_PROactive")
 
       
       if(nrow(results_list()$df_with_computed_metrics) >=1) {
@@ -895,8 +919,9 @@ app_server <- function(input, output, session) {
       shinyjs::show("BoxResByDay")
       shinyjs::show("BoxResMeans")
       shinyjs::show("BoxResMedians")
-      shinyjs::show("PROactive_medians")
-      shinyjs::show("PROactive_means")
+      shinyjs::show("CPPAC_PROactive_medians")
+      shinyjs::show("CPPAC_PROactive_means")
+      shinyjs::show("DPPAC_PROactive")
 
       }
     })

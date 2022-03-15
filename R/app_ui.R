@@ -434,24 +434,37 @@ app_ui <- function(request) {
                        #******************************************************
                        
                        fluidRow(
-                         column(3,
-                         shinydashboardPlus::box(
-                           id = "PROactive_medians",
-                           title = "PROactive scores based on daily medians (C-PPAC)",
-                                shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_medians")),
-                           width = NULL, 
-                           height = "auto")
+                        column(3,
+                               shinydashboardPlus::box(
+                                 id = "CPPAC_PROactive_medians",
+                                 title = "PROactive scores based on daily medians (C-PPAC)",
+                                      shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_cppac_medians")),
+                                 width = NULL, 
+                                 height = "auto"
+                                 )
                          ),
                          column(3,
                                 shinydashboardPlus::box(
-                                  id = "PROactive_means",
+                                  id = "CPPAC_PROactive_means",
                                   title = "PROactive scores based on daily means (C-PPAC)",
-                                  shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_means")),
+                                  shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_cppac_means")),
                                   width = NULL, 
-                                  height = "auto")
+                                  height = "auto"
+                                  )
                          ),
                          
                        ),
+                      fluidRow(
+                        column(6,
+                               shinydashboardPlus::box(
+                               id = "DPPAC_PROactive",
+                               title = "PROactive score for each day (D-PPAC)",
+                               shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_dppac")),
+                               width = NULL, 
+                               height = "auto"
+                               )
+                         ),
+                      ),
                            
                   #******************
                   # Export
