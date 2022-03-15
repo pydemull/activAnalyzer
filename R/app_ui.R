@@ -434,19 +434,19 @@ app_ui <- function(request) {
                        #******************************************************
                        
                        fluidRow(
-                        column(3,
+                        column(4,
                                shinydashboardPlus::box(
                                  id = "CPPAC_PROactive_medians",
-                                 title = "PROactive scores based on daily medians (C-PPAC)",
+                                 title = "PROactive scores based on the medians of valid days (C-PPAC)",
                                       shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_cppac_medians")),
                                  width = NULL, 
                                  height = "auto"
                                  )
                          ),
-                         column(3,
+                         column(4,
                                 shinydashboardPlus::box(
                                   id = "CPPAC_PROactive_means",
-                                  title = "PROactive scores based on daily means (C-PPAC)",
+                                  title = "PROactive scores based on the means of valid days (C-PPAC)",
                                   shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_cppac_means")),
                                   width = NULL, 
                                   height = "auto"
@@ -455,10 +455,10 @@ app_ui <- function(request) {
                          
                        ),
                       fluidRow(
-                        column(6,
+                        column(8,
                                shinydashboardPlus::box(
                                id = "DPPAC_PROactive",
-                               title = "PROactive score for each day (D-PPAC)",
+                               title = "PROactive score for each valid day (D-PPAC)",
                                shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_dppac")),
                                width = NULL, 
                                height = "auto"

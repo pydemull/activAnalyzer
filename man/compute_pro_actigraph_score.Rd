@@ -4,11 +4,18 @@
 \alias{compute_pro_actigraph_score}
 \title{Compute PROactive monitor-based physical activity score for C-PPAC tool}
 \usage{
-compute_pro_actigraph_score(x, metric = c("steps", "vmu"), fun = "median")
+compute_pro_actigraph_score(
+  x,
+  quest = c("C-PPAC", "D-PPAC"),
+  metric = c("steps", "vmu"),
+  fun = c("median", "mean")
+)
 }
 \arguments{
 \item{x}{A numeric value that should be the daily median or the daily mean of step count or vector magnitude unit following a measurement of physical activity;
 see Gimeno-Santos et al. (2015, online supplement, p.71, doi: 10.1183/09031936.00183014) and Garcia-Aymerich et al. (2021, supplemental material, p.17; doi: 10.1136/thoraxjnl-2020-214554).}
+
+\item{quest}{A character value to indicate for which PROactive questionnaire a score of the amount of physical activity should be computed.}
 
 \item{metric}{A character value to indicate the metric for which the PROactive score should be obtained.}
 

@@ -817,7 +817,7 @@ app_server <- function(input, output, session) {
   
   # Showing PROactive scores
     
-    # C-PPAC: Based on medians
+    # C-PPAC: Based on the median metrics related to valid days
     output$PROactive_scores_cppac_medians <- reactable::renderReactable({
       
       steps_score <- compute_pro_actigraph_score(results_summary_medians()[["total_steps"]], metric = "steps", fun = "median")
@@ -836,7 +836,7 @@ app_server <- function(input, output, session) {
       
     })
     
-    # C-PPAC: Based on means
+    # C-PPAC: Based on the mean metrics related to valid days
     output$PROactive_scores_cppac_means <- reactable::renderReactable({
       
       steps_score <- compute_pro_actigraph_score(results_summary_means()[["total_steps"]], metric = "steps", fun = "mean")
@@ -870,12 +870,14 @@ app_server <- function(input, output, session) {
                                                quest = "D-PPAC",
                                                metric = "vmu"
                                              ),
+                      validity = ifelse(wear_time >= input$minimum_wear_time_for_analysis * 60, "valid", "invalid")
                       ) %>%
-        dplyr::select(Date, "Daily steps score", "Daily VMU score" )
-      ),
+        dplyr::filter(validity == "valid") %>%
+        dplyr::select(Date, "Daily steps score", "Daily VMU score"),
       striped = TRUE,
-      list(Score = reactable::colDef(align = "center"))
-      )
+      list("Daily steps score" = reactable::colDef(align = "center"),
+           "Daily VMU score" = reactable::colDef(align = "center"))
+    )
     })
     
   
