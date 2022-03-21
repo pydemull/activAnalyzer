@@ -41,19 +41,7 @@ app_server <- function(input, output, session) {
     data <- reactive({
       
       req(input$upload)
-      
-      if(!(
-           "axis1" %in% names(file()) &&
-           "axis2" %in% names(file()) &&
-           "axis3" %in% names(file()) &&
-           "steps" %in% names(file()) &&
-           "inclinestanding" %in% names(file()) &&
-           "inclinesitting" %in% names(file()) &&
-           "inclinelying" %in% names(file()))
-         ){
-        validate("Please load an .agd file with at least the following variables: axis1, axis2, axis3, steps, inclinestanding, inclinesitting, inclinelying")
-      }
-      
+
       prepare_dataset(data = input$upload$datapath)
       
     })
@@ -61,7 +49,7 @@ app_server <- function(input, output, session) {
   # Controlling appearance of the "Validate configuration" button
     observe({
       shinyjs::hide("validate")
-      if(nrow(data()) >=1) {
+      if(nrow(data()) >= 1) {
       shinyjs::show("validate")
         
       }
@@ -85,7 +73,7 @@ app_server <- function(input, output, session) {
   
   # Controlling for correct inputs
   
-      # File input
+      # File extension
         observeEvent(input$validate,
                      shinyFeedback::feedbackWarning(
                        "upload", 
@@ -93,6 +81,17 @@ app_server <- function(input, output, session) {
                        "Invalid file format. Please choose an .agd file."
                      )
         )
+    
+      # File extension
+        observeEvent(input$validate,
+                     shinyFeedback::feedbackWarning(
+                       "to_epoch", 
+                       (is.numeric(input$to_epoch) == FALSE | input$to_epoch < 1 | input$to_epoch > 60 |
+                          input$to_epoch < hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])),
+                       "Please choose a number between 1 and 60 and that is greater or equal to the duration of the file epochs."
+                     )
+        )
+       
   
       # Frame size
         observeEvent(input$validate,
@@ -127,6 +126,10 @@ app_server <- function(input, output, session) {
       
         # Waiting for required conditions 
           req(tools::file_ext(input$upload$name) == "agd" & 
+                is.numeric(input$to_epoch) & 
+                input$to_epoch >= 1 &
+                input$to_epoch <= 60 &
+                input$to_epoch >= hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1]) & 
                 is.numeric(input$frame_size) & 
                 input$frame_size >= 0 & 
                 is.numeric(input$allowanceFrame_size) & 
@@ -145,6 +148,7 @@ app_server <- function(input, output, session) {
         # Creating reactive dataframe
           df <- 
             mark_wear_time(dataset = data(),
+                           to_epoch = input$to_epoch,
                            cts = cts, 
                            frame = input$frame_size, 
                            allowanceFrame = input$allowanceFrame_size,
@@ -158,6 +162,7 @@ app_server <- function(input, output, session) {
   # Returning to default values for the wear time detection algorithm
     observeEvent(input$reset_nonwear, {
       axis_weartime <- c("vector magnitude", "vertical axis")
+      updateNumericInput(inputId = "to_epoch", value = 60)
       updateSelectInput(inputId = "axis_weartime", choices = axis_weartime)
       updateNumericInput(inputId = "frame_size", value = 90)
       updateNumericInput(inputId = "allowanceFrame_size", value = 2)
@@ -534,7 +539,7 @@ app_server <- function(input, output, session) {
   # Returning to default settings for the minimum wear time duration
     observeEvent(input$reset_period, {
       updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*0))
-      updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*23+60*59))
+      updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*23+60*59+59))
       updateNumericInput(inputId = "minimum_wear_time_for_analysis", value = 10)
     })
           
@@ -969,7 +974,7 @@ app_server <- function(input, output, session) {
       },
       content = function(file) {
         utils::write.csv2(results_list()$df_with_computed_metrics %>%
-                            dplyr::select(-col_time_stamp, -timestamp), 
+                            dplyr::select(-timestamp), 
                           file, row.names = FALSE)
       }
     )
@@ -1240,6 +1245,7 @@ app_server <- function(input, output, session) {
       
     # Exporting inputs after resetting inputs for nonwear/wear time analysis
       observeEvent(input$validate, {
+        shiny::exportTestValues(to_epoch = input$to_epoch)
         shiny::exportTestValues(axis_weartime = input$axis_weartime)
         shiny::exportTestValues(frame_size = input$frame_size)
         shiny::exportTestValues(allowanceFrame_size = input$allowanceFrame_size)

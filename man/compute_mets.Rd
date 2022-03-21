@@ -33,7 +33,7 @@ within the \code{\link{mark_intensity}} function.
 \examples{
 library(magrittr)
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
-mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
+mydata <- prepare_dataset(data = file)
 mydata_with_wear_marks <- mydata \%>\% mark_wear_time() \%>\% 
 dplyr::filter(days == 2 & time >= hms::as_hms("14:00:00") & time <= hms::as_hms("15:00:00")) 
 mets <- compute_mets(

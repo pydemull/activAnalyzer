@@ -6,7 +6,8 @@
 \usage{
 mark_wear_time(
   dataset,
-  TS = "timestamp",
+  TS = "TimeStamp",
+  to_epoch = 60,
   cts = "vm",
   frame = 90,
   allowanceFrame = 2,
@@ -17,6 +18,8 @@ mark_wear_time(
 \item{dataset}{A dataframe obtained using the \code{\link{prepare_dataset}} function.}
 
 \item{TS}{A character value indicating the name of the variable where date and time information are provided.}
+
+\item{to_epoch}{A numeric value indicating the length of the epoch to use (in seconds) for accumulating data. The value must be superior or equal to the recording epoch that was used for the measurement.}
 
 \item{cts}{A character value indicating the name of the variable used by the nonwear/wear detection algorithm.}
 
@@ -32,19 +35,23 @@ to validate nonwear time.}
 A dataframe.
 }
 \description{
-This function wraps the \code{\link[PhysicalActivity]{wearingMarking}} function
-from the \code{PhysicalActivity} package, and adds two variables to the dataset: the variable \code{non_wearing_count}
+This function wraps the \code{\link[PhysicalActivity]{dataCollapser}} and the
+\code{\link[PhysicalActivity]{wearingMarking}} functions from the \code{PhysicalActivity} package.
+After collapsing data, the fonction computes the vector magnitude for each epoch, and adds \code{time} and
+\code{date} columns. Then, the function analyzes the dataset for nonwear time detection. Finally, the function
+adds two variables to the dataset: the variable \code{non_wearing_count}
 that contains the number 1 when the device was \emph{not} worn (otherwise, 0 is used),
 and the variable \code{wearing_count} that contains the number 1 when the device
 was worn (otherwise, 0 is used).
 }
 \examples{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
-mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
+mydata <- prepare_dataset(data = file)
 mydata_with_wear_marks <- mark_wear_time(
     dataset = mydata, 
-    TS = "timestamp", 
-    cts  = "vm", 
+    TS = "TimeStamp", 
+    to_epoch = 60,
+    cts  = "vm",
     frame = 90, 
     allowanceFrame = 2, 
     streamFrame = 30

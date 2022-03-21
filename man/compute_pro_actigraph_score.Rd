@@ -29,8 +29,8 @@ This function computes the PROactive activity score based on the daily median or
 step count or vector magnitude unit (in counts/min) obtained using an ActiGraph accelerometer.
 }
 \examples{
-compute_pro_actigraph_score(x = 3500, metric = "steps")
+compute_pro_actigraph_score(x = 3500, quest = "C-PPAC", metric = "steps", fun = "median")
 
-compute_pro_actigraph_score(x = 340, metric = "vmu")
+compute_pro_actigraph_score(x = 340, quest = "C-PPAC", metric = "vmu",  fun = "mean")
 
 }

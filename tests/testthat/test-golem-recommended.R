@@ -41,6 +41,8 @@ test_that("The server functions correctly work", {
     Metric <<- "Metric"
     Score <<- "Score"
     Date <<- "Date"
+    wear_time <<- "wear_time"
+    validity <<- "validity"
     col_time_stamp <<- "col_time_stamp"
     assign("users", shiny::reactiveValues(count = 0), envir = .GlobalEnv)
     assign("equations_mets", activAnalyzer:::equations_mets, envir = .GlobalEnv)
@@ -65,6 +67,7 @@ test_that("The server functions correctly work", {
   # Testing dataframe marked for wear time
       # Test 1
         app$setInputs(
+          to_epoch = 60,
           axis_weartime = "vertical axis", 
           frame_size = 60, 
           allowanceFrame_size = 1, 
@@ -77,6 +80,7 @@ test_that("The server functions correctly work", {
         test_df <- 
           prepare_dataset(data = test_file) %>%
           mark_wear_time(
+            to_epoch = 60,
             cts  = "axis1", 
             frame = 60, 
             allowanceFrame = 1, 
@@ -87,6 +91,7 @@ test_that("The server functions correctly work", {
      
      # Test 2
        app$setInputs(
+         to_epoch = 60,
          axis_weartime = "vector magnitude", 
          frame_size = 30, 
          allowanceFrame_size = 0, 
@@ -99,6 +104,7 @@ test_that("The server functions correctly work", {
        test_df <- 
          prepare_dataset(data = test_file) %>%
          mark_wear_time(
+           to_epoch = 60,
            cts  = "vm", 
            frame = 30, 
            allowanceFrame = 0,
@@ -113,6 +119,7 @@ test_that("The server functions correctly work", {
        
        test_list <-
          list(
+           60,
            "vector magnitude",
            90,
            2,
@@ -121,6 +128,7 @@ test_that("The server functions correctly work", {
        
        actual_list <-
          list(
+           app$getAllValues()$export[["to_epoch"]],
            app$getAllValues()$export[["axis_weartime"]],
            app$getAllValues()$export[["frame_size"]],
            app$getAllValues()$export[["allowanceFrame_size"]],
@@ -296,7 +304,7 @@ test_that("The server functions correctly work", {
       expect_equal(actual_set_proactive, test_set_proactive)
          
        
-    # Testing dataframe with daily means
+    # Testing dataframe with daily summary
        app$setInputs(minimum_wear_time_for_analysis = 12)
        app$setInputs(Run = "click")
        

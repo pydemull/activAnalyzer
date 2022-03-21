@@ -32,9 +32,7 @@ file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 ## Preparing dataset
 ```{r, warning=FALSE, message=FALSE}
 mydata <- prepare_dataset(
-  data = file, 
-  epoch_len_out = 60, 
-  col_time_stamp = "timestamp"
+  data = file
   )
 ```
 

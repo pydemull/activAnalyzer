@@ -1,5 +1,5 @@
 # Setting maximum size for .adg files
-options(shiny.maxRequestSize=30*1024^2)
+options(shiny.maxRequestSize=100*1024^2)
 
 # Setting lists of inputs
 sex <- c("...", "male", "female", "undefined")

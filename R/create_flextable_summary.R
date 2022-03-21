@@ -11,10 +11,10 @@
 #'
 #' @examples
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
-#' mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
+#' mydata <- prepare_dataset(data = file)
 #' mydata_with_wear_marks <- mark_wear_time(
 #'     dataset = mydata, 
-#'     TS = "timestamp", 
+#'     TS = "TimeStamp", 
 #'     cts  = "vm", 
 #'     frame = 90, 
 #'     allowanceFrame = 2, 
@@ -30,7 +30,6 @@
 #'     age = 32,
 #'     weight = 67,
 #'     sex = "male",
-#'     col_steps = "steps"
 #'     )
 #' summary_by_day <- recap_by_day(
 #'     data = mydata_with_intensity_marks, 

@@ -8,7 +8,7 @@ recap_by_day(
   data,
   col_time = "time",
   valid_wear_time_start = "00:00:00",
-  valid_wear_time_end = "23:59:00",
+  valid_wear_time_end = "23:59:59",
   age = 40,
   weight = 70,
   sex = c("male", "female", "undefined")
@@ -81,11 +81,12 @@ that may not be accurate at the individual level.
 }
 \examples{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
-mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
+mydata <- prepare_dataset(data = file)
 mydata_with_wear_marks <- mark_wear_time(
     dataset = mydata, 
-    TS = "timestamp", 
-    cts  = "vm", 
+    TS = "TimeStamp", 
+    to_epoch = 60,
+    cts  = "vm",
     frame = 90, 
     allowanceFrame = 2, 
     streamFrame = 30
@@ -100,7 +101,6 @@ mydata_with_intensity_marks <- mark_intensity(
     age = 32,
     weight = 67,
     sex = "male",
-    col_steps = "steps"
     )
 recap_by_day(
     data = mydata_with_intensity_marks, 

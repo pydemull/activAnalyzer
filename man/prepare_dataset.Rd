@@ -4,38 +4,29 @@
 \alias{prepare_dataset}
 \title{Prepare accelerometer data}
 \usage{
-prepare_dataset(data, epoch_len_out = 60, col_time_stamp = "timestamp")
+prepare_dataset(data)
 }
 \arguments{
 \item{data}{Path to an .agd file that was exported from Actilife software.}
-
-\item{epoch_len_out}{A numeric value (in seconds) setting the length of the desired epoch for accumulating accelerometer data. For now, only 60 can be used.}
-
-\item{col_time_stamp}{A character value that corresponds to the name of the variable that contains date and time information.}
 }
 \value{
 A dataframe.
 }
 \description{
-This function performs the following actions: it reads the .agd file, then it collapses
-accelerometer data based on the configured epoch length (for now, only 60 s can be used),
-then it creates the vector magnitude variable, creates \code{date} and \code{time} columns, and finally organizes columns
-in a predefined order.
-
-The .agd file must contain at least the following columns:
+This function reads an .agd file. The .agd file must contain at least the following columns:
 \itemize{
 \item \strong{axis1}
 \item \strong{axis2}
 \item \strong{axis3}
 \item \strong{steps}
-\item \strong{inclinestanding}
-\item \strong{inclinesitting}
-\item \strong{inclinelying}
+\item \strong{inclineStanding}
+\item \strong{inclineSitting}
+\item \strong{inclineLying}
 }
 }
 \examples{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
-mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
+mydata <- prepare_dataset(data = file)
 head(mydata)
 
 }

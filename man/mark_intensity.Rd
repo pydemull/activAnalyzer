@@ -15,7 +15,6 @@ mark_intensity(
   age = 40,
   weight = 70,
   sex = c("male", "female", "undefined"),
-  col_steps = "steps",
   dates = NULL
 )
 }
@@ -24,11 +23,20 @@ mark_intensity(
 
 \item{col_axis}{A character value to indicate the name of the variable to be used for determining intensity categories.}
 
-\item{sed_cutpoint}{A numeric value below which time is considered as spent in sedentary behavior.}
+\item{sed_cutpoint}{A numeric value below which time is considered as spent in sedentary behavior (in counts/min).
+You must convert to counts/min if you want to use a cut-point initially developped using an epoch shorter than 60 s. In the case where the epoch of the
+dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
+You must provide a value inferior or equal to 60.}
 
-\item{mpa_cutpoint}{A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity.}
+\item{mpa_cutpoint}{A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity (in counts/min).
+You must convert to counts/min if you want to use a cut-point initially developped using an epoch shorter than 60 s. In the case where the epoch of the
+dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
+You must provide a value inferior or equal to 60.}
 
-\item{vpa_cutpoint}{A numeric value at and above which time is considered as spent in vigorous physical activity.}
+\item{vpa_cutpoint}{A numeric value at and above which time is considered as spent in vigorous physical activity (in counts/min).
+You must convert to counts/min if you want to use a cut-point initially developped using an epoch shorter than 60 s. In the case where the epoch of the
+dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
+You must provide a value inferior or equal to 60.}
 
 \item{equation}{A character string to indicate the equation to be used for estimating METs.}
 
@@ -37,8 +45,6 @@ mark_intensity(
 \item{weight}{A numeric value in kg.}
 
 \item{sex}{A character value.}
-
-\item{col_steps}{A character value to indicate the name of the variable to be used for analyzing steps.}
 
 \item{dates}{A character vector containing the dates to be retained for analyzis. The dates must be with the "YYYY-MM-DD" format.}
 }
@@ -49,8 +55,8 @@ A dataframe.
 This function adds several columns to a dataset that contains accelerometer counts data.
 These columns concern respectively sedentary time (SED), light physical activity time (LPA),
 moderate physical activity time (MPA), vigorous physical activity time (VPA),
-metabolic equivalent of task (METs), kilocalories (kcal), MET-hours when
-time is spent in moderate-to-vigorous physical activity, and step-based metrics (based on step accumulation per minute). For the SED, LPA, MPA,
+metabolic equivalent of task (METs), kilocalories (kcal), and  MET-hours when
+time is spent in moderate-to-vigorous physical activity. For the SED, LPA, MPA,
 and VPA columns, the function provides, for each epoch, the numeric value 1 when
 the value of the configured counts variable respectively fulfills the criteria of the
 SED, LPA, MPA, and VPA category (e.g., for the SED column, 1 may be provided if VM counts are <150 counts/min);
@@ -64,14 +70,15 @@ and Freedson et al. (1998) equations, the MET values are multiplied by weight an
 metabolic rate (i.e., 3.5 mLO2/min/kg) and a standard MET is approximately equivalent to 1 kcal/kg/h (Butte et al., 2012; doi: 10.1249/MSS.0b013e3182399c0e).
 For SED epochs, BMR expressed in kcal/min is directly used. BMR is computed using the \code{\link{compute_bmr}} function that uses sex, age, and weight
 inputs, and one of the equations retrieved from the paper by Henry et al. (2005; doi: 10.1079/PHN2005801). MET-hours are obtained by multiplying METs by time
-related to each epoch (here 1/60e of an hour), only when the MET value is  >=3.
+related to each epoch (e.g., 1/60e of an hour for 1-min epochs), only when the MET value is  >=3.
 }
 \examples{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
-mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
+mydata <- prepare_dataset(data = file)
 mydata_with_wear_marks <- mark_wear_time(
     dataset = mydata, 
-    TS = "timestamp", 
+    TS = "TimeStamp", 
+    to_epoch = 60,
     cts  = "vm",
     frame = 90, 
     allowanceFrame = 2, 
@@ -87,7 +94,6 @@ mydata_with_intensity_marks <- mark_intensity(
     age = 32,
     weight = 67,
     sex = "male",
-    col_steps = "steps"
     )
 head(mydata_with_intensity_marks)
 

@@ -90,6 +90,8 @@ utils::globalVariables(c(
   "xmax",
   "xmin",
   "y",
-  "yend"
+  "yend",
+  "Date",
+  "TimeStamp"
   
   ))

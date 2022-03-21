@@ -13,12 +13,13 @@
 #' @export
 #'
 #' @examples
-#' compute_pro_actigraph_score(x = 3500, metric = "steps")
+#' compute_pro_actigraph_score(x = 3500, quest = "C-PPAC", metric = "steps", fun = "median")
 #' 
-#' compute_pro_actigraph_score(x = 340, metric = "vmu")
+#' compute_pro_actigraph_score(x = 340, quest = "C-PPAC", metric = "vmu",  fun = "mean")
 #' 
 compute_pro_actigraph_score <- function(x, quest = c("C-PPAC", "D-PPAC"), metric = c("steps", "vmu"), fun = c("median", "mean")) {
-  
+
+quest = match.arg(quest)
 metric = match.arg(metric)
 fun = match.arg(fun)
 

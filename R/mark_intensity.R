@@ -3,8 +3,8 @@
 #' This function adds several columns to a dataset that contains accelerometer counts data. 
 #'     These columns concern respectively sedentary time (SED), light physical activity time (LPA), 
 #'     moderate physical activity time (MPA), vigorous physical activity time (VPA), 
-#'     metabolic equivalent of task (METs), kilocalories (kcal), MET-hours when 
-#'     time is spent in moderate-to-vigorous physical activity, and step-based metrics (based on step accumulation per minute). For the SED, LPA, MPA, 
+#'     metabolic equivalent of task (METs), kilocalories (kcal), and  MET-hours when 
+#'     time is spent in moderate-to-vigorous physical activity. For the SED, LPA, MPA, 
 #'     and VPA columns, the function provides, for each epoch, the numeric value 1 when 
 #'     the value of the configured counts variable respectively fulfills the criteria of the 
 #'     SED, LPA, MPA, and VPA category (e.g., for the SED column, 1 may be provided if VM counts are <150 counts/min); 
@@ -18,18 +18,26 @@
 #'     metabolic rate (i.e., 3.5 mLO2/min/kg) and a standard MET is approximately equivalent to 1 kcal/kg/h (Butte et al., 2012; doi: 10.1249/MSS.0b013e3182399c0e).  
 #'     For SED epochs, BMR expressed in kcal/min is directly used. BMR is computed using the \code{\link{compute_bmr}} function that uses sex, age, and weight 
 #'     inputs, and one of the equations retrieved from the paper by Henry et al. (2005; doi: 10.1079/PHN2005801). MET-hours are obtained by multiplying METs by time 
-#'     related to each epoch (here 1/60e of an hour), only when the MET value is  >=3.
+#'     related to each epoch (e.g., 1/60e of an hour for 1-min epochs), only when the MET value is  >=3.
 #'
 #' @param data A dataframe obtained using the \code{\link{prepare_dataset}} and then the \code{\link{mark_wear_time}} functions.
 #' @param col_axis A character value to indicate the name of the variable to be used for determining intensity categories. 
 #' @param equation A character string to indicate the equation to be used for estimating METs.
-#' @param sed_cutpoint A numeric value below which time is considered as spent in sedentary behavior.
-#' @param mpa_cutpoint A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity.
-#' @param vpa_cutpoint A numeric value at and above which time is considered as spent in vigorous physical activity.
+#' @param sed_cutpoint A numeric value below which time is considered as spent in sedentary behavior (in counts/min). 
+#'                     You must convert to counts/min if you want to use a cut-point initially developped using an epoch shorter than 60 s. In the case where the epoch of the 
+#'                     dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
+#'                     You must provide a value inferior or equal to 60.
+#' @param mpa_cutpoint A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity (in counts/min). 
+#'                     You must convert to counts/min if you want to use a cut-point initially developped using an epoch shorter than 60 s. In the case where the epoch of the 
+#'                     dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
+#'                     You must provide a value inferior or equal to 60.
+#' @param vpa_cutpoint A numeric value at and above which time is considered as spent in vigorous physical activity (in counts/min). 
+#'                     You must convert to counts/min if you want to use a cut-point initially developped using an epoch shorter than 60 s. In the case where the epoch of the 
+#'                     dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
+#'                     You must provide a value inferior or equal to 60.
 #' @param age A numeric value in yr.
 #' @param weight A numeric value in kg.
 #' @param sex A character value.
-#' @param col_steps A character value to indicate the name of the variable to be used for analyzing steps. 
 #' @param dates A character vector containing the dates to be retained for analyzis. The dates must be with the "YYYY-MM-DD" format.
 
 #' @return A dataframe.
@@ -37,10 +45,11 @@
 #'
 #' @examples
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
-#' mydata <- prepare_dataset(data = file, epoch_len_out = 60, col_time_stamp = "timestamp")
+#' mydata <- prepare_dataset(data = file)
 #' mydata_with_wear_marks <- mark_wear_time(
 #'     dataset = mydata, 
-#'     TS = "timestamp", 
+#'     TS = "TimeStamp", 
+#'     to_epoch = 60,
 #'     cts  = "vm",
 #'     frame = 90, 
 #'     allowanceFrame = 2, 
@@ -56,7 +65,6 @@
 #'     age = 32,
 #'     weight = 67,
 #'     sex = "male",
-#'     col_steps = "steps"
 #'     )
 #' head(mydata_with_intensity_marks)
 #' 
@@ -72,7 +80,6 @@ mark_intensity <- function(data,
                            age = 40, 
                            weight = 70, 
                            sex = c("male", "female", "undefined"),
-                           col_steps = "steps",
                            dates = NULL) {
   
   
@@ -82,8 +89,10 @@ mark_intensity <- function(data,
   equation <- match.arg(equation)
   sex <- match.arg(sex)
   
-  # Computing basal metabolic rate
+  # Correction factor for determining intensity from cut-points and equations
+    cor_factor = 60 / (as.numeric(data$time[2] - data$time[1]))
   
+  # Computing basal metabolic rate
     bmr_kcal_min <- suppressMessages(
       compute_bmr(age = age, sex = sex, weight = weight) / (24*60)
   )
@@ -92,31 +101,32 @@ mark_intensity <- function(data,
     df <-
         data %>%
         dplyr::mutate(
-         SED = ifelse(.data[[col_axis]] < sed_cutpoint, 1, 0),
-         LPA = ifelse(.data[[col_axis]] >= sed_cutpoint & .data[[col_axis]] < mpa_cutpoint, 1, 0),
-         MPA = ifelse(.data[[col_axis]] >= mpa_cutpoint & .data[[col_axis]] < vpa_cutpoint, 1, 0), 
-         VPA = ifelse(.data[[col_axis]] >= vpa_cutpoint, 1, 0),
-         METS = suppressMessages(compute_mets(data = .data, equation = equation, weight = weight, sex = sex)),
+         SED = ifelse(.data[[col_axis]] < sed_cutpoint / cor_factor, 1, 0),
+         LPA = ifelse(.data[[col_axis]] >= sed_cutpoint / cor_factor & .data[[col_axis]] < mpa_cutpoint / cor_factor, 1, 0),
+         MPA = ifelse(.data[[col_axis]] >= mpa_cutpoint / cor_factor & .data[[col_axis]] < vpa_cutpoint / cor_factor, 1, 0), 
+         VPA = ifelse(.data[[col_axis]] >= vpa_cutpoint / cor_factor, 1, 0),
+         METS = suppressMessages(compute_mets(data = 
+                                                data %>% 
+                                                dplyr::mutate(axis1 = axis1 * cor_factor,
+                                                              vm = vm * cor_factor),
+                                              equation = equation, 
+                                              weight = weight, 
+                                              sex = sex)
+                                 ),
          kcal = dplyr::case_when(
-          SED == 1 ~ bmr_kcal_min,
-          equation == "Sasaki et al. (2011) [Adults]" | equation == "Freedson et al. (1998) [Adults]" ~ METS * weight * 1/60,
-          equation == "Santos-Lozano et al. (2013) [Adults]" | equation == "Santos-Lozano et al. (2013) [Older adults]" ~ METS * bmr_kcal_min
+         SED == 1 ~ bmr_kcal_min / cor_factor,
+         equation == "Sasaki et al. (2011) [Adults]" | equation == "Freedson et al. (1998) [Adults]" ~ METS * weight * 1/60 / cor_factor,
+         equation == "Santos-Lozano et al. (2013) [Adults]" | equation == "Santos-Lozano et al. (2013) [Older adults]" ~ METS * bmr_kcal_min / cor_factor
         ),
           
 
       # Computing MET-hr corresponding to MVPA only, for each epoch
-        mets_hours_mvpa = ifelse(METS >= 3, METS * 1/60, 0),
-      
-      # Applying moving averages for future computations of step-based metrics
-        accum_steps_60min = zoo::rollmean(data[[col_steps]], align = "center", k = 60L, fill = NA),
-        accum_steps_30min = zoo::rollmean(data[[col_steps]], align = "center", k = 30L, fill = NA),
-        accum_steps_20min = zoo::rollmean(data[[col_steps]], align = "center", k = 20L, fill = NA),
-        accum_steps_5min  = zoo::rollmean(data[[col_steps]], align = "center", k = 5L,  fill = NA),
-        accum_steps_1min  = zoo::rollmean(data[[col_steps]], align = "center", k = 1L,  fill = NA)
+        mets_hours_mvpa = ifelse(METS >= 3, METS * 1/60 / cor_factor, 0),
+
       ) %>%
       
       # Filtering data based on selected dates 
-      dplyr::filter(date %in% as.Date(selected_dates))
+        dplyr::filter(date %in% as.Date(selected_dates))
       
 
   # Marking the bouts based on intensity categories
@@ -139,9 +149,9 @@ mark_intensity <- function(data,
   # Providing information about the parameters used for computing results
     message(paste0("You have computed intensity metrics with the mark_intensity() function using the following inputs: 
     axis = ", col_axis, "
-    sed_cutpoint = ", sed_cutpoint, "
-    mpa_cutpoint = ", mpa_cutpoint, "
-    vpa_cutpoint = ", vpa_cutpoint, "
+    sed_cutpoint = ", sed_cutpoint, " counts/min", "
+    mpa_cutpoint = ", mpa_cutpoint, " counts/min", "
+    vpa_cutpoint = ", vpa_cutpoint, " counts/min", "
     equation = " , equation, "
     age = ", age, "
     weight = ", weight, "

@@ -1,5 +1,9 @@
 # activAnalyzer (development version)
 * Added scores for the D-PPAC questionnaire.
+* Allowed the possiblity to work with epochs inferior to 60 s (it seems that epochs different from 10/60s do not work).
+* Updated guide.
+* The user can now set "23:59:59" rather than "23:59:00" to set the upper limit of the period of the day to consider for analyzis.
+* Increased the size of the files that the app can manage.
 
 # activAnalyzer 0.4.1
 * Updated calculations for PROactive accelerometer scores (previous calculations actually were appropriate when using the means of the days of the measurement, not the medians). Now the app allows to compute scores from both medians and means of the days of the measurement (see references in the documentation for further details).

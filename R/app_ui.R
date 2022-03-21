@@ -158,6 +158,11 @@ app_ui <- function(request) {
                            fileInput("upload", "Upload file (please wait until seeing the 'Validate configuration' green button below)", placeholder = ".agd")
                     ),
                   ),
+                 fluidRow(
+                   column(12,
+                          numericInput("to_epoch", "Length of the epoch to use for analysis (s)", value = 60, min = 1, max = 60)
+                   ),
+                 ),
                   fluidRow(
                     column(3,
                            selectInput("axis_weartime", "Axis to be considered to detect nonwear time", axis_weartime)
@@ -324,14 +329,14 @@ app_ui <- function(request) {
                   fluidRow(
                     column(3,
                            selectInput("start_day_analysis", "Start of the period to consider each day", 
-                                       choices = c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59)),
+                                       choices = c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59), hms::as_hms(60*60*23+60*59+59)),
                                        selectize=FALSE
                            )
                     ),
                     column(3,
                            selectInput("end_day_analysis", "End of the period to consider each day", 
-                                       choices = c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59)),
-                                       selected = hms::as_hms(60*60*23+60*59),
+                                       choices = c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59), hms::as_hms(60*60*23+60*59+59)),
+                                       selected = hms::as_hms(60*60*23+60*59+59),
                                        selectize=FALSE
                            )
                     ),
