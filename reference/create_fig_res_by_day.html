@@ -84,10 +84,10 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"acc.agd"</span>, package <span class="op">=</span> <span class="st">"activAnalyzer"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_dataset.html">prepare_dataset</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">file</span>, epoch_len_out <span class="op">=</span> <span class="fl">60</span>, col_time_stamp <span class="op">=</span> <span class="st">"timestamp"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_dataset.html">prepare_dataset</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">file</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">mydata_with_wear_marks</span> <span class="op">&lt;-</span> <span class="fu"><a href="mark_wear_time.html">mark_wear_time</a></span><span class="op">(</span></span>
 <span class="r-in">    dataset <span class="op">=</span> <span class="va">mydata</span>, </span>
-<span class="r-in">    TS <span class="op">=</span> <span class="st">"timestamp"</span>, </span>
+<span class="r-in">    TS <span class="op">=</span> <span class="st">"TimeStamp"</span>, </span>
 <span class="r-in">    cts  <span class="op">=</span> <span class="st">"vm"</span>, </span>
 <span class="r-in">    frame <span class="op">=</span> <span class="fl">90</span>, </span>
 <span class="r-in">    allowanceFrame <span class="op">=</span> <span class="fl">2</span>, </span>
@@ -106,13 +106,12 @@
 <span class="r-in">    age <span class="op">=</span> <span class="fl">32</span>,</span>
 <span class="r-in">    weight <span class="op">=</span> <span class="fl">67</span>,</span>
 <span class="r-in">    sex <span class="op">=</span> <span class="st">"male"</span>,</span>
-<span class="r-in">    col_steps <span class="op">=</span> <span class="st">"steps"</span></span>
 <span class="r-in">    <span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You have computed intensity metrics with the mark_intensity() function using the following inputs: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     axis = vm</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     sed_cutpoint = 200</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     mpa_cutpoint = 2690</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     vpa_cutpoint = 6167</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     sed_cutpoint = 200 counts/min</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     mpa_cutpoint = 2690 counts/min</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     vpa_cutpoint = 6167 counts/min</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     equation = Sasaki et al. (2011) [Adults]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     age = 32</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     weight = 67</span>
@@ -126,9 +125,9 @@
 <span class="r-in">    valid_wear_time_end <span class="op">=</span> <span class="st">"22:00:00"</span></span>
 <span class="r-in">    <span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You have computed results with the recap_by_day() function using the following inputs: </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     age = 32</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     weight = 67</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     sex = male</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>          age = 32</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>          weight = 67</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>          sex = male</span>
 <span class="r-in"><span class="fu">create_fig_res_by_day</span><span class="op">(</span><span class="va">summary_by_day</span>, </span>
 <span class="r-in">    minimum_wear_time_for_analysis <span class="op">=</span> <span class="fl">10</span>, </span>
 <span class="r-in">    start_day_analysis <span class="op">=</span> <span class="st">"00:00:00"</span>, </span>
