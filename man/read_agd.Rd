@@ -21,15 +21,14 @@ are stored as attributes, which include \code{epochlength}.
 \description{
 Read ActiGraph sleep watch data from a database stored in an
 AGD file. Return a tibble.
-Code is from actigraph.sleepr package (https://github.com/dipetkov/actigraph.sleepr).
-See LICENCE.note file in the app skeleton.
+(Code is from actigraph.sleepr package \link{https://github.com/dipetkov/actigraph.sleepr}.
+See LICENCE.note file in the app skeleton.)
 }
 \examples{
 file <- system.file("extdata", "acc.agd",
   package = "activAnalyzer"
 )
 read_agd(file)
-
   
 }
 \references{

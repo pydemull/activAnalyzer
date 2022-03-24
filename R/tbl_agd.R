@@ -1,12 +1,13 @@
 #' A `tibble` of activity data exported by an ActiGraph device
 #'
 #' This tibble has several attributes, most importantly, `epochlength`. 
-#' Code is from actigraph.sleepr package
-#' (https://github.com/dipetkov/actigraph.sleepr). See LICENCE.note file in the app skeleton.
+#' (Code is from actigraph.sleepr package [https://github.com/dipetkov/actigraph.sleepr]. 
+#' See LICENCE.note file in the app skeleton.)
 #' 
 #' @param data A data frame of raw activity counts.
 #' @param settings A data frame of device settings.
 #' @export
+#' 
 tbl_agd <- function(data, settings) {
   assertthat::assert_that(
     is.data.frame(data),

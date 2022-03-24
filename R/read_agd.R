@@ -2,8 +2,8 @@
 #' 
 #' Read ActiGraph sleep watch data from a database stored in an
 #'     AGD file. Return a tibble. 
-#'     Code is from actigraph.sleepr package (https://github.com/dipetkov/actigraph.sleepr). 
-#'     See LICENCE.note file in the app skeleton.
+#'     (Code is from actigraph.sleepr package [https://github.com/dipetkov/actigraph.sleepr]. 
+#'     See LICENCE.note file in the app skeleton.)
 #' 
 #' @param file Full path to an agd file to read.
 #' @param tz Time zone to convert DateTime ticks to POSIX time.
@@ -23,7 +23,6 @@
 #'   package = "activAnalyzer"
 #' )
 #' read_agd(file)
-#'
 #'   
 #' @export
 #'
@@ -93,8 +92,8 @@ read_agd <- function(file, tz = "UTC") {
 #' @seealso [read_agd()]
 #' 
 #' @examples
-#' file <- system.file("extdata", "GT3XPlus-RawData-Day01.agd",
-#'   package = "actigraph.sleepr"
+#' file <- system.file("extdata", "acc.agd",
+#'   package = "activAnalyzer"
 #' )
 #' str(read_agd_raw(file))
 #' 
