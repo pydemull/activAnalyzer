@@ -50,10 +50,15 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="activanalyzer-development-version">activAnalyzer (development version)<a class="anchor" aria-label="anchor" href="#activanalyzer-development-version"></a></h2>
 <ul><li>Added scores for the D-PPAC questionnaire.</li>
-<li>Allowed the possiblity to work with epochs inferior to 60 s (it seems that epochs different from 10/60s do not work).</li>
+<li>Allowed the possiblity to work with epochs shorter than 60 s. A warning is provided when the set epoch is &lt;10 s to indicate that figures will not be created with such epochs to save time.</li>
 <li>Updated guide.</li>
 <li>The user can now set “23:59:59” rather than “23:59:00” to set the upper limit of the period of the day to consider for analyzis.</li>
 <li>Increased the size of the files that the app can manage.</li>
+<li>Corrected bug for the message that should appear when a file with incorrect extension is uploaded.</li>
+<li>Added feedbacks to guide the user for the choice of the values to set to configure the desired epoch for analysis (the ratio between the desired epoch and the current epoch in the file can only be an integer).</li>
+<li>Replaced for loop by vectorization to detect bouts in the data file with the mark_intensity() function.</li>
+<li>Removed actigraph.sleepr from the DESCRIPTION file and added the read_agd.R file (from the actigraph.sleepr package) as additionnal file into the activAnalyzer package.</li>
+<li>The Reset button is now at the top of the app.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.1" id="activanalyzer-041">activAnalyzer 0.4.1<a class="anchor" aria-label="anchor" href="#activanalyzer-041"></a></h2>

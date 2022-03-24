@@ -85,9 +85,18 @@
     <loc>https://pydemull.github.io/activAnalyzer/reference/prepare_dataset.html</loc>
   </url>
   <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/read_agd.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/read_agd_raw.html</loc>
+  </url>
+  <url>
     <loc>https://pydemull.github.io/activAnalyzer/reference/recap_by_day.html</loc>
   </url>
   <url>
     <loc>https://pydemull.github.io/activAnalyzer/reference/run_app.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/tbl_agd.html</loc>
   </url>
 </urlset>
