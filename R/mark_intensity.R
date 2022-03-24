@@ -132,18 +132,16 @@ mark_intensity <- function(data,
   # Marking the bouts based on intensity categories
     df$intensity_category <- ifelse(df$non_wearing_count == 1, "Nonwear", 
                                     ifelse(df$SED == 1, "SED", 
-                                           ifelse(df$LPA == 1, "LPA", 
-                                                  ifelse(df$MPA == 1 | df$VPA == 1, "MVPA", "none"))))
-    df$bout <- vector("double", length = nrow(df))
-    df$bout[1] <- 1
-    for (i in 2:(nrow(df) - 1)) {
-      if (df$intensity_category[i] != df$intensity_category[i-1]) {
-        df$bout[i] <- df$bout[i-1] + 1
-      } else {
-        df$bout[i] <- df$bout[i-1]
-      }
-    }
-    df$bout[nrow(df)] <- df$bout[nrow(df)-1] 
+                                           ifelse(df$LPA == 1, "LPA", "MVPA")))
+    
+        
+      # Thanks to https://stackoverflow.com/questions/29661269/increment-by-1-for-every-change-in-column 
+      # for the code block below
+        df$intensity_category <- as.factor(df$intensity_category)
+        df$intensity_category_num <- as.numeric(forcats::fct_recode(df$intensity_category , "0" = "Nonwear", "1" = "SED", "2" = "LPA", "3" = "MVPA"))
+        df$bout <- cumsum(c(1, as.numeric(diff(df$intensity_category_num))!= 0))
+    
+    
     
     
   # Providing information about the parameters used for computing results

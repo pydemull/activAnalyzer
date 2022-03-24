@@ -117,12 +117,11 @@ recap_by_day <- function(
            
            
          # Getting step-based metrics for each day of measurement (using a 1-min epoch)
+           
+           if (as.numeric(data$time[2] - data$time[1]) == 60) { 
+             
            df1 <- 
-             PhysicalActivity::dataCollapser(
-               dataset = data, 
-               TS = "timestamp", 
-               by = 60
-             ) %>%
+             data %>%
              tidyr::separate("timestamp", c("date", "time"), sep = " ") %>%
              dplyr::mutate(date = as.Date(date), time = hms::as_hms(time)) %>%
              dplyr::select(
@@ -147,7 +146,39 @@ recap_by_day <- function(
               peak_steps_5min = round(mean(head(sort(steps, decreasing = TRUE), n = 5L), na.rm = TRUE), 2), 
               peak_steps_1min = round(mean(head(sort(steps, decreasing = TRUE), n = 1L), na.rm = TRUE), 2),
            )
-            
+           } else {
+             
+             df1 <- 
+               PhysicalActivity::dataCollapser(
+                 dataset = data, 
+                 TS = "timestamp", 
+                 by = 60
+               ) %>%
+               tidyr::separate("timestamp", c("date", "time"), sep = " ") %>%
+               dplyr::mutate(date = as.Date(date), time = hms::as_hms(time)) %>%
+               dplyr::select(
+                 date, 
+                 time, 
+                 steps
+               ) %>%
+               dplyr::group_by(date, .drop = FALSE) %>%
+               dplyr::filter(
+                 .data[[col_time]] >= hms::as_hms(valid_wear_time_start) &
+                   .data[[col_time]] <= hms::as_hms(valid_wear_time_end)
+               ) %>%
+               dplyr::summarise(
+                 max_steps_60min = round(my_max(zoo::rollmean(steps, align = "center", k = 60L, fill = NA)), 2),
+                 max_steps_30min = round(my_max(zoo::rollmean(steps, align = "center", k = 30L, fill = NA)), 2),
+                 max_steps_20min = round(my_max(zoo::rollmean(steps, align = "center", k = 20L, fill = NA)), 2),
+                 max_steps_5min = round(my_max(zoo::rollmean(steps, align = "center", k = 5L, fill = NA)), 2),
+                 max_steps_1min = round(my_max(zoo::rollmean(steps, align = "center", k = 1L, fill = NA)), 2),
+                 peak_steps_60min = round(mean(head(sort(steps, decreasing = TRUE), n = 60L), na.rm = TRUE), 2),
+                 peak_steps_30min = round(mean(head(sort(steps, decreasing = TRUE), n = 30L), na.rm = TRUE), 2),
+                 peak_steps_20min = round(mean(head(sort(steps, decreasing = TRUE), n = 20L), na.rm = TRUE), 2),
+                 peak_steps_5min = round(mean(head(sort(steps, decreasing = TRUE), n = 5L), na.rm = TRUE), 2), 
+                 peak_steps_1min = round(mean(head(sort(steps, decreasing = TRUE), n = 1L), na.rm = TRUE), 2),
+               )
+           }
            
         
          # Summarising all results by day              

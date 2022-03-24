@@ -49,26 +49,51 @@ mark_wear_time <- function(
   ) {
   
   # Collapsing data and creating date and time columns
-  df <- 
-    PhysicalActivity::dataCollapser(
-      dataset = dataset, 
-      TS = TS, 
-      by = to_epoch
-      ) %>%
-    dplyr::mutate(
-      vm = round(sqrt(axis1^2 + axis2^2 + axis3^2), 2),
-      timestamp = as.character(.data[[TS]]),
-      timeStamp2 = timestamp
-    ) %>%
-  tidyr::separate("timeStamp2", c("date", "time"), sep = " ") %>%
-  dplyr::mutate(date = as.Date(date), time = hms::as_hms(time)) %>%
-  dplyr::select(
-    timestamp, 
-    date, 
-    time, 
-    everything(),
-    -TimeStamp
-  )
+  
+  if (to_epoch == as.numeric(difftime(dataset[[TS]][2], dataset[[TS]][1], units = "secs")))  { 
+    
+    df <- 
+      dataset %>%
+      dplyr::mutate(
+            vm = round(sqrt(axis1^2 + axis2^2 + axis3^2), 2),
+            timestamp = as.character(.data[[TS]]),
+            timeStamp2 = timestamp
+          ) %>%
+      tidyr::separate("timeStamp2", c("date", "time"), sep = " ") %>%
+      dplyr::mutate(date = as.Date(date), time = hms::as_hms(time)) %>%
+      dplyr::select(
+        timestamp, 
+        date, 
+        time, 
+        everything(),
+        -TimeStamp
+          )
+    
+  } else {
+      
+    
+   df <- 
+     PhysicalActivity::dataCollapser(
+       dataset = dataset, 
+       TS = TS, 
+       by = to_epoch
+       ) %>%
+     dplyr::mutate(
+       vm = round(sqrt(axis1^2 + axis2^2 + axis3^2), 2),
+       timestamp = as.character(.data[[TS]]),
+       timeStamp2 = timestamp
+     ) %>%
+   tidyr::separate("timeStamp2", c("date", "time"), sep = " ") %>%
+   dplyr::mutate(date = as.Date(date), time = hms::as_hms(time)) %>%
+   dplyr::select(
+     timestamp, 
+     date, 
+     time, 
+     everything(),
+     -TimeStamp
+   )
+  
+  }
   
   # Getting time factor for using the wearingMarking() function
   perMinuteCts <-  60 / (as.numeric(df$time[2] - df$time[1]))

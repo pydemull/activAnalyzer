@@ -33,7 +33,7 @@ app_server <- function(input, output, session) {
       
       req(input$upload)
       
-      actigraph.sleepr::read_agd(input$upload$datapath)
+      read_agd(input$upload$datapath)
       
     })
     
@@ -49,11 +49,21 @@ app_server <- function(input, output, session) {
   # Controlling appearance of the "Validate configuration" button
     observe({
       shinyjs::hide("validate")
-      if(nrow(data()) >= 1) {
+      if((tools::file_ext(input$upload$name) == "agd") && nrow(data()) >= 1) {
       shinyjs::show("validate")
-        
+      } else {
+        shinyjs::hide("validate")
       }
     })
+    
+  # Controlling file extension
+  observeEvent(input$upload,
+              shinyFeedback::feedbackWarning(
+                "upload", 
+                ((tools::file_ext(input$upload$name) == "agd") == FALSE),
+                "Invalid file format. Please choose an .agd file."
+              )
+  )
     
     
     
@@ -72,26 +82,38 @@ app_server <- function(input, output, session) {
   ###########################################################################################
   
   # Controlling for correct inputs
-  
-      # File extension
-        observeEvent(input$validate,
-                     shinyFeedback::feedbackWarning(
-                       "upload", 
-                       ((tools::file_ext(input$upload$name) == "agd") == FALSE),
-                       "Invalid file format. Please choose an .agd file."
-                     )
-        )
     
       # File extension
         observeEvent(input$validate,
                      shinyFeedback::feedbackWarning(
                        "to_epoch", 
-                       (is.numeric(input$to_epoch) == FALSE | input$to_epoch < 1 | input$to_epoch > 60 |
-                          input$to_epoch < hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])),
-                       "Please choose a number between 1 and 60 and that is greater or equal to the duration of the file epochs."
+                       (!is.numeric(input$to_epoch) | 
+                        input$to_epoch < 1 | 
+                        input$to_epoch > 60 |
+                        input$to_epoch < as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])) |
+                        ((input$to_epoch / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1]))) - floor(input$to_epoch / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])))) != 0
+                        ),
+                       "Please choose a number between 1 and 60 and that is greater or equal to the duration of the file epochs. 
+                       The ratio between the desired epoch and the current epoch must be an integer."
                      )
         )
-       
+  
+  
+      # File epoch length
+        output$warning_epoch <- renderText({
+        "With such a short epoch, the app will have to deal with a large dataset, and processing times will certainly be long. 
+         As the figures provided by the app are quite complex, rendering them with this epoch to vizualize a week of measurement could take several minutes. 
+         For this reason, the figure will not be created with this epoch to save your time. Please use a longer epoch if you want to benefit from the figures of the app."
+          })
+        
+        observe({
+          req(is.numeric(input$to_epoch))
+          shinyjs::hide("warning_epoch")
+          if(input$to_epoch < 10) {
+            shinyjs::show("warning_epoch")
+            
+          }
+        })
   
       # Frame size
         observeEvent(input$validate,
@@ -129,7 +151,8 @@ app_server <- function(input, output, session) {
                 is.numeric(input$to_epoch) & 
                 input$to_epoch >= 1 &
                 input$to_epoch <= 60 &
-                input$to_epoch >= hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1]) & 
+                input$to_epoch >= as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])) & 
+                ((input$to_epoch / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1]))) - floor(input$to_epoch / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])))) == 0 & 
                 is.numeric(input$frame_size) & 
                 input$frame_size >= 0 & 
                 is.numeric(input$allowanceFrame_size) & 
@@ -177,7 +200,22 @@ app_server <- function(input, output, session) {
   ########################################
   
   output$graph <- renderPlot({
+    
+    if (as.numeric(df()$time[2] - df()$time[1]) < 10) { 
+      ggplot2::ggplot() + ggplot2::geom_text(
+        ggplot2::aes(
+          x = 1, 
+          y  = 1,
+          label = "Sorry, below 10-s epochs, we prefer \nnot to build the plot to save your time..."),
+        size = 10
+        ) +
+        ggplot2::theme(
+          axis.text = ggplot2::element_blank(),
+          axis.ticks = ggplot2::element_blank()
+          )
+    } else {
     plot_data(data = df(), metric = input$Metric)
+    }
   }, 
   width = "auto", 
   height = function(){
@@ -653,7 +691,6 @@ app_server <- function(input, output, session) {
         validate("Please choose a MPA cut-point that is strictly lower than the VPA cut-point.")
       }
     
-      
     
     # Adding variables of interest to the initial dataframe
       df_with_computed_metrics <-
@@ -667,7 +704,7 @@ app_server <- function(input, output, session) {
                        weight = input$weight,
                        sex = input$sex,
                        dates = input$selected_days)
-      
+    
    # Creating a dataframe with results by day and corresponding to valid wear time only  
      results_by_day <-
        df_with_computed_metrics %>%
@@ -678,6 +715,7 @@ app_server <- function(input, output, session) {
          valid_wear_time_start = input$start_day_analysis,
          valid_wear_time_end = input$end_day_analysis
        )
+    
      
    # Returning a list of the results and parameters
      return(list(df_with_computed_metrics = df_with_computed_metrics,
@@ -688,6 +726,7 @@ app_server <- function(input, output, session) {
                  mpa_cutpoint_chosen = mpa_cutpoint_chosen,
                  vpa_cutpoint_chosen = vpa_cutpoint_chosen))
     })
+ 
       
       
   # Creating reactive time filters used for the plot with intensity metrics
@@ -699,10 +738,25 @@ app_server <- function(input, output, session) {
     
   # Plotting data with intensity categories
     output$graph_int <- renderPlot({
+      if (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) < 10) { 
+        ggplot2::ggplot() + ggplot2::geom_text(
+          ggplot2::aes(
+            x = 1,
+            y  = 1,
+            label = "Sorry, below 10-s epochs, we prefer \nnot to build the plot to save your time..."),
+          size = 10
+          ) +
+          ggplot2::theme(
+            axis.title = ggplot2::element_blank(),
+            axis.text = ggplot2::element_blank(),
+            axis.ticks = ggplot2::element_blank()
+            )
+      } else {
       plot_data_with_intensity(data = results_list()$df_with_computed_metrics, 
                                metric = input$Metric2,
                                valid_wear_time_start = analysis_filters()$start_day_analysis,
                                valid_wear_time_end = analysis_filters()$end_day_analysis)
+      }
     }, 
     width = "auto", 
     height = function(){
@@ -945,14 +999,12 @@ app_server <- function(input, output, session) {
       shinyjs::hide("ExpDailySummaryMedians")
       shinyjs::hide("report_en")
       shinyjs::hide("report_fr")
-      shinyjs::hide("reset")
-      
+
     if(nrow(results_list()$df_with_computed_metrics) >=1) {
       shinyjs::show("ExpDataset")
       shinyjs::show("ExpResultsByDays")
       shinyjs::show("ExpDailySummaryMeans")
       shinyjs::show("ExpDailySummaryMedians")
-      shinyjs::show("reset")
     }
       
     if(results_summary_means()$valid_days >=1 | results_summary_medians()$valid_days >=1) {
@@ -1047,6 +1099,7 @@ app_server <- function(input, output, session) {
           side = input$side,
           sampling_rate = attributes(file())$`original sample rate`,
           filter = attributes(file())$filter,
+          epoch = input$to_epoch,
           start_day_analysis = input$start_day_analysis,
           end_day_analysis = input$end_day_analysis,
           axis_weartime = input$axis_weartime,
@@ -1116,6 +1169,7 @@ app_server <- function(input, output, session) {
           side = input$side,
           sampling_rate = attributes(file())$`original sample rate`,
           filter = attributes(file())$filter,
+          epoch = input$to_epoch,
           start_day_analysis = input$start_day_analysis,
           end_day_analysis = input$end_day_analysis,
           axis_weartime = input$axis_weartime,

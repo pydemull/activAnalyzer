@@ -13,6 +13,7 @@ params:
   sex: NA
   age: NA
   weight: NA
+  epoch: NA
   start_date: NA
   end_date: NA
   device: NA
@@ -90,7 +91,7 @@ options("scipen"=100, "digits"=4)
 
 **Appareil :** `r params$device` | **Position :** `r position` | **Côté :** `r side` | **Fréquence d'échantillonnage :** `r params$sampling_rate` Hz | **Filtre :** `r params$filter`.
 
-**Temps de non-port :** Basé sur `r axis_weartime`, intervalle de `r params$frame_size` min avec zéro count pour la détection du temps de non-port, intervalle de `r params$allowanceFrame_size` min avec counts différents de 0 autorisé durant une période de non-port, intervalle de `r params$streamFrame_size` min avec zéro count autour de la période d'activité détectée pour confirmer le non-port | **Équation de prédiction des METs :** `r params$equation_mets` | **Axe utilisé pour catégoriser l'intensité d'activité physique :** `r axis_mvpa` | **Valeurs seuils :** <`r params$sed_cutpoint` counts/min pour SED, $\geqslant$ `r params$mpa_cutpoint` counts/min pour MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min pour VPA.
+**'Epoch':** `r params$epoch` s | **Temps de non-port :** Basé sur `r axis_weartime`, intervalle de `r params$frame_size` min avec zéro count pour la détection du temps de non-port, intervalle de `r params$allowanceFrame_size` min avec counts différents de 0 autorisé durant une période de non-port, intervalle de `r params$streamFrame_size` min avec zéro count autour de la période d'activité détectée pour confirmer le non-port | **Équation de prédiction des METs :** `r params$equation_mets` | **Axe utilisé pour catégoriser l'intensité d'activité physique :** `r axis_mvpa` | **Valeurs seuils :** <`r params$sed_cutpoint` counts/min pour SED, $\geqslant$ `r params$mpa_cutpoint` counts/min pour MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min pour VPA.
 
 **Période journalière considérée pour compter le temps de port :** de `r params$start_day_analysis` à `r params$end_day_analysis`.
 

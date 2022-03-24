@@ -28,7 +28,8 @@ app_ui <- function(request) {
     ")),
         shinydashboard::sidebarMenu(
           shinydashboard::menuItem("App", tabName = "app", icon = icon("fas fa-tablet-alt")),
-          shinydashboard::menuItem("User's guide", tabName = "guide", icon = icon("far fa-file-alt"))
+          shinydashboard::menuItem("User's guide", tabName = "guide", icon = icon("far fa-file-alt")),
+          shiny::actionButton('reset',"Reset App",  style="color: #fff; background-color: #FF3333; border-color: white")
         )),
       shinydashboard::dashboardBody(
 
@@ -54,6 +55,7 @@ app_ui <- function(request) {
                   # Controlling appearance of warning feedbacks      
                   shinyFeedback::useShinyFeedback(),
                   tags$head(
+                    tags$style("#warning_epoch {font-size:15px; color:orange; display:block; font-weight:bold}"),
                     tags$style(HTML("
             .shiny-output-error-validation {
               color: #ff0000;
@@ -161,6 +163,12 @@ app_ui <- function(request) {
                  fluidRow(
                    column(12,
                           numericInput("to_epoch", "Length of the epoch to use for analysis (s)", value = 60, min = 1, max = 60)
+                   ),
+                 ),
+                 fluidRow(
+                   column(12,
+                          textOutput("warning_epoch"),
+                          h4("")
                    ),
                  ),
                   fluidRow(
@@ -365,13 +373,13 @@ app_ui <- function(request) {
                     ),
                   ),
                   
-                  #######################################
-                  # Section 4. Results, Export, and Reset ----
-                  #######################################
+                  #############################
+                  # Section 4. Results & Export ----
+                  #############################
                   
                   fluidRow(
                     column(12,
-                           h2("Section 4. Results, Export, and Reset"),
+                           h2("Section 4. Results & Export"),
                     ),
                   ),  
                   
@@ -486,17 +494,7 @@ app_ui <- function(request) {
                     ),
                     
                   ),
-                  
-                  #******************
-                  # Reset app
-                  #******************
-                  
-                  fluidRow(
-                    column(4,
-                           h3(""),
-                           shiny::actionButton('reset',"Reset App",  style="color: #fff; background-color: #FF3333; border-color: black")
-                    )
-                  )
+                
           ), # End first tab
           
           
