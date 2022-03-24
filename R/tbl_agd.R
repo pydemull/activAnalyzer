@@ -1,7 +1,7 @@
 #' A `tibble` of activity data exported by an ActiGraph device
 #'
 #' This tibble has several attributes, most importantly, `epochlength`. 
-#' (Code is from actigraph.sleepr package [https://github.com/dipetkov/actigraph.sleepr]. 
+#' (Code is from actigraph.sleepr package <https://github.com/dipetkov/actigraph.sleepr/>. 
 #' See LICENCE.note file in the app skeleton.)
 #' 
 #' @param data A data frame of raw activity counts.

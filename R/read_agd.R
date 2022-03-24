@@ -2,7 +2,7 @@
 #' 
 #' Read ActiGraph sleep watch data from a database stored in an
 #'     AGD file. Return a tibble. 
-#'     (Code is from actigraph.sleepr package [https://github.com/dipetkov/actigraph.sleepr]. 
+#'     (Code is from actigraph.sleepr package <https://github.com/dipetkov/actigraph.sleepr/>. 
 #'     See LICENCE.note file in the app skeleton.)
 #' 
 #' @param file Full path to an agd file to read.
@@ -69,7 +69,7 @@ read_agd <- function(file, tz = "UTC") {
 #'     filters, settings, awakenings. The tables have the schema described
 #'     in the ActiLife 6 User manual and the timestamps are converted from
 #'     Unix time format to human-readable POSIXct representation.
-#'     Code is from actigraph.sleepr package #'     (https://github.com/dipetkov/actigraph.sleepr). 
+#'     Code is from actigraph.sleepr package <https://github.com/dipetkov/actigraph.sleepr/>. 
 #'     See LICENCE.note file in the app skeleton.
 #' 
 #' @param file Full path to an agd file to read.

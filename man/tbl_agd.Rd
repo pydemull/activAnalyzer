@@ -13,6 +13,6 @@ tbl_agd(data, settings)
 }
 \description{
 This tibble has several attributes, most importantly, \code{epochlength}.
-(Code is from actigraph.sleepr package \link{https://github.com/dipetkov/actigraph.sleepr}.
+(Code is from actigraph.sleepr package \url{https://github.com/dipetkov/actigraph.sleepr/}.
 See LICENCE.note file in the app skeleton.)
 }

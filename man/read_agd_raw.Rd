@@ -21,7 +21,7 @@ AGD file and return a list with (at least) five tables: data, sleep,
 filters, settings, awakenings. The tables have the schema described
 in the ActiLife 6 User manual and the timestamps are converted from
 Unix time format to human-readable POSIXct representation.
-Code is from actigraph.sleepr package #'     (https://github.com/dipetkov/actigraph.sleepr).
+Code is from actigraph.sleepr package \url{https://github.com/dipetkov/actigraph.sleepr/}.
 See LICENCE.note file in the app skeleton.
 }
 \details{
