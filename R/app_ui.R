@@ -162,7 +162,7 @@ app_ui <- function(request) {
                   ),
                  fluidRow(
                    column(12,
-                          numericInput("to_epoch", "Length of the epoch to use for analysis (s)", value = 60, min = 1, max = 60)
+                          selectInput("to_epoch", "Length of the epoch to use for analysis (s)", choices = c(60, 15, 10, 5, 1))
                    ),
                  ),
                  fluidRow(

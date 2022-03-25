@@ -87,11 +87,11 @@ app_server <- function(input, output, session) {
         observeEvent(input$validate,
                      shinyFeedback::feedbackWarning(
                        "to_epoch", 
-                       (!is.numeric(input$to_epoch) | 
-                        input$to_epoch < 1 | 
-                        input$to_epoch > 60 |
-                        input$to_epoch < as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])) |
-                        ((input$to_epoch / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1]))) - floor(input$to_epoch / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])))) != 0
+                       (!is.numeric(as.numeric(input$to_epoch)) | 
+                        as.numeric(input$to_epoch) < 1 | 
+                        as.numeric(input$to_epoch) > 60 |
+                        as.numeric(input$to_epoch) < as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])) |
+                        ((as.numeric(input$to_epoch) / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1]))) - floor(as.numeric(input$to_epoch) / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])))) != 0
                         ),
                        "Please choose a number between 1 and 60 and that is greater or equal to the duration of the file epochs. 
                        The ratio between the desired epoch and the current epoch must be an integer."
@@ -107,9 +107,9 @@ app_server <- function(input, output, session) {
           })
         
         observe({
-          req(is.numeric(input$to_epoch))
+          req(is.numeric(as.numeric(input$to_epoch)))
           shinyjs::hide("warning_epoch")
-          if(input$to_epoch < 10) {
+          if(as.numeric(input$to_epoch) < 10) {
             shinyjs::show("warning_epoch")
             
           }
@@ -148,11 +148,11 @@ app_server <- function(input, output, session) {
       
         # Waiting for required conditions 
           req(tools::file_ext(input$upload$name) == "agd" & 
-                is.numeric(input$to_epoch) & 
-                input$to_epoch >= 1 &
-                input$to_epoch <= 60 &
-                input$to_epoch >= as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])) & 
-                ((input$to_epoch / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1]))) - floor(input$to_epoch / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])))) == 0 & 
+                is.numeric(as.numeric(input$to_epoch)) & 
+                as.numeric(input$to_epoch) >= 1 &
+                as.numeric(input$to_epoch) <= 60 &
+                as.numeric(input$to_epoch) >= as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])) & 
+                ((as.numeric(input$to_epoch) / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1]))) - floor(as.numeric(input$to_epoch) / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])))) == 0 & 
                 is.numeric(input$frame_size) & 
                 input$frame_size >= 0 & 
                 is.numeric(input$allowanceFrame_size) & 
@@ -171,7 +171,7 @@ app_server <- function(input, output, session) {
         # Creating reactive dataframe
           df <- 
             mark_wear_time(dataset = data(),
-                           to_epoch = input$to_epoch,
+                           to_epoch = as.numeric(input$to_epoch),
                            cts = cts, 
                            frame = input$frame_size, 
                            allowanceFrame = input$allowanceFrame_size,
@@ -1099,7 +1099,7 @@ app_server <- function(input, output, session) {
           side = input$side,
           sampling_rate = attributes(file())$`original sample rate`,
           filter = attributes(file())$filter,
-          epoch = input$to_epoch,
+          epoch = as.numeric(input$to_epoch),
           start_day_analysis = input$start_day_analysis,
           end_day_analysis = input$end_day_analysis,
           axis_weartime = input$axis_weartime,
@@ -1169,7 +1169,7 @@ app_server <- function(input, output, session) {
           side = input$side,
           sampling_rate = attributes(file())$`original sample rate`,
           filter = attributes(file())$filter,
-          epoch = input$to_epoch,
+          epoch = as.numeric(input$to_epoch),
           start_day_analysis = input$start_day_analysis,
           end_day_analysis = input$end_day_analysis,
           axis_weartime = input$axis_weartime,
@@ -1299,7 +1299,7 @@ app_server <- function(input, output, session) {
       
     # Exporting inputs after resetting inputs for nonwear/wear time analysis
       observeEvent(input$validate, {
-        shiny::exportTestValues(to_epoch = input$to_epoch)
+        shiny::exportTestValues(to_epoch = as.numeric(input$to_epoch))
         shiny::exportTestValues(axis_weartime = input$axis_weartime)
         shiny::exportTestValues(frame_size = input$frame_size)
         shiny::exportTestValues(allowanceFrame_size = input$allowanceFrame_size)
