@@ -403,6 +403,24 @@ app_server <- function(input, output, session) {
                      )
         )
         
+        
+      # Controlling PROactive settings
+      observeEvent(input$Run,
+                   shinyFeedback::feedbackWarning(
+                     "start_day_analysis", 
+                     hms::as_hms(input$end_day_analysis) <= hms::as_hms(input$start_day_analysis),
+                     "End time should be superior to start time."
+                   )
+      )
+      
+      observeEvent(input$Run,
+                   shinyFeedback::feedbackWarning(
+                     "end_day_analysis", 
+                     hms::as_hms(input$end_day_analysis) <= hms::as_hms(input$start_day_analysis),
+                     "End time should be superior to start time."
+                   )
+      )
+      
       # Minimum daily wear time
         observeEvent(input$Run,
                      shinyFeedback::feedbackWarning(
@@ -556,23 +574,6 @@ app_server <- function(input, output, session) {
       updateNumericInput(inputId = "minimum_wear_time_for_analysis", value = 8)
     })
     
-
-  # Controlling PROactive settings
-    observeEvent(input$validate,
-                 shinyFeedback::feedbackWarning(
-                   "start_day_analysis", 
-                   input$end_day_analysis <= input$start_day_analysis,
-                   "End time should be superior to start time."
-                 )
-    )
-    
-    observeEvent(input$validate,
-                 shinyFeedback::feedbackWarning(
-                   "end_day_analysis", 
-                   input$end_day_analysis <= input$start_day_analysis,
-                   "End time should be superior to start time."
-                 )
-    )
     
   # Returning to default settings for the minimum wear time duration
     observeEvent(input$reset_period, {
@@ -602,7 +603,8 @@ app_server <- function(input, output, session) {
         is.numeric(input$weight) &
         input$weight > 0 &
         is.numeric(input$minimum_wear_time_for_analysis) &
-        input$minimum_wear_time_for_analysis >= 0
+        input$minimum_wear_time_for_analysis >= 0 &
+        hms::as_hms(input$end_day_analysis) > hms::as_hms(input$start_day_analysis)
         )
      
   # Setting axis and cut-points to compute SED and MVPA times
