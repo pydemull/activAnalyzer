@@ -44,6 +44,12 @@ test_that("The server functions correctly work", {
     wear_time <<- "wear_time"
     validity <<- "validity"
     col_time_stamp <<- "col_time_stamp"
+    Range <<- "Range"
+    Intervalle <<- "Intervalle"
+    Selected_Day_ID <<- "Selected_Day_ID"
+    Steps_score <<- "Steps_score"
+    VMU_score <<- "VMU_score"
+    Validity <<- "Validity"
     assign("users", shiny::reactiveValues(count = 0), envir = .GlobalEnv)
     assign("equations_mets", activAnalyzer:::equations_mets, envir = .GlobalEnv)
     assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = .GlobalEnv)

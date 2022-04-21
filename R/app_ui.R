@@ -20,14 +20,14 @@ app_ui <- function(request) {
         ),
         title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.4.1"), titleWidth = 237
                                       ),
-      shinydashboardPlus::dashboardSidebar(
-        tags$style(HTML("
-      .main-sidebar{
-        width: 235px;
-      }
-    ")),
+      shinydashboardPlus::dashboardSidebar( 
+        tags$style(HTML(".sidebar-menu li a {font-size: 17px;}")),
+        tags$style(HTML(".main-sidebar{ width: 240px; }")),
         shinydashboard::sidebarMenu(
-          shinydashboard::menuItem("App", tabName = "app", icon = icon("fas fa-tablet-alt")),
+          tags$style("@import url(https://use.fontawesome.com/releases/v6.1.0/css/all.css);"),
+          id = "tabs",
+          shinydashboard::menuItem("Accelerometer analysis", tabName = "app", icon = icon("chart-column", verify_fa = FALSE)),
+          shinydashboard::menuItem("PROactive questionnaire", tabName = "proactive", icon = icon("file-circle-question", verify_fa = FALSE)),
           shinydashboard::menuItem("User's guide", tabName = "guide", icon = icon("far fa-file-alt")),
           shiny::actionButton('reset',"Reset App",  style="color: #fff; background-color: #FF3333; border-color: white")
         )),
@@ -42,7 +42,17 @@ app_ui <- function(request) {
              window.onbeforeunload = function() {
                 return 'Your changes will be lost!';
              };
-             "))),
+             ")),
+        # Keeping the top of the page when clicking on the "go_to_proactive_q" button
+        # per https://stackoverflow.com/questions/44686681/r-shiny-tabpanel-does-not-automatically-got-to-top-of-page-when-clicked
+        tags$script(" $(document).ready(function () {
+         $('#go_to_proactive_q').on('click', function (e) {
+          window.scrollTo(0, 0)
+               });
+
+               });")
+          
+          ),
         
         shinydashboard::tabItems(
           
@@ -56,6 +66,7 @@ app_ui <- function(request) {
                   shinyFeedback::useShinyFeedback(),
                   tags$head(
                     tags$style("#warning_epoch {font-size:15px; color:orange; display:block; font-weight:bold}"),
+                    tags$style("#warning_no_valid_days {font-size:30px; color:orange; display:block; font-weight:bold}"),
                     tags$style(HTML("
             .shiny-output-error-validation {
               color: #ff0000;
@@ -187,7 +198,7 @@ app_ui <- function(request) {
                   ),
                   fluidRow(
                     column(3,
-                           shiny::actionButton("reset_nonwear", "Return to default values", style = "border-color: #2e6da4")
+                           shiny::actionButton("reset_nonwear", "Return to default values (Choi et al., 2012)", style = "border-color: #2e6da4")
                     ),
                   ),
                   fluidRow(
@@ -350,16 +361,19 @@ app_ui <- function(request) {
                     ),
                     column(2,
                            numericInput("minimum_wear_time_for_analysis", "Minimum wear time to validate a day (hours)", value = 10)
-                    ),
+                    )
                   ),
                   fluidRow(
                     column(2,
                            shiny::actionButton("pro_active_period", "PROactive configuration for 24-h recording", style = "background-color: #9933CC; color: white; border-color: #330066"),
                            ),
-                    column(1,
-                           shiny::actionButton("reset_period", "Return to default values", style = "border-color: #2e6da4")
-                    ),
                   ),
+                 fluidRow(
+                   column(1,
+                          h3(""),
+                          shiny::actionButton("reset_period", "Return to default values", style = "border-color: #2e6da4")
+                   ),
+                 ),
                   
                   #*****************
                   # Running analysis
@@ -442,43 +456,7 @@ app_ui <- function(request) {
                            height = "auto")
                        ),
                        
-                       #******************************************************
-                       # Proactive scores
-                       #******************************************************
-                       
-                       fluidRow(
-                        column(4,
-                               shinydashboardPlus::box(
-                                 id = "CPPAC_PROactive_medians",
-                                 title = "PROactive scores based on the medians of valid days (C-PPAC)",
-                                      shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_cppac_medians")),
-                                 width = NULL, 
-                                 height = "auto"
-                                 )
-                         ),
-                         column(4,
-                                shinydashboardPlus::box(
-                                  id = "CPPAC_PROactive_means",
-                                  title = "PROactive scores based on the means of valid days (C-PPAC)",
-                                  shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_cppac_means")),
-                                  width = NULL, 
-                                  height = "auto"
-                                  )
-                         ),
-                         
-                       ),
-                      fluidRow(
-                        column(8,
-                               shinydashboardPlus::box(
-                               id = "DPPAC_PROactive",
-                               title = "PROactive score for each valid day (D-PPAC)",
-                               shinycssloaders::withSpinner(reactable::reactableOutput("PROactive_scores_dppac")),
-                               width = NULL, 
-                               height = "auto"
-                               )
-                         ),
-                      ),
-                           
+
                   #******************
                   # Export
                   #******************
@@ -490,17 +468,2781 @@ app_ui <- function(request) {
                            downloadButton("ExpDailySummaryMeans", "Export daily summary (means) (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
                            downloadButton("ExpDailySummaryMedians", "Export daily summary (medians) (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
                            downloadButton("report_en", "Generate report (EN) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33"),
-                           downloadButton("report_fr", "Generate report (FR) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33")
+                           downloadButton("report_fr", "Generate report (FR) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33"),
+                           actionButton("go_to_proactive_q", "Go to PROactive questionnaire", style = "background-color: #9933CC; color: white; border-color: #330066")
                     ),
                     
                   ),
+                 fluidRow(
+                   column(12,
+                          h3(""),
+                          textOutput("warning_no_valid_days")
+                          ),
+                 )
                 
           ), # End first tab
           
           
-          
           # $$$$$$$$$$$$$$$$$$
           # Second tab content ----
+          # $$$$$$$$$$$$$$$$$$
+          
+          shinydashboard::tabItem(tabName = "proactive",
+                  
+                 ####################
+                 # Panel C-PPAC (EN) ----
+                 ####################
+                 
+                 tabsetPanel(
+                    tabPanel("C-PPAC (EN)",
+                    wellPanel(
+                      fluidRow(
+                        column(12,
+                               "Reference: Gimeno-Santos et al. European Respiratory Journal 2015:46 988–10008", style = "font-weight: bold;"
+                        )
+                      ),
+                      fluidRow(
+                        column(12,
+                               h4("")
+                        )
+                      ),
+                       fluidRow(
+                         column(12,
+                                 "INSTRUCTIONS TO PATIENTS:
+                                  Patients with chronic lung disease like you often report that they have problems during physical activity. 
+                                By physical activity, we mean all activities that require movement of your body. Examples are household activities, walking, going to work,
+                                or getting dressed. However, please consider all activities you do, and not only these examples. We would like to know how you experienced 
+                                your physical activity IN THE PAST 7 DAYS."
+                                ),
+                         ),
+                       fluidRow(
+                         column(12,
+                                h4("")
+                         )
+                       ),
+                       fluidRow(
+                         column(12,
+                                "Please select the box next to the response that best applies to you IN THE PAST 7 DAYS."
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                h4("")
+                         )
+                       ),
+                       fluidRow(
+                         column(12,
+                                "There are no wrong answers. We very much value your response."
+                         ),
+                       ),
+                       ),      
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="cppac_EN_q1", label="In the past 7 days, how much walking did you do outside?", 
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit (about 10 minutes every day)",
+                                                 "Some (about 30 minutes every day)",
+                                                 "A lot (about 1 hour every day)",
+                                                 "A great deal (more than 1 hour every day)"
+                                               )
+                                ),
+                         ),
+     
+                        )
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="cppac_EN_q2", label="In the past 7 days, how many chores did you do outside the house? 
+                                                   Some examples are gardening, taking the rubbish out, or doing small errands?",
+                                                   choices=c(
+                                                     "None at all",
+                                                     "A few",
+                                                     "Some",
+                                                     "A lot",
+                                                     "A large amount"
+                                                   )
+                                ),
+                         ),
+                        ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="cppac_EN_q3", label="In the past 7 days, how much difficulty did you have getting dressed?",
+                                                   choices=c(
+                                                    "None at all",
+                                                    "A little bit",
+                                                    "Some",
+                                                    "A lot",
+                                                    "A great deal"
+                                                   )
+                                ),
+                         ),
+                        ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="cppac_EN_q4", label="In the past 7 days, how much difficulty did you have getting out and about?",
+                                                   choices=c(
+                                                    "None at all",
+                                                     "A little bit",
+                                                     "Some",
+                                                     "A lot",
+                                                     "A great deal"
+                                                     
+                                                   )
+                                ),
+                         ),
+                        ), 
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="cppac_EN_q5", label="In the past 7 days, how often did you avoid doing activities because of your lung problems?",
+                                                   choices=c(
+                                                     "Not at all",
+                                                     "Rarely",
+                                                     "Sometimes",
+                                                     "Frequently",
+                                                     "All the time"
+                                                   )
+                                ),
+                         ),
+                        ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="cppac_EN_q6", label="In the past 7 days, how breathless were you in general during your activities?",
+                                                   choices=c(
+                                                     "Not at all",
+                                                     "A little bit",
+                                                     "Moderately",
+                                                     "Very",
+                                                     "Extremely"
+                                                     
+                                                   )
+                                ),
+                         ),
+                         
+                       ),
+                       
+                     ), 
+                     fluidRow(
+                       column(12,
+                              wellPanel(
+                                radioButtons(inputId="cppac_EN_q7", label="In the past 7 days, how often did you lack physical strength to do things because of your lung problems?",
+                                                   choices=c(
+                                                     "Not at all",
+                                                     "Rarely",
+                                                     "Sometimes",
+                                                     "Frequently",
+                                                     "All the time"
+                                                     
+                                                   )
+                                ),
+                              ),
+                              
+                       ),
+                       
+                     ),
+                     fluidRow(
+                       column(12,
+                              wellPanel(
+                                radioButtons(inputId="cppac_EN_q8", label="In the past 7 days, how tired were you in general during your activities?",
+                                                   choices=c(
+                                                     "Not at all",
+                                                     "A little bit",
+                                                     "Moderately",
+                                                     "Very",
+                                                     "Extremely"
+                                                     
+                                                   )
+                                ),
+                              ),
+                              
+                       ),
+                       
+                     ),
+                     fluidRow(
+                       column(12,
+                              wellPanel(
+                                radioButtons(inputId="cppac_EN_q9", label="In the past 7 days, how often did you have to take breaks during your physical activities?",
+                                                   choices=c(
+                                                     "Not at all",
+                                                     "Rarely",
+                                                     "Sometimes",
+                                                     "Frequently",
+                                                     "All the time"
+                                                     
+                                                   )
+                                ),
+                              ),
+                              
+                       ),
+                       
+                     ),
+                     fluidRow(
+                       column(12,
+                              wellPanel(
+                                radioButtons(inputId="cppac_EN_q10", label="In the past 7 days, how breathless were you when walking on level ground indoors and outdoors?",
+                                                   choices=c(
+                                                     "Not at all",
+                                                     "A little bit",
+                                                     "Moderately",
+                                                     "Very",
+                                                     "Extremely"
+                                                     
+                                                   )
+                                ),
+                              ),
+                              
+                       ),
+                       
+                     ),
+                     fluidRow(
+                       column(12,
+                              wellPanel(
+                                radioButtons(inputId="cppac_EN_q11", label="In the past 7 days, how much time did you need to recover from your physical activities?",
+                                                   choices=c(
+                                                     "Not at all",
+                                                     "A little bit",
+                                                     "Some",
+                                                     "A lot",
+                                                     "A great deal"
+                                                     
+                                                   )
+                                ),
+                              ),
+                              
+                       ),
+                       
+                     ),
+                     fluidRow(
+                       column(12,
+                              wellPanel(
+                                radioButtons(inputId="cppac_EN_q12", label="In the past 7 days, did you need to consider your lung problems when you planned your activities because of your lung problems? Examples are a trip out, an appointment or expecting visitors.",
+                                                   choices=c(
+                                                     "No",
+                                                     "A little bit",
+                                                     "Sometimes",
+                                                     "A lot",
+                                                     "A great deal"
+                                                     
+                                                   )
+                                ),
+                              ),
+                              
+                       ),
+                       
+                     ),
+                    fluidRow(
+                      column(6,
+                             wellPanel("Accelerometer steps score (based on the daily median of valid days)", style = "font-weight: bold;",
+                                       h4(""),
+                             reactable::reactableOutput("table_cppac_en_steps_med")
+                             )
+                     ),
+                     column(6,
+                            wellPanel("Accelerometer steps score (Based on the daily mean of valid days)", style = "font-weight: bold;",
+                                      h4(""),
+                              reactable::reactableOutput("table_cppac_en_steps_mean")
+                            )
+                     )
+                    ),
+                    fluidRow(
+                      column(6,
+                             wellPanel("Accelerometer VMU score (based on the daily median of valid days)", style = "font-weight: bold;",
+                                       h4(""),
+                               reactable::reactableOutput("table_cppac_en_vmu_med")
+                             )
+                      ),
+                      column(6,
+                             wellPanel("Accelerometer VMU score (based on the daily mean of valid days)", style = "font-weight: bold;",
+                                       h4(""),
+                               reactable::reactableOutput("table_cppac_en_vmu_mean")
+                             )
+                      )
+                    ),
+                    fluidRow(
+                      column(12,
+                             h2("Summary"),
+                             h4("")
+                      ),
+                    ),
+                    fluidRow(
+                      column(12,
+                             wellPanel(
+                             radioButtons(inputId="cppac_EN_summary_metric", label="Do you want to use PROactive steps / VMU scores based on the MEDIANS or the MEANS of valid days?",
+                                          choices=c(
+                                            "Scores based on MEDIANS",
+                                            "Scores based on MEANS"
+                                          )
+                             )
+                        ),
+                      ),
+                    ),
+                    fluidRow(
+                      column(12,
+                             shiny::actionButton("get_cppac_summary_en", "Get / Update C-PPAC summary", style="color: #fff; background-color: #00CC66; border-color: #336600"),
+                             h3("")
+                      ),
+                    ),
+                    
+                    fluidRow(
+                      column(6,
+                             h4(""),
+                             reactable::reactableOutput("PROactive_scores_cppac_summary_en"), 
+                             ),
+                      column(6,
+                             h4(""),
+                             shinydashboard::valueBoxOutput("infoBox_cppac_en_total_diff"),
+                             shinydashboard::valueBoxOutput("infoBox_cppac_en_total_amount"),
+                             shinydashboard::valueBoxOutput("infoBox_cppac_en_total_all"),
+                             h4(""),
+                             h4(""),
+                             shinydashboard::valueBoxOutput("infoBox_cppac_en_total_diff_rasch"),
+                             shinydashboard::valueBoxOutput("infoBox_cppac_en_total_amount_rasch"),
+                             shinydashboard::valueBoxOutput("infoBox_cppac_en_total_all_rasch")
+                             ),
+                      
+                    ),
+                    
+                   ), # End of tabPanel
+                   
+                   
+                ###################
+                # Panel D-PPAC (EN) ----
+                ###################
+                  
+                tabPanel("D-PPAC (EN)",
+                       wellPanel(
+                         fluidRow(
+                           column(12,
+                                  "Reference: Gimeno-Santos et al. European Respiratory Journal 2015:46 988–10008", style = "font-weight: bold;"
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  h4("")
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                               "INSTRUCTIONS TO PATIENTS DAY 1:
+                                Patients with chronic lung disease like you often report that they have problems during physical activity. 
+                                By physical activity, we mean all activities that require movement of your body. Examples are household activities, 
+                                walking, going to work, or getting dressed. However, please consider all activities you do, and not only these examples. 
+                                We would like to know how you experienced your physical activity since you woke up TODAY."
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  h4("")
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  "Please complete this questionnaire in the evening before going to bed. Please select the box next to the response that 
+                                  best applies to you TODAY."
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  h4("")
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  "There are no wrong answers. We very much value your response."
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  h4("")
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  "INSTRUCTIONS FOR SUBSEQUENT DAYS: We would like to know how you experienced your physical activity since you woke up TODAY. 
+                                  Please complete this questionnaire in the evening before going to bed. 
+                                  Please select the box next to the response that best applies to you TODAY."
+                           ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                h2("Day 1"),
+                                h4()
+                                ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d1_q1", label="Day 1. How much walking did you do outside today?", 
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit (up to 10 minutes in total)",
+                                                 "Some (up to 30 minutes in total)",
+                                                 "A lot (up to 1 hour in total)",
+                                                 "A great deal (more than 1 hour in total)"
+                                               )
+                                  ),
+                                ),
+                                
+                         )
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d1_q2", label="Day 1. How many chores did you do outside the house today? 
+                                               Some examples are gardening, taking the rubbish out, or doing small errands.",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A few",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A large amount"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d1_q3", label="Day 1. How much difficulty did you have getting dressed today?",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A great deal"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d1_q4", label="Day 1. How often did you avoid doing activities because of your lung problems today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                         ), 
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d1_q5", label="Day 1. How breathless were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ), 
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d1_q6", label="Day 1. How tired were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d1_q7", label="Day 1. How often did you have to take breaks during your physical activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(6,
+                                wellPanel("Day 1. Accelerometer steps score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d1_steps")
+                                )
+                         ),
+                         column(6,
+                                wellPanel("Day 1. Accelerometer VMU score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d1_vmu")
+                                )
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                h2("Day 2"),
+                                h4()
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d2_q1", label="Day 2. How much walking did you do outside today?", 
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit (up to 10 minutes in total)",
+                                                 "Some (up to 30 minutes in total)",
+                                                 "A lot (up to 1 hour in total)",
+                                                 "A great deal (more than 1 hour in total)"
+                                               )
+                                  ),
+                                ),
+                                
+                         )
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d2_q2", label="Day 2. How many chores did you do outside the house today? 
+                                               Some examples are gardening, taking the rubbish out, or doing small errands.",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A few",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A large amount"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d2_q3", label="Day 2. How much difficulty did you have getting dressed today?",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A great deal"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d2_q4", label="Day 2. How often did you avoid doing activities because of your lung problems today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                         ), 
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d2_q5", label="Day 2. How breathless were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ), 
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d2_q6", label="Day 2. How tired were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d2_q7", label="Day 2. How often did you have to take breaks during your physical activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(6,
+                                wellPanel("Day 2. Accelerometer steps score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d2_steps")
+                                )
+                         ),
+                         column(6,
+                                wellPanel("Day 2. Accelerometer VMU score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d2_vmu")
+                                )
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                h2("Day 3"),
+                                h4()
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d3_q1", label="Day 3. How much walking did you do outside today?", 
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit (up to 10 minutes in total)",
+                                                 "Some (up to 30 minutes in total)",
+                                                 "A lot (up to 1 hour in total)",
+                                                 "A great deal (more than 1 hour in total)"
+                                               )
+                                  ),
+                                ),
+                                
+                         )
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d3_q2", label="Day 3. How many chores did you do outside the house today? 
+                                               Some examples are gardening, taking the rubbish out, or doing small errands.",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A few",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A large amount"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d3_q3", label="Day 3. How much difficulty did you have getting dressed today?",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A great deal"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d3_q4", label="Day 3. How often did you avoid doing activities because of your lung problems today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                         ), 
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d3_q5", label="Day 3. How breathless were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ), 
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d3_q6", label="Day 3. How tired were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d3_q7", label="Day 3. How often did you have to take breaks during your physical activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(6,
+                                wellPanel("Day 3. Accelerometer steps score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d3_steps")
+                                )
+                         ),
+                         column(6,
+                                wellPanel("Day 3. Accelerometer VMU score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d3_vmu")
+                                )
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                h2("Day 4"),
+                                h4()
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d4_q1", label="Day 4. How much walking did you do outside today?", 
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit (up to 10 minutes in total)",
+                                                 "Some (up to 30 minutes in total)",
+                                                 "A lot (up to 1 hour in total)",
+                                                 "A great deal (more than 1 hour in total)"
+                                               )
+                                  ),
+                                ),
+                                
+                         )
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d4_q2", label="Day 4. How many chores did you do outside the house today? 
+                                               Some examples are gardening, taking the rubbish out, or doing small errands.",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A few",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A large amount"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d4_q3", label="Day 4. How much difficulty did you have getting dressed today?",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A great deal"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d4_q4", label="Day 4. How often did you avoid doing activities because of your lung problems today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                         ), 
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d4_q5", label="Day 4. How breathless were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ), 
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d4_q6", label="Day 4. How tired were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d4_q7", label="Day 4. How often did you have to take breaks during your physical activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(6,
+                                wellPanel("Day 4. Accelerometer steps score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d4_steps")
+                                )
+                         ),
+                         column(6,
+                                wellPanel("Day 4. Accelerometer VMU score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d4_vmu")
+                                )
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                h2("Day 5"),
+                                h4()
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d5_q1", label="Day 5. How much walking did you do outside today?", 
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit (up to 10 minutes in total)",
+                                                 "Some (up to 30 minutes in total)",
+                                                 "A lot (up to 1 hour in total)",
+                                                 "A great deal (more than 1 hour in total)"
+                                               )
+                                  ),
+                                ),
+                                
+                         )
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d5_q2", label="Day 5. How many chores did you do outside the house today? 
+                                               Some examples are gardening, taking the rubbish out, or doing small errands.",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A few",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A large amount"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d5_q3", label="Day 5. How much difficulty did you have getting dressed today?",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A great deal"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d5_q4", label="Day 5. How often did you avoid doing activities because of your lung problems today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                         ), 
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d5_q5", label="Day 5. How breathless were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ), 
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d5_q6", label="Day 5. How tired were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d5_q7", label="Day 5. How often did you have to take breaks during your physical activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(6,
+                                wellPanel("Day 5. Accelerometer steps score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d5_steps")
+                                )
+                         ),
+                         column(6,
+                                wellPanel("Day 5. Accelerometer VMU score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d5_vmu")
+                                )
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                h2("Day 6"),
+                                h4()
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d6_q1", label="Day 6. How much walking did you do outside today?", 
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit (up to 10 minutes in total)",
+                                                 "Some (up to 30 minutes in total)",
+                                                 "A lot (up to 1 hour in total)",
+                                                 "A great deal (more than 1 hour in total)"
+                                               )
+                                  ),
+                                ),
+                                
+                         )
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d6_q2", label="Day 6. How many chores did you do outside the house today? 
+                                               Some examples are gardening, taking the rubbish out, or doing small errands.",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A few",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A large amount"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d6_q3", label="Day 6. How much difficulty did you have getting dressed today?",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A great deal"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d6_q4", label="Day 6. How often did you avoid doing activities because of your lung problems today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                         ), 
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d6_q5", label="Day 6. How breathless were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ), 
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d6_q6", label="Day 6. How tired were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d6_q7", label="Day 6. How often did you have to take breaks during your physical activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(6,
+                                wellPanel("Day 6. Accelerometer steps score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d6_steps")
+                                )
+                         ),
+                         column(6,
+                                wellPanel("Day 6. Accelerometer VMU score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d6_vmu")
+                                )
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                h2("Day 7"),
+                                h4()
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d7_q1", label="Day 7. How much walking did you do outside today?", 
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit (up to 10 minutes in total)",
+                                                 "Some (up to 30 minutes in total)",
+                                                 "A lot (up to 1 hour in total)",
+                                                 "A great deal (more than 1 hour in total)"
+                                               )
+                                  ),
+                                ),
+                                
+                         )
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d7_q2", label="Day 7. How many chores did you do outside the house today? 
+                                               Some examples are gardening, taking the rubbish out, or doing small errands.",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A few",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A large amount"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d7_q3", label="Day 7. How much difficulty did you have getting dressed today?",
+                                               choices=c(
+                                                 "None at all",
+                                                 "A little bit",
+                                                 "Some",
+                                                 "A lot",
+                                                 "A great deal"
+                                               )
+                                  ),
+                                ),
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d7_q4", label="Day 7. How often did you avoid doing activities because of your lung problems today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                         ), 
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d7_q5", label="Day 7. How breathless were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ), 
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d7_q6", label="Day 7. How tired were you in general during your activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "A little bit",
+                                                 "Moderately",
+                                                 "Very",
+                                                 "Extremely"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(12,
+                                wellPanel(
+                                  radioButtons(inputId="dppac_EN_d7_q7", label="Day 7. How often did you have to take breaks during your physical activities today?",
+                                               choices=c(
+                                                 "Not at all",
+                                                 "Rarely",
+                                                 "Sometimes",
+                                                 "Frequently",
+                                                 "All the time"
+                                                 
+                                               )
+                                  ),
+                                ),
+                                
+                         ),
+                         
+                       ),
+                       fluidRow(
+                         column(6,
+                                wellPanel("Day 7. Accelerometer steps score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d7_steps")
+                                )
+                         ),
+                         column(6,
+                                wellPanel("Day 7. Accelerometer VMU score", style = "font-weight: bold;",
+                                          h4(""),
+                                          reactable::reactableOutput("table_dppac_en_d7_vmu")
+                                )
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                h2("Summary"),
+                                h4("")
+                         ),
+                       ),
+                       fluidRow(
+                         column(12,
+                                shiny::actionButton("get_dppac_summary_en", "Get / Update D-PPAC summary", style="color: #fff; background-color: #00CC66; border-color: #336600"),
+                         ),
+                       ),
+                       fluidRow(
+                         column(6,
+                                h4(""),
+                                reactable::reactableOutput("PROactive_scores_dppac_summary_en"), 
+                         ),
+                         column(6,
+                                h4(""),
+                                shinydashboard::valueBoxOutput("infoBox_dppac_en_total_diff"),
+                                shinydashboard::valueBoxOutput("infoBox_dppac_en_total_amount"),
+                                shinydashboard::valueBoxOutput("infoBox_dppac_en_total_all"),
+                                h4(""),
+                                h4(""),
+                                shinydashboard::valueBoxOutput("infoBox_dppac_en_total_diff_rasch"),
+                                shinydashboard::valueBoxOutput("infoBox_dppac_en_total_amount_rasch"),
+                                shinydashboard::valueBoxOutput("infoBox_dppac_en_total_all_rasch")
+                         ),
+                       ),
+                       
+                         
+                 ), # End of tabPanel
+                 
+                ###################
+                # Panel C-PPAC (FR) ----
+                ###################
+                
+                tabPanel("C-PPAC (FR)",
+
+                        wellPanel(
+                         fluidRow(
+                           column(12,
+                           "Référence : Vaidya et al. International Journal of Chronic Obstructive Pulmonary Disease 2020:15 471–478", style = "font-weight: bold;"
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  h4("")
+                            )
+                         ),
+                         fluidRow(
+                           column(12,
+
+                                    "INSTRUCTIONS POUR LES PATIENTS : 
+                                    Les patients souffrant d’une maladie pulmonaire chronique comme vous signalent qu’ils connaissent des problèmes au cours de leurs activités physiques. 
+                                    Par activités physiques, nous entendons toutes les activités nécessitant un mouvement de votre corps. (Exemples : les activités domestiques, la marche, aller au travail ou s’habiller). Veuillez prendre en compte toutes les activités que vous réalisez, et pas seulement ces exemples. Nous aimerions savoir comment vous avez vécu vos activités physiques AU COURS DES 7 DERNIERS JOURS."
+                                  ),
+                           ),
+                         fluidRow(
+                           column(12,
+                                  h4("")
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  "Veuillez cocher la case de la réponse qui vous correspond le mieux AU COURS DES 7 DERNIERS JOURS."
+                                  )
+                          ),
+                         fluidRow(
+                           column(12,
+                                  h4("")
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  "Il n’y a pas de mauvaise réponse. Nous vous remercions de votre participation."
+                           )
+                          ),
+                         ),  
+                         
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="cppac_FR_q1", label="Au cours des 7 derniers jours, avez-vous marché à l’extérieur ?", 
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu (environ 10 minutes chaque jour)",
+                                                   "Un peu (environ 30 minutes chaque jour)",
+                                                   "Beaucoup (environ 1 heure chaque jour)",
+                                                   "Enormément (plus d’1 heure chaque jour)"
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="cppac_FR_q2", label="Au cours des 7 derniers jours, avez-vous effectué des tâches à l’extérieur ? 
+                                                 (exemples : le jardinage, sortir les poubelles ou faire des petites courses)",
+                                                 choices=c(
+                                                   "Aucune",
+                                                   "Très peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="cppac_FR_q3", label="Au cours des 7 derniers jours, avez-vous eu des difficultés pour vous habiller ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="cppac_FR_q4", label="Au cours des 7 derniers jours, avez-vous eu des difficultés pour sortir de chez vous ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                           ), 
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="cppac_FR_q5", label="Au cours des 7 derniers jours, avez-vous évité des activités à cause de vos problèmes respiratoires ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="cppac_FR_q6", label="Au cours des 7 derniers jours, étiez-vous essoufflé(e) en général durant vos activités ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ), 
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="cppac_FR_q7", label="Au cours des 7 derniers jours, avez-vous manqué de force pour effectuer des tâches à cause de vos problèmes respiratoires ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="cppac_FR_q8", label="Au cours des 7 derniers jours, étiez-vous fatigué(e) en général durant vos activités ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="cppac_FR_q9", label="Au cours des 7 derniers jours, avez-vous dû faire des pauses pendant vos activités physiques ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="cppac_FR_q10", label="Au cours des 7 derniers jours, étiez-vous essoufflé(e) lors de la marche sur terrain plat, à l’intérieur et à l’extérieur ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="cppac_FR_q11", label="Au cours des 7 derniers jours, combien de temps vous a-t-il fallu pour récupérer de vos activités physiques ?",
+                                                 choices=c(
+                                                   "Aucun",
+                                                   "Un petit peu",
+                                                   "Un peu",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="cppac_FR_q12", label="Au cours des 7 derniers jours, avez-vous eu besoin de prendre en compte vos problèmes respiratoires lorsque vous avez planifié vos activités ? 
+                                                 (exemples : une sortie, un rendez-vous ou recevoir des invités)",
+                                                 choices=c(
+                                                   "Non",
+                                                   "Un petit peu",
+                                                   "Quelques fois",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(6,
+                                  wellPanel("Score accélérométrique pour les pas (à partir de la médiane journalière des jours valides)", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_cppac_en_steps_med_fr")
+                                  )
+                           ),
+                           column(6,
+                                  wellPanel("Score accélérométrique pour les pas (à partir de la moyenne journalière des jours valides)", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_cppac_en_steps_mean_fr")
+                                  )
+                           )
+                         ),
+                         fluidRow(
+                           column(6,
+                                  wellPanel("Score accélérométrique pour le VMU (à partir de la médiane journalière des jours valides)", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_cppac_en_vmu_med_fr")
+                                  )
+                           ),
+                           column(6,
+                                  wellPanel("Score accélérométrique pour le VMU (à partir de la moyenne journalière des jours valides)", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_cppac_en_vmu_mean_fr")
+                                  )
+                           ),
+                         ),
+                        fluidRow(
+                          column(12,
+                                 h2("Bilan"),
+                                 h4()
+                          ),
+                        ),
+                        fluidRow(
+                          column(12,
+                                 wellPanel(
+                                   radioButtons(inputId="cppac_FR_summary_metric", label="Voulez-vous utiliser les scores de pas / VMU PROactive calculés à partir des MÉDIANES ou des MOYENNES
+                                   des jours valides?",
+                                                choices=c(
+                                                  "Scores calculés à partir des MÉDIANES",
+                                                  "Scores calculés à partir des MOYENNES"
+                                                )
+                                   )
+                                 ),
+                          ),
+                        ),
+                        fluidRow(
+                          column(12,
+                                 shiny::actionButton("get_cppac_summary_fr", "Obtenir / Mettre à jour les résultats du C-PPAC", style="color: #fff; background-color: #00CC66; border-color: #336600"),
+                                 h3("")
+                          ),
+                        ),
+                        fluidRow(
+                          column(6,
+                                 h4(""),
+                                 reactable::reactableOutput("PROactive_scores_cppac_summary_fr"), 
+                          ),
+                          column(6,
+                                 h4(""),
+                                 shinydashboard::valueBoxOutput("infoBox_cppac_fr_total_diff"),
+                                 shinydashboard::valueBoxOutput("infoBox_cppac_fr_total_amount"),
+                                 shinydashboard::valueBoxOutput("infoBox_cppac_fr_total_all"),
+                                 h4(""),
+                                 h4(""),
+                                 shinydashboard::valueBoxOutput("infoBox_cppac_fr_total_diff_rasch"),
+                                 shinydashboard::valueBoxOutput("infoBox_cppac_fr_total_amount_rasch"),
+                                 shinydashboard::valueBoxOutput("infoBox_cppac_fr_total_all_rasch")
+                          ),
+                          
+                        ),
+                ), # End of tabPanel
+                
+                ###################
+                # Panel D-PPAC (FR) ----
+                ###################
+                
+                tabPanel("D-PPAC (FR)",
+                         wellPanel(
+                           fluidRow(
+                             column(12,
+                                    "Référence : Vaidya et al. International Journal of Chronic Obstructive Pulmonary Disease 2020:15 471–478", style = "font-weight: bold;"
+                             )
+                           ),
+                           fluidRow(
+                             column(12,
+                                    h4("")
+                             )
+                           ),
+                           fluidRow(
+                             column(12,
+                                    "INSTRUCTIONS POUR LES PATIENTS :
+                               Les patients souffrant d’une maladie pulmonaire chronique comme vous signalent qu’ils connaissent des problèmes au 
+                                    cours de leurs activités physiques. Par activités physiques, nous entendons toutes les activités nécessitant un
+                                    mouvement de votre corps. (Exemples : les activités domestiques, la marche, aller au travail ou s’habiller). 
+                                    Veuillez prendre en compte toutes les activités que vous réalisez, et pas seulement ces exemples. Nous aimerions savoir 
+                                    comment vous avez vécu vos activités physiques depuis que vous vous êtes réveillé(e) AUJOURD’HUI."
+                             ),
+                           ),
+                           fluidRow(
+                             column(12,
+                                    h4("")
+                             )
+                           ),
+                           fluidRow(
+                             column(12,
+                                    "Veuillez remplir ce questionnaire le soir avant de vous coucher. Veuillez cocher la case de la réponse qui vous correspond le mieux AUJOURD’HUI."
+                             ),
+                           ),
+                           fluidRow(
+                             column(12,
+                                    h4("")
+                             )
+                           ),
+                           fluidRow(
+                             column(12,
+                                    "Il n’y a pas de mauvaise réponse. Nous vous remercions de votre participation."
+                             ),
+                           ),
+                           fluidRow(
+                             column(12,
+                                    h4("")
+                             )
+                           ),
+                           fluidRow(
+                             column(12,
+                                    "INSTRUCTIONS POUR LES JOURS SUIVANTS : Nous aimerions savoir comment vous avez vécu vos 
+                                    activités physiques depuis que vous vous êtes réveillé(e) AUJOURD’HUI. Veuillez remplir ce questionnaire le soir avant de vous coucher. 
+                                    Veuillez cocher la case de la réponse qui vous correspond le mieux AUJOURD’HUI."
+                             ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  h2("Jour 1"),
+                                  h4()
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d1_q1", label="Jour 1. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu (jusqu’à 10 minutes au total)",
+                                                   "Un peu (jusqu’à 30 minutes au total)",
+                                                   "Beaucoup (jusqu’à 1 heure au total)",
+                                                   "Enormément (plus d’1 heure au total)"
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d1_q2", label="Jour 1. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                                 (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
+                                                 choices=c(
+                                                   "Aucune",
+                                                   "Très peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d1_q3", label="Jour 1. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d1_q4", label="Jour 1. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                           ), 
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d1_q5", label="Jour 1. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ), 
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d1_q6", label="Jour 1. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d1_q7", label="Jour 1. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(6,
+                                  wellPanel("Jour 1. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d1_steps")
+                                  )
+                           ),
+                           column(6,
+                                  wellPanel("Jour 1. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d1_vmu")
+                                  )
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  h2("Jour 2"),
+                                  h4()
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d2_q1", label="Jour 2. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu (jusqu’à 10 minutes au total)",
+                                                   "Un peu (jusqu’à 30 minutes au total)",
+                                                   "Beaucoup (jusqu’à 1 heure au total)",
+                                                   "Enormément (plus d’1 heure au total)"
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d2_q2", label="Jour 2. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                                 (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
+                                                 choices=c(
+                                                   "Aucune",
+                                                   "Très peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d2_q3", label="Jour 2. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d2_q4", label="Jour 2. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                           ), 
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d2_q5", label="Jour 2. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ), 
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d2_q6", label="Jour 2. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d2_q7", label="Jour 2. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(6,
+                                  wellPanel("Jour 2. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d2_steps")
+                                  )
+                           ),
+                           column(6,
+                                  wellPanel("Jour 2. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d2_vmu")
+                                  )
+                           ),
+                         ),
+                         
+                         fluidRow(
+                           column(12,
+                                  h2("Jour 3"),
+                                  h4()
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d3_q1", label="Jour 3. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu (jusqu’à 10 minutes au total)",
+                                                   "Un peu (jusqu’à 30 minutes au total)",
+                                                   "Beaucoup (jusqu’à 1 heure au total)",
+                                                   "Enormément (plus d’1 heure au total)"
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d3_q2", label="Jour 3. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                                 (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
+                                                 choices=c(
+                                                   "Aucune",
+                                                   "Très peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d3_q3", label="Jour 3. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d3_q4", label="Jour 3. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                           ), 
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d3_q5", label="Jour 3. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ), 
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d3_q6", label="Jour 3. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d3_q7", label="Jour 3. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(6,
+                                  wellPanel("Jour 3. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d3_steps")
+                                  )
+                           ),
+                           column(6,
+                                  wellPanel("Jour 3. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d3_vmu")
+                                  )
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  h2("Jour 4"),
+                                  h4()
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d4_q1", label="Jour 4. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu (jusqu’à 10 minutes au total)",
+                                                   "Un peu (jusqu’à 30 minutes au total)",
+                                                   "Beaucoup (jusqu’à 1 heure au total)",
+                                                   "Enormément (plus d’1 heure au total)"
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d4_q2", label="Jour 4. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                                 (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
+                                                 choices=c(
+                                                   "Aucune",
+                                                   "Très peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d4_q3", label="Jour 4. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d4_q4", label="Jour 4. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                           ), 
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d4_q5", label="Jour 4. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ), 
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d4_q6", label="Jour 4. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d4_q7", label="Jour 4. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(6,
+                                  wellPanel("Jour 4. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d4_steps")
+                                  )
+                           ),
+                           column(6,
+                                  wellPanel("Jour 4. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d4_vmu")
+                                  )
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  h2("Jour 5"),
+                                  h4()
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d5_q1", label="Jour 5. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu (jusqu’à 10 minutes au total)",
+                                                   "Un peu (jusqu’à 30 minutes au total)",
+                                                   "Beaucoup (jusqu’à 1 heure au total)",
+                                                   "Enormément (plus d’1 heure au total)"
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d5_q2", label="Jour 5. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                                 (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
+                                                 choices=c(
+                                                   "Aucune",
+                                                   "Très peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d5_q3", label="Jour 5. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d5_q4", label="Jour 5. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                           ), 
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d5_q5", label="Jour 5. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ), 
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d5_q6", label="Jour 5. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d5_q7", label="Jour 5. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(6,
+                                  wellPanel("Jour 5. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d5_steps")
+                                  )
+                           ),
+                           column(6,
+                                  wellPanel("Jour 5. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d5_vmu")
+                                  )
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  h2("Jour 6"),
+                                  h4()
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d6_q1", label="Jour 6. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu (jusqu’à 10 minutes au total)",
+                                                   "Un peu (jusqu’à 30 minutes au total)",
+                                                   "Beaucoup (jusqu’à 1 heure au total)",
+                                                   "Enormément (plus d’1 heure au total)"
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d6_q2", label="Jour 6. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                                 (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
+                                                 choices=c(
+                                                   "Aucune",
+                                                   "Très peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d6_q3", label="Jour 6. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d6_q4", label="Jour 6. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                           ), 
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d6_q5", label="Jour 6. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ), 
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d6_q6", label="Jour 6. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d6_q7", label="Jour 6. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(6,
+                                  wellPanel("Jour 6. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d6_steps")
+                                  )
+                           ),
+                           column(6,
+                                  wellPanel("Jour 6. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d6_vmu")
+                                  )
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  h2("Jour 7"),
+                                  h4()
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d7_q1", label="Jour 7. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu (jusqu’à 10 minutes au total)",
+                                                   "Un peu (jusqu’à 30 minutes au total)",
+                                                   "Beaucoup (jusqu’à 1 heure au total)",
+                                                   "Enormément (plus d’1 heure au total)"
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           )
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d7_q2", label="Jour 7. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                                 (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
+                                                 choices=c(
+                                                   "Aucune",
+                                                   "Très peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d7_q3", label="Jour 7. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Quelques-unes",
+                                                   "Beaucoup",
+                                                   "Enormément"
+                                                 )
+                                    ),
+                                  ),
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d7_q4", label="Jour 7. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                           ), 
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d7_q5", label="Jour 7. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ), 
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d7_q6", label="Jour 7. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                                 choices=c(
+                                                   "Pas du tout",
+                                                   "Un petit peu",
+                                                   "Modérément",
+                                                   "Très",
+                                                   "Extrêmement"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(12,
+                                  wellPanel(
+                                    radioButtons(inputId="dppac_FR_d7_q7", label="Jour 7. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                                 choices=c(
+                                                   "Jamais",
+                                                   "Rarement",
+                                                   "Quelques fois",
+                                                   "Fréquemment",
+                                                   "Tout le temps"
+                                                   
+                                                 )
+                                    ),
+                                  ),
+                                  
+                           ),
+                           
+                         ),
+                         fluidRow(
+                           column(6,
+                                  wellPanel("Jour 7. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d7_steps")
+                                  )
+                           ),
+                           column(6,
+                                  wellPanel("Jour 7. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                            h4(""),
+                                            reactable::reactableOutput("table_dppac_fr_d7_vmu")
+                                  )
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  h2("Bilan"),
+                                  h4("")
+                           ),
+                         ),
+                         fluidRow(
+                           column(12,
+                                  shiny::actionButton("get_dppac_summary_fr", "Obtenir / Mettre à jour les résultats du D-PPAC", style="color: #fff; background-color: #00CC66; border-color: #336600"),
+                           ),
+                         ),
+                         fluidRow(
+                           column(6,
+                                  h4(""),
+                                  reactable::reactableOutput("PROactive_scores_dppac_summary_fr"), 
+                           ),
+                           column(6,
+                                  h4(""),
+                                  shinydashboard::valueBoxOutput("infoBox_dppac_fr_total_diff"),
+                                  shinydashboard::valueBoxOutput("infoBox_dppac_fr_total_amount"),
+                                  shinydashboard::valueBoxOutput("infoBox_dppac_fr_total_all"),
+                                  h4(""),
+                                  h4(""),
+                                  shinydashboard::valueBoxOutput("infoBox_dppac_fr_total_diff_rasch"),
+                                  shinydashboard::valueBoxOutput("infoBox_dppac_fr_total_amount_rasch"),
+                                  shinydashboard::valueBoxOutput("infoBox_dppac_fr_total_all_rasch")
+                           ),
+                         ),
+                ),
+               ),
+               ),
+          
+          # $$$$$$$$$$$$$$$$$$
+          # Third tab content ----
           # $$$$$$$$$$$$$$$$$$
           
           shinydashboard::tabItem(tabName = "guide",
