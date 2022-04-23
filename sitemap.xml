@@ -37,6 +37,12 @@
     <loc>https://pydemull.github.io/activAnalyzer/reference/compute_pro_actigraph_score.html</loc>
   </url>
   <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/compute_pro_score_cppac.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/compute_pro_score_dppac.html</loc>
+  </url>
+  <url>
     <loc>https://pydemull.github.io/activAnalyzer/reference/create_fig_mvpa.html</loc>
   </url>
   <url>
@@ -83,6 +89,9 @@
   </url>
   <url>
     <loc>https://pydemull.github.io/activAnalyzer/reference/prepare_dataset.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/rasch_transform.html</loc>
   </url>
   <url>
     <loc>https://pydemull.github.io/activAnalyzer/reference/read_agd.html</loc>
