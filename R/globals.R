@@ -92,6 +92,22 @@ utils::globalVariables(c(
   "y",
   "yend",
   "Date",
-  "TimeStamp"
-  
+  "TimeStamp",
+  "Selected_Day_ID",
+  "Steps_score",
+  "VMU_score",
+  "Validity",
+  "Day",
+  "Jour",
+  "score_type",
+  "Item",
+  "difficulty_score_raw",
+  "difficulty_score_raw_diff",
+  "difficulty_score_rasch",
+  "amount_score_raw",
+  "amount_score_raw_quant",
+  "amount_score_rasch",
+  "total_score_raw",
+  "total_score_rasch"
+
   ))

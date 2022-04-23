@@ -13,6 +13,8 @@ rasch_transform(
 \arguments{
 \item{x}{A numeric value that is the difficulty score (between 0 and 40 for C-PPAC or 0 and 20 for D-PPAC) or the quantity score (between 0 and 15 for C-PPAC or 0 and 17 for D-PPAC) obtained using a PROactive questionnaire.}
 
+\item{quest}{A character value to indicate with which PROactive questionnaire the raw score has been obtained.}
+
 \item{score}{A character value.}
 }
 \value{

@@ -98,21 +98,21 @@ language <- match.arg(language)
   
   if (question == "q1" && language == "fr") {
     score <- dplyr::case_when(
-      x ==  "Pas du tout"                                  ~ 0,
-      x ==  "Un petit peu (jusqu’à 10 minutes au total)"   ~ 1,
-      x ==  "Un peu (jusqu’à 30 minutes au total)"         ~ 2,
-      x ==  "Beaucoup (jusqu’à 1 heure au total)"          ~ 3,
-      x ==  "Enormément (plus d’1 heure au total)"         ~ 4
+      x ==  "Pas du tout"                                       ~ 0,
+      x ==  "Un petit peu (jusqu’à 10 minutes au total)"        ~ 1,
+      x ==  "Un peu (jusqu’à 30 minutes au total)"              ~ 2,
+      x ==  "Beaucoup (jusqu’à 1 heure au total)"               ~ 3,
+      x ==  "Enorm\u00e9ment (plus d\u00271 heure au total)"    ~ 4
     )
   }
   
   if (question == "q2" && language == "fr") {
     score <- dplyr::case_when(
       x == "Aucune"          ~ 0,
-      x == "Très peu"        ~ 1,
+      x == "Tr\u00e8s peu"   ~ 1,
       x == "Quelques-unes"   ~ 2,
       x == "Beaucoup"        ~ 3,
-      x == "Enormément"      ~ 4
+      x == "Enorm\u00e9ment" ~ 4
     )
   }
   
@@ -122,37 +122,37 @@ language <- match.arg(language)
       x ==   "Un petit peu"     ~ 3,
       x ==   "Quelques-unes"    ~ 2,
       x ==   "Beaucoup"         ~ 1,
-      x ==   "Enormément"       ~ 0
+      x ==   "Enorm\u00e9ment"  ~ 0
     )
   }
   
   if (question == "q4" && language == "fr") {
     score <- dplyr::case_when(
-      x ==   "Jamais"           ~ 4,
+      x ==   "Jamais"            ~ 4,
       x ==   "Rarement"          ~ 3,
       x ==   "Quelques fois"     ~ 2,
-      x ==   "Fréquemment"       ~ 1,
+      x ==   "Fr\u00e9quemment"  ~ 1,
       x ==   "Tout le temps"     ~ 0
     )
   }
   
   if (question == "q5" && language == "fr") {
     score <- dplyr::case_when(
-      x ==   "Pas du tout"     ~ 4,
-      x ==   "Un petit peu"    ~ 3,
-      x ==   "Modérément"      ~ 2,
-      x ==   "Très"            ~ 1,
-      x ==   "Extrêmement"     ~ 0
+      x ==   "Pas du tout"             ~ 4,
+      x ==   "Un petit peu"            ~ 3,
+      x ==   "Mod\u00e9r\u00e9ment"    ~ 2,
+      x ==   "Tr\u00e8s"               ~ 1,
+      x ==   "Extr\u00eamement"        ~ 0
     )
   }
   
   if (question == "q6" && language == "fr") {
     score <- dplyr::case_when(
-      x ==   "Pas du tout"    ~ 4,
-      x ==   "Un petit peu"   ~ 3,
-      x ==   "Modérément"     ~ 2,
-      x ==   "Très"           ~ 1,
-      x ==   "Extrêmement"    ~ 0
+      x ==   "Pas du tout"            ~ 4,
+      x ==   "Un petit peu"           ~ 3,
+      x ==   "Mod\u00e9r\u00e9ment"   ~ 2,
+      x ==   "Tr\u00e8s"              ~ 1,
+      x ==   "Extr\u00eamement"       ~ 0
     )
   }
   
@@ -161,7 +161,7 @@ language <- match.arg(language)
       x ==  "Jamais"           ~ 4,
       x ==  "Rarement"         ~ 3,
       x ==  "Quelques fois"    ~ 2,
-      x ==  "Fréquemment"      ~ 1,
+      x ==  "Fr\u00e9quemment" ~ 1,
       x ==  "Tout le temps"    ~ 0
     )
   }

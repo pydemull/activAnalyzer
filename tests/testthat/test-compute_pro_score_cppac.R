@@ -1,0 +1,162 @@
+test_that("C-PPAC item scores are accurate", {
+ 
+  # English version  R1 ---- 
+    q1 <- compute_pro_score_cppac(x = "None at all",  question = "q1", language = "en")
+    q2 <- compute_pro_score_cppac(x = "None at all",  question = "q2", language = "en")
+    q3 <- compute_pro_score_cppac(x = "None at all",  question = "q3", language = "en")
+    q4 <- compute_pro_score_cppac(x = "None at all",  question = "q4", language = "en")
+    q5 <- compute_pro_score_cppac(x = "Not at all",  question = "q5", language = "en")
+    q6 <- compute_pro_score_cppac(x = "Not at all",  question = "q6", language = "en")
+    q7 <- compute_pro_score_cppac(x = "Not at all",  question = "q7", language = "en")
+    q8 <- compute_pro_score_cppac(x = "Not at all",  question = "q8", language = "en")
+    q9 <- compute_pro_score_cppac(x = "Not at all",  question = "q9", language = "en")
+    q10 <- compute_pro_score_cppac(x = "Not at all",  question = "q10", language = "en")
+    q11 <- compute_pro_score_cppac(x = "Not at all",  question = "q11", language = "en")
+    q12 <- compute_pro_score_cppac(x = "No",  question = "q12", language = "en")
+    
+    expect_equal(sum(c(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12)), 0+0+10*4)
+    
+  # English version  R2 ---- 
+    q1 <- compute_pro_score_cppac(x = "A little bit (about 10 minutes every day)",  question = "q1", language = "en")
+    q2 <- compute_pro_score_cppac(x = "A few",  question = "q2", language = "en")
+    q3 <- compute_pro_score_cppac(x = "A little bit",  question = "q3", language = "en")
+    q4 <- compute_pro_score_cppac(x = "A little bit",  question = "q4", language = "en")
+    q5 <- compute_pro_score_cppac(x = "Rarely",  question = "q5", language = "en")
+    q6 <- compute_pro_score_cppac(x = "A little bit",  question = "q6", language = "en")
+    q7 <- compute_pro_score_cppac(x = "Rarely",  question = "q7", language = "en")
+    q8 <- compute_pro_score_cppac(x = "A little bit",  question = "q8", language = "en")
+    q9 <- compute_pro_score_cppac(x = "Rarely",  question = "q9", language = "en")
+    q10 <- compute_pro_score_cppac(x = "A little bit",  question = "q10", language = "en")
+    q11 <- compute_pro_score_cppac(x = "A little bit",  question = "q11", language = "en")
+    q12 <- compute_pro_score_cppac(x = "A little bit",  question = "q12", language = "en")
+    
+    expect_equal(sum(c(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12)), 1+1+10*3)
+    
+  # English version  R3 ---- 
+    q1 <- compute_pro_score_cppac(x = "Some (about 30 minutes every day)",  question = "q1", language = "en")
+    q2 <- compute_pro_score_cppac(x = "Some",  question = "q2", language = "en")
+    q3 <- compute_pro_score_cppac(x = "Some",  question = "q3", language = "en")
+    q4 <- compute_pro_score_cppac(x = "Some",  question = "q4", language = "en")
+    q5 <- compute_pro_score_cppac(x = "Sometimes",  question = "q5", language = "en")
+    q6 <- compute_pro_score_cppac(x = "Moderately",  question = "q6", language = "en")
+    q7 <- compute_pro_score_cppac(x = "Sometimes",  question = "q7", language = "en")
+    q8 <- compute_pro_score_cppac(x = "Moderately",  question = "q8", language = "en")
+    q9 <- compute_pro_score_cppac(x = "Sometimes",  question = "q9", language = "en")
+    q10 <- compute_pro_score_cppac(x = "Moderately",  question = "q10", language = "en")
+    q11 <- compute_pro_score_cppac(x = "Some",  question = "q11", language = "en")
+    q12 <- compute_pro_score_cppac(x = "Sometimes",  question = "q12", language = "en")
+    
+    expect_equal(sum(c(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12)), 2+2+10*2)
+    
+  # English version  R4 ---- 
+    q1 <- compute_pro_score_cppac(x = "A lot (about 1 hour every day)",  question = "q1", language = "en")
+    q2 <- compute_pro_score_cppac(x = "A lot",  question = "q2", language = "en")
+    q3 <- compute_pro_score_cppac(x = "A lot",  question = "q3", language = "en")
+    q4 <- compute_pro_score_cppac(x = "A lot",  question = "q4", language = "en")
+    q5 <- compute_pro_score_cppac(x = "Frequently",  question = "q5", language = "en")
+    q6 <- compute_pro_score_cppac(x = "Very",  question = "q6", language = "en")
+    q7 <- compute_pro_score_cppac(x = "Frequently",  question = "q7", language = "en")
+    q8 <- compute_pro_score_cppac(x = "Very",  question = "q8", language = "en")
+    q9 <- compute_pro_score_cppac(x = "Frequently",  question = "q9", language = "en")
+    q10 <- compute_pro_score_cppac(x = "Very",  question = "q10", language = "en")
+    q11 <- compute_pro_score_cppac(x = "A lot",  question = "q11", language = "en")
+    q12 <- compute_pro_score_cppac(x = "A lot",  question = "q12", language = "en")
+    
+    expect_equal(sum(c(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12)), 3+3+10*1)
+    
+  # English version  R5 ---- 
+    q1 <- compute_pro_score_cppac(x = "A great deal (more than 1 hour every day)",  question = "q1", language = "en")
+    q2 <- compute_pro_score_cppac(x = "A large amount",  question = "q2", language = "en")
+    q3 <- compute_pro_score_cppac(x = "A great deal",  question = "q3", language = "en")
+    q4 <- compute_pro_score_cppac(x = "A great deal",  question = "q4", language = "en")
+    q5 <- compute_pro_score_cppac(x = "All the time",  question = "q5", language = "en")
+    q6 <- compute_pro_score_cppac(x = "Extremely",  question = "q6", language = "en")
+    q7 <- compute_pro_score_cppac(x = "All the time",  question = "q7", language = "en")
+    q8 <- compute_pro_score_cppac(x = "Extremely",  question = "q8", language = "en")
+    q9 <- compute_pro_score_cppac(x = "All the time",  question = "q9", language = "en")
+    q10 <- compute_pro_score_cppac(x = "Extremely",  question = "q10", language = "en")
+    q11 <- compute_pro_score_cppac(x = "A great deal",  question = "q11", language = "en")
+    q12 <- compute_pro_score_cppac(x = "A great deal",  question = "q12", language = "en")
+    
+    expect_equal(sum(c(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12)), 3+4+10*0)
+    
+  # French version  R1 ---- 
+    q1 <- compute_pro_score_cppac(x = "Pas du tout",  question = "q1", language = "fr")
+    q2 <- compute_pro_score_cppac(x = "Aucune",  question = "q2", language = "fr")
+    q3 <- compute_pro_score_cppac(x = "Pas du tout",  question = "q3", language = "fr")
+    q4 <- compute_pro_score_cppac(x = "Pas du tout",  question = "q4", language = "fr")
+    q5 <- compute_pro_score_cppac(x = "Jamais",  question = "q5", language = "fr")
+    q6 <- compute_pro_score_cppac(x = "Pas du tout",  question = "q6", language = "fr")
+    q7 <- compute_pro_score_cppac(x = "Jamais",  question = "q7", language = "fr")
+    q8 <- compute_pro_score_cppac(x = "Pas du tout",  question = "q8", language = "fr")
+    q9 <- compute_pro_score_cppac(x = "Jamais",  question = "q9", language = "fr")
+    q10 <- compute_pro_score_cppac(x = "Pas du tout",  question = "q10", language = "fr")
+    q11 <- compute_pro_score_cppac(x = "Aucun",  question = "q11", language = "fr")
+    q12 <- compute_pro_score_cppac(x = "Non",  question = "q12", language = "fr")
+    
+    expect_equal(sum(c(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12)), 0+0+10*4)
+    
+   # French version  R2 ---- 
+    q1 <- compute_pro_score_cppac(x = "Un petit peu (environ 10 minutes chaque jour)",  question = "q1", language = "fr")
+    q2 <- compute_pro_score_cppac(x = "Tr\u00e8s peu",  question = "q2", language = "fr")
+    q3 <- compute_pro_score_cppac(x = "Un petit peu",  question = "q3", language = "fr")
+    q4 <- compute_pro_score_cppac(x = "Un petit peu",  question = "q4", language = "fr")
+    q5 <- compute_pro_score_cppac(x = "Rarement",  question = "q5", language = "fr")
+    q6 <- compute_pro_score_cppac(x = "Un petit peu",  question = "q6", language = "fr")
+    q7 <- compute_pro_score_cppac(x = "Rarement",  question = "q7", language = "fr")
+    q8 <- compute_pro_score_cppac(x = "Un petit peu",  question = "q8", language = "fr")
+    q9 <- compute_pro_score_cppac(x = "Rarement",  question = "q9", language = "fr")
+    q10 <- compute_pro_score_cppac(x = "Un petit peu",  question = "q10", language = "fr")
+    q11 <- compute_pro_score_cppac(x = "Un petit peu",  question = "q11", language = "fr")
+    q12 <- compute_pro_score_cppac(x = "Un petit peu",  question = "q12", language = "fr")
+    
+    expect_equal(sum(c(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12)), 1+1+10*3)
+    
+  # French version  R3 ---- 
+    q1 <- compute_pro_score_cppac(x = "Un peu (environ 30 minutes chaque jour)",  question = "q1", language = "fr")
+    q2 <- compute_pro_score_cppac(x = "Quelques-unes",  question = "q2", language = "fr")
+    q3 <- compute_pro_score_cppac(x = "Quelques-unes",  question = "q3", language = "fr")
+    q4 <- compute_pro_score_cppac(x = "Quelques-unes",  question = "q4", language = "fr")
+    q5 <- compute_pro_score_cppac(x = "Quelques fois",  question = "q5", language = "fr")
+    q6 <- compute_pro_score_cppac(x = "Mod\u00e9r\u00e9ment",  question = "q6", language = "fr")
+    q7 <- compute_pro_score_cppac(x = "Quelques fois",  question = "q7", language = "fr")
+    q8 <- compute_pro_score_cppac(x = "Mod\u00e9r\u00e9ment",  question = "q8", language = "fr")
+    q9 <- compute_pro_score_cppac(x = "Quelques fois",  question = "q9", language = "fr")
+    q10 <- compute_pro_score_cppac(x = "Mod\u00e9r\u00e9ment",  question = "q10", language = "fr")
+    q11 <- compute_pro_score_cppac(x = "Un peu",  question = "q11", language = "fr")
+    q12 <- compute_pro_score_cppac(x = "Quelques fois",  question = "q12", language = "fr")
+    
+    expect_equal(sum(c(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12)), 2+2+10*2)
+    
+  # English version  R4 ---- 
+    q1 <- compute_pro_score_cppac(x = "Beaucoup (environ 1 heure chaque jour)",  question = "q1", language = "fr")
+    q2 <- compute_pro_score_cppac(x = "Beaucoup",  question = "q2", language = "fr")
+    q3 <- compute_pro_score_cppac(x = "Beaucoup",  question = "q3", language = "fr")
+    q4 <- compute_pro_score_cppac(x = "Beaucoup",  question = "q4", language = "fr")
+    q5 <- compute_pro_score_cppac(x = "Fr\u00e9quemment",  question = "q5", language = "fr")
+    q6 <- compute_pro_score_cppac(x = "Tr\u00e8s",  question = "q6", language = "fr")
+    q7 <- compute_pro_score_cppac(x = "Fr\u00e9quemment",  question = "q7", language = "fr")
+    q8 <- compute_pro_score_cppac(x = "Tr\u00e8s",  question = "q8", language = "fr")
+    q9 <- compute_pro_score_cppac(x = "Fr\u00e9quemment",  question = "q9", language = "fr")
+    q10 <- compute_pro_score_cppac(x = "Tr\u00e8s",  question = "q10", language = "fr")
+    q11 <- compute_pro_score_cppac(x = "Beaucoup",  question = "q11", language = "fr")
+    q12 <- compute_pro_score_cppac(x = "Beaucoup",  question = "q12", language = "fr")
+    
+    expect_equal(sum(c(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12)), 3+3+10*1)
+    
+  # French version  R5 ---- 
+    q1 <- compute_pro_score_cppac(x = "Enorm\u00e9ment (plus d\u00271 heure chaque jour)",  question = "q1", language = "fr")
+    q2 <- compute_pro_score_cppac(x = "Enorm\u00e9ment",  question = "q2", language = "fr")
+    q3 <- compute_pro_score_cppac(x = "Enorm\u00e9ment",  question = "q3", language = "fr")
+    q4 <- compute_pro_score_cppac(x = "Enorm\u00e9ment",  question = "q4", language = "fr")
+    q5 <- compute_pro_score_cppac(x = "Tout le temps",  question = "q5", language = "fr")
+    q6 <- compute_pro_score_cppac(x = "Extr\u00eamement",  question = "q6", language = "fr")
+    q7 <- compute_pro_score_cppac(x = "Tout le temps",  question = "q7", language = "fr")
+    q8 <- compute_pro_score_cppac(x = "Extr\u00eamement",  question = "q8", language = "fr")
+    q9 <- compute_pro_score_cppac(x = "Tout le temps",  question = "q9", language = "fr")
+    q10 <- compute_pro_score_cppac(x = "Extr\u00eamement",  question = "q10", language = "fr")
+    q11 <- compute_pro_score_cppac(x = "Enorm\u00e9ment",  question = "q11", language = "fr")
+    q12 <- compute_pro_score_cppac(x = "Enorm\u00e9ment",  question = "q12", language = "fr")
+    
+    expect_equal(sum(c(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12)), 3+4+10*0)
+})

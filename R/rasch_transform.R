@@ -3,6 +3,7 @@
 #' This function provides the 0-100 Rasch scaled score of a given C-PPAC or D-PPAC raw score (based on: Garcia-Aymerich J, et al. Thorax 2021;0:1–11. doi: 10.1136/thoraxjnl-2020-214554).
 #'
 #' @param x A numeric value that is the difficulty score (between 0 and 40 for C-PPAC or 0 and 20 for D-PPAC) or the quantity score (between 0 and 15 for C-PPAC or 0 and 17 for D-PPAC) obtained using a PROactive questionnaire.
+#' @param quest  A character value to indicate with which PROactive questionnaire the raw score has been obtained.
 #' @param score A character value.
 #'
 #' @return A numeric value.

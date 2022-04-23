@@ -50,6 +50,20 @@ test_that("The server functions correctly work", {
     Steps_score <<- "Steps_score"
     VMU_score <<- "VMU_score"
     Validity <<- "Validity"
+    Item <<- "Item"
+    Day <<- "Day"
+    score_type <<- "score_type"
+    difficulty_score_raw <<- "difficulty_score_raw"
+    difficulty_score_raw_diff <<- "difficulty_score_raw_diff"
+    difficulty_score_raw_quant <<- "difficulty_score_raw_quant"
+    difficulty_score_rasch <<- "difficulty_score_rasch"
+    amount_score_raw <<- "amount_score_raw"
+    amount_score_raw_diff <<- "amount_score_raw_diff"
+    amount_score_raw_quant <<- "amount_score_raw_quant"
+    amount_score_rasch <<- "amount_score_rasch"
+    total_score_raw <<- "total_score_raw"
+    total_score_rasch <<- "total_score_rasch"
+    Jour <<- "Jour"
     assign("users", shiny::reactiveValues(count = 0), envir = .GlobalEnv)
     assign("equations_mets", activAnalyzer:::equations_mets, envir = .GlobalEnv)
     assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = .GlobalEnv)
@@ -65,12 +79,12 @@ test_that("The server functions correctly work", {
       shinyOptions = list(test.mode = TRUE)
       )
 
-    
   # Loading data file inside and outside the app
     app$uploadFile(upload = "acc.agd")
     test_file <- "acc.agd"
 
   # Testing dataframe marked for wear time
+    
       # Test 1
         app$setInputs(
           to_epoch = 60,
@@ -315,56 +329,56 @@ test_that("The server functions correctly work", {
        app$setInputs(Run = "click")
        
        # With means
-       actual_results_summary_means <- app$getAllValues()$export[["results_summary_means"]]
-       
-       test_results_summary_means <- 
-         test_df %>%
-         mark_intensity(
-           col_axis = "axis1", 
-           sed_cutpoint = 100, 
-           mpa_cutpoint = 1952, 
-           vpa_cutpoint = 5725,
-           equation = "Freedson et al. (1998) [Adults]", 
-           age = 47, 
-           weight = 78, 
-           sex = "female"
-           ) %>%
-         recap_by_day(
-           age = 47, 
-           weight = 78, 
-           sex = "female", 
-           valid_wear_time_start = "07:00:00", 
-           valid_wear_time_end = "22:00:00") %>%
-         average_results(minimum_wear_time = 12, fun = "mean")
-       
-       expect_equal(actual_results_summary_means, test_results_summary_means)
-       
+         actual_results_summary_means <- app$getAllValues()$export[["results_summary_means"]]
+         
+         test_results_summary_means <- 
+           test_df %>%
+           mark_intensity(
+             col_axis = "axis1", 
+             sed_cutpoint = 100, 
+             mpa_cutpoint = 1952, 
+             vpa_cutpoint = 5725,
+             equation = "Freedson et al. (1998) [Adults]", 
+             age = 47, 
+             weight = 78, 
+             sex = "female"
+             ) %>%
+           recap_by_day(
+             age = 47, 
+             weight = 78, 
+             sex = "female", 
+             valid_wear_time_start = "07:00:00", 
+             valid_wear_time_end = "22:00:00") %>%
+           average_results(minimum_wear_time = 12, fun = "mean")
+         
+         expect_equal(actual_results_summary_means, test_results_summary_means)
+         
        
        # With medians
-       actual_results_summary_medians <- app$getAllValues()$export[["results_summary_medians"]]
-       
-       test_results_summary_medians <- 
-         test_df %>%
-         mark_intensity(
-           col_axis = "axis1", 
-           sed_cutpoint = 100, 
-           mpa_cutpoint = 1952, 
-           vpa_cutpoint = 5725,
-           equation = "Freedson et al. (1998) [Adults]", 
-           age = 47, 
-           weight = 78, 
-           sex = "female"
-         ) %>%
-         recap_by_day(
-           age = 47, 
-           weight = 78, 
-           sex = "female", 
-           valid_wear_time_start = "07:00:00", 
-           valid_wear_time_end = "22:00:00") %>%
-         average_results(minimum_wear_time = 12, fun = "median")
-       
-       expect_equal(actual_results_summary_medians, test_results_summary_medians)
-       
+         actual_results_summary_medians <- app$getAllValues()$export[["results_summary_medians"]]
+         
+         test_results_summary_medians <- 
+           test_df %>%
+           mark_intensity(
+             col_axis = "axis1", 
+             sed_cutpoint = 100, 
+             mpa_cutpoint = 1952, 
+             vpa_cutpoint = 5725,
+             equation = "Freedson et al. (1998) [Adults]", 
+             age = 47, 
+             weight = 78, 
+             sex = "female"
+           ) %>%
+           recap_by_day(
+             age = 47, 
+             weight = 78, 
+             sex = "female", 
+             valid_wear_time_start = "07:00:00", 
+             valid_wear_time_end = "22:00:00") %>%
+           average_results(minimum_wear_time = 12, fun = "median")
+         
+         expect_equal(actual_results_summary_medians, test_results_summary_medians)
+         
        
        
     # Testing BMR computation

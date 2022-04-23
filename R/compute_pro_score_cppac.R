@@ -151,17 +151,17 @@ language <- match.arg(language)
       x ==  "Un petit peu (environ 10 minutes chaque jour)"   ~ 1,
       x ==  "Un peu (environ 30 minutes chaque jour)"         ~ 2,
       x ==  "Beaucoup (environ 1 heure chaque jour)"          ~ 3,
-      x ==  "Enormément (plus d’1 heure chaque jour)"         ~ 3
+      x ==  "Enorm\u00e9ment (plus d\u00271 heure chaque jour)"         ~ 3
     )
   }
   
   if (question == "q2" && language == "fr") {
     score <- dplyr::case_when(
       x == "Aucune"            ~ 0,
-      x == "Très peu"          ~ 1,
+      x == "Tr\u00e8s peu"          ~ 1,
       x == "Quelques-unes"     ~ 2,
       x == "Beaucoup"          ~ 3,
-      x == "Enormément"        ~ 4
+      x == "Enorm\u00e9ment"    ~ 4
     )
   }
   
@@ -171,7 +171,7 @@ language <- match.arg(language)
       x ==   "Un petit peu"      ~ 3,
       x ==   "Quelques-unes"     ~ 2,
       x ==   "Beaucoup"          ~ 1,
-      x ==   "Enormément"        ~ 0
+      x ==   "Enorm\u00e9ment"    ~ 0
     )
   }
   
@@ -181,7 +181,7 @@ language <- match.arg(language)
       x ==   "Un petit peu"      ~ 3,
       x ==   "Quelques-unes"     ~ 2,
       x ==   "Beaucoup"          ~ 1,
-      x ==   "Enormément"        ~ 0
+      x ==   "Enorm\u00e9ment"    ~ 0
     )
   }
   
@@ -190,7 +190,7 @@ language <- match.arg(language)
       x ==  "Jamais"            ~ 4,
       x ==  "Rarement"          ~ 3,
       x ==  "Quelques fois"     ~ 2,
-      x ==  "Fréquemment"       ~ 1,
+      x ==  "Fr\u00e9quemment"       ~ 1,
       x ==  "Tout le temps"     ~ 0
     )
   }
@@ -199,9 +199,9 @@ language <- match.arg(language)
     score <- dplyr::case_when(
       x ==   "Pas du tout"     ~ 4,
       x ==   "Un petit peu"    ~ 3,
-      x ==   "Modérément"      ~ 2,
-      x ==   "Très"            ~ 1,
-      x ==   "Extrêmement"     ~ 0
+      x ==   "Mod\u00e9r\u00e9ment"      ~ 2,
+      x ==   "Tr\u00e8s"            ~ 1,
+      x ==   "Extr\u00eamement"     ~ 0
     )
   }
   
@@ -210,7 +210,7 @@ language <- match.arg(language)
       x ==  "Jamais"             ~ 4,
       x ==  "Rarement"           ~ 3,
       x ==  "Quelques fois"      ~ 2,
-      x ==  "Fréquemment"        ~ 1,
+      x ==  "Fr\u00e9quemment"        ~ 1,
       x ==  "Tout le temps"      ~ 0
     )
   }
@@ -219,9 +219,9 @@ language <- match.arg(language)
     score <- dplyr::case_when(
       x ==  "Pas du tout"    ~ 4,
       x ==  "Un petit peu"   ~ 3,
-      x ==  "Modérément"     ~ 2,
-      x ==  "Très"           ~ 1,
-      x ==  "Extrêmement"    ~ 0
+      x ==  "Mod\u00e9r\u00e9ment"     ~ 2,
+      x ==  "Tr\u00e8s"           ~ 1,
+      x ==  "Extr\u00eamement"    ~ 0
     )
   }
   
@@ -230,7 +230,7 @@ language <- match.arg(language)
       x ==  "Jamais"             ~ 4,
       x ==  "Rarement"           ~ 3,
       x ==  "Quelques fois"      ~ 2,
-      x ==  "Fréquemment"        ~ 1,
+      x ==  "Fr\u00e9quemment"        ~ 1,
       x ==  "Tout le temps"      ~ 0
     )
   }
@@ -239,9 +239,9 @@ language <- match.arg(language)
     score <- dplyr::case_when(
       x ==   "Pas du tout"     ~ 4,
       x ==   "Un petit peu"    ~ 3,
-      x ==   "Modérément"      ~ 2,
-      x ==   "Très"            ~ 1,
-      x ==   "Extrêmement"     ~ 0
+      x ==   "Mod\u00e9r\u00e9ment"      ~ 2,
+      x ==   "Tr\u00e8s"            ~ 1,
+      x ==   "Extr\u00eamement"     ~ 0
     )
   }
   
@@ -251,17 +251,17 @@ language <- match.arg(language)
       x ==   "Un petit peu"     ~ 3,
       x ==   "Un peu"           ~ 2,
       x ==   "Beaucoup"         ~ 1,
-      x ==   "Enormément"       ~ 0
+      x ==   "Enorm\u00e9ment"  ~ 0
     )
   }
   
   if (question == "q12" && language == "fr") {
     score <- dplyr::case_when(
-      x ==  "Non"            ~ 4,
-      x ==  "Un petit peu"   ~ 3,
-      x ==  "Quelques fois"  ~ 2,
-      x ==  "Beaucoup"       ~ 1,
-      x ==  "Enormément"     ~ 0
+      x ==  "Non"             ~ 4,
+      x ==  "Un petit peu"    ~ 3,
+      x ==  "Quelques fois"   ~ 2,
+      x ==  "Beaucoup"        ~ 1,
+      x ==  "Enorm\u00e9ment" ~ 0
     )
   }
   

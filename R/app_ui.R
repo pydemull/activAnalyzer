@@ -248,9 +248,9 @@ app_ui <- function(request) {
                     ),
                   ),
                   
-                  #******************
-                  # Choosing Equation
-                  #******************
+                  #**********************
+                  # Choosing MET equation
+                  #**********************
                   
                   fluidRow(
                     column(10,
@@ -359,7 +359,7 @@ app_ui <- function(request) {
                                        selectize=FALSE
                            )
                     ),
-                    column(2,
+                    column(3,
                            numericInput("minimum_wear_time_for_analysis", "Minimum wear time to validate a day (hours)", value = 10)
                     )
                   ),
@@ -498,7 +498,7 @@ app_ui <- function(request) {
                     wellPanel(
                       fluidRow(
                         column(12,
-                               "Reference: Gimeno-Santos et al. European Respiratory Journal 2015:46 988–10008", style = "font-weight: bold;"
+                               "Reference: Gimeno-Santos et al. European Respiratory Journal 2015:46 988\u201310008", style = "font-weight: bold;"
                         )
                       ),
                       fluidRow(
@@ -539,7 +539,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="cppac_EN_q1", label="In the past 7 days, how much walking did you do outside?", 
+                                  radioButtons(inputId="cppac_EN_q1", label="In the past 7 days, how much walking did you do outside\u003f", 
                                                choices=c(
                                                  "None at all",
                                                  "A little bit (about 10 minutes every day)",
@@ -555,8 +555,8 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="cppac_EN_q2", label="In the past 7 days, how many chores did you do outside the house? 
-                                                   Some examples are gardening, taking the rubbish out, or doing small errands?",
+                                  radioButtons(inputId="cppac_EN_q2", label="In the past 7 days, how many chores did you do outside the house\u003f 
+                                                   Some examples are gardening, taking the rubbish out, or doing small errands\u003f",
                                                    choices=c(
                                                      "None at all",
                                                      "A few",
@@ -571,7 +571,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="cppac_EN_q3", label="In the past 7 days, how much difficulty did you have getting dressed?",
+                                  radioButtons(inputId="cppac_EN_q3", label="In the past 7 days, how much difficulty did you have getting dressed\u003f",
                                                    choices=c(
                                                     "None at all",
                                                     "A little bit",
@@ -586,7 +586,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="cppac_EN_q4", label="In the past 7 days, how much difficulty did you have getting out and about?",
+                                  radioButtons(inputId="cppac_EN_q4", label="In the past 7 days, how much difficulty did you have getting out and about\u003f",
                                                    choices=c(
                                                     "None at all",
                                                      "A little bit",
@@ -602,7 +602,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="cppac_EN_q5", label="In the past 7 days, how often did you avoid doing activities because of your lung problems?",
+                                  radioButtons(inputId="cppac_EN_q5", label="In the past 7 days, how often did you avoid doing activities because of your lung problems\u003f",
                                                    choices=c(
                                                      "Not at all",
                                                      "Rarely",
@@ -617,7 +617,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="cppac_EN_q6", label="In the past 7 days, how breathless were you in general during your activities?",
+                                  radioButtons(inputId="cppac_EN_q6", label="In the past 7 days, how breathless were you in general during your activities\u003f",
                                                    choices=c(
                                                      "Not at all",
                                                      "A little bit",
@@ -635,7 +635,7 @@ app_ui <- function(request) {
                      fluidRow(
                        column(12,
                               wellPanel(
-                                radioButtons(inputId="cppac_EN_q7", label="In the past 7 days, how often did you lack physical strength to do things because of your lung problems?",
+                                radioButtons(inputId="cppac_EN_q7", label="In the past 7 days, how often did you lack physical strength to do things because of your lung problems\u003f",
                                                    choices=c(
                                                      "Not at all",
                                                      "Rarely",
@@ -653,7 +653,7 @@ app_ui <- function(request) {
                      fluidRow(
                        column(12,
                               wellPanel(
-                                radioButtons(inputId="cppac_EN_q8", label="In the past 7 days, how tired were you in general during your activities?",
+                                radioButtons(inputId="cppac_EN_q8", label="In the past 7 days, how tired were you in general during your activities\u003f",
                                                    choices=c(
                                                      "Not at all",
                                                      "A little bit",
@@ -671,7 +671,7 @@ app_ui <- function(request) {
                      fluidRow(
                        column(12,
                               wellPanel(
-                                radioButtons(inputId="cppac_EN_q9", label="In the past 7 days, how often did you have to take breaks during your physical activities?",
+                                radioButtons(inputId="cppac_EN_q9", label="In the past 7 days, how often did you have to take breaks during your physical activities\u003f",
                                                    choices=c(
                                                      "Not at all",
                                                      "Rarely",
@@ -689,7 +689,7 @@ app_ui <- function(request) {
                      fluidRow(
                        column(12,
                               wellPanel(
-                                radioButtons(inputId="cppac_EN_q10", label="In the past 7 days, how breathless were you when walking on level ground indoors and outdoors?",
+                                radioButtons(inputId="cppac_EN_q10", label="In the past 7 days, how breathless were you when walking on level ground indoors and outdoors\u003f",
                                                    choices=c(
                                                      "Not at all",
                                                      "A little bit",
@@ -707,7 +707,7 @@ app_ui <- function(request) {
                      fluidRow(
                        column(12,
                               wellPanel(
-                                radioButtons(inputId="cppac_EN_q11", label="In the past 7 days, how much time did you need to recover from your physical activities?",
+                                radioButtons(inputId="cppac_EN_q11", label="In the past 7 days, how much time did you need to recover from your physical activities\u003f",
                                                    choices=c(
                                                      "Not at all",
                                                      "A little bit",
@@ -725,7 +725,7 @@ app_ui <- function(request) {
                      fluidRow(
                        column(12,
                               wellPanel(
-                                radioButtons(inputId="cppac_EN_q12", label="In the past 7 days, did you need to consider your lung problems when you planned your activities because of your lung problems? Examples are a trip out, an appointment or expecting visitors.",
+                                radioButtons(inputId="cppac_EN_q12", label="In the past 7 days, did you need to consider your lung problems when you planned your activities because of your lung problems\u003f Examples are a trip out, an appointment or expecting visitors.",
                                                    choices=c(
                                                      "No",
                                                      "A little bit",
@@ -777,7 +777,7 @@ app_ui <- function(request) {
                     fluidRow(
                       column(12,
                              wellPanel(
-                             radioButtons(inputId="cppac_EN_summary_metric", label="Do you want to use PROactive steps / VMU scores based on the MEDIANS or the MEANS of valid days?",
+                             radioButtons(inputId="cppac_EN_summary_metric", label="Do you want to use PROactive steps / VMU scores based on the MEDIANS or the MEANS of valid days\u003f",
                                           choices=c(
                                             "Scores based on MEDIANS",
                                             "Scores based on MEANS"
@@ -823,7 +823,7 @@ app_ui <- function(request) {
                        wellPanel(
                          fluidRow(
                            column(12,
-                                  "Reference: Gimeno-Santos et al. European Respiratory Journal 2015:46 988–10008", style = "font-weight: bold;"
+                                  "Reference: Gimeno-Santos et al. European Respiratory Journal 2015:46 988\u201310008", style = "font-weight: bold;"
                            )
                          ),
                          fluidRow(
@@ -883,7 +883,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d1_q1", label="Day 1. How much walking did you do outside today?", 
+                                  radioButtons(inputId="dppac_EN_d1_q1", label="Day 1. How much walking did you do outside today\u003f", 
                                                choices=c(
                                                  "None at all",
                                                  "A little bit (up to 10 minutes in total)",
@@ -899,7 +899,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d1_q2", label="Day 1. How many chores did you do outside the house today? 
+                                  radioButtons(inputId="dppac_EN_d1_q2", label="Day 1. How many chores did you do outside the house today\u003f 
                                                Some examples are gardening, taking the rubbish out, or doing small errands.",
                                                choices=c(
                                                  "None at all",
@@ -915,7 +915,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d1_q3", label="Day 1. How much difficulty did you have getting dressed today?",
+                                  radioButtons(inputId="dppac_EN_d1_q3", label="Day 1. How much difficulty did you have getting dressed today\u003f",
                                                choices=c(
                                                  "None at all",
                                                  "A little bit",
@@ -930,7 +930,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d1_q4", label="Day 1. How often did you avoid doing activities because of your lung problems today?",
+                                  radioButtons(inputId="dppac_EN_d1_q4", label="Day 1. How often did you avoid doing activities because of your lung problems today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -946,7 +946,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d1_q5", label="Day 1. How breathless were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d1_q5", label="Day 1. How breathless were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -964,7 +964,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d1_q6", label="Day 1. How tired were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d1_q6", label="Day 1. How tired were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -982,7 +982,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d1_q7", label="Day 1. How often did you have to take breaks during your physical activities today?",
+                                  radioButtons(inputId="dppac_EN_d1_q7", label="Day 1. How often did you have to take breaks during your physical activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -1020,7 +1020,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d2_q1", label="Day 2. How much walking did you do outside today?", 
+                                  radioButtons(inputId="dppac_EN_d2_q1", label="Day 2. How much walking did you do outside today\u003f", 
                                                choices=c(
                                                  "None at all",
                                                  "A little bit (up to 10 minutes in total)",
@@ -1036,7 +1036,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d2_q2", label="Day 2. How many chores did you do outside the house today? 
+                                  radioButtons(inputId="dppac_EN_d2_q2", label="Day 2. How many chores did you do outside the house today\u003f 
                                                Some examples are gardening, taking the rubbish out, or doing small errands.",
                                                choices=c(
                                                  "None at all",
@@ -1052,7 +1052,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d2_q3", label="Day 2. How much difficulty did you have getting dressed today?",
+                                  radioButtons(inputId="dppac_EN_d2_q3", label="Day 2. How much difficulty did you have getting dressed today\u003f",
                                                choices=c(
                                                  "None at all",
                                                  "A little bit",
@@ -1067,7 +1067,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d2_q4", label="Day 2. How often did you avoid doing activities because of your lung problems today?",
+                                  radioButtons(inputId="dppac_EN_d2_q4", label="Day 2. How often did you avoid doing activities because of your lung problems today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -1083,7 +1083,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d2_q5", label="Day 2. How breathless were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d2_q5", label="Day 2. How breathless were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -1101,7 +1101,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d2_q6", label="Day 2. How tired were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d2_q6", label="Day 2. How tired were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -1119,7 +1119,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d2_q7", label="Day 2. How often did you have to take breaks during your physical activities today?",
+                                  radioButtons(inputId="dppac_EN_d2_q7", label="Day 2. How often did you have to take breaks during your physical activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -1157,7 +1157,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d3_q1", label="Day 3. How much walking did you do outside today?", 
+                                  radioButtons(inputId="dppac_EN_d3_q1", label="Day 3. How much walking did you do outside today\u003f", 
                                                choices=c(
                                                  "None at all",
                                                  "A little bit (up to 10 minutes in total)",
@@ -1173,7 +1173,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d3_q2", label="Day 3. How many chores did you do outside the house today? 
+                                  radioButtons(inputId="dppac_EN_d3_q2", label="Day 3. How many chores did you do outside the house today\u003f 
                                                Some examples are gardening, taking the rubbish out, or doing small errands.",
                                                choices=c(
                                                  "None at all",
@@ -1189,7 +1189,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d3_q3", label="Day 3. How much difficulty did you have getting dressed today?",
+                                  radioButtons(inputId="dppac_EN_d3_q3", label="Day 3. How much difficulty did you have getting dressed today\u003f",
                                                choices=c(
                                                  "None at all",
                                                  "A little bit",
@@ -1204,7 +1204,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d3_q4", label="Day 3. How often did you avoid doing activities because of your lung problems today?",
+                                  radioButtons(inputId="dppac_EN_d3_q4", label="Day 3. How often did you avoid doing activities because of your lung problems today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -1220,7 +1220,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d3_q5", label="Day 3. How breathless were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d3_q5", label="Day 3. How breathless were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -1238,7 +1238,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d3_q6", label="Day 3. How tired were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d3_q6", label="Day 3. How tired were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -1256,7 +1256,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d3_q7", label="Day 3. How often did you have to take breaks during your physical activities today?",
+                                  radioButtons(inputId="dppac_EN_d3_q7", label="Day 3. How often did you have to take breaks during your physical activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -1294,7 +1294,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d4_q1", label="Day 4. How much walking did you do outside today?", 
+                                  radioButtons(inputId="dppac_EN_d4_q1", label="Day 4. How much walking did you do outside today\u003f", 
                                                choices=c(
                                                  "None at all",
                                                  "A little bit (up to 10 minutes in total)",
@@ -1310,7 +1310,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d4_q2", label="Day 4. How many chores did you do outside the house today? 
+                                  radioButtons(inputId="dppac_EN_d4_q2", label="Day 4. How many chores did you do outside the house today\u003f 
                                                Some examples are gardening, taking the rubbish out, or doing small errands.",
                                                choices=c(
                                                  "None at all",
@@ -1326,7 +1326,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d4_q3", label="Day 4. How much difficulty did you have getting dressed today?",
+                                  radioButtons(inputId="dppac_EN_d4_q3", label="Day 4. How much difficulty did you have getting dressed today\u003f",
                                                choices=c(
                                                  "None at all",
                                                  "A little bit",
@@ -1341,7 +1341,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d4_q4", label="Day 4. How often did you avoid doing activities because of your lung problems today?",
+                                  radioButtons(inputId="dppac_EN_d4_q4", label="Day 4. How often did you avoid doing activities because of your lung problems today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -1357,7 +1357,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d4_q5", label="Day 4. How breathless were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d4_q5", label="Day 4. How breathless were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -1375,7 +1375,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d4_q6", label="Day 4. How tired were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d4_q6", label="Day 4. How tired were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -1393,7 +1393,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d4_q7", label="Day 4. How often did you have to take breaks during your physical activities today?",
+                                  radioButtons(inputId="dppac_EN_d4_q7", label="Day 4. How often did you have to take breaks during your physical activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -1431,7 +1431,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d5_q1", label="Day 5. How much walking did you do outside today?", 
+                                  radioButtons(inputId="dppac_EN_d5_q1", label="Day 5. How much walking did you do outside today\u003f", 
                                                choices=c(
                                                  "None at all",
                                                  "A little bit (up to 10 minutes in total)",
@@ -1447,7 +1447,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d5_q2", label="Day 5. How many chores did you do outside the house today? 
+                                  radioButtons(inputId="dppac_EN_d5_q2", label="Day 5. How many chores did you do outside the house today\u003f 
                                                Some examples are gardening, taking the rubbish out, or doing small errands.",
                                                choices=c(
                                                  "None at all",
@@ -1463,7 +1463,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d5_q3", label="Day 5. How much difficulty did you have getting dressed today?",
+                                  radioButtons(inputId="dppac_EN_d5_q3", label="Day 5. How much difficulty did you have getting dressed today\u003f",
                                                choices=c(
                                                  "None at all",
                                                  "A little bit",
@@ -1478,7 +1478,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d5_q4", label="Day 5. How often did you avoid doing activities because of your lung problems today?",
+                                  radioButtons(inputId="dppac_EN_d5_q4", label="Day 5. How often did you avoid doing activities because of your lung problems today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -1494,7 +1494,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d5_q5", label="Day 5. How breathless were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d5_q5", label="Day 5. How breathless were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -1512,7 +1512,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d5_q6", label="Day 5. How tired were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d5_q6", label="Day 5. How tired were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -1530,7 +1530,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d5_q7", label="Day 5. How often did you have to take breaks during your physical activities today?",
+                                  radioButtons(inputId="dppac_EN_d5_q7", label="Day 5. How often did you have to take breaks during your physical activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -1568,7 +1568,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d6_q1", label="Day 6. How much walking did you do outside today?", 
+                                  radioButtons(inputId="dppac_EN_d6_q1", label="Day 6. How much walking did you do outside today\u003f", 
                                                choices=c(
                                                  "None at all",
                                                  "A little bit (up to 10 minutes in total)",
@@ -1584,7 +1584,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d6_q2", label="Day 6. How many chores did you do outside the house today? 
+                                  radioButtons(inputId="dppac_EN_d6_q2", label="Day 6. How many chores did you do outside the house today\u003f 
                                                Some examples are gardening, taking the rubbish out, or doing small errands.",
                                                choices=c(
                                                  "None at all",
@@ -1600,7 +1600,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d6_q3", label="Day 6. How much difficulty did you have getting dressed today?",
+                                  radioButtons(inputId="dppac_EN_d6_q3", label="Day 6. How much difficulty did you have getting dressed today\u003f",
                                                choices=c(
                                                  "None at all",
                                                  "A little bit",
@@ -1615,7 +1615,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d6_q4", label="Day 6. How often did you avoid doing activities because of your lung problems today?",
+                                  radioButtons(inputId="dppac_EN_d6_q4", label="Day 6. How often did you avoid doing activities because of your lung problems today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -1631,7 +1631,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d6_q5", label="Day 6. How breathless were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d6_q5", label="Day 6. How breathless were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -1649,7 +1649,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d6_q6", label="Day 6. How tired were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d6_q6", label="Day 6. How tired were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -1667,7 +1667,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d6_q7", label="Day 6. How often did you have to take breaks during your physical activities today?",
+                                  radioButtons(inputId="dppac_EN_d6_q7", label="Day 6. How often did you have to take breaks during your physical activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -1705,7 +1705,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d7_q1", label="Day 7. How much walking did you do outside today?", 
+                                  radioButtons(inputId="dppac_EN_d7_q1", label="Day 7. How much walking did you do outside today\u003f", 
                                                choices=c(
                                                  "None at all",
                                                  "A little bit (up to 10 minutes in total)",
@@ -1721,7 +1721,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d7_q2", label="Day 7. How many chores did you do outside the house today? 
+                                  radioButtons(inputId="dppac_EN_d7_q2", label="Day 7. How many chores did you do outside the house today\u003f 
                                                Some examples are gardening, taking the rubbish out, or doing small errands.",
                                                choices=c(
                                                  "None at all",
@@ -1737,7 +1737,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d7_q3", label="Day 7. How much difficulty did you have getting dressed today?",
+                                  radioButtons(inputId="dppac_EN_d7_q3", label="Day 7. How much difficulty did you have getting dressed today\u003f",
                                                choices=c(
                                                  "None at all",
                                                  "A little bit",
@@ -1752,7 +1752,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d7_q4", label="Day 7. How often did you avoid doing activities because of your lung problems today?",
+                                  radioButtons(inputId="dppac_EN_d7_q4", label="Day 7. How often did you avoid doing activities because of your lung problems today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -1768,7 +1768,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d7_q5", label="Day 7. How breathless were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d7_q5", label="Day 7. How breathless were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -1786,7 +1786,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d7_q6", label="Day 7. How tired were you in general during your activities today?",
+                                  radioButtons(inputId="dppac_EN_d7_q6", label="Day 7. How tired were you in general during your activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "A little bit",
@@ -1804,7 +1804,7 @@ app_ui <- function(request) {
                        fluidRow(
                          column(12,
                                 wellPanel(
-                                  radioButtons(inputId="dppac_EN_d7_q7", label="Day 7. How often did you have to take breaks during your physical activities today?",
+                                  radioButtons(inputId="dppac_EN_d7_q7", label="Day 7. How often did you have to take breaks during your physical activities today\u003f",
                                                choices=c(
                                                  "Not at all",
                                                  "Rarely",
@@ -1874,7 +1874,7 @@ app_ui <- function(request) {
                         wellPanel(
                          fluidRow(
                            column(12,
-                           "Référence : Vaidya et al. International Journal of Chronic Obstructive Pulmonary Disease 2020:15 471–478", style = "font-weight: bold;"
+                           "R\u00e9f\u00e9rence : Vaidya et al. International Journal of Chronic Obstructive Pulmonary Disease 2020:15 471\u2013478", style = "font-weight: bold;"
                            )
                          ),
                          fluidRow(
@@ -1886,8 +1886,8 @@ app_ui <- function(request) {
                            column(12,
 
                                     "INSTRUCTIONS POUR LES PATIENTS : 
-                                    Les patients souffrant d’une maladie pulmonaire chronique comme vous signalent qu’ils connaissent des problèmes au cours de leurs activités physiques. 
-                                    Par activités physiques, nous entendons toutes les activités nécessitant un mouvement de votre corps. (Exemples : les activités domestiques, la marche, aller au travail ou s’habiller). Veuillez prendre en compte toutes les activités que vous réalisez, et pas seulement ces exemples. Nous aimerions savoir comment vous avez vécu vos activités physiques AU COURS DES 7 DERNIERS JOURS."
+                                    Les patients souffrant d\u2019une maladie pulmonaire chronique comme vous signalent qu\u2019ils connaissent des probl\u00e8mes au cours de leurs activit\u00e9s physiques. 
+                                    Par activit\u00e9s physiques, nous entendons toutes les activit\u00e9s n\u00e9cessitant un mouvement de votre corps. (Exemples : les activit\u00e9s domestiques, la marche, aller au travail ou s\u2019habiller). Veuillez prendre en compte toutes les activit\u00e9s que vous r\u00e9alisez, et pas seulement ces exemples. Nous aimerions savoir comment vous avez v\u00e9cu vos activit\u00e9s physiques AU COURS DES 7 DERNIERS JOURS."
                                   ),
                            ),
                          fluidRow(
@@ -1897,7 +1897,7 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(12,
-                                  "Veuillez cocher la case de la réponse qui vous correspond le mieux AU COURS DES 7 DERNIERS JOURS."
+                                  "Veuillez cocher la case de la r\u00e9ponse qui vous correspond le mieux AU COURS DES 7 DERNIERS JOURS."
                                   )
                           ),
                          fluidRow(
@@ -1907,7 +1907,7 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(12,
-                                  "Il n’y a pas de mauvaise réponse. Nous vous remercions de votre participation."
+                                  "Il n\u2019y a pas de mauvaise r\u00e9ponse. Nous vous remercions de votre participation."
                            )
                           ),
                          ),  
@@ -1915,13 +1915,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="cppac_FR_q1", label="Au cours des 7 derniers jours, avez-vous marché à l’extérieur ?", 
+                                    radioButtons(inputId="cppac_FR_q1", label="Au cours des 7 derniers jours, avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur \u003f", 
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu (environ 10 minutes chaque jour)",
                                                    "Un peu (environ 30 minutes chaque jour)",
                                                    "Beaucoup (environ 1 heure chaque jour)",
-                                                   "Enormément (plus d’1 heure chaque jour)"
+                                                   "Enorm\u00e9ment (plus d\u20191 heure chaque jour)"
                                                  )
                                     ),
                                   ),
@@ -1931,14 +1931,14 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="cppac_FR_q2", label="Au cours des 7 derniers jours, avez-vous effectué des tâches à l’extérieur ? 
+                                    radioButtons(inputId="cppac_FR_q2", label="Au cours des 7 derniers jours, avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur \u003f 
                                                  (exemples : le jardinage, sortir les poubelles ou faire des petites courses)",
                                                  choices=c(
                                                    "Aucune",
-                                                   "Très peu",
+                                                   "Tr\u00e8s peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -1947,13 +1947,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="cppac_FR_q3", label="Au cours des 7 derniers jours, avez-vous eu des difficultés pour vous habiller ?",
+                                    radioButtons(inputId="cppac_FR_q3", label="Au cours des 7 derniers jours, avez-vous eu des difficult\u00e9s pour vous habiller \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -1962,13 +1962,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="cppac_FR_q4", label="Au cours des 7 derniers jours, avez-vous eu des difficultés pour sortir de chez vous ?",
+                                    radioButtons(inputId="cppac_FR_q4", label="Au cours des 7 derniers jours, avez-vous eu des difficult\u00e9s pour sortir de chez vous \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                    
                                                  )
                                     ),
@@ -1978,12 +1978,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="cppac_FR_q5", label="Au cours des 7 derniers jours, avez-vous évité des activités à cause de vos problèmes respiratoires ?",
+                                    radioButtons(inputId="cppac_FR_q5", label="Au cours des 7 derniers jours, avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                  )
                                     ),
@@ -1993,13 +1993,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="cppac_FR_q6", label="Au cours des 7 derniers jours, étiez-vous essoufflé(e) en général durant vos activités ?",
+                                    radioButtons(inputId="cppac_FR_q6", label="Au cours des 7 derniers jours, \u00e9tiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -2011,12 +2011,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="cppac_FR_q7", label="Au cours des 7 derniers jours, avez-vous manqué de force pour effectuer des tâches à cause de vos problèmes respiratoires ?",
+                                    radioButtons(inputId="cppac_FR_q7", label="Au cours des 7 derniers jours, avez-vous manqu\u00e9 de force pour effectuer des t\u00e2ches \u00e0 cause de vos probl\u00e8mes respiratoires \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -2029,13 +2029,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="cppac_FR_q8", label="Au cours des 7 derniers jours, étiez-vous fatigué(e) en général durant vos activités ?",
+                                    radioButtons(inputId="cppac_FR_q8", label="Au cours des 7 derniers jours, \u00e9tiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -2047,12 +2047,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="cppac_FR_q9", label="Au cours des 7 derniers jours, avez-vous dû faire des pauses pendant vos activités physiques ?",
+                                    radioButtons(inputId="cppac_FR_q9", label="Au cours des 7 derniers jours, avez-vous d\u00fb faire des pauses pendant vos activit\u00e9s physiques \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -2065,13 +2065,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="cppac_FR_q10", label="Au cours des 7 derniers jours, étiez-vous essoufflé(e) lors de la marche sur terrain plat, à l’intérieur et à l’extérieur ?",
+                                    radioButtons(inputId="cppac_FR_q10", label="Au cours des 7 derniers jours, \u00e9tiez-vous essouffl\u00e9(e) lors de la marche sur terrain plat, \u00e0 l\u2019int\u00e9rieur et \u00e0 l\u2019ext\u00e9rieur \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -2083,13 +2083,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="cppac_FR_q11", label="Au cours des 7 derniers jours, combien de temps vous a-t-il fallu pour récupérer de vos activités physiques ?",
+                                    radioButtons(inputId="cppac_FR_q11", label="Au cours des 7 derniers jours, combien de temps vous a-t-il fallu pour r\u00e9cup\u00e9rer de vos activit\u00e9s physiques \u003f",
                                                  choices=c(
                                                    "Aucun",
                                                    "Un petit peu",
                                                    "Un peu",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                    
                                                  )
                                     ),
@@ -2101,14 +2101,14 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="cppac_FR_q12", label="Au cours des 7 derniers jours, avez-vous eu besoin de prendre en compte vos problèmes respiratoires lorsque vous avez planifié vos activités ? 
-                                                 (exemples : une sortie, un rendez-vous ou recevoir des invités)",
+                                    radioButtons(inputId="cppac_FR_q12", label="Au cours des 7 derniers jours, avez-vous eu besoin de prendre en compte vos probl\u00e8mes respiratoires lorsque vous avez planifi\u00e9 vos activit\u00e9s \u003f 
+                                                 (exemples : une sortie, un rendez-vous ou recevoir des invit\u00e9s)",
                                                  choices=c(
                                                    "Non",
                                                    "Un petit peu",
                                                    "Quelques fois",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                    
                                                  )
                                     ),
@@ -2119,13 +2119,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Score accélérométrique pour les pas (à partir de la médiane journalière des jours valides)", style = "font-weight: bold;",
+                                  wellPanel("Score acc\u00e9l\u00e9rom\u00e9trique pour les pas (\u00e0 partir de la m\u00e9diane journali\u00e8re des jours valides)", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_cppac_en_steps_med_fr")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Score accélérométrique pour les pas (à partir de la moyenne journalière des jours valides)", style = "font-weight: bold;",
+                                  wellPanel("Score acc\u00e9l\u00e9rom\u00e9trique pour les pas (\u00e0 partir de la moyenne journali\u00e8re des jours valides)", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_cppac_en_steps_mean_fr")
                                   )
@@ -2133,13 +2133,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Score accélérométrique pour le VMU (à partir de la médiane journalière des jours valides)", style = "font-weight: bold;",
+                                  wellPanel("Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU (\u00e0 partir de la m\u00e9diane journali\u00e8re des jours valides)", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_cppac_en_vmu_med_fr")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Score accélérométrique pour le VMU (à partir de la moyenne journalière des jours valides)", style = "font-weight: bold;",
+                                  wellPanel("Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU (\u00e0 partir de la moyenne journali\u00e8re des jours valides)", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_cppac_en_vmu_mean_fr")
                                   )
@@ -2154,11 +2154,11 @@ app_ui <- function(request) {
                         fluidRow(
                           column(12,
                                  wellPanel(
-                                   radioButtons(inputId="cppac_FR_summary_metric", label="Voulez-vous utiliser les scores de pas / VMU PROactive calculés à partir des MÉDIANES ou des MOYENNES
-                                   des jours valides?",
+                                   radioButtons(inputId="cppac_FR_summary_metric", label="Voulez-vous utiliser les scores de pas / VMU PROactive calcul\u00e9s \u00e0 partir des M\u00c9DIANES ou des MOYENNES
+                                   des jours valides\u003f",
                                                 choices=c(
-                                                  "Scores calculés à partir des MÉDIANES",
-                                                  "Scores calculés à partir des MOYENNES"
+                                                  "Scores calcul\u00e9s \u00e0 partir des M\u00c9DIANES",
+                                                  "Scores calcul\u00e9s \u00e0 partir des MOYENNES"
                                                 )
                                    )
                                  ),
@@ -2166,7 +2166,7 @@ app_ui <- function(request) {
                         ),
                         fluidRow(
                           column(12,
-                                 shiny::actionButton("get_cppac_summary_fr", "Obtenir / Mettre à jour les résultats du C-PPAC", style="color: #fff; background-color: #00CC66; border-color: #336600"),
+                                 shiny::actionButton("get_cppac_summary_fr", "Obtenir / Mettre \u00e0 jour les r\u00e9sultats du C-PPAC", style="color: #fff; background-color: #00CC66; border-color: #336600"),
                                  h3("")
                           ),
                         ),
@@ -2198,7 +2198,7 @@ app_ui <- function(request) {
                          wellPanel(
                            fluidRow(
                              column(12,
-                                    "Référence : Vaidya et al. International Journal of Chronic Obstructive Pulmonary Disease 2020:15 471–478", style = "font-weight: bold;"
+                                    "R\u00e9f\u00e9rence : Vaidya et al. International Journal of Chronic Obstructive Pulmonary Disease 2020:15 471\u2013478", style = "font-weight: bold;"
                              )
                            ),
                            fluidRow(
@@ -2209,11 +2209,11 @@ app_ui <- function(request) {
                            fluidRow(
                              column(12,
                                     "INSTRUCTIONS POUR LES PATIENTS :
-                               Les patients souffrant d’une maladie pulmonaire chronique comme vous signalent qu’ils connaissent des problèmes au 
-                                    cours de leurs activités physiques. Par activités physiques, nous entendons toutes les activités nécessitant un
-                                    mouvement de votre corps. (Exemples : les activités domestiques, la marche, aller au travail ou s’habiller). 
-                                    Veuillez prendre en compte toutes les activités que vous réalisez, et pas seulement ces exemples. Nous aimerions savoir 
-                                    comment vous avez vécu vos activités physiques depuis que vous vous êtes réveillé(e) AUJOURD’HUI."
+                               Les patients souffrant d\u2019une maladie pulmonaire chronique comme vous signalent qu\u2019ils connaissent des probl\u00e8mes au 
+                                    cours de leurs activit\u00e9s physiques. Par activit\u00e9s physiques, nous entendons toutes les activit\u00e9s n\u00e9cessitant un
+                                    mouvement de votre corps. (Exemples : les activit\u00e9s domestiques, la marche, aller au travail ou s\u2019habiller). 
+                                    Veuillez prendre en compte toutes les activit\u00e9s que vous r\u00e9alisez, et pas seulement ces exemples. Nous aimerions savoir 
+                                    comment vous avez v\u00e9cu vos activit\u00e9s physiques depuis que vous vous \u00eates r\u00e9veill\u00e9(e) AUJOURD\u2019HUI."
                              ),
                            ),
                            fluidRow(
@@ -2223,7 +2223,7 @@ app_ui <- function(request) {
                            ),
                            fluidRow(
                              column(12,
-                                    "Veuillez remplir ce questionnaire le soir avant de vous coucher. Veuillez cocher la case de la réponse qui vous correspond le mieux AUJOURD’HUI."
+                                    "Veuillez remplir ce questionnaire le soir avant de vous coucher. Veuillez cocher la case de la r\u00e9ponse qui vous correspond le mieux AUJOURD\u2019HUI."
                              ),
                            ),
                            fluidRow(
@@ -2233,7 +2233,7 @@ app_ui <- function(request) {
                            ),
                            fluidRow(
                              column(12,
-                                    "Il n’y a pas de mauvaise réponse. Nous vous remercions de votre participation."
+                                    "Il n\u2019y a pas de mauvaise r\u00e9ponse. Nous vous remercions de votre participation."
                              ),
                            ),
                            fluidRow(
@@ -2243,9 +2243,9 @@ app_ui <- function(request) {
                            ),
                            fluidRow(
                              column(12,
-                                    "INSTRUCTIONS POUR LES JOURS SUIVANTS : Nous aimerions savoir comment vous avez vécu vos 
-                                    activités physiques depuis que vous vous êtes réveillé(e) AUJOURD’HUI. Veuillez remplir ce questionnaire le soir avant de vous coucher. 
-                                    Veuillez cocher la case de la réponse qui vous correspond le mieux AUJOURD’HUI."
+                                    "INSTRUCTIONS POUR LES JOURS SUIVANTS : Nous aimerions savoir comment vous avez v\u00e9cu vos 
+                                    activit\u00e9s physiques depuis que vous vous \u00eates r\u00e9veill\u00e9(e) AUJOURD\u2019HUI. Veuillez remplir ce questionnaire le soir avant de vous coucher. 
+                                    Veuillez cocher la case de la r\u00e9ponse qui vous correspond le mieux AUJOURD\u2019HUI."
                              ),
                            ),
                          ),
@@ -2258,13 +2258,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d1_q1", label="Jour 1. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                    radioButtons(inputId="dppac_FR_d1_q1", label="Jour 1. Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f", 
                                                  choices=c(
                                                    "Pas du tout",
-                                                   "Un petit peu (jusqu’à 10 minutes au total)",
-                                                   "Un peu (jusqu’à 30 minutes au total)",
-                                                   "Beaucoup (jusqu’à 1 heure au total)",
-                                                   "Enormément (plus d’1 heure au total)"
+                                                   "Un petit peu (jusqu\u2019\u00e0 10 minutes au total)",
+                                                   "Un peu (jusqu\u2019\u00e0 30 minutes au total)",
+                                                   "Beaucoup (jusqu\u2019\u00e0 1 heure au total)",
+                                                   "Enorm\u00e9ment (plus d\u20191 heure au total)"
                                                  )
                                     ),
                                   ),
@@ -2274,14 +2274,14 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d1_q2", label="Jour 1. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                    radioButtons(inputId="dppac_FR_d1_q2", label="Jour 1. Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f 
                                                  (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
                                                  choices=c(
                                                    "Aucune",
-                                                   "Très peu",
+                                                   "Tr\u00e8s peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -2290,13 +2290,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d1_q3", label="Jour 1. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d1_q3", label="Jour 1. Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -2305,12 +2305,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d1_q4", label="Jour 1. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d1_q4", label="Jour 1. Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -2321,13 +2321,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d1_q5", label="Jour 1. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d1_q5", label="Jour 1. Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -2339,13 +2339,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d1_q6", label="Jour 1. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d1_q6", label="Jour 1. Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -2357,12 +2357,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d1_q7", label="Jour 1. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d1_q7", label="Jour 1. Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -2374,13 +2374,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 1. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 1. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d1_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 1. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 1. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d1_vmu")
                                   )
@@ -2395,13 +2395,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d2_q1", label="Jour 2. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                    radioButtons(inputId="dppac_FR_d2_q1", label="Jour 2. Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f", 
                                                  choices=c(
                                                    "Pas du tout",
-                                                   "Un petit peu (jusqu’à 10 minutes au total)",
-                                                   "Un peu (jusqu’à 30 minutes au total)",
-                                                   "Beaucoup (jusqu’à 1 heure au total)",
-                                                   "Enormément (plus d’1 heure au total)"
+                                                   "Un petit peu (jusqu\u2019\u00e0 10 minutes au total)",
+                                                   "Un peu (jusqu\u2019\u00e0 30 minutes au total)",
+                                                   "Beaucoup (jusqu\u2019\u00e0 1 heure au total)",
+                                                   "Enorm\u00e9ment (plus d\u20191 heure au total)"
                                                  )
                                     ),
                                   ),
@@ -2411,14 +2411,14 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d2_q2", label="Jour 2. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                    radioButtons(inputId="dppac_FR_d2_q2", label="Jour 2. Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f 
                                                  (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
                                                  choices=c(
                                                    "Aucune",
-                                                   "Très peu",
+                                                   "Tr\u00e8s peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -2427,13 +2427,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d2_q3", label="Jour 2. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d2_q3", label="Jour 2. Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -2442,12 +2442,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d2_q4", label="Jour 2. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d2_q4", label="Jour 2. Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -2458,13 +2458,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d2_q5", label="Jour 2. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d2_q5", label="Jour 2. Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -2476,13 +2476,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d2_q6", label="Jour 2. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d2_q6", label="Jour 2. Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -2494,12 +2494,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d2_q7", label="Jour 2. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d2_q7", label="Jour 2. Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -2511,13 +2511,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 2. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 2. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d2_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 2. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 2. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d2_vmu")
                                   )
@@ -2533,13 +2533,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d3_q1", label="Jour 3. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                    radioButtons(inputId="dppac_FR_d3_q1", label="Jour 3. Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f", 
                                                  choices=c(
                                                    "Pas du tout",
-                                                   "Un petit peu (jusqu’à 10 minutes au total)",
-                                                   "Un peu (jusqu’à 30 minutes au total)",
-                                                   "Beaucoup (jusqu’à 1 heure au total)",
-                                                   "Enormément (plus d’1 heure au total)"
+                                                   "Un petit peu (jusqu\u2019\u00e0 10 minutes au total)",
+                                                   "Un peu (jusqu\u2019\u00e0 30 minutes au total)",
+                                                   "Beaucoup (jusqu\u2019\u00e0 1 heure au total)",
+                                                   "Enorm\u00e9ment (plus d\u20191 heure au total)"
                                                  )
                                     ),
                                   ),
@@ -2549,14 +2549,14 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d3_q2", label="Jour 3. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                    radioButtons(inputId="dppac_FR_d3_q2", label="Jour 3. Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f 
                                                  (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
                                                  choices=c(
                                                    "Aucune",
-                                                   "Très peu",
+                                                   "Tr\u00e8s peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -2565,13 +2565,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d3_q3", label="Jour 3. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d3_q3", label="Jour 3. Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -2580,12 +2580,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d3_q4", label="Jour 3. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d3_q4", label="Jour 3. Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -2596,13 +2596,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d3_q5", label="Jour 3. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d3_q5", label="Jour 3. Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -2614,13 +2614,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d3_q6", label="Jour 3. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d3_q6", label="Jour 3. Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -2632,12 +2632,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d3_q7", label="Jour 3. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d3_q7", label="Jour 3. Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -2649,13 +2649,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 3. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 3. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d3_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 3. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 3. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d3_vmu")
                                   )
@@ -2670,13 +2670,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d4_q1", label="Jour 4. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                    radioButtons(inputId="dppac_FR_d4_q1", label="Jour 4. Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f", 
                                                  choices=c(
                                                    "Pas du tout",
-                                                   "Un petit peu (jusqu’à 10 minutes au total)",
-                                                   "Un peu (jusqu’à 30 minutes au total)",
-                                                   "Beaucoup (jusqu’à 1 heure au total)",
-                                                   "Enormément (plus d’1 heure au total)"
+                                                   "Un petit peu (jusqu\u2019\u00e0 10 minutes au total)",
+                                                   "Un peu (jusqu\u2019\u00e0 30 minutes au total)",
+                                                   "Beaucoup (jusqu\u2019\u00e0 1 heure au total)",
+                                                   "Enorm\u00e9ment (plus d\u20191 heure au total)"
                                                  )
                                     ),
                                   ),
@@ -2686,14 +2686,14 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d4_q2", label="Jour 4. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                    radioButtons(inputId="dppac_FR_d4_q2", label="Jour 4. Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f 
                                                  (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
                                                  choices=c(
                                                    "Aucune",
-                                                   "Très peu",
+                                                   "Tr\u00e8s peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -2702,13 +2702,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d4_q3", label="Jour 4. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d4_q3", label="Jour 4. Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -2717,12 +2717,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d4_q4", label="Jour 4. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d4_q4", label="Jour 4. Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -2733,13 +2733,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d4_q5", label="Jour 4. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d4_q5", label="Jour 4. Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -2751,13 +2751,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d4_q6", label="Jour 4. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d4_q6", label="Jour 4. Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -2769,12 +2769,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d4_q7", label="Jour 4. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d4_q7", label="Jour 4. Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -2786,13 +2786,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 4. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 4. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d4_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 4. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 4. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d4_vmu")
                                   )
@@ -2807,13 +2807,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d5_q1", label="Jour 5. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                    radioButtons(inputId="dppac_FR_d5_q1", label="Jour 5. Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f", 
                                                  choices=c(
                                                    "Pas du tout",
-                                                   "Un petit peu (jusqu’à 10 minutes au total)",
-                                                   "Un peu (jusqu’à 30 minutes au total)",
-                                                   "Beaucoup (jusqu’à 1 heure au total)",
-                                                   "Enormément (plus d’1 heure au total)"
+                                                   "Un petit peu (jusqu\u2019\u00e0 10 minutes au total)",
+                                                   "Un peu (jusqu\u2019\u00e0 30 minutes au total)",
+                                                   "Beaucoup (jusqu\u2019\u00e0 1 heure au total)",
+                                                   "Enorm\u00e9ment (plus d\u20191 heure au total)"
                                                  )
                                     ),
                                   ),
@@ -2823,14 +2823,14 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d5_q2", label="Jour 5. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                    radioButtons(inputId="dppac_FR_d5_q2", label="Jour 5. Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f 
                                                  (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
                                                  choices=c(
                                                    "Aucune",
-                                                   "Très peu",
+                                                   "Tr\u00e8s peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -2839,13 +2839,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d5_q3", label="Jour 5. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d5_q3", label="Jour 5. Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -2854,12 +2854,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d5_q4", label="Jour 5. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d5_q4", label="Jour 5. Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -2870,13 +2870,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d5_q5", label="Jour 5. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d5_q5", label="Jour 5. Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -2888,13 +2888,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d5_q6", label="Jour 5. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d5_q6", label="Jour 5. Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -2906,12 +2906,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d5_q7", label="Jour 5. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d5_q7", label="Jour 5. Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -2923,13 +2923,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 5. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 5. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d5_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 5. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 5. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d5_vmu")
                                   )
@@ -2944,13 +2944,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d6_q1", label="Jour 6. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                    radioButtons(inputId="dppac_FR_d6_q1", label="Jour 6. Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f", 
                                                  choices=c(
                                                    "Pas du tout",
-                                                   "Un petit peu (jusqu’à 10 minutes au total)",
-                                                   "Un peu (jusqu’à 30 minutes au total)",
-                                                   "Beaucoup (jusqu’à 1 heure au total)",
-                                                   "Enormément (plus d’1 heure au total)"
+                                                   "Un petit peu (jusqu\u2019\u00e0 10 minutes au total)",
+                                                   "Un peu (jusqu\u2019\u00e0 30 minutes au total)",
+                                                   "Beaucoup (jusqu\u2019\u00e0 1 heure au total)",
+                                                   "Enorm\u00e9ment (plus d\u20191 heure au total)"
                                                  )
                                     ),
                                   ),
@@ -2960,14 +2960,14 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d6_q2", label="Jour 6. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                    radioButtons(inputId="dppac_FR_d6_q2", label="Jour 6. Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f 
                                                  (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
                                                  choices=c(
                                                    "Aucune",
-                                                   "Très peu",
+                                                   "Tr\u00e8s peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -2976,13 +2976,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d6_q3", label="Jour 6. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d6_q3", label="Jour 6. Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -2991,12 +2991,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d6_q4", label="Jour 6. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d6_q4", label="Jour 6. Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -3007,13 +3007,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d6_q5", label="Jour 6. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d6_q5", label="Jour 6. Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -3025,13 +3025,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d6_q6", label="Jour 6. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d6_q6", label="Jour 6. Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -3043,12 +3043,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d6_q7", label="Jour 6. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d6_q7", label="Jour 6. Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -3060,13 +3060,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 6. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 6. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d6_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 6. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 6. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d6_vmu")
                                   )
@@ -3081,13 +3081,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d7_q1", label="Jour 7. Avez-vous marché à l’extérieur aujourd’hui ?", 
+                                    radioButtons(inputId="dppac_FR_d7_q1", label="Jour 7. Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f", 
                                                  choices=c(
                                                    "Pas du tout",
-                                                   "Un petit peu (jusqu’à 10 minutes au total)",
-                                                   "Un peu (jusqu’à 30 minutes au total)",
-                                                   "Beaucoup (jusqu’à 1 heure au total)",
-                                                   "Enormément (plus d’1 heure au total)"
+                                                   "Un petit peu (jusqu\u2019\u00e0 10 minutes au total)",
+                                                   "Un peu (jusqu\u2019\u00e0 30 minutes au total)",
+                                                   "Beaucoup (jusqu\u2019\u00e0 1 heure au total)",
+                                                   "Enorm\u00e9ment (plus d\u20191 heure au total)"
                                                  )
                                     ),
                                   ),
@@ -3097,14 +3097,14 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d7_q2", label="Jour 7. Avez-vous effectué des tâches à l’extérieur aujourd’hui ? 
+                                    radioButtons(inputId="dppac_FR_d7_q2", label="Jour 7. Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f 
                                                  (exemples : le jardinage, sortir les poubelles ou effectuer de petites courses)",
                                                  choices=c(
                                                    "Aucune",
-                                                   "Très peu",
+                                                   "Tr\u00e8s peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -3113,13 +3113,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d7_q3", label="Jour 7. Avez-vous eu des difficultés pour vous habiller aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d7_q3", label="Jour 7. Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
                                                    "Quelques-unes",
                                                    "Beaucoup",
-                                                   "Enormément"
+                                                   "Enorm\u00e9ment"
                                                  )
                                     ),
                                   ),
@@ -3128,12 +3128,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d7_q4", label="Jour 7. Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d7_q4", label="Jour 7. Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -3144,13 +3144,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d7_q5", label="Jour 7. Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d7_q5", label="Jour 7. Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -3162,13 +3162,13 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d7_q6", label="Jour 7. Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d7_q6", label="Jour 7. Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Pas du tout",
                                                    "Un petit peu",
-                                                   "Modérément",
-                                                   "Très",
-                                                   "Extrêmement"
+                                                   "Mod\u00e9r\u00e9ment",
+                                                   "Tr\u00e8s",
+                                                   "Extr\u00eamement"
                                                    
                                                  )
                                     ),
@@ -3180,12 +3180,12 @@ app_ui <- function(request) {
                          fluidRow(
                            column(12,
                                   wellPanel(
-                                    radioButtons(inputId="dppac_FR_d7_q7", label="Jour 7. Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?",
+                                    radioButtons(inputId="dppac_FR_d7_q7", label="Jour 7. Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f",
                                                  choices=c(
                                                    "Jamais",
                                                    "Rarement",
                                                    "Quelques fois",
-                                                   "Fréquemment",
+                                                   "Fr\u00e9quemment",
                                                    "Tout le temps"
                                                    
                                                  )
@@ -3197,13 +3197,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 7. Score accélérométrique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 7. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d7_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 7. Score accélérométrique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 7. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d7_vmu")
                                   )
@@ -3217,7 +3217,7 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(12,
-                                  shiny::actionButton("get_dppac_summary_fr", "Obtenir / Mettre à jour les résultats du D-PPAC", style="color: #fff; background-color: #00CC66; border-color: #336600"),
+                                  shiny::actionButton("get_dppac_summary_fr", "Obtenir / Mettre \u00e0 jour les r\u00e9sultats du D-PPAC", style="color: #fff; background-color: #00CC66; border-color: #336600"),
                            ),
                          ),
                          fluidRow(
