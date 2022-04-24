@@ -26,7 +26,7 @@ This function provides a score (from 0 to 4) in relation to the response to a gi
 }
 \examples{
 compute_pro_score_dppac(
-    x = "Un petit peu (jusqu’à 10 minutes au total)", 
+    x = "Un petit peu (jusqu\u2019\u00e0 10 minutes au total)", 
     question = "q1",
     language = "fr"
     )

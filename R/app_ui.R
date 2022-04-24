@@ -494,6 +494,7 @@ app_ui <- function(request) {
                  ####################
                  
                  tabsetPanel(
+                   id = "questionnaires", 
                     tabPanel("C-PPAC (EN)",
                     wellPanel(
                       fluidRow(
@@ -3274,7 +3275,7 @@ app_ui <- function(request) {
                            h2("Authors"),
                            h4("Pierre-Yves de M\u00fcllenheim, PhD", style = "font-weight: bold; font-size: 20px"),
                            h4("Associate professor"),
-                           h4("Institut de formation en \u00e9ducation physique et en sport d\u0027Angers \u0028IFEPSA\u0029, UCO, France"),
+                           h4("Institut de formation en \u00e9ducation physique et en sport d\u2019Angers \u0028IFEPSA\u0029, UCO, France"),
                            h4("Email: pydemull@uco.fr"),
                            h3(""),
                            h4("Arnaud Chambellan, MD, PhD", style = "font-weight: bold; font-size: 20px"),

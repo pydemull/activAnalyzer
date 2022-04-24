@@ -386,7 +386,386 @@ test_that("The server functions correctly work", {
       actual_bmr <- app$getAllValues()$export[["BMR"]]
       
       expect_equal(actual_bmr, test_bmr)
-       
+      
+    # Testing computed PROactive scores
+      
+      # Setting inputs for all tests
+        app$setInputs(
+          age = 25,
+          weight = 50,
+          sex = "female",
+          reset_nonwear = "click",
+          validate = "click",
+          equation_mets = "Sasaki et al. (2011) [Adults]",
+          mvpa_cutpoint = "Sasaki et al. (2011) [Adults]",
+          sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]",
+          reset_period = "click",
+          Run = "click"
+        )
+        
+      # ============================================================================================================================================  
+      # C-PPAC (EN)
+      # ============================================================================================================================================
+        
+         #************
+         # Round 1
+         #************
+        
+            # Setting inputs for C-PPAC tests
+              app$setInputs(
+                cppac_EN_q1 = "None at all",
+                cppac_EN_q2 = "None at all",
+                cppac_EN_q3 = "None at all",
+                cppac_EN_q4 = "None at all",
+                cppac_EN_q5 = "Not at all",
+                cppac_EN_q6 = "Not at all",
+                cppac_EN_q7 = "Not at all",
+                cppac_EN_q8 = "Not at all",
+                cppac_EN_q9 = "Not at all",
+                cppac_EN_q10 = "Not at all",
+                cppac_EN_q11 = "Not at all",
+                cppac_EN_q12 = "No",
+                get_cppac_summary_en = "click"
+              )
+           
+           # Getting final scores computed with the app
+             score_cppac_diff_en <- app$getAllValues()$export[["score_cppac_diff_en"]]
+             score_cppac_quant_en <- app$getAllValues()$export[["score_cppac_quant_en"]]
+             score_cppac_tot_rasch_en <- app$getAllValues()$export[["score_cppac_tot_rasch_en"]]
+             
+           # Testing Difficulty score (raw)
+             expect_equal(score_cppac_diff_en, 10*4)
+           
+           # Testing Amount score (raw)
+             expect_equal(score_cppac_quant_en, 0+0+4+4)
+           
+           # Testing Total score (rasch)
+             expect_equal(score_cppac_tot_rasch_en, round((100+59) / 2, 1))
+             
+             
+        #************
+        # Round 2
+        #************
+              
+           # Setting inputs for C-PPAC tests
+           app$setInputs(
+             cppac_EN_q1 = "A little bit (about 10 minutes every day)", 
+             cppac_EN_q2 = "A few", 
+             cppac_EN_q3 = "A little bit",
+             cppac_EN_q4 = "A little bit",
+             cppac_EN_q5 = "Rarely",
+             cppac_EN_q6 = "A little bit",  
+             cppac_EN_q7 = "Rarely",  
+             cppac_EN_q8 = "A little bit",  
+             cppac_EN_q9 = "Rarely",  
+             cppac_EN_q10 =  "A little bit", 
+             cppac_EN_q11 =  "A little bit",
+             cppac_EN_q12 =  "A little bit",
+             get_cppac_summary_en = "click"
+           )
+             
+           # Getting final scores computed with the app
+             score_cppac_diff_en <- app$getAllValues()$export[["score_cppac_diff_en"]]
+             score_cppac_quant_en <- app$getAllValues()$export[["score_cppac_quant_en"]]
+             score_cppac_tot_rasch_en <- app$getAllValues()$export[["score_cppac_tot_rasch_en"]]
+           
+           # Testing Difficulty score (raw)
+             expect_equal(score_cppac_diff_en, 10*3)
+           
+           # Testing Amount score (raw)
+             expect_equal(score_cppac_quant_en, 1+1+4+4)
+           
+           # Testing Total score (rasch)
+            expect_equal(score_cppac_tot_rasch_en, round((75+67) / 2, 1))
+            
+          #************
+          # Round 3
+          #************
+            
+            # Setting inputs for C-PPAC tests
+              app$setInputs(
+                cppac_EN_q1 = "Some (about 30 minutes every day)", 
+                cppac_EN_q2 = "Some", 
+                cppac_EN_q3 = "Some",
+                cppac_EN_q4 = "Some",
+                cppac_EN_q5 = "Sometimes",
+                cppac_EN_q6 = "Moderately",  
+                cppac_EN_q7 = "Sometimes",  
+                cppac_EN_q8 = "Moderately",  
+                cppac_EN_q9 = "Sometimes",  
+                cppac_EN_q10 =  "Moderately", 
+                cppac_EN_q11 =  "Some",
+                cppac_EN_q12 =  "Sometimes",
+                get_cppac_summary_en = "click"
+              )
+            
+            # Getting final scores computed with the app
+              score_cppac_diff_en <- app$getAllValues()$export[["score_cppac_diff_en"]]
+              score_cppac_quant_en <- app$getAllValues()$export[["score_cppac_quant_en"]]
+              score_cppac_tot_rasch_en <- app$getAllValues()$export[["score_cppac_tot_rasch_en"]]
+            
+            # Testing Difficulty score (raw)
+              expect_equal(score_cppac_diff_en, 10*2)
+            
+            # Testing Amount score (raw)
+              expect_equal(score_cppac_quant_en, 2+2+4+4)
+            
+            # Testing Total score (rasch)
+              expect_equal(score_cppac_tot_rasch_en, round((58+77) / 2, 1))
+              
+          #************
+          # Round 4
+          #************
+              
+              # Setting inputs for C-PPAC tests
+                app$setInputs(
+                  cppac_EN_q1 = "A lot (about 1 hour every day)", 
+                  cppac_EN_q2 = "A lot", 
+                  cppac_EN_q3 = "A lot",
+                  cppac_EN_q4 = "A lot",
+                  cppac_EN_q5 = "Frequently",
+                  cppac_EN_q6 = "Very",  
+                  cppac_EN_q7 = "Frequently",  
+                  cppac_EN_q8 = "Very",  
+                  cppac_EN_q9 = "Frequently",  
+                  cppac_EN_q10 =  "Very", 
+                  cppac_EN_q11 =  "A lot",
+                  cppac_EN_q12 =  "A lot",
+                  get_cppac_summary_en = "click"
+                )
+              
+              # Getting final scores computed with the app
+                score_cppac_diff_en <- app$getAllValues()$export[["score_cppac_diff_en"]]
+                score_cppac_quant_en <- app$getAllValues()$export[["score_cppac_quant_en"]]
+                score_cppac_tot_rasch_en <- app$getAllValues()$export[["score_cppac_tot_rasch_en"]]
+              
+              # Testing Difficulty score (raw)
+                expect_equal(score_cppac_diff_en, 10*1)
+              
+              # Testing Amount score (raw)
+                expect_equal(score_cppac_quant_en, 3+3+4+4)
+              
+              # Testing Total score (rasch)
+                expect_equal(score_cppac_tot_rasch_en, round((40+91) / 2, 1))
+                
+                
+           #************
+           # Round 5
+           #************
+              
+              # Setting inputs for C-PPAC tests
+                app$setInputs(
+                  cppac_EN_q1 = "A great deal (more than 1 hour every day)", 
+                  cppac_EN_q2 = "A large amount", 
+                  cppac_EN_q3 = "A great deal",
+                  cppac_EN_q4 = "A great deal",
+                  cppac_EN_q5 = "All the time",
+                  cppac_EN_q6 = "Extremely",  
+                  cppac_EN_q7 = "All the time",  
+                  cppac_EN_q8 = "Extremely",  
+                  cppac_EN_q9 = "All the time",  
+                  cppac_EN_q10 =  "Extremely", 
+                  cppac_EN_q11 =  "A great deal",
+                  cppac_EN_q12 =  "A great deal",
+                  get_cppac_summary_en = "click"
+                )
+                
+              # Getting final scores computed with the app
+                score_cppac_diff_en <- app$getAllValues()$export[["score_cppac_diff_en"]]
+                score_cppac_quant_en <- app$getAllValues()$export[["score_cppac_quant_en"]]
+                score_cppac_tot_rasch_en <- app$getAllValues()$export[["score_cppac_tot_rasch_en"]]
+                
+              # Testing Difficulty score (raw)
+                expect_equal(score_cppac_diff_en, 10*0)
+              
+              # Testing Amount score (raw)
+                expect_equal(score_cppac_quant_en, 3+4+4+4)
+              
+              # Testing Total score (rasch)
+                expect_equal(score_cppac_tot_rasch_en, round((0+100) / 2, 1))
+                
+                
+        # ============================================================================================================================================  
+        # C-PPAC (FR)
+        # ============================================================================================================================================
+                
+             #************
+             # Round 1
+             #************
+                
+                # Setting inputs for C-PPAC tests
+                  app$setInputs(
+                    cppac_FR_q1 = "Pas du tout",
+                    cppac_FR_q2 = "Aucune",
+                    cppac_FR_q3 = "Pas du tout",
+                    cppac_FR_q4 = "Pas du tout",
+                    cppac_FR_q5 = "Jamais",
+                    cppac_FR_q6 = "Pas du tout",
+                    cppac_FR_q7 = "Jamais",
+                    cppac_FR_q8 = "Pas du tout",
+                    cppac_FR_q9 = "Jamais",
+                    cppac_FR_q10 = "Pas du tout",
+                    cppac_FR_q11 = "Aucun",
+                    cppac_FR_q12 = "Non",
+                    get_cppac_summary_fr = "click"
+                  )
+                
+                # Getting final scores computed with the app
+                  score_cppac_diff_fr <- app$getAllValues()$export[["score_cppac_diff_fr"]]
+                  score_cppac_quant_fr <- app$getAllValues()$export[["score_cppac_quant_fr"]]
+                  score_cppac_tot_rasch_fr <- app$getAllValues()$export[["score_cppac_tot_rasch_fr"]]
+                
+                # Testing Difficulty score (raw)
+                  expect_equal(score_cppac_diff_fr, 10*4)
+                
+                # Testing Amount score (raw)
+                  expect_equal(score_cppac_quant_fr, 0+0+4+4)
+                
+                # Testing Total score (rasch)
+                  expect_equal(score_cppac_tot_rasch_fr, round((100+59) / 2, 1))
+                
+                
+            #************
+            # Round 2
+            #************
+                
+                # Setting inputs for C-PPAC tests
+                app$setInputs(
+                  cppac_FR_q1 = "Un petit peu (environ 10 minutes chaque jour)", 
+                  cppac_FR_q2 = "Tr\u00e8s peu", 
+                  cppac_FR_q3 = "Un petit peu",
+                  cppac_FR_q4 = "Un petit peu",
+                  cppac_FR_q5 = "Rarement",
+                  cppac_FR_q6 = "Un petit peu",  
+                  cppac_FR_q7 = "Rarement",  
+                  cppac_FR_q8 = "Un petit peu",  
+                  cppac_FR_q9 = "Rarement",  
+                  cppac_FR_q10 = "Un petit peu", 
+                  cppac_FR_q11 = "Un petit peu",
+                  cppac_FR_q12 = "Un petit peu",
+                  get_cppac_summary_fr = "click"
+                )
+                
+                # Getting final scores computed with the app
+                  score_cppac_diff_fr <- app$getAllValues()$export[["score_cppac_diff_fr"]]
+                  score_cppac_quant_fr <- app$getAllValues()$export[["score_cppac_quant_fr"]]
+                  score_cppac_tot_rasch_fr <- app$getAllValues()$export[["score_cppac_tot_rasch_fr"]]
+                
+                # Testing Difficulty score (raw)
+                  expect_equal(score_cppac_diff_fr, 10*3)
+                
+                # Testing Amount score (raw)
+                  expect_equal(score_cppac_quant_fr, 1+1+4+4)
+                
+                # Testing Total score (rasch)
+                  expect_equal(score_cppac_tot_rasch_fr, round((75+67) / 2, 1))
+                
+           #************
+           # Round 3
+           #************
+                
+                # Setting inputs for C-PPAC tests
+                  app$setInputs(
+                    cppac_FR_q1 = "Un peu (environ 30 minutes chaque jour)", 
+                    cppac_FR_q2 = "Quelques-unes", 
+                    cppac_FR_q3 = "Quelques-unes",
+                    cppac_FR_q4 = "Quelques-unes",
+                    cppac_FR_q5 = "Quelques fois",
+                    cppac_FR_q6 = "Mod\u00e9r\u00e9ment",  
+                    cppac_FR_q7 = "Quelques fois",  
+                    cppac_FR_q8 = "Mod\u00e9r\u00e9ment",  
+                    cppac_FR_q9 = "Quelques fois",  
+                    cppac_FR_q10 =  "Mod\u00e9r\u00e9ment", 
+                    cppac_FR_q11 =  "Un peu",
+                    cppac_FR_q12 =  "Quelques fois",
+                    get_cppac_summary_fr = "click"
+                  )
+                
+                # Getting final scores computed with the app
+                score_cppac_diff_fr <- app$getAllValues()$export[["score_cppac_diff_fr"]]
+                score_cppac_quant_fr <- app$getAllValues()$export[["score_cppac_quant_fr"]]
+                score_cppac_tot_rasch_fr <- app$getAllValues()$export[["score_cppac_tot_rasch_fr"]]
+                
+                # Testing Difficulty score (raw)
+                  expect_equal(score_cppac_diff_fr, 10*2)
+                
+                # Testing Amount score (raw)
+                  expect_equal(score_cppac_quant_fr, 2+2+4+4)
+                
+                # Testing Total score (rasch)
+                expect_equal(score_cppac_tot_rasch_fr, round((58+77) / 2, 1))
+                
+          #************
+          # Round 4
+          #************
+                
+                # Setting inputs for C-PPAC tests
+                  app$setInputs(
+                   cppac_FR_q1 = "Beaucoup (environ 1 heure chaque jour)", 
+                   cppac_FR_q2 = "Beaucoup", 
+                   cppac_FR_q3 = "Beaucoup",
+                   cppac_FR_q4 = "Beaucoup",
+                   cppac_FR_q5 = "Fr\u00e9quemment",
+                   cppac_FR_q6 = "Tr\u00e8s",  
+                   cppac_FR_q7 = "Fr\u00e9quemment",  
+                   cppac_FR_q8 = "Tr\u00e8s",  
+                   cppac_FR_q9 = "Fr\u00e9quemment",  
+                   cppac_FR_q10 =  "Tr\u00e8s", 
+                   cppac_FR_q11 =  "Beaucoup",
+                   cppac_FR_q12 =  "Beaucoup",
+                   get_cppac_summary_fr = "click"
+                  )
+                
+                # Getting final scores computed with the app
+                score_cppac_diff_fr <- app$getAllValues()$export[["score_cppac_diff_fr"]]
+                score_cppac_quant_fr <- app$getAllValues()$export[["score_cppac_quant_fr"]]
+                score_cppac_tot_rasch_fr <- app$getAllValues()$export[["score_cppac_tot_rasch_fr"]]
+                
+                # Testing Difficulty score (raw)
+                  expect_equal(score_cppac_diff_fr, 10*1)
+                
+                # Testing Amount score (raw)
+                  expect_equal(score_cppac_quant_fr, 3+3+4+4)
+                
+                # Testing Total score (rasch)
+                  expect_equal(score_cppac_tot_rasch_fr, round((40+91) / 2, 1))
+                
+                
+          #************
+          # Round 5
+          #************
+                
+                # Setting inputs for C-PPAC tests
+                  app$setInputs(
+                    cppac_FR_q1 = "Enorm\u00e9ment (plus d\u20191 heure chaque jour)", 
+                    cppac_FR_q2 = "Enorm\u00e9ment", 
+                    cppac_FR_q3 = "Enorm\u00e9ment",
+                    cppac_FR_q4 = "Enorm\u00e9ment",
+                    cppac_FR_q5 = "Tout le temps",
+                    cppac_FR_q6 = "Extr\u00eamement",  
+                    cppac_FR_q7 = "Tout le temps",  
+                    cppac_FR_q8 = "Extr\u00eamement",  
+                    cppac_FR_q9 = "Tout le temps",  
+                    cppac_FR_q10 =  "Extr\u00eamement", 
+                    cppac_FR_q11 =  "Enorm\u00e9ment",
+                    cppac_FR_q12 =  "Enorm\u00e9ment",
+                    get_cppac_summary_fr = "click"
+                  )
+                  
+                # Getting final scores computed with the app
+                  score_cppac_diff_fr <- app$getAllValues()$export[["score_cppac_diff_fr"]]
+                  score_cppac_quant_fr <- app$getAllValues()$export[["score_cppac_quant_fr"]]
+                  score_cppac_tot_rasch_fr <- app$getAllValues()$export[["score_cppac_tot_rasch_fr"]]
+                
+                # Testing Difficulty score (raw)
+                  expect_equal(score_cppac_diff_fr, 10*0)
+                
+                # Testing Amount score (raw)
+                  expect_equal(score_cppac_quant_fr, 3+4+4+4)
+                
+                # Testing Total score (rasch)
+                  expect_equal(score_cppac_tot_rasch_fr, round((0+100) / 2, 1))
+        
 })      
     
     

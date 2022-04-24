@@ -1165,7 +1165,7 @@ app_server <- function(input, output, session) {
              if(is.na(steps_score_cppac_median())) {
                reactable::reactable(
                  tibble::tribble(
-                   ~"Désolé, aucun score n'est disponible en raison de l'absence de jour valide.", 
+                   ~"D\u00e9sol\u00e9, aucun score n'est disponible en raison de l'absence de jour valide.", 
                    ""      
                  )
                )
@@ -1223,7 +1223,7 @@ app_server <- function(input, output, session) {
               if(is.na(vmu_score_cppac_median())) {
                 reactable::reactable(
                   tibble::tribble(
-                    ~"Désolé, aucun score n'est disponible en raison de l'absence de jour valide.", 
+                    ~"D\u00e9sol\u00e9, aucun score n'est disponible en raison de l'absence de jour valide.", 
                     ""      
                   )
                 )
@@ -1281,7 +1281,7 @@ app_server <- function(input, output, session) {
               if(is.na(steps_score_cppac_mean())) {
                 reactable::reactable(
                   tibble::tribble(
-                    ~"Désolé, aucun score n'est disponible en raison de l'absence de jour valide.", 
+                    ~"D\u00e9sol\u00e9, aucun score n'est disponible en raison de l'absence de jour valide.", 
                     ""      
                   )
                 )
@@ -1338,7 +1338,7 @@ app_server <- function(input, output, session) {
               if(is.na(vmu_score_cppac_mean())) {
                 reactable::reactable(
                   tibble::tribble(
-                    ~"Désolé, aucun score n'est disponible en raison de l'absence de jour valide.", 
+                    ~"D\u00e9sol\u00e9, aucun score n'est disponible en raison de l'absence de jour valide.", 
                     ""      
                   )
                 )
@@ -2268,7 +2268,7 @@ app_server <- function(input, output, session) {
               if(nrow(results_list()$results_by_day) < 1 | results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
-                    ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.",  
+                    ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.",  
                     ""      
                   )
                 )
@@ -2330,7 +2330,7 @@ app_server <- function(input, output, session) {
              if(nrow(results_list()$results_by_day) < 1 | results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                reactable::reactable(
                  tibble::tribble(
-                   ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.", 
+                   ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
                    ""      
                  )
                )
@@ -2392,7 +2392,7 @@ app_server <- function(input, output, session) {
             if(nrow(results_list()$results_by_day) < 2 | results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
               reactable::reactable(
                 tibble::tribble(
-                  ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.", 
+                  ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
                   ""      
                 )
               )
@@ -2454,7 +2454,7 @@ app_server <- function(input, output, session) {
             if(nrow(results_list()$results_by_day) < 2 | results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
               reactable::reactable(
                 tibble::tribble(
-                  ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.", 
+                  ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
                   ""      
                 )
               )
@@ -2516,7 +2516,7 @@ app_server <- function(input, output, session) {
             if(nrow(results_list()$results_by_day) < 3 | results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
               reactable::reactable(
                 tibble::tribble(
-                  ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.", 
+                  ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
                   ""      
                 )
               )
@@ -2578,7 +2578,7 @@ app_server <- function(input, output, session) {
               if(nrow(results_list()$results_by_day) < 3 | results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
-                    ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.", 
+                    ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
                     ""      
                   )
                 )
@@ -2640,7 +2640,7 @@ app_server <- function(input, output, session) {
               if(nrow(results_list()$results_by_day) < 4 | results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
-                    ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.", 
+                    ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
                     ""      
                   )
                 )
@@ -2702,7 +2702,7 @@ app_server <- function(input, output, session) {
               if(nrow(results_list()$results_by_day) < 4 | results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
-                    ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.",  
+                    ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.",  
                     ""      
                   )
                 )
@@ -2764,7 +2764,7 @@ app_server <- function(input, output, session) {
               if(nrow(results_list()$results_by_day) < 5 | results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
-                    ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.", 
+                    ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
                     ""      
                   )
                 )
@@ -2826,7 +2826,7 @@ app_server <- function(input, output, session) {
               if(nrow(results_list()$results_by_day) < 5 | results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
-                    ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.", 
+                    ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
                     ""      
                   )
                 )
@@ -2888,7 +2888,7 @@ app_server <- function(input, output, session) {
                if(nrow(results_list()$results_by_day) < 6 | results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                  reactable::reactable(
                    tibble::tribble(
-                     ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.", 
+                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
                      ""      
                    )
                  )
@@ -2950,7 +2950,7 @@ app_server <- function(input, output, session) {
               if(nrow(results_list()$results_by_day) < 6 | results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
-                    ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.", 
+                    ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
                     ""      
                   )
                 )
@@ -3013,7 +3013,7 @@ app_server <- function(input, output, session) {
               if(nrow(results_list()$results_by_day) < 7 | results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
-                    ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.", 
+                    ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
                     ""      
                   )
                 )
@@ -3075,7 +3075,7 @@ app_server <- function(input, output, session) {
               if(nrow(results_list()$results_by_day) < 7 | results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
-                    ~"Désolé, aucun résultat n'est disponible en raison d'un nombre insuffisant de jours sélectionnés ou d'un temps de port insuffisant pour ce jour.", 
+                    ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
                     ""      
                   )
                 )
@@ -3162,18 +3162,18 @@ app_server <- function(input, output, session) {
                   table <- 
                     tibble::tribble(
                       ~Item                                                                                                                              ,~"Difficulty score"                                              ,~"Amount score",
-                      "In the past 7 days, how much walking did you do outside?"                                                                             , NA                                                              ,  compute_pro_score_cppac(input$cppac_EN_q1, question = "q1"),
-                      "In the past 7 days, how many chores did you do outside the house?"                                                                    , NA                                                              ,  compute_pro_score_cppac(input$cppac_EN_q2, question = "q2"),
-                      "In the past 7 days, how much difficulty did you have getting dressed?"                                                                , compute_pro_score_cppac(input$cppac_EN_q3, question = "q3")     ,  NA,
-                      "In the past 7 days, how much difficulty did you have getting out and about?"                                                          , compute_pro_score_cppac(input$cppac_EN_q4, question = "q4")     ,  NA,
-                      "In the past 7 days, how often did you avoid doing activities because of your lung problems?"                                          , compute_pro_score_cppac(input$cppac_EN_q5, question = "q5")     ,  NA,
-                      "In the past 7 days, how breathless were you in general during your activities?"                                                       , compute_pro_score_cppac(input$cppac_EN_q6, question = "q6")     ,  NA,
-                      "In the past 7 days, how often did you lack physical strength to do things because of your lung problems?"                             , compute_pro_score_cppac(input$cppac_EN_q7, question = "q7")     ,  NA,
-                      "In the past 7 days, how tired were you in general during your activities?"                                                            , compute_pro_score_cppac(input$cppac_EN_q8, question = "q8")     ,  NA,
-                      "In the past 7 days, how often did you have to take breaks during your physical activities?"                                           , compute_pro_score_cppac(input$cppac_EN_q9, question = "q9")     ,  NA,
-                      "In the past 7 days, how breathless were you when walking on level ground indoors and outdoors?"                                       , compute_pro_score_cppac(input$cppac_EN_q10, question = "q10")   ,  NA,
-                      "In the past 7 days, how much time did you need to recover from your physical activities?"                                             , compute_pro_score_cppac(input$cppac_EN_q11, question = "q11")   ,  NA,
-                      "In the past 7 days, did you need to consider your lung problems when you planned your activities because of your lung problems?"      , compute_pro_score_cppac(input$cppac_EN_q12, question = "q12")   ,  NA,
+                      "In the past 7 days, how much walking did you do outside\u003f"                                                                             , NA                                                              ,  compute_pro_score_cppac(input$cppac_EN_q1, question = "q1"),
+                      "In the past 7 days, how many chores did you do outside the house\u003f"                                                                    , NA                                                              ,  compute_pro_score_cppac(input$cppac_EN_q2, question = "q2"),
+                      "In the past 7 days, how much difficulty did you have getting dressed\u003f"                                                                , compute_pro_score_cppac(input$cppac_EN_q3, question = "q3")     ,  NA,
+                      "In the past 7 days, how much difficulty did you have getting out and about\u003f"                                                          , compute_pro_score_cppac(input$cppac_EN_q4, question = "q4")     ,  NA,
+                      "In the past 7 days, how often did you avoid doing activities because of your lung problems\u003f"                                          , compute_pro_score_cppac(input$cppac_EN_q5, question = "q5")     ,  NA,
+                      "In the past 7 days, how breathless were you in general during your activities\u003f"                                                       , compute_pro_score_cppac(input$cppac_EN_q6, question = "q6")     ,  NA,
+                      "In the past 7 days, how often did you lack physical strength to do things because of your lung problems\u003f"                             , compute_pro_score_cppac(input$cppac_EN_q7, question = "q7")     ,  NA,
+                      "In the past 7 days, how tired were you in general during your activities\u003f"                                                            , compute_pro_score_cppac(input$cppac_EN_q8, question = "q8")     ,  NA,
+                      "In the past 7 days, how often did you have to take breaks during your physical activities\u003f"                                           , compute_pro_score_cppac(input$cppac_EN_q9, question = "q9")     ,  NA,
+                      "In the past 7 days, how breathless were you when walking on level ground indoors and outdoors\u003f"                                       , compute_pro_score_cppac(input$cppac_EN_q10, question = "q10")   ,  NA,
+                      "In the past 7 days, how much time did you need to recover from your physical activities\u003f"                                             , compute_pro_score_cppac(input$cppac_EN_q11, question = "q11")   ,  NA,
+                      "In the past 7 days, did you need to consider your lung problems when you planned your activities because of your lung problems\u003f"      , compute_pro_score_cppac(input$cppac_EN_q12, question = "q12")   ,  NA,
                       "Weekly steps score"                                                                                                                   , NA                                                              ,  chosen_proactive_cppac_steps_score_en(),
                       "Weekly VMU score"                                                                                                                     , NA                                                              ,  chosen_proactive_cppac_vmu_score_en()
                     )
@@ -3277,9 +3277,9 @@ app_server <- function(input, output, session) {
                     )
                 })
             
-              # ************
-              # Amount (raw)
-              # ************                
+              # **************
+              # Amount (rasch)
+              # **************                
                 output$infoBox_cppac_en_total_amount_rasch <- shinydashboard::renderValueBox({
                   
                   # Waiting for required conditions
@@ -3297,9 +3297,9 @@ app_server <- function(input, output, session) {
                     )
                 })
             
-             # ************
-             # Total (raw)
-             # ************
+             # *************
+             # Total (rasch)
+             # *************
                output$infoBox_cppac_en_total_all_rasch <- shinydashboard::renderValueBox({
                  
                  # Waiting for required conditions
@@ -3354,13 +3354,13 @@ app_server <- function(input, output, session) {
                     tibble::tribble(
                       ~Day,   ~Item                                                                                      ,~"Difficulty score"                                                            ,~"Amount score",
                       "Day 1", ""                                                                                        , NA                                                                              ,   NA,              
-                      "Day 1", "How much walking did you do outside today?"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d1_q1, question = "q1", language = "en"),
-                      "Day 1", "How many chores did you do outside the house today? "                                    , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d1_q2, question = "q2", language = "en"),
-                      "Day 1", "How much difficulty did you have getting dressed today?"                                 , compute_pro_score_dppac(input$dppac_EN_d1_q3, question = "q3", language = "en")     ,  NA,
-                      "Day 1", "How often did you avoid doing activities because of your lung problems today?"           , compute_pro_score_dppac(input$dppac_EN_d1_q4, question = "q4", language = "en")     ,  NA,
-                      "Day 1", "How breathless were you in general during your activities today?"                        , compute_pro_score_dppac(input$dppac_EN_d1_q5, question = "q5", language = "en")     ,  NA,
-                      "Day 1", "How tired were you in general during your activities today?"                             , compute_pro_score_dppac(input$dppac_EN_d1_q6, question = "q6", language = "en")     ,  NA,
-                      "Day 1", "How often did you have to take breaks during your physical activities today?"            , compute_pro_score_dppac(input$dppac_EN_d1_q7, question = "q7", language = "en")     ,  NA,
+                      "Day 1", "How much walking did you do outside today\u003f"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d1_q1, question = "q1", language = "en"),
+                      "Day 1", "How many chores did you do outside the house today\u003f "                                    , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d1_q2, question = "q2", language = "en"),
+                      "Day 1", "How much difficulty did you have getting dressed today\u003f"                                 , compute_pro_score_dppac(input$dppac_EN_d1_q3, question = "q3", language = "en")     ,  NA,
+                      "Day 1", "How often did you avoid doing activities because of your lung problems today\u003f"           , compute_pro_score_dppac(input$dppac_EN_d1_q4, question = "q4", language = "en")     ,  NA,
+                      "Day 1", "How breathless were you in general during your activities today\u003f"                        , compute_pro_score_dppac(input$dppac_EN_d1_q5, question = "q5", language = "en")     ,  NA,
+                      "Day 1", "How tired were you in general during your activities today\u003f"                             , compute_pro_score_dppac(input$dppac_EN_d1_q6, question = "q6", language = "en")     ,  NA,
+                      "Day 1", "How often did you have to take breaks during your physical activities today\u003f"            , compute_pro_score_dppac(input$dppac_EN_d1_q7, question = "q7", language = "en")     ,  NA,
                       "Day 1", "Weekly steps score"                                                                      , NA                                                                               ,  ifelse(table_gt3x_results_en()$Validity[1] == "Valid", table_gt3x_results_en()$Steps_score[1], NA),
                       "Day 1", "Weekly VMU score"                                                                        , NA                                                                               ,  ifelse(table_gt3x_results_en()$Validity[1] == "Valid", table_gt3x_results_en()$VMU_score[1], NA)
                     )  
@@ -3369,13 +3369,13 @@ app_server <- function(input, output, session) {
                     tibble::tribble(
                       ~Day,   ~Item                                                                                      ,~"Difficulty score"                                                            ,~"Amount score",
                       "Day 2", ""                                                                                        , NA                                                                                ,   NA,              
-                      "Day 2", "How much walking did you do outside today?"                                              , NA                                                                                ,  compute_pro_score_dppac(input$dppac_EN_d2_q1, question = "q1", language = "en"),
-                      "Day 2", "How many chores did you do outside the house today? "                                    , NA                                                                                ,  compute_pro_score_dppac(input$dppac_EN_d2_q2, question = "q2", language = "en"),
-                      "Day 2", "How much difficulty did you have getting dressed today?"                                 , compute_pro_score_dppac(input$dppac_EN_d2_q3, question = "q3", language = "en")   ,  NA,
-                      "Day 2", "How often did you avoid doing activities because of your lung problems today?"           , compute_pro_score_dppac(input$dppac_EN_d2_q4, question = "q4", language = "en")   ,  NA,
-                      "Day 2", "How breathless were you in general during your activities today?"                        , compute_pro_score_dppac(input$dppac_EN_d2_q5, question = "q5", language = "en")   ,  NA,
-                      "Day 2", "How tired were you in general during your activities today?"                             , compute_pro_score_dppac(input$dppac_EN_d2_q6, question = "q6", language = "en")   ,  NA,
-                      "Day 2", "How often did you have to take breaks during your physical activities today?"            , compute_pro_score_dppac(input$dppac_EN_d2_q7, question = "q7", language = "en")   ,  NA,
+                      "Day 2", "How much walking did you do outside today\u003f"                                              , NA                                                                                ,  compute_pro_score_dppac(input$dppac_EN_d2_q1, question = "q1", language = "en"),
+                      "Day 2", "How many chores did you do outside the house today\u003f "                                    , NA                                                                                ,  compute_pro_score_dppac(input$dppac_EN_d2_q2, question = "q2", language = "en"),
+                      "Day 2", "How much difficulty did you have getting dressed today\u003f"                                 , compute_pro_score_dppac(input$dppac_EN_d2_q3, question = "q3", language = "en")   ,  NA,
+                      "Day 2", "How often did you avoid doing activities because of your lung problems today\u003f"           , compute_pro_score_dppac(input$dppac_EN_d2_q4, question = "q4", language = "en")   ,  NA,
+                      "Day 2", "How breathless were you in general during your activities today\u003f"                        , compute_pro_score_dppac(input$dppac_EN_d2_q5, question = "q5", language = "en")   ,  NA,
+                      "Day 2", "How tired were you in general during your activities today\u003f"                             , compute_pro_score_dppac(input$dppac_EN_d2_q6, question = "q6", language = "en")   ,  NA,
+                      "Day 2", "How often did you have to take breaks during your physical activities today\u003f"            , compute_pro_score_dppac(input$dppac_EN_d2_q7, question = "q7", language = "en")   ,  NA,
                       "Day 2", "Weekly steps score"                                                                      , NA                                                                                ,  ifelse(table_gt3x_results_en()$Validity[2] == "Valid", table_gt3x_results_en()$Steps_score[2], NA),
                       "Day 2", "Weekly VMU score"                                                                        , NA                                                                                ,  ifelse(table_gt3x_results_en()$Validity[2] == "Valid", table_gt3x_results_en()$VMU_score[2], NA)
                     ) 
@@ -3384,13 +3384,13 @@ app_server <- function(input, output, session) {
                     tibble::tribble(
                       ~Day,   ~Item                                                                                      ,~"Difficulty score"                                                            ,~"Amount score",
                       "Day 3", ""                                                                                        , NA                                                                              ,   NA,              
-                      "Day 3", "How much walking did you do outside today?"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d3_q1, question = "q1", language = "en"),
-                      "Day 3", "How many chores did you do outside the house today? "                                    , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d3_q2, question = "q2", language = "en"),
-                      "Day 3", "How much difficulty did you have getting dressed today?"                                 , compute_pro_score_dppac(input$dppac_EN_d3_q3, question = "q3", language = "en")     ,  NA,
-                      "Day 3", "How often did you avoid doing activities because of your lung problems today?"           , compute_pro_score_dppac(input$dppac_EN_d3_q4, question = "q4", language = "en")     ,  NA,
-                      "Day 3", "How breathless were you in general during your activities today?"                        , compute_pro_score_dppac(input$dppac_EN_d3_q5, question = "q5", language = "en")     ,  NA,
-                      "Day 3", "How tired were you in general during your activities today?"                             , compute_pro_score_dppac(input$dppac_EN_d3_q6, question = "q6", language = "en")     ,  NA,
-                      "Day 3", "How often did you have to take breaks during your physical activities today?"            , compute_pro_score_dppac(input$dppac_EN_d3_q7, question = "q7", language = "en")     ,  NA,
+                      "Day 3", "How much walking did you do outside today\u003f"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d3_q1, question = "q1", language = "en"),
+                      "Day 3", "How many chores did you do outside the house today\u003f "                                    , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d3_q2, question = "q2", language = "en"),
+                      "Day 3", "How much difficulty did you have getting dressed today\u003f"                                 , compute_pro_score_dppac(input$dppac_EN_d3_q3, question = "q3", language = "en")     ,  NA,
+                      "Day 3", "How often did you avoid doing activities because of your lung problems today\u003f"           , compute_pro_score_dppac(input$dppac_EN_d3_q4, question = "q4", language = "en")     ,  NA,
+                      "Day 3", "How breathless were you in general during your activities today\u003f"                        , compute_pro_score_dppac(input$dppac_EN_d3_q5, question = "q5", language = "en")     ,  NA,
+                      "Day 3", "How tired were you in general during your activities today\u003f"                             , compute_pro_score_dppac(input$dppac_EN_d3_q6, question = "q6", language = "en")     ,  NA,
+                      "Day 3", "How often did you have to take breaks during your physical activities today\u003f"            , compute_pro_score_dppac(input$dppac_EN_d3_q7, question = "q7", language = "en")     ,  NA,
                       "Day 3", "Weekly steps score"                                                                      , NA                                                                               ,  ifelse(table_gt3x_results_en()$Validity[3] == "Valid", table_gt3x_results_en()$Steps_score[3], NA),
                       "Day 3", "Weekly VMU score"                                                                        , NA                                                                               ,  ifelse(table_gt3x_results_en()$Validity[3] == "Valid", table_gt3x_results_en()$VMU_score[3], NA)
                     ) 
@@ -3399,13 +3399,13 @@ app_server <- function(input, output, session) {
                     tibble::tribble(
                       ~Day,   ~Item                                                                                      ,~"Difficulty score"                                                            ,~"Amount score",
                       "Day 4", ""                                                                                        , NA                                                                              ,   NA,              
-                      "Day 4", "How much walking did you do outside today?"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d4_q1, question = "q1", language = "en"),
-                      "Day 4", "How many chores did you do outside the house today? "                                    , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d4_q2, question = "q2", language = "en"),
-                      "Day 4", "How much difficulty did you have getting dressed today?"                                 , compute_pro_score_dppac(input$dppac_EN_d4_q3, question = "q3", language = "en")     ,  NA,
-                      "Day 4", "How often did you avoid doing activities because of your lung problems today?"           , compute_pro_score_dppac(input$dppac_EN_d4_q4, question = "q4", language = "en")     ,  NA,
-                      "Day 4", "How breathless were you in general during your activities today?"                        , compute_pro_score_dppac(input$dppac_EN_d4_q5, question = "q5", language = "en")     ,  NA,
-                      "Day 4", "How tired were you in general during your activities today?"                             , compute_pro_score_dppac(input$dppac_EN_d4_q6, question = "q6", language = "en")     ,  NA,
-                      "Day 4", "How often did you have to take breaks during your physical activities today?"            , compute_pro_score_dppac(input$dppac_EN_d4_q7, question = "q7", language = "en")     ,  NA,
+                      "Day 4", "How much walking did you do outside today\u003f"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d4_q1, question = "q1", language = "en"),
+                      "Day 4", "How many chores did you do outside the house today\u003f "                                    , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d4_q2, question = "q2", language = "en"),
+                      "Day 4", "How much difficulty did you have getting dressed today\u003f"                                 , compute_pro_score_dppac(input$dppac_EN_d4_q3, question = "q3", language = "en")     ,  NA,
+                      "Day 4", "How often did you avoid doing activities because of your lung problems today\u003f"           , compute_pro_score_dppac(input$dppac_EN_d4_q4, question = "q4", language = "en")     ,  NA,
+                      "Day 4", "How breathless were you in general during your activities today\u003f"                        , compute_pro_score_dppac(input$dppac_EN_d4_q5, question = "q5", language = "en")     ,  NA,
+                      "Day 4", "How tired were you in general during your activities today\u003f"                             , compute_pro_score_dppac(input$dppac_EN_d4_q6, question = "q6", language = "en")     ,  NA,
+                      "Day 4", "How often did you have to take breaks during your physical activities today\u003f"            , compute_pro_score_dppac(input$dppac_EN_d4_q7, question = "q7", language = "en")     ,  NA,
                       "Day 4", "Weekly steps score"                                                                      , NA                                                                               ,  ifelse(table_gt3x_results_en()$Validity[4] == "Valid", table_gt3x_results_en()$Steps_score[4], NA),
                       "Day 4", "Weekly VMU score"                                                                        , NA                                                                               ,  ifelse(table_gt3x_results_en()$Validity[4] == "Valid", table_gt3x_results_en()$VMU_score[4], NA)
                     ) 
@@ -3413,13 +3413,13 @@ app_server <- function(input, output, session) {
                     tibble::tribble(
                       ~Day,   ~Item                                                                                      ,~"Difficulty score"                                                            ,~"Amount score",
                       "Day 5", ""                                                                                        , NA                                                                              ,   NA,              
-                      "Day 5", "How much walking did you do outside today?"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d5_q1, question = "q1", language = "en"),
-                      "Day 5", "How many chores did you do outside the house today? "                                    , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d5_q2, question = "q2", language = "en"),
-                      "Day 5", "How much difficulty did you have getting dressed today?"                                 , compute_pro_score_dppac(input$dppac_EN_d5_q3, question = "q3", language = "en")     ,  NA,
-                      "Day 5", "How often did you avoid doing activities because of your lung problems today?"           , compute_pro_score_dppac(input$dppac_EN_d5_q4, question = "q4", language = "en")     ,  NA,
-                      "Day 5", "How breathless were you in general during your activities today?"                        , compute_pro_score_dppac(input$dppac_EN_d5_q5, question = "q5", language = "en")     ,  NA,
-                      "Day 5", "How tired were you in general during your activities today?"                             , compute_pro_score_dppac(input$dppac_EN_d5_q6, question = "q6", language = "en")     ,  NA,
-                      "Day 5", "How often did you have to take breaks during your physical activities today?"            , compute_pro_score_dppac(input$dppac_EN_d5_q7, question = "q7", language = "en")     ,  NA,
+                      "Day 5", "How much walking did you do outside today\u003f"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d5_q1, question = "q1", language = "en"),
+                      "Day 5", "How many chores did you do outside the house today\u003f "                                    , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d5_q2, question = "q2", language = "en"),
+                      "Day 5", "How much difficulty did you have getting dressed today\u003f"                                 , compute_pro_score_dppac(input$dppac_EN_d5_q3, question = "q3", language = "en")     ,  NA,
+                      "Day 5", "How often did you avoid doing activities because of your lung problems today\u003f"           , compute_pro_score_dppac(input$dppac_EN_d5_q4, question = "q4", language = "en")     ,  NA,
+                      "Day 5", "How breathless were you in general during your activities today\u003f"                        , compute_pro_score_dppac(input$dppac_EN_d5_q5, question = "q5", language = "en")     ,  NA,
+                      "Day 5", "How tired were you in general during your activities today\u003f"                             , compute_pro_score_dppac(input$dppac_EN_d5_q6, question = "q6", language = "en")     ,  NA,
+                      "Day 5", "How often did you have to take breaks during your physical activities today\u003f"            , compute_pro_score_dppac(input$dppac_EN_d5_q7, question = "q7", language = "en")     ,  NA,
                       "Day 5", "Weekly steps score"                                                                      , NA                                                                               ,  ifelse(table_gt3x_results_en()$Validity[5] == "Valid", table_gt3x_results_en()$Steps_score[5], NA),
                       "Day 5", "Weekly VMU score"                                                                        , NA                                                                               ,  ifelse(table_gt3x_results_en()$Validity[5] == "Valid", table_gt3x_results_en()$VMU_score[5], NA)
                     )               
@@ -3427,13 +3427,13 @@ app_server <- function(input, output, session) {
                     tibble::tribble(
                       ~Day,   ~Item                                                                                      ,~"Difficulty score"                                                            ,~"Amount score",
                       "Day 6", ""                                                                                        , NA                                                                              ,   NA,              
-                      "Day 6", "How much walking did you do outside today?"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d6_q1, question = "q1", language = "en"),
-                      "Day 6", "How many chores did you do outside the house today? "                                    , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d6_q2, question = "q2", language = "en"),
-                      "Day 6", "How much difficulty did you have getting dressed today?"                                 , compute_pro_score_dppac(input$dppac_EN_d6_q3, question = "q3", language = "en")     ,  NA,
-                      "Day 6", "How often did you avoid doing activities because of your lung problems today?"           , compute_pro_score_dppac(input$dppac_EN_d6_q4, question = "q4", language = "en")     ,  NA,
-                      "Day 6", "How breathless were you in general during your activities today?"                        , compute_pro_score_dppac(input$dppac_EN_d6_q5, question = "q5", language = "en")     ,  NA,
-                      "Day 6", "How tired were you in general during your activities today?"                             , compute_pro_score_dppac(input$dppac_EN_d6_q6, question = "q6", language = "en")     ,  NA,
-                      "Day 6", "How often did you have to take breaks during your physical activities today?"            , compute_pro_score_dppac(input$dppac_EN_d6_q7, question = "q7", language = "en")     ,  NA,
+                      "Day 6", "How much walking did you do outside today\u003f"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d6_q1, question = "q1", language = "en"),
+                      "Day 6", "How many chores did you do outside the house today\u003f "                                    , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d6_q2, question = "q2", language = "en"),
+                      "Day 6", "How much difficulty did you have getting dressed today\u003f"                                 , compute_pro_score_dppac(input$dppac_EN_d6_q3, question = "q3", language = "en")     ,  NA,
+                      "Day 6", "How often did you avoid doing activities because of your lung problems today\u003f"           , compute_pro_score_dppac(input$dppac_EN_d6_q4, question = "q4", language = "en")     ,  NA,
+                      "Day 6", "How breathless were you in general during your activities today\u003f"                        , compute_pro_score_dppac(input$dppac_EN_d6_q5, question = "q5", language = "en")     ,  NA,
+                      "Day 6", "How tired were you in general during your activities today\u003f"                             , compute_pro_score_dppac(input$dppac_EN_d6_q6, question = "q6", language = "en")     ,  NA,
+                      "Day 6", "How often did you have to take breaks during your physical activities today\u003f"            , compute_pro_score_dppac(input$dppac_EN_d6_q7, question = "q7", language = "en")     ,  NA,
                       "Day 6", "Weekly steps score"                                                                      , NA                                                                               ,  ifelse(table_gt3x_results_en()$Validity[6] == "Valid", table_gt3x_results_en()$Steps_score[6], NA),
                       "Day 6", "Weekly VMU score"                                                                        , NA                                                                               ,  ifelse(table_gt3x_results_en()$Validity[6] == "Valid", table_gt3x_results_en()$VMU_score[6], NA)
                     ) 
@@ -3442,13 +3442,13 @@ app_server <- function(input, output, session) {
                     tibble::tribble(
                       ~Day,   ~Item                                                                                      ,~"Difficulty score"                                                            ,~"Amount score",
                       "Day 7", ""                                                                                        , NA                                                                              ,   NA,              
-                      "Day 7", "How much walking did you do outside today?"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d7_q1, question = "q1", language = "en"),
-                      "Day 7", "How many chores did you do outside the house today? "                                    , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d7_q2, question = "q2", language = "en"),
-                      "Day 7", "How much difficulty did you have getting dressed today?"                                 , compute_pro_score_dppac(input$dppac_EN_d7_q3, question = "q3", language = "en")     ,  NA,
-                      "Day 7", "How often did you avoid doing activities because of your lung problems today?"           , compute_pro_score_dppac(input$dppac_EN_d7_q4, question = "q4", language = "en")     ,  NA,
-                      "Day 7", "How breathless were you in general during your activities today?"                        , compute_pro_score_dppac(input$dppac_EN_d7_q5, question = "q5", language = "en")     ,  NA,
-                      "Day 7", "How tired were you in general during your activities today?"                             , compute_pro_score_dppac(input$dppac_EN_d7_q6, question = "q6", language = "en")     ,  NA,
-                      "Day 7", "How often did you have to take breaks during your physical activities today?"            , compute_pro_score_dppac(input$dppac_EN_d7_q7, question = "q7", language = "en")     ,  NA,
+                      "Day 7", "How much walking did you do outside today\u003f"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d7_q1, question = "q1", language = "en"),
+                      "Day 7", "How many chores did you do outside the house today\u003f "                                    , NA                                                                               ,  compute_pro_score_dppac(input$dppac_EN_d7_q2, question = "q2", language = "en"),
+                      "Day 7", "How much difficulty did you have getting dressed today\u003f"                                 , compute_pro_score_dppac(input$dppac_EN_d7_q3, question = "q3", language = "en")     ,  NA,
+                      "Day 7", "How often did you avoid doing activities because of your lung problems today\u003f"           , compute_pro_score_dppac(input$dppac_EN_d7_q4, question = "q4", language = "en")     ,  NA,
+                      "Day 7", "How breathless were you in general during your activities today\u003f"                        , compute_pro_score_dppac(input$dppac_EN_d7_q5, question = "q5", language = "en")     ,  NA,
+                      "Day 7", "How tired were you in general during your activities today\u003f"                             , compute_pro_score_dppac(input$dppac_EN_d7_q6, question = "q6", language = "en")     ,  NA,
+                      "Day 7", "How often did you have to take breaks during your physical activities today\u003f"            , compute_pro_score_dppac(input$dppac_EN_d7_q7, question = "q7", language = "en")     ,  NA,
                       "Day 7", "Weekly steps score"                                                                      , NA                                                                               ,  ifelse(table_gt3x_results_en()$Validity[7] == "Valid", table_gt3x_results_en()$Steps_score[7], NA),
                       "Day 7", "Weekly VMU score"                                                                        , NA                                                                               ,  ifelse(table_gt3x_results_en()$Validity[7] == "Valid", table_gt3x_results_en()$VMU_score[7], NA)
                     ) 
@@ -3644,7 +3644,7 @@ app_server <- function(input, output, session) {
                   req(!is.na(steps_score_cppac_median()) & !is.na(vmu_score_cppac_median()))
                 
                 # Choosing score
-                  if (input$cppac_FR_summary_metric == "Scores calculés à partir des MÉDIANES") {
+                  if (input$cppac_FR_summary_metric == "Scores calcul\u00e9s \u00e0 partir des M\u00c9DIANES") {
                     score <- steps_score_cppac_median()
                   } else {
                     score <- steps_score_cppac_mean()
@@ -3660,7 +3660,7 @@ app_server <- function(input, output, session) {
                   req(!is.na(steps_score_cppac_median()) & !is.na(vmu_score_cppac_median()))
                 
                 # Choosing score
-                  if (input$cppac_FR_summary_metric == "Scores calculés à partir des MÉDIANES") {
+                  if (input$cppac_FR_summary_metric == "Scores calcul\u00e9s \u00e0 partir des M\u00c9DIANES") {
                     score <- vmu_score_cppac_median()
                   } else {
                     score <- vmu_score_cppac_mean()
@@ -3678,21 +3678,21 @@ app_server <- function(input, output, session) {
                 # Building table
                   table <- 
                     tibble::tribble(
-                      ~Item                                                                                                                                             ,~"Score de difficulté"                                                            ,~"Score de quantité",
-                      "Au cours des 7 derniers jours, avez-vous marché à l’extérieur ?"                                                                                 , NA                                                                               ,  compute_pro_score_cppac(input$cppac_FR_q1, question = "q1", language = "fr"),
-                      "Au cours des 7 derniers jours, avez-vous effectué des tâches à l’extérieur ?"                                                                    , NA                                                                               ,  compute_pro_score_cppac(input$cppac_FR_q2, question = "q2", language = "fr"),
-                      "Au cours des 7 derniers jours, avez-vous eu des difficultés pour vous habiller ?"                                                                , compute_pro_score_cppac(input$cppac_FR_q3, question = "q3", language = "fr")     ,  NA,
-                      "Au cours des 7 derniers jours, avez-vous eu des difficultés pour sortir de chez vous ?"                                                          , compute_pro_score_cppac(input$cppac_FR_q4, question = "q4", language = "fr")     ,  NA,
-                      "Au cours des 7 derniers jours, avez-vous évité des activités à cause de vos problèmes respiratoires ?"                                           , compute_pro_score_cppac(input$cppac_FR_q5, question = "q5", language = "fr")     ,  NA,
-                      "Au cours des 7 derniers jours, étiez-vous essoufflé(e) en général durant vos activités ?"                                                        , compute_pro_score_cppac(input$cppac_FR_q6, question = "q6", language = "fr")     ,  NA,
-                      "Au cours des 7 derniers jours, avez-vous manqué de force pour effectuer des tâches à cause de vos problèmes respiratoires ?"                     , compute_pro_score_cppac(input$cppac_FR_q7, question = "q7", language = "fr")     ,  NA,
-                      "Au cours des 7 derniers jours, étiez-vous fatigué(e) en général durant vos activités ?"                                                          , compute_pro_score_cppac(input$cppac_FR_q8, question = "q8", language = "fr")     ,  NA,
-                      "Au cours des 7 derniers jours, avez-vous dû faire des pauses pendant vos activités physiques ?"                                                  , compute_pro_score_cppac(input$cppac_FR_q9, question = "q9", language = "fr")     ,  NA,
-                      "Au cours des 7 derniers jours, étiez-vous essoufflé(e) lors de la marche sur terrain plat, à l’intérieur et à l’extérieur ?"                     , compute_pro_score_cppac(input$cppac_FR_q10, question = "q10", language = "fr")   ,  NA,
-                      "Au cours des 7 derniers jours, combien de temps vous a-t-il fallu pour récupérer de vos activités physiques ?"                                   , compute_pro_score_cppac(input$cppac_FR_q11, question = "q11", language = "fr")   ,  NA,
-                      "Au cours des 7 derniers jours, avez-vous eu besoin de prendre en compte vos problèmes respiratoires lorsque vous avez planifié vos activités ?"  , compute_pro_score_cppac(input$cppac_FR_q12, question = "q12", language = "fr")   ,  NA,
-                      "Score de pas hebdomadaire"                                                                                                                       , NA                                                                               ,  chosen_proactive_cppac_steps_score_fr(),
-                      "Score VMU hebdomadaire"                                                                                                                          , NA                                                                               ,  chosen_proactive_cppac_vmu_score_fr()
+                      ~Item                                                                                                                                                                      ,~"Score de difficult\u00e9"                                                       ,~"Score de quantit\u00e9",
+                      "Au cours des 7 derniers jours, avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur \u003f"                                                                                 , NA                                                                               ,  compute_pro_score_cppac(input$cppac_FR_q1, question = "q1", language = "fr"),
+                      "Au cours des 7 derniers jours, avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur \u003f"                                                               , NA                                                                               ,  compute_pro_score_cppac(input$cppac_FR_q2, question = "q2", language = "fr"),
+                      "Au cours des 7 derniers jours, avez-vous eu des difficult\u00e9s pour vous habiller \u003f"                                                                               , compute_pro_score_cppac(input$cppac_FR_q3, question = "q3", language = "fr")     ,  NA,
+                      "Au cours des 7 derniers jours, avez-vous eu des difficult\u00e9s pour sortir de chez vous \u003f"                                                                         , compute_pro_score_cppac(input$cppac_FR_q4, question = "q4", language = "fr")     ,  NA,
+                      "Au cours des 7 derniers jours, avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires \u003f"                                      , compute_pro_score_cppac(input$cppac_FR_q5, question = "q5", language = "fr")     ,  NA,
+                      "Au cours des 7 derniers jours, \u00e9tiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s \u003f"                                                   , compute_pro_score_cppac(input$cppac_FR_q6, question = "q6", language = "fr")     ,  NA,
+                      "Au cours des 7 derniers jours, avez-vous manqu\u00e9 de force pour effectuer des t\u00e2ches \u00e0 cause de vos probl\u00e8mes respiratoires \u003f"                     , compute_pro_score_cppac(input$cppac_FR_q7, question = "q7", language = "fr")     ,  NA,
+                      "Au cours des 7 derniers jours, \u00e9tiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s \u003f"                                                     , compute_pro_score_cppac(input$cppac_FR_q8, question = "q8", language = "fr")     ,  NA,
+                      "Au cours des 7 derniers jours, avez-vous d\u00fb faire des pauses pendant vos activit\u00e9s physiques \u003f"                                                            , compute_pro_score_cppac(input$cppac_FR_q9, question = "q9", language = "fr")     ,  NA,
+                      "Au cours des 7 derniers jours, \u00e9tiez-vous essouffl\u00e9(e) lors de la marche sur terrain plat, \u00e0 l\u2019int\u00e9rieur et \u00e0 l\u2019ext\u00e9rieur \u003f" , compute_pro_score_cppac(input$cppac_FR_q10, question = "q10", language = "fr")   ,  NA,
+                      "Au cours des 7 derniers jours, combien de temps vous a-t-il fallu pour r\u00e9cup\u00e9rer de vos activit\u00e9s physiques \u003f"                                        , compute_pro_score_cppac(input$cppac_FR_q11, question = "q11", language = "fr")   ,  NA,
+                      "Au cours des 7 derniers jours, avez-vous eu besoin de prendre en compte vos probl\u00e8mes respiratoires lorsque vous avez planifi\u00e9 vos activit\u00e9s \u003f"       , compute_pro_score_cppac(input$cppac_FR_q12, question = "q12", language = "fr")   ,  NA,
+                      "Score de pas hebdomadaire"                                                                                                                                                , NA                                                                               ,  chosen_proactive_cppac_steps_score_fr(),
+                      "Score VMU hebdomadaire"                                                                                                                                                   , NA                                                                               ,  chosen_proactive_cppac_vmu_score_fr()
                     )
  
               return(table)
@@ -3712,8 +3712,8 @@ app_server <- function(input, output, session) {
                   defaultColDef = reactable::colDef(align = "center"),
                   columns = list(
                     Item = reactable::colDef(align = "left"),
-                    "Score de difficulté" = reactable::colDef(width = 80),
-                    "Score de quantité" = reactable::colDef(width = 80)
+                    "Score de difficult\u00e9" = reactable::colDef(width = 80),
+                    "Score de quantit\u00e9" = reactable::colDef(width = 80)
                   ),
                   defaultPageSize = 17,
                   striped = TRUE
@@ -3732,8 +3732,8 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(sum(tab_cppac_summary_fr()$"Score de difficulté", na.rm = TRUE), " / 40"), style = "color: white;"),
-                    "Score de difficulté (brut)", icon = NULL,
+                    tags$h3(paste0(sum(tab_cppac_summary_fr()$"Score de difficult\u00e9", na.rm = TRUE), " / 40"), style = "color: white;"),
+                    "Score de difficult\u00e9 (brut)", icon = NULL,
                     color = "aqua",
                     width = 4
                   )
@@ -3749,8 +3749,8 @@ app_server <- function(input, output, session) {
                  
                  # Box
                  shinydashboard::valueBox(
-                   tags$h3(paste0(sum(tab_cppac_summary_fr()$"Score de quantité", na.rm = TRUE), " / 15"), style = "color: white;"), 
-                   "Score de quantité (brut)", icon = NULL,
+                   tags$h3(paste0(sum(tab_cppac_summary_fr()$"Score de quantit\u00e9", na.rm = TRUE), " / 15"), style = "color: white;"), 
+                   "Score de quantit\u00e9 (brut)", icon = NULL,
                    color = "teal",
                    width = 4
                  )
@@ -3766,7 +3766,7 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(sum(tab_cppac_summary_fr()$"Score de difficulté", na.rm = TRUE) + sum(tab_cppac_summary_fr()$"Score de quantité", na.rm = TRUE), " / 55"),  style = "color: white;"), 
+                    tags$h3(paste0(sum(tab_cppac_summary_fr()$"Score de difficult\u00e9", na.rm = TRUE) + sum(tab_cppac_summary_fr()$"Score de quantit\u00e9", na.rm = TRUE), " / 55"),  style = "color: white;"), 
                     "Score total (brut)",  icon = NULL,
                     color = "purple",
                     width = 4
@@ -3784,10 +3784,10 @@ app_server <- function(input, output, session) {
                 # Box
                   shinydashboard::valueBox(
                     tags$h3(paste0(rasch_transform(
-                      x = sum(tab_cppac_summary_fr()$"Score de difficulté", na.rm = TRUE),
+                      x = sum(tab_cppac_summary_fr()$"Score de difficult\u00e9", na.rm = TRUE),
                       quest = "C-PPAC",
                       score = "difficulty"), " / 100"), style = "color: white;"),
-                    "Score de difficulté (Rasch)", icon = NULL,
+                    "Score de difficult\u00e9 (Rasch)", icon = NULL,
                     color = "aqua",
                     width = 4
                   )
@@ -3804,10 +3804,10 @@ app_server <- function(input, output, session) {
                 # Box 
                  shinydashboard::valueBox(
                    tags$h3(paste0(rasch_transform(
-                     x = sum(tab_cppac_summary_fr()$"Score de quantité", na.rm = TRUE),
+                     x = sum(tab_cppac_summary_fr()$"Score de quantit\u00e9", na.rm = TRUE),
                      quest = "C-PPAC",
                      score = "quantity"), " / 100"), style = "color: white;"), 
-                   "Score de quantité (Rasch)", icon = NULL,
+                   "Score de quantit\u00e9 (Rasch)", icon = NULL,
                    color = "teal",
                    width = 4
                  )
@@ -3825,8 +3825,8 @@ app_server <- function(input, output, session) {
                 # Box 
                   shinydashboard::valueBox(
                     tags$h3(paste0(
-                      round((rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de difficulté", na.rm = TRUE), quest = "C-PPAC", score = "difficulty") +
-                               rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de quantité", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1),
+                      round((rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de difficult\u00e9", na.rm = TRUE), quest = "C-PPAC", score = "difficulty") +
+                               rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de quantit\u00e9", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1),
                       " / 100"),  style = "color: white;"), 
                     "Score total (Rasch)",  icon = NULL,
                     color = "purple",
@@ -3869,107 +3869,107 @@ app_server <- function(input, output, session) {
                    # Making 7 tables (each for one assessment day)
                      table_day1 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                      ,~"Score de difficulté"                                                            ,~"Score de quantité",
-                         "Jour 1", ""                                                                                         , NA                                                                              ,   NA,              
-                         "Jour 1", "Avez-vous marché à l’extérieur aujourd’hui ?"                                             , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d1_q1, question = "q1", language = "fr"),
-                         "Jour 1", "Avez-vous effectué des tâches à l’extérieur aujourd’hui ?"                                , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d1_q2, question = "q2", language = "fr"),
-                         "Jour 1", "Avez-vous eu des difficultés pour vous habiller aujourd’hui ?"                            , compute_pro_score_dppac(input$dppac_FR_d1_q3, question = "q3", language = "fr")     ,  NA,
-                         "Jour 1", "Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?"       , compute_pro_score_dppac(input$dppac_FR_d1_q4, question = "q4", language = "fr")     ,  NA,
-                         "Jour 1", "Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?"                    , compute_pro_score_dppac(input$dppac_FR_d1_q5, question = "q5", language = "fr")     ,  NA,
-                         "Jour 1", "Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?"                      , compute_pro_score_dppac(input$dppac_FR_d1_q6, question = "q6", language = "fr")     ,  NA,
-                         "Jour 1", "Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?"              , compute_pro_score_dppac(input$dppac_FR_d1_q7, question = "q7", language = "fr")     ,  NA,
-                         "Jour 1", "Score de pas hebdomadaire"                                                                , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[1] == "Valid", table_gt3x_results_fr()$Steps_score[1], NA),
-                         "Jour 1", "Score VMU hebdomadaire"                                                                   , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[1] == "Valid", table_gt3x_results_fr()$VMU_score[1], NA)
+                         ~Jour,   ~Item                                                                                                                      ,~"Score de difficult\u00e9"                                                       ,~"Score de quantit\u00e9",
+                         "Jour 1", ""                                                                                                                        , NA                                                                               ,   NA,              
+                         "Jour 1", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d1_q1, question = "q1", language = "fr"),
+                         "Jour 1", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                            , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d1_q2, question = "q2", language = "fr"),
+                         "Jour 1", "Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f"                                            , compute_pro_score_dppac(input$dppac_FR_d1_q3, question = "q3", language = "fr")  ,  NA,
+                         "Jour 1", "Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f"   , compute_pro_score_dppac(input$dppac_FR_d1_q4, question = "q4", language = "fr")  ,  NA,
+                         "Jour 1", "Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                     , compute_pro_score_dppac(input$dppac_FR_d1_q5, question = "q5", language = "fr")  ,  NA,
+                         "Jour 1", "Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                       , compute_pro_score_dppac(input$dppac_FR_d1_q6, question = "q6", language = "fr")  ,  NA,
+                         "Jour 1", "Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f"                              , compute_pro_score_dppac(input$dppac_FR_d1_q7, question = "q7", language = "fr")  ,  NA,
+                         "Jour 1", "Score de pas hebdomadaire"                                                                                               , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[1] == "Valid", table_gt3x_results_fr()$Steps_score[1], NA),
+                         "Jour 1", "Score VMU hebdomadaire"                                                                                                  , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[1] == "Valid", table_gt3x_results_fr()$VMU_score[1], NA)
                        )  
                      
                      table_day2 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                      ,~"Score de difficulté"                                                            ,~"Score de quantité",
-                         "Jour 2", ""                                                                                         , NA                                                                              ,   NA,              
-                         "Jour 2", "Avez-vous marché à l’extérieur aujourd’hui ?"                                             , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d2_q1, question = "q1", language = "fr"),
-                         "Jour 2", "Avez-vous effectué des tâches à l’extérieur aujourd’hui ?"                                , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d2_q2, question = "q2", language = "fr"),
-                         "Jour 2", "Avez-vous eu des difficultés pour vous habiller aujourd’hui ?"                            , compute_pro_score_dppac(input$dppac_FR_d2_q3, question = "q3", language = "fr")     ,  NA,
-                         "Jour 2", "Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?"       , compute_pro_score_dppac(input$dppac_FR_d2_q4, question = "q4", language = "fr")     ,  NA,
-                         "Jour 2", "Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?"                    , compute_pro_score_dppac(input$dppac_FR_d2_q5, question = "q5", language = "fr")     ,  NA,
-                         "Jour 2", "Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?"                      , compute_pro_score_dppac(input$dppac_FR_d2_q6, question = "q6", language = "fr")     ,  NA,
-                         "Jour 2", "Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?"              , compute_pro_score_dppac(input$dppac_FR_d2_q7, question = "q7", language = "fr")     ,  NA,
-                         "Jour 2", "Score de pas hebdomadaire"                                                                , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[2] == "Valid", table_gt3x_results_fr()$Steps_score[2], NA),
-                         "Jour 2", "Score VMU hebdomadaire"                                                                   , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[2] == "Valid", table_gt3x_results_fr()$VMU_score[2], NA)
+                         ~Jour,   ~Item                                                                                                                        ,~"Score de difficult\u00e9"                                                          ,~"Score de quantit\u00e9",
+                         "Jour 2", ""                                                                                                                          , NA                                                                                  ,   NA,              
+                         "Jour 2", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                                , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d2_q1, question = "q1", language = "fr"),
+                         "Jour 2", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                              , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d2_q2, question = "q2", language = "fr"),
+                         "Jour 2", "Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f"                                              , compute_pro_score_dppac(input$dppac_FR_d2_q3, question = "q3", language = "fr")     ,  NA,
+                         "Jour 2", "Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f"     , compute_pro_score_dppac(input$dppac_FR_d2_q4, question = "q4", language = "fr")     ,  NA,
+                         "Jour 2", "Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                       , compute_pro_score_dppac(input$dppac_FR_d2_q5, question = "q5", language = "fr")     ,  NA,
+                         "Jour 2", "Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                         , compute_pro_score_dppac(input$dppac_FR_d2_q6, question = "q6", language = "fr")     ,  NA,
+                         "Jour 2", "Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f"                                , compute_pro_score_dppac(input$dppac_FR_d2_q7, question = "q7", language = "fr")     ,  NA,
+                         "Jour 2", "Score de pas hebdomadaire"                                                                                                 , NA                                                                                  ,  ifelse(table_gt3x_results_fr()$Validity[2] == "Valid", table_gt3x_results_fr()$Steps_score[2], NA),
+                         "Jour 2", "Score VMU hebdomadaire"                                                                                                    , NA                                                                                  ,  ifelse(table_gt3x_results_fr()$Validity[2] == "Valid", table_gt3x_results_fr()$VMU_score[2], NA)
                        ) 
                      
                      table_day3 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                      ,~"Score de difficulté"                                                            ,~"Score de quantité",
-                         "Jour 3", ""                                                                                         , NA                                                                              ,   NA,              
-                         "Jour 3", "Avez-vous marché à l’extérieur aujourd’hui ?"                                             , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d3_q1, question = "q1", language = "fr"),
-                         "Jour 3", "Avez-vous effectué des tâches à l’extérieur aujourd’hui ?"                                , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d3_q2, question = "q2", language = "fr"),
-                         "Jour 3", "Avez-vous eu des difficultés pour vous habiller aujourd’hui ?"                            , compute_pro_score_dppac(input$dppac_FR_d3_q3, question = "q3", language = "fr")     ,  NA,
-                         "Jour 3", "Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?"       , compute_pro_score_dppac(input$dppac_FR_d3_q4, question = "q4", language = "fr")     ,  NA,
-                         "Jour 3", "Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?"                    , compute_pro_score_dppac(input$dppac_FR_d3_q5, question = "q5", language = "fr")     ,  NA,
-                         "Jour 3", "Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?"                      , compute_pro_score_dppac(input$dppac_FR_d3_q6, question = "q6", language = "fr")     ,  NA,
-                         "Jour 3", "Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?"              , compute_pro_score_dppac(input$dppac_FR_d3_q7, question = "q7", language = "fr")     ,  NA,
-                         "Jour 3", "Score de pas hebdomadaire"                                                                , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[3] == "Valid", table_gt3x_results_fr()$Steps_score[3], NA),
-                         "Jour 3", "Score VMU hebdomadaire"                                                                   , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[3] == "Valid", table_gt3x_results_fr()$VMU_score[3], NA)
+                         ~Jour,   ~Item                                                                                                                      ,~"Score de difficult\u00e9"                                                          ,~"Score de quantit\u00e9",
+                         "Jour 3", ""                                                                                                                        , NA                                                                                  ,   NA,              
+                         "Jour 3", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                              , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d3_q1, question = "q1", language = "fr"),
+                         "Jour 3", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                            , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d3_q2, question = "q2", language = "fr"),
+                         "Jour 3", "Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f"                                            , compute_pro_score_dppac(input$dppac_FR_d3_q3, question = "q3", language = "fr")     ,  NA,
+                         "Jour 3", "Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f"   , compute_pro_score_dppac(input$dppac_FR_d3_q4, question = "q4", language = "fr")     ,  NA,
+                         "Jour 3", "Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                     , compute_pro_score_dppac(input$dppac_FR_d3_q5, question = "q5", language = "fr")     ,  NA,
+                         "Jour 3", "Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                       , compute_pro_score_dppac(input$dppac_FR_d3_q6, question = "q6", language = "fr")     ,  NA,
+                         "Jour 3", "Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f"                              , compute_pro_score_dppac(input$dppac_FR_d3_q7, question = "q7", language = "fr")     ,  NA,
+                         "Jour 3", "Score de pas hebdomadaire"                                                                                               , NA                                                                                  ,  ifelse(table_gt3x_results_fr()$Validity[3] == "Valid", table_gt3x_results_fr()$Steps_score[3], NA),
+                         "Jour 3", "Score VMU hebdomadaire"                                                                                                  , NA                                                                                  ,  ifelse(table_gt3x_results_fr()$Validity[3] == "Valid", table_gt3x_results_fr()$VMU_score[3], NA)
                        ) 
                      
                      table_day4 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                      ,~"Score de difficulté"                                                            ,~"Score de quantité",
-                         "Jour 4", ""                                                                                         , NA                                                                              ,   NA,              
-                         "Jour 4", "Avez-vous marché à l’extérieur aujourd’hui ?"                                             , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d4_q1, question = "q1", language = "fr"),
-                         "Jour 4", "Avez-vous effectué des tâches à l’extérieur aujourd’hui ?"                                , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d4_q2, question = "q2", language = "fr"),
-                         "Jour 4", "Avez-vous eu des difficultés pour vous habiller aujourd’hui ?"                            , compute_pro_score_dppac(input$dppac_FR_d4_q3, question = "q3", language = "fr")     ,  NA,
-                         "Jour 4", "Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?"       , compute_pro_score_dppac(input$dppac_FR_d4_q4, question = "q4", language = "fr")     ,  NA,
-                         "Jour 4", "Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?"                    , compute_pro_score_dppac(input$dppac_FR_d4_q5, question = "q5", language = "fr")     ,  NA,
-                         "Jour 4", "Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?"                      , compute_pro_score_dppac(input$dppac_FR_d4_q6, question = "q6", language = "fr")     ,  NA,
-                         "Jour 4", "Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?"              , compute_pro_score_dppac(input$dppac_FR_d4_q7, question = "q7", language = "fr")     ,  NA,
-                         "Jour 4", "Score de pas hebdomadaire"                                                                , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[4] == "Valid", table_gt3x_results_fr()$Steps_score[4], NA),
-                         "Jour 4", "Score VMU hebdomadaire"                                                                   , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[4] == "Valid", table_gt3x_results_fr()$VMU_score[4], NA)
+                         ~Jour,   ~Item                                                                                                                     ,~"Score de difficult\u00e9"                                                          ,~"Score de quantit\u00e9",
+                         "Jour 4", ""                                                                                                                       , NA                                                                                  ,   NA,              
+                         "Jour 4", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                             , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d4_q1, question = "q1", language = "fr"),
+                         "Jour 4", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                           , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d4_q2, question = "q2", language = "fr"),
+                         "Jour 4", "Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f"                                           , compute_pro_score_dppac(input$dppac_FR_d4_q3, question = "q3", language = "fr")     ,  NA,
+                         "Jour 4", "Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f"  , compute_pro_score_dppac(input$dppac_FR_d4_q4, question = "q4", language = "fr")     ,  NA,
+                         "Jour 4", "Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                    , compute_pro_score_dppac(input$dppac_FR_d4_q5, question = "q5", language = "fr")     ,  NA,
+                         "Jour 4", "Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                      , compute_pro_score_dppac(input$dppac_FR_d4_q6, question = "q6", language = "fr")     ,  NA,
+                         "Jour 4", "Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f"                             , compute_pro_score_dppac(input$dppac_FR_d4_q7, question = "q7", language = "fr")     ,  NA,
+                         "Jour 4", "Score de pas hebdomadaire"                                                                                              , NA                                                                                  ,  ifelse(table_gt3x_results_fr()$Validity[4] == "Valid", table_gt3x_results_fr()$Steps_score[4], NA),
+                         "Jour 4", "Score VMU hebdomadaire"                                                                                                 , NA                                                                                  ,  ifelse(table_gt3x_results_fr()$Validity[4] == "Valid", table_gt3x_results_fr()$VMU_score[4], NA)
                        ) 
                      
                      table_day5 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                      ,~"Score de difficulté"                                                            ,~"Score de quantité",
-                         "Jour 5", ""                                                                                         , NA                                                                              ,   NA,              
-                         "Jour 5", "Avez-vous marché à l’extérieur aujourd’hui ?"                                             , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d5_q1, question = "q1", language = "fr"),
-                         "Jour 5", "Avez-vous effectué des tâches à l’extérieur aujourd’hui ?"                                , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d5_q2, question = "q2", language = "fr"),
-                         "Jour 5", "Avez-vous eu des difficultés pour vous habiller aujourd’hui ?"                            , compute_pro_score_dppac(input$dppac_FR_d5_q3, question = "q3", language = "fr")     ,  NA,
-                         "Jour 5", "Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?"       , compute_pro_score_dppac(input$dppac_FR_d5_q4, question = "q4", language = "fr")     ,  NA,
-                         "Jour 5", "Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?"                    , compute_pro_score_dppac(input$dppac_FR_d5_q5, question = "q5", language = "fr")     ,  NA,
-                         "Jour 5", "Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?"                      , compute_pro_score_dppac(input$dppac_FR_d5_q6, question = "q6", language = "fr")     ,  NA,
-                         "Jour 5", "Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?"              , compute_pro_score_dppac(input$dppac_FR_d5_q7, question = "q7", language = "fr")     ,  NA,
-                         "Jour 5", "Score de pas hebdomadaire"                                                                , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[5] == "Valid", table_gt3x_results_fr()$Steps_score[5], NA),
-                         "Jour 5", "Score VMU hebdomadaire"                                                                   , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[5] == "Valid", table_gt3x_results_fr()$VMU_score[5], NA)
+                         ~Jour,   ~Item                                                                                                                      ,~"Score de difficult\u00e9"                                                          ,~"Score de quantit\u00e9",
+                         "Jour 5", ""                                                                                                                        , NA                                                                                  ,   NA,              
+                         "Jour 5", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                              , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d5_q1, question = "q1", language = "fr"),
+                         "Jour 5", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                            , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d5_q2, question = "q2", language = "fr"),
+                         "Jour 5", "Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f"                                            , compute_pro_score_dppac(input$dppac_FR_d5_q3, question = "q3", language = "fr")     ,  NA,
+                         "Jour 5", "Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f"   , compute_pro_score_dppac(input$dppac_FR_d5_q4, question = "q4", language = "fr")     ,  NA,
+                         "Jour 5", "Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                     , compute_pro_score_dppac(input$dppac_FR_d5_q5, question = "q5", language = "fr")     ,  NA,
+                         "Jour 5", "Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                       , compute_pro_score_dppac(input$dppac_FR_d5_q6, question = "q6", language = "fr")     ,  NA,
+                         "Jour 5", "Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f"                              , compute_pro_score_dppac(input$dppac_FR_d5_q7, question = "q7", language = "fr")     ,  NA,
+                         "Jour 5", "Score de pas hebdomadaire"                                                                                               , NA                                                                                  ,  ifelse(table_gt3x_results_fr()$Validity[5] == "Valid", table_gt3x_results_fr()$Steps_score[5], NA),
+                         "Jour 5", "Score VMU hebdomadaire"                                                                                                  , NA                                                                                  ,  ifelse(table_gt3x_results_fr()$Validity[5] == "Valid", table_gt3x_results_fr()$VMU_score[5], NA)
                        ) 
                      
                      table_day6 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                      ,~"Score de difficulté"                                                            ,~"Score de quantité",
-                         "Jour 6", ""                                                                                         , NA                                                                              ,   NA,              
-                         "Jour 6", "Avez-vous marché à l’extérieur aujourd’hui ?"                                             , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d6_q1, question = "q1", language = "fr"),
-                         "Jour 6", "Avez-vous effectué des tâches à l’extérieur aujourd’hui ?"                                , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d6_q2, question = "q2", language = "fr"),
-                         "Jour 6", "Avez-vous eu des difficultés pour vous habiller aujourd’hui ?"                            , compute_pro_score_dppac(input$dppac_FR_d6_q3, question = "q3", language = "fr")     ,  NA,
-                         "Jour 6", "Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?"       , compute_pro_score_dppac(input$dppac_FR_d6_q4, question = "q4", language = "fr")     ,  NA,
-                         "Jour 6", "Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?"                    , compute_pro_score_dppac(input$dppac_FR_d6_q5, question = "q5", language = "fr")     ,  NA,
-                         "Jour 6", "Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?"                      , compute_pro_score_dppac(input$dppac_FR_d6_q6, question = "q6", language = "fr")     ,  NA,
-                         "Jour 6", "Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?"              , compute_pro_score_dppac(input$dppac_FR_d6_q7, question = "q7", language = "fr")     ,  NA,
-                         "Jour 6", "Score de pas hebdomadaire"                                                                , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[6] == "Valid", table_gt3x_results_fr()$Steps_score[6], NA),
-                         "Jour 6", "Score VMU hebdomadaire"                                                                   , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[6] == "Valid", table_gt3x_results_fr()$VMU_score[6], NA)
+                         ~Jour,   ~Item                                                                                                                       ,~"Score de difficult\u00e9"                                                          ,~"Score de quantit\u00e9",
+                         "Jour 6", ""                                                                                                                         , NA                                                                                  ,   NA,              
+                         "Jour 6", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                               , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d6_q1, question = "q1", language = "fr"),
+                         "Jour 6", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                             , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d6_q2, question = "q2", language = "fr"),
+                         "Jour 6", "Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f"                                             , compute_pro_score_dppac(input$dppac_FR_d6_q3, question = "q3", language = "fr")     ,  NA,
+                         "Jour 6", "Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f"    , compute_pro_score_dppac(input$dppac_FR_d6_q4, question = "q4", language = "fr")     ,  NA,
+                         "Jour 6", "Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                      , compute_pro_score_dppac(input$dppac_FR_d6_q5, question = "q5", language = "fr")     ,  NA,
+                         "Jour 6", "Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                        , compute_pro_score_dppac(input$dppac_FR_d6_q6, question = "q6", language = "fr")     ,  NA,
+                         "Jour 6", "Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f"                               , compute_pro_score_dppac(input$dppac_FR_d6_q7, question = "q7", language = "fr")     ,  NA,
+                         "Jour 6", "Score de pas hebdomadaire"                                                                                                , NA                                                                                  ,  ifelse(table_gt3x_results_fr()$Validity[6] == "Valid", table_gt3x_results_fr()$Steps_score[6], NA),
+                         "Jour 6", "Score VMU hebdomadaire"                                                                                                   , NA                                                                                  ,  ifelse(table_gt3x_results_fr()$Validity[6] == "Valid", table_gt3x_results_fr()$VMU_score[6], NA)
                        ) 
                      
                      table_day7 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                      ,~"Score de difficulté"                                                            ,~"Score de quantité",
-                         "Jour 7", ""                                                                                         , NA                                                                              ,   NA,              
-                         "Jour 7", "Avez-vous marché à l’extérieur aujourd’hui ?"                                             , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d7_q1, question = "q1", language = "fr"),
-                         "Jour 7", "Avez-vous effectué des tâches à l’extérieur aujourd’hui ?"                                , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d7_q2, question = "q2", language = "fr"),
-                         "Jour 7", "Avez-vous eu des difficultés pour vous habiller aujourd’hui ?"                            , compute_pro_score_dppac(input$dppac_FR_d7_q3, question = "q3", language = "fr")     ,  NA,
-                         "Jour 7", "Avez-vous évité des activités à cause de vos problèmes respiratoires aujourd’hui ?"       , compute_pro_score_dppac(input$dppac_FR_d7_q4, question = "q4", language = "fr")     ,  NA,
-                         "Jour 7", "Etiez-vous essoufflé(e) en général durant vos activités aujourd’hui ?"                    , compute_pro_score_dppac(input$dppac_FR_d7_q5, question = "q5", language = "fr")     ,  NA,
-                         "Jour 7", "Etiez-vous fatigué(e) en général durant vos activités aujourd’hui ?"                      , compute_pro_score_dppac(input$dppac_FR_d7_q6, question = "q6", language = "fr")     ,  NA,
-                         "Jour 7", "Avez-vous du faire des pauses pendant vos activités physiques aujourd’hui ?"              , compute_pro_score_dppac(input$dppac_FR_d7_q7, question = "q7", language = "fr")     ,  NA,
-                         "Jour 7", "Score de pas hebdomadaire"                                                                , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[7] == "Valid", table_gt3x_results_fr()$Steps_score[7], NA),
-                         "Jour 7", "Score VMU hebdomadaire"                                                                   , NA                                                                               ,  ifelse(table_gt3x_results_fr()$Validity[7] == "Valid", table_gt3x_results_fr()$VMU_score[7], NA)
+                         ~Jour,   ~Item                                                                                                                       ,~"Score de difficult\u00e9"                                                          ,~"Score de quantit\u00e9",
+                         "Jour 7", ""                                                                                                                         , NA                                                                                  ,  NA,              
+                         "Jour 7", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                               , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d7_q1, question = "q1", language = "fr"),
+                         "Jour 7", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                             , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d7_q2, question = "q2", language = "fr"),
+                         "Jour 7", "Avez-vous eu des difficult\u00e9s pour vous habiller aujourd\u2019hui \u003f"                                             , compute_pro_score_dppac(input$dppac_FR_d7_q3, question = "q3", language = "fr")     ,  NA,
+                         "Jour 7", "Avez-vous \u00e9vit\u00e9 des activit\u00e9s \u00e0 cause de vos probl\u00e8mes respiratoires aujourd\u2019hui \u003f"    , compute_pro_score_dppac(input$dppac_FR_d7_q4, question = "q4", language = "fr")     ,  NA,
+                         "Jour 7", "Etiez-vous essouffl\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                      , compute_pro_score_dppac(input$dppac_FR_d7_q5, question = "q5", language = "fr")     ,  NA,
+                         "Jour 7", "Etiez-vous fatigu\u00e9(e) en g\u00e9n\u00e9ral durant vos activit\u00e9s aujourd\u2019hui \u003f"                        , compute_pro_score_dppac(input$dppac_FR_d7_q6, question = "q6", language = "fr")     ,  NA,
+                         "Jour 7", "Avez-vous du faire des pauses pendant vos activit\u00e9s physiques aujourd\u2019hui \u003f"                               , compute_pro_score_dppac(input$dppac_FR_d7_q7, question = "q7", language = "fr")     ,  NA,
+                         "Jour 7", "Score de pas hebdomadaire"                                                                                                , NA                                                                                  ,  ifelse(table_gt3x_results_fr()$Validity[7] == "Valid", table_gt3x_results_fr()$Steps_score[7], NA),
+                         "Jour 7", "Score VMU hebdomadaire"                                                                                                   , NA                                                                                  ,  ifelse(table_gt3x_results_fr()$Validity[7] == "Valid", table_gt3x_results_fr()$VMU_score[7], NA)
                        ) 
                  # Combining all tables  
                    table_all_days <- 
@@ -3990,7 +3990,7 @@ app_server <- function(input, output, session) {
                     tab_dppac_summary_fr(),
                     rowStyle = function(index) {
                       
-                      if ((tab_dppac_summary_fr()[index, "Item"] %in% c("Score de pas hebdomadaire", "Score VMU hebdomadaire")) && is.na(tab_dppac_summary_fr()[index, "Score de quantité"])) {
+                      if ((tab_dppac_summary_fr()[index, "Item"] %in% c("Score de pas hebdomadaire", "Score VMU hebdomadaire")) && is.na(tab_dppac_summary_fr()[index, "Score de quantit\u00e9"])) {
                         list(background = "#FF6666")
                       } else if (tab_dppac_summary_fr()[index, "Item"] == "") {
                         list(background = "grey", color = "white", fontWeight = "bold")
@@ -4002,8 +4002,8 @@ app_server <- function(input, output, session) {
                     columns = list(
                       Item = reactable::colDef(align = "left"),
                       "Jour" = reactable::colDef(width = 60),
-                      "Score de difficulté" = reactable::colDef(width = 80),
-                      "Score de quantité" = reactable::colDef(width = 80)
+                      "Score de difficult\u00e9" = reactable::colDef(width = 80),
+                      "Score de quantit\u00e9" = reactable::colDef(width = 80)
                       
                     ),
                     defaultPageSize = 70,
@@ -4025,8 +4025,8 @@ app_server <- function(input, output, session) {
                      dplyr::mutate(score_type = rep(c("", "quant", "quant", "diff", "diff", "diff", "diff", "diff", "quant", "quant"), 7)) %>%
                      dplyr::group_by(Jour, score_type) %>%
                      dplyr::filter(Item != "") %>%
-                     dplyr::summarise(difficulty_score_raw = sum(.data[["Score de difficulté"]], na.rm = TRUE),
-                                      amount_score_raw = sum(.data[["Score de quantité"]])
+                     dplyr::summarise(difficulty_score_raw = sum(.data[["Score de difficult\u00e9"]], na.rm = TRUE),
+                                      amount_score_raw = sum(.data[["Score de quantit\u00e9"]])
                                       ) %>%
                      tidyr::pivot_wider(values_from = c(difficulty_score_raw, amount_score_raw), names_from = score_type ) %>%
                      dplyr::filter(!is.na(amount_score_raw_quant)) %>%
@@ -4060,7 +4060,7 @@ app_server <- function(input, output, session) {
                 # Box
                   shinydashboard::valueBox(
                     tags$h3(paste0(round(recap_ddpac_fr()$mean_difficulty_score_raw[1], 1), " / 20"), style = "color: white;"),
-                    "Score de difficulté moyen (brut)", icon = NULL,
+                    "Score de difficult\u00e9 moyen (brut)", icon = NULL,
                     color = "aqua",
                     width = 4
                   )
@@ -4077,7 +4077,7 @@ app_server <- function(input, output, session) {
                 # Box
                   shinydashboard::valueBox(
                     tags$h3(paste0(round(recap_ddpac_fr()$mean_amount_score_raw[1], 1), " / 17"), style = "color: white;"), 
-                    "Score de quantité moyen (brut)", icon = NULL,
+                    "Score de quantit\u00e9 moyen (brut)", icon = NULL,
                     color = "teal",
                     width = 4
                   )
@@ -4112,7 +4112,7 @@ app_server <- function(input, output, session) {
                 # Box
                   shinydashboard::valueBox(
                     tags$h3(paste0(round(recap_ddpac_fr()$mean_difficulty_score_rasch[1], 1), " / 100"), style = "color: white;"),
-                    "Score de difficulté moyen (Rasch)", icon = NULL,
+                    "Score de difficult\u00e9 moyen (Rasch)", icon = NULL,
                     color = "aqua",
                     width = 4
                   )
@@ -4130,7 +4130,7 @@ app_server <- function(input, output, session) {
                 # Box
                   shinydashboard::valueBox(
                     tags$h3(paste0(round(recap_ddpac_fr()$mean_amount_score_rasch[1], 1), " / 100"), style = "color: white;"), 
-                    "Score de quantité moyen (Rasch)", icon = NULL,
+                    "Score de quantit\u00e9 moyen (Rasch)", icon = NULL,
                     color = "teal",
                     width = 4
                   )
@@ -4456,7 +4456,7 @@ app_server <- function(input, output, session) {
   observeEvent(input$reset, {
     
     modal_confirm <- modalDialog(
-      "Are you sure you want to reset the app?",
+      "Are you sure you want to reset the app\u003f",
       title = "Reset app",
       footer = tagList(
         actionButton("cancel", "Cancel"),
@@ -4529,7 +4529,7 @@ app_server <- function(input, output, session) {
     })
     
   # Exporting plot showing nonwear/wear time
-    observeEvent(input$Run, {
+    observeEvent(input$validate, {
       shiny::exportTestValues(gg_plot_data = plot_data(data = df(), metric = input$Metric))
     })
     
@@ -4554,6 +4554,21 @@ app_server <- function(input, output, session) {
     observeEvent(input$Run, {
       shiny::exportTestValues(BMR = bmr_kcal_d())
     })
+    
+  # Exporting PROactive accelerometer scores for C-PPAC
+    observeEvent(input$get_cppac_summary_en, {
+      shiny::exportTestValues(score_cppac_diff_en = sum(tab_cppac_summary_en()$"Difficulty score", na.rm = TRUE))
+      shiny::exportTestValues(score_cppac_quant_en = sum(tab_cppac_summary_en()$"Amount score", na.rm = TRUE))
+      shiny::exportTestValues(score_cppac_tot_rasch_en = round((rasch_transform(x = sum(tab_cppac_summary_en()$"Difficulty score", na.rm = TRUE), quest = "C-PPAC", score = "difficulty") +
+                                                               rasch_transform(x = sum(tab_cppac_summary_en()$"Amount score", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1))    })
+    
+    observeEvent(input$get_cppac_summary_fr, {
+      shiny::exportTestValues(score_cppac_diff_fr = sum(tab_cppac_summary_fr()$"Score de difficult\u00e9", na.rm = TRUE))
+      shiny::exportTestValues(score_cppac_quant_fr = sum(tab_cppac_summary_fr()$"Score de quantit\u00e9", na.rm = TRUE))
+      shiny::exportTestValues(score_cppac_tot_rasch_fr = round((rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de difficult\u00e9", na.rm = TRUE), quest = "C-PPAC", score = "difficulty") +
+                                                                  rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de quantit\u00e9", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1))                         
+      shiny::exportTestValues(score_test =  compute_pro_score_cppac(input$cppac_FR_q1, question = "q1", language = "fr"))
+      })
       
 }
 
