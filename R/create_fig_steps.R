@@ -56,7 +56,8 @@ language <- match.arg(language)
     dplyr::mutate(label =  forcats::fct_relevel(label, "Adults (20-65 ans)", 
                                                 "Healthy older adults (65+ yr)", 
                                                 "People with disability \n and/or chronic illness")) 
-
+  band_color <- scales::seq_gradient_pal("white", "blue")(seq(0,1,length.out=6))
+  
 # Creating figure 
   if (language == "en") {
     
@@ -76,7 +77,7 @@ language <- match.arg(language)
     scale_y_continuous(limits = c(0, 18000),
                        labels = as.character(c(0, 2500, 5000, 7500, 10000, 12500, 18000)), 
                        breaks = c(0, 2500, 5000, 7500, 10000, 12500, 18000)) +
-    scale_fill_brewer(palette="Blues") +
+    scale_fill_manual(values = band_color)  +
     scale_color_brewer(palette="Dark2") +
     theme_bw() +
     coord_flip(expand = FALSE) +
@@ -124,7 +125,7 @@ language <- match.arg(language)
       scale_y_continuous(limits = c(0, 18000),
                          labels = as.character(c(0, 2500, 5000, 7500, 10000, 12500, 18000)), 
                          breaks = c(0, 2500, 5000, 7500, 10000, 12500, 18000)) +
-      scale_fill_brewer(palette="Blues") +
+      scale_fill_manual(values = band_color)  +
       scale_color_brewer(palette="Dark2") +
       theme_bw() +
       coord_flip(expand = FALSE) +

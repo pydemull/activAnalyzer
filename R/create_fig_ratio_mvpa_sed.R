@@ -80,7 +80,7 @@ if (language == "en") {
              curvature = .5, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
     annotate("text", label = "Ref: Chastin et al. J Phys Act Health 2021, 18 (6), 631\u2013637", hjust = 0, x = 0.005, y = 0.15)
-  
+
   return(g_ratio)
 }
   
@@ -124,7 +124,7 @@ if (language == "fr") {
              curvature = .5, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
     annotate("text", label = "R\u00e9f: Chastin et al. J Phys Act Health 2021, 18 (6), 631\u2013637", hjust = 0, x = 0.005, y = 0.15)
-  
+
   return(g_ratio)
   
   }

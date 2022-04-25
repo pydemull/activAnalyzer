@@ -44,6 +44,7 @@ language <- match.arg(language)
   
 # Creating figure
 if (language == "en") {
+  
   g_mvpa <-
     ggplot() +
     geom_ribbon(data = grid_mvpa, aes(x = x, y = up, ymin = low, ymax = up), fill = "grey95") +
@@ -94,7 +95,7 @@ if (language == "en") {
              curvature = -.4, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
     annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1, y = 0.265)
-  
+
   return(g_mvpa)
 }
   
@@ -150,7 +151,7 @@ if (language == "fr") {
              curvature = -.4, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
     annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1, y = 0.265)
-  
+
   return(g_mvpa)
   
   }

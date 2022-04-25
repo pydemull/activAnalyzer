@@ -29,21 +29,22 @@ language <- match.arg(language)
   model_sed_low <- loess(y ~ x, data = sed_lines %>% dplyr::filter(line == "low"), 
                          control = loess.control(surface = "direct"))
   
-  grid_sed <-
+    grid_sed <-
     sed_lines %>%
     modelr::data_grid(
       x = seq(1, 15, 0.1),
     ) %>%
     modelr::spread_predictions(model_sed, model_sed_up, model_sed_low) %>%
     dplyr::rename(mid = model_sed, up = model_sed_up, low = model_sed_low)
-  
+
 # Getting data for plotting patient's result  
   
   score_sed <- data.frame(x = score / 60) %>% 
     modelr::add_predictions(model_sed)
   
 # Creating figure
-if (language == "en") {  
+if (language == "en") { 
+  
   g_sed <-
     ggplot() +
     geom_ribbon(data = grid_sed, aes(x = x, y = up, ymin = low, ymax = up), fill = "grey95") +
@@ -87,7 +88,7 @@ if (language == "en") {
              curvature = .5, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
     annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1.2, y = 0.387)
-  
+
   return(g_sed)
   
   }
@@ -137,7 +138,7 @@ if (language == "fr") {
              curvature = .5, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
     annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1.2, y = 0.387)
-  
+
   return(g_sed)
   
   }

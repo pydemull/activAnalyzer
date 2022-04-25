@@ -3678,7 +3678,7 @@ app_server <- function(input, output, session) {
                 # Building table
                   table <- 
                     tibble::tribble(
-                      ~Item                                                                                                                                                                      ,~"Score de difficult\u00e9"                                                       ,~"Score de quantit\u00e9",
+                      ~Item                                                                                                                                                                      ,~"Score de difficult\xc3\xa9"                                                       ,~"Score de quantit\xc3\xa9",
                       "Au cours des 7 derniers jours, avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur \u003f"                                                                                 , NA                                                                               ,  compute_pro_score_cppac(input$cppac_FR_q1, question = "q1", language = "fr"),
                       "Au cours des 7 derniers jours, avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur \u003f"                                                               , NA                                                                               ,  compute_pro_score_cppac(input$cppac_FR_q2, question = "q2", language = "fr"),
                       "Au cours des 7 derniers jours, avez-vous eu des difficult\u00e9s pour vous habiller \u003f"                                                                               , compute_pro_score_cppac(input$cppac_FR_q3, question = "q3", language = "fr")     ,  NA,
@@ -3712,8 +3712,8 @@ app_server <- function(input, output, session) {
                   defaultColDef = reactable::colDef(align = "center"),
                   columns = list(
                     Item = reactable::colDef(align = "left"),
-                    "Score de difficult\u00e9" = reactable::colDef(width = 80),
-                    "Score de quantit\u00e9" = reactable::colDef(width = 80)
+                    "Score de difficult\xc3\xa9" = reactable::colDef(width = 80),
+                    "Score de quantit\xc3\xa9" = reactable::colDef(width = 80)
                   ),
                   defaultPageSize = 17,
                   striped = TRUE
@@ -3732,8 +3732,8 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(sum(tab_cppac_summary_fr()$"Score de difficult\u00e9", na.rm = TRUE), " / 40"), style = "color: white;"),
-                    "Score de difficult\u00e9 (brut)", icon = NULL,
+                    tags$h3(paste0(sum(tab_cppac_summary_fr()$"Score de difficult\xc3\xa9", na.rm = TRUE), " / 40"), style = "color: white;"),
+                    "Score de difficult\xc3\xa9 (brut)", icon = NULL,
                     color = "aqua",
                     width = 4
                   )
@@ -3749,8 +3749,8 @@ app_server <- function(input, output, session) {
                  
                  # Box
                  shinydashboard::valueBox(
-                   tags$h3(paste0(sum(tab_cppac_summary_fr()$"Score de quantit\u00e9", na.rm = TRUE), " / 15"), style = "color: white;"), 
-                   "Score de quantit\u00e9 (brut)", icon = NULL,
+                   tags$h3(paste0(sum(tab_cppac_summary_fr()$"Score de quantit\xc3\xa9", na.rm = TRUE), " / 15"), style = "color: white;"), 
+                   "Score de quantit\xc3\xa9 (brut)", icon = NULL,
                    color = "teal",
                    width = 4
                  )
@@ -3766,7 +3766,7 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(sum(tab_cppac_summary_fr()$"Score de difficult\u00e9", na.rm = TRUE) + sum(tab_cppac_summary_fr()$"Score de quantit\u00e9", na.rm = TRUE), " / 55"),  style = "color: white;"), 
+                    tags$h3(paste0(sum(tab_cppac_summary_fr()$"Score de difficult\xc3\xa9", na.rm = TRUE) + sum(tab_cppac_summary_fr()$"Score de quantit\xc3\xa9", na.rm = TRUE), " / 55"),  style = "color: white;"), 
                     "Score total (brut)",  icon = NULL,
                     color = "purple",
                     width = 4
@@ -3784,10 +3784,10 @@ app_server <- function(input, output, session) {
                 # Box
                   shinydashboard::valueBox(
                     tags$h3(paste0(rasch_transform(
-                      x = sum(tab_cppac_summary_fr()$"Score de difficult\u00e9", na.rm = TRUE),
+                      x = sum(tab_cppac_summary_fr()$"Score de difficult\xc3\xa9", na.rm = TRUE),
                       quest = "C-PPAC",
                       score = "difficulty"), " / 100"), style = "color: white;"),
-                    "Score de difficult\u00e9 (Rasch)", icon = NULL,
+                    "Score de difficult\xc3\xa9 (Rasch)", icon = NULL,
                     color = "aqua",
                     width = 4
                   )
@@ -3804,10 +3804,10 @@ app_server <- function(input, output, session) {
                 # Box 
                  shinydashboard::valueBox(
                    tags$h3(paste0(rasch_transform(
-                     x = sum(tab_cppac_summary_fr()$"Score de quantit\u00e9", na.rm = TRUE),
+                     x = sum(tab_cppac_summary_fr()$"Score de quantit\xc3\xa9", na.rm = TRUE),
                      quest = "C-PPAC",
                      score = "quantity"), " / 100"), style = "color: white;"), 
-                   "Score de quantit\u00e9 (Rasch)", icon = NULL,
+                   "Score de quantit\xc3\xa9 (Rasch)", icon = NULL,
                    color = "teal",
                    width = 4
                  )
@@ -3825,8 +3825,8 @@ app_server <- function(input, output, session) {
                 # Box 
                   shinydashboard::valueBox(
                     tags$h3(paste0(
-                      round((rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de difficult\u00e9", na.rm = TRUE), quest = "C-PPAC", score = "difficulty") +
-                               rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de quantit\u00e9", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1),
+                      round((rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de difficult\xc3\xa9", na.rm = TRUE), quest = "C-PPAC", score = "difficulty") +
+                               rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de quantit\xc3\xa9", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1),
                       " / 100"),  style = "color: white;"), 
                     "Score total (Rasch)",  icon = NULL,
                     color = "purple",
@@ -3869,7 +3869,7 @@ app_server <- function(input, output, session) {
                    # Making 7 tables (each for one assessment day)
                      table_day1 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                                                      ,~"Score de difficult\u00e9"                                                       ,~"Score de quantit\u00e9",
+                         ~Jour,   ~Item                                                                                                                      ,~"Score de difficult\xc3\xa9"                                                       ,~"Score de quantit\xc3\xa9",
                          "Jour 1", ""                                                                                                                        , NA                                                                               ,   NA,              
                          "Jour 1", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                              , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d1_q1, question = "q1", language = "fr"),
                          "Jour 1", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                            , NA                                                                               ,  compute_pro_score_dppac(input$dppac_FR_d1_q2, question = "q2", language = "fr"),
@@ -3884,7 +3884,7 @@ app_server <- function(input, output, session) {
                      
                      table_day2 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                                                        ,~"Score de difficult\u00e9"                                                          ,~"Score de quantit\u00e9",
+                         ~Jour,   ~Item                                                                                                                        ,~"Score de difficult\xc3\xa9"                                                          ,~"Score de quantit\xc3\xa9",
                          "Jour 2", ""                                                                                                                          , NA                                                                                  ,   NA,              
                          "Jour 2", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                                , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d2_q1, question = "q1", language = "fr"),
                          "Jour 2", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                              , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d2_q2, question = "q2", language = "fr"),
@@ -3899,7 +3899,7 @@ app_server <- function(input, output, session) {
                      
                      table_day3 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                                                      ,~"Score de difficult\u00e9"                                                          ,~"Score de quantit\u00e9",
+                         ~Jour,   ~Item                                                                                                                      ,~"Score de difficult\xc3\xa9"                                                          ,~"Score de quantit\xc3\xa9",
                          "Jour 3", ""                                                                                                                        , NA                                                                                  ,   NA,              
                          "Jour 3", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                              , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d3_q1, question = "q1", language = "fr"),
                          "Jour 3", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                            , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d3_q2, question = "q2", language = "fr"),
@@ -3914,7 +3914,7 @@ app_server <- function(input, output, session) {
                      
                      table_day4 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                                                     ,~"Score de difficult\u00e9"                                                          ,~"Score de quantit\u00e9",
+                         ~Jour,   ~Item                                                                                                                     ,~"Score de difficult\xc3\xa9"                                                          ,~"Score de quantit\xc3\xa9",
                          "Jour 4", ""                                                                                                                       , NA                                                                                  ,   NA,              
                          "Jour 4", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                             , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d4_q1, question = "q1", language = "fr"),
                          "Jour 4", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                           , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d4_q2, question = "q2", language = "fr"),
@@ -3929,7 +3929,7 @@ app_server <- function(input, output, session) {
                      
                      table_day5 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                                                      ,~"Score de difficult\u00e9"                                                          ,~"Score de quantit\u00e9",
+                         ~Jour,   ~Item                                                                                                                      ,~"Score de difficult\xc3\xa9"                                                          ,~"Score de quantit\xc3\xa9",
                          "Jour 5", ""                                                                                                                        , NA                                                                                  ,   NA,              
                          "Jour 5", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                              , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d5_q1, question = "q1", language = "fr"),
                          "Jour 5", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                            , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d5_q2, question = "q2", language = "fr"),
@@ -3944,7 +3944,7 @@ app_server <- function(input, output, session) {
                      
                      table_day6 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                                                       ,~"Score de difficult\u00e9"                                                          ,~"Score de quantit\u00e9",
+                         ~Jour,   ~Item                                                                                                                       ,~"Score de difficult\xc3\xa9"                                                          ,~"Score de quantit\xc3\xa9",
                          "Jour 6", ""                                                                                                                         , NA                                                                                  ,   NA,              
                          "Jour 6", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                               , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d6_q1, question = "q1", language = "fr"),
                          "Jour 6", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                             , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d6_q2, question = "q2", language = "fr"),
@@ -3959,7 +3959,7 @@ app_server <- function(input, output, session) {
                      
                      table_day7 <- 
                        tibble::tribble(
-                         ~Jour,   ~Item                                                                                                                       ,~"Score de difficult\u00e9"                                                          ,~"Score de quantit\u00e9",
+                         ~Jour,   ~Item                                                                                                                       ,~"Score de difficult\xc3\xa9"                                                          ,~"Score de quantit\xc3\xa9",
                          "Jour 7", ""                                                                                                                         , NA                                                                                  ,  NA,              
                          "Jour 7", "Avez-vous march\u00e9 \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                                               , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d7_q1, question = "q1", language = "fr"),
                          "Jour 7", "Avez-vous effectu\u00e9 des t\u00e2ches \u00e0 l\u2019ext\u00e9rieur aujourd\u2019hui \u003f"                             , NA                                                                                  ,  compute_pro_score_dppac(input$dppac_FR_d7_q2, question = "q2", language = "fr"),
@@ -3990,7 +3990,7 @@ app_server <- function(input, output, session) {
                     tab_dppac_summary_fr(),
                     rowStyle = function(index) {
                       
-                      if ((tab_dppac_summary_fr()[index, "Item"] %in% c("Score de pas hebdomadaire", "Score VMU hebdomadaire")) && is.na(tab_dppac_summary_fr()[index, "Score de quantit\u00e9"])) {
+                      if ((tab_dppac_summary_fr()[index, "Item"] %in% c("Score de pas hebdomadaire", "Score VMU hebdomadaire")) && is.na(tab_dppac_summary_fr()[index, "Score de quantit\xc3\xa9"])) {
                         list(background = "#FF6666")
                       } else if (tab_dppac_summary_fr()[index, "Item"] == "") {
                         list(background = "grey", color = "white", fontWeight = "bold")
@@ -4002,8 +4002,8 @@ app_server <- function(input, output, session) {
                     columns = list(
                       Item = reactable::colDef(align = "left"),
                       "Jour" = reactable::colDef(width = 60),
-                      "Score de difficult\u00e9" = reactable::colDef(width = 80),
-                      "Score de quantit\u00e9" = reactable::colDef(width = 80)
+                      "Score de difficult\xc3\xa9" = reactable::colDef(width = 80),
+                      "Score de quantit\xc3\xa9" = reactable::colDef(width = 80)
                       
                     ),
                     defaultPageSize = 70,
@@ -4025,8 +4025,8 @@ app_server <- function(input, output, session) {
                      dplyr::mutate(score_type = rep(c("", "quant", "quant", "diff", "diff", "diff", "diff", "diff", "quant", "quant"), 7)) %>%
                      dplyr::group_by(Jour, score_type) %>%
                      dplyr::filter(Item != "") %>%
-                     dplyr::summarise(difficulty_score_raw = sum(.data[["Score de difficult\u00e9"]], na.rm = TRUE),
-                                      amount_score_raw = sum(.data[["Score de quantit\u00e9"]])
+                     dplyr::summarise(difficulty_score_raw = sum(.data[["Score de difficult\xc3\xa9"]], na.rm = TRUE),
+                                      amount_score_raw = sum(.data[["Score de quantit\xc3\xa9"]])
                                       ) %>%
                      tidyr::pivot_wider(values_from = c(difficulty_score_raw, amount_score_raw), names_from = score_type ) %>%
                      dplyr::filter(!is.na(amount_score_raw_quant)) %>%
@@ -4060,7 +4060,7 @@ app_server <- function(input, output, session) {
                 # Box
                   shinydashboard::valueBox(
                     tags$h3(paste0(round(recap_ddpac_fr()$mean_difficulty_score_raw[1], 1), " / 20"), style = "color: white;"),
-                    "Score de difficult\u00e9 moyen (brut)", icon = NULL,
+                    "Score de difficult\xc3\xa9 moyen (brut)", icon = NULL,
                     color = "aqua",
                     width = 4
                   )
@@ -4077,7 +4077,7 @@ app_server <- function(input, output, session) {
                 # Box
                   shinydashboard::valueBox(
                     tags$h3(paste0(round(recap_ddpac_fr()$mean_amount_score_raw[1], 1), " / 17"), style = "color: white;"), 
-                    "Score de quantit\u00e9 moyen (brut)", icon = NULL,
+                    "Score de quantit\xc3\xa9 moyen (brut)", icon = NULL,
                     color = "teal",
                     width = 4
                   )
@@ -4112,7 +4112,7 @@ app_server <- function(input, output, session) {
                 # Box
                   shinydashboard::valueBox(
                     tags$h3(paste0(round(recap_ddpac_fr()$mean_difficulty_score_rasch[1], 1), " / 100"), style = "color: white;"),
-                    "Score de difficult\u00e9 moyen (Rasch)", icon = NULL,
+                    "Score de difficult\xc3\xa9 moyen (Rasch)", icon = NULL,
                     color = "aqua",
                     width = 4
                   )
@@ -4130,7 +4130,7 @@ app_server <- function(input, output, session) {
                 # Box
                   shinydashboard::valueBox(
                     tags$h3(paste0(round(recap_ddpac_fr()$mean_amount_score_rasch[1], 1), " / 100"), style = "color: white;"), 
-                    "Score de quantit\u00e9 moyen (Rasch)", icon = NULL,
+                    "Score de quantit\xc3\xa9 moyen (Rasch)", icon = NULL,
                     color = "teal",
                     width = 4
                   )
@@ -4563,11 +4563,10 @@ app_server <- function(input, output, session) {
                                                                rasch_transform(x = sum(tab_cppac_summary_en()$"Amount score", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1))    })
     
     observeEvent(input$get_cppac_summary_fr, {
-      shiny::exportTestValues(score_cppac_diff_fr = sum(tab_cppac_summary_fr()$"Score de difficult\u00e9", na.rm = TRUE))
-      shiny::exportTestValues(score_cppac_quant_fr = sum(tab_cppac_summary_fr()$"Score de quantit\u00e9", na.rm = TRUE))
-      shiny::exportTestValues(score_cppac_tot_rasch_fr = round((rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de difficult\u00e9", na.rm = TRUE), quest = "C-PPAC", score = "difficulty") +
-                                                                  rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de quantit\u00e9", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1))                         
-      shiny::exportTestValues(score_test =  compute_pro_score_cppac(input$cppac_FR_q1, question = "q1", language = "fr"))
+      shiny::exportTestValues(score_cppac_diff_fr = sum(tab_cppac_summary_fr()$"Score de difficult\xc3\xa9", na.rm = TRUE))
+      shiny::exportTestValues(score_cppac_quant_fr = sum(tab_cppac_summary_fr()$"Score de quantit\xc3\xa9", na.rm = TRUE))
+      shiny::exportTestValues(score_cppac_tot_rasch_fr = round((rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de difficult\xc3\xa9", na.rm = TRUE), quest = "C-PPAC", score = "difficulty") +
+                                                                  rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de quantit\xc3\xa9", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1))                         
       })
       
 }

@@ -34,7 +34,8 @@ There are three different ways to use the activAnalyzer app:
 install.packages("devtools")
 devtools::install_github("pydemull/activAnalyzer")
 
-# Code for installing the TinyTex distribution 
+# Code for installing the TinyTex distribution
+install.packages("tinytex")
 tinytex::install_tinytex()
 ```
 

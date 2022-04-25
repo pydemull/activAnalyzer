@@ -21,7 +21,6 @@ Imports:
     modelr (>= 0.1.8),
     patchwork (>= 1.1.1),
     PhysicalActivity,
-    RColorBrewer,
     reactable (>= 0.2.3),
     rmarkdown (>= 2.11),
     RSQLite,
@@ -33,7 +32,6 @@ Imports:
     shinyjs (>= 2.0.0),
     stringr (>= 1.4.0),
     tidyr (>= 1.1.4),
-    tinytex (>= 0.35),
     zoo
 Encoding: UTF-8
 LazyData: true
@@ -58,7 +56,8 @@ Suggests:
     pkgload,
     scales,
     tibble,
-    rlang
+    rlang,
+    tinytex
 Language: en-US
 Depends: R (>= 3.4.0)
 Config/testthat/edition: 3

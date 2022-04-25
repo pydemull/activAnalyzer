@@ -9,6 +9,7 @@
 * Replaced for loop by vectorization to detect bouts in the data file with the mark_intensity() function.
 * Removed actigraph.sleepr from the DESCRIPTION file and added the read_agd.R file (from the actigraph.sleepr package) as additionnal file into the activAnalyzer package.
 * The Reset button is now at the top of the app.
+* Removed two dependencies (RColorBrewer, tinytex)
 
 # activAnalyzer 0.4.1
 * Updated calculations for PROactive accelerometer scores (previous calculations actually were appropriate when using the means of the days of the measurement, not the medians). Now the app allows to compute scores from both medians and means of the days of the measurement (see references in the documentation for further details).

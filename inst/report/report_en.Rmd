@@ -51,7 +51,6 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, echo = FALSE)
 library(magrittr)
 library(ggplot2)
 library(patchwork)
-library(RColorBrewer)
 
 df1_means <- params$results_summary_means
 df1_medians <- params$results_summary_medians
