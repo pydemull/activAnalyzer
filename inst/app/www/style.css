@@ -1,23 +1,162 @@
 /* navbar */
 .skin-blue .main-header .navbar {
-    background-color: #337ab7;
+    background-color: #3F51B5;
 }
 
 .skin-blue .main-header .logo {
-    background-color: #337ab7;
+    background-color: #3F51B5;
 }
 
-/* Section titles */
+.sidebar {
+  position: fixed;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.main-header {
+  position: fixed;
+  width:100%;
+}
+
+.content {
+  padding-top: 60px;
+}
+
+
+/* Section Titles */
 h2 {
   font-weight: bold; 
   font-size: 30px; 
   color: #FDFEFE;
-  background-color: #337ab7;
+  background-color: #3F51B5;
   padding: 0.3em;
 }
 
 h3 {
   font-weight: bold; 
   font-size: 20px; 
-  color: #337ab7;
+  color: #3F51B5;
+}
+
+/* Buttons */
+.btn-proactive {
+  color: #fff; 
+  background-color: #9C2780; 
+  border-color: #6A1B9A;
+  padding: 12px;
+}
+
+.btn-proactive:hover {
+  color: #fff; 
+  background-color: #3F51B5; 
+  border-color: #3F51B5;
+  padding: 12px;
+}
+
+.btn-report {
+  color: #3F51B5; 
+  background-color: #FFEB3B;
+  border-color: #FFEB3B; 
+  padding: 12px;
+}
+
+.btn-report:hover {
+  color: #fff;
+  background-color: #3F51B5;
+  border-color: #3F51B5; 
+  padding: 12px;
+}
+
+.btn-return {
+  color: #3F51B5; 
+  background-color: #fff; 
+  border-color: #3F51B5;
+  padding: 12px;
+}
+
+.btn-return:hover {
+  color: #fff; 
+  background-color: #3F51B5; 
+  border-color: #3F51B5;
+  padding: 12px;
+}
+
+.btn-refresh {
+  color: #fff; 
+  background-color: red; 
+  border-color: red;
+  padding: 12px;
+  padding-top: 15px; 
+  padding-bottom: 15px; 
+  padding-right: 15px;
+  border-radius: 0%;
+}
+
+.btn-refresh:hover {
+  color: #fff; 
+  background-color: red; 
+  border-color: red;
+  padding: 12px;
+  padding-top: 15px; 
+  padding-bottom: 15px; 
+  padding-right: 15px;
+  border-radius: 0%;
+}
+
+.btn-secondary {
+  color: #3F51B5; 
+  background-color: #fff; 
+  border-color: #3F51B5;
+  padding: 12px;
+}
+
+.btn-secondary:hover {
+  color: #fff; 
+  background-color: #3F51B5; 
+  border-color: #3F51B5;
+  padding: 12px;
+}
+
+.btn-validate {
+  color: #fff; 
+  background-color: #4CAF50; 
+  border-color: #4CAF50;
+  padding: 12px;
+}
+
+.btn-validate:hover {
+  color: #fff; 
+  background-color: #3F51B5; 
+  border-color: #3F51B5;
+  padding: 12px;
+}
+
+/* Well Boxes */
+.well{
+  border-color: #3F51B5;
+}
+
+/* Tab Panels Titles */
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #fff;
+    cursor: default;
+    background-color: #3F51B5;
+    border: 1px solid #3F51B5;
+    border-bottom-color: transparent;
+    font-weight: bold;
+}
+
+a {
+  color: #3F51B5;
+}
+
+.control-label {
+  color: #3F51B5;
+  font-weight: bold;
+}
+
+
+/* Footer */
+.main-footer {
+      background-color: #ECEFF1;
 }

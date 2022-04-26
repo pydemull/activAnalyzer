@@ -445,7 +445,7 @@ app_server <- function(input, output, session) {
       } else {
         equations_mets %>% 
           dplyr::filter(Study == input$equation_mets) %>%
-          reactable::reactable(striped = TRUE,
+          reactable::reactable(striped = TRUE, bordered = TRUE,
                     list('Study' = reactable::colDef(minWidth = 80),
                          'Population' = reactable::colDef(minWidth = 60),
                          'Activities performed' = reactable::colDef(minWidth = 60),
@@ -469,7 +469,7 @@ app_server <- function(input, output, session) {
      } else {
        sed_cutpoints %>% 
          dplyr::filter(Study == input$sed_cutpoint) %>%
-         reactable::reactable(striped = TRUE,
+         reactable::reactable(striped = TRUE, bordered = TRUE,
                    list('Study' = reactable::colDef(minWidth = 80),
                         'Population' = reactable::colDef(minWidth = 70),
                         'Activities performed' = reactable::colDef(minWidth = 60),
@@ -495,7 +495,7 @@ app_server <- function(input, output, session) {
       } else {
         mvpa_cutpoints %>% 
           dplyr::filter(Study == input$mvpa_cutpoint) %>%
-          reactable::reactable(striped = TRUE,
+          reactable::reactable(striped = TRUE, bordered = TRUE,
                     list('Study' = reactable::colDef(minWidth = 80),
                          'Population' = reactable::colDef(minWidth = 70),
                          'Activities performed' = reactable::colDef(minWidth = 60),
@@ -515,7 +515,7 @@ app_server <- function(input, output, session) {
       } else {
         mvpa_cutpoints %>% 
           dplyr::filter(Study == input$mvpa_cutpoint) %>%
-          reactable::reactable(striped = TRUE,
+          reactable::reactable(striped = TRUE, bordered = TRUE,
                     list('Study' = reactable::colDef(minWidth = 80),
                          'Population' = reactable::colDef(minWidth = 70),
                          'Activities performed' = reactable::colDef(minWidth = 60),
@@ -535,7 +535,7 @@ app_server <- function(input, output, session) {
       } else {
         mvpa_cutpoints %>% 
           dplyr::filter(Study == input$mvpa_cutpoint) %>%
-          reactable::reactable(striped = TRUE,
+          reactable::reactable(striped = TRUE, bordered = TRUE,
                                list('Study' = reactable::colDef(minWidth = 80),
                                     'Population' = reactable::colDef(minWidth = 70),
                                     'Activities performed' = reactable::colDef(minWidth = 60),
@@ -555,7 +555,7 @@ app_server <- function(input, output, session) {
       } else {
         mvpa_cutpoints %>% 
           dplyr::filter(Study == input$mvpa_cutpoint) %>%
-          reactable::reactable(striped = TRUE,
+          reactable::reactable(striped = TRUE, bordered = TRUE,
                     list('Study' = reactable::colDef(minWidth = 80),
                          'Population' = reactable::colDef(minWidth = 70),
                          'Activities performed' = reactable::colDef(minWidth = 60),
@@ -944,7 +944,7 @@ app_server <- function(input, output, session) {
                     Score = reactable::colDef(
                       style = function(value, index) {
                         if (table$Score[index] == steps_score_cppac_median()) {
-                          color_bg <- "#337ab7"
+                          color_bg <- "#3F51B5"
                           color_text <- "white"
                         } else {
                           color_bg <- ""
@@ -956,7 +956,7 @@ app_server <- function(input, output, session) {
                     Range = reactable::colDef(
                       style = function(value, index) {
                         if (table$Score[index] == steps_score_cppac_median()) {
-                          color_bg <- "#337ab7"
+                          color_bg <- "#3F51B5"
                           color_text <- "white"
                         } else {
                           color_bg <- ""
@@ -1002,7 +1002,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score_cppac_median()) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1014,7 +1014,7 @@ app_server <- function(input, output, session) {
                   Range = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score_cppac_median()) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1060,7 +1060,7 @@ app_server <- function(input, output, session) {
                    Score = reactable::colDef(
                      style = function(value, index) {
                        if (table$Score[index] == steps_score_cppac_mean()) {
-                         color_bg <- "#337ab7"
+                         color_bg <- "#3F51B5"
                          color_text <- "white"
                        } else {
                          color_bg <- ""
@@ -1072,7 +1072,7 @@ app_server <- function(input, output, session) {
                    Range = reactable::colDef(
                      style = function(value, index) {
                        if (table$Score[index] == steps_score_cppac_mean()) {
-                         color_bg <- "#337ab7"
+                         color_bg <- "#3F51B5"
                          color_text <- "white"
                        } else {
                          color_bg <- ""
@@ -1118,7 +1118,7 @@ app_server <- function(input, output, session) {
                  Score = reactable::colDef(
                    style = function(value, index) {
                      if (table$Score[index] == vmu_score_cppac_mean()) {
-                       color_bg <- "#337ab7"
+                       color_bg <- "#3F51B5"
                        color_text <- "white"
                      } else {
                        color_bg <- ""
@@ -1130,7 +1130,7 @@ app_server <- function(input, output, session) {
                  Range = reactable::colDef(
                    style = function(value, index) {
                      if (table$Score[index] == vmu_score_cppac_mean()) {
-                       color_bg <- "#337ab7"
+                       color_bg <- "#3F51B5"
                        color_text <- "white"
                      } else {
                        color_bg <- ""
@@ -1178,7 +1178,7 @@ app_server <- function(input, output, session) {
                    Score = reactable::colDef(
                      style = function(value, index) {
                        if (table$Score[index] == steps_score_cppac_median()) {
-                         color_bg <- "#337ab7"
+                         color_bg <- "#3F51B5"
                          color_text <- "white"
                        } else {
                          color_bg <- ""
@@ -1190,7 +1190,7 @@ app_server <- function(input, output, session) {
                    Intervalle = reactable::colDef(
                      style = function(value, index) {
                        if (table$Score[index] == steps_score_cppac_median()) {
-                         color_bg <- "#337ab7"
+                         color_bg <- "#3F51B5"
                          color_text <- "white"
                        } else {
                          color_bg <- ""
@@ -1236,7 +1236,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score_cppac_median()) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1248,7 +1248,7 @@ app_server <- function(input, output, session) {
                   Intervalle = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score_cppac_median()) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1294,7 +1294,7 @@ app_server <- function(input, output, session) {
                     Score = reactable::colDef(
                       style = function(value, index) {
                         if (table$Score[index] == steps_score_cppac_mean()) {
-                          color_bg <- "#337ab7"
+                          color_bg <- "#3F51B5"
                           color_text <- "white"
                         } else {
                           color_bg <- ""
@@ -1306,7 +1306,7 @@ app_server <- function(input, output, session) {
                     Intervalle = reactable::colDef(
                       style = function(value, index) {
                         if (table$Score[index] == steps_score_cppac_mean()) {
-                          color_bg <- "#337ab7"
+                          color_bg <- "#3F51B5"
                           color_text <- "white"
                         } else {
                           color_bg <- ""
@@ -1351,7 +1351,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score_cppac_mean()) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1363,7 +1363,7 @@ app_server <- function(input, output, session) {
                   Intervalle = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score_cppac_mean()) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1414,7 +1414,7 @@ app_server <- function(input, output, session) {
                    Score = reactable::colDef(
                      style = function(value, index) {
                        if (table$Score[index] == steps_score) {
-                         color_bg <- "#337ab7"
+                         color_bg <- "#3F51B5"
                          color_text <- "white"
                        } else {
                          color_bg <- ""
@@ -1426,7 +1426,7 @@ app_server <- function(input, output, session) {
                    Range = reactable::colDef(
                      style = function(value, index) {
                        if (table$Score[index] == steps_score) {
-                         color_bg <- "#337ab7"
+                         color_bg <- "#3F51B5"
                          color_text <- "white"
                        } else {
                          color_bg <- ""
@@ -1475,7 +1475,7 @@ app_server <- function(input, output, session) {
                     Score = reactable::colDef(
                       style = function(value, index) {
                         if (table$Score[index] == vmu_score) {
-                          color_bg <- "#337ab7"
+                          color_bg <- "#3F51B5"
                           color_text <- "white"
                         } else {
                           color_bg <- ""
@@ -1487,7 +1487,7 @@ app_server <- function(input, output, session) {
                     Range = reactable::colDef(
                       style = function(value, index) {
                         if (table$Score[index] == vmu_score) {
-                          color_bg <- "#337ab7"
+                          color_bg <- "#3F51B5"
                           color_text <- "white"
                         } else {
                           color_bg <- ""
@@ -1537,7 +1537,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1549,7 +1549,7 @@ app_server <- function(input, output, session) {
                   Range = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1599,7 +1599,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1611,7 +1611,7 @@ app_server <- function(input, output, session) {
                   Range = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1661,7 +1661,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1673,7 +1673,7 @@ app_server <- function(input, output, session) {
                   Range = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1723,7 +1723,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1735,7 +1735,7 @@ app_server <- function(input, output, session) {
                   Range = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1784,7 +1784,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1796,7 +1796,7 @@ app_server <- function(input, output, session) {
                   Range = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1847,7 +1847,7 @@ app_server <- function(input, output, session) {
                 Score = reactable::colDef(
                   style = function(value, index) {
                     if (table$Score[index] == vmu_score) {
-                      color_bg <- "#337ab7"
+                      color_bg <- "#3F51B5"
                       color_text <- "white"
                     } else {
                       color_bg <- ""
@@ -1859,7 +1859,7 @@ app_server <- function(input, output, session) {
                 Range = reactable::colDef(
                   style = function(value, index) {
                     if (table$Score[index] == vmu_score) {
-                      color_bg <- "#337ab7"
+                      color_bg <- "#3F51B5"
                       color_text <- "white"
                     } else {
                       color_bg <- ""
@@ -1909,7 +1909,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1921,7 +1921,7 @@ app_server <- function(input, output, session) {
                   Range = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1971,7 +1971,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -1983,7 +1983,7 @@ app_server <- function(input, output, session) {
                   Range = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2033,7 +2033,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2045,7 +2045,7 @@ app_server <- function(input, output, session) {
                   Range = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2095,7 +2095,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2107,7 +2107,7 @@ app_server <- function(input, output, session) {
                   Range = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2157,7 +2157,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2169,7 +2169,7 @@ app_server <- function(input, output, session) {
                   Range = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2218,7 +2218,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2230,7 +2230,7 @@ app_server <- function(input, output, session) {
                   Range = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2280,7 +2280,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2292,7 +2292,7 @@ app_server <- function(input, output, session) {
                   Intervalle = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2342,7 +2342,7 @@ app_server <- function(input, output, session) {
                  Score = reactable::colDef(
                    style = function(value, index) {
                      if (table$Score[index] == vmu_score) {
-                       color_bg <- "#337ab7"
+                       color_bg <- "#3F51B5"
                        color_text <- "white"
                      } else {
                        color_bg <- ""
@@ -2354,7 +2354,7 @@ app_server <- function(input, output, session) {
                  Intervalle = reactable::colDef(
                    style = function(value, index) {
                      if (table$Score[index] == vmu_score) {
-                       color_bg <- "#337ab7"
+                       color_bg <- "#3F51B5"
                        color_text <- "white"
                      } else {
                        color_bg <- ""
@@ -2404,7 +2404,7 @@ app_server <- function(input, output, session) {
                 Score = reactable::colDef(
                   style = function(value, index) {
                     if (table$Score[index] == steps_score) {
-                      color_bg <- "#337ab7"
+                      color_bg <- "#3F51B5"
                       color_text <- "white"
                     } else {
                       color_bg <- ""
@@ -2416,7 +2416,7 @@ app_server <- function(input, output, session) {
                 Intervalle = reactable::colDef(
                   style = function(value, index) {
                     if (table$Score[index] == steps_score) {
-                      color_bg <- "#337ab7"
+                      color_bg <- "#3F51B5"
                       color_text <- "white"
                     } else {
                       color_bg <- ""
@@ -2466,7 +2466,7 @@ app_server <- function(input, output, session) {
                 Score = reactable::colDef(
                   style = function(value, index) {
                     if (table$Score[index] == vmu_score) {
-                      color_bg <- "#337ab7"
+                      color_bg <- "#3F51B5"
                       color_text <- "white"
                     } else {
                       color_bg <- ""
@@ -2478,7 +2478,7 @@ app_server <- function(input, output, session) {
                 Intervalle = reactable::colDef(
                   style = function(value, index) {
                     if (table$Score[index] == vmu_score) {
-                      color_bg <- "#337ab7"
+                      color_bg <- "#3F51B5"
                       color_text <- "white"
                     } else {
                       color_bg <- ""
@@ -2528,7 +2528,7 @@ app_server <- function(input, output, session) {
                 Score = reactable::colDef(
                   style = function(value, index) {
                     if (table$Score[index] == steps_score) {
-                      color_bg <- "#337ab7"
+                      color_bg <- "#3F51B5"
                       color_text <- "white"
                     } else {
                       color_bg <- ""
@@ -2540,7 +2540,7 @@ app_server <- function(input, output, session) {
                 Intervalle = reactable::colDef(
                   style = function(value, index) {
                     if (table$Score[index] == steps_score) {
-                      color_bg <- "#337ab7"
+                      color_bg <- "#3F51B5"
                       color_text <- "white"
                     } else {
                       color_bg <- ""
@@ -2590,7 +2590,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2602,7 +2602,7 @@ app_server <- function(input, output, session) {
                   Intervalle = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2652,7 +2652,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2664,7 +2664,7 @@ app_server <- function(input, output, session) {
                   Intervalle = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2714,7 +2714,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2726,7 +2726,7 @@ app_server <- function(input, output, session) {
                   Intervalle = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2776,7 +2776,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2788,7 +2788,7 @@ app_server <- function(input, output, session) {
                   Intervalle = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2838,7 +2838,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2850,7 +2850,7 @@ app_server <- function(input, output, session) {
                   Intervalle = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2900,7 +2900,7 @@ app_server <- function(input, output, session) {
                    Score = reactable::colDef(
                      style = function(value, index) {
                        if (table$Score[index] == steps_score) {
-                         color_bg <- "#337ab7"
+                         color_bg <- "#3F51B5"
                          color_text <- "white"
                        } else {
                          color_bg <- ""
@@ -2912,7 +2912,7 @@ app_server <- function(input, output, session) {
                    Intervalle = reactable::colDef(
                      style = function(value, index) {
                        if (table$Score[index] == steps_score) {
-                         color_bg <- "#337ab7"
+                         color_bg <- "#3F51B5"
                          color_text <- "white"
                        } else {
                          color_bg <- ""
@@ -2962,7 +2962,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -2974,7 +2974,7 @@ app_server <- function(input, output, session) {
                   Intervalle = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -3025,7 +3025,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -3037,7 +3037,7 @@ app_server <- function(input, output, session) {
                   Intervalle = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == steps_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -3087,7 +3087,7 @@ app_server <- function(input, output, session) {
                   Score = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -3099,7 +3099,7 @@ app_server <- function(input, output, session) {
                   Intervalle = reactable::colDef(
                     style = function(value, index) {
                       if (table$Score[index] == vmu_score) {
-                        color_bg <- "#337ab7"
+                        color_bg <- "#3F51B5"
                         color_text <- "white"
                       } else {
                         color_bg <- ""
@@ -3475,7 +3475,7 @@ app_server <- function(input, output, session) {
                       if ((tab_dppac_summary_en()[index, "Item"] %in% c("Weekly steps score", "Weekly VMU score")) && is.na(tab_dppac_summary_en()[index, "Amount score"])) {
                         list(background = "#FF6666")
                       } else if (tab_dppac_summary_en()[index, "Item"] == "") {
-                        list(background = "grey", color = "white", fontWeight = "bold")
+                        list(background = "#3F51B5", color = "white", fontWeight = "bold")
                       } else {
                         NULL
                       }
@@ -3993,7 +3993,7 @@ app_server <- function(input, output, session) {
                       if ((tab_dppac_summary_fr()[index, "Item"] %in% c("Score de pas hebdomadaire", "Score VMU hebdomadaire")) && is.na(tab_dppac_summary_fr()[index, "Score de quantit\xc3\xa9"])) {
                         list(background = "#FF6666")
                       } else if (tab_dppac_summary_fr()[index, "Item"] == "") {
-                        list(background = "grey", color = "white", fontWeight = "bold")
+                        list(background = "#3F51B5", color = "white", fontWeight = "bold")
                       } else {
                         NULL
                       }
@@ -4460,7 +4460,7 @@ app_server <- function(input, output, session) {
       title = "Reset app",
       footer = tagList(
         actionButton("cancel", "Cancel"),
-        actionButton("ok", "Reset", class = "btn btn-danger", style="color: #fff; background-color: #F8766D; border-color: #FC717F")
+        actionButton("ok", "Reset", class = "btn btn-danger", style="color: #fff; background-color: red; border-color: red")
       )
     )
     

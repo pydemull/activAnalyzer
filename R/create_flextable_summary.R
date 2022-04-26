@@ -130,7 +130,7 @@ if (language == "fr") {
           "Ratio MVPA/SED"                       
         ),
         
-        title = c(
+        "Moyenne | m\xc3\xa9diane journali\xc3\xa8re obtenue \xc3\xa0 partir des jours valides" = c(
           paste0(results_summary_means[["valid_days"]], " jour(s)"),
           paste0(format(round(results_summary_means[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["wear_time"]]), ") | ",  
                  format(round(results_summary_medians[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["wear_time"]]), ")"),  
@@ -148,8 +148,7 @@ if (language == "fr") {
           paste0(format(round(results_summary_means[["percent_MVPA"]], 1), nsmall = 1), " % | ", format(round(results_summary_medians[["percent_MVPA"]], 1), nsmall = 1), " %"),                 
           paste0(format(round(results_summary_means[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr | ", format(round(results_summary_medians[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr"),         
           paste0(format(round(results_summary_means[["ratio_mvpa_sed"]], 2), nsmall = 2), " | ", format(round(results_summary_medians[["ratio_mvpa_sed"]], 2), nsmall = 2)))
-      ) %>%
-        dplyr::rename("Moyenne | m\xc3\xa9diane journali\xc3\xa8re obtenue \xc3\xa0 partir des jours valides" = title)
+      )
     ) %>%
     flextable::theme_zebra() %>%
     flextable::align(align = "left", part = "all" ) %>%

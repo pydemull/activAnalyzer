@@ -15,6 +15,7 @@ app_ui <- function(request) {
       shinydashboard::dashboardHeader(
         # Set height of dashboardHeader
         tags$li(class = "dropdown",
+                tags$li(class = "dropdown",  shiny::actionButton('reset',"Reset",  class = "btn-refresh")),
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
         ),
@@ -28,8 +29,7 @@ app_ui <- function(request) {
           id = "tabs",
           shinydashboard::menuItem("Accelerometer analysis", tabName = "app", icon = icon("chart-column", verify_fa = FALSE)),
           shinydashboard::menuItem("PROactive questionnaire", tabName = "proactive", icon = icon("file-circle-question", verify_fa = FALSE)),
-          shinydashboard::menuItem("User's guide", tabName = "guide", icon = icon("far fa-file-alt")),
-          shiny::actionButton('reset',"Reset App",  style="color: #fff; background-color: #FF3333; border-color: white")
+          shinydashboard::menuItem("User's guide", tabName = "guide", icon = icon("far fa-file-alt"))
         )),
       shinydashboard::dashboardBody(
 
@@ -37,6 +37,7 @@ app_ui <- function(request) {
         # https://stackoverflow.com/questions/56369796/adding-a-are-you-sure-you-want-to-leave-this-page-alert-message-when-exiting-a)
         tags$head(
           tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
+          tags$style(htmltools::HTML("hr {border-top: 1px solid #3F51B5;}")),
           tags$script(htmltools::HTML("
              // Enable navigation prompt
              window.onbeforeunload = function() {
@@ -50,8 +51,7 @@ app_ui <- function(request) {
           window.scrollTo(0, 0)
                });
 
-               });")
-          
+               });"),
           ),
         
         shinydashboard::tabItems(
@@ -92,8 +92,9 @@ app_ui <- function(request) {
                   #******************
                   
                   fluidRow(
-                    column(6,                   
+                    column(12,                   
                            h3("Assessor"),
+                           hr()
                     ),
                   ),
                   fluidRow(
@@ -110,8 +111,9 @@ app_ui <- function(request) {
                   #******************
                   
                   fluidRow(
-                    column(6,                   
-                           h3("Patient")
+                    column(12,                   
+                           h3("Patient"),
+                           hr()
                     ),
                   ),
                   fluidRow(
@@ -139,8 +141,9 @@ app_ui <- function(request) {
                   #******************
                   
                   fluidRow(
-                    column(6,                   
-                           h3("Device")
+                    column(12,                   
+                           h3("Device"),
+                           hr()
                     ),
                   ),
                   fluidRow(
@@ -198,13 +201,13 @@ app_ui <- function(request) {
                   ),
                   fluidRow(
                     column(3,
-                           shiny::actionButton("reset_nonwear", "Return to default values (Choi et al., 2012)", style = "border-color: #2e6da4")
+                           shiny::actionButton("reset_nonwear", "Default settings", class = "btn-return")
                     ),
                   ),
                   fluidRow(
                     column(3,
                            h3(""),
-                           shiny::actionButton("validate", "Validate configuration", style="color: #fff; background-color: #00CC66; border-color: #336600"),
+                           shiny::actionButton("validate", "Validate configuration", class = "btn-validate"),
                     ),
                   ),
                   
@@ -243,7 +246,7 @@ app_ui <- function(request) {
                   fluidRow(
                     column(12,
                            tags$div(align = "left",
-                           uiOutput("select_days")
+                           uiOutput("select_days"),
                            )
                     ),
                   ),
@@ -253,8 +256,9 @@ app_ui <- function(request) {
                   #**********************
                   
                   fluidRow(
-                    column(10,
+                    column(12,
                            h3("Choose a MET equation"),
+                           hr(),
                            selectInput("equation_mets", with_red_star("Equation"), equations)
                     ),
                   ),
@@ -271,6 +275,7 @@ app_ui <- function(request) {
                   fluidRow(
                     column(12,
                            h3("Choose cut-points"),
+                           hr()
                     )
                   ),
                   
@@ -343,6 +348,7 @@ app_ui <- function(request) {
                   fluidRow(
                     column(12,
                            h3("Configure the inputs required to define the period of the day to be considered to count wear time and to validate a day based on wear time"),
+                           hr()
                     ),
                   ),
                   fluidRow(
@@ -364,16 +370,11 @@ app_ui <- function(request) {
                     )
                   ),
                   fluidRow(
-                    column(2,
-                           shiny::actionButton("pro_active_period", "PROactive configuration for 24-h recording", style = "background-color: #9933CC; color: white; border-color: #330066"),
-                           ),
+                    column(12,
+                           shiny::actionButton("pro_active_period", "PROactive configuration for 24-h recording", class = "btn-proactive"),
+                           shiny::actionButton("reset_period", "Default settings", class = "btn-return")
+                           )
                   ),
-                 fluidRow(
-                   column(1,
-                          h3(""),
-                          shiny::actionButton("reset_period", "Return to default values", style = "border-color: #2e6da4")
-                   ),
-                 ),
                   
                   #*****************
                   # Running analysis
@@ -382,7 +383,7 @@ app_ui <- function(request) {
                   fluidRow(
                     column(3,
                            h3(""),
-                           shiny::actionButton("Run", "Run Analysis", style="color: #fff; background-color: #00CC66; border-color: #336600"),
+                           shiny::actionButton("Run", "Run Analysis",  class = "btn-validate"),
                            h3("")
                     ),
                   ),
@@ -463,13 +464,13 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12,
-                           downloadButton("ExpDataset", "Export marked dataset (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
-                           downloadButton("ExpResultsByDays", "Export results by day (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
-                           downloadButton("ExpDailySummaryMeans", "Export daily summary (means) (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
-                           downloadButton("ExpDailySummaryMedians", "Export daily summary (medians) (.csv)", style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
-                           downloadButton("report_en", "Generate report (EN) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33"),
-                           downloadButton("report_fr", "Generate report (FR) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33"),
-                           actionButton("go_to_proactive_q", "Go to PROactive questionnaire", style = "background-color: #9933CC; color: white; border-color: #330066")
+                           downloadButton("report_en", "Generate report (EN) (.pdf)", class = "btn-report"),
+                           downloadButton("report_fr", "Generate report (FR) (.pdf)", class = "btn-report"),
+                           actionButton("go_to_proactive_q", "Go to PROactive questionnaire", class = "btn-proactive"),
+                           downloadButton("ExpDataset", "Export marked dataset (.csv)", class = "btn-secondary"),
+                           downloadButton("ExpResultsByDays", "Export results by day (.csv)", class = "btn-secondary"),
+                           downloadButton("ExpDailySummaryMeans", "Export daily summary (means) (.csv)", class = "btn-secondary"),
+                           downloadButton("ExpDailySummaryMedians", "Export daily summary (medians) (.csv)",  class = "btn-secondary"),
                     ),
                     
                   ),
@@ -743,13 +744,13 @@ app_ui <- function(request) {
                      ),
                     fluidRow(
                       column(6,
-                             wellPanel("Accelerometer steps score (based on the daily median of valid days)", style = "font-weight: bold;",
+                             wellPanel("Accelerometer steps score (based on the daily median of valid days)", class = "control-label",
                                        h4(""),
                              reactable::reactableOutput("table_cppac_en_steps_med")
                              )
                      ),
                      column(6,
-                            wellPanel("Accelerometer steps score (Based on the daily mean of valid days)", style = "font-weight: bold;",
+                            wellPanel("Accelerometer steps score (Based on the daily mean of valid days)", class = "control-label",
                                       h4(""),
                               reactable::reactableOutput("table_cppac_en_steps_mean")
                             )
@@ -757,13 +758,13 @@ app_ui <- function(request) {
                     ),
                     fluidRow(
                       column(6,
-                             wellPanel("Accelerometer VMU score (based on the daily median of valid days)", style = "font-weight: bold;",
+                             wellPanel("Accelerometer VMU score (based on the daily median of valid days)", class = "control-label",
                                        h4(""),
                                reactable::reactableOutput("table_cppac_en_vmu_med")
                              )
                       ),
                       column(6,
-                             wellPanel("Accelerometer VMU score (based on the daily mean of valid days)", style = "font-weight: bold;",
+                             wellPanel("Accelerometer VMU score (based on the daily mean of valid days)", class = "control-label",
                                        h4(""),
                                reactable::reactableOutput("table_cppac_en_vmu_mean")
                              )
@@ -789,7 +790,7 @@ app_ui <- function(request) {
                     ),
                     fluidRow(
                       column(12,
-                             shiny::actionButton("get_cppac_summary_en", "Get / Update C-PPAC summary", style="color: #fff; background-color: #00CC66; border-color: #336600"),
+                             shiny::actionButton("get_cppac_summary_en", "Results / Update", class = "btn-validate"),
                              h3("")
                       ),
                     ),
@@ -1000,13 +1001,13 @@ app_ui <- function(request) {
                        ),
                        fluidRow(
                          column(6,
-                                wellPanel("Day 1. Accelerometer steps score", style = "font-weight: bold;",
+                                wellPanel("Day 1. Accelerometer steps score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d1_steps")
                                 )
                          ),
                          column(6,
-                                wellPanel("Day 1. Accelerometer VMU score", style = "font-weight: bold;",
+                                wellPanel("Day 1. Accelerometer VMU score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d1_vmu")
                                 )
@@ -1137,13 +1138,13 @@ app_ui <- function(request) {
                        ),
                        fluidRow(
                          column(6,
-                                wellPanel("Day 2. Accelerometer steps score", style = "font-weight: bold;",
+                                wellPanel("Day 2. Accelerometer steps score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d2_steps")
                                 )
                          ),
                          column(6,
-                                wellPanel("Day 2. Accelerometer VMU score", style = "font-weight: bold;",
+                                wellPanel("Day 2. Accelerometer VMU score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d2_vmu")
                                 )
@@ -1274,13 +1275,13 @@ app_ui <- function(request) {
                        ),
                        fluidRow(
                          column(6,
-                                wellPanel("Day 3. Accelerometer steps score", style = "font-weight: bold;",
+                                wellPanel("Day 3. Accelerometer steps score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d3_steps")
                                 )
                          ),
                          column(6,
-                                wellPanel("Day 3. Accelerometer VMU score", style = "font-weight: bold;",
+                                wellPanel("Day 3. Accelerometer VMU score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d3_vmu")
                                 )
@@ -1411,13 +1412,13 @@ app_ui <- function(request) {
                        ),
                        fluidRow(
                          column(6,
-                                wellPanel("Day 4. Accelerometer steps score", style = "font-weight: bold;",
+                                wellPanel("Day 4. Accelerometer steps score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d4_steps")
                                 )
                          ),
                          column(6,
-                                wellPanel("Day 4. Accelerometer VMU score", style = "font-weight: bold;",
+                                wellPanel("Day 4. Accelerometer VMU score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d4_vmu")
                                 )
@@ -1548,13 +1549,13 @@ app_ui <- function(request) {
                        ),
                        fluidRow(
                          column(6,
-                                wellPanel("Day 5. Accelerometer steps score", style = "font-weight: bold;",
+                                wellPanel("Day 5. Accelerometer steps score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d5_steps")
                                 )
                          ),
                          column(6,
-                                wellPanel("Day 5. Accelerometer VMU score", style = "font-weight: bold;",
+                                wellPanel("Day 5. Accelerometer VMU score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d5_vmu")
                                 )
@@ -1685,13 +1686,13 @@ app_ui <- function(request) {
                        ),
                        fluidRow(
                          column(6,
-                                wellPanel("Day 6. Accelerometer steps score", style = "font-weight: bold;",
+                                wellPanel("Day 6. Accelerometer steps score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d6_steps")
                                 )
                          ),
                          column(6,
-                                wellPanel("Day 6. Accelerometer VMU score", style = "font-weight: bold;",
+                                wellPanel("Day 6. Accelerometer VMU score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d6_vmu")
                                 )
@@ -1822,13 +1823,13 @@ app_ui <- function(request) {
                        ),
                        fluidRow(
                          column(6,
-                                wellPanel("Day 7. Accelerometer steps score", style = "font-weight: bold;",
+                                wellPanel("Day 7. Accelerometer steps score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d7_steps")
                                 )
                          ),
                          column(6,
-                                wellPanel("Day 7. Accelerometer VMU score", style = "font-weight: bold;",
+                                wellPanel("Day 7. Accelerometer VMU score", class = "control-label",
                                           h4(""),
                                           reactable::reactableOutput("table_dppac_en_d7_vmu")
                                 )
@@ -1842,7 +1843,7 @@ app_ui <- function(request) {
                        ),
                        fluidRow(
                          column(12,
-                                shiny::actionButton("get_dppac_summary_en", "Get / Update D-PPAC summary", style="color: #fff; background-color: #00CC66; border-color: #336600"),
+                                shiny::actionButton("get_dppac_summary_en", "Results / Update", class = "btn-validate"),
                          ),
                        ),
                        fluidRow(
@@ -2120,13 +2121,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Score acc\u00e9l\u00e9rom\u00e9trique pour les pas (\u00e0 partir de la m\u00e9diane journali\u00e8re des jours valides)", style = "font-weight: bold;",
+                                  wellPanel("Score acc\u00e9l\u00e9rom\u00e9trique pour les pas (\u00e0 partir de la m\u00e9diane journali\u00e8re des jours valides)", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_cppac_en_steps_med_fr")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Score acc\u00e9l\u00e9rom\u00e9trique pour les pas (\u00e0 partir de la moyenne journali\u00e8re des jours valides)", style = "font-weight: bold;",
+                                  wellPanel("Score acc\u00e9l\u00e9rom\u00e9trique pour les pas (\u00e0 partir de la moyenne journali\u00e8re des jours valides)", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_cppac_en_steps_mean_fr")
                                   )
@@ -2134,13 +2135,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU (\u00e0 partir de la m\u00e9diane journali\u00e8re des jours valides)", style = "font-weight: bold;",
+                                  wellPanel("Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU (\u00e0 partir de la m\u00e9diane journali\u00e8re des jours valides)", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_cppac_en_vmu_med_fr")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU (\u00e0 partir de la moyenne journali\u00e8re des jours valides)", style = "font-weight: bold;",
+                                  wellPanel("Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU (\u00e0 partir de la moyenne journali\u00e8re des jours valides)", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_cppac_en_vmu_mean_fr")
                                   )
@@ -2167,7 +2168,7 @@ app_ui <- function(request) {
                         ),
                         fluidRow(
                           column(12,
-                                 shiny::actionButton("get_cppac_summary_fr", "Obtenir / Mettre \u00e0 jour les r\u00e9sultats du C-PPAC", style="color: #fff; background-color: #00CC66; border-color: #336600"),
+                                 shiny::actionButton("get_cppac_summary_fr", "R\u00e9ssulats / Actualiser", class = "btn-validate"),
                                  h3("")
                           ),
                         ),
@@ -2375,13 +2376,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 1. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 1. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d1_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 1. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 1. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d1_vmu")
                                   )
@@ -2512,13 +2513,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 2. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 2. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d2_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 2. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 2. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d2_vmu")
                                   )
@@ -2650,13 +2651,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 3. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 3. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d3_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 3. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 3. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d3_vmu")
                                   )
@@ -2787,13 +2788,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 4. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 4. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d4_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 4. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 4. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d4_vmu")
                                   )
@@ -2924,13 +2925,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 5. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 5. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d5_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 5. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 5. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d5_vmu")
                                   )
@@ -3061,13 +3062,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 6. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 6. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d6_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 6. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 6. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d6_vmu")
                                   )
@@ -3198,13 +3199,13 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(6,
-                                  wellPanel("Jour 7. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", style = "font-weight: bold;",
+                                  wellPanel("Jour 7. Score acc\u00e9l\u00e9rom\u00e9trique pour les pas", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d7_steps")
                                   )
                            ),
                            column(6,
-                                  wellPanel("Jour 7. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", style = "font-weight: bold;",
+                                  wellPanel("Jour 7. Score acc\u00e9l\u00e9rom\u00e9trique pour le VMU", class = "control-label",
                                             h4(""),
                                             reactable::reactableOutput("table_dppac_fr_d7_vmu")
                                   )
@@ -3218,7 +3219,7 @@ app_ui <- function(request) {
                          ),
                          fluidRow(
                            column(12,
-                                  shiny::actionButton("get_dppac_summary_fr", "Obtenir / Mettre \u00e0 jour les r\u00e9sultats du D-PPAC", style="color: #fff; background-color: #00CC66; border-color: #336600"),
+                                  shiny::actionButton("get_dppac_summary_fr", "R\u00e9sultats / Actualiser", class = "btn-validate"),
                            ),
                          ),
                          fluidRow(
@@ -3265,8 +3266,8 @@ app_ui <- function(request) {
                   ),
                   fluidRow(
                     column(4,
-                           downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33"),
-                           downloadButton("user_guide_fr", "Download user's guide (FR) (.pdf)", style="border-color: #FF9900; color: black; background-color: #FFCC33")
+                           downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", class = "btn-report"),
+                           downloadButton("user_guide_fr", "Download user's guide (FR) (.pdf)", class = "btn-report")
                     ),
                   ),
 
