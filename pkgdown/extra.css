@@ -4,7 +4,7 @@
 }
 
 :root{
-  --bs-primary-rgb: 51, 122, 183;
+  --bs-primary-rgb: 63, 81, 181;
 }
 
 /* Version number */
@@ -31,3 +31,15 @@ h1 {
 h2 {
   font-weight: 400;
 }
+
+/* Links */
+
+a {
+    color: #3F51B5;
+}
+
+a.external-link {
+  color: #3F51B5;
+  font-weight: bold;
+} 
+

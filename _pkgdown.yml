@@ -5,7 +5,7 @@ template:
   bootswatch: yeti
   bslib:
     bg: "#FFFFFF"
-    fg: "#34495E"
+    fg: "#3F51B5"
 
 development:
   destination: docs
