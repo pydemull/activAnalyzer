@@ -13,7 +13,9 @@ prepare_dataset(data)
 A dataframe.
 }
 \description{
-This function reads an .agd file. The .agd file must contain at least the following columns:
+This function reads an .agd file and then creates the vector magnitude variable as follows:
+\eqn{vm = \sqrt{axis1^{2} + axis2^{2} + axis3^{2}}}.
+The .agd file must contain at least the following columns:
 \itemize{
 \item \strong{axis1}
 \item \strong{axis2}
