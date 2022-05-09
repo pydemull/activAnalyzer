@@ -37,7 +37,7 @@ A dataframe.
 \description{
 This function wraps the \code{\link[PhysicalActivity]{dataCollapser}} and the
 \code{\link[PhysicalActivity]{wearingMarking}} functions from the \code{PhysicalActivity} package.
-After collapsing data, the fonction computes the vector magnitude for each epoch, and adds \code{time} and
+After collapsing data, the fonction adds \code{time} and
 \code{date} columns. Then, the function analyzes the dataset for nonwear time detection. Finally, the function
 adds two variables to the dataset: the variable \code{non_wearing_count}
 that contains the number 1 when the device was \emph{not} worn (otherwise, 0 is used),

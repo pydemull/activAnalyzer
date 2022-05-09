@@ -1,11 +1,15 @@
+/* App theme*/
+
+:root{
+  --bs-primary-rgb: 63, 81, 181;
+}
+
+
 /* App title */
 .navbar-brand.me-2 {
   font-size: 100%;
 }
 
-:root{
-  --bs-primary-rgb: 63, 81, 181;
-}
 
 /* Version number */
 .text-version { /* code is from https://imos-animaltracking.github.io/remora/ */
@@ -30,6 +34,20 @@ h1 {
 
 h2 {
   font-weight: 400;
+}
+
+/* Paragraphs and lists */
+p {
+  color: black;
+}
+
+
+ul {
+  color: black;
+}
+
+dd {
+  color: black;
 }
 
 /* Links */

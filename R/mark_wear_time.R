@@ -2,7 +2,7 @@
 #' 
 #' This function wraps the \code{\link[PhysicalActivity]{dataCollapser}} and the 
 #'     \code{\link[PhysicalActivity]{wearingMarking}} functions from the `PhysicalActivity` package.
-#'     After collapsing data, the fonction computes the vector magnitude for each epoch, and adds `time` and
+#'     After collapsing data, the fonction adds `time` and
 #'     `date` columns. Then, the function analyzes the dataset for nonwear time detection. Finally, the function
 #'     adds two variables to the dataset: the variable `non_wearing_count` 
 #'     that contains the number 1 when the device was *not* worn (otherwise, 0 is used), 
@@ -55,7 +55,6 @@ mark_wear_time <- function(
     df <- 
       dataset %>%
       dplyr::mutate(
-            vm = round(sqrt(axis1^2 + axis2^2 + axis3^2), 2),
             timestamp = as.character(.data[[TS]]),
             timeStamp2 = timestamp
           ) %>%
@@ -79,7 +78,6 @@ mark_wear_time <- function(
        by = to_epoch
        ) %>%
      dplyr::mutate(
-       vm = round(sqrt(axis1^2 + axis2^2 + axis3^2), 2),
        timestamp = as.character(.data[[TS]]),
        timeStamp2 = timestamp
      ) %>%
