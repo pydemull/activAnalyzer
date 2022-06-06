@@ -1,6 +1,6 @@
 The activAnalyzer package as a whole is distributed under GPL-3. The activAnalyzer package includes other open source software components that are not listed in the DESCRIPTION file. The following is a list of these components:
 
-* read_agd.R file from the actigraph.sleepr package: GPL (>=2). The code of the function has been changed by adding packages names next to functions names (for example, dplyr::rename_with() rather than rename_with()). Moreover, in the `examples` section, the path to the reference folder has been updated so that it corresponds to the actiVAnalyzer package; the following lines of code have been deleted from the `examples` section:
+* read_agd.R file from the actigraph.sleepr package: GPL (>=2). The code of the function has been changed by adding packages names next to functions names (for example, dplyr::rename_with() rather than rename_with()). Moreover, in the `examples` section, the path to the reference folder has been updated so that it corresponds to the activAnalyzer package; the following lines of code have been deleted from the `examples` section:
 
 #' library("dplyr")
 #' library("purrr")
