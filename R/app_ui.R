@@ -500,7 +500,7 @@ app_ui <- function(request) {
                     wellPanel(
                       fluidRow(
                         column(12,
-                               "Reference: Gimeno-Santos et al. European Respiratory Journal 2015:46 988\u201310008", style = "font-weight: bold;"
+                               "Reference: Gimeno-Santos et al. European Respiratory Journal 2015:46 988\u201310008 [reproduced according to the terms Creative Commons Attribution Non-Commercial Licence 4.0; https://creativecommons.org/licenses/by-nc/4.0]", style = "font-weight: bold;"
                         )
                       ),
                       fluidRow(
@@ -825,7 +825,7 @@ app_ui <- function(request) {
                        wellPanel(
                          fluidRow(
                            column(12,
-                                  "Reference: Gimeno-Santos et al. European Respiratory Journal 2015:46 988\u201310008", style = "font-weight: bold;"
+                                  "Reference: Gimeno-Santos et al. European Respiratory Journal 2015:46 988\u201310008 [reproduced according to the terms Creative Commons Attribution Non-Commercial Licence 4.0; https://creativecommons.org/licenses/by-nc/4.0]", style = "font-weight: bold;"
                            )
                          ),
                          fluidRow(
@@ -1876,7 +1876,7 @@ app_ui <- function(request) {
                         wellPanel(
                          fluidRow(
                            column(12,
-                           "R\u00e9f\u00e9rence : Vaidya et al. International Journal of Chronic Obstructive Pulmonary Disease 2020:15 471\u2013478", style = "font-weight: bold;"
+                           "R\u00e9f\u00e9rence : Vaidya et al. International Journal of Chronic Obstructive Pulmonary Disease 2020:15 471\u2013478 [reproduced according to the terms Creative Commons Attribution Non-Commercial Licence 3.0; https://creativecommons.org/licenses/by-nc/3.0/]", style = "font-weight: bold;"
                            )
                          ),
                          fluidRow(
@@ -2200,7 +2200,7 @@ app_ui <- function(request) {
                          wellPanel(
                            fluidRow(
                              column(12,
-                                    "R\u00e9f\u00e9rence : Vaidya et al. International Journal of Chronic Obstructive Pulmonary Disease 2020:15 471\u2013478", style = "font-weight: bold;"
+                                    "R\u00e9f\u00e9rence : Vaidya et al. International Journal of Chronic Obstructive Pulmonary Disease 2020:15 471\u2013478 [reproduced according to the terms Creative Commons Attribution Non-Commercial Licence 3.0; https://creativecommons.org/licenses/by-nc/3.0/]", style = "font-weight: bold;"
                              )
                            ),
                            fluidRow(
