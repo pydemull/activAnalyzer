@@ -98,11 +98,11 @@ language <- match.arg(language)
   
   if (question == "q1" && language == "fr") {
     score <- dplyr::case_when(
-      x ==  "Pas du tout"                                       ~ 0,
+      x ==  "Pas du tout"                                                 ~ 0,
       x ==  "Un petit peu (jusqu\u2019\u00e0 10 minutes au total)"        ~ 1,
       x ==  "Un peu (jusqu\u2019\u00e0 30 minutes au total)"              ~ 2,
       x ==  "Beaucoup (jusqu\u2019\u00e0 1 heure au total)"               ~ 3,
-      x ==  "Enorm\u00e9ment (plus d\u00271 heure au total)"    ~ 4
+      x ==  "Enorm\u00e9ment (plus d\u20191 heure au total)"              ~ 4
     )
   }
   
