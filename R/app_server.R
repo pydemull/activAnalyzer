@@ -3532,9 +3532,9 @@ app_server <- function(input, output, session) {
               })
               
                 
-              #****************
-              #Difficulty (raw)
-              #****************
+              #*****************
+              # Difficulty (raw)
+              #*****************
               output$infoBox_dppac_en_total_diff <- shinydashboard::renderValueBox({
                 
                 # Waiting for required conditions
@@ -3549,9 +3549,9 @@ app_server <- function(input, output, session) {
                   )
               })
               
-              #************
-              #Amount (raw)
-              #************
+              #*************
+              # Amount (raw)
+              #*************
               output$infoBox_dppac_en_total_amount <- shinydashboard::renderValueBox({
                 
                 # Waiting for required conditions
@@ -3566,9 +3566,9 @@ app_server <- function(input, output, session) {
                   )
               })
               
-              #***********
-              #Total (raw)
-              #***********
+              #************
+              # Total (raw)
+              #************
               output$infoBox_dppac_en_total_all <- shinydashboard::renderValueBox({
                 
                 # Waiting for required conditions
@@ -3584,9 +3584,9 @@ app_server <- function(input, output, session) {
               })
               
               
-              #******************
-              #Difficulty (rasch)
-              #******************
+              #*******************
+              # Difficulty (rasch)
+              #*******************
               output$infoBox_dppac_en_total_diff_rasch <- shinydashboard::renderValueBox({
                 req(input$get_dppac_summary_en & !is.na(steps_score_cppac_median()) & !is.na(vmu_score_cppac_median()))
                 
@@ -3599,9 +3599,9 @@ app_server <- function(input, output, session) {
                   )
               })
               
-              #**************
-              #Amount (rasch)
-              #**************
+              #***************
+              # Amount (rasch)
+              #***************
               output$infoBox_dppac_en_total_amount_rasch <- shinydashboard::renderValueBox({
                 
                 # Waiting for required conditions
@@ -3617,9 +3617,9 @@ app_server <- function(input, output, session) {
               })
               
               
-              #*************
-              #Total (rasch)
-              #*************
+              #**************
+              # Total (rasch)
+              #**************
               output$infoBox_dppac_en_total_all_rasch <- shinydashboard::renderValueBox({
                 
                 # Waiting for required conditions
@@ -4568,6 +4568,21 @@ app_server <- function(input, output, session) {
       shiny::exportTestValues(score_cppac_tot_rasch_fr = round((rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de difficult\xc3\xa9", na.rm = TRUE), quest = "C-PPAC", score = "difficulty") +
                                                                   rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de quantit\xc3\xa9", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1))                         
       })
+    
+    
+    # Exporting PROactive accelerometer scores for D-PPAC
+    observeEvent(input$get_dppac_summary_en, {
+      shiny::exportTestValues(score_dppac_diff_en = recap_ddpac_en()$mean_difficulty_score_raw[1])
+      shiny::exportTestValues(score_dppac_quant_en = recap_ddpac_en()$mean_amount_score_raw[1])
+      shiny::exportTestValues(score_dppac_tot_rasch_en = round(recap_ddpac_en()$mean_total_score_rasch[1], 1))
+      })
+    
+    observeEvent(input$get_dppac_summary_fr, {
+      shiny::exportTestValues(score_dppac_diff_fr = recap_ddpac_fr()$mean_difficulty_score_raw[1])
+      shiny::exportTestValues(score_dppac_quant_fr = recap_ddpac_fr()$mean_amount_score_raw[1])
+      shiny::exportTestValues(score_dppac_tot_rasch_fr = round(recap_ddpac_fr()$mean_total_score_rasch[1], 1))
+    })
+    
       
 }
 

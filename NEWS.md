@@ -1,5 +1,4 @@
 # activAnalyzer (development version)
-* Added full C-PPAC and D-PPAC questionnaires with corresponding accelerometer scores.
 * Allowed the possiblity to work with epochs shorter than 60 s. A warning is provided when the set epoch is <10 s to indicate that figures will not be created with such epochs to save time.
 * Updated guide.
 * The user can now set "23:59:59" rather than "23:59:00" to set the upper limit of the period of the day to consider for analyzis.
@@ -11,6 +10,8 @@
 * The Reset button is now at the top of the app.
 * Removed two dependencies (RColorBrewer, tinytex)
 * Vector magnitude is now computed when using the prepare_dataset() function, not the mark_wear_time() function, that should be used after the prepare_dataset() function.
+* Added tests for questionnaires scores computations.
+* Upated guides.
 
 # activAnalyzer 0.4.1
 * Updated calculations for PROactive accelerometer scores (previous calculations actually were appropriate when using the means of the days of the measurement, not the medians). Now the app allows to compute scores from both medians and means of the days of the measurement (see references in the documentation for further details).
