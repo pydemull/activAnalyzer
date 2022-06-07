@@ -765,7 +765,743 @@ test_that("The server functions correctly work", {
                 
                 # Testing Total score (rasch)
                   expect_equal(score_cppac_tot_rasch_fr, round((0+100) / 2, 1))
+                  
+                  
+# ============================================================================================================================================  
+# D-PPAC (EN)
+# ============================================================================================================================================
+
+         #************
+         # Round 1
+         #************
+                  
+                # Setting inputs for D-PPAC tests
+                app$setInputs(
+                  dppac_EN_d1_q1 = "None at all",
+                  dppac_EN_d1_q2 = "None at all",
+                  dppac_EN_d1_q3 = "None at all",
+                  dppac_EN_d1_q4 = "Not at all",
+                  dppac_EN_d1_q5 = "Not at all",
+                  dppac_EN_d1_q6 = "Not at all",
+                  dppac_EN_d1_q7 = "Not at all",
+                  dppac_EN_d2_q1 = "None at all",
+                  dppac_EN_d2_q2 = "None at all",
+                  dppac_EN_d2_q3 = "None at all",
+                  dppac_EN_d2_q4 = "Not at all",
+                  dppac_EN_d2_q5 = "Not at all",
+                  dppac_EN_d2_q6 = "Not at all",
+                  dppac_EN_d2_q7 = "Not at all",
+                  dppac_EN_d3_q1 = "None at all",
+                  dppac_EN_d3_q2 = "None at all",
+                  dppac_EN_d3_q3 = "None at all",
+                  dppac_EN_d3_q4 = "Not at all",
+                  dppac_EN_d3_q5 = "Not at all",
+                  dppac_EN_d3_q6 = "Not at all",
+                  dppac_EN_d3_q7 = "Not at all",
+                  dppac_EN_d4_q1 = "None at all",
+                  dppac_EN_d4_q2 = "None at all",
+                  dppac_EN_d4_q3 = "None at all",
+                  dppac_EN_d4_q4 = "Not at all",
+                  dppac_EN_d4_q5 = "Not at all",
+                  dppac_EN_d4_q6 = "Not at all",
+                  dppac_EN_d4_q7 = "Not at all",
+                  dppac_EN_d5_q1 = "None at all",
+                  dppac_EN_d5_q2 = "None at all",
+                  dppac_EN_d5_q3 = "None at all",
+                  dppac_EN_d5_q4 = "Not at all",
+                  dppac_EN_d5_q5 = "Not at all",
+                  dppac_EN_d5_q6 = "Not at all",
+                  dppac_EN_d5_q7 = "Not at all",
+                  dppac_EN_d6_q1 = "None at all",
+                  dppac_EN_d6_q2 = "None at all",
+                  dppac_EN_d6_q3 = "None at all",
+                  dppac_EN_d6_q4 = "Not at all",
+                  dppac_EN_d6_q5 = "Not at all",
+                  dppac_EN_d6_q6 = "Not at all",
+                  dppac_EN_d6_q7 = "Not at all",
+                  dppac_EN_d7_q1 = "None at all",
+                  dppac_EN_d7_q2 = "None at all",
+                  dppac_EN_d7_q3 = "None at all",
+                  dppac_EN_d7_q4 = "Not at all",
+                  dppac_EN_d7_q5 = "Not at all",
+                  dppac_EN_d7_q6 = "Not at all",
+                  dppac_EN_d7_q7 = "Not at all",
+                  get_dppac_summary_en = "click"
+                )
+                
+                # Getting final scores computed with the app
+                mean_score_dppac_diff_en <- app$getAllValues()$export[["score_dppac_diff_en"]]
+                mean_score_dppac_quant_en <- app$getAllValues()$export[["score_dppac_quant_en"]]
+                mean_score_dppac_tot_rasch_en <- app$getAllValues()$export[["score_dppac_tot_rasch_en"]]
+                
+                # Testing Difficulty score (raw)
+                expect_equal(mean_score_dppac_diff_en, 20)
+                
+                # Testing Amount score (raw)
+                expect_equal(mean_score_dppac_quant_en, 44/5)
+                
+                # Testing Total score (rasch)
+                expect_equal(mean_score_dppac_tot_rasch_en, round((150/2*4+147/2)/5, 1))
+                
+                
+        #************
+        # Round 2
+        #************
+                
+                # Setting inputs for D-PPAC tests
+                app$setInputs(
+                  dppac_EN_d1_q1 = "A little bit (up to 10 minutes in total)",
+                  dppac_EN_d1_q2 = "A few",
+                  dppac_EN_d1_q3 = "A little bit",
+                  dppac_EN_d1_q4 = "Rarely",
+                  dppac_EN_d1_q5 = "A little bit",
+                  dppac_EN_d1_q6 = "A little bit",
+                  dppac_EN_d1_q7 = "Rarely",
+                  dppac_EN_d2_q1 = "A little bit (up to 10 minutes in total)",
+                  dppac_EN_d2_q2 = "A few",
+                  dppac_EN_d2_q3 = "A little bit",
+                  dppac_EN_d2_q4 = "Rarely",
+                  dppac_EN_d2_q5 = "A little bit",
+                  dppac_EN_d2_q6 = "A little bit",
+                  dppac_EN_d2_q7 = "Rarely",
+                  dppac_EN_d3_q1 = "A little bit (up to 10 minutes in total)",
+                  dppac_EN_d3_q2 = "A few",
+                  dppac_EN_d3_q3 = "A little bit",
+                  dppac_EN_d3_q4 = "Rarely",
+                  dppac_EN_d3_q5 = "A little bit",
+                  dppac_EN_d3_q6 = "A little bit",
+                  dppac_EN_d3_q7 = "Rarely",
+                  dppac_EN_d4_q1 = "A little bit (up to 10 minutes in total)",
+                  dppac_EN_d4_q2 = "A few",
+                  dppac_EN_d4_q3 = "A little bit",
+                  dppac_EN_d4_q4 = "Rarely",
+                  dppac_EN_d4_q5 = "A little bit",
+                  dppac_EN_d4_q6 = "A little bit",
+                  dppac_EN_d4_q7 = "Rarely",
+                  dppac_EN_d5_q1 = "A little bit (up to 10 minutes in total)",
+                  dppac_EN_d5_q2 = "A few",
+                  dppac_EN_d5_q3 = "A little bit",
+                  dppac_EN_d5_q4 = "Rarely",
+                  dppac_EN_d5_q5 = "A little bit",
+                  dppac_EN_d5_q6 = "A little bit",
+                  dppac_EN_d5_q7 = "Rarely",
+                  dppac_EN_d6_q1 = "A little bit (up to 10 minutes in total)",
+                  dppac_EN_d6_q2 = "A few",
+                  dppac_EN_d6_q3 = "A little bit",
+                  dppac_EN_d6_q4 = "Rarely",
+                  dppac_EN_d6_q5 = "A little bit",
+                  dppac_EN_d6_q6 = "A little bit",
+                  dppac_EN_d6_q7 = "Rarely",
+                  dppac_EN_d7_q1 = "A little bit (up to 10 minutes in total)",
+                  dppac_EN_d7_q2 = "A few",
+                  dppac_EN_d7_q3 = "A little bit",
+                  dppac_EN_d7_q4 = "Rarely",
+                  dppac_EN_d7_q5 = "A little bit",
+                  dppac_EN_d7_q6 = "A little bit",
+                  dppac_EN_d7_q7 = "Rarely",
+                  get_dppac_summary_en = "click"
+                )
+                
+                # Getting final scores computed with the app
+                mean_score_dppac_diff_en <- app$getAllValues()$export[["score_dppac_diff_en"]]
+                mean_score_dppac_quant_en <- app$getAllValues()$export[["score_dppac_quant_en"]]
+                mean_score_dppac_tot_rasch_en <- app$getAllValues()$export[["score_dppac_tot_rasch_en"]]
+                
+                # Testing Difficulty score (raw)
+                expect_equal(mean_score_dppac_diff_en, 15)
+                
+                # Testing Amount score (raw)
+                expect_equal(mean_score_dppac_quant_en, 54/5)
+                
+                # Testing Total score (rasch)
+                expect_equal(mean_score_dppac_tot_rasch_en, round((125/2*4+122/2)/5, 1))
+                
+        #************
+        # Round 3
+        #************
+                
+                # Setting inputs for D-PPAC tests
+                app$setInputs(
+                  dppac_EN_d1_q1 = "Some (up to 30 minutes in total)",
+                  dppac_EN_d1_q2 = "Some",
+                  dppac_EN_d1_q3 = "Some",
+                  dppac_EN_d1_q4 = "Sometimes",
+                  dppac_EN_d1_q5 = "Moderately",
+                  dppac_EN_d1_q6 = "Moderately",
+                  dppac_EN_d1_q7 = "Sometimes",
+                  dppac_EN_d2_q1 = "Some (up to 30 minutes in total)",
+                  dppac_EN_d2_q2 = "Some",
+                  dppac_EN_d2_q3 = "Some",
+                  dppac_EN_d2_q4 = "Sometimes",
+                  dppac_EN_d2_q5 = "Moderately",
+                  dppac_EN_d2_q6 = "Moderately",
+                  dppac_EN_d2_q7 = "Sometimes",
+                  dppac_EN_d3_q1 = "Some (up to 30 minutes in total)",
+                  dppac_EN_d3_q2 = "Some",
+                  dppac_EN_d3_q3 = "Some",
+                  dppac_EN_d3_q4 = "Sometimes",
+                  dppac_EN_d3_q5 = "Moderately",
+                  dppac_EN_d3_q6 = "Moderately",
+                  dppac_EN_d3_q7 = "Sometimes",
+                  dppac_EN_d4_q1 = "Some (up to 30 minutes in total)",
+                  dppac_EN_d4_q2 = "Some",
+                  dppac_EN_d4_q3 = "Some",
+                  dppac_EN_d4_q4 = "Sometimes",
+                  dppac_EN_d4_q5 = "Moderately",
+                  dppac_EN_d4_q6 = "Moderately",
+                  dppac_EN_d4_q7 = "Sometimes",
+                  dppac_EN_d5_q1 = "Some (up to 30 minutes in total)",
+                  dppac_EN_d5_q2 = "Some",
+                  dppac_EN_d5_q3 = "Some",
+                  dppac_EN_d5_q4 = "Sometimes",
+                  dppac_EN_d5_q5 = "Moderately",
+                  dppac_EN_d5_q6 = "Moderately",
+                  dppac_EN_d5_q7 = "Sometimes",
+                  dppac_EN_d6_q1 = "Some (up to 30 minutes in total)",
+                  dppac_EN_d6_q2 = "Some",
+                  dppac_EN_d6_q3 = "Some",
+                  dppac_EN_d6_q4 = "Sometimes",
+                  dppac_EN_d6_q5 = "Moderately",
+                  dppac_EN_d6_q6 = "Moderately",
+                  dppac_EN_d6_q7 = "Sometimes",
+                  dppac_EN_d7_q1 = "Some (up to 30 minutes in total)",
+                  dppac_EN_d7_q2 = "Some",
+                  dppac_EN_d7_q3 = "Some",
+                  dppac_EN_d7_q4 = "Sometimes",
+                  dppac_EN_d7_q5 = "Moderately",
+                  dppac_EN_d7_q6 = "Moderately",
+                  dppac_EN_d7_q7 = "Sometimes",
+                  get_dppac_summary_en = "click"
+                )
+                
+                # Getting final scores computed with the app
+                mean_score_dppac_diff_en <- app$getAllValues()$export[["score_dppac_diff_en"]]
+                mean_score_dppac_quant_en <- app$getAllValues()$export[["score_dppac_quant_en"]]
+                mean_score_dppac_tot_rasch_en <- app$getAllValues()$export[["score_dppac_tot_rasch_en"]]
+                
+                # Testing Difficulty score (raw)
+                expect_equal(mean_score_dppac_diff_en, 10)
+                
+                # Testing Amount score (raw)
+                expect_equal(mean_score_dppac_quant_en, 64/5)
+                
+                # Testing Total score (rasch)
+                expect_equal(mean_score_dppac_tot_rasch_en, round((117/2*4+113/2)/5, 1))
+             
+                
+        #************
+        # Round 4
+        #************
+                
+                # Setting inputs for D-PPAC tests
+                app$setInputs(
+                  dppac_EN_d1_q1 = "A lot (up to 1 hour in total)",
+                  dppac_EN_d1_q2 = "A lot",
+                  dppac_EN_d1_q3 = "A lot",
+                  dppac_EN_d1_q4 = "Frequently",
+                  dppac_EN_d1_q5 = "Very",
+                  dppac_EN_d1_q6 = "Very",
+                  dppac_EN_d1_q7 = "Frequently",
+                  dppac_EN_d2_q1 = "A lot (up to 1 hour in total)",
+                  dppac_EN_d2_q2 = "A lot",
+                  dppac_EN_d2_q3 = "A lot",
+                  dppac_EN_d2_q4 = "Frequently",
+                  dppac_EN_d2_q5 = "Very",
+                  dppac_EN_d2_q6 = "Very",
+                  dppac_EN_d2_q7 = "Frequently",
+                  dppac_EN_d3_q1 = "A lot (up to 1 hour in total)",
+                  dppac_EN_d3_q2 = "A lot",
+                  dppac_EN_d3_q3 = "A lot",
+                  dppac_EN_d3_q4 = "Frequently",
+                  dppac_EN_d3_q5 = "Very",
+                  dppac_EN_d3_q6 = "Very",
+                  dppac_EN_d3_q7 = "Frequently",
+                  dppac_EN_d4_q1 = "A lot (up to 1 hour in total)",
+                  dppac_EN_d4_q2 = "A lot",
+                  dppac_EN_d4_q3 = "A lot",
+                  dppac_EN_d4_q4 = "Frequently",
+                  dppac_EN_d4_q5 = "Very",
+                  dppac_EN_d4_q6 = "Very",
+                  dppac_EN_d4_q7 = "Frequently",
+                  dppac_EN_d5_q1 = "A lot (up to 1 hour in total)",
+                  dppac_EN_d5_q2 = "A lot",
+                  dppac_EN_d5_q3 = "A lot",
+                  dppac_EN_d5_q4 = "Frequently",
+                  dppac_EN_d5_q5 = "Very",
+                  dppac_EN_d5_q6 = "Very",
+                  dppac_EN_d5_q7 = "Frequently",
+                  dppac_EN_d6_q1 = "A lot (up to 1 hour in total)",
+                  dppac_EN_d6_q2 = "A lot",
+                  dppac_EN_d6_q3 = "A lot",
+                  dppac_EN_d6_q4 = "Frequently",
+                  dppac_EN_d6_q5 = "Very",
+                  dppac_EN_d6_q6 = "Very",
+                  dppac_EN_d6_q7 = "Frequently",
+                  dppac_EN_d7_q1 = "A lot (up to 1 hour in total)",
+                  dppac_EN_d7_q2 = "A lot",
+                  dppac_EN_d7_q3 = "A lot",
+                  dppac_EN_d7_q4 = "Frequently",
+                  dppac_EN_d7_q5 = "Very",
+                  dppac_EN_d7_q6 = "Very",
+                  dppac_EN_d7_q7 = "Frequently",
+                  get_dppac_summary_en = "click"
+                )
+                
+                # Getting final scores computed with the app
+                mean_score_dppac_diff_en <- app$getAllValues()$export[["score_dppac_diff_en"]]
+                mean_score_dppac_quant_en <- app$getAllValues()$export[["score_dppac_quant_en"]]
+                mean_score_dppac_tot_rasch_en <- app$getAllValues()$export[["score_dppac_tot_rasch_en"]]
+                
+                # Testing Difficulty score (raw)
+                expect_equal(mean_score_dppac_diff_en, 5)
+                
+                # Testing Amount score (raw)
+                expect_equal(mean_score_dppac_quant_en, 74/5)
+                
+                # Testing Total score (rasch)
+                expect_equal(mean_score_dppac_tot_rasch_en, round((116/2*4+107/2)/5, 1))     
         
+                
+      #************
+      # Round 5
+      #************
+      
+                # Setting inputs for D-PPAC tests
+                app$setInputs(
+                  dppac_EN_d1_q1 = "A great deal (more than 1 hour in total)",
+                  dppac_EN_d1_q2 = "A large amount",
+                  dppac_EN_d1_q3 = "A great deal",
+                  dppac_EN_d1_q4 = "All the time",
+                  dppac_EN_d1_q5 = "Extremely",
+                  dppac_EN_d1_q6 = "Extremely",
+                  dppac_EN_d1_q7 = "All the time",
+                  dppac_EN_d2_q1 = "A great deal (more than 1 hour in total)",
+                  dppac_EN_d2_q2 = "A large amount",
+                  dppac_EN_d2_q3 = "A great deal",
+                  dppac_EN_d2_q4 = "All the time",
+                  dppac_EN_d2_q5 = "Extremely",
+                  dppac_EN_d2_q6 = "Extremely",
+                  dppac_EN_d2_q7 = "All the time",
+                  dppac_EN_d3_q1 = "A great deal (more than 1 hour in total)",
+                  dppac_EN_d3_q2 = "A large amount",
+                  dppac_EN_d3_q3 = "A great deal",
+                  dppac_EN_d3_q4 = "All the time",
+                  dppac_EN_d3_q5 = "Extremely",
+                  dppac_EN_d3_q6 = "Extremely",
+                  dppac_EN_d3_q7 = "All the time",
+                  dppac_EN_d4_q1 = "A great deal (more than 1 hour in total)",
+                  dppac_EN_d4_q2 = "A large amount",
+                  dppac_EN_d4_q3 = "A great deal",
+                  dppac_EN_d4_q4 = "All the time",
+                  dppac_EN_d4_q5 = "Extremely",
+                  dppac_EN_d4_q6 = "Extremely",
+                  dppac_EN_d4_q7 = "All the time",
+                  dppac_EN_d5_q1 = "A great deal (more than 1 hour in total)",
+                  dppac_EN_d5_q2 = "A large amount",
+                  dppac_EN_d5_q3 = "A great deal",
+                  dppac_EN_d5_q4 = "All the time",
+                  dppac_EN_d5_q5 = "Extremely",
+                  dppac_EN_d5_q6 = "Extremely",
+                  dppac_EN_d5_q7 = "All the time",
+                  dppac_EN_d6_q1 = "A great deal (more than 1 hour in total)",
+                  dppac_EN_d6_q2 = "A large amount",
+                  dppac_EN_d6_q3 = "A great deal",
+                  dppac_EN_d6_q4 = "All the time",
+                  dppac_EN_d6_q5 = "Extremely",
+                  dppac_EN_d6_q6 = "Extremely",
+                  dppac_EN_d6_q7 = "All the time",
+                  dppac_EN_d7_q1 = "A great deal (more than 1 hour in total)",
+                  dppac_EN_d7_q2 = "A large amount",
+                  dppac_EN_d7_q3 = "A great deal",
+                  dppac_EN_d7_q4 = "All the time",
+                  dppac_EN_d7_q5 = "Extremely",
+                  dppac_EN_d7_q6 = "Extremely",
+                  dppac_EN_d7_q7 = "All the time",
+                  get_dppac_summary_en = "click"
+                )
+                
+                # Getting final scores computed with the app
+                mean_score_dppac_diff_en <- app$getAllValues()$export[["score_dppac_diff_en"]]
+                mean_score_dppac_quant_en <- app$getAllValues()$export[["score_dppac_quant_en"]]
+                mean_score_dppac_tot_rasch_en <- app$getAllValues()$export[["score_dppac_tot_rasch_en"]]
+                
+                # Testing Difficulty score (raw)
+                expect_equal(mean_score_dppac_diff_en, 0)
+                
+                # Testing Amount score (raw)
+                expect_equal(mean_score_dppac_quant_en, 84/5)
+                
+                # Testing Total score (rasch)
+                expect_equal(mean_score_dppac_tot_rasch_en, round((100/2*4+90/2)/5, 1)) 
+      
+ 
+                
+# ============================================================================================================================================  
+# D-PPAC (FR)
+# ============================================================================================================================================
+                
+     #************
+     # Round 1
+     #************
+                
+                # Setting inputs for D-PPAC tests
+                app$setInputs(
+                  dppac_FR_d1_q1 = "Pas du tout",
+                  dppac_FR_d1_q2 = "Aucune",
+                  dppac_FR_d1_q3 = "Pas du tout",
+                  dppac_FR_d1_q4 = "Jamais",
+                  dppac_FR_d1_q5 = "Pas du tout",
+                  dppac_FR_d1_q6 = "Pas du tout",
+                  dppac_FR_d1_q7 = "Jamais",
+                  dppac_FR_d2_q1 = "Pas du tout",
+                  dppac_FR_d2_q2 = "Aucune",
+                  dppac_FR_d2_q3 = "Pas du tout",
+                  dppac_FR_d2_q4 = "Jamais",
+                  dppac_FR_d2_q5 = "Pas du tout",
+                  dppac_FR_d2_q6 = "Pas du tout",
+                  dppac_FR_d2_q7 = "Jamais",
+                  dppac_FR_d3_q1 = "Pas du tout",
+                  dppac_FR_d3_q2 = "Aucune",
+                  dppac_FR_d3_q3 = "Pas du tout",
+                  dppac_FR_d3_q4 = "Jamais",
+                  dppac_FR_d3_q5 = "Pas du tout",
+                  dppac_FR_d3_q6 = "Pas du tout",
+                  dppac_FR_d3_q7 = "Jamais",
+                  dppac_FR_d4_q1 = "Pas du tout",
+                  dppac_FR_d4_q2 = "Aucune",
+                  dppac_FR_d4_q3 = "Pas du tout",
+                  dppac_FR_d4_q4 = "Jamais",
+                  dppac_FR_d4_q5 = "Pas du tout",
+                  dppac_FR_d4_q6 = "Pas du tout",
+                  dppac_FR_d4_q7 = "Jamais",
+                  dppac_FR_d5_q1 = "Pas du tout",
+                  dppac_FR_d5_q2 = "Aucune",
+                  dppac_FR_d5_q3 = "Pas du tout",
+                  dppac_FR_d5_q4 = "Jamais",
+                  dppac_FR_d5_q5 = "Pas du tout",
+                  dppac_FR_d5_q6 = "Pas du tout",
+                  dppac_FR_d5_q7 = "Jamais",
+                  dppac_FR_d6_q1 = "Pas du tout",
+                  dppac_FR_d6_q2 = "Aucune",
+                  dppac_FR_d6_q3 = "Pas du tout",
+                  dppac_FR_d6_q4 = "Jamais",
+                  dppac_FR_d6_q5 = "Pas du tout",
+                  dppac_FR_d6_q6 = "Pas du tout",
+                  dppac_FR_d6_q7 = "Jamais",
+                  dppac_FR_d7_q1 = "Pas du tout",
+                  dppac_FR_d7_q2 = "Aucune",
+                  dppac_FR_d7_q3 = "Pas du tout",
+                  dppac_FR_d7_q4 = "Jamais",
+                  dppac_FR_d7_q5 = "Pas du tout",
+                  dppac_FR_d7_q6 = "Pas du tout",
+                  dppac_FR_d7_q7 = "Jamais",
+                  get_dppac_summary_fr = "click"
+                )
+                
+                # Getting final scores computed with the app
+                mean_score_dppac_diff_fr <- app$getAllValues()$export[["score_dppac_diff_fr"]]
+                mean_score_dppac_quant_fr <- app$getAllValues()$export[["score_dppac_quant_fr"]]
+                mean_score_dppac_tot_rasch_fr <- app$getAllValues()$export[["score_dppac_tot_rasch_fr"]]
+                
+                # Testing Difficulty score (raw)
+                expect_equal(mean_score_dppac_diff_fr, 20)
+                
+                # Testing Amount score (raw)
+                expect_equal(mean_score_dppac_quant_fr, 44/5)
+                
+                # Testing Total score (rasch)
+                expect_equal(mean_score_dppac_tot_rasch_fr, round((150/2*4+147/2)/5, 1))
+                
+                
+       #************
+       # Round 2
+       #************
+       
+                # Setting inputs for D-PPAC tests
+                app$setInputs(
+                  dppac_FR_d1_q1 = "Un petit peu (jusqu’à 10 minutes au total)",
+                  dppac_FR_d1_q2 = "Très peu",
+                  dppac_FR_d1_q3 = "Un petit peu",
+                  dppac_FR_d1_q4 = "Rarement",
+                  dppac_FR_d1_q5 = "Un petit peu",
+                  dppac_FR_d1_q6 = "Un petit peu",
+                  dppac_FR_d1_q7 = "Rarement",
+                  dppac_FR_d2_q1 = "Un petit peu (jusqu’à 10 minutes au total)",
+                  dppac_FR_d2_q2 = "Très peu",
+                  dppac_FR_d2_q3 = "Un petit peu",
+                  dppac_FR_d2_q4 = "Rarement",
+                  dppac_FR_d2_q5 = "Un petit peu",
+                  dppac_FR_d2_q6 = "Un petit peu",
+                  dppac_FR_d2_q7 = "Rarement",
+                  dppac_FR_d3_q1 = "Un petit peu (jusqu’à 10 minutes au total)",
+                  dppac_FR_d3_q2 = "Très peu",
+                  dppac_FR_d3_q3 = "Un petit peu",
+                  dppac_FR_d3_q4 = "Rarement",
+                  dppac_FR_d3_q5 = "Un petit peu",
+                  dppac_FR_d3_q6 = "Un petit peu",
+                  dppac_FR_d3_q7 = "Rarement",
+                  dppac_FR_d4_q1 = "Un petit peu (jusqu’à 10 minutes au total)",
+                  dppac_FR_d4_q2 = "Très peu",
+                  dppac_FR_d4_q3 = "Un petit peu",
+                  dppac_FR_d4_q4 = "Rarement",
+                  dppac_FR_d4_q5 = "Un petit peu",
+                  dppac_FR_d4_q6 = "Un petit peu",
+                  dppac_FR_d4_q7 = "Rarement",
+                  dppac_FR_d5_q1 = "Un petit peu (jusqu’à 10 minutes au total)",
+                  dppac_FR_d5_q2 = "Très peu",
+                  dppac_FR_d5_q3 = "Un petit peu",
+                  dppac_FR_d5_q4 = "Rarement",
+                  dppac_FR_d5_q5 = "Un petit peu",
+                  dppac_FR_d5_q6 = "Un petit peu",
+                  dppac_FR_d5_q7 = "Rarement",
+                  dppac_FR_d6_q1 = "Un petit peu (jusqu’à 10 minutes au total)",
+                  dppac_FR_d6_q2 = "Très peu",
+                  dppac_FR_d6_q3 = "Un petit peu",
+                  dppac_FR_d6_q4 = "Rarement",
+                  dppac_FR_d6_q5 = "Un petit peu",
+                  dppac_FR_d6_q6 = "Un petit peu",
+                  dppac_FR_d6_q7 = "Rarement",
+                  dppac_FR_d7_q1 = "Un petit peu (jusqu’à 10 minutes au total)",
+                  dppac_FR_d7_q2 = "Très peu",
+                  dppac_FR_d7_q3 = "Un petit peu",
+                  dppac_FR_d7_q4 = "Rarement",
+                  dppac_FR_d7_q5 = "Un petit peu",
+                  dppac_FR_d7_q6 = "Un petit peu",
+                  dppac_FR_d7_q7 = "Rarement",
+                  get_dppac_summary_fr = "click"
+                )
+                
+                # Getting final scores computed with the app
+                mean_score_dppac_diff_fr <- app$getAllValues()$export[["score_dppac_diff_fr"]]
+                mean_score_dppac_quant_fr <- app$getAllValues()$export[["score_dppac_quant_fr"]]
+                mean_score_dppac_tot_rasch_fr <- app$getAllValues()$export[["score_dppac_tot_rasch_fr"]]
+                
+                # Testing Difficulty score (raw)
+                expect_equal(mean_score_dppac_diff_fr, 15)
+                
+                # Testing Amount score (raw)
+                expect_equal(mean_score_dppac_quant_fr, 54/5)
+                
+                # Testing Total score (rasch)
+                expect_equal(mean_score_dppac_tot_rasch_fr, round((125/2*4+122/2)/5, 1))
+                
+      #************
+      # Round 3
+      #************
+                
+                # Setting inputs for D-PPAC tests
+                app$setInputs(
+                  dppac_FR_d1_q1 = "Un peu (jusqu’à 30 minutes au total)",
+                  dppac_FR_d1_q2 = "Quelques-unes",
+                  dppac_FR_d1_q3 = "Quelques-unes",
+                  dppac_FR_d1_q4 = "Quelques fois",
+                  dppac_FR_d1_q5 = "Modérément",
+                  dppac_FR_d1_q6 = "Modérément",
+                  dppac_FR_d1_q7 = "Quelques fois",
+                  dppac_FR_d2_q1 = "Un peu (jusqu’à 30 minutes au total)",
+                  dppac_FR_d2_q2 = "Quelques-unes",
+                  dppac_FR_d2_q3 = "Quelques-unes",
+                  dppac_FR_d2_q4 = "Quelques fois",
+                  dppac_FR_d2_q5 = "Modérément",
+                  dppac_FR_d2_q6 = "Modérément",
+                  dppac_FR_d2_q7 = "Quelques fois",
+                  dppac_FR_d3_q1 = "Un peu (jusqu’à 30 minutes au total)",
+                  dppac_FR_d3_q2 = "Quelques-unes",
+                  dppac_FR_d3_q3 = "Quelques-unes",
+                  dppac_FR_d3_q4 = "Quelques fois",
+                  dppac_FR_d3_q5 = "Modérément",
+                  dppac_FR_d3_q6 = "Modérément",
+                  dppac_FR_d3_q7 = "Quelques fois",
+                  dppac_FR_d4_q1 = "Un peu (jusqu’à 30 minutes au total)",
+                  dppac_FR_d4_q2 = "Quelques-unes",
+                  dppac_FR_d4_q3 = "Quelques-unes",
+                  dppac_FR_d4_q4 = "Quelques fois",
+                  dppac_FR_d4_q5 = "Modérément",
+                  dppac_FR_d4_q6 = "Modérément",
+                  dppac_FR_d4_q7 = "Quelques fois",
+                  dppac_FR_d5_q1 = "Un peu (jusqu’à 30 minutes au total)",
+                  dppac_FR_d5_q2 = "Quelques-unes",
+                  dppac_FR_d5_q3 = "Quelques-unes",
+                  dppac_FR_d5_q4 = "Quelques fois",
+                  dppac_FR_d5_q5 = "Modérément",
+                  dppac_FR_d5_q6 = "Modérément",
+                  dppac_FR_d5_q7 = "Quelques fois",
+                  dppac_FR_d6_q1 = "Un peu (jusqu’à 30 minutes au total)",
+                  dppac_FR_d6_q2 = "Quelques-unes",
+                  dppac_FR_d6_q3 = "Quelques-unes",
+                  dppac_FR_d6_q4 = "Quelques fois",
+                  dppac_FR_d6_q5 = "Modérément",
+                  dppac_FR_d6_q6 = "Modérément",
+                  dppac_FR_d6_q7 = "Quelques fois",
+                  dppac_FR_d7_q1 = "Un peu (jusqu’à 30 minutes au total)",
+                  dppac_FR_d7_q2 = "Quelques-unes",
+                  dppac_FR_d7_q3 = "Quelques-unes",
+                  dppac_FR_d7_q4 = "Quelques fois",
+                  dppac_FR_d7_q5 = "Modérément",
+                  dppac_FR_d7_q6 = "Modérément",
+                  dppac_FR_d7_q7 = "Quelques fois",
+                  get_dppac_summary_fr = "click"
+                )
+                
+                # Getting final scores computed with the app
+                mean_score_dppac_diff_fr <- app$getAllValues()$export[["score_dppac_diff_fr"]]
+                mean_score_dppac_quant_fr <- app$getAllValues()$export[["score_dppac_quant_fr"]]
+                mean_score_dppac_tot_rasch_fr <- app$getAllValues()$export[["score_dppac_tot_rasch_fr"]]
+                
+                # Testing Difficulty score (raw)
+                expect_equal(mean_score_dppac_diff_fr, 10)
+                
+                # Testing Amount score (raw)
+                expect_equal(mean_score_dppac_quant_fr, 64/5)
+                
+                # Testing Total score (rasch)
+                expect_equal(mean_score_dppac_tot_rasch_fr, round((117/2*4+113/2)/5, 1))
+                
+                
+    #************
+    # Round 4
+    #************
+                
+                # Setting inputs for D-PPAC tests
+                app$setInputs(
+                  dppac_FR_d1_q1 = "Beaucoup (jusqu’à 1 heure au total)",
+                  dppac_FR_d1_q2 = "Beaucoup",
+                  dppac_FR_d1_q3 = "Beaucoup",
+                  dppac_FR_d1_q4 = "Fréquemment",
+                  dppac_FR_d1_q5 = "Très",
+                  dppac_FR_d1_q6 = "Très",
+                  dppac_FR_d1_q7 = "Fréquemment",
+                  dppac_FR_d2_q1 = "Beaucoup (jusqu’à 1 heure au total)",
+                  dppac_FR_d2_q2 = "Beaucoup",
+                  dppac_FR_d2_q3 = "Beaucoup",
+                  dppac_FR_d2_q4 = "Fréquemment",
+                  dppac_FR_d2_q5 = "Très",
+                  dppac_FR_d2_q6 = "Très",
+                  dppac_FR_d2_q7 = "Fréquemment",
+                  dppac_FR_d3_q1 = "Beaucoup (jusqu’à 1 heure au total)",
+                  dppac_FR_d3_q2 = "Beaucoup",
+                  dppac_FR_d3_q3 = "Beaucoup",
+                  dppac_FR_d3_q4 = "Fréquemment",
+                  dppac_FR_d3_q5 = "Très",
+                  dppac_FR_d3_q6 = "Très",
+                  dppac_FR_d3_q7 = "Fréquemment",
+                  dppac_FR_d4_q1 = "Beaucoup (jusqu’à 1 heure au total)",
+                  dppac_FR_d4_q2 = "Beaucoup",
+                  dppac_FR_d4_q3 = "Beaucoup",
+                  dppac_FR_d4_q4 = "Fréquemment",
+                  dppac_FR_d4_q5 = "Très",
+                  dppac_FR_d4_q6 = "Très",
+                  dppac_FR_d4_q7 = "Fréquemment",
+                  dppac_FR_d5_q1 = "Beaucoup (jusqu’à 1 heure au total)",
+                  dppac_FR_d5_q2 = "Beaucoup",
+                  dppac_FR_d5_q3 = "Beaucoup",
+                  dppac_FR_d5_q4 = "Fréquemment",
+                  dppac_FR_d5_q5 = "Très",
+                  dppac_FR_d5_q6 = "Très",
+                  dppac_FR_d5_q7 = "Fréquemment",
+                  dppac_FR_d6_q1 = "Beaucoup (jusqu’à 1 heure au total)",
+                  dppac_FR_d6_q2 = "Beaucoup",
+                  dppac_FR_d6_q3 = "Beaucoup",
+                  dppac_FR_d6_q4 = "Fréquemment",
+                  dppac_FR_d6_q5 = "Très",
+                  dppac_FR_d6_q6 = "Très",
+                  dppac_FR_d6_q7 = "Fréquemment",
+                  dppac_FR_d7_q1 = "Beaucoup (jusqu’à 1 heure au total)",
+                  dppac_FR_d7_q2 = "Beaucoup",
+                  dppac_FR_d7_q3 = "Beaucoup",
+                  dppac_FR_d7_q4 = "Fréquemment",
+                  dppac_FR_d7_q5 = "Très",
+                  dppac_FR_d7_q6 = "Très",
+                  dppac_FR_d7_q7 = "Fréquemment",
+                  get_dppac_summary_fr = "click"
+                )
+                
+                # Getting final scores computed with the app
+                mean_score_dppac_diff_fr <- app$getAllValues()$export[["score_dppac_diff_fr"]]
+                mean_score_dppac_quant_fr <- app$getAllValues()$export[["score_dppac_quant_fr"]]
+                mean_score_dppac_tot_rasch_fr <- app$getAllValues()$export[["score_dppac_tot_rasch_fr"]]
+                
+                # Testing Difficulty score (raw)
+                expect_equal(mean_score_dppac_diff_fr, 5)
+                
+                # Testing Amount score (raw)
+                expect_equal(mean_score_dppac_quant_fr, 74/5)
+                
+                # Testing Total score (rasch)
+                expect_equal(mean_score_dppac_tot_rasch_fr, round((116/2*4+107/2)/5, 1))     
+                
+                
+   #************
+   # Round 5
+   #************
+                
+                # Setting inputs for D-PPAC tests
+                app$setInputs(
+                  dppac_FR_d1_q1 = "Enormément (plus d’1 heure au total)",
+                  dppac_FR_d1_q2 = "Enormément",
+                  dppac_FR_d1_q3 = "Enormément",
+                  dppac_FR_d1_q4 = "Tout le temps",
+                  dppac_FR_d1_q5 = "Extrêmement",
+                  dppac_FR_d1_q6 = "Extrêmement",
+                  dppac_FR_d1_q7 = "Tout le temps",
+                  dppac_FR_d2_q1 = "Enormément (plus d’1 heure au total)",
+                  dppac_FR_d2_q2 = "Enormément",
+                  dppac_FR_d2_q3 = "Enormément",
+                  dppac_FR_d2_q4 = "Tout le temps",
+                  dppac_FR_d2_q5 = "Extrêmement",
+                  dppac_FR_d2_q6 = "Extrêmement",
+                  dppac_FR_d2_q7 = "Tout le temps",
+                  dppac_FR_d3_q1 = "Enormément (plus d’1 heure au total)",
+                  dppac_FR_d3_q2 = "Enormément",
+                  dppac_FR_d3_q3 = "Enormément",
+                  dppac_FR_d3_q4 = "Tout le temps",
+                  dppac_FR_d3_q5 = "Extrêmement",
+                  dppac_FR_d3_q6 = "Extrêmement",
+                  dppac_FR_d3_q7 = "Tout le temps",
+                  dppac_FR_d4_q1 = "Enormément (plus d’1 heure au total)",
+                  dppac_FR_d4_q2 = "Enormément",
+                  dppac_FR_d4_q3 = "Enormément",
+                  dppac_FR_d4_q4 = "Tout le temps",
+                  dppac_FR_d4_q5 = "Extrêmement",
+                  dppac_FR_d4_q6 = "Extrêmement",
+                  dppac_FR_d4_q7 = "Tout le temps",
+                  dppac_FR_d5_q1 = "Enormément (plus d’1 heure au total)",
+                  dppac_FR_d5_q2 = "Enormément",
+                  dppac_FR_d5_q3 = "Enormément",
+                  dppac_FR_d5_q4 = "Tout le temps",
+                  dppac_FR_d5_q5 = "Extrêmement",
+                  dppac_FR_d5_q6 = "Extrêmement",
+                  dppac_FR_d5_q7 = "Tout le temps",
+                  dppac_FR_d6_q1 = "Enormément (plus d’1 heure au total)",
+                  dppac_FR_d6_q2 = "Enormément",
+                  dppac_FR_d6_q3 = "Enormément",
+                  dppac_FR_d6_q4 = "Tout le temps",
+                  dppac_FR_d6_q5 = "Extrêmement",
+                  dppac_FR_d6_q6 = "Extrêmement",
+                  dppac_FR_d6_q7 = "Tout le temps",
+                  dppac_FR_d7_q1 = "Enormément (plus d’1 heure au total)",
+                  dppac_FR_d7_q2 = "Enormément",
+                  dppac_FR_d7_q3 = "Enormément",
+                  dppac_FR_d7_q4 = "Tout le temps",
+                  dppac_FR_d7_q5 = "Extrêmement",
+                  dppac_FR_d7_q6 = "Extrêmement",
+                  dppac_FR_d7_q7 = "Tout le temps",
+                  get_dppac_summary_fr = "click"
+                )
+                
+                # Getting final scores computed with the app
+                mean_score_dppac_diff_fr <- app$getAllValues()$export[["score_dppac_diff_fr"]]
+                mean_score_dppac_quant_fr <- app$getAllValues()$export[["score_dppac_quant_fr"]]
+                mean_score_dppac_tot_rasch_fr <- app$getAllValues()$export[["score_dppac_tot_rasch_fr"]]
+                
+                # Testing Difficulty score (raw)
+                expect_equal(mean_score_dppac_diff_fr, 0)
+                
+                # Testing Amount score (raw)
+                expect_equal(mean_score_dppac_quant_fr, 84/5)
+                
+                # Testing Total score (rasch)
+                expect_equal(mean_score_dppac_tot_rasch_fr, round((100/2*4+90/2)/5, 1))                
 })      
     
     

@@ -100,7 +100,7 @@ test_that("D-PPAC item scores are accurate", {
     expect_equal(sum(c(q1, q2, q3, q4, q5, q6, q7)), 3+3+5*1)
   
   # French version  R5 ---- 
-    q1 <- compute_pro_score_dppac(x = "Enorm\u00e9ment (plus d\u00271 heure au total)",  question = "q1", language = "fr")
+    q1 <- compute_pro_score_dppac(x = "Enorm\u00e9ment (plus d\u20191 heure au total)",  question = "q1", language = "fr")
     q2 <- compute_pro_score_dppac(x = "Enorm\u00e9ment",  question = "q2", language = "fr")
     q3 <- compute_pro_score_dppac(x = "Enorm\u00e9ment",  question = "q3", language = "fr")
     q4 <- compute_pro_score_dppac(x = "Tout le temps",  question = "q4", language = "fr")
