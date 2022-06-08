@@ -10,7 +10,7 @@ coverage](https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge
 [![R-CMD-check](https://github.com/pydemull/activAnalyzer/workflows/R-CMD-check/badge.svg)](https://github.com/pydemull/activAnalyzer/actions)
 <!-- badges: end -->
 
-activAnalyzer is a Shiny app that was developed to analyze daily
+activAnalyzer is a Shiny app that has been developed to analyze daily
 physical behavior data recorded at the hip in adults using an ActiGraph
 accelerometer (.agd files). Once analysis is completed, the app allows
 to export results (summarized by day with means or medians of the valid
