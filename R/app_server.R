@@ -3712,8 +3712,8 @@ app_server <- function(input, output, session) {
                   defaultColDef = reactable::colDef(align = "center"),
                   columns = list(
                     Item = reactable::colDef(align = "left"),
-                    "Score de difficult\u00e9" = reactable::colDef(width = 80),
-                    "Score de quantit\u00e9" = reactable::colDef(width = 80)
+                    "Score de difficult\xc3\xa9" = reactable::colDef(width = 80),
+                    "Score de quantit\xc3\xa9" = reactable::colDef(width = 80)
                   ),
                   defaultPageSize = 17,
                   striped = TRUE
@@ -4002,8 +4002,8 @@ app_server <- function(input, output, session) {
                     columns = list(
                       Item = reactable::colDef(align = "left"),
                       "Jour" = reactable::colDef(width = 60),
-                      "Score de difficult\u00e9" = reactable::colDef(width = 80),
-                      "Score de quantit\u00e9" = reactable::colDef(width = 80)
+                      "Score de difficult\xc3\xa9" = reactable::colDef(width = 80),
+                      "Score de quantit\xc3\xa9" = reactable::colDef(width = 80)
                       
                     ),
                     defaultPageSize = 70,
