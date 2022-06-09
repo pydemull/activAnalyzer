@@ -19,7 +19,7 @@ app_ui <- function(request) {
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
         ),
-        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 0.4.1"), titleWidth = 237
+        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 1.0.0"), titleWidth = 237
                                       ),
       shinydashboardPlus::dashboardSidebar( 
         tags$style(HTML(".sidebar-menu li a {font-size: 17px;}")),
@@ -789,7 +789,7 @@ app_ui <- function(request) {
                       ),
                     ),
                     fluidRow(
-                      column(12,
+                      column(1,
                              shiny::actionButton("get_cppac_summary_en", "Results / Update", class = "btn-validate"),
                              h3("")
                       ),
@@ -809,10 +809,17 @@ app_ui <- function(request) {
                              h4(""),
                              shinydashboard::valueBoxOutput("infoBox_cppac_en_total_diff_rasch"),
                              shinydashboard::valueBoxOutput("infoBox_cppac_en_total_amount_rasch"),
-                             shinydashboard::valueBoxOutput("infoBox_cppac_en_total_all_rasch")
+                             shinydashboard::valueBoxOutput("infoBox_cppac_en_total_all_rasch"),
                              ),
                       
                     ),
+                    fluidRow(
+                      column(2,
+                             h4(""),
+                             h4(""),
+                             downloadButton("report_en_cppac", "Generate C-PPAC report (EN) (.pdf)", class = "btn-report")
+                             )
+                    )
                     
                    ), # End of tabPanel
                    
@@ -2167,8 +2174,8 @@ app_ui <- function(request) {
                           ),
                         ),
                         fluidRow(
-                          column(12,
-                                 shiny::actionButton("get_cppac_summary_fr", "R\u00e9ssulats / Actualiser", class = "btn-validate"),
+                          column(1,
+                                 shiny::actionButton("get_cppac_summary_fr", "R\u00e9sulats / Actualiser", class = "btn-validate"),
                                  h3("")
                           ),
                         ),
@@ -2188,7 +2195,13 @@ app_ui <- function(request) {
                                  shinydashboard::valueBoxOutput("infoBox_cppac_fr_total_amount_rasch"),
                                  shinydashboard::valueBoxOutput("infoBox_cppac_fr_total_all_rasch")
                           ),
-                          
+                          ),
+                        fluidRow(
+                          column(4,
+                                 h4(""),
+                                 h4(""),
+                                 downloadButton("report_fr_cppac", "Générer le rapport du C-PPAC (.pdf)", class = "btn-report")
+                                 )
                         ),
                 ), # End of tabPanel
                 

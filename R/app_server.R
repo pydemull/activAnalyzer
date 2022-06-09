@@ -4212,6 +4212,8 @@ app_server <- function(input, output, session) {
       shinyjs::hide("get_cppac_summary_fr")
       shinyjs::hide("get_dppac_summary_en")
       shinyjs::hide("get_dppac_summary_fr")
+      shinyjs::hide("report_en_cppac")
+      shinyjs::hide("report_fr_cppac")
 
     if(nrow(results_list()$df_with_computed_metrics) >=1) {
       shinyjs::show("ExpDataset")
@@ -4233,6 +4235,19 @@ app_server <- function(input, output, session) {
       shinyjs::show("get_dppac_summary_fr")
     }
 
+  })
+    
+  observe({  
+    if(nrow(tab_cppac_summary_en()) >= 1) {
+      shinyjs::show("report_en_cppac")
+    }
+  })
+    
+  observe({  
+    if(nrow(tab_cppac_summary_fr()) >= 1) {
+      shinyjs::show("report_fr_cppac")
+    }
+  
   })
   
   
@@ -4291,11 +4306,11 @@ app_server <- function(input, output, session) {
     }
     )
   
-  ###################
-  # Generating report ----
-  ###################
+  ####################
+  # Generating reports ----
+  ####################
   
-  # Generating report EN
+  # Generating general report EN
     output$report_en <- downloadHandler(
     
     
@@ -4365,7 +4380,7 @@ app_server <- function(input, output, session) {
     }
   )
   
-  # Generating report FR
+  # Generating general report FR
     output$report_fr <- downloadHandler(
     
       
@@ -4434,6 +4449,163 @@ app_server <- function(input, output, session) {
       
     }
   )
+    
+  # Generating C-PPAC report EN
+    output$report_en_cppac <- downloadHandler(
+      
+      
+      filename = "report_cppac.pdf",
+      content = function(file) {
+        
+        
+        withProgress(message = 'Please wait...', {
+          
+          report <- system.file("report", "report_en_cppac.Rmd", package = "activAnalyzer")
+          
+          # Copy the report file to a temporary directory before processing it, in
+          # case we don't have write permissions to the current working dir (which
+          # can happen when deployed). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
+          tempReport <- file.path(tempdir(), "report_en_cppac.Rmd")
+          file.copy(report, tempReport, overwrite = TRUE)
+          
+          # Set up parameters to pass to Rmd document
+          params <- list(
+            assessor_name = input$assessor_name,
+            assessor_surname = input$assessor_surname,
+            patient_name = input$patient_name,
+            patient_surname = input$patient_surname,
+            sex = input$sex,
+            age = input$age,
+            weight = input$weight,
+            start_date = attributes(file())$startdatetime,
+            end_date = attributes(file())$stopdatetime,
+            device = attributes(file())$devicename,
+            position = input$position,
+            side = input$side,
+            sampling_rate = attributes(file())$`original sample rate`,
+            filter = attributes(file())$filter,
+            epoch = as.numeric(input$to_epoch),
+            start_day_analysis = input$start_day_analysis,
+            end_day_analysis = input$end_day_analysis,
+            axis_weartime = input$axis_weartime,
+            frame_size = input$frame_size,
+            allowanceFrame_size = input$allowanceFrame_size,
+            streamFrame_size = input$streamFrame_size,
+            equation_mets = input$equation_mets,
+            bmr_kcal_d = bmr_kcal_d(),
+            axis_sed = results_list()$axis_sed_chosen_name,
+            axis_mvpa = results_list()$axis_mvpa_chosen_name,
+            sed_cutpoint = results_list()$sed_cutpoint_chosen,
+            mpa_cutpoint = results_list()$mpa_cutpoint_chosen,
+            vpa_cutpoint = results_list()$vpa_cutpoint_chosen,
+            minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
+            results_by_day = results_list()$results_by_day,
+            results_summary_means =  results_summary_means(),
+            results_summary_medians =  results_summary_medians(),
+            cppac_table = tab_cppac_summary_en(),
+            cppac_diff_raw = sum(tab_cppac_summary_en()$"Difficulty score", na.rm = TRUE),
+            cppac_amount_raw = sum(tab_cppac_summary_en()$"Amount score", na.rm = TRUE),
+            cppac_total_raw = sum(tab_cppac_summary_en()$"Difficulty score", na.rm = TRUE) + sum(tab_cppac_summary_en()$"Amount score", na.rm = TRUE),
+            cppac_diff_rasch = rasch_transform(x = sum(tab_cppac_summary_en()$"Difficulty score", na.rm = TRUE), quest = "C-PPAC", score = "difficulty"),
+            cppac_amount_rasch = rasch_transform(x = sum(tab_cppac_summary_en()$"Amount score", na.rm = TRUE), quest = "C-PPAC", score = "quantity"),
+            cppac_total_rasch = round((rasch_transform(x = sum(tab_cppac_summary_en()$"Difficulty score", na.rm = TRUE), quest = "C-PPAC", score = "difficulty") +
+                     rasch_transform(x = sum(tab_cppac_summary_en()$"Amount score", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1),
+            
+            rendered_by_shiny = TRUE
+          )
+          
+          # Knit the document, passing in the `params` list, and eval it in a
+          # child of the global environment (this isolates the code in the document
+          # from the code in this app). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
+          out <- rmarkdown::render(tempReport,
+                                   params = params,
+                                   envir = new.env(parent = globalenv())
+          )
+          out <- file.rename(out, file)
+          
+        })
+        
+      }
+    )
+    
+    # Generating C-PPAC report FR
+    output$report_fr_cppac <- downloadHandler(
+      
+      
+      filename = "rapport_cppac.pdf",
+      content = function(file) {
+        
+        
+        withProgress(message = 'Please wait...', {
+          
+          report <- system.file("report", "report_fr_cppac.Rmd", package = "activAnalyzer")
+          
+          # Copy the report file to a temporary directory before processing it, in
+          # case we don't have write permissions to the current working dir (which
+          # can happen when deployed). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
+          tempReport <- file.path(tempdir(), "report_fr_cppac.Rmd")
+          file.copy(report, tempReport, overwrite = TRUE)
+          
+          # Set up parameters to pass to Rmd document
+          params <- list(
+            assessor_name = input$assessor_name,
+            assessor_surname = input$assessor_surname,
+            patient_name = input$patient_name,
+            patient_surname = input$patient_surname,
+            sex = input$sex,
+            age = input$age,
+            weight = input$weight,
+            start_date = attributes(file())$startdatetime,
+            end_date = attributes(file())$stopdatetime,
+            device = attributes(file())$devicename,
+            position = input$position,
+            side = input$side,
+            sampling_rate = attributes(file())$`original sample rate`,
+            filter = attributes(file())$filter,
+            epoch = as.numeric(input$to_epoch),
+            start_day_analysis = input$start_day_analysis,
+            end_day_analysis = input$end_day_analysis,
+            axis_weartime = input$axis_weartime,
+            frame_size = input$frame_size,
+            allowanceFrame_size = input$allowanceFrame_size,
+            streamFrame_size = input$streamFrame_size,
+            equation_mets = input$equation_mets,
+            bmr_kcal_d = bmr_kcal_d(),
+            axis_sed = results_list()$axis_sed_chosen_name,
+            axis_mvpa = results_list()$axis_mvpa_chosen_name,
+            sed_cutpoint = results_list()$sed_cutpoint_chosen,
+            mpa_cutpoint = results_list()$mpa_cutpoint_chosen,
+            vpa_cutpoint = results_list()$vpa_cutpoint_chosen,
+            minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
+            results_by_day = results_list()$results_by_day,
+            results_summary_means =  results_summary_means(),
+            results_summary_medians =  results_summary_medians(),
+            cppac_table = tab_cppac_summary_fr(),
+            cppac_diff_raw = sum(tab_cppac_summary_fr()$"Score de difficult\xc3\xa9", na.rm = TRUE),
+            cppac_amount_raw = sum(tab_cppac_summary_fr()$"Score de quantit\xc3\xa9", na.rm = TRUE),
+            cppac_total_raw = sum(tab_cppac_summary_fr()$"Score de difficult\xc3\xa9", na.rm = TRUE) + sum(tab_cppac_summary_fr()$"Score de quantit\xc3\xa9", na.rm = TRUE),
+            cppac_diff_rasch = rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de difficult\xc3\xa9", na.rm = TRUE), quest = "C-PPAC", score = "difficulty"),
+            cppac_amount_rasch = rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de quantit\xc3\xa9", na.rm = TRUE), quest = "C-PPAC", score = "quantity"),
+            cppac_total_rasch = round((rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de difficult\xc3\xa9", na.rm = TRUE), quest = "C-PPAC", score = "difficulty") +
+                                         rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de quantit\xc3\xa9", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1),
+          
+            
+            rendered_by_shiny = TRUE
+          )
+          
+          # Knit the document, passing in the `params` list, and eval it in a
+          # child of the global environment (this isolates the code in the document
+          # from the code in this app). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
+          out <- rmarkdown::render(tempReport,
+                                   params = params,
+                                   envir = new.env(parent = globalenv())
+          )
+          out <- file.rename(out, file)
+          
+        })
+        
+      }
+    )
   
   #######################################################
   # Switching from accelerometer panel to PROactive panel
