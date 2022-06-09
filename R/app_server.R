@@ -4050,7 +4050,7 @@ app_server <- function(input, output, session) {
                 })
                 
               #****************
-              #Difficulty (raw)
+              # Difficulty (raw)
               #****************
               output$infoBox_dppac_fr_total_diff <- shinydashboard::renderValueBox({
                 
@@ -4067,7 +4067,7 @@ app_server <- function(input, output, session) {
               })
               
               #************
-              #Amount (raw)
+              # Amount (raw)
               #************
               output$infoBox_dppac_fr_total_amount <- shinydashboard::renderValueBox({
                 
@@ -4084,7 +4084,7 @@ app_server <- function(input, output, session) {
               })
               
               #***********
-              #Total (raw)
+              # Total (raw)
               #***********
               output$infoBox_dppac_fr_total_all <- shinydashboard::renderValueBox({
                 
@@ -4102,7 +4102,7 @@ app_server <- function(input, output, session) {
               
               
               #******************
-              #Difficulty (rasch)
+              # Difficulty (rasch)
               #******************
               output$infoBox_dppac_fr_total_diff_rasch <- shinydashboard::renderValueBox({
                 
@@ -4120,7 +4120,7 @@ app_server <- function(input, output, session) {
               
               
               #**************
-              #Amount (rasch)
+              # Amount (rasch)
               #**************
               output$infoBox_dppac_fr_total_amount_rasch <- shinydashboard::renderValueBox({
                 
@@ -4138,7 +4138,7 @@ app_server <- function(input, output, session) {
               
               
               #*************
-              #Total (rasch
+              # Total (rasch
               #*************
               output$infoBox_dppac_fr_total_all_rasch <- shinydashboard::renderValueBox({
                 
