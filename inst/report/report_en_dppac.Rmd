@@ -1,5 +1,5 @@
 ---
-title: \vspace{-2cm} C-PPAC questionnaire results
+title: \vspace{-2cm} D-PPAC questionnaire results
 output: 
    pdf_document:
      latex_engine: xelatex
@@ -38,13 +38,13 @@ params:
   results_by_day: NA
   results_summary_means: NA
   results_summary_medians: NA
-  cppac_table: NA
-  cppac_diff_raw: NA
-  cppac_amount_raw: NA
-  cppac_total_raw: NA
-  cppac_diff_rasch: NA
-  cppac_amount_rasch: NA
-  cppac_total_rasch: NA 
+  dppac_table: NA
+  dppac_diff_raw: NA
+  dppac_amount_raw: NA
+  dppac_total_raw: NA
+  dppac_diff_rasch: NA
+  dppac_amount_rasch: NA
+  dppac_total_rasch: NA 
   rendered_by_shiny: FALSE
   geometry: "left=2cm, right=2cm, top=1cm, bottom=1cm"
 
@@ -78,7 +78,7 @@ options("scipen"=100, "digits"=4)
 ```{r, fig.width=12}
 
 diff_raw <-
-  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_diff_raw), aes(x, y, label = paste0(label, " / 40"))) +
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$dppac_diff_raw), aes(x, y, label = paste0(label, " / 20"))) +
   geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
   coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
   annotate("text", x = 0.1, y = 0.2, label = "Difficulty score (raw)", color = "white", fontface = "bold", hjust = 0, size = 6) +
@@ -88,7 +88,7 @@ diff_raw <-
   )
 
 amount_raw <-
-  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_amount_raw), aes(x, y, label = paste0(label, " / 15"))) +
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$dppac_amount_raw), aes(x, y, label = paste0(label, " / 17"))) +
   geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
   coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
   annotate("text", x = 0.1, y = 0.2, label = "Amount score (raw)", color = "white", fontface = "bold", hjust = 0, size = 6) +
@@ -98,7 +98,7 @@ amount_raw <-
   )
 
 total_raw <-
-  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_total_raw), aes(x, y, label = paste0(label, " / 55"))) +
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$dppac_total_raw), aes(x, y, label = paste0(label, " / 37"))) +
   geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
   coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
   annotate("text", x = 0.1, y = 0.2, label = "Total score (raw)", color = "white", fontface = "bold", hjust = 0, size = 6) +
@@ -108,7 +108,7 @@ total_raw <-
   )
 
 diff_rasch <-
-  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_diff_rasch), aes(x, y, label = paste0(label, " / 100"))) +
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$dppac_diff_rasch), aes(x, y, label = paste0(label, " / 100"))) +
   geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
   coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
   annotate("text", x = 0.1, y = 0.2, label = "Difficulty score (Rasch)", color = "white", fontface = "bold", hjust = 0, size = 6) +
@@ -118,7 +118,7 @@ diff_rasch <-
   )
 
 amount_rasch <-
-  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_amount_rasch), aes(x, y, label = paste0(label, " / 100"))) +
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$dppac_amount_rasch), aes(x, y, label = paste0(label, " / 100"))) +
   geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
   coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
   annotate("text", x = 0.1, y = 0.2, label = "Amount score (Rasch)", color = "white", fontface = "bold", hjust = 0, size = 6) +
@@ -128,7 +128,7 @@ amount_rasch <-
   )
 
 total_rasch <-
-  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_total_rasch), aes(x, y, label = paste0(label, " / 100"))) +
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$dppac_total_rasch), aes(x, y, label = paste0(label, " / 100"))) +
   geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
   coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
   annotate("text", x = 0.1, y = 0.2, label = "Total score (Rasch)", color = "white", fontface = "bold", hjust = 0, size = 6) +
@@ -147,10 +147,12 @@ total_rasch <-
 # Details
 ```{r}
 flextable::set_flextable_defaults(fonts_ignore = TRUE)
-flextable::flextable(params$cppac_table) %>%
+flextable::flextable(params$dppac_table) %>%
    flextable::theme_zebra() %>%
    flextable::align(align = "left", part = "all" ) %>%
-   flextable::width(width = 2.1) %>%
+   flextable::width(j = "Day", width = 0.6) %>%
+   flextable::width(j = "Item", width = 3.2) %>%
+   flextable::width(j = c("Difficulty score", "Amount score"), width = 1) %>%
    flextable::align(j = "Difficulty score", align = "center", part = "body") %>%
    flextable::align(j = "Amount score", align = "center", part = "body") %>%
    flextable::align(j = "Difficulty score", align = "center", part = "header") %>%

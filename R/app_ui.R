@@ -817,7 +817,7 @@ app_ui <- function(request) {
                       column(2,
                              h4(""),
                              h4(""),
-                             downloadButton("report_en_cppac", "Generate C-PPAC report (EN) (.pdf)", class = "btn-report")
+                             downloadButton("report_en_cppac", "Generate C-PPAC report (.pdf)", class = "btn-report")
                              )
                     )
                     
@@ -1870,6 +1870,13 @@ app_ui <- function(request) {
                                 shinydashboard::valueBoxOutput("infoBox_dppac_en_total_all_rasch")
                          ),
                        ),
+                       fluidRow(
+                         column(2,
+                                h4(""),
+                                h4(""),
+                                downloadButton("report_en_dppac", "Generate D-PPAC report (.pdf)", class = "btn-report")
+                         )
+                       )
                        
                          
                  ), # End of tabPanel
@@ -2200,7 +2207,7 @@ app_ui <- function(request) {
                           column(4,
                                  h4(""),
                                  h4(""),
-                                 downloadButton("report_fr_cppac", "Générer le rapport du C-PPAC (.pdf)", class = "btn-report")
+                                 downloadButton("report_fr_cppac", "G\u00e9n\u00e9rer le rapport du C-PPAC (.pdf)", class = "btn-report")
                                  )
                         ),
                 ), # End of tabPanel
@@ -3250,6 +3257,13 @@ app_ui <- function(request) {
                                   shinydashboard::valueBoxOutput("infoBox_dppac_fr_total_diff_rasch"),
                                   shinydashboard::valueBoxOutput("infoBox_dppac_fr_total_amount_rasch"),
                                   shinydashboard::valueBoxOutput("infoBox_dppac_fr_total_all_rasch")
+                           ),
+                         ),
+                         fluidRow(
+                           column(2,
+                                  h4(""),
+                                  h4(""),
+                                  downloadButton("report_fr_dppac", "G\u00e9n\u00e9rer le rapport du D-PPAC (.pdf)", class = "btn-report")
                            ),
                          ),
                 ),
