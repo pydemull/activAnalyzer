@@ -18,11 +18,11 @@
     font-size: 80%;
     font-weight: 700;
     line-height: 1;
-    color: "#FDFEFE";
+    color: grey;
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    background-color: red;
+    background-color: white;
     border-radius: .25em;
 }
 
