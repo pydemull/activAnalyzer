@@ -40,11 +40,15 @@ There are three different ways to use the activAnalyzer app:
     app is hosted using a free account that allows to run apps for 25
     hours per month. Thus, the availability of the app on the web is
     very dependent on the number of users as well as the time spent by
-    each user on the app. That’s why the second option available to use
-    the app (see below) may be more appropriate (for Windows users
-    only). Google Chrome and Microsoft Edge browsers allow the app to
-    work as expected but Mozilla Firefox does not seem to allow reseting
-    all the inputs when required.
+    each user on the app. Moreover, as computations when using the app
+    can be quite intensive, it is possible that speed and stability of
+    this online version of the app are compromised. For these reasons,
+    this option should be considered as a way to have a quick look about
+    how the app works. The other available options (please see below)
+    will be more appropriate for working with the app on a regular
+    basis. Of note, Google Chrome and Microsoft Edge browsers allow the
+    app to work as expected but Mozilla Firefox does not seem to allow
+    reseting all the inputs when required.
 -   [Locally on PC via a standalone desktop
     app](https://sourceforge.net/projects/activanalyzer) that is
     downloadable from the SourceForge website (stable version, for
