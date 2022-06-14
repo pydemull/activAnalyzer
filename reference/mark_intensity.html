@@ -46,7 +46,7 @@ related to each epoch (e.g., 1/60e of an hour for 1-min epochs), only when the M
     
     <a class="navbar-brand me-2" href="../index.html">activAnalyzer</a>
 
-    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,37 +127,58 @@ related to each epoch (e.g., 1/60e of an hour for 1-min epochs), only when the M
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p>A dataframe obtained using the <code><a href="prepare_dataset.html">prepare_dataset</a></code> and then the <code><a href="mark_wear_time.html">mark_wear_time</a></code> functions.</p></dd>
+
+
 <dt>col_axis</dt>
 <dd><p>A character value to indicate the name of the variable to be used for determining intensity categories.</p></dd>
+
+
 <dt>sed_cutpoint</dt>
 <dd><p>A numeric value below which time is considered as spent in sedentary behavior (in counts/min).
 You must convert to counts/min if you want to use a cut-point initially developped using an epoch shorter than 60 s. In the case where the epoch of the
 dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
 You must provide a value inferior or equal to 60.</p></dd>
+
+
 <dt>mpa_cutpoint</dt>
 <dd><p>A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity (in counts/min).
 You must convert to counts/min if you want to use a cut-point initially developped using an epoch shorter than 60 s. In the case where the epoch of the
 dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
 You must provide a value inferior or equal to 60.</p></dd>
+
+
 <dt>vpa_cutpoint</dt>
 <dd><p>A numeric value at and above which time is considered as spent in vigorous physical activity (in counts/min).
 You must convert to counts/min if you want to use a cut-point initially developped using an epoch shorter than 60 s. In the case where the epoch of the
 dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
 You must provide a value inferior or equal to 60.</p></dd>
+
+
 <dt>equation</dt>
 <dd><p>A character string to indicate the equation to be used for estimating METs.</p></dd>
+
+
 <dt>age</dt>
 <dd><p>A numeric value in yr.</p></dd>
+
+
 <dt>weight</dt>
 <dd><p>A numeric value in kg.</p></dd>
+
+
 <dt>sex</dt>
 <dd><p>A character value.</p></dd>
+
+
 <dt>dates</dt>
 <dd><p>A character vector containing the dates to be retained for analyzis. The dates must be with the "YYYY-MM-DD" format.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A dataframe.</p>
+    
+
+<p>A dataframe.</p>
     </div>
 
     <div class="section level2">
@@ -237,7 +258,7 @@ You must provide a value inferior or equal to 60.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>
