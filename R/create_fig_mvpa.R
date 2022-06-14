@@ -94,7 +94,7 @@ if (language == "en") {
              yend = 0.36, 
              curvature = -.4, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
-    annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1, y = 0.265)
+    annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (modified)", hjust = 0, x = 1, y = 0.265)
 
   return(g_mvpa)
 }
@@ -150,7 +150,7 @@ if (language == "fr") {
              yend = 0.36, 
              curvature = -.4, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
-    annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1, y = 0.265)
+    annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570 (modifi\u00e9)", hjust = 0, x = 1, y = 0.265)
 
   return(g_mvpa)
   

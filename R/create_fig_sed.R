@@ -75,7 +75,7 @@ if (language == "en") {
     annotate("text", 
              label = "Threshold above \nwhich risk \nis significant",
              x = 10.3, 
-             y = 0.55, 
+             y = 0.58, 
              hjust = 0,
              size = 5,
              colour = "black", 
@@ -87,7 +87,7 @@ if (language == "en") {
              yend = 0.71, 
              curvature = .5, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
-    annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1.2, y = 0.387)
+    annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (modified)", hjust = 0, x = 1.2, y = 0.387)
 
   return(g_sed)
   
@@ -125,7 +125,7 @@ if (language == "fr") {
     annotate("text", 
              label = "Seuil au-dessus \nduquel le risque \nest significatif",
              x = 10.3, 
-             y = 0.55, 
+             y = 0.58, 
              hjust = 0,
              size = 5, 
              colour = "black", 
@@ -137,7 +137,7 @@ if (language == "fr") {
              yend = 0.71, 
              curvature = .5, arrow = arrow(length = unit(2, "mm")),
              colour = "black") +
-    annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570", hjust = 0, x = 1.2, y = 0.387)
+    annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570 (modifi\u00e9)", hjust = 0, x = 1.2, y = 0.387)
 
   return(g_sed)
   

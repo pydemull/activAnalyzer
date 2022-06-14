@@ -41,8 +41,8 @@ h3 {
 /* Buttons */
 .btn-proactive {
   color: #fff; 
-  background-color: #9C2780; 
-  border-color: #6A1B9A;
+  background-color: #E50055; 
+  border-color: #E50055;
   padding: 12px;
 }
 
@@ -54,9 +54,9 @@ h3 {
 }
 
 .btn-report {
-  color: #3F51B5; 
-  background-color: #FFEB3B;
-  border-color: #FFEB3B; 
+  color: white; 
+  background-color: #72B89E;
+  border-color: white; 
   padding: 12px;
 }
 
@@ -118,9 +118,9 @@ h3 {
 }
 
 .btn-validate {
-  color: #fff; 
-  background-color: #4CAF50; 
-  border-color: #4CAF50;
+  color: white; 
+  background-color: #72B89E;
+  border-color: white; 
   padding: 12px;
 }
 
