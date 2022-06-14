@@ -42,7 +42,7 @@ h3 {
 .btn-proactive {
   color: #fff; 
   background-color: #E50055; 
-  border-color: #E50055;
+  border-color: white;
   padding: 12px;
 }
 
@@ -83,8 +83,8 @@ h3 {
 
 .btn-refresh {
   color: #fff; 
-  background-color: red; 
-  border-color: red;
+  background-color: #72B89E;
+  border-color: #72B89E;
   padding: 12px;
   padding-top: 15px; 
   padding-bottom: 15px; 
@@ -94,7 +94,7 @@ h3 {
 
 .btn-refresh:hover {
   color: #fff; 
-  background-color: red; 
+  background-color: red;
   border-color: red;
   padding: 12px;
   padding-top: 15px; 

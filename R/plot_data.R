@@ -72,7 +72,7 @@ plot_data <- function(data,
                 labels = format_hm
                  ) +
     scale_y_continuous(position = "right", expand = c(0, 0)) +
-    scale_fill_manual(values = c("#FF6666", "lemonchiffon1")) +
+    scale_fill_manual(values = c("lemonchiffon3", "lemonchiffon1")) +
     labs(x = "Time (hh:mm)", y = metric, fill = "") +
     theme_bw() +
     theme(legend.position = "bottom",

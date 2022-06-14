@@ -3283,7 +3283,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12, 
-                           h4("Welcome to the activAnalyzer app. activAnalyzer is a Shiny app that was developed to analyze daily physical behavior data recorded at the hip 
+                           h4("Welcome to the activAnalyzer app. activAnalyzer is a Shiny app that has been developed to analyze daily physical behavior data recorded at the hip 
                    in adults using an ActiGraph accelerometer (.agd files). Once analysis is completed,
                    the app allows to export results to .csv files and to generate a report of the measurement. All the configured inputs
                    relevant for interpreting the results are recorded into the report. Be sure that the inputs that are configured

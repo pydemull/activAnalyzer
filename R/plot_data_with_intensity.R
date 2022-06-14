@@ -96,8 +96,8 @@ plot_data_with_intensity <- function(data,
                labels = format_hm
                ) +
    scale_y_continuous(position = "right", expand = c(0, 0)) +
-   scale_fill_manual(breaks = c("Nonwear", "SED", "LPA", "MVPA"), values = c("#FF6666", "#0066FF", "green", "yellow")) +
-   scale_color_manual(breaks = c("Nonwear", "SED", "LPA", "MVPA"), values = c("#FF6666", "#0066FF", "green", "yellow")) +
+   scale_fill_manual(breaks = c("Nonwear", "SED", "LPA", "MVPA"), values = c("lemonchiffon3", "#FF0066", "#00CEF1", "#0066FF")) +
+   scale_color_manual(breaks = c("Nonwear", "SED", "LPA", "MVPA"), values = c("lemonchiffon3", "#FF0066", "#00CEF1", "#0066FF")) +
    labs(x = "Time (hh:mm)", y = metric, fill = "", color = "") +
    theme_bw() +
    theme(legend.position = "bottom",
