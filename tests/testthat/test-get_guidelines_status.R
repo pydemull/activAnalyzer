@@ -13,7 +13,7 @@ test_that("Gives correct guidelines status", {
   expect_match(mets_hr_within_en, "within the 2020 WHO physical activity guidelines")
   expect_match(mets_hr_above_en, "above the 2020 WHO physical activity guidelines")
   expect_match(mets_hr_below_fr, "en-dessous des recommandations d'AP 2020 de l'OMS")
-  expect_match(mets_hr_within_fr, "within the 2020 WHO physical activity guidelines")
+  expect_match(mets_hr_within_fr, "dans les recommandations d'AP 2020 de l'OMS")
   expect_match(mets_hr_above_fr, "au-dessus des recommandations d'AP 2020 de l'OMS")
   
 })

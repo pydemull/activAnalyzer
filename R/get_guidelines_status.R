@@ -25,7 +25,7 @@ if (language == "fr") {
   
   guidelines_status <- 
     ifelse(value < 150/7/60*3, "en-dessous des recommandations d'AP 2020 de l'OMS",
-           ifelse(value >  150/7/60*3*2, "au-dessus des recommandations d'AP 2020 de l'OMS", "within the 2020 WHO physical activity guidelines"))
+           ifelse(value >  150/7/60*3*2, "au-dessus des recommandations d'AP 2020 de l'OMS", "dans les recommandations d'AP 2020 de l'OMS"))
   
   return(guidelines_status)
   
