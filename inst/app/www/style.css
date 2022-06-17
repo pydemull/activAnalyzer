@@ -40,9 +40,9 @@ h3 {
 
 /* Buttons */
 .btn-proactive {
-  color: #fff; 
-  background-color: #E50055; 
-  border-color: white;
+  color: #4CAF50; 
+  background-color: #fff; 
+  border-color: #4CAF50;
   padding: 12px;
 }
 
@@ -55,7 +55,7 @@ h3 {
 
 .btn-report {
   color: white; 
-  background-color: #72B89E;
+  background-color: #4CAF50;
   border-color: white; 
   padding: 12px;
 }
@@ -81,10 +81,32 @@ h3 {
   padding: 12px;
 }
 
+.btn-fullscreen {
+  color: #fff; 
+  background-color: #3F51B5;
+  border-color: #3F51B5;
+  padding: 12px;
+  padding-top: 15px; 
+  padding-bottom: 15px; 
+  padding-right: 15px;
+  border-radius: 0%;
+}
+
+.btn-fullscreen:hover {
+  color: #fff; 
+  background-color: #00CEF1; 
+  border-color: #00CEF1;
+  padding: 12px;
+  padding-top: 15px; 
+  padding-bottom: 15px; 
+  padding-right: 15px;
+  border-radius: 0%;
+}
+
 .btn-refresh {
   color: #fff; 
-  background-color: #72B89E;
-  border-color: #72B89E;
+  background-color: #3F51B5;
+  border-color: #3F51B5;
   padding: 12px;
   padding-top: 15px; 
   padding-bottom: 15px; 
@@ -119,7 +141,7 @@ h3 {
 
 .btn-validate {
   color: white; 
-  background-color: #72B89E;
+  background-color: #4CAF50;
   border-color: white; 
   padding: 12px;
 }
