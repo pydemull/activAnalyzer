@@ -1,9 +1,11 @@
 # activAnalyzer (development version)
+
 * Updated UI buttons colors.
 * The figures of the report now indicate that figures have been modified from original versions.
 * Added a Full Screen button.
 
 # activAnalyzer 1.0.0
+
 * Allowed the possiblity to work with epochs shorter than 60 s. A warning is provided when the set epoch is <10 s to indicate that figures will not be created with such epochs to save time.
 * The user can now set "23:59:59" rather than "23:59:00" to set the upper limit of the period of the day to be considered for analyzis.
 * Increased the size of the files that the app can manage.
@@ -19,6 +21,7 @@
 * Added reports for the C-PPAC and D-PPAC questionnaires.
 
 # activAnalyzer 0.4.1
+
 * Updated calculations for PROactive accelerometer scores (previous calculations actually were appropriate when using the means of the days of the measurement, not the medians). Now the app allows to compute scores from both medians and means of the days of the measurement (see references in the documentation for further details).
 * Updated plots algorithms so that plots are correctly displayed in the app when a few days were recorded.
 * Hidden the download buttons for the reports when there is not enough valid days.

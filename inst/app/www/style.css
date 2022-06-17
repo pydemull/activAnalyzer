@@ -7,6 +7,15 @@
     background-color: #3F51B5;
 }
 
+
+.skin-blue .main-header .logo:hover {
+    background-color: #3F51B5;
+}
+
+.skin-blue .main-header .navbar .sidebar-toggle:hover {
+    background-color: #3F51B5;
+}
+
 .sidebar {
   position: fixed;
   white-space: nowrap;
@@ -40,9 +49,9 @@ h3 {
 
 /* Buttons */
 .btn-proactive {
-  color: #4CAF50; 
+  color: #660066; 
   background-color: #fff; 
-  border-color: #4CAF50;
+  border-color: #660066;
   padding: 12px;
 }
 
@@ -56,7 +65,7 @@ h3 {
 .btn-report {
   color: white; 
   background-color: #4CAF50;
-  border-color: white; 
+  border-color: white;
   padding: 12px;
 }
 
@@ -125,10 +134,25 @@ h3 {
   border-radius: 0%;
 }
 
-.btn-secondary {
+.btn-input {
   color: #3F51B5; 
   background-color: #fff; 
   border-color: #3F51B5;
+  padding: 12px;
+}
+
+.btn-input:hover {
+  color: #fff; 
+  background-color: #3F51B5; 
+  border-color: #3F51B5;
+  padding: 12px;
+}
+
+
+.btn-secondary {
+  color: #4CAF50; 
+  background-color: #fff;
+  border-color: #4CAF50; 
   padding: 12px;
 }
 
@@ -142,7 +166,7 @@ h3 {
 .btn-validate {
   color: white; 
   background-color: #4CAF50;
-  border-color: white; 
+  border-color: white;
   padding: 12px;
 }
 

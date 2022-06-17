@@ -479,11 +479,11 @@ app_ui <- function(request) {
                     column(12,
                            downloadButton("report_en", "Generate report (EN) (.pdf)", class = "btn-report"),
                            downloadButton("report_fr", "Generate report (FR) (.pdf)", class = "btn-report"),
-                           actionButton("go_to_proactive_q", "Go to PROactive questionnaire", class = "btn-proactive"),
                            downloadButton("ExpDataset", "Export marked dataset (.csv)", class = "btn-secondary"),
                            downloadButton("ExpResultsByDays", "Export results by day (.csv)", class = "btn-secondary"),
                            downloadButton("ExpDailySummaryMeans", "Export daily summary (means) (.csv)", class = "btn-secondary"),
                            downloadButton("ExpDailySummaryMedians", "Export daily summary (medians) (.csv)",  class = "btn-secondary"),
+                           actionButton("go_to_proactive_q", "Go to PROactive questionnaire", class = "btn-proactive")
                     ),
                     
                   ),
@@ -3306,8 +3306,8 @@ app_ui <- function(request) {
                   ),
                   fluidRow(
                     column(4,
-                           downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", class = "btn-secondary"),
-                           downloadButton("user_guide_fr", "Download user's guide (FR) (.pdf)", class = "btn-secondary")
+                           downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", class = "btn-input"),
+                           downloadButton("user_guide_fr", "Download user's guide (FR) (.pdf)", class = "btn-input")
                     ),
                   ),
 

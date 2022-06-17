@@ -1,5 +1,5 @@
 ---
-title: \vspace{-2cm} Résultats du questionnaire D-PPAC
+title: \vspace{-2cm} Résultats du D-PPAC
 output: 
    pdf_document:
      latex_engine: xelatex
