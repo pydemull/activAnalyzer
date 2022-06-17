@@ -9,12 +9,25 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     shinyjs::useShinyjs(),
+    # Script for Full Screen
+    shinyjs::extendShinyjs(text = "shinyjs.toggleFullScreen = function() {
+    var element = document.documentElement,
+      enterFS = element.requestFullscreen || element.msRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen,
+      exitFS = document.exitFullscreen || document.msExitFullscreen || document.mozCancelFullScreen || document.webkitExitFullscreen;
+    if (!document.fullscreenElement && !document.msFullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement) {
+      enterFS.call(element);
+    } else {
+      exitFS.call(document);
+    }
+  }", 
+                           functions = c("shinyjs.toggleFullScreen")
+                           ),
 
     # Your application UI logic 
     shinydashboardPlus::dashboardPage(
       shinydashboard::dashboardHeader(
-        # Set height of dashboardHeader
         tags$li(class = "dropdown",
+                tags$li(class = "dropdown",  shiny::actionButton('fs',"Full Screen",  class = "btn-fullscreen"), onclick = "shinyjs.toggleFullScreen();"),
                 tags$li(class = "dropdown",  shiny::actionButton('reset',"Reset",  class = "btn-refresh")),
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
@@ -3293,8 +3306,8 @@ app_ui <- function(request) {
                   ),
                   fluidRow(
                     column(4,
-                           downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", class = "btn-report"),
-                           downloadButton("user_guide_fr", "Download user's guide (FR) (.pdf)", class = "btn-report")
+                           downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", class = "btn-secondary"),
+                           downloadButton("user_guide_fr", "Download user's guide (FR) (.pdf)", class = "btn-secondary")
                     ),
                   ),
 
