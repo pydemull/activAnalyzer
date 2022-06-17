@@ -9,7 +9,7 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     shinyjs::useShinyjs(),
-    # Script for Full Screen
+    # Script for Full Screen (https://stackoverflow.com/questions/42371164/how-to-run-r-shiny-app-in-full-sized-window)
     shinyjs::extendShinyjs(text = "shinyjs.toggleFullScreen = function() {
     var element = document.documentElement,
       enterFS = element.requestFullscreen || element.msRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen,

@@ -80,7 +80,7 @@ app_server <- function(input, output, session) {
     
   # Selecting days required for analysis
     output$select_days <- renderUI({
-      dates <- attributes(as.factor(df()$date))$levels
+      dates <- paste0(attributes(as.factor(df()$date))$levels, " (", weekdays(as.Date(attributes(as.factor(df()$date))$levels)), ")")
       checkboxGroupInput("selected_days", h3("Select the days to keep for analyzis (please only select the 7 appropriate days if your analyzis is related to PROactive framework)"), dates, selected = dates, inline = TRUE)
     })  
     

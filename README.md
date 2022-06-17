@@ -22,7 +22,7 @@ performed (in other words, avoid modifying the inputs after generating
 satisfactory results). In addition to a general analysis of physical
 behavior, the app also allows to complete the [Daily- and Clinical
 visit-PROactive Physical Activity in COPD (D-PPAC and C-PPAC)
-questionnaires](https://erj.ersjournals.com/content/early/2015/05/28/09031936.00183014).
+instruments](https://erj.ersjournals.com/content/early/2015/05/28/09031936.00183014).
 Please read the [user’s
 guide](https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf)
 for details about how the app works.
@@ -43,7 +43,7 @@ There are three different ways to use the activAnalyzer app:
     each user on the app. Moreover, as computations when using the app
     can be quite intensive, it is possible that speed and stability of
     this online version of the app are compromised. For these reasons,
-    this option should be considered as a way to have a quick look about
+    this option should be considered as a way to have a quick look at
     how the app works. The other available options (please see below)
     will be more appropriate for working with the app on a regular
     basis. Of note, Google Chrome and Microsoft Edge browsers allow the
