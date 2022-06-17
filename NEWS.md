@@ -1,6 +1,7 @@
 # activAnalyzer (development version)
 * Updated UI buttons colors.
 * The figures of the report now indicate that figures have been modified from original versions.
+* Added a Full Screen button.
 
 # activAnalyzer 1.0.0
 * Allowed the possiblity to work with epochs shorter than 60 s. A warning is provided when the set epoch is <10 s to indicate that figures will not be created with such epochs to save time.
