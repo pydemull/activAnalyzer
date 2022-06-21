@@ -3305,8 +3305,8 @@ app_ui <- function(request) {
                               the results are recorded in the report. Be sure that the inputs that are configured when 
                               generating the report correspond to the analysis that was actually performed (in other words, 
                               avoid modifying the inputs after generating satisfactory results). In addition to a general 
-                              analysis of physical behavior, the app also allows to implement the Daily- and Clinical visit-PROactive 
-                              Physical Activity in COPD (D-PPAC and C-PPAC) instruments. Please read the user’s guide for 
+                              analysis of physical behavior, the app also allows to implement the Daily\u002d and Clinical visit\u002dPROactive 
+                              Physical Activity in COPD (D\u002dPPAC and C\u002dPPAC) instruments. Please read the user\u2019s guide for 
                               details about how the app works."),
                         ),
                            downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", class = "btn-input"),
