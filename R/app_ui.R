@@ -3296,16 +3296,19 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12, 
-                           h4("Welcome to the activAnalyzer app. activAnalyzer is a Shiny app that has been developed to analyze daily physical behavior data recorded at the hip 
-                   in adults using an ActiGraph accelerometer (.agd files). Once analysis is completed,
-                   the app allows to export results to .csv files and to generate a report of the measurement. All the configured inputs
-                   relevant for interpreting the results are recorded into the report. Be sure that the inputs that are configured
-                   when generating the report correspond to the analysis that was actually performed (in other words, avoid modifying the inputs
-                   after generating satisfactory results). Please read the user's guide for details about how the app works."),
-                    ),
-                  ),
-                  fluidRow(
-                    column(4,
+                        wellPanel(
+                           h4("Welcome to the activAnalyzer app. activAnalyzer is a Shiny app that has been developed 
+                              to analyze daily physical behavior data recorded at the hip in adults using an ActiGraph 
+                              accelerometer (.agd files). Once analysis is completed, the app allows to export results 
+                              (summarized by day with means or medians of the valid days) to .csv files and to generate 
+                              a report of the measurement (.pdf file). All the configured inputs relevant for interpreting 
+                              the results are recorded in the report. Be sure that the inputs that are configured when 
+                              generating the report correspond to the analysis that was actually performed (in other words, 
+                              avoid modifying the inputs after generating satisfactory results). In addition to a general 
+                              analysis of physical behavior, the app also allows to implement the Daily- and Clinical visit-PROactive 
+                              Physical Activity in COPD (D-PPAC and C-PPAC) instruments. Please read the user’s guide for 
+                              details about how the app works."),
+                        ),
                            downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", class = "btn-input"),
                            downloadButton("user_guide_fr", "Download user's guide (FR) (.pdf)", class = "btn-input")
                     ),
@@ -3314,15 +3317,18 @@ app_ui <- function(request) {
                   fluidRow(
                     column(12,
                            h2("Authors"),
+                      wellPanel(
                            h4("Pierre-Yves de M\u00fcllenheim, PhD", style = "font-weight: bold; font-size: 20px"),
                            h4("Associate professor"),
                            h4("Institut de formation en \u00e9ducation physique et en sport d\u2019Angers \u0028IFEPSA\u0029, UCO, France"),
-                           h4("Email: pydemull@uco.fr"),
-                           h3(""),
+                           h4("Email: pydemull@uco.fr")
+                        ),
+                      wellPanel(
                            h4("Arnaud Chambellan, MD, PhD", style = "font-weight: bold; font-size: 20px"),
                            h4("Pulmonology Department, H\u00f4pital Saint Philibert, GHICL, France"),
                            h4("Professor of Physiology, Universit\u00e9 Catholique de Lille, France"),
                            h4("Email: chambellan.arnaud@ghicl.net")
+                        )
                            
                     ),
                   ),

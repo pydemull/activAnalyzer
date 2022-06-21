@@ -20,7 +20,7 @@ are recorded in the report. Be sure that the inputs that are configured
 when generating the report correspond to the analysis that was actually
 performed (in other words, avoid modifying the inputs after generating
 satisfactory results). In addition to a general analysis of physical
-behavior, the app also allows to complete the [Daily- and Clinical
+behavior, the app also allows to implement the [Daily- and Clinical
 visit-PROactive Physical Activity in COPD (D-PPAC and C-PPAC)
 instruments](https://erj.ersjournals.com/content/early/2015/05/28/09031936.00183014).
 Please read the [user’s
