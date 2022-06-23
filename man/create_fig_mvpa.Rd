@@ -15,8 +15,8 @@ create_fig_mvpa(score, language = c("en", "fr"))
 A ggplot object.
 }
 \description{
-The function generates a figure showing the daily mean of MVPA time in correspondence with the Ekelund et al. (2019; doi: 10.1136/bmj.l4570)
-mortality hazard ratios.
+The function generates a figure showing mortality hazard ratio in correspondence with daily MVPA minutes. The figure is based on
+data extracted from Ekelund et al. paper (2019; doi: 10.1136/bmj.l4570).
 }
 \examples{
 create_fig_mvpa(score = 27)

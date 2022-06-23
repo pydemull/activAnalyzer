@@ -15,8 +15,8 @@ create_fig_ratio_mvpa_sed(score, language = c("en", "fr"))
 A ggplot object.
 }
 \description{
-The function generates a figure showing the daily mean of the MVPA/SED ratio in correspondence with the Chastin et al. (2021; doi: 10.1123/jpah.2020-0635)
-mortality hazard ratios.
+The function generates a figure showing mortality hazard ratio in correspondence with the daily mean of the MVPA/SED ratio.
+The figure is based on data extracted from Chastin et al. paper (2021; doi: 10.1123/jpah.2020-0635).
 }
 \examples{
 create_fig_ratio_mvpa_sed(score = 0.06)

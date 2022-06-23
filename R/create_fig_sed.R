@@ -1,7 +1,7 @@
 #' Create a figure showing the mean daily sedentary (SED) time
 #' 
-#' The function generates a figure showing the daily mean of SED time in correspondence with the Ekelund et al. (2019; doi: 10.1136/bmj.l4570)
-#'     mortality hazard ratios.
+#' The function generates a figure showing mortality hazard ratio in correspondence with daily SED hours. The figure is based on
+#'     data extracted from Ekelund et al. paper (2019; doi: 10.1136/bmj.l4570).
 #'
 #' @param score A numeric value for mean daily SED time in minutes.
 #' @param language A character value for setting the language with which the figure should be created: `en` for english; `fr` for french.
@@ -23,19 +23,13 @@ language <- match.arg(language)
   model_sed <- loess(y ~ x, data = sed_lines %>% dplyr::filter(line == "mid"), 
                      control = loess.control(surface = "direct"))
   
-  model_sed_up <- loess(y ~ x, data = sed_lines %>% dplyr::filter(line == "up"), 
-                        control = loess.control(surface = "direct")) 
-  
-  model_sed_low <- loess(y ~ x, data = sed_lines %>% dplyr::filter(line == "low"), 
-                         control = loess.control(surface = "direct"))
-  
     grid_sed <-
     sed_lines %>%
     modelr::data_grid(
-      x = seq(1, 15, 0.1),
+      x = seq(6, 12, 0.1),
     ) %>%
-    modelr::spread_predictions(model_sed, model_sed_up, model_sed_low) %>%
-    dplyr::rename(mid = model_sed, up = model_sed_up, low = model_sed_low)
+    modelr::spread_predictions(model_sed) %>%
+    dplyr::rename(mid = model_sed)
 
 # Getting data for plotting patient's result  
   
@@ -43,24 +37,20 @@ language <- match.arg(language)
     modelr::add_predictions(model_sed)
   
 # Creating figure
-if (language == "en") { 
+if (language == "en" && score/60 >= 6 && score/60 <= 12) { 
   
   g_sed <-
     ggplot() +
-    geom_ribbon(data = grid_sed, aes(x = x, y = up, ymin = low, ymax = up), fill = "grey95") +
-    geom_ribbon(data = grid_sed %>% dplyr::filter(x < 5), 
-                aes(x = x, y = up, ymin = rep(0, 40), ymax = up), fill = "grey95") +
+    geom_rect(data = grid_sed, aes(xmin = 6, xmax = 12, ymin = 0.5,  ymax = 3.1), fill = "white", color = "grey50") + 
     geom_line(data = grid_sed, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
-    geom_line(data = grid_sed, aes (x = x, y = up), size = 1, colour = "#3366FF", linetype = "dashed") +
-    geom_line(data = grid_sed, aes (x = x, y = low), size = 1, colour = "#3366FF", linetype = "dashed") +
-    geom_vline(aes(xintercept = 9.5), linetype = "dotted") +
+    geom_point(data = score_sed, aes(x = 7.5, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
     geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
     geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
     geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 7, shape = 3) +
     scale_y_continuous(trans = scales::log2_trans()) +
-    scale_x_continuous(limits = c(1, 15), breaks = seq(1, 15, 2)) +
-    coord_cartesian(xlim = c(1, 15), ylim = c(0.35, 5), expand = FALSE) +
-    labs(title = "Daily SED hours", x = "", y = NULL) +
+    scale_x_continuous(limits = c(1, 15), breaks = seq(6, 12, 1)) +
+    coord_cartesian(xlim = c(6, 12), ylim = c(0.5, 3.1), expand = FALSE, clip = "off") +
+    labs(title = "Mortality hazard ratio vs. SED hours / day", x = "", y = NULL) +
     theme_bw() +
     theme(axis.ticks = element_blank(),
           axis.text.x = element_text(size = 13),
@@ -72,45 +62,37 @@ if (language == "en") {
           plot.background = element_rect(fill = "beige", color = "beige"),
           plot.margin = margin(1, 1, 0, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-    annotate("text", 
-             label = "Threshold above \nwhich risk \nis significant",
-             x = 10.3, 
-             y = 0.61, 
-             hjust = 0,
-             size = 5,
-             colour = "black", 
-             fontface = "italic") +
+    annotate("text", label = "The curve shows the \nmortality hazard ratio in \nadults older than 40 yr old", 
+             x = 9.4, y = 0.85, hjust = 0, 
+             fontface = "bold.italic", colour = "#3366FF") +
     annotate(geom = "curve", 
-             x = 10.2, 
-             y = 0.76, 
-             xend = 9.5, 
-             yend = 0.71, 
-             curvature = .5, arrow = arrow(length = unit(2, "mm")),
-             colour = "black") +
-    annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (modified)", hjust = 0, x = 1.2, y = 0.387)
+             x = 9.35, 
+             y = 0.85, 
+             xend = 8.9, 
+             yend = 1.10, 
+             curvature = -.35, arrow = arrow(length = unit(2, "mm")),
+             colour = "#3366FF") +
+    annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (modified)", hjust = 0, x = 6.1, y = 0.53) +
+    annotate("text", label = "Reference \npoint", hjust = 1, vjust = 0, x = 7.45, y = 1.13, color = "grey30", fontface = "bold")
 
   return(g_sed)
   
   }
   
-if (language == "fr") {  
+if (language == "fr" && score/60 >= 6 && score/60 <= 12) {  
   
   g_sed <-
     ggplot() +
-    geom_ribbon(data = grid_sed, aes(x = x, y = up, ymin = low, ymax = up), fill = "grey95") +
-    geom_ribbon(data = grid_sed %>% dplyr::filter(x < 5), 
-                aes(x = x, y = up, ymin = rep(0, 40), ymax = up), fill = "grey95") +
+    geom_rect(data = grid_sed, aes(xmin = 6, xmax = 12, ymin = 0.5,  ymax = 3.1), fill = "white", color = "grey50") + 
     geom_line(data = grid_sed, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
-    geom_line(data = grid_sed, aes (x = x, y = up), size = 1, colour = "#3366FF", linetype = "dashed") +
-    geom_line(data = grid_sed, aes (x = x, y = low), size = 1, colour = "#3366FF", linetype = "dashed") +
-    geom_vline(aes(xintercept = 9.5), linetype = "dotted") +
+    geom_point(data = score_sed, aes(x = 7.5, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
     geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
     geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
     geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 7, shape = 3) +
     scale_y_continuous(trans = scales::log2_trans()) +
-    scale_x_continuous(limits = c(1, 15), breaks = seq(1, 15, 2)) +
-    coord_cartesian(xlim = c(1, 15), ylim = c(0.35, 5), expand = FALSE) +
-    labs(title = "Heures SED journali\u00e8res", x = "", y = NULL) +
+    scale_x_continuous(limits = c(1, 15), breaks = seq(6, 12, 1)) +
+    coord_cartesian(xlim = c(6, 12), ylim = c(0.5, 3.1), expand = FALSE, clip = "off") +
+    labs(title = "Risque de mortalit\u00e9 vs. Heures SED / jour", x = "", y = NULL) +
     theme_bw() +
     theme(axis.ticks = element_blank(),
           axis.text.x = element_text(size = 13),
@@ -122,25 +104,104 @@ if (language == "fr") {
           plot.background = element_rect(fill = "beige", color = "beige"),
           plot.margin = margin(1, 1, 0, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-    annotate("text", 
-             label = "Seuil au-dessus \nduquel le risque \nest significatif",
-             x = 10.3, 
-             y = 0.61, 
-             hjust = 0,
-             size = 5, 
-             colour = "black", 
-             fontface = "italic") +
+    annotate("text", label = "La courbe montre le \nrisque de mortalit\u00e9 chez \ndes adultes de plus de \n40 ans",  
+             x = 9.4, y = 0.85, hjust = 0, 
+             fontface = "bold.italic", colour = "#3366FF") +
     annotate(geom = "curve", 
-             x = 10.2, 
-             y = 0.76, 
-             xend = 9.5, 
-             yend = 0.71, 
-             curvature = .5, arrow = arrow(length = unit(2, "mm")),
-             colour = "black") +
-    annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570 (modifi\u00e9)", hjust = 0, x = 1.2, y = 0.387)
+             x = 9.35, 
+             y = 0.85, 
+             xend = 8.9, 
+             yend = 1.10, 
+             curvature = -.35, arrow = arrow(length = unit(2, "mm")),
+             colour = "#3366FF") +
+    annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570 (modifi\u00e9)", hjust = 0, x = 6.1, y = 0.53) +
+    annotate("text", label = "Point de \nr\u00e9f\u00e9rence", hjust = 1, vjust = 0, x = 7.45, y = 1.13, color = "grey30", fontface = "bold")
 
   return(g_sed)
   
+}
+  
+  
+  if (language == "en" && (score/60 < 6 | score/60 > 12)) { 
+    
+    g_sed <-
+      ggplot() +
+      geom_rect(data = grid_sed, aes(xmin = 6, xmax = 12, ymin = 0.5,  ymax = 3.1), fill = "white", color = "grey50") + 
+      geom_line(data = grid_sed, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+      geom_point(data = score_sed, aes(x = 7.5, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
+      scale_y_continuous(trans = scales::log2_trans()) +
+      scale_x_continuous(limits = c(1, 15), breaks = seq(6, 12, 1)) +
+      coord_cartesian(xlim = c(6, 12), ylim = c(0.5, 3.1), expand = FALSE, clip = "off") +
+      labs(title = "Mortality hazard ratio vs. SED hours / day", x = "", y = NULL) +
+      theme_bw() +
+      theme(axis.ticks = element_blank(),
+            axis.text.x = element_text(size = 13),
+            axis.text.y = element_blank(),
+            legend.position = "none",
+            legend.title = element_text(face = "bold" , size = 10),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            plot.background = element_rect(fill = "beige", color = "beige"),
+            plot.margin = margin(1, 1, 0, 1, "cm"),
+            plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+      annotate("text", label = "The curve shows the \nmortality hazard ratio in \nadults older than 40 yr old", 
+               x = 9.4, y = 0.85, hjust = 0, 
+               fontface = "bold.italic", colour = "#3366FF") +
+      annotate(geom = "curve", 
+               x = 9.35, 
+               y = 0.85, 
+               xend = 8.9, 
+               yend = 1.10, 
+               curvature = -.35, arrow = arrow(length = unit(2, "mm")),
+               colour = "#3366FF") +
+      annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (modified)", hjust = 0, x = 6.1, y = 0.53) +
+      annotate("text", label = "Reference \npoint", hjust = 1, vjust = 0, x = 7.45, y = 1.13, color = "grey30", fontface = "bold") +
+      annotate("text", label = "The recorded score is outside the \nrange of the X axis of the original figure.", 
+               hjust = 0, x = 6.5, y = 2.5, size = 6, color = "red", fontface = "bold")
+    
+    return(g_sed)
+    
+  }
+  
+  if (language == "fr" && (score/60 < 6 | score/60 > 12)) {  
+    
+    g_sed <-
+      ggplot() +
+      geom_rect(data = grid_sed, aes(xmin = 6, xmax = 12, ymin = 0.5,  ymax = 3.1), fill = "white", color = "grey50") + 
+      geom_line(data = grid_sed, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+      geom_point(data = score_sed, aes(x = 7.5, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
+      scale_y_continuous(trans = scales::log2_trans()) +
+      scale_x_continuous(limits = c(1, 15), breaks = seq(6, 12, 1)) +
+      coord_cartesian(xlim = c(6, 12), ylim = c(0.5, 3.1), expand = FALSE, clip = "off") +
+      labs(title = "Risque de mortalit\u00e9 vs. Heures SED / jour", x = "", y = NULL) +
+      theme_bw() +
+      theme(axis.ticks = element_blank(),
+            axis.text.x = element_text(size = 13),
+            axis.text.y = element_blank(),
+            legend.position = "none",
+            legend.title = element_text(face = "bold" , size = 10),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            plot.background = element_rect(fill = "beige", color = "beige"),
+            plot.margin = margin(1, 1, 0, 1, "cm"),
+            plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+      annotate("text", label = "La courbe montre le \nrisque de mortalit\u00e9 chez \ndes adultes de plus de \n40 ans", 
+               x = 9.4, y = 0.85, hjust = 0, 
+               fontface = "bold.italic", colour = "#3366FF") +
+      annotate(geom = "curve", 
+               x = 9.35, 
+               y = 0.85, 
+               xend = 8.9, 
+               yend = 1.10, 
+               curvature = -.35, arrow = arrow(length = unit(2, "mm")),
+               colour = "#3366FF") +
+      annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570 (modifi\u00e9)", hjust = 0, x = 6.1, y = 0.53) +
+      annotate("text", label = "Point de \nr\u00e9f\u00e9rence", hjust = 1, vjust = 0, x = 7.45, y = 1.13, color = "grey30", fontface = "bold") +
+      annotate("text", label = "Le score mesur\u00e9 est en-dehors de \nl\u2019\u00e9tendue des valeurs de l\u2019axe X de \nla figure originale.", 
+               hjust = 0, x = 6.5, y = 2.5, size = 6, color = "red", fontface = "bold")
+    
+    return(g_sed)
+    
   }
 }
 

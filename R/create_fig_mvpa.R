@@ -1,7 +1,7 @@
 #' Create a figure showing the mean daily MVPA time
 #' 
-#' The function generates a figure showing the daily mean of MVPA time in correspondence with the Ekelund et al. (2019; doi: 10.1136/bmj.l4570)
-#'     mortality hazard ratios.
+#' The function generates a figure showing mortality hazard ratio in correspondence with daily MVPA minutes. The figure is based on
+#'     data extracted from Ekelund et al. paper (2019; doi: 10.1136/bmj.l4570).
 #'
 #' @param score A numeric value for mean daily MVPA time in minutes.
 #' @param language A character value for setting the language with which the figure should be created: `en` for english; `fr` for french.
@@ -23,19 +23,13 @@ language <- match.arg(language)
   model_mvpa <- loess(y ~ x, data = mvpa_lines %>% dplyr::filter(line == "mid"), 
                       control = loess.control(surface = "direct"))
   
-  model_mvpa_up <- loess(y ~ x, data = mvpa_lines %>% dplyr::filter(line == "up"), 
-                         control = loess.control(surface = "direct")) 
-  
-  model_mvpa_low <- loess(y ~ x, data = mvpa_lines %>% dplyr::filter(line == "low"), 
-                          control = loess.control(surface = "direct"))
-  
   grid_mvpa <-
     mvpa_lines %>%
     modelr::data_grid(
-      x = seq(0, 100, 1),
+      x = seq(0, 65, 1),
     ) %>%
-    modelr::spread_predictions(model_mvpa, model_mvpa_up, model_mvpa_low) %>%
-    dplyr::rename(mid = model_mvpa, up = model_mvpa_up, low = model_mvpa_low)
+    modelr::spread_predictions(model_mvpa) %>%
+    dplyr::rename(mid = model_mvpa)
   
 # Getting data for plotting patient's result  
   score_mvpa <- data.frame(x = score) %>% 
@@ -43,23 +37,21 @@ language <- match.arg(language)
   
   
 # Creating figure
-if (language == "en") {
+if (language == "en" && score <= 65) {
   
   g_mvpa <-
     ggplot() +
-    geom_ribbon(data = grid_mvpa, aes(x = x, y = up, ymin = low, ymax = up), fill = "grey95") +
+    geom_rect(data = grid_mvpa, aes(xmin = 0, xmax = 65, ymin = 0.2, ymax = 2.1), fill = "white", color = "grey50") + 
     geom_line(data = grid_mvpa, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
-    geom_line(data = grid_mvpa, aes (x = x, y = up), size = 1, colour = "#3366FF", linetype = "dashed") +
-    geom_line(data = grid_mvpa, aes (x = x, y = low), size = 1, colour = "#3366FF", linetype = "dashed") +
-    geom_vline(aes(xintercept = 24), linetype = "dotted") +
+    geom_point(data = score_mvpa, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
     geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
     geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
     geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 7, shape = 3) +
-    scale_y_continuous(trans = scales::log2_trans()) +
-    scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 100, 25)) +
+    scale_y_continuous(trans = scales::log2_trans(), breaks = seq(0.2, 2.1, 0.1)) +
+    scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 65, 13)) +
     theme_bw() +
-    coord_cartesian(xlim = c(0, 100), ylim = c(0.25, 1), expand = FALSE) +
-    labs(title = "Daily MVPA minutes", x = "", y = NULL) +
+    coord_cartesian(xlim = c(0, 65), ylim = c(0.2, 2.1), expand = FALSE, clip = "off") +
+    labs(title = "Mortality hazard ratio vs. MVPA minutes / day", x = "", y = NULL) +
     theme(axis.ticks = element_blank(),
           axis.text.x = element_text(size = 13),
           axis.text.y = element_blank(),
@@ -67,55 +59,41 @@ if (language == "en") {
           legend.title = element_text(face = "bold" , size = 10),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
+          panel.border = element_blank(),
           plot.background = element_rect(fill = "beige", color = "beige"),
           plot.margin = margin(1, 1, 0, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-    annotate("text", label = "Mortality hazard \nratio", 
-             x = 73, y = 0.57, hjust = 0, 
+    annotate("text", label = "The curve shows the \nmortality hazard ratio in \nadults older than 40 yr old", 
+             x = 31.5, y = 0.75, hjust = 0, 
              fontface = "bold.italic", colour = "#3366FF") +
     annotate(geom = "curve", 
-             x = 73, 
-             y = 0.5, 
-             xend = 58, 
-             yend = 0.53, 
-             curvature = -.45, arrow = arrow(length = unit(2, "mm")),
-             colour = "#3366FF") +
-    annotate("text", label = "Uncertainty \nzone", 
-             x = 60, y = 0.80, hjust = 0.5, 
-             colour = "grey50", fontface = "bold.italic") +
-    
-    annotate("text", label = "Threshold above which maximum \nof health benefits may be obtained", 
-             x = 35, y = 0.37, hjust = 0, vjust = 1, size = 5,
-             colour = "black", fontface = "italic") +
-    annotate(geom = "curve", 
-             x = 35, 
-             y = 0.34, 
+             x = 31, 
+             y = 0.75, 
              xend = 24, 
-             yend = 0.36, 
-             curvature = -.4, arrow = arrow(length = unit(2, "mm")),
-             colour = "black") +
-    annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (modified)", hjust = 0, x = 1, y = 0.265)
+             yend = 0.405, 
+             curvature = .35, arrow = arrow(length = unit(2, "mm")),
+             colour = "#3366FF") +
+    annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (modified)", hjust = 0, x = 1, y = 0.22) +
+    annotate("text", label = "Reference point", hjust = 0, x = 2, y = 1.04, color = "grey30", fontface = "bold")
 
   return(g_mvpa)
 }
   
-if (language == "fr") {
+if (language == "fr" && score <= 65) {
   
   g_mvpa <-
     ggplot() +
-    geom_ribbon(data = grid_mvpa, aes(x = x, y = up, ymin = low, ymax = up), fill = "grey95") +
+    geom_rect(data = grid_mvpa, aes(xmin = 0, xmax = 65, ymin = 0.2, ymax = 2.1), fill = "white", color = "grey50") + 
     geom_line(data = grid_mvpa, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
-    geom_line(data = grid_mvpa, aes (x = x, y = up), size = 1, colour = "#3366FF", linetype = "dashed") +
-    geom_line(data = grid_mvpa, aes (x = x, y = low), size = 1, colour = "#3366FF", linetype = "dashed") +
-    geom_vline(aes(xintercept = 24), linetype = "dotted") +
+    geom_point(data = score_mvpa, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
     geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
     geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
     geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 7, shape = 3) +
-    scale_y_continuous(trans = scales::log2_trans()) +
-    scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 100, 25)) +
+    scale_y_continuous(trans = scales::log2_trans(), breaks = seq(0.2, 2.1, 0.1)) +
+    scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 65, 13)) +
     theme_bw() +
-    coord_cartesian(xlim = c(0, 100), ylim = c(0.25, 1), expand = FALSE) +
-    labs(title = "Minutes MVPA journali\u00e8res", x = "", y = NULL) +
+    coord_cartesian(xlim = c(0, 65), ylim = c(0.2, 2.1), expand = FALSE, clip = "off") +
+    labs(title = "Risque de mortalit\u00e9 vs. Minutes MVPA / jour", x = "", y = NULL) +
     theme(axis.ticks = element_blank(),
           axis.text.x = element_text(size = 13),
           axis.text.y = element_blank(),
@@ -123,37 +101,107 @@ if (language == "fr") {
           legend.title = element_text(face = "bold" , size = 10),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
+          panel.border = element_blank(),
           plot.background = element_rect(fill = "beige", color = "beige"),
           plot.margin = margin(1, 1, 0, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-    annotate("text", label = "Rapport de risque \npour la mortalit\u00e9", 
-             x = 70, y = 0.57, hjust = 0, 
+    annotate("text", label = "La courbe montre le \nrisque de mortalit\u00e9 chez \ndes adultes de plus de \n40 ans", 
+             x = 31.5, y = 0.75, hjust = 0, 
              fontface = "bold.italic", colour = "#3366FF") +
     annotate(geom = "curve", 
-             x = 73, 
-             y = 0.5, 
-             xend = 58, 
-             yend = 0.53, 
-             curvature = -.45, arrow = arrow(length = unit(2, "mm")),
-             colour = "#3366FF") +
-    annotate("text", label = "Zone \nd'incertitude", 
-             x = 60, y = 0.80, hjust = 0.5, 
-             colour = "grey50", fontface = "bold.italic") +
-    
-    annotate("text", label = "Seuil au-dessus duquel le max. \nde b\u00e9n\u00e9fices de sant\u00e9 \npourrait \u00eAtre obtenu", 
-             x = 38, y = 0.42, hjust = 0, vjust = 1, size = 5,
-             colour = "black", fontface = "italic") +
-    annotate(geom = "curve", 
-             x = 36.5, 
-             y = 0.34, 
+             x = 31, 
+             y = 0.75, 
              xend = 24, 
-             yend = 0.36, 
-             curvature = -.4, arrow = arrow(length = unit(2, "mm")),
-             colour = "black") +
-    annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570 (modifi\u00e9)", hjust = 0, x = 1, y = 0.265)
+             yend = 0.405, 
+             curvature = .35, arrow = arrow(length = unit(2, "mm")),
+             colour = "#3366FF") +
+    annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570 (modifi\u00e9)", hjust = 0, x = 1, y = 0.22) +
+    annotate("text", label = "Point de r\u00e9f\u00e9rence", hjust = 0, x = 2, y = 1.04, color = "grey30", fontface = "bold")
 
   return(g_mvpa)
   
+}
+  
+  if (language == "en" && score > 65) {
+    g_mvpa <-
+      ggplot() +
+      geom_rect(data = grid_mvpa, aes(xmin = 0, xmax = 65, ymin = 0.2, ymax = 2.1), fill = "white", color = "grey50") + 
+      geom_line(data = grid_mvpa, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+      geom_point(data = score_mvpa, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
+      scale_y_continuous(trans = scales::log2_trans(), breaks = seq(0.2, 2.1, 0.1)) +
+      scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 65, 13)) +
+      theme_bw() +
+      coord_cartesian(xlim = c(0, 65), ylim = c(0.2, 2.1), expand = FALSE, clip = "off") +
+      labs(title = "Mortality hazard ratio vs. MVPA minutes / day", x = "", y = NULL) +
+      theme(axis.ticks = element_blank(),
+            axis.text.x = element_text(size = 13),
+            axis.text.y = element_blank(),
+            legend.position = "none",
+            legend.title = element_text(face = "bold" , size = 10),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.border = element_blank(),
+            plot.background = element_rect(fill = "beige", color = "beige"),
+            plot.margin = margin(1, 1, 0, 1, "cm"),
+            plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+      annotate("text", label = "The curve shows the \nmortality hazard ratio in \nadults older than 40 yr old", 
+               x = 31.5, y = 0.75, hjust = 0, 
+               fontface = "bold.italic", colour = "#3366FF") +
+      annotate(geom = "curve", 
+               x = 31, 
+               y = 0.75, 
+               xend = 24, 
+               yend = 0.405, 
+               curvature = .35, arrow = arrow(length = unit(2, "mm")),
+               colour = "#3366FF") +
+      annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (modified)", hjust = 0, x = 1, y = 0.22) +
+      annotate("text", label = "Reference point", hjust = 0, x = 2, y = 1.04, color = "grey30", fontface = "bold") +
+      annotate("text", label = "The recorded score is beyond the upper \nlimit of the X axis of the original figure.", 
+               hjust = 0, x = 5, y = 1.5, size = 6, color = "red", fontface = "bold")
+    
+    return(g_mvpa)
+  }
+  
+  if (language == "fr" && score > 65) {
+    
+    g_mvpa <-
+      ggplot() +
+      geom_rect(data = grid_mvpa, aes(xmin = 0, xmax = 65, ymin = 0.2, ymax = 2.1), fill = "white", color = "grey50") + 
+      geom_line(data = grid_mvpa, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+      geom_point(data = score_mvpa, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
+      scale_y_continuous(trans = scales::log2_trans(), breaks = seq(0.2, 2.1, 0.1)) +
+      scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 65, 13)) +
+      theme_bw() +
+      coord_cartesian(xlim = c(0, 65), ylim = c(0.2, 2.1), expand = FALSE, clip = "off") +
+      labs(title = "Risque de mortalit\u00e9 vs. Minutes MVPA / jour", x = "", y = NULL) +
+      theme(axis.ticks = element_blank(),
+            axis.text.x = element_text(size = 13),
+            axis.text.y = element_blank(),
+            legend.position = "none",
+            legend.title = element_text(face = "bold" , size = 10),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.border = element_blank(),
+            plot.background = element_rect(fill = "beige", color = "beige"),
+            plot.margin = margin(1, 1, 0, 1, "cm"),
+            plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+      annotate("text", label = "La courbe montre le \nrisque de mortalit\u00e9 chez \ndes adultes de plus de \n40 ans", 
+               x = 31.5, y = 0.75, hjust = 0, 
+               fontface = "bold.italic", colour = "#3366FF") +
+      annotate(geom = "curve", 
+               x = 31, 
+               y = 0.75, 
+               xend = 24, 
+               yend = 0.405, 
+               curvature = .35, arrow = arrow(length = unit(2, "mm")),
+               colour = "#3366FF") +
+      annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570 (modifi\u00e9)", hjust = 0, x = 1, y = 0.22) +
+      annotate("text", label = "Point de r\u00e9f\u00e9rence", hjust = 0, x = 2, y = 1.04, color = "grey30", fontface = "bold") +
+      annotate("text", label = "Le score mesur\u00e9 est au\u002ddel\u00e0 de la limite \nsup\u00e9rieure de l\u2019axe X de la figure originale.", 
+               hjust = 0, x = 5, y = 1.5, size = 6, color = "red", fontface = "bold")
+    
+    return(g_mvpa)
+    
   }
   
 }
