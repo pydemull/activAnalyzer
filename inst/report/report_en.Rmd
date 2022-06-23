@@ -130,13 +130,9 @@ guidelines_status <- get_guidelines_status(df1_means[["mets_hours_mvpa"]], langu
 # Determining PAL status
 pal_status <- get_pal_status(df1_means[["pal"]], language = "en")
 
-# Ratio MVPA / SED comment
-comment_ratio <- get_ratio_mvpa_sed_comment(df1_means[["ratio_mvpa_sed"]], language = "en")
-
 if (params$rendered_by_shiny)
   shiny::setProgress(1)  # set progress to 100%
 ```
 
-According to the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the PAL of the patient could be characterized as **`r pal_status`**. After converting moderate and vigorous physical activity minutes to MET-hours, the estimate of the daily mean of MVPA volume for the patient is `r paste0(format(round(df1_means[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hr, which could correspond to falling **`r guidelines_status`** (i.e., 7.5-15.0 MET-hr a week, or 1.07-2.14 MET-hr a day). Based on the MVPA/SED ratio, **`r paste(comment_ratio)`**.
-
+According to the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the PAL of the patient could be characterized as **`r pal_status`**. After converting moderate and vigorous physical activity minutes to MET-hours, the estimate of the daily mean of MVPA volume for the patient is `r paste0(format(round(df1_means[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hr, which could correspond to falling **`r guidelines_status`** (i.e., 7.5-15.0 MET-hr a week, or 1.07-2.14 MET-hr a day).
 

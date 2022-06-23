@@ -154,13 +154,10 @@ guidelines_status <- get_guidelines_status(df1_means[["mets_hours_mvpa"]], langu
 # Determining PAL status
 pal_status <- get_pal_status(df1_means[["pal"]], language = "fr")
 
-# Ratio MVPA / SED comment
-comment_ratio <- get_ratio_mvpa_sed_comment(df1_means[["ratio_mvpa_sed"]], language = "fr")
-
 if (params$rendered_by_shiny)
   shiny::setProgress(1)  # set progress to 100%
 ```
 
-Selon la *[Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf)*, le NAP du patient pourrait être décrit comme **`r pal_status`**. Après avoir fait la conversion des minutes MPA et VPA vers les MET-heures, l'estimation du volume MVPA moyen journalier pour le patient est de `r paste0(format(round(df1_means[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hr, ce qui pourrait correspondre au fait de tomber **`r guidelines_status`** (i.e., 7.5-15.0 MET-hr par semaine, ou 1.07-2.14 MET-hr par jour). Au regard du ratio MVPA/SED, **`r paste(comment_ratio)`**.
+Selon la *[Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf)*, le NAP du patient pourrait être décrit comme **`r pal_status`**. Après avoir fait la conversion des minutes MPA et VPA vers les MET-heures, l'estimation du volume MVPA moyen journalier pour le patient est de `r paste0(format(round(df1_means[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hr, ce qui pourrait correspondre au fait de tomber **`r guidelines_status`** (i.e., 7.5-15.0 MET-hr par semaine, ou 1.07-2.14 MET-hr par jour).
 
 

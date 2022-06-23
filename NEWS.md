@@ -3,6 +3,9 @@
 * Updated UI buttons colors.
 * The figures of the report now indicate that figures have been modified from original versions.
 * Added a Full Screen button.
+* Modified the figures of the report: the figures now respect the X range of the original figures. 95% CI zones have been deleted for more simplicity.
+* Removed the comment related to the MVPA/SED ratio from the reports because it was finally appropriate only for 50-79 yr people (ie, the age category assessed in the concerned study).
+* Updated guides.
 
 # activAnalyzer 1.0.0
 
