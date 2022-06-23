@@ -1,4 +1,4 @@
-# activAnalyzer (development version)
+# activAnalyzer 1.0.1
 
 * Updated UI buttons colors.
 * The figures of the report now indicate that figures have been modified from original versions.
