@@ -54,15 +54,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">recap_by_day</span><span class="op">(</span>
-  <span class="va">data</span>,
-  col_time <span class="op">=</span> <span class="st">"time"</span>,
-  valid_wear_time_start <span class="op">=</span> <span class="st">"00:00:00"</span>,
-  valid_wear_time_end <span class="op">=</span> <span class="st">"23:59:59"</span>,
-  age <span class="op">=</span> <span class="fl">40</span>,
-  weight <span class="op">=</span> <span class="fl">70</span>,
-  sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"undefined"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">recap_by_day</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  col_time <span class="op">=</span> <span class="st">"time"</span>,</span>
+<span>  valid_wear_time_start <span class="op">=</span> <span class="st">"00:00:00"</span>,</span>
+<span>  valid_wear_time_end <span class="op">=</span> <span class="st">"23:59:59"</span>,</span>
+<span>  age <span class="op">=</span> <span class="fl">40</span>,</span>
+<span>  weight <span class="op">=</span> <span class="fl">70</span>,</span>
+<span>  sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"undefined"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -145,31 +145,31 @@ that may not be accurate at the individual level.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"acc.agd"</span>, package <span class="op">=</span> <span class="st">"activAnalyzer"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_dataset.html">prepare_dataset</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">file</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydata_with_wear_marks</span> <span class="op">&lt;-</span> <span class="fu"><a href="mark_wear_time.html">mark_wear_time</a></span><span class="op">(</span></span>
-<span class="r-in">    dataset <span class="op">=</span> <span class="va">mydata</span>, </span>
-<span class="r-in">    TS <span class="op">=</span> <span class="st">"TimeStamp"</span>, </span>
-<span class="r-in">    to_epoch <span class="op">=</span> <span class="fl">60</span>,</span>
-<span class="r-in">    cts  <span class="op">=</span> <span class="st">"vm"</span>,</span>
-<span class="r-in">    frame <span class="op">=</span> <span class="fl">90</span>, </span>
-<span class="r-in">    allowanceFrame <span class="op">=</span> <span class="fl">2</span>, </span>
-<span class="r-in">    streamFrame <span class="op">=</span> <span class="fl">30</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"acc.agd"</span>, package <span class="op">=</span> <span class="st">"activAnalyzer"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_dataset.html">prepare_dataset</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">file</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mydata_with_wear_marks</span> <span class="op">&lt;-</span> <span class="fu"><a href="mark_wear_time.html">mark_wear_time</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    dataset <span class="op">=</span> <span class="va">mydata</span>, </span></span>
+<span class="r-in"><span>    TS <span class="op">=</span> <span class="st">"TimeStamp"</span>, </span></span>
+<span class="r-in"><span>    to_epoch <span class="op">=</span> <span class="fl">60</span>,</span></span>
+<span class="r-in"><span>    cts  <span class="op">=</span> <span class="st">"vm"</span>,</span></span>
+<span class="r-in"><span>    frame <span class="op">=</span> <span class="fl">90</span>, </span></span>
+<span class="r-in"><span>    allowanceFrame <span class="op">=</span> <span class="fl">2</span>, </span></span>
+<span class="r-in"><span>    streamFrame <span class="op">=</span> <span class="fl">30</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> frame is 90</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> streamFrame is 30</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allowanceFrame is 2</span>
-<span class="r-in"><span class="va">mydata_with_intensity_marks</span> <span class="op">&lt;-</span> <span class="fu"><a href="mark_intensity.html">mark_intensity</a></span><span class="op">(</span></span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">mydata_with_wear_marks</span>, </span>
-<span class="r-in">    col_axis <span class="op">=</span> <span class="st">"vm"</span>, </span>
-<span class="r-in">    equation <span class="op">=</span> <span class="st">"Sasaki et al. (2011) [Adults]"</span>,</span>
-<span class="r-in">    sed_cutpoint <span class="op">=</span> <span class="fl">200</span>, </span>
-<span class="r-in">    mpa_cutpoint <span class="op">=</span> <span class="fl">2690</span>, </span>
-<span class="r-in">    vpa_cutpoint <span class="op">=</span> <span class="fl">6167</span>, </span>
-<span class="r-in">    age <span class="op">=</span> <span class="fl">32</span>,</span>
-<span class="r-in">    weight <span class="op">=</span> <span class="fl">67</span>,</span>
-<span class="r-in">    sex <span class="op">=</span> <span class="st">"male"</span>,</span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in"><span><span class="va">mydata_with_intensity_marks</span> <span class="op">&lt;-</span> <span class="fu"><a href="mark_intensity.html">mark_intensity</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">mydata_with_wear_marks</span>, </span></span>
+<span class="r-in"><span>    col_axis <span class="op">=</span> <span class="st">"vm"</span>, </span></span>
+<span class="r-in"><span>    equation <span class="op">=</span> <span class="st">"Sasaki et al. (2011) [Adults]"</span>,</span></span>
+<span class="r-in"><span>    sed_cutpoint <span class="op">=</span> <span class="fl">200</span>, </span></span>
+<span class="r-in"><span>    mpa_cutpoint <span class="op">=</span> <span class="fl">2690</span>, </span></span>
+<span class="r-in"><span>    vpa_cutpoint <span class="op">=</span> <span class="fl">6167</span>, </span></span>
+<span class="r-in"><span>    age <span class="op">=</span> <span class="fl">32</span>,</span></span>
+<span class="r-in"><span>    weight <span class="op">=</span> <span class="fl">67</span>,</span></span>
+<span class="r-in"><span>    sex <span class="op">=</span> <span class="st">"male"</span>,</span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You have computed intensity metrics with the mark_intensity() function using the following inputs: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     axis = vm</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     sed_cutpoint = 200 counts/min</span>
@@ -179,14 +179,14 @@ that may not be accurate at the individual level.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     age = 32</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     weight = 67</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     sex = male</span>
-<span class="r-in"><span class="fu">recap_by_day</span><span class="op">(</span></span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">mydata_with_intensity_marks</span>, </span>
-<span class="r-in">    age <span class="op">=</span> <span class="fl">32</span>, </span>
-<span class="r-in">    weight <span class="op">=</span> <span class="fl">67</span>, </span>
-<span class="r-in">    sex <span class="op">=</span> <span class="st">"male"</span>,</span>
-<span class="r-in">    valid_wear_time_start <span class="op">=</span> <span class="st">"07:00:00"</span>,</span>
-<span class="r-in">    valid_wear_time_end <span class="op">=</span> <span class="st">"22:00:00"</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">recap_by_day</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">mydata_with_intensity_marks</span>, </span></span>
+<span class="r-in"><span>    age <span class="op">=</span> <span class="fl">32</span>, </span></span>
+<span class="r-in"><span>    weight <span class="op">=</span> <span class="fl">67</span>, </span></span>
+<span class="r-in"><span>    sex <span class="op">=</span> <span class="st">"male"</span>,</span></span>
+<span class="r-in"><span>    valid_wear_time_start <span class="op">=</span> <span class="st">"07:00:00"</span>,</span></span>
+<span class="r-in"><span>    valid_wear_time_end <span class="op">=</span> <span class="st">"22:00:00"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You have computed results with the recap_by_day() function using the following inputs: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>          age = 32</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>          weight = 67</span>
@@ -207,7 +207,7 @@ that may not be accurate at the individual level.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   max_steps_60min &lt;dbl&gt;, max_steps_30min &lt;dbl&gt;, max_steps_20min &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   max_steps_5min &lt;dbl&gt;, max_steps_1min &lt;dbl&gt;, peak_steps_60min &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   peak_steps_30min &lt;dbl&gt;, peak_steps_20min &lt;dbl&gt;, peak_steps_5min &lt;dbl&gt;, …</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -219,7 +219,7 @@ that may not be accurate at the individual level.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>
