@@ -156,7 +156,7 @@ if (language == "fr" && score <= 0.25) {
       annotate("text", label = "Ref: Chastin et al. J Phys Act Health 2021, 18 (6), 631\u2013637 (modif.)", hjust = 0, x = 0.004, y = 0.145) +
       annotate("text", label = "Reference point", hjust = 0, x = 0.008, y = 1.02, color = "grey30", fontface = "bold") +
       annotate("text", label = "The recorded score is beyond the upper \nlimit of the X axis of the original figure.", 
-               hjust = 0, x = 0.06, y = 1.1, size = 6, color = "red", fontface = "bold")
+               hjust = 0, vjust = 1, x = 0.06, y = 1.20, size = 4, color = "red", fontface = "bold")
     
     return(g_ratio)
   }
@@ -197,7 +197,7 @@ if (language == "fr" && score <= 0.25) {
       annotate("text", label = "R\u00e9f: Chastin et al. J Phys Act Health 2021, 18 (6), 631\u2013637 (modifi\u00e9)", hjust = 0, x = 0.004, y = 0.145) +
       annotate("text", label = "Point de r\u00e9f\u00e9rence", hjust = 0, x = 0.008, y = 1.02, color = "grey30", fontface = "bold") +
       annotate("text", label = "Le score mesur\u00e9 est au\u002ddel\u00e0 de la limite \nsup\u00e9rieure de l\u2019axe X de la figure originale.", 
-               hjust = 0, x = 0.06, y = 1.1, size = 6, color = "red", fontface = "bold")
+               hjust = 0, vjust = 1, x = 0.06, y = 1.20, size = 4, color = "red", fontface = "bold")
     
     return(g_ratio)
     

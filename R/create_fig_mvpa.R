@@ -157,7 +157,7 @@ if (language == "fr" && score <= 65) {
       annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (modified)", hjust = 0, x = 1, y = 0.22) +
       annotate("text", label = "Reference point", hjust = 0, x = 2, y = 1.04, color = "grey30", fontface = "bold") +
       annotate("text", label = "The recorded score is beyond the upper \nlimit of the X axis of the original figure.", 
-               hjust = 0, x = 5, y = 1.5, size = 6, color = "red", fontface = "bold")
+               hjust = 0, vjust = 1, x = 5, y = 1.9, size = 4, color = "red", fontface = "bold")
     
     return(g_mvpa)
   }
@@ -198,7 +198,7 @@ if (language == "fr" && score <= 65) {
       annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570 (modifi\u00e9)", hjust = 0, x = 1, y = 0.22) +
       annotate("text", label = "Point de r\u00e9f\u00e9rence", hjust = 0, x = 2, y = 1.04, color = "grey30", fontface = "bold") +
       annotate("text", label = "Le score mesur\u00e9 est au\u002ddel\u00e0 de la limite \nsup\u00e9rieure de l\u2019axe X de la figure originale.", 
-               hjust = 0, x = 5, y = 1.5, size = 6, color = "red", fontface = "bold")
+               hjust = 0, vjust = 1, x = 5, y = 1.9, size = 4, color = "red", fontface = "bold")
     
     return(g_mvpa)
     
