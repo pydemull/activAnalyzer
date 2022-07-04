@@ -78,8 +78,6 @@ app_ui <- function(request) {
                   # Controlling appearance of warning feedbacks      
                   shinyFeedback::useShinyFeedback(),
                   tags$head(
-                    tags$style("#warning_epoch {font-size:15px; color:orange; display:block; font-weight:bold}"),
-                    tags$style("#warning_no_valid_days {font-size:30px; color:orange; display:block; font-weight:bold}"),
                     tags$style(HTML("
             .shiny-output-error-validation {
               color: #ff0000;
@@ -183,9 +181,13 @@ app_ui <- function(request) {
                     ),
                   ),
                   fluidRow(
-                    column(12,
+                    column(3,
                            fileInput("upload", "Upload file (please wait until seeing the 'Validate configuration' green button below)", placeholder = ".agd")
                     ),
+                    column(1,
+                           div("You can also load a demo file below ! ", class = "control-label"),
+                           shiny::actionButton('demo',"Load Demo File",  class = "btn-demo")
+                    )
                   ),
                  fluidRow(
                    column(12,
@@ -194,7 +196,11 @@ app_ui <- function(request) {
                  ),
                  fluidRow(
                    column(12,
-                          textOutput("warning_epoch"),
+                          shinydashboardPlus::box(id = "box-epoch",
+                                                  title = "NOTE",
+                                                  width = 8,
+                                                  div(textOutput("warning_epoch"), class = "warn-message")
+                          ),
                           h4("")
                    ),
                  ),
@@ -217,12 +223,22 @@ app_ui <- function(request) {
                            shiny::actionButton("reset_nonwear", "Default settings", class = "btn-return")
                     ),
                   ),
+                 fluidRow(
+                   column(12,
+                          h3(""),
+                          shinydashboardPlus::box(id = "box-demo",
+                                                  title = "NOTE",
+                                                  width = 8,
+                                                  div(textOutput("warning_demo"), class = "warn-message")
+                          )
+                   )
+                 ),
                   fluidRow(
                     column(3,
-                           h3(""),
                            shiny::actionButton("validate", "Validate configuration", class = "btn-validate"),
                     ),
                   ),
+                 
                   
                   #*************************
                   # Box showing monitor data
@@ -474,7 +490,15 @@ app_ui <- function(request) {
                   #******************
                   # Export
                   #******************
-                  
+                  fluidRow(
+                    column(12,
+                           shinydashboardPlus::box(id = "box-no-valid-days",
+                                                   title = "NOTE",
+                                                   width = 8,
+                                                   div(textOutput("warning_no_valid_days"), class = "warn-message")
+                           )
+                    ),
+                  ),
                   fluidRow(
                     column(12,
                            downloadButton("report_en", "Generate report (EN) (.pdf)", class = "btn-report"),
@@ -486,13 +510,7 @@ app_ui <- function(request) {
                            actionButton("go_to_proactive_q", "Go to PROactive questionnaire", class = "btn-proactive")
                     ),
                     
-                  ),
-                 fluidRow(
-                   column(12,
-                          h3(""),
-                          textOutput("warning_no_valid_days")
-                          ),
-                 )
+                  )
                 
           ), # End first tab
           

@@ -30,34 +30,47 @@ app_server <- function(input, output, session) {
   ##############################
   # Uploading and preparing data ----
   ##############################
+  
+  # Initializing reactive values for data inputs
+    init <- reactiveValues(file = NULL, data = NULL, name = NULL)
 
-  # Getting data file without modification (required for extracting device attributes 
-  # information when generating the report)
-     file <- reactive({
-      
-      # Waiting for required conditions 
-        req(input$upload)
-      
-      # Reading file
-        read_agd(input$upload$datapath)
-      
+  # Getting data supplied by the user if any
+    observeEvent(input$upload, {
+      init$name <- input$upload$name
+      req(tools::file_ext(input$upload$name) == "agd")
+      init$file <- read_agd(input$upload$datapath)
+      init$data <- prepare_dataset(input$upload$datapath)
     })
-
-  # Getting reactive dataset
+    
+  # Getting demo data if any
+    observeEvent(input$demo, {
+      withProgress(message = 'Upload Demo File...', {
+      shiny::setProgress(1)
+      init$file <- read_agd(system.file("extdata", "acc.agd", package = "activAnalyzer"))
+      init$data <- prepare_dataset(system.file("extdata", "acc.agd", package = "activAnalyzer"))
+      init$name <- system.file("extdata", "acc.agd", package = "activAnalyzer")
+      shiny::setProgress(100)
+      })
+    })
+   
+  # Building the reactive datasets that will be used for subsequent analysis
+    
+    # Dataset containing device information
+    file <- reactive({
+      req(!is.null(init$file))
+      isolate(init$file)
+      })
+    
+    # Dataset prepared for analysis
     data <- reactive({
-      
-      # Waiting for required conditions 
-        req(input$upload)
-      
-      # Formatting file
-        prepare_dataset(data = input$upload$datapath)
-      
+      req(!is.null(init$data))
+      isolate(init$data)
       })
     
   # Controlling appearance of the "Validate configuration" button
     observe({
      shinyjs::hide("validate")
-     if((tools::file_ext(input$upload$name) == "agd") && nrow(data()) >= 1) {
+     if((tools::file_ext(init$name) == "agd") && nrow(data()) >= 1) {
      shinyjs::show("validate")
      } else {
        shinyjs::hide("validate")
@@ -68,7 +81,7 @@ app_server <- function(input, output, session) {
     observeEvent(input$upload,
                 shinyFeedback::feedbackWarning(
                   "upload", 
-                  ((tools::file_ext(input$upload$name) == "agd") == FALSE),
+                  ((tools::file_ext(init$name) == "agd") == FALSE),
                   "Invalid file format. Please choose an .agd file."
                 )
     )
@@ -114,11 +127,10 @@ app_server <- function(input, output, session) {
     
       observe({
       req(is.numeric(as.numeric(input$to_epoch)))
-      shinyjs::hide("warning_epoch")
+      shinyjs::hide("box-epoch")
       if(as.numeric(input$to_epoch) < 10) {
-        shinyjs::show("warning_epoch")
-        
-      }
+        shinyjs::show("box-epoch")
+        }
       })
   
     # Frame size
@@ -148,12 +160,26 @@ app_server <- function(input, output, session) {
                    )
       )
       
+    # Alert message when working with the Demo file
+      output$warning_demo <- renderText({
+        "This is just a reminder that you are now working on demo data, not your own data !"
+      })
+      
+      observe({
+        shinyjs::hide("box-demo")
+        req(!is.null(init$name))
+        init$name 
+        if(init$name == system.file("extdata", "acc.agd", package = "activAnalyzer")) {
+          shinyjs::show("box-demo")
+        }
+      })
+      
   # Building reactive dataframe marked for nonwear/wear time
   
     df <- eventReactive(input$validate, {
       
         # Waiting for required conditions 
-          req(tools::file_ext(input$upload$name) == "agd" & 
+          req(tools::file_ext(init$name) == "agd" & 
                 is.numeric(as.numeric(input$to_epoch)) & 
                 as.numeric(input$to_epoch) >= 1 &
                 as.numeric(input$to_epoch) <= 60 &
@@ -4316,11 +4342,18 @@ app_server <- function(input, output, session) {
   # Warning message to indicate that no questionnaire results will be provided in case of absence of any valid days
     output$warning_no_valid_days <- renderText({
       
-      req(results_summary_medians()$valid_days == 0 & results_summary_means()$valid_days == 0)
+        req(results_summary_medians()$valid_days == 0 & results_summary_means()$valid_days == 0)
       "Unfortunately, there is no valid days. As a consequence, no report will be generated. 
       Moreover, despite the fact that the app allows to fill a PROactive questionnaire, no summary results will be provided."
     }
     )
+    
+    observe({
+      shinyjs::hide("box-no-valid-days")
+      if(results_summary_medians()$valid_days == 0 & results_summary_means()$valid_days == 0) {
+        shinyjs::show("box-no-valid-days")
+      }
+    })
   
   ####################
   # Generating reports ----

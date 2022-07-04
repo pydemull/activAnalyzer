@@ -1,3 +1,9 @@
+# activAnalyzer (development version)
+
+* Adjusted size of alert messages on report figures when scores are out of bounds.
+* Improved warning messages design in the UI interface.
+* Added the possibility to automatically upload a demo file.
+
 # activAnalyzer 1.0.1
 
 * Updated UI buttons colors.
