@@ -157,7 +157,7 @@ if (language == "fr" && score/60 >= 6 && score/60 <= 12) {
       annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (modified)", hjust = 0, x = 6.1, y = 0.54) +
       annotate("text", label = "Reference \npoint", hjust = 1, vjust = 0, x = 7.45, y = 1.13, color = "grey30", fontface = "bold") +
       annotate("text", label = "The recorded score is outside the \nrange of the X axis of the original figure.", 
-               hjust = 0, x = 6.5, y = 2.5, size = 6, color = "red", fontface = "bold")
+               hjust = 0, vjust = 1, x = 6.5, y = 2.9, size = 4, color = "red", fontface = "bold")
     
     return(g_sed)
     
@@ -198,7 +198,7 @@ if (language == "fr" && score/60 >= 6 && score/60 <= 12) {
       annotate("text", label = "R\u00e9f: Ekelund et al. BMJ 2019, l4570 (modifi\u00e9)", hjust = 0, x = 6.1, y = 0.54) +
       annotate("text", label = "Point de \nr\u00e9f\u00e9rence", hjust = 1, vjust = 0, x = 7.45, y = 1.13, color = "grey30", fontface = "bold") +
       annotate("text", label = "Le score mesur\u00e9 est en-dehors de \nl\u2019\u00e9tendue des valeurs de l\u2019axe X de \nla figure originale.", 
-               hjust = 0, x = 6.5, y = 2.5, size = 6, color = "red", fontface = "bold")
+               hjust = 0, vjust = 1, x = 6.5, y = 2.9, size = 4, color = "red", fontface = "bold")
     
     return(g_sed)
     
