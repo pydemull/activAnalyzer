@@ -68,8 +68,8 @@ app_server <- function(input, output, session) {
       })
     
   # Controlling appearance of the "Validate configuration" button
+    shinyjs::hide("validate")
     observe({
-     shinyjs::hide("validate")
      if((tools::file_ext(init$name) == "agd") && nrow(data()) >= 1) {
      shinyjs::show("validate")
      } else {
@@ -125,11 +125,16 @@ app_server <- function(input, output, session) {
       For this reason, the figure will not be created with this epoch to save your time. Please use a longer epoch if you want to benefit from the figures of the app."
       })
     
+      shinyjs::hide("box-epoch")
+      shinyjs::hide("warning_epoch")
       observe({
       req(is.numeric(as.numeric(input$to_epoch)))
-      shinyjs::hide("box-epoch")
       if(as.numeric(input$to_epoch) < 10) {
         shinyjs::show("box-epoch")
+        shinyjs::show("warning_epoch")
+      } else {
+        shinyjs::hide("box-epoch")
+        shinyjs::hide("warning_epoch")
         }
       })
   
@@ -165,12 +170,17 @@ app_server <- function(input, output, session) {
         "This is just a reminder that you are now working on demo data, not your own data !"
       })
       
+      shinyjs::hide("box-demo")
+      shinyjs::hide("warning_demo")
       observe({
-        shinyjs::hide("box-demo")
         req(!is.null(init$name))
         init$name 
         if(init$name == system.file("extdata", "acc.agd", package = "activAnalyzer")) {
           shinyjs::show("box-demo")
+          shinyjs::show("warning_demo")
+        } else {
+          shinyjs::hide("box-demo")
+          shinyjs::hide("warning_demo")
         }
       })
       
@@ -274,10 +284,12 @@ app_server <- function(input, output, session) {
   ###################################################
     
   # Controlling the appearance of the "Run analysis" button
+    shinyjs::hide("Run")
     observe({
-      shinyjs::hide("Run")
       if(nrow(df()) >=1) {
         shinyjs::show("Run")
+      } else {
+        shinyjs::hide("Run")
       }
     })
     
@@ -4187,37 +4199,43 @@ app_server <- function(input, output, session) {
   #########################
   
   # Box for graph with wear time
+    shinyjs::hide("myBox")
+    shinyjs::hide("Metric")
+    shinyjs::hide("graph")
     observe({
-      shinyjs::hide("myBox")
-      shinyjs::hide("Metric")
-      shinyjs::hide("graph")
-      
       if(nrow(df()) >=1) {
-        
         shinyjs::show("myBox")
         shinyjs::show("Metric")
         shinyjs::show("graph")
-        
+      } else {
+        shinyjs::hide("myBox")
+        shinyjs::hide("Metric")
+        shinyjs::hide("graph")
       }
     })
   
   # Boxes for graph with PA categories and results
+    shinyjs::hide("myBox2")
+    shinyjs::hide("Metric2")
+    shinyjs::hide("graph_int")
+    shinyjs::hide("BoxResByDay")
+    shinyjs::hide("BoxResMeans")
+    shinyjs::hide("BoxResMedians")
     observe({
-      shinyjs::hide("myBox2")
-      shinyjs::hide("Metric2")
-      shinyjs::hide("graph_int")
-      shinyjs::hide("BoxResByDay")
-      shinyjs::hide("BoxResMeans")
-      shinyjs::hide("BoxResMedians")
-
       if(nrow(results_list()$df_with_computed_metrics) >=1) {
-        
       shinyjs::show("myBox2")
       shinyjs::show("Metric2")
       shinyjs::show("graph_int")
       shinyjs::show("BoxResByDay")
       shinyjs::show("BoxResMeans")
       shinyjs::show("BoxResMedians")
+      } else {
+      shinyjs::hide("myBox2")
+      shinyjs::hide("Metric2")
+      shinyjs::hide("graph_int")
+      shinyjs::hide("BoxResByDay")
+      shinyjs::hide("BoxResMeans")
+      shinyjs::hide("BoxResMedians")
       }
     })
     
@@ -4225,33 +4243,40 @@ app_server <- function(input, output, session) {
   ###################################
   # Hiding / showing Download buttons ----
   ###################################
-  
+    shinyjs::hide("ExpDataset")
+    shinyjs::hide("ExpResultsByDays")
+    shinyjs::hide("ExpDailySummaryMeans")
+    shinyjs::hide("ExpDailySummaryMedians")
+    shinyjs::hide("report_en")
+    shinyjs::hide("report_fr")
+    shinyjs::hide("go_to_proactive_q")
+    shinyjs::hide("get_cppac_summary_en")
+    shinyjs::hide("get_cppac_summary_fr")
+    shinyjs::hide("get_dppac_summary_en")
+    shinyjs::hide("get_dppac_summary_fr")
+    shinyjs::hide("report_en_cppac")
+    shinyjs::hide("report_fr_cppac")
   observe({
-      shinyjs::hide("ExpDataset")
-      shinyjs::hide("ExpResultsByDays")
-      shinyjs::hide("ExpDailySummaryMeans")
-      shinyjs::hide("ExpDailySummaryMedians")
-      shinyjs::hide("report_en")
-      shinyjs::hide("report_fr")
-      shinyjs::hide("go_to_proactive_q")
-      shinyjs::hide("get_cppac_summary_en")
-      shinyjs::hide("get_cppac_summary_fr")
-      shinyjs::hide("get_dppac_summary_en")
-      shinyjs::hide("get_dppac_summary_fr")
-      shinyjs::hide("report_en_cppac")
-      shinyjs::hide("report_fr_cppac")
-
     if(nrow(results_list()$df_with_computed_metrics) >=1) {
       shinyjs::show("ExpDataset")
       shinyjs::show("ExpResultsByDays")
       shinyjs::show("ExpDailySummaryMeans")
       shinyjs::show("ExpDailySummaryMedians")
+    } else {
+      shinyjs::hide("ExpDataset")
+      shinyjs::hide("ExpResultsByDays")
+      shinyjs::hide("ExpDailySummaryMeans")
+      shinyjs::hide("ExpDailySummaryMedians")
     }
       
     if(results_summary_means()$valid_days >=1 | results_summary_medians()$valid_days >=1) {
       shinyjs::show("report_en")
       shinyjs::show("report_fr") 
       shinyjs::show("go_to_proactive_q")
+    } else {
+      shinyjs::hide("report_en")
+      shinyjs::hide("report_fr") 
+      shinyjs::hide("go_to_proactive_q")
     }
       
     if(!is.na(steps_score_cppac_median()) & !is.na(vmu_score_cppac_median())) {
@@ -4259,36 +4284,48 @@ app_server <- function(input, output, session) {
       shinyjs::show("get_cppac_summary_fr")
       shinyjs::show("get_dppac_summary_en")
       shinyjs::show("get_dppac_summary_fr")
+    } else {
+      shinyjs::hide("get_cppac_summary_en")
+      shinyjs::hide("get_cppac_summary_fr")
+      shinyjs::hide("get_dppac_summary_en")
+      shinyjs::hide("get_dppac_summary_fr")
     }
 
   })
     
+  shinyjs::hide("report_en_cppac")
   observe({  
-    shinyjs::hide("report_en_cppac")
-    
     if(nrow(tab_cppac_summary_en()) >= 1) {
       shinyjs::show("report_en_cppac")
+    } else {
+      shinyjs::hide("report_en_cppac")
     }
   })
     
+  shinyjs::hide("report_fr_cppac")
   observe({  
-    shinyjs::hide("report_fr_cppac")
     if(nrow(tab_cppac_summary_fr()) >= 1) {
       shinyjs::show("report_fr_cppac")
+    } else {
+      shinyjs::hide("report_fr_cppac")
     }
   })
   
+  shinyjs::hide("report_en_dppac")
   observe({  
-    shinyjs::hide("report_en_dppac")
     if(nrow(tab_dppac_summary_en()) >= 1) {
       shinyjs::show("report_en_dppac")
+    } else {
+      shinyjs::hide("report_en_dppac")
     }
   })
   
+  shinyjs::hide("report_fr_dppac")
   observe({  
-    shinyjs::hide("report_fr_dppac")
     if(nrow(tab_dppac_summary_fr()) >= 1) {
       shinyjs::show("report_fr_dppac")
+    } else {
+      shinyjs::hide("report_fr_dppac")
     }
   })
   
@@ -4348,10 +4385,12 @@ app_server <- function(input, output, session) {
     }
     )
     
+    shinyjs::hide("box-no-valid-days")
     observe({
-      shinyjs::hide("box-no-valid-days")
       if(results_summary_medians()$valid_days == 0 & results_summary_means()$valid_days == 0) {
         shinyjs::show("box-no-valid-days")
+      } else {
+        shinyjs::hide("box-no-valid-days")
       }
     })
   
