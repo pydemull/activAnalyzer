@@ -4381,7 +4381,7 @@ app_server <- function(input, output, session) {
       
         req(results_summary_medians()$valid_days == 0 & results_summary_means()$valid_days == 0)
       "Unfortunately, there is no valid days. As a consequence, no report will be generated. 
-      Moreover, despite the fact that the app allows to fill a PROactive questionnaire, no summary results will be provided."
+      Moreover, despite the fact that the app allows to fill a PROactive questionnaire, no results summaries will be provided."
     }
     )
     
