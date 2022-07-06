@@ -24,3 +24,5 @@ $run_dev.*
 ^\.Rproj\.user$
 ^joss$
 ^cran$
+^CRAN-SUBMISSION$
+^cran-comments\.md$
