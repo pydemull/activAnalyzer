@@ -1,8 +1,11 @@
-# activAnalyzer (development version)
+# activAnalyzer 1.0.2
 
 * Adjusted size of alert messages on report figures when scores are out of bounds.
 * Improved warning messages design in the UI interface.
 * Added the possibility to automatically upload a demo file.
+* Added information in the guides on the content of .agd files that can be analyzed.
+* Removed inappropriate options to set the wearing position in the UI (wrist, thigh, ankle).
+* Added constraints to prevent the app to shut down when downloading invalid .agd file.
 
 # activAnalyzer 1.0.1
 
