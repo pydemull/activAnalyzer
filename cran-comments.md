@@ -3,6 +3,8 @@ This is a resubmission. In this version I have:
 
 * Converted the DESCRIPTION title to title case.
 
+* Corrected my ORCID ID.
+
 * Included more plateforms in my R-CMD-check workflow on github. Following the last 
 push of my package to github, all the workflows passed with the following configuration:
           - {os: macOS-latest,   r: 'release'}
