@@ -23,8 +23,9 @@ date: 05 July 2022
 ---
 
 # Summary
-- importance of measuring physical activity and sedenatary behavior
-- interest of using accelerometry
+Physical activity is a behaviour related to many health outcomes. Accelerometry is commonly accepted as a more accurate method than questionnaires for measuring physical activity. ActiGraph devices have been the most used accelerometers in the scientific literature. Moreover, some research groups have developed specific frameworks to assess patients with specific conditions, as th D-PPAC and C-PPAC instruments developped by the PROactive consortium group for assessing physical activity in COPD patients.
+
+
 - Importantance of actigraph and actilife sofware
 - problems for wide dissemination and use by clinicians, students, and some researchers; existence of programming interface but not accessible for non skilled users
 -
