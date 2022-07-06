@@ -15,7 +15,7 @@
 
 #'}
 #'
-#' @param data Path to an .agd file that was exported from Actilife software.
+#' @param data Path to an .agd file that was exported from ActiLife software.
 #'
 #' @return A dataframe.
 #' 

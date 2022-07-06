@@ -3,7 +3,7 @@
 #' The function generates a formatted table with both means and medians of the metrics obtained following the physical behavior measurement.
 #'
 #' @param results_summary_means A dataframe with mean results obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, \code{\link{recap_by_day}}, and then the \code{\link{average_results}} functions.
-#' @param results_summary_medians A dataframe with meadian results obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, \code{\link{recap_by_day}}, and then the \code{\link{average_results}} functions.
+#' @param results_summary_medians A dataframe with median results obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, \code{\link{recap_by_day}}, and then the \code{\link{average_results}} functions.
 #' @param language A character value for setting the language with which the table should be created: `en` for english; `fr` for french.
 #'
 #' @return A flextable object

@@ -7,7 +7,7 @@
 prepare_dataset(data)
 }
 \arguments{
-\item{data}{Path to an .agd file that was exported from Actilife software.}
+\item{data}{Path to an .agd file that was exported from ActiLife software.}
 }
 \value{
 A dataframe.

@@ -18,7 +18,7 @@
 
 # activAnalyzer 1.0.0
 
-* Allowed the possiblity to work with epochs shorter than 60 s. A warning is provided when the set epoch is <10 s to indicate that figures will not be created with such epochs to save time.
+* Allowed the possibility to work with epochs shorter than 60 s. A warning is provided when the set epoch is <10 s to indicate that figures will not be created with such epochs to save time.
 * The user can now set "23:59:59" rather than "23:59:00" to set the upper limit of the period of the day to be considered for analyzis.
 * Increased the size of the files that the app can manage.
 * Corrected bug for the message that should appear when a file with incorrect extension is uploaded.

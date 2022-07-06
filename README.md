@@ -13,8 +13,8 @@ coverage](https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge
 activAnalyzer is a Shiny app that has been developed to analyze daily
 physical behavior data recorded at the hip in adults using an ActiGraph
 accelerometer (.agd files). Once analysis is completed, the app allows
-to export results (summarized by day with means or medians of the valid
-days) to .csv files and to generate a report of the measurement (.pdf
+exporting results (summarized by day with means or medians of the valid
+days) to .csv files and generating a report of the measurement (.pdf
 file). All the configured inputs relevant for interpreting the results
 are recorded in the report. Be sure that the inputs that are configured
 when generating the report correspond to the analysis that was actually
@@ -42,14 +42,14 @@ There are three different ways to use the activAnalyzer app:
     very dependent on the number of users as well as the time spent by
     each user on the app. Moreover, as computations when using the app
     can be quite intensive, it is possible that speed and stability of
-    this online version of the app are compromised. For these reasons,
-    this option should be considered as a way to have a quick look at
-    how the app works. The other available options (please see below)
-    will be more appropriate for working with the app on a regular
-    basis. Of note, Google Chrome and Microsoft Edge browsers allow the
-    app to work as expected but Mozilla Firefox does not seem to allow
-    reseting all the inputs when required.
--   [Locally on PC via a standalone desktop
+    this online version of the app become sometimes compromised. For
+    these reasons, this option should be considered as a way to have a
+    quick look at how the app works. The other available options (please
+    see below) will be more appropriate for working with the app on a
+    regular basis. Of note, Google Chrome and Microsoft Edge browsers
+    allow the app to work as expected but Mozilla Firefox does not seem
+    to allow resetting all the inputs when required.
+-   [On your machine via a standalone desktop
     app](https://sourceforge.net/projects/activanalyzer) that is
     downloadable from the SourceForge website (stable version, for
     Windows machines only). The standalone app has been developped using
@@ -58,17 +58,16 @@ There are three different ways to use the activAnalyzer app:
     framework can be retrieved from [a dedicated GitHub
     repository](https://github.com/wleepang/DesktopDeployR). Once the
     app is installed on your PC, you will have to double-click on the
-    desktop app icon (if you have chosen this option during the
-    installation process), which will run the R-portable version
-    embedded in the app and then will launch the app in your default web
-    browser with 127.0.0.1 as the value for the host parameter. This
-    means that only your current machine will can access the app. You
-    will can open only one session at a time. As written above, Google
-    Chrome and Microsoft Edge browsers allow the app to work as expected
-    but Mozilla Firefox does not seem to allow reseting all the inputs
-    when required.
--   Locally on your machine via [R software](https://cran.rstudio.com/),
-    the [RStudio environment](https://www.rstudio.com/), and the
+    desktop app icon (if you chose this option during the installation
+    process), which will run the R-portable version embedded in the app
+    and then will launch the app in your default web browser with
+    127.0.0.1 as the value for the host parameter. This means that only
+    your current machine will can access the app. You will can open only
+    one session at a time. As written above, Google Chrome and Microsoft
+    Edge browsers allow the app to work as expected but Mozilla Firefox
+    does not seem to allow resetting all the inputs when required.
+-   On your machine via [R software](https://cran.rstudio.com/), the
+    [RStudio environment](https://www.rstudio.com/), and the
     [activAnalyzer package](https://github.com/pydemull/activAnalyzer)
     installable from GitHub (development version). To be able to
     generate the .pdf reports, you will have to install the [TinyTeX

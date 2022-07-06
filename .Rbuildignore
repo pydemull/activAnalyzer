@@ -23,3 +23,4 @@ $run_dev.*
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^joss$
+^cran$
