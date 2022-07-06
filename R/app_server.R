@@ -39,6 +39,16 @@ app_server <- function(input, output, session) {
       init$name <- input$upload$name
       req(tools::file_ext(input$upload$name) == "agd")
       init$file <- read_agd(input$upload$datapath)
+      req(
+        "axis1" %in% names(init$file) & 
+        "axis2" %in% names(init$file) & 
+        "axis3" %in% names(init$file) &
+        "steps" %in% names(init$file) & 
+        "inclineoff" %in% names(init$file) &
+        "inclinestanding" %in% names(init$file) &
+        "inclinesitting" %in% names(init$file) &
+        "inclinelying" %in% names(init$file)
+          )
       init$data <- prepare_dataset(input$upload$datapath)
     })
     
@@ -57,35 +67,76 @@ app_server <- function(input, output, session) {
     
     # Dataset containing device information
     file <- reactive({
-      req(!is.null(init$file))
+      req(
+        !is.null(init$file) & 
+        tools::file_ext(init$name) == "agd" &
+        "axis1" %in% names(init$file) & 
+        "axis2" %in% names(init$file) & 
+        "axis3" %in% names(init$file) &
+        "steps" %in% names(init$file) & 
+        "inclineoff" %in% names(init$file) &
+        "inclinestanding" %in% names(init$file) &
+        "inclinesitting" %in% names(init$file) &
+        "inclinelying" %in% names(init$file)
+        )
       isolate(init$file)
       })
     
     # Dataset prepared for analysis
     data <- reactive({
-      req(!is.null(init$data))
+      req(
+        !is.null(init$file) & 
+          tools::file_ext(init$name) == "agd" &
+          "axis1" %in% names(init$file) & 
+          "axis2" %in% names(init$file) & 
+          "axis3" %in% names(init$file) &
+          "steps" %in% names(init$file) & 
+          "inclineoff" %in% names(init$file) &
+          "inclinestanding" %in% names(init$file) &
+          "inclinesitting" %in% names(init$file) &
+          "inclinelying" %in% names(init$file)
+      )
       isolate(init$data)
       })
     
   # Controlling appearance of the "Validate configuration" button
     shinyjs::hide("validate")
     observe({
-     if((tools::file_ext(init$name) == "agd") && nrow(data()) >= 1) {
+     if (!is.null(init$file) &&
+        tools::file_ext(init$name) == "agd" &&
+        "axis1" %in% names(init$file) &&
+        "axis2" %in% names(init$file) &&
+        "axis3" %in% names(init$file) &&
+        "steps" %in% names(init$file) && 
+        "inclineoff" %in% names(init$file) &&
+        "inclinestanding" %in% names(init$file) &&
+        "inclinesitting" %in% names(init$file) &&
+        "inclinelying" %in% names(init$file)
+        ){
      shinyjs::show("validate")
      } else {
        shinyjs::hide("validate")
      }
     })
     
-  # Controlling file extension
+  # Controlling file extension and content
     observeEvent(input$upload,
                 shinyFeedback::feedbackWarning(
                   "upload", 
-                  ((tools::file_ext(init$name) == "agd") == FALSE),
-                  "Invalid file format. Please choose an .agd file."
+                  (!(tools::file_ext(init$name) == "agd") | !(
+                    "axis1" %in% names(init$file) & 
+                    "axis2" %in% names(init$file) & 
+                    "axis3" %in% names(init$file) &
+                    "steps" %in% names(init$file) & 
+                    "inclineoff" %in% names(init$file) &
+                    "inclinestanding" %in% names(init$file) &
+                    "inclinesitting" %in% names(init$file) &
+                    "inclinelying" %in% names(init$file)
+                  )),
+                  "Invalid file. Choose an appropriate .agd file (cf. guide)."
                 )
     )
-      
+    
     
   ################
   # Days selection ----

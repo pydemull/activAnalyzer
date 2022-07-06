@@ -185,7 +185,7 @@ app_ui <- function(request) {
                            fileInput("upload", "Upload file (please wait until seeing the 'Validate configuration' green button below)", placeholder = ".agd")
                     ),
                     column(1,
-                           div("You can also load a demo file below ! ", class = "control-label"),
+                           div("You can also load a demo file ! ", class = "control-label"),
                            shiny::actionButton('demo',"Load Demo File",  class = "btn-demo")
                     )
                   ),

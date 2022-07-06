@@ -11,6 +11,7 @@
 #'   \item \strong{inclineStanding}
 #'   \item \strong{inclineSitting}
 #'   \item \strong{inclineLying}
+#'   \item \strong{inclineOff}
 
 #'}
 #'
