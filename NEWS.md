@@ -1,3 +1,5 @@
+# activAnalyzer 1.1.0
+
 # activAnalyzer 1.0.2
 
 * Adjusted size of alert messages on report figures when scores are out of bounds.
