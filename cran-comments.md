@@ -1,3 +1,27 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Converted the DESCRIPTION title to title case.
+
+* Corrected my ORCID ID.
+
+* Included more plateforms in my R-CMD-check workflow on github. Following the last 
+push of my package to github, all the workflows passed with the following configuration:
+          - {os: macOS-latest,   r: 'release'}
+          - {os: windows-latest, r: 'release'}
+          - {os: ubuntu-latest,   r: 'release'}
+          - {os: macOS-latest,   r: 'devel'}
+          - {os: windows-latest, r: 'devel'}
+          - {os: ubuntu-latest, r: 'devel'}
+It may be worth noting that the error thrown during my first submission and seen for 
+the platform x86_64-pc-linux-gnu (64-bit) is similar to one I regularly encounter
+(but not systematically) with the mac-OS plateform during R-CMD check on github.
+This error is related to the fail of the tested plateform to find PhantomJS, which
+is required for testing server actions from my app thanks to the 'shinytest' package.
+Thus, I guess this is not a problem from my side, but from the side of the 
+plateform being tested (sorry in advance if I'm wrong, but the behavior of 
+R-CMD-check on github supports this idea).
+
 ## R CMD check results
 There were no ERRORs or WARNINGs.
 
@@ -26,6 +50,3 @@ There were 2 NOTEs:
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
-
-## Other information
-This is my first submission for this package.

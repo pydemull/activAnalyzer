@@ -64,6 +64,7 @@ test_that("The server functions correctly work", {
     total_score_raw <<- "total_score_raw"
     total_score_rasch <<- "total_score_rasch"
     Jour <<- "Jour"
+    init <<- "init"
     assign("users", shiny::reactiveValues(count = 0), envir = .GlobalEnv)
     assign("equations_mets", activAnalyzer:::equations_mets, envir = .GlobalEnv)
     assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = .GlobalEnv)
@@ -82,6 +83,47 @@ test_that("The server functions correctly work", {
   # Loading data file inside and outside the app
     app$uploadFile(upload = "acc.agd")
     test_file <- "acc.agd"
+    
+  # Testing auto-filling patient information
+    app$setInputs(
+      assessor_name = "Doe",
+      assessor_surname = "John",
+      patient_name = "Doe",
+      patient_surname = "Jane", 
+      sex = "female",
+      age = 67,
+      weight = 86,
+      side = "right"
+    )
+    
+    app$setInputs(auto_fill_char = "click")
+    
+    test_list <-
+      list(
+        "Doe",
+        "John",
+        "Doe",
+        "Jane",
+        "female",
+        67,
+        86,
+        "right"
+        
+      )
+    
+    actual_list <-
+      list(
+        app$getAllValues()$export[["assessor_name"]],
+        app$getAllValues()$export[["assessor_surname"]],
+        app$getAllValues()$export[["patient_name"]],
+        app$getAllValues()$export[["patient_surname"]],
+        app$getAllValues()$export[["sex"]],
+        app$getAllValues()$export[["age"]],
+        app$getAllValues()$export[["weight"]],
+        app$getAllValues()$export[["side"]]
+      )
+    
+    expect_equal(actual_list, test_list)
 
   # Testing dataframe marked for wear time
     
@@ -163,6 +205,31 @@ test_that("The server functions correctly work", {
        test_gg_nonwear <- str(plot_data(test_df))
        actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data"]])
        expect_equal(actual_gg_nonwear, test_gg_nonwear)
+       
+    # Testing auto-filling activity intensity analyzis
+       app$setInputs(
+         equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
+         sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]",
+         mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]"
+       )
+       
+       app$setInputs(auto_fill_intensity = "click")
+       
+       test_list <-
+         list(
+           "Santos-Lozano et al. (2013) [Older adults]",
+           "Aguilar-Farias et al. (2014) [Older adults]",
+           "Santos-Lozano et al. (2013) [Older adults]"
+           
+         )
+       
+       actual_list <-
+         list(
+           app$getAllValues()$export[["equation_mets"]],
+           app$getAllValues()$export[["sed_cutpoint"]],
+           app$getAllValues()$export[["mvpa_cutpoint"]]
+         )
+       
        
        
     # Testing dataframe with results by day
@@ -306,19 +373,60 @@ test_that("The server functions correctly work", {
        
        expect_equal(actual_results_by_day, test_results_by_day)
        
-    # Testing for setting proactive period
-      app$setInputs(pro_active_period = "click")
+    # Testing for setting default configuration to validate a day (period and wear time hours)
+       app$setInputs(reset_period = "click")
+       
+       test_set_default <-
+         list(
+           "00:00:00",
+           "23:59:59",
+           10
+         )
+       
+       actual_set_default <- 
+         list(
+           app$getAllValues()$export[["start_day_analysis"]],
+           app$getAllValues()$export[["end_day_analysis"]],
+           app$getAllValues()$export[["minimum_wear_time_for_analysis"]]
+         )
+       
+       expect_equal(test_set_default, actual_set_default)
+    
+    # Testing for setting proactive period (non-sleep wearing protocol)
+       app$setInputs(pro_active_period_non_sleep = "click")
+       
+       test_set_proactive <-
+         list(
+           "00:00:00",
+           "23:59:59",
+           8
+         )
+       
+       actual_set_proactive <- 
+         list(
+           app$getAllValues()$export[["start_day_analysis"]],
+           app$getAllValues()$export[["end_day_analysis"]],
+           app$getAllValues()$export[["minimum_wear_time_for_analysis"]]
+         )
+       
+       expect_equal(actual_set_proactive, test_set_proactive)
+       
+       
+    # Testing for setting proactive period (24-h wearing protocol)
+      app$setInputs(pro_active_period_24h = "click")
       
       test_set_proactive <-
         list(
           "07:00:00",
-          "22:00:00"
+          "22:00:00",
+          8
         )
       
       actual_set_proactive <- 
         list(
           app$getAllValues()$export[["start_day_analysis"]],
-          app$getAllValues()$export[["end_day_analysis"]]
+          app$getAllValues()$export[["end_day_analysis"]],
+          app$getAllValues()$export[["minimum_wear_time_for_analysis"]]
         )
       
       expect_equal(actual_set_proactive, test_set_proactive)

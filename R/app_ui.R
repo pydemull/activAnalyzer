@@ -32,7 +32,7 @@ app_ui <- function(request) {
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
         ),
-        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 1.0.2"), titleWidth = 237
+        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 1.0.3"), titleWidth = 237
                                       ),
       shinydashboardPlus::dashboardSidebar( 
         tags$style(HTML(".sidebar-menu li a {font-size: 17px;}")),
@@ -166,6 +166,17 @@ app_ui <- function(request) {
                     ),
                     
                   ),
+                 
+                 
+                 #******************
+                 # Auto-complete
+                 #******************
+                 
+                 fluidRow(
+                   column(2,
+                          shiny::actionButton("auto_fill_char", "Auto-fill", class = "btn-return"),
+                          )
+                 ),
                   
                   ###########################################################################
                   # Section 2. Data uploading, nonwear time detection, and data visualization ----
@@ -182,10 +193,12 @@ app_ui <- function(request) {
                   ),
                   fluidRow(
                     column(3,
+                           h3(""),
                            fileInput("upload", "Upload file (please wait until seeing the 'Validate configuration' green button below)", placeholder = ".agd")
                     ),
-                    column(1,
-                           div("You can also load a demo file ! ", class = "control-label"),
+                    column(2,
+                           h3(""),
+                           div("You can also load a demo file by clicking on the button below ! ", class = "control-label", style = "width: 100%;"),
                            shiny::actionButton('demo',"Load Demo File",  class = "btn-demo")
                     )
                   ),
@@ -201,7 +214,6 @@ app_ui <- function(request) {
                                                   width = 8,
                                                   div(textOutput("warning_epoch"), class = "warn-message")
                           ),
-                          h4("")
                    ),
                  ),
                   fluidRow(
@@ -225,7 +237,14 @@ app_ui <- function(request) {
                   ),
                  fluidRow(
                    column(12,
-                          h3(""),
+                          shinydashboardPlus::box(id = "box-auto_fill_char",
+                                                  title = "NOTE",
+                                                  width = 8,
+                                                  div(textOutput("warning_auto_fill_char"), class = "warn-message")
+                          ),                   ),
+                 ),
+                 fluidRow(
+                   column(12,
                           shinydashboardPlus::box(id = "box-demo",
                                                   title = "NOTE",
                                                   width = 8,
@@ -235,7 +254,7 @@ app_ui <- function(request) {
                  ),
                   fluidRow(
                     column(3,
-                           shiny::actionButton("validate", "Validate configuration", class = "btn-validate"),
+                           shiny::actionButton("validate", "Validate configuration", class = "btn-validate", style = "margin-bottom: 20px;"),
                     ),
                   ),
                  
@@ -245,7 +264,6 @@ app_ui <- function(request) {
                   #*************************
                   
                   fluidRow(
-                    h3(""),
                     shinydashboardPlus::box(id = "myBox", 
                                             title = "Wear time analysis",
                                             shinycssloaders::withSpinner(plotOutput("graph", height = "auto")), 
@@ -280,9 +298,9 @@ app_ui <- function(request) {
                     ),
                   ),
                   
-                  #**********************
-                  # Choosing MET equation
-                  #**********************
+                  #*************************************
+                  # Choosing MET equation and cut-points
+                  #*************************************
                   
                   fluidRow(
                     column(12,
@@ -297,32 +315,17 @@ app_ui <- function(request) {
                     )
                   ),
                   
-                  #********************
-                  # Choosing cut-points
-                  #********************
-                  
-                  fluidRow(
-                    column(12,
-                           h3("Choose cut-points"),
-                           hr()
-                    )
-                  ),
-                  
                   #***************
                   # SED cut-points
                   #***************
                   
                   fluidRow(
                     column(12,
-                           selectInput("sed_cutpoint", with_red_star("SED cut-point"), choices = sed_cutpoint)
-                    )
-                  ),
-                  
-                  fluidRow(
-                    column(12,
-                           tabsetPanel(
+                           div(selectInput("sed_cutpoint", with_red_star("SED cut-point"), choices = sed_cutpoint), style = "margin-top: 20px; margin-bottom: 0px"),
+                           div(tabsetPanel(
                              id = "switcher_sed",
                              type = "hidden",
+                             
                              tabPanelBody("...", ""),
                              tabPanelBody("Aguilar-Farias et al. (2014) [Older adults]", reactable::reactableOutput("table_sed_cutpoints")),
                              tabPanelBody("Personalized...", 
@@ -333,8 +336,8 @@ app_ui <- function(request) {
                                             ),
                                           )
                              )
+                           ), class = "tab_cutpoints")
                            )
-                    )
                   ),
                   
                   #****************
@@ -343,13 +346,8 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12,
-                           h3(""),
-                           selectInput("mvpa_cutpoint", with_red_star("MVPA cut-points"), choices = mvpa_cutpoint)
-                    )
-                  ),
-                  fluidRow(
-                    column(12,
-                           tabsetPanel(
+                           div(selectInput("mvpa_cutpoint", with_red_star("MVPA cut-points"), choices = mvpa_cutpoint), style = "margin-top: 20px; margin-bottom: 0px"),
+                           div(tabsetPanel(
                              id = "switcher_mvpa",
                              type = "hidden",
                              tabPanelBody("...", ""),
@@ -366,9 +364,14 @@ app_ui <- function(request) {
                                             ),
                                           )
                              )
-                           )
+                           ), class = "tab_cutpoints")
                     )
                   ),
+                 fluidRow(
+                   column(3,
+                          shiny::actionButton("auto_fill_intensity", "Default settings",  class = "btn-return", style = "margin-top: 10px"),
+                   ),
+                 ),
                   
                   #********************************
                   # Minimum wear time for valid day
@@ -398,12 +401,22 @@ app_ui <- function(request) {
                            numericInput("minimum_wear_time_for_analysis", "Minimum wear time to validate a day (hours)", value = 10)
                     )
                   ),
+
                   fluidRow(
                     column(12,
-                           shiny::actionButton("pro_active_period", "PROactive configuration for 24-h recording", class = "btn-proactive"),
-                           shiny::actionButton("reset_period", "Default settings", class = "btn-return")
+                           shiny::actionButton("reset_period", "Default settings", class = "btn-return"),
+                           shiny::actionButton("pro_active_period_non_sleep", "PROactive config. for non-sleep wearing protocol", class = "btn-proactive"),
+                           shiny::actionButton("pro_active_period_24h", "PROactive config. for 24-h wearing protocol", class = "btn-proactive")
                            )
                   ),
+                 fluidRow(
+                   column(12,
+                          shinydashboardPlus::box(id = "box-intensity_inputs",
+                                                  title = "NOTE",
+                                                  width = 8,
+                                                  div(textOutput("warning_intensity_inputs"), class = "warn-message")
+                          ),                   ),
+                 ),
                   
                   #*****************
                   # Running analysis
@@ -411,9 +424,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(3,
-                           h3(""),
-                           shiny::actionButton("Run", "Run Analysis",  class = "btn-validate"),
-                           h3("")
+                           shiny::actionButton("Run", "Run analysis",  class = "btn-validate"),
                     ),
                   ),
                   
@@ -3327,8 +3338,8 @@ app_ui <- function(request) {
                               Physical Activity in COPD (D\u002dPPAC and C\u002dPPAC) instruments. Please read the user\u2019s guide for 
                               details about how the app works."),
                         ),
-                           downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", class = "btn-input"),
-                           downloadButton("user_guide_fr", "Download user's guide (FR) (.pdf)", class = "btn-input")
+                           downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", class = "btn-guide"),
+                           downloadButton("user_guide_fr", "Download user's guide (FR) (.pdf)", class = "btn-guide")
                     ),
                   ),
 
