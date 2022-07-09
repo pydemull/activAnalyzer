@@ -424,7 +424,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(3,
-                           shiny::actionButton("Run", "Run Analysis",  class = "btn-validate"),
+                           shiny::actionButton("Run", "Run analysis",  class = "btn-validate"),
                     ),
                   ),
                   
