@@ -714,12 +714,14 @@ app_server <- function(input, output, session) {
         equations_mets %>% 
           dplyr::filter(Study == input$equation_mets) %>%
           reactable::reactable(striped = TRUE, bordered = TRUE,
-                    list('Study' = reactable::colDef(minWidth = 80),
-                         'Population' = reactable::colDef(minWidth = 60),
-                         'Activities performed' = reactable::colDef(minWidth = 60),
-                         'Device used' = reactable::colDef(minWidth = 40),
-                         'Axis used' = reactable::colDef(minWidth = 40),
-                         'Filter enabled' = reactable::colDef(minWidth = 40))
+                    list('Study' = reactable::colDef(minWidth = 150),
+                         'Population' = reactable::colDef(minWidth = 150),
+                         'Activities performed' = reactable::colDef(minWidth = 150),
+                         'Device used' = reactable::colDef(minWidth = 80),
+                         'Axis used' = reactable::colDef(minWidth = 150),
+                         'Filter enabled' = reactable::colDef(minWidth = 150),
+                         Equation = reactable::colDef(minWidth = 150)
+                    )
           )
       }
       
@@ -738,13 +740,13 @@ app_server <- function(input, output, session) {
        sed_cutpoints %>% 
          dplyr::filter(Study == input$sed_cutpoint) %>%
          reactable::reactable(striped = TRUE, bordered = TRUE,
-                   list('Study' = reactable::colDef(minWidth = 80),
-                        'Population' = reactable::colDef(minWidth = 70),
-                        'Activities performed' = reactable::colDef(minWidth = 60),
-                        'Device used' = reactable::colDef(minWidth = 40),
-                        'Axis used' = reactable::colDef(minWidth = 30),
-                        'Filter enabled' = reactable::colDef(minWidth = 40),
-                        'SED cut-point in counts/min' = reactable::colDef(minWidth = 60))
+                   list('Study' = reactable::colDef(minWidth = 150),
+                        'Population' = reactable::colDef(minWidth = 150),
+                        'Activities performed' = reactable::colDef(minWidth = 150),
+                        'Device used' = reactable::colDef(minWidth = 80),
+                        'Axis used' = reactable::colDef(minWidth = 150),
+                        'Filter enabled' = reactable::colDef(minWidth = 150),
+                        'SED cut-point in counts/min' = reactable::colDef(minWidth = 150))
          )
      }
      
@@ -764,14 +766,14 @@ app_server <- function(input, output, session) {
         mvpa_cutpoints %>% 
           dplyr::filter(Study == input$mvpa_cutpoint) %>%
           reactable::reactable(striped = TRUE, bordered = TRUE,
-                    list('Study' = reactable::colDef(minWidth = 80),
-                         'Population' = reactable::colDef(minWidth = 70),
-                         'Activities performed' = reactable::colDef(minWidth = 60),
-                         'Device used' = reactable::colDef(minWidth = 40),
-                         'Axis used' = reactable::colDef(minWidth = 30),
-                         'Filter enabled' = reactable::colDef(minWidth = 40),
-                         'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 60),
-                         'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 60))
+                    list('Study' = reactable::colDef(minWidth = 150),
+                         'Population' = reactable::colDef(minWidth = 150),
+                         'Activities performed' = reactable::colDef(minWidth = 150),
+                         'Device used' = reactable::colDef(minWidth = 80),
+                         'Axis used' = reactable::colDef(minWidth = 150),
+                         'Filter enabled' = reactable::colDef(minWidth = 150),
+                         'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 150),
+                         'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 150))
           )
       }
       
@@ -784,14 +786,14 @@ app_server <- function(input, output, session) {
         mvpa_cutpoints %>% 
           dplyr::filter(Study == input$mvpa_cutpoint) %>%
           reactable::reactable(striped = TRUE, bordered = TRUE,
-                    list('Study' = reactable::colDef(minWidth = 80),
-                         'Population' = reactable::colDef(minWidth = 70),
-                         'Activities performed' = reactable::colDef(minWidth = 60),
-                         'Device used' = reactable::colDef(minWidth = 40),
-                         'Axis used' = reactable::colDef(minWidth = 30),
-                         'Filter enabled' = reactable::colDef(minWidth = 40),
-                         'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 60),
-                         'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 60))
+                    list('Study' = reactable::colDef(minWidth = 150),
+                         'Population' = reactable::colDef(minWidth = 150),
+                         'Activities performed' = reactable::colDef(minWidth = 150),
+                         'Device used' = reactable::colDef(minWidth = 80),
+                         'Axis used' = reactable::colDef(minWidth = 150),
+                         'Filter enabled' = reactable::colDef(minWidth = 150),
+                         'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 150),
+                         'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 150))
           )
       }
       
@@ -804,14 +806,14 @@ app_server <- function(input, output, session) {
         mvpa_cutpoints %>% 
           dplyr::filter(Study == input$mvpa_cutpoint) %>%
           reactable::reactable(striped = TRUE, bordered = TRUE,
-                               list('Study' = reactable::colDef(minWidth = 80),
-                                    'Population' = reactable::colDef(minWidth = 70),
-                                    'Activities performed' = reactable::colDef(minWidth = 60),
-                                    'Device used' = reactable::colDef(minWidth = 40),
-                                    'Axis used' = reactable::colDef(minWidth = 30),
-                                    'Filter enabled' = reactable::colDef(minWidth = 40),
-                                    'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 60),
-                                    'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 60))
+                               list('Study' = reactable::colDef(minWidth = 150),
+                                    'Population' = reactable::colDef(minWidth = 150),
+                                    'Activities performed' = reactable::colDef(minWidth = 150),
+                                    'Device used' = reactable::colDef(minWidth = 80),
+                                    'Axis used' = reactable::colDef(minWidth = 150),
+                                    'Filter enabled' = reactable::colDef(minWidth = 150),
+                                    'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 150),
+                                    'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 150))
           )
       }
       
@@ -824,14 +826,14 @@ app_server <- function(input, output, session) {
         mvpa_cutpoints %>% 
           dplyr::filter(Study == input$mvpa_cutpoint) %>%
           reactable::reactable(striped = TRUE, bordered = TRUE,
-                    list('Study' = reactable::colDef(minWidth = 80),
-                         'Population' = reactable::colDef(minWidth = 70),
-                         'Activities performed' = reactable::colDef(minWidth = 60),
-                         'Device used' = reactable::colDef(minWidth = 40),
-                         'Axis used' = reactable::colDef(minWidth = 30),
-                         'Filter enabled' = reactable::colDef(minWidth = 40),
-                         'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 60),
-                         'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 60))
+                    list('Study' = reactable::colDef(minWidth = 150),
+                         'Population' = reactable::colDef(minWidth = 150),
+                         'Activities performed' = reactable::colDef(minWidth = 150),
+                         'Device used' = reactable::colDef(minWidth = 80),
+                         'Axis used' = reactable::colDef(minWidth = 150),
+                         'Filter enabled' = reactable::colDef(minWidth = 150),
+                         'MPA cut-point (3 METs) in counts/min' = reactable::colDef(minWidth = 150),
+                         'VPA cut-point (6 METs) in counts/min' = reactable::colDef(minWidth = 150))
           )
       }
       
@@ -1066,6 +1068,10 @@ app_server <- function(input, output, session) {
       reactable::reactable(results_list()$results_by_day,  
                 striped = TRUE,
                 list(
+                     date = reactable::colDef(
+                       style = list(position = "sticky", left = 0, background = "#CCCCCC", zIndex = 1),
+                       headerStyle = list(position = "sticky", left = 0,  background = "#fff", zIndex = 1)
+                     ),
                      total_counts_axis1 = reactable::colDef(minWidth = 150),
                      total_counts_vm = reactable::colDef(minWidth = 150),
                      axis1_per_min = reactable::colDef(minWidth = 150),
