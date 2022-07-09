@@ -26,7 +26,61 @@ app_server <- function(input, output, session) {
            # The following comments were helpful to build the code: 
            # https://stackoverflow.com/questions/47728208/how-many-users-are-connected-to-my-shiny-application
   
+  #############################
+  # Filling patient information ----
+  #############################
   
+  # Automatically filling patient information inputs by defaut values
+  observeEvent(input$auto_fill_char, {
+    updateTextInput(inputId = "assessor_name", value = "Doe")
+    updateTextInput(inputId = "assessor_surname", value = "John")
+    updateTextInput(inputId = "patient_name", value = "Doe")
+    updateTextInput(inputId = "patient_surname", value = "Jane")
+    updateSelectInput(inputId = "sex", selected = "female")
+    updateNumericInput(inputId = "age", value = 67)
+    updateNumericInput(inputId = "weight", value = 86)
+    updateSelectInput(inputId = "side", selected = "right")
+  })
+    
+  # Warning regarding non-complete patient information if any
+    
+    output$warning_auto_fill_char <- renderText({
+      "While you are ready to analyze wear time, you are not ready to get all 
+      the final results that will be displayed in Section 4 because you have not
+      fullfilled all the required inputs in Section 1 (see the inputs with a red star). 
+      If you decide to ignore this message, you will cannot get the final results. 
+      If you are using the app only for testing it, you can just click on the 
+      \"Auto-fill\" button at the end of Section 1."
+    })
+    
+    shinyjs::hide("box-auto_fill_char")
+    shinyjs::hide("warning_auto_fill_char")
+    observe({
+      if (!is.null(init$file) &&
+          tools::file_ext(init$name) == "agd" &&
+          "axis1" %in% names(init$file) &&
+          "axis2" %in% names(init$file) &&
+          "axis3" %in% names(init$file) &&
+          "steps" %in% names(init$file) && 
+          "inclineoff" %in% names(init$file) &&
+          "inclinestanding" %in% names(init$file) &&
+          "inclinesitting" %in% names(init$file) &&
+          "inclinelying" %in% names(init$file) &&
+          (
+            !(input$sex %in% c("female", "male", "undefined")) |
+            !(input$age > 0) |
+            !(input$weight > 0)
+          )
+      ) {
+        shinyjs::show("box-auto_fill_char")
+        shinyjs::show("warning_auto_fill_char")
+      } else {
+        shinyjs::hide("box-auto_fill_char")
+        shinyjs::hide("warning_auto_fill_char")
+      }
+    })
+
+    
   ##############################
   # Uploading and preparing data ----
   ##############################
@@ -137,6 +191,12 @@ app_server <- function(input, output, session) {
                 )
     )
     
+   # Getting default settings to configure activity intensity analysis
+    observeEvent(input$auto_fill_intensity, {
+      updateSelectInput(inputId = "equation_mets", selected = "Santos-Lozano et al. (2013) [Older adults]")
+      updateSelectInput(inputId = "sed_cutpoint", selected = "Aguilar-Farias et al. (2014) [Older adults]")
+      updateSelectInput(inputId = "mvpa_cutpoint", selected = "Santos-Lozano et al. (2013) [Older adults]")
+    })
     
   ################
   # Days selection ----
@@ -152,7 +212,7 @@ app_server <- function(input, output, session) {
   ###########################################################################################
   # Getting dataframe with marks for wear/nonwear time when clicking on the "Validate" button ----
   ###########################################################################################
-  
+    
   # Controlling for correct inputs
   
     # File epoch length
@@ -165,8 +225,9 @@ app_server <- function(input, output, session) {
                      as.numeric(input$to_epoch) < as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])) |
                      ((as.numeric(input$to_epoch) / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1]))) - floor(as.numeric(input$to_epoch) / as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])))) != 0
                      ),
-                    "Please choose a number between 1 and 60 and that is greater or equal to the duration of the file epochs. 
-                    The ratio between the desired epoch and the current epoch must be an integer."
+                    paste("Please choose a number between 1 and 60 and that is greater or equal to the duration of the file epochs. 
+                    The ratio between the desired epoch and the current epoch must be an integer. The epoch length of the file currently
+                          used is", as.numeric(hms::as_hms(data()$TimeStamp[2] - data()$TimeStamp[1])), "s.")
                   )
       )
 
@@ -279,9 +340,8 @@ app_server <- function(input, output, session) {
 
   # Returning to default values for the wear time detection algorithm
     observeEvent(input$reset_nonwear, {
-      axis_weartime <- c("vector magnitude", "vertical axis")
       updateNumericInput(inputId = "to_epoch", value = 60)
-      updateSelectInput(inputId = "axis_weartime", choices = axis_weartime)
+      updateSelectInput(inputId = "axis_weartime", selected = "vector magnitude")
       updateNumericInput(inputId = "frame_size", value = 90)
       updateNumericInput(inputId = "allowanceFrame_size", value = 2)
       updateNumericInput(inputId = "streamFrame_size", value = 30)
@@ -378,13 +438,8 @@ app_server <- function(input, output, session) {
                     shinyFeedback::feedbackWarning(
                       "equation_mets", 
                       (
-                          (!input$sex %in% c("male", "female", "undefined") | 
-                          !is.numeric(input$age) |
-                          input$age <= 0 | 
-                          !is.numeric(input$weight) |
-                          input$weight <= 0) | 
-                          input$equation_mets == "..."),
-                      "Please provide valid values for the inputs shown in Patient's information section and choose a MET equation."
+                      input$equation_mets == "..."),
+                      "Please choose a MET equation."
                     )
         )
 
@@ -498,6 +553,130 @@ app_server <- function(input, output, session) {
                        
                      )
         )
+        
+        
+      # Warning regarding non-complete/incorrect values for estimating intensity
+        
+        output$warning_intensity_inputs <- renderText({
+          "It seems the inputs required for getting final results are not all 
+          correctly configured. Please look at Section 1 and Section 3 to solve this
+          issue."
+        })
+        
+        shinyjs::hide("box-intensity_inputs")
+        shinyjs::hide("warning_intensity_inputs")
+        observeEvent(input$Run, {
+          if (
+              (input$sex %in% c("male", "female", "undefined")) == FALSE |
+              (is.numeric(input$age) == FALSE | input$age <= 0) |
+              (is.numeric(input$weight) == FALSE | input$weight <= 0) |
+              (
+                (!input$sex %in% c("male", "female", "undefined") | 
+                 !is.numeric(input$age) |
+                 input$age <= 0 | 
+                 !is.numeric(input$weight) |
+                 input$weight <= 0) | 
+                input$equation_mets == "..."
+                ) |
+              (
+                (input$sed_cutpoint == "...")
+                | # OR
+                (
+                  (input$mvpa_cutpoint == "Freedson et al. (1998) [Adults]" | (input$mvpa_cutpoint == "Personalized..." & input$perso_mvpa_axis == "vertical axis")) & 
+                  (input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]" | (input$sed_cutpoint == "Personalized..." & input$perso_sed_axis == "vector magnitude"))
+                ) 
+                | # OR
+                (
+                  (input$mvpa_cutpoint %in% c("Santos-Lozano et al. (2013) [Adults]",
+                                              "Santos-Lozano et al. (2013) [Older adults]",
+                                              "Sasaki et al. (2011) [Adults]") | (input$mvpa_cutpoint == "Personalized..." & input$perso_mvpa_axis == "vector magnitude")) & 
+                  (input$sed_cutpoint == "Personalized..." & input$perso_sed_axis == "vertical axis")
+                )
+                | # OR
+                (
+                  input$mvpa_cutpoint == "Personalized..." &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= input$perso_mpa_cutpoint
+                )
+                | # OR
+                (
+                  input$sed_cutpoint == "Personalized..." & !is.numeric(input$perso_sed_cutpoint)
+                )
+                | # OR
+                (
+                  input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]" &  input$mvpa_cutpoint == "Personalized..." & input$perso_mpa_cutpoint <= 200
+                )
+                | # OR
+                (
+                  input$mvpa_cutpoint == "Freedson et al. (1998) [Adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 1952
+                )
+                | # OR
+                (
+                  input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 3208
+                )
+                | # OR
+                (
+                  input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Older adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 2751
+                )
+                | # OR
+                (
+                  input$mvpa_cutpoint == "Sasaki et al. (2011) [Adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 2690
+                )
+              ) |
+              (    
+                (input$mvpa_cutpoint == "...")
+                | # OR
+                (
+                  (input$mvpa_cutpoint == "Freedson et al. (1998) [Adults]" | (input$mvpa_cutpoint == "Personalized..." & input$perso_mvpa_axis == "vertical axis")) & 
+                  (input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]" | (input$sed_cutpoint == "Personalized..." & input$perso_sed_axis == "vector magnitude"))
+                ) 
+                | # OR
+                (
+                  (input$mvpa_cutpoint %in% c("Santos-Lozano et al. (2013) [Adults]",
+                                              "Santos-Lozano et al. (2013) [Older adults]",
+                                              "Sasaki et al. (2011) [Adults]") | (input$mvpa_cutpoint == "Personalized..." & input$perso_mvpa_axis == "vector magnitude")) & 
+                  (input$sed_cutpoint == "Personalized..." & input$perso_sed_axis == "vertical axis")
+                )
+                | # OR
+                (
+                  input$mvpa_cutpoint == "Personalized..." &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= input$perso_mpa_cutpoint
+                )
+                | # OR
+                (
+                  input$mvpa_cutpoint == "Personalized..." & ((!is.numeric(input$perso_mpa_cutpoint)) | (!is.numeric(input$perso_vpa_cutpoint)))
+                )
+                | # OR
+                (
+                  input$sed_cutpoint == "Aguilar-Farias et al. (2014) [Older adults]" &  input$mvpa_cutpoint == "Personalized..." & input$perso_mpa_cutpoint <= 200
+                )
+                | # OR
+                (
+                  input$mvpa_cutpoint == "Freedson et al. (1998) [Adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 1952
+                )
+                | # OR
+                (
+                  input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 3208
+                )
+                | # OR
+                (
+                  input$mvpa_cutpoint == "Santos-Lozano et al. (2013) [Older adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 2751
+                )
+                | # OR
+                (
+                  input$mvpa_cutpoint == "Sasaki et al. (2011) [Adults]" &  input$sed_cutpoint == "Personalized..." & input$perso_sed_cutpoint >= 2690
+                )
+                | # OR
+                (
+                  input$mvpa_cutpoint == "Personalized..." & input$perso_mpa_cutpoint >= input$perso_vpa_cutpoint
+                )
+              )
+              
+              ) {
+            shinyjs::show("box-intensity_inputs")
+            shinyjs::show("warning_intensity_inputs")
+          } else {
+            shinyjs::hide("box-intensity_inputs")
+            shinyjs::hide("warning_intensity_inputs")
+          }
+        })
         
         
       # Controlling PROactive settings
@@ -659,22 +838,29 @@ app_server <- function(input, output, session) {
     })
     
   
-  
-  # Setting PROactive default values to valid a day based on wear time
-    observeEvent(input$pro_active_period, {
-      updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*7))
-      updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*22))
-      updateNumericInput(inputId = "minimum_wear_time_for_analysis", value = 8)
-    })
-    
-    
-  # Returning to default settings for the minimum wear time duration
+    # Returning to default settings for the minimum wear time duration
     observeEvent(input$reset_period, {
       updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*0))
       updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*23+60*59+59))
       updateNumericInput(inputId = "minimum_wear_time_for_analysis", value = 10)
     })
-          
+    
+    
+    # Setting PROactive default values to valid a day based on wear time: non-sleep wearing protocol
+    observeEvent(input$pro_active_period_non_sleep, {
+      updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*0))
+      updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*23+60*59+59))
+      updateNumericInput(inputId = "minimum_wear_time_for_analysis", value = 8)
+    })
+    
+  # Setting PROactive default values to valid a day based on wear time: 24-h wearing protocol
+    observeEvent(input$pro_active_period_24h, {
+      updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(60*60*7))
+      updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*22))
+      updateNumericInput(inputId = "minimum_wear_time_for_analysis", value = 8)
+    })
+    
+
   # Getting BMR (kcal/d)
     bmr_kcal_d <- eventReactive(input$Run, {
      
@@ -4973,12 +5159,40 @@ app_server <- function(input, output, session) {
   #################################################
   # Exporting values/objects (required for testing) ----
   #################################################
-  
+    
+  # Exporting inputs for patient information
+    observeEvent(input$auto_fill_char, {
+      shiny::exportTestValues(assessor_name = input$assessor_name)
+      shiny::exportTestValues(assessor_surname = input$assessor_surname)
+      shiny::exportTestValues(patient_name = input$patient_name)
+      shiny::exportTestValues(patient_surname = input$patient_surname)
+      shiny::exportTestValues(age = input$age)
+      shiny::exportTestValues(sex = input$sex)
+      shiny::exportTestValues(weight = input$weight)
+      shiny::exportTestValues(side = input$side)
+    })
+    
+  # Exporting inputs after resetting inputs for nonwear/wear time analysis
+    observeEvent(input$validate, {
+      shiny::exportTestValues(to_epoch = as.numeric(input$to_epoch))
+      shiny::exportTestValues(axis_weartime = input$axis_weartime)
+      shiny::exportTestValues(frame_size = input$frame_size)
+      shiny::exportTestValues(allowanceFrame_size = input$allowanceFrame_size)
+      shiny::exportTestValues(streamFrame_size = input$streamFrame_size)
+      shiny::exportTestValues(start_day_analysis = input$start_day_analysis)
+      shiny::exportTestValues(end_day_analysis = input$end_day_analysis)
+    })
+
   # Exporting dataframe marked for wear time
     observeEvent(input$validate, {
       shiny::exportTestValues(df = df())
     })
-  
+    
+  # Exporting plot showing nonwear/wear time
+    observeEvent(input$validate, {
+      shiny::exportTestValues(gg_plot_data = plot_data(data = df(), metric = input$Metric))
+    })
+    
   # Exporting dataframe for the results by day
     observeEvent(input$Run, {
       shiny::exportTestValues(results_by_day = results_list()$results_by_day)
@@ -4993,29 +5207,35 @@ app_server <- function(input, output, session) {
     observeEvent(input$Run, {
       shiny::exportTestValues(results_summary_medians = results_summary_medians())
     })
-    
-  # Exporting plot showing nonwear/wear time
-    observeEvent(input$validate, {
-      shiny::exportTestValues(gg_plot_data = plot_data(data = df(), metric = input$Metric))
+
+  # Exporting inputs after setting activity intensity analyzis
+    observeEvent(input$auto_fill_intensity, {
+      shiny::exportTestValues(equation_mets = input$equation_mets)
+      shiny::exportTestValues(sed_cutpoint = input$sed_cutpoint)
+      shiny::exportTestValues(mvpa_cutpoint = input$mvpa_cutpoint)
     })
     
-  # Exporting inputs after setting proactive inputs for data analysis
-    observeEvent(input$pro_active_period, {
+  # Exporting inputs after setting default configuration to validate a day (period and number of wear time hours)
+    observeEvent(input$reset_period, {
       shiny::exportTestValues(start_day_analysis = input$start_day_analysis)
       shiny::exportTestValues(end_day_analysis = input$end_day_analysis)
-    })
-      
-  # Exporting inputs after resetting inputs for nonwear/wear time analysis
-    observeEvent(input$validate, {
-      shiny::exportTestValues(to_epoch = as.numeric(input$to_epoch))
-      shiny::exportTestValues(axis_weartime = input$axis_weartime)
-      shiny::exportTestValues(frame_size = input$frame_size)
-      shiny::exportTestValues(allowanceFrame_size = input$allowanceFrame_size)
-      shiny::exportTestValues(streamFrame_size = input$streamFrame_size)
-      shiny::exportTestValues(start_day_analysis = input$start_day_analysis)
-      shiny::exportTestValues(end_day_analysis = input$end_day_analysis)
+      shiny::exportTestValues(minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis)
     })
     
+  # Exporting inputs after setting proactive (non-sleep wearing protocol) inputs for data analysis
+    observeEvent(input$pro_active_period_non_sleep, {
+      shiny::exportTestValues(start_day_analysis = input$start_day_analysis)
+      shiny::exportTestValues(end_day_analysis = input$end_day_analysis)
+      shiny::exportTestValues(minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis)
+    })
+    
+  # Exporting inputs after setting proactive (24-h wearing protocol) inputs for data analysis
+    observeEvent(input$pro_active_period_24h, {
+      shiny::exportTestValues(start_day_analysis = input$start_day_analysis)
+      shiny::exportTestValues(end_day_analysis = input$end_day_analysis)
+      shiny::exportTestValues(minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis)
+    })
+
   # Exporting BMR
     observeEvent(input$Run, {
       shiny::exportTestValues(BMR = bmr_kcal_d())
@@ -5035,8 +5255,7 @@ app_server <- function(input, output, session) {
                                                                   rasch_transform(x = sum(tab_cppac_summary_fr()$"Score de quantit\u00e9", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1))                         
       })
     
-    
-    # Exporting PROactive accelerometer scores for D-PPAC
+  # Exporting PROactive accelerometer scores for D-PPAC
     observeEvent(input$get_dppac_summary_en, {
       shiny::exportTestValues(score_dppac_diff_en = recap_ddpac_en()$mean_difficulty_score_raw[1])
       shiny::exportTestValues(score_dppac_quant_en = recap_ddpac_en()$mean_amount_score_raw[1])
