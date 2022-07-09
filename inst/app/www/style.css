@@ -187,6 +187,7 @@ h3 {
   background-color: #fff; 
   border-color: #3F51B5;
   padding: 12px;
+  margin-bottom: 10px;
 }
 
 .btn-guide:hover {
@@ -194,6 +195,7 @@ h3 {
   background-color: #3F51B5; 
   border-color: #3F51B5;
   padding: 12px;
+  margin-bottom: 10px;
 }
 
 
