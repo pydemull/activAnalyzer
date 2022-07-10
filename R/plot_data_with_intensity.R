@@ -75,6 +75,22 @@ plot_data_with_intensity <- function(data,
       x = .data[[col_time]],
       y = .data[[metric]])
       ) +
+      geom_rect(aes(
+        xmin = hms::as_hms(0), 
+        xmax =  hms::as_hms(valid_wear_time_start), 
+        ymin = -Inf, 
+        ymax = Inf), 
+        color = "grey",
+        fill = "grey"
+      ) +
+      geom_rect(aes(
+        xmin = hms::as_hms(valid_wear_time_end), 
+        xmax =  hms::as_hms("23:59:59"),
+        ymin = -Inf, 
+        ymax = Inf), 
+        color = "grey",
+        fill = "grey"
+      ) +
    scale_x_time(breaks = hms::hms(seq(3600, 23*3600, 2*3600)), 
                expand = c(0, 0), 
                labels = format_hm

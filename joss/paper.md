@@ -1,12 +1,14 @@
 ---
 title: 'activAnalyzer: An app to analyze ActiGraph accelerometer data and to implement the use of the PROactive Physical Activity in COPD instruments'
 tags:
-  - R
   - physical activity
   - sedentary behaviour
   - accelerometer
-  - PROactive questionnaires
+  - actigraph
   - COPD
+  - PROactive instruments
+  - R
+  - Shiny
 authors:
   - name: Pierre-Yves de Müllenheim
     orcid: 0000-0001-9157-7371
@@ -20,21 +22,31 @@ affiliations:
  - name: Hôpital Saint Philibert, GHICL, France
    index: 2
 date: 05 July 2022
+bibliography: references.bib
 ---
 
 # Summary
-Physical activity is a behaviour related to many health outcomes. Accelerometry is commonly accepted as a more accurate method than questionnaires for measuring physical activity. ActiGraph devices have been the most used accelerometers in the scientific literature. Moreover, some research groups have developed specific frameworks to assess patients with specific conditions, as th D-PPAC and C-PPAC instruments developped by the PROactive consortium group for assessing physical activity in COPD patients.
+Physical activity is a behaviour related to many health outcomes [@whoWHOGuidelinesPhysical2020]. To measure physical activity, researchers have increasingly used accelerometry during the past two decades to limit the influence of psychosocial bias in outcomes related to questionnaires use [@baumannPitfallsAccelerometerbasedMeasurement2018] and thus to use more valid methods for getting results [@hallalEnergyExpenditureCompared2013; @colbertComparativeValidityPhysical2011;@gardnerAssessmentFreelivingDaily1998]. Accelerometry has also become a way to access a diversity of metrics that cannot be easily (or not at all) obtained using questionnaires [@keadleEvaluationAccelerometerderivedMetrics2017; @backesAdvancedAnalyticalMethods2022].
+
+ActiGraph devices have been the most used accelerometers in the scientific literature [@bassettAccelerometerbasedPhysicalActivity2015a]. ActiGraph accelerometers, along with its software companion (ActiLife), now allow to get movement date expressed in either *physical activity counts* or in *G-force* units.
+
+Moreover, some research groups have developed specific frameworks to assess patients with specific conditions, as th D-PPAC and C-PPAC instruments developped by the PROactive consortium group for assessing physical activity in COPD patients.
 
 
-- Importantance of actigraph and actilife sofware
+- Importance of actigraph and actilife sofware
 - problems for wide dissemination and use by clinicians, students, and some researchers; existence of programming interface but not accessible for non skilled users
 -
 
 # Statement of need
+several packages : ggir, other...
 
 # A description of how this software compares to other commonly-used packages in this research area.
 
 # A list of key references including a link to the software archive.
+
+# Usage
+
+
 
 # Acknowledgements
 
