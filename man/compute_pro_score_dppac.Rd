@@ -14,7 +14,7 @@ compute_pro_score_dppac(
 \arguments{
 \item{x}{A character string that is the exact response to the considered question from the D-PPAC questionnaire.}
 
-\item{question}{A character value to inditify the question to be considered when providing the score.}
+\item{question}{A character value to identify the question to be considered when providing the score.}
 
 \item{language}{A character value for setting the language of the considered questionnaire.}
 }

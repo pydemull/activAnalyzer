@@ -52,7 +52,7 @@ There are three different ways to use the activAnalyzer app:
 -   [On your machine via a standalone desktop
     app](https://sourceforge.net/projects/activanalyzer) that is
     downloadable from the SourceForge website (stable version, for
-    Windows machines only). The standalone app has been developped using
+    Windows machines only). The standalone app has been developed using
     the framework *DesktopDeployR* made available by [W. Lee
     Pang](https://github.com/wleepang). Explanations related to this
     framework can be retrieved from [a dedicated GitHub

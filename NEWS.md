@@ -4,7 +4,7 @@
 
 # activAnalyzer 1.0.3
 
-* Added an alerte message with box when validating intensity analysis while all inputs are not correctly defined (before the user could not quickly see
+* Added an alert message with box when validating intensity analysis while all inputs are not correctly defined (before the user could not quickly see
 that there were some problems if any).
 * Improved UI reactivity depending on size screen.
 * Added auto-fill button for patient information and intensity analysis.
@@ -31,12 +31,12 @@ that there were some problems if any).
 # activAnalyzer 1.0.0
 
 * Allowed the possibility to work with epochs shorter than 60 s. A warning is provided when the set epoch is <10 s to indicate that figures will not be created with such epochs to save time.
-* The user can now set "23:59:59" rather than "23:59:00" to set the upper limit of the period of the day to be considered for analyzis.
+* The user can now set "23:59:59" rather than "23:59:00" to set the upper limit of the period of the day to be considered for analysis.
 * Increased the size of the files that the app can manage.
 * Corrected bug for the message that should appear when a file with incorrect extension is uploaded.
 * Added feedbacks to guide the user for the choice of the values to set to configure the desired epoch for analysis (the ratio between the desired epoch and the current epoch in the file can only be an integer).
 * Replaced for loop by vectorization to detect bouts in the data file with the mark_intensity() function.
-* Removed actigraph.sleepr from the DESCRIPTION file and added the read_agd.R file (from the actigraph.sleepr package) as additionnal file into the activAnalyzer package.
+* Removed actigraph.sleepr from the DESCRIPTION file and added the read_agd.R file (from the actigraph.sleepr package) as additional file into the activAnalyzer package.
 * The Reset button is now at the top of the app.
 * Removed two dependencies (RColorBrewer, tinytex).
 * Vector magnitude is now computed when using the prepare_dataset() function, not the mark_wear_time() function, that should be used after the prepare_dataset() function.

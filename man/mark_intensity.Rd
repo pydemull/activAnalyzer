@@ -24,17 +24,17 @@ mark_intensity(
 \item{col_axis}{A character value to indicate the name of the variable to be used for determining intensity categories.}
 
 \item{sed_cutpoint}{A numeric value below which time is considered as spent in sedentary behavior (in counts/min).
-You must convert to counts/min if you want to use a cut-point initially developped using an epoch shorter than 60 s. In the case where the epoch of the
+You must convert to counts/min if you want to use a cut-point initially developed using an epoch shorter than 60 s. In the case where the epoch of the
 dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
 You must provide a value inferior or equal to 60.}
 
 \item{mpa_cutpoint}{A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity (in counts/min).
-You must convert to counts/min if you want to use a cut-point initially developped using an epoch shorter than 60 s. In the case where the epoch of the
+You must convert to counts/min if you want to use a cut-point initially developed using an epoch shorter than 60 s. In the case where the epoch of the
 dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
 You must provide a value inferior or equal to 60.}
 
 \item{vpa_cutpoint}{A numeric value at and above which time is considered as spent in vigorous physical activity (in counts/min).
-You must convert to counts/min if you want to use a cut-point initially developped using an epoch shorter than 60 s. In the case where the epoch of the
+You must convert to counts/min if you want to use a cut-point initially developed using an epoch shorter than 60 s. In the case where the epoch of the
 dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
 You must provide a value inferior or equal to 60.}
 
@@ -46,7 +46,7 @@ You must provide a value inferior or equal to 60.}
 
 \item{sex}{A character value.}
 
-\item{dates}{A character vector containing the dates to be retained for analyzis. The dates must be with the "YYYY-MM-DD" format.}
+\item{dates}{A character vector containing the dates to be retained for analysis. The dates must be with the "YYYY-MM-DD" format.}
 }
 \value{
 A dataframe.

@@ -3,7 +3,7 @@
 #' This function provides a score (from 0 to 4) in relation to the response to a given question from the D-PPAC questionnaire.
 #'
 #' @param x A character string that is the exact response to the considered question from the D-PPAC questionnaire.
-#' @param question A character value to inditify the question to be considered when providing the score.
+#' @param question A character value to identify the question to be considered when providing the score.
 #' @param language  A character value for setting the language of the considered questionnaire.
 #'
 #' @return A numeric value.

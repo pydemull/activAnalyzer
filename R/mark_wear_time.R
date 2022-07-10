@@ -2,7 +2,7 @@
 #' 
 #' This function wraps the \code{\link[PhysicalActivity]{dataCollapser}} and the 
 #'     \code{\link[PhysicalActivity]{wearingMarking}} functions from the `PhysicalActivity` package.
-#'     After collapsing data, the fonction adds `time` and
+#'     After collapsing data, the function adds `time` and
 #'     `date` columns. Then, the function analyzes the dataset for nonwear time detection. Finally, the function
 #'     adds two variables to the dataset: the variable `non_wearing_count` 
 #'     that contains the number 1 when the device was *not* worn (otherwise, 0 is used), 
