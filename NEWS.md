@@ -3,7 +3,7 @@
 * Added an alerte message with box when validating intensity analysis while all inputs are not correctly defined (before the user could not quickly see
 that there were some problems if any).
 * Improved UI reactivity depending on size screen.
-* Add auto-fill button for patient information and intensity analysis.
+* Added auto-fill button for patient information and intensity analysis.
 * Added tests related to default values configuration when clicking on corresponding buttons.
 
 # activAnalyzer 1.0.2
