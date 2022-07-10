@@ -1,3 +1,7 @@
+# activAnalyzer 1.0.4
+
+* Added a block of code into the plot_data_with_intensity() function that was erroneously removed during a previous commit. This block of code allows to show grey bands on the figure with intensity data to indicate what periods will not be considered for analysis.
+
 # activAnalyzer 1.0.3
 
 * Added an alerte message with box when validating intensity analysis while all inputs are not correctly defined (before the user could not quickly see
