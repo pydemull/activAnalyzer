@@ -36,6 +36,8 @@ test_that("app server", {
 
 test_that("The server functions correctly work", {
   
+  skip_on_cran() # This is set because PhantomJS is not found on Debian platform during CRAN submission pre-tests.
+  
   # Preparing environment for shinytest
     Study <<- "Study"
     Metric <<- "Metric"

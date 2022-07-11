@@ -28,7 +28,7 @@ bibliography: references.bib
 # Summary
 Physical activity is a behaviour related to many health outcomes [@whoWHOGuidelinesPhysical2020]. To measure physical activity, researchers have increasingly used accelerometry during the past two decades to limit the influence of psychosocial bias in outcomes related to questionnaires use [@baumannPitfallsAccelerometerbasedMeasurement2018] and thus to use more valid methods for getting results [@hallalEnergyExpenditureCompared2013; @colbertComparativeValidityPhysical2011;@gardnerAssessmentFreelivingDaily1998]. Accelerometry has also become a way to access a diversity of metrics that cannot be easily (or not at all) obtained using questionnaires [@keadleEvaluationAccelerometerderivedMetrics2017; @backesAdvancedAnalyticalMethods2022].
 
-ActiGraph devices have been the most used accelerometers in the scientific literature [@bassettAccelerometerbasedPhysicalActivity2015a]. ActiGraph accelerometers, along with its software companion (ActiLife), now allow to get movement date expressed in either *physical activity counts* or in *G-force* units.
+ActiGraph devices have been the most used accelerometers in the scientific literature [@bassettAccelerometerbasedPhysicalActivity2015a]. These devices, along with their software companion (ActiLife), allow to get movement date expressed in either *physical activity counts* or in *G-force* units.
 
 Moreover, some research groups have developed specific frameworks to assess patients with specific conditions, as th D-PPAC and C-PPAC instruments developped by the PROactive consortium group for assessing physical activity in COPD patients.
 
