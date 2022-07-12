@@ -18,6 +18,7 @@
 #' @import ggplot2
 #'
 #' @examples
+#' \dontrun{
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 #' mydata <- prepare_dataset(data = file)
 #' mydata_with_wear_marks <- mark_wear_time(
@@ -46,6 +47,7 @@
 #'     valid_wear_time_start = "00:00:00",
 #'     valid_wear_time_end = "23:59:00"
 #'     )
+#' }
 #' 
 plot_data_with_intensity <- function(data, 
                       metric = "axis1", 

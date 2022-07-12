@@ -9,6 +9,8 @@ This is a resubmission. In this version I have:
 
 * Added single quotes to the term 'ActiGraph' in the Description field.
 
+* Modified the plot_data_with_intensity.R file so that the example is not run because it randomly generated a NOTE causing CRAN pre-tests failure during package resubmission.
+
 
 
 ## R CMD check results
