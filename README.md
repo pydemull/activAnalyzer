@@ -6,7 +6,7 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Codecov test
-coverage](https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge.svg)](https://codecov.io/gh/pydemull/activAnalyzer?branch=master)
+coverage](https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge.svg)](https://app.codecov.io/gh/pydemull/activAnalyzer?branch=master)
 [![R-CMD-check](https://github.com/pydemull/activAnalyzer/workflows/R-CMD-check/badge.svg)](https://github.com/pydemull/activAnalyzer/actions)
 <!-- badges: end -->
 
@@ -66,7 +66,7 @@ There are three different ways to use the activAnalyzer app:
     one session at a time. As written above, Google Chrome and Microsoft
     Edge browsers allow the app to work as expected but Mozilla Firefox
     does not seem to allow resetting all the inputs when required.
--   On your machine via [R software](https://cran.rstudio.com/), the
+-   On your machine via [R software](https://CRAN.R-project.org/), the
     [RStudio environment](https://www.rstudio.com/), and the
     [activAnalyzer package](https://github.com/pydemull/activAnalyzer)
     installable from GitHub (development version). To be able to

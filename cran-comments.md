@@ -1,3 +1,16 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Moved https://codecov.io/gh/pydemull/activAnalyzer?branch=master to https://app.codecov.io/gh/pydemull/activAnalyzer?branch=master in the README.md file.
+
+* Moved https://pydemull.github.io/activAnalyzer to https://pydemull.github.io/activAnalyzer/ in the DESCRIPTION file.
+
+* Moved https://cran.rstudio.com/ to https://CRAN.R-project.org/ in the README.md file.
+
+* Added single quotes to the term 'ActiGraph' in the Description field.
+
+
+
 ## R CMD check results
 There were no ERRORs or WARNINGs.
 
