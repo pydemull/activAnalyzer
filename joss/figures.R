@@ -1,5 +1,6 @@
 # Packages
 library(activAnalyzer)
+library(dplyr)
 library(ggplot2)
 library(ragg)
 library(gridExtra)
@@ -25,7 +26,7 @@ g1 <-
   col_wear = "wearing_count"
 )
 
-agg_png("joss/nonwear.png", width = 15, height = 7, unit = "cm",  scaling = 0.6, res = 300)
+agg_png("joss/nonwear.png", width = 15, height = 8, unit = "cm",  scaling = 0.6, res = 300)
 g1
 dev.off()
 
@@ -48,7 +49,7 @@ g2 <- plot_data_with_intensity(
   valid_wear_time_end = "23:59:00"
 )
 
-agg_png("joss/intensity.png", width = 15, height = 7, unit = "cm",  scaling = 0.6, res = 300)
+agg_png("joss/intensity.png", width = 15, height = 8, unit = "cm",  scaling = 0.6, res = 300)
 g2
 dev.off()
 
@@ -59,11 +60,35 @@ results <-
   age = 32, 
   weight = 67, 
   sex = "male",
-  valid_wear_time_start = "07:00:00",
-  valid_wear_time_end = "22:00:00"
-)
+  valid_wear_time_start = "00:00:00",
+  valid_wear_time_end = "23:59:00"
+) %>% 
+  select(date:total_kcal)
 
-agg_png("joss/results_days.png", width = 15, height = 3, unit = "cm",  scaling = 0.6, res = 300)
+agg_png("joss/results_days.png", width = 15, height = 3.5, unit = "cm",  scaling = 0.6, res = 300)
 grid.table(results)
 dev.off()
+
+
+# Table daily means ------------------------------------------------------------------------
+
+means <-
+  recap_by_day(
+  data = mydata_with_intensity_marks, 
+  age = 32, 
+  weight = 67, 
+  sex = "male",
+  valid_wear_time_start = "00:00:00",
+  valid_wear_time_end = "23:59:00"
+) %>% 
+  average_results() %>%
+  select(valid_days:total_kcal)
+
+agg_png("joss/means.png", width = 15, height = 1.5, unit = "cm",  scaling = 0.6, res = 300)
+grid.table(means)
+dev.off()
+
+
+
+
 
