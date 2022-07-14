@@ -1,28 +1,32 @@
 ---
-title: 'activAnalyzer: An R Shiny app to analyse ActiGraph accelerometer data and to implement the use of the PROactive Physical Activity in COPD instruments'
+title: 'activAnalyzer: An R Shiny app to analyse ActiGraph accelerometer data and
+  to implement the use of the PROactive Physical Activity in COPD instruments'
 tags:
-  - physical activity
-  - sedentary behaviour
-  - accelerometer
-  - actigraph
-  - COPD
-  - PROactive instruments
-  - R
-  - Shiny
+- physical activity
+- sedentary behaviour
+- accelerometer
+- actigraph
+- COPD
+- PROactive instruments
+- R
+- Shiny
+date: "05 July 2022"
+output:
+  word_document: default
+  pdf_document: default
 authors:
-  - name: Pierre-Yves de Müllenheim
-    orcid: 0000-0001-9157-7371
-    affiliation: 1
-  - name: Arnaud Chambellan
-    orcid: 0000-0002-7860-1880
-    affiliation: 2
-affiliations:
- - name: Institute of Physical Education and Sport Sciences, Les Ponts-de-Cé, France
-   index: 1
- - name: Hôpital Saint Philibert, GHICL, France
-   index: 2
-date: 05 July 2022
+- name: Pierre-Yves de Müllenheim
+  orcid: 0000-0001-9157-7371
+  affiliation: 1
+- name: Arnaud Chambellan
+  orcid: 0000-0002-7860-1880
+  affiliation: 2
 bibliography: references.bib
+affiliations:
+- name: Institute of Physical Education and Sport Sciences, Les Ponts-de-Cé, France
+  index: 1
+- name: Hôpital Saint Philibert, GHICL, France
+  index: 2
 ---
 
 # Summary
@@ -57,9 +61,9 @@ In a third section, the user has to select an equation to estimate METs (an indi
 
 ![Example of analysis for intensity of physical behaviour. \label{fig:intensity}](intensity.png)
 
-![Example of table of results with the metrics for each day (first columns). \label{fig:results.png}](results.png)
+![Example of table of results with the metrics for each day (first columns). \label{fig:results}](results.png)
 
-![Example of table of results with the means of the metrics from valid days (first columns). \label{fig:means.png}](means.png)
+![Example of table of results with the means of the metrics from valid days (first columns). \label{fig:means}](means.png)
 
 Once analysis is finished, the user can generate a report of the measurement, download .csv files containing data produced by the app (i.e., the whole dataset, the table containing a summary of metrics for each day of the measurement, and the tables with daily means or medians of the metrics summarised from the valid days), or go to the questionnaires related to the PROactive framework. This last part simply consists of completing the chosen questionnaire, and downloading a report once analysis is completed.
 
