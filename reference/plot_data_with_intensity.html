@@ -107,7 +107,8 @@ with the possibility to specify the metric to visualize.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"acc.agd"</span>, package <span class="op">=</span> <span class="st">"activAnalyzer"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"acc.agd"</span>, package <span class="op">=</span> <span class="st">"activAnalyzer"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_dataset.html">prepare_dataset</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">file</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mydata_with_wear_marks</span> <span class="op">&lt;-</span> <span class="fu"><a href="mark_wear_time.html">mark_wear_time</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    dataset <span class="op">=</span> <span class="va">mydata</span>, </span></span>
@@ -118,9 +119,6 @@ with the possibility to specify the metric to visualize.</p>
 <span class="r-in"><span>    allowanceFrame <span class="op">=</span> <span class="fl">2</span>, </span></span>
 <span class="r-in"><span>    streamFrame <span class="op">=</span> <span class="fl">30</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> frame is 90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> streamFrame is 30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> allowanceFrame is 2</span>
 <span class="r-in"><span><span class="va">mydata_with_intensity_marks</span> <span class="op">&lt;-</span> <span class="fu"><a href="mark_intensity.html">mark_intensity</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    data <span class="op">=</span> <span class="va">mydata_with_wear_marks</span>, </span></span>
 <span class="r-in"><span>    col_axis <span class="op">=</span> <span class="st">"vm"</span>, </span></span>
@@ -132,22 +130,13 @@ with the possibility to specify the metric to visualize.</p>
 <span class="r-in"><span>    weight <span class="op">=</span> <span class="fl">67</span>,</span></span>
 <span class="r-in"><span>    sex <span class="op">=</span> <span class="st">"male"</span>,</span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> You have computed intensity metrics with the mark_intensity() function using the following inputs: </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     axis = vm</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     sed_cutpoint = 200 counts/min</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     mpa_cutpoint = 2690 counts/min</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     vpa_cutpoint = 6167 counts/min</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     equation = Sasaki et al. (2011) [Adults]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     age = 32</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     weight = 67</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     sex = male</span>
 <span class="r-in"><span><span class="fu">plot_data_with_intensity</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    data <span class="op">=</span> <span class="va">mydata_with_intensity_marks</span>,</span></span>
 <span class="r-in"><span>    metric <span class="op">=</span> <span class="st">"vm"</span>,</span></span>
 <span class="r-in"><span>    valid_wear_time_start <span class="op">=</span> <span class="st">"00:00:00"</span>,</span></span>
 <span class="r-in"><span>    valid_wear_time_end <span class="op">=</span> <span class="st">"23:59:00"</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_data_with_intensity-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
