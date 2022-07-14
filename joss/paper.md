@@ -57,7 +57,7 @@ In a third section, the user has to select an equation to estimate METs (an indi
 
 ![Example of analysis for intensity of physical behaviour. \label{fig:intensity}](intensity.png)
 
-![Example of table of results with the metrics for each day (first columns). \label{fig:results_days.png}](results.png)
+![Example of table of results with the metrics for each day (first columns). \label{fig:results.png}](results.png)
 
 ![Example of table of results with the means of the metrics from valid days (first columns). \label{fig:means.png}](means.png)
 
