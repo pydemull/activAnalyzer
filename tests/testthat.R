@@ -1,5 +1,5 @@
 library(testthat)
-library(activAnalyzer)
 library(shinytest)
+library(activAnalyzer)
 
 test_check("activAnalyzer")

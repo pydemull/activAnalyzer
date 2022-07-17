@@ -1,4 +1,37 @@
-## Resubmission
+## Resubmission 2 (current)
+This is a resubmission. In this version I have:
+
+* Updated the content of the 'Description' field in the DESCRIPTION file. I have 
+changed the first terms of the description and added the mention to the author of the
+'actigraph.sleepr' package, that is not imported with the app (only a few functions
+from this package have been manually added into the structure of the present app).
+
+* Indicated in the run_app.R file that the function does not return an object and 
+that it is used for its side effects.
+
+* Indicated in the tbl_agd.R file that the function returns a tibble with attributes
+related to the measurement settings. I have also removed from this file the 
+add_magnitude() function that is not used in the package.
+
+* Replaced \dontrun{} by \donttest{} in the plot_data_with_intensity.R file (the single
+problem with this function is that it is too long to be tested when submitting
+on CRAN).
+
+* Ensured that package functions, examples, tests, and vignettes do not modify the
+Global Environement. Initially, functions that modified the Global Environment were
+located in files created for testing. My apologies, I thought the CRAN policy regarding
+the modification of the Global Environment concerned only the functions of the
+package placed in the R/ repository. I did that because during testing, for unknown reasons,
+shinytest::ShinyDriver$new() failed to locate global variables in relevant environments, 
+and defining variables in the Global Environment was the solution I had found.
+For this resubmission, I have solved the problem by attaching a new environment (containing
+all the variables having to be seen as 'global') when the concerned test_that() 
+function in called. This new environment, called 'test_activAnalyzer_env' is detached 
+at the end of the test_that() function (cf. tests/testthat/test-golem-recommended.R file). 
+Thus, after testing, the workspace and the list of the environments that are reached by 
+the function search() are not modified.
+
+## Resubmission 1
 This is a resubmission. In this version I have:
 
 * Moved https://codecov.io/gh/pydemull/activAnalyzer?branch=master to https://app.codecov.io/gh/pydemull/activAnalyzer?branch=master in the README.md file.
@@ -10,8 +43,6 @@ This is a resubmission. In this version I have:
 * Added single quotes to the term 'ActiGraph' in the Description field.
 
 * Modified the plot_data_with_intensity.R file so that the example is not run because it randomly generated a NOTE causing CRAN pre-tests failure during package resubmission.
-
-
 
 ## R CMD check results
 There were no ERRORs or WARNINGs.

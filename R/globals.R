@@ -1,12 +1,8 @@
 utils::globalVariables(c(
-  "users",
   "equations_mets", 
   "Study",
   "sed_cutpoints",
   "mvpa_cutpoints",
-  "sed_lines", 
-  "ratio_lines", 
-  "mvpa_lines", 
   "sed_cutpoint_chosen",
   "mpa_cutpoint_chosen",
   "vpa_cutpoint_chosen",
@@ -109,5 +105,4 @@ utils::globalVariables(c(
   "amount_score_rasch",
   "total_score_raw",
   "total_score_rasch"
-
   ))

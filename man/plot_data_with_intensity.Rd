@@ -37,7 +37,7 @@ This function plots accelerometer data with intensity categories against time fo
 with the possibility to specify the metric to visualize.
 }
 \examples{
-\dontrun{
+\donttest{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 mydata <- prepare_dataset(data = file)
 mydata_with_wear_marks <- mark_wear_time(

@@ -26,3 +26,5 @@ $run_dev.*
 ^cran$
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
+^doc$
+^Meta$

@@ -7,6 +7,7 @@
 #' @param data A data frame of raw activity counts.
 #' @param settings A data frame of device settings.
 #' @export
+#' @return A tibble containing accelerometer data and having measurement settings as attributes.
 #' 
 tbl_agd <- function(data, settings) {
   assertthat::assert_that(
@@ -21,9 +22,4 @@ tbl_agd <- function(data, settings) {
     attr(data, key) <- settings[[key]]
   }
   structure(data, class = c("tbl_df", "tbl", "data.frame"))
-}
-
-add_magnitude <- function(data) {
-  data %>%
-    dplyr::mutate(magnitude = sqrt(.data$axis1^2 + .data$axis2^2 + .data$axis3^2))
 }

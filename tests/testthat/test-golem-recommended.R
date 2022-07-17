@@ -35,52 +35,57 @@ test_that("app server", {
 
 
 test_that("The server functions correctly work", {
-  
+
   skip_on_cran() # This is set because PhantomJS is not found on Debian platform during CRAN submission pre-tests.
   
-  # Preparing environment for shinytest
-    Study <<- "Study"
-    Metric <<- "Metric"
-    Score <<- "Score"
-    Date <<- "Date"
-    wear_time <<- "wear_time"
-    validity <<- "validity"
-    col_time_stamp <<- "col_time_stamp"
-    Range <<- "Range"
-    Intervalle <<- "Intervalle"
-    Selected_Day_ID <<- "Selected_Day_ID"
-    Steps_score <<- "Steps_score"
-    VMU_score <<- "VMU_score"
-    Validity <<- "Validity"
-    Item <<- "Item"
-    Day <<- "Day"
-    score_type <<- "score_type"
-    difficulty_score_raw <<- "difficulty_score_raw"
-    difficulty_score_raw_diff <<- "difficulty_score_raw_diff"
-    difficulty_score_raw_quant <<- "difficulty_score_raw_quant"
-    difficulty_score_rasch <<- "difficulty_score_rasch"
-    amount_score_raw <<- "amount_score_raw"
-    amount_score_raw_diff <<- "amount_score_raw_diff"
-    amount_score_raw_quant <<- "amount_score_raw_quant"
-    amount_score_rasch <<- "amount_score_rasch"
-    total_score_raw <<- "total_score_raw"
-    total_score_rasch <<- "total_score_rasch"
-    Jour <<- "Jour"
-    init <<- "init"
-    assign("users", shiny::reactiveValues(count = 0), envir = .GlobalEnv)
-    assign("equations_mets", activAnalyzer:::equations_mets, envir = .GlobalEnv)
-    assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = .GlobalEnv)
-    assign("sed_cutpoints", activAnalyzer:::sed_cutpoints, envir = .GlobalEnv)
-    assign("mvpa_lines", activAnalyzer:::mvpa_lines, envir = .GlobalEnv)
-    assign("sed_lines", activAnalyzer:::sed_lines, envir = .GlobalEnv)
-    assign("ratio_lines", activAnalyzer:::ratio_lines, envir = .GlobalEnv)
+  # Building a new environment with variables having to be seen globally for passing tests
+    test_activAnalyzer_env <- new.env()
+    test_activAnalyzer_env$Study <- "Study"
+    test_activAnalyzer_env$Metric <- "Metric"
+    test_activAnalyzer_env$Score <- "Score"
+    test_activAnalyzer_env$Date <- "Date"
+    test_activAnalyzer_env$wear_time <- "wear_time"
+    test_activAnalyzer_env$validity <- "validity"
+    test_activAnalyzer_env$col_time_stamp <- "col_time_stamp"
+    test_activAnalyzer_env$Range <- "Range"
+    test_activAnalyzer_env$Intervalle <- "Intervalle"
+    test_activAnalyzer_env$Selected_Day_ID <- "Selected_Day_ID"
+    test_activAnalyzer_env$Steps_score <- "Steps_score"
+    test_activAnalyzer_env$VMU_score <- "VMU_score"
+    test_activAnalyzer_env$Validity <- "Validity"
+    test_activAnalyzer_env$Item <- "Item"
+    test_activAnalyzer_env$Day <- "Day"
+    test_activAnalyzer_env$score_type <- "score_type"
+    test_activAnalyzer_env$difficulty_score_raw <- "difficulty_score_raw"
+    test_activAnalyzer_env$difficulty_score_raw_diff <- "difficulty_score_raw_diff"
+    test_activAnalyzer_env$difficulty_score_raw_quant <- "difficulty_score_raw_quant"
+    test_activAnalyzer_env$difficulty_score_rasch <- "difficulty_score_rasch"
+    test_activAnalyzer_env$amount_score_raw <- "amount_score_raw"
+    test_activAnalyzer_env$amount_score_raw_diff <- "amount_score_raw_diff"
+    test_activAnalyzer_env$amount_score_raw_quant <- "amount_score_raw_quant"
+    test_activAnalyzer_env$amount_score_rasch <- "amount_score_rasch"
+    test_activAnalyzer_env$total_score_raw <- "total_score_raw"
+    test_activAnalyzer_env$total_score_rasch <- "total_score_rasch"
+    test_activAnalyzer_env$Jour <- "Jour"
+    test_activAnalyzer_env$init <- "init"
+    test_activAnalyzer_env$users <- "users"
+    assign("equations_mets", activAnalyzer:::equations_mets, envir = test_activAnalyzer_env)
+    assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = test_activAnalyzer_env)
+    assign("sed_cutpoints", activAnalyzer:::sed_cutpoints, envir = test_activAnalyzer_env)
+    
 
+  # Attaching new environment so that variables defined above as global can be located during testing
+    attach(test_activAnalyzer_env)
+
+ 
   # Creating shinyDriver object
-    app <- shinytest::ShinyDriver$new(
+  
+  app <- shinytest::ShinyDriver$new(
       run_app(),
       loadTimeout = 1e+05,
       shinyOptions = list(test.mode = TRUE)
-      )
+  )
+  
 
   # Loading data file inside and outside the app
     app$uploadFile(upload = "acc.agd")
@@ -1611,7 +1616,12 @@ test_that("The server functions correctly work", {
                 expect_equal(mean_score_dppac_quant_fr, 84/5)
                 
                 # Testing Total score (rasch)
-                expect_equal(mean_score_dppac_tot_rasch_fr, round((100/2*4+90/2)/5, 1))                
+                expect_equal(mean_score_dppac_tot_rasch_fr, round((100/2*4+90/2)/5, 1))
+                
+            
+        # Detaching the environment created above
+          detach(test_activAnalyzer_env)
+                
 })      
     
     

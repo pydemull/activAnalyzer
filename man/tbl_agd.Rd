@@ -11,6 +11,9 @@ tbl_agd(data, settings)
 
 \item{settings}{A data frame of device settings.}
 }
+\value{
+A tibble containing accelerometer data and having measurement settings as attributes.
+}
 \description{
 This tibble has several attributes, most importantly, \code{epochlength}.
 (Code is from actigraph.sleepr package \url{https://github.com/dipetkov/actigraph.sleepr/}.
