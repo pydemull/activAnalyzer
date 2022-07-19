@@ -1,4 +1,13 @@
-## Resubmission 2 (current)
+## Resubmission 3 (current)
+This is a resubmission. In this version I have:
+
+* Added single quotes to the term 'Shiny' in the Title section of the DESCRIPTION file.
+* Added single quotes to the term 'R' in the Description section of the DESCRIPTION file.
+* Added an explanation of the acronym 'COPD' in the Description section of the DESCRIPTION file.
+* Updated the README file to define the term 'COPD'.
+
+
+## Resubmission 2
 This is a resubmission. In this version I have:
 
 * Updated the content of the 'Description' field in the DESCRIPTION file. I have 
