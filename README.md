@@ -3,10 +3,12 @@
 
 <!-- badges: start -->
 
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/activAnalyzer)](https://CRAN.R-project.org/package=activAnalyzer)
 [![Codecov test
 coverage](https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge.svg)](https://app.codecov.io/gh/pydemull/activAnalyzer?branch=master)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/pydemull/activAnalyzer/workflows/R-CMD-check/badge.svg)](https://github.com/pydemull/activAnalyzer/actions)
 <!-- badges: end -->
 
@@ -70,20 +72,23 @@ There are three different ways to use the activAnalyzer app:
 -   On your machine via [R software](https://CRAN.R-project.org/), the
     [RStudio environment](https://www.rstudio.com/), and the
     [activAnalyzer package](https://github.com/pydemull/activAnalyzer)
-    installable from GitHub (development version). To be able to
-    generate the .pdf reports, you will have to install the [TinyTeX
-    distribution](https://yihui.org/tinytex/). In short, after
-    installing R and RStudio, you can run the following command lines in
-    the RStudio console:
+    installable from CRAN (stable version) or from GitHub (development
+    version). To be able to generate the .pdf reports, you will have to
+    install the [TinyTeX distribution](https://yihui.org/tinytex/). In
+    short, after installing R and RStudio, you can run the following
+    command lines in the RStudio console:
 
 ``` r
-# Code for installing the activAnalyzer package
-install.packages("devtools")
-devtools::install_github("pydemull/activAnalyzer")
+# Code for installing the activAnalyzer package (stable version)
+install.packages("activAnalyzer")
 
 # Code for installing the TinyTex distribution
 install.packages("tinytex")
 tinytex::install_tinytex()
+
+# Code for installing the activAnalyzer package (development version)
+install.packages("devtools")
+devtools::install_github("pydemull/activAnalyzer")
 ```
 
 ## Example
