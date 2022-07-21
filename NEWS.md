@@ -1,6 +1,9 @@
+# activAnalyzer (development version)
+
 # activAnalyzer 1.0.4
 
 * Added a block of code into the plot_data_with_intensity() function that was erroneously removed during a previous commit. This block of code allows to show grey bands on the figure with intensity data to indicate what periods will not be considered for analysis.
+* This version has been accepted on CRAN. From now on, future shinyapps.io and desktop versions will be updated after new CRAN releases to keep consistency across the different ways to use the app.
 
 # activAnalyzer 1.0.3
 
