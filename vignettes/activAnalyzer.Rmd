@@ -20,7 +20,6 @@ The activAnalyzer package was primarily built for working through a Shiny app. T
 ```{r setup}
 library(activAnalyzer)
 library(magrittr)
-library(ggplot2)
 ```
 
 

@@ -73,20 +73,28 @@ There are three different ways to use the activAnalyzer app:
     [RStudio environment](https://www.rstudio.com/), and the
     [activAnalyzer package](https://github.com/pydemull/activAnalyzer)
     installable from CRAN (stable version) or from GitHub (development
-    version). To be able to generate the .pdf reports, you will have to
-    install the [TinyTeX distribution](https://yihui.org/tinytex/). In
-    short, after installing R and RStudio, you can run the following
-    command lines in the RStudio console:
+    version). To be able to generate .pdf reports, you will have to
+    install the [TinyTeX distribution](https://yihui.org/tinytex/). The
+    first time you will generate a .pdf report, you will have to wait
+    some time so that the required packages are installed on your
+    machine. In short, after installing R and RStudio, you can run the
+    following command lines in the RStudio console:
 
 ``` r
-# Code for installing the activAnalyzer package (stable version)
+# For CRAN version:
+
+## Code for installing the activAnalyzer package (stable version)
 install.packages("activAnalyzer")
 
-# Code for installing the TinyTex distribution
+## Code for installing the TinyTex distribution
 install.packages("tinytex")
 tinytex::install_tinytex()
+```
 
-# Code for installing the activAnalyzer package (development version)
+``` r
+# For development version:
+
+## Code for installing the activAnalyzer package (development version)
 install.packages("devtools")
 devtools::install_github("pydemull/activAnalyzer")
 ```
