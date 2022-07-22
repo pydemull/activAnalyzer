@@ -1,5 +1,7 @@
 # activAnalyzer (development version)
 
+* Increased to 1.7.2 the version number of Shiny required when installing activAnalyzer package.
+
 # activAnalyzer 1.0.4
 
 * Added a block of code into the plot_data_with_intensity() function that was erroneously removed during a previous commit. This block of code allows to show grey bands on the figure with intensity data to indicate what periods will not be considered for analysis.
