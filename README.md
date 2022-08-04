@@ -10,6 +10,7 @@ coverage](https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/pydemull/activAnalyzer/workflows/R-CMD-check/badge.svg)](https://github.com/pydemull/activAnalyzer/actions)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/activAnalyzer?color=blue)](https://cran.r-project.org/package=activAnalyzer)
 <!-- badges: end -->
 
 activAnalyzer is a Shiny app that has been developed to analyze daily
