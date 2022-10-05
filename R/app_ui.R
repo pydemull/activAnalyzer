@@ -38,11 +38,10 @@ app_ui <- function(request) {
         tags$style(HTML(".sidebar-menu li a {font-size: 17px;}")),
         tags$style(HTML(".main-sidebar{ width: 240px; }")),
         shinydashboard::sidebarMenu(
-          tags$style("@import url(https://use.fontawesome.com/releases/v6.1.0/css/all.css);"),
           id = "tabs",
-          shinydashboard::menuItem("Accelerometer analysis", tabName = "app", icon = icon("chart-column", verify_fa = FALSE)),
-          shinydashboard::menuItem("PROactive questionnaire", tabName = "proactive", icon = icon("file-circle-question", verify_fa = FALSE)),
-          shinydashboard::menuItem("User's guide", tabName = "guide", icon = icon("far fa-file-alt"))
+          shinydashboard::menuItem("Accelerometer analysis", tabName = "app", icon = icon("fa-solid fa-chart-column", verify_fa = FALSE)),
+          shinydashboard::menuItem("PROactive questionnaire", tabName = "proactive", icon = icon("fa-solid fa-file-circle-question", verify_fa = FALSE)),
+          shinydashboard::menuItem("User's guide", tabName = "guide", icon = icon("fa-solid fa-file-lines", verify_fa = FALSE))
         )),
       shinydashboard::dashboardBody(
 
