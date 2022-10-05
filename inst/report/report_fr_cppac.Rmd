@@ -1,5 +1,6 @@
 ---
-title: \vspace{-2cm} Résultats du C-PPAC
+title: |
+       | \vspace{-2.5cm} Résultats du C-PPAC
 output: 
    pdf_document:
      latex_engine: xelatex
