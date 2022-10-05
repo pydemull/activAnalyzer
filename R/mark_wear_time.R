@@ -55,7 +55,7 @@ mark_wear_time <- function(
     df <- 
       dataset %>%
       dplyr::mutate(
-            timestamp = as.character(.data[[TS]]),
+            timestamp = format(.data[[TS]]),
             timeStamp2 = timestamp
           ) %>%
       tidyr::separate("timeStamp2", c("date", "time"), sep = " ") %>%
@@ -78,7 +78,7 @@ mark_wear_time <- function(
        by = to_epoch
        ) %>%
      dplyr::mutate(
-       timestamp = as.character(.data[[TS]]),
+       timestamp = format(.data[[TS]]),
        timeStamp2 = timestamp
      ) %>%
    tidyr::separate("timeStamp2", c("date", "time"), sep = " ") %>%
