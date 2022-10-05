@@ -34,51 +34,53 @@ for details about how the app works.
 
 There are three different ways to use the activAnalyzer app:
 
--   [On the web via a shinyapps.io
-    plateform](https://pydemull.shinyapps.io/activAnalyzer/) (stable
-    version). For information, as indicated by
-    [RStudio](https://www.shinyapps.io/), “*shinyapps.io is
-    secure-by-design. Each Shiny application runs in its own protected
-    environment and access is always SSL encrypted*”. Importantly, the
-    app is hosted using a free account that allows to run apps for 25
-    hours per month. Thus, the availability of the app on the web is
-    very dependent on the number of users as well as the time spent by
-    each user on the app. Moreover, as computations when using the app
-    can be quite intensive, it is possible that speed and stability of
-    this online version of the app become sometimes compromised. For
-    these reasons, this option should be considered as a way to have a
-    quick look at how the app works. The other available options (please
-    see below) will be more appropriate for working with the app on a
-    regular basis. Of note, Google Chrome and Microsoft Edge browsers
-    allow the app to work as expected but Mozilla Firefox does not seem
-    to allow resetting all the inputs when required.
--   [On your machine via a standalone desktop
-    app](https://sourceforge.net/projects/activanalyzer) that is
-    downloadable from the SourceForge website (stable version, for
-    Windows machines only). The standalone app has been developed using
-    the framework *DesktopDeployR* made available by [W. Lee
-    Pang](https://github.com/wleepang). Explanations related to this
-    framework can be retrieved from [a dedicated GitHub
-    repository](https://github.com/wleepang/DesktopDeployR). Once the
-    app is installed on your PC, you will have to double-click on the
-    desktop app icon (if you chose this option during the installation
-    process), which will run the R-portable version embedded in the app
-    and then will launch the app in your default web browser with
-    127.0.0.1 as the value for the host parameter. This means that only
-    your current machine will can access the app. You will can open only
-    one session at a time. As written above, Google Chrome and Microsoft
-    Edge browsers allow the app to work as expected but Mozilla Firefox
-    does not seem to allow resetting all the inputs when required.
--   On your machine via [R software](https://CRAN.R-project.org/), the
-    [RStudio environment](https://www.rstudio.com/), and the
-    [activAnalyzer package](https://github.com/pydemull/activAnalyzer)
-    installable from CRAN (stable version) or from GitHub (development
-    version). To be able to generate .pdf reports, you will have to
-    install the [TinyTeX distribution](https://yihui.org/tinytex/). The
-    first time you will generate a .pdf report, you will have to wait
-    some time so that the required packages are installed on your
-    machine. In short, after installing R and RStudio, you can run the
-    following command lines in the RStudio console:
+- [On the web via a shinyapps.io
+  plateform](https://pydemull.shinyapps.io/activAnalyzer/) (stable
+  version). For information, as indicated by
+  [RStudio](https://www.shinyapps.io/), “*shinyapps.io is
+  secure-by-design. Each Shiny application runs in its own protected
+  environment and access is always SSL encrypted*”. Importantly, the app
+  is hosted using a free account that allows to run apps for 25 hours
+  per month. Thus, the availability of the app on the web is very
+  dependent on the number of users as well as the time spent by each
+  user on the app. Moreover, as computations when using the app can be
+  quite intensive, it is possible that speed and stability of this
+  online version of the app become sometimes compromised. For these
+  reasons, this option should be considered as a way to have a quick
+  look at how the app works. The other available options (please see
+  below) will be more appropriate for working with the app on a regular
+  basis. Of note, Google Chrome and Microsoft Edge browsers allow the
+  app to work as expected but Mozilla Firefox does not seem to allow
+  resetting all the inputs when required.
+- [On your machine via a standalone desktop
+  app](https://sourceforge.net/projects/activanalyzer) that is
+  downloadable from the SourceForge website (stable version, for Windows
+  machines only). The standalone app has been developed using the
+  framework *DesktopDeployR* made available by [W. Lee
+  Pang](https://github.com/wleepang). Explanations related to this
+  framework can be retrieved from [a dedicated GitHub
+  repository](https://github.com/wleepang/DesktopDeployR). Once the app
+  is installed on your PC, you will have to double-click on the desktop
+  app icon (if you chose this option during the installation process),
+  which will run the R-portable version embedded in the app and then
+  will launch the app in your default web browser with 127.0.0.1 as the
+  value for the host parameter. This means that only your current
+  machine will can access the app. You will can open only one session at
+  a time. As written above, Google Chrome and Microsoft Edge browsers
+  allow the app to work as expected but Mozilla Firefox does not seem to
+  allow resetting all the inputs when required.
+- On your machine via [R software](https://CRAN.R-project.org/)
+  (version: \>= 3.4.0), the [RStudio
+  environment](https://www.rstudio.com/) (recommended version: Prairie
+  Trillium \[2022.02\] or newer), and the [activAnalyzer
+  package](https://github.com/pydemull/activAnalyzer) installable from
+  CRAN (stable version) or from GitHub (development version). To be able
+  to generate .pdf reports, you will have to install the [TinyTeX
+  distribution](https://yihui.org/tinytex/). The first time you will
+  generate a .pdf report, you will have to wait some time so that the
+  required packages are installed on your machine. In short, after
+  installing R and RStudio, you can run the following command lines in
+  the RStudio console:
 
 ``` r
 # For CRAN version:
