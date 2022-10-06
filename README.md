@@ -70,9 +70,9 @@ There are three different ways to use the activAnalyzer app:
   allow the app to work as expected but Mozilla Firefox does not seem to
   allow resetting all the inputs when required.
 - On your machine via [R software](https://CRAN.R-project.org/)
-  (version: \>= 3.4.0), the [RStudio
-  environment](https://www.rstudio.com/) (recommended version: Prairie
-  Trillium \[2022.02\] or newer), and the [activAnalyzer
+  (version: $\ge$ 3.4.0), the [RStudio
+  environment](https://www.rstudio.com/) (recommended versions: Prairie
+  Trillium \[2022.02\] and newer), and the [activAnalyzer
   package](https://github.com/pydemull/activAnalyzer) installable from
   CRAN (stable version) or from GitHub (development version). To be able
   to generate .pdf reports, you will have to install the [TinyTeX
