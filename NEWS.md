@@ -1,6 +1,9 @@
 # activAnalyzer (development version)
 
-* Increased to 1.7.2 the version number of Shiny required when installing activAnalyzer package.
+* Updated the version numbers of the package dependencies.
+* Replaced `as.character()` by `format()` in the `mark_wear_time()` function so that there is no more error when checking for R dev versions.
+* Added the argument `verify_fa = FALSE` to `icon()` functions in the UI to remove an error message that appeared when running the app.
+* Updated the README by indicating the minimum versions to install to use the app.
 
 # activAnalyzer 1.0.4
 

@@ -6,8 +6,7 @@
 \usage{
 compute_pro_score_cppac(
   x,
-  question = c("q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11",
-    "q12"),
+  question = c("q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11", "q12"),
   language = c("en", "fr")
 )
 }

@@ -1,5 +1,6 @@
 ---
-title: \vspace{-2cm} D-PPAC results
+title: |
+       | \vspace{-2.5cm} D-PPAC results
 output: 
    pdf_document:
      latex_engine: xelatex

@@ -1,5 +1,6 @@
 ---
-title: \vspace{-2cm} Results of the measurement of physical behavior
+title: |
+       | \vspace{-2.5cm} Results of the measurement of physical behavior
 output: 
    pdf_document:
      latex_engine: xelatex
