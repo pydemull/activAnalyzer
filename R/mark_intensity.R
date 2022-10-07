@@ -138,7 +138,7 @@ mark_intensity <- function(data,
       # Thanks to https://stackoverflow.com/questions/29661269/increment-by-1-for-every-change-in-column 
       # for the code block below
         df$intensity_category <- as.factor(df$intensity_category)
-        df$intensity_category_num <- as.numeric(forcats::fct_recode(df$intensity_category , "0" = "Nonwear", "1" = "SED", "2" = "LPA", "3" = "MVPA"))
+        df$intensity_category_num <- as.numeric(as.character(forcats::fct_recode(df$intensity_category , "0" = "Nonwear", "1" = "SED", "2" = "LPA", "3" = "MVPA")))
         df$bout <- cumsum(c(1, as.numeric(diff(df$intensity_category_num))!= 0))
     
     

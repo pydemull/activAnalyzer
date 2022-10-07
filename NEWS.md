@@ -4,6 +4,7 @@
 * Replaced `as.character()` by `format()` in the `mark_wear_time()` function so that there is no more error when checking for R dev versions.
 * Added the argument `verify_fa = FALSE` to `icon()` functions in the UI to remove an error message that appeared when running the app.
 * Updated the README by indicating the minimum versions to install to use the app.
+* Updated the `mark_intensity()` function: the intensity category numbers associated to the Nonwear, SED, LPA, and MVPA categories (that are present only in the exported marked whole dataset when using the app) were not as expected because they were obtained by converting a factor vector to a numeric vector. Now the conversion is done from a character vector to a numeric vector, which keeps the numerical order as expected. This error had no impact on the results, nor on the figures provided by the package/app. The exported marked dataset has now the corrected intensity category numbers, that is: 0 for Nonwear, 1 for SED, 2 for LPA, and 4 for MVPA.
 
 # activAnalyzer 1.0.4
 
