@@ -1,3 +1,5 @@
+# activAnalyzer (development version)
+
 # activAnalyzer 1.0.5
 
 * Updated the version numbers of the package dependencies.
