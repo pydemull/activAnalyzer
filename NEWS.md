@@ -1,4 +1,4 @@
-# activAnalyzer (development version)
+# activAnalyzer 1.0.5
 
 * Updated the version numbers of the package dependencies.
 * Replaced `as.character()` by `format()` in the `mark_wear_time()` function so that there is no more error when checking for R dev versions.
