@@ -1,4 +1,5 @@
 # activAnalyzer (development version)
+* Corrected typos ("MPVA" -->"MVPA") in the english guide.
 
 # activAnalyzer 1.0.5
 
