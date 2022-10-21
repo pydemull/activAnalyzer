@@ -4,7 +4,11 @@
 \alias{compute_bmr}
 \title{Compute Basal Metabolic Rate (BMR)}
 \usage{
-compute_bmr(age = 40, sex = c("male", "female", "undefined"), weight = 70)
+compute_bmr(
+  age = 40,
+  sex = c("male", "female", "intersex", "undefined", "prefer not to say"),
+  weight = 70
+)
 }
 \arguments{
 \item{age}{A numeric value in yr.}
