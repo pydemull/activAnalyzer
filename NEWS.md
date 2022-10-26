@@ -1,4 +1,10 @@
 # activAnalyzer (development version)
+ 
+* Added the "intersex" and "prefer not to say" categories to provide a more inclusive classification of sex. As it seems there is no scientific study about what should be the calculation of resting and activity energy expenditures for intersex people, the values provided for Basal metabolic rate (BMR) and METs are the averages of two values: the value that would be computed for a male, and the value that would be computed for a female. For people reporting "prefer not to say", computations for females are used by default.
+* Updated in the guide the description of the computation of BMR: "If the patient considers their sex as "undefined" or chooses the "prefer not to say" option, then an equation for females is used. If the patient falls into the "intersex" category, then the average of the results for a male and for a female of the considered age is used (WARNING: At the time of writing this guide, there is no scientific data to justify any calculation for intersex people).".
+* Updated in the guide the description of the computation of METs: "METs, by using the MET equation provided by the user (if the patient considers their sex as "undefined" or chooses the "prefer not to say" option, then equations including sex information, when selected, are used as if the patient were a female; when the "intersex" category is used, an average of the METs related respectively to a male and to a female is used with the equations using sex information; of note, at the time of writing this guide, there is no scientific data to justify any calculation for intersex people);".
+* The `compute_bmr()` and `compute_mets()` functions now use the `dplyr::case_when()` to determine the appropriate value of BMR and METs, respectively.
+* Corrected typos ("MPVA" -->"MVPA") in the english guide.
 
 # activAnalyzer 1.0.5
 

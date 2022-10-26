@@ -33,21 +33,27 @@ compute_mets <- function(data,
                                       "Freedson et al. (1998) [Adults]",
                                       "Santos-Lozano et al. (2013) [Older adults]"),
                          weight = 70, 
-                         sex = c("male", "female", "undefined")) {
+                         sex = c("male", "female", "intersex", "undefined", "prefer not to say")) {
   
   equation <- match.arg(equation)
   sex <- match.arg(sex)
   
   BM <- weight
-  
-  if (sex == "male") {G <- 2
-  } else { G <- 1}
-  
 
-  if (equation == "Santos-Lozano et al. (2013) [Older adults]") { METS <- 2.5878 + 0.00047 * data$vm - 0.6453 * G }
-  if (equation == "Santos-Lozano et al. (2013) [Adults]") { METS <- 2.8323 + 0.00054 * data$vm - 0.05912 * BM + 1.4410 * G }
-  if (equation == "Sasaki et al. (2011) [Adults]") { METS <- 0.668876 + 0.000863 * data$vm }
-  if (equation == "Freedson et al. (1998) [Adults]") { METS <- 1.439008 + 0.000795 * data$axis1 }
+  
+  METS <- dplyr::case_when(
+     equation == "Santos-Lozano et al. (2013) [Older adults]" & sex == "male"                                                    ~ 2.5878 + 0.00047 * data$vm - 0.6453 * 2,
+     equation == "Santos-Lozano et al. (2013) [Older adults]" & sex %in% c("female", "undefined", "prefer not to say")           ~ 2.5878 + 0.00047 * data$vm - 0.6453 * 1,
+     equation == "Santos-Lozano et al. (2013) [Older adults]" & sex == "intersex"                                                ~ ((2.5878 + 0.00047 * data$vm - 0.6453 * 2) + (2.5878 + 0.00047 * data$vm - 0.6453 * 1)) / 2,
+     
+     equation == "Santos-Lozano et al. (2013) [Adults]" & sex == "male"                                                          ~ 2.8323 + 0.00054 * data$vm - 0.05912 * BM + 1.4410 * 2,
+     equation == "Santos-Lozano et al. (2013) [Adults]" & sex %in% c("female", "undefined", "prefer not to say")                 ~ 2.8323 + 0.00054 * data$vm - 0.05912 * BM + 1.4410 * 1,
+     equation == "Santos-Lozano et al. (2013) [Adults]" & sex == "intersex"                                                      ~ ((2.8323 + 0.00054 * data$vm - 0.05912 * BM + 1.4410 * 2) + (2.8323 + 0.00054 * data$vm - 0.05912 * BM + 1.4410 * 1)) / 2, 
+                               
+     equation == "Sasaki et al. (2011) [Adults]"                                                                                 ~ 0.668876 + 0.000863 * data$vm,
+     equation == "Freedson et al. (1998) [Adults]"                                                                               ~ 1.439008 + 0.000795 * data$axis1
+  )
+  
   
   message(paste0("You have computed METs using the following inputs: 
     equation = " , equation, "

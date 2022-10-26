@@ -273,8 +273,77 @@ test_that("The server functions correctly work", {
            
            expect_equal(actual_results_by_day, test_results_by_day)
            
-       # Test 2 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
-       # SED cut-point: Aguilar-Farias et al. (2014) [Older adults]
+         # Test 2 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
+         # SED cut-point: Aguilar-Farias et al. (2014) [Older adults]
+           app$setInputs(
+             age = 64,
+             weight = 67,
+             sex = "intersex",
+             equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
+             mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]",
+             sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]")
+           
+           app$setInputs(Run = "click")
+           
+           actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
+           
+           test_results_by_day <-
+             test_df %>%
+             mark_intensity(
+               col_axis = "vm", 
+               sed_cutpoint = 200, 
+               mpa_cutpoint = 2751, 
+               vpa_cutpoint = 9359,
+               equation = "Santos-Lozano et al. (2013) [Older adults]", 
+               age = 64, 
+               weight = 67,
+               sex = "intersex"
+             ) %>%
+             recap_by_day( 
+               age = 64, 
+               weight = 67,
+               sex = "intersex"
+             )
+           
+           expect_equal(actual_results_by_day, test_results_by_day)
+           
+           
+         # Test 3 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
+         # SED cut-point: Aguilar-Farias et al. (2014) [Older adults]
+           app$setInputs(
+             age = 64,
+             weight = 67,
+             sex = "prefer not to say",
+             equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
+             mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]",
+             sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]")
+           
+           app$setInputs(Run = "click")
+           
+           actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
+           
+           test_results_by_day <-
+             test_df %>%
+             mark_intensity(
+               col_axis = "vm", 
+               sed_cutpoint = 200, 
+               mpa_cutpoint = 2751, 
+               vpa_cutpoint = 9359,
+               equation = "Santos-Lozano et al. (2013) [Older adults]", 
+               age = 64, 
+               weight = 67,
+               sex = "prefer not to say"
+             ) %>%
+             recap_by_day( 
+               age = 64, 
+               weight = 67,
+               sex = "prefer not to say"
+             )
+           
+           expect_equal(actual_results_by_day, test_results_by_day)
+           
+      # Test 4 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
+      # SED cut-point: Aguilar-Farias et al. (2014) [Older adults]
          app$setInputs(
            age = 64,
            weight = 67,
@@ -307,7 +376,7 @@ test_that("The server functions correctly work", {
          
          expect_equal(actual_results_by_day, test_results_by_day)
          
-      # Test 3 / Equation: Santos-Lozano et al. (2013) [Adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Adults];
+      # Test 5 / Equation: Santos-Lozano et al. (2013) [Adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Adults];
       # SED cut-point: Personalized
          app$setInputs(
            age = 47,
@@ -344,7 +413,7 @@ test_that("The server functions correctly work", {
          
          expect_equal(actual_results_by_day, test_results_by_day)
          
-      # Test 4 / Equation: Freedson et al. (1998) [Adults]; MVPA cut-points: Personalized;
+      # Test 6 / Equation: Freedson et al. (1998) [Adults]; MVPA cut-points: Personalized;
       # SED cut-point: Personalized
         app$setInputs(
           age = 47,

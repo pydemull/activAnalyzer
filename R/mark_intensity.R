@@ -79,7 +79,7 @@ mark_intensity <- function(data,
                                         "Santos-Lozano et al. (2013) [Older adults]"),
                            age = 40, 
                            weight = 70, 
-                           sex = c("male", "female", "undefined"),
+                           sex = c("male", "female", "intersex", "undefined", "prefer not to say"),
                            dates = NULL) {
   
   
