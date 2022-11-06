@@ -97,8 +97,10 @@ recap_by_day <- function(
   valid_wear_time_end = "23:59:59",
   age = 40, 
   weight = 70, 
-  sex = c("male", "female", "undefined")
+  sex = c("male", "female", "intersex", "undefined", "prefer not to say")
   ) {
+  
+  sex <- match.arg(sex)
   
   # Computing basal metabolic rate
     bmr_kcal_min <- suppressMessages(
