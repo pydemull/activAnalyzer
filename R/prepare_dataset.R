@@ -8,10 +8,7 @@
 #'   \item \strong{axis2}
 #'   \item \strong{axis3}
 #'   \item \strong{steps}
-#'   \item \strong{inclineStanding}
-#'   \item \strong{inclineSitting}
-#'   \item \strong{inclineLying}
-#'   \item \strong{inclineOff}
+
 
 #'}
 #'
@@ -31,8 +28,9 @@
 prepare_dataset <- function(data) {
   
   df <-
-    PhysicalActivity::readActigraph(data) %>%
+    read_agd(data) %>%
     as.data.frame() %>%
+    dplyr::rename(TimeStamp = timestamp) %>%
     dplyr::mutate(
       vm = round(sqrt(axis1^2 + axis2^2 + axis3^2), 2)
     )

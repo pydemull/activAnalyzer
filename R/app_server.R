@@ -62,10 +62,6 @@ app_server <- function(input, output, session) {
           "axis2" %in% names(init$file) &&
           "axis3" %in% names(init$file) &&
           "steps" %in% names(init$file) && 
-          "inclineoff" %in% names(init$file) &&
-          "inclinestanding" %in% names(init$file) &&
-          "inclinesitting" %in% names(init$file) &&
-          "inclinelying" %in% names(init$file) &&
           (
             !(input$sex %in% c("female", "male", "intersex", "undefined", "prefer not to say")) |
             !(input$age > 0) |
@@ -97,11 +93,7 @@ app_server <- function(input, output, session) {
         "axis1" %in% names(init$file) & 
         "axis2" %in% names(init$file) & 
         "axis3" %in% names(init$file) &
-        "steps" %in% names(init$file) & 
-        "inclineoff" %in% names(init$file) &
-        "inclinestanding" %in% names(init$file) &
-        "inclinesitting" %in% names(init$file) &
-        "inclinelying" %in% names(init$file)
+        "steps" %in% names(init$file)
           )
       init$data <- prepare_dataset(input$upload$datapath)
     })
@@ -127,11 +119,7 @@ app_server <- function(input, output, session) {
         "axis1" %in% names(init$file) & 
         "axis2" %in% names(init$file) & 
         "axis3" %in% names(init$file) &
-        "steps" %in% names(init$file) & 
-        "inclineoff" %in% names(init$file) &
-        "inclinestanding" %in% names(init$file) &
-        "inclinesitting" %in% names(init$file) &
-        "inclinelying" %in% names(init$file)
+        "steps" %in% names(init$file)
         )
       isolate(init$file)
       })
@@ -144,11 +132,7 @@ app_server <- function(input, output, session) {
           "axis1" %in% names(init$file) & 
           "axis2" %in% names(init$file) & 
           "axis3" %in% names(init$file) &
-          "steps" %in% names(init$file) & 
-          "inclineoff" %in% names(init$file) &
-          "inclinestanding" %in% names(init$file) &
-          "inclinesitting" %in% names(init$file) &
-          "inclinelying" %in% names(init$file)
+          "steps" %in% names(init$file)
       )
       isolate(init$data)
       })
@@ -161,11 +145,7 @@ app_server <- function(input, output, session) {
         "axis1" %in% names(init$file) &&
         "axis2" %in% names(init$file) &&
         "axis3" %in% names(init$file) &&
-        "steps" %in% names(init$file) && 
-        "inclineoff" %in% names(init$file) &&
-        "inclinestanding" %in% names(init$file) &&
-        "inclinesitting" %in% names(init$file) &&
-        "inclinelying" %in% names(init$file)
+        "steps" %in% names(init$file)
         ){
      shinyjs::show("validate")
      } else {
@@ -181,11 +161,7 @@ app_server <- function(input, output, session) {
                     "axis1" %in% names(init$file) & 
                     "axis2" %in% names(init$file) & 
                     "axis3" %in% names(init$file) &
-                    "steps" %in% names(init$file) & 
-                    "inclineoff" %in% names(init$file) &
-                    "inclinestanding" %in% names(init$file) &
-                    "inclinesitting" %in% names(init$file) &
-                    "inclinelying" %in% names(init$file)
+                    "steps" %in% names(init$file)
                   )),
                   "Invalid file. Choose an appropriate .agd file (cf. guide)."
                 )

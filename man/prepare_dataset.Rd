@@ -21,10 +21,6 @@ The .agd file must contain at least the following columns:
 \item \strong{axis2}
 \item \strong{axis3}
 \item \strong{steps}
-\item \strong{inclineStanding}
-\item \strong{inclineSitting}
-\item \strong{inclineLying}
-\item \strong{inclineOff}
 }
 }
 \examples{
