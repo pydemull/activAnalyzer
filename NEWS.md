@@ -5,7 +5,9 @@
 * Updated in the guide the description of the computation of METs: "METs, by using the MET equation provided by the user (if the patient considers their sex as "undefined" or chooses the "prefer not to say" option, then equations including sex information, when selected, are used as if the patient were a female; when the "intersex" category is used, an average of the METs related respectively to a male and to a female is used with the equations using sex information; of note, at the time of writing this guide, there is no scientific data to justify any calculation for intersex people);".
 * The `compute_bmr()` and `compute_mets()` functions now use the `dplyr::case_when()` to determine the appropriate value of BMR and METs, respectively.
 * Corrected typos ("MPVA" -->"MVPA") in the english guide.
-* Add a class "icon-widjet" to the sidebar icons to keep control on the appropriate size of the icons.
+* Added a class "icon-widget" to the sidebar icons to keep control on the appropriate size of the icons.
+* Now the prepare_dataset() function imports data using the read_agd() function (instead of the PhysicalActivity::readActigraph() function). This modification now allows to import data from the GT3X device (GT3X+ and newer devices could be used only). This was not possible before because the structure of the .agd file obtained with a GT3X device is not accepted by the PhysicalActivity::readActigraph() function. 
+* There is no more constraints about the necessity to have inclinometer information in the .agd file. This information is not used anymore in the app.
 
 # activAnalyzer 1.0.5
 
