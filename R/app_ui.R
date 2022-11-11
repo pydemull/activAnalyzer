@@ -39,9 +39,9 @@ app_ui <- function(request) {
         tags$style(HTML(".main-sidebar{ width: 240px; }")),
         shinydashboard::sidebarMenu(
           id = "tabs",
-          shinydashboard::menuItem("Accelerometer analysis", tabName = "app", icon = suppressMessages(icon("fa-solid fa-chart-column", class="icon-widjet"))),
-          shinydashboard::menuItem("PROactive questionnaire", tabName = "proactive", icon = suppressMessages(icon("fa-solid fa-file-circle-question",  class="icon-widjet"))),
-          shinydashboard::menuItem("User's guide", tabName = "guide", icon = suppressMessages(icon("fa-solid fa-file-lines",  class="icon-widjet")))
+          shinydashboard::menuItem("Accelerometer analysis", tabName = "app", icon = suppressMessages(icon("fa-solid fa-chart-column", class="icon-widget"))),
+          shinydashboard::menuItem("PROactive questionnaire", tabName = "proactive", icon = suppressMessages(icon("fa-solid fa-file-circle-question",  class="icon-widget"))),
+          shinydashboard::menuItem("User's guide", tabName = "guide", icon = suppressMessages(icon("fa-solid fa-file-lines",  class="icon-widget")))
         )),
       shinydashboard::dashboardBody(
 
