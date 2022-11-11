@@ -98,6 +98,39 @@ app_server <- function(input, output, session) {
       init$data <- prepare_dataset(input$upload$datapath)
     })
     
+  # Showing file features
+    output$warning_features <- renderText({
+      
+      if (attributes(file())$devicename == "GT3X") {
+        sampling_rate <- "XX"
+      } else {
+        sampling_rate <- paste(attributes(file())$`original sample rate`, " Hz")
+      }
+      
+      paste0(
+        "Start date: ", attributes(file())$startdatetime,
+        " | End date: ", attributes(file())$stopdatetime,
+        " | Device: ", attributes(file())$devicename,
+        " | Sampling rate: ", sampling_rate,
+        " | Filter: ", attributes(file())$filter
+      )
+    })
+    
+    shinyjs::hide("box-features")
+    shinyjs::hide("warning_features")
+    observe({
+      req(!is.null(init$name))
+      init$name 
+      if(nrow(data()) >= 1) {
+        shinyjs::show("box-features")
+        shinyjs::show("warning_features")
+      } else {
+        shinyjs::hide("box-features")
+        shinyjs::hide("warning_features")
+      }
+    })
+    
+    
   # Getting demo data if any
     observeEvent(input$demo, {
       withProgress(message = 'Upload Demo File...', {
@@ -190,7 +223,7 @@ app_server <- function(input, output, session) {
   ###########################################################################################
     
   # Controlling for correct inputs
-  
+   
     # File epoch length
       observeEvent(input$validate,
                   shinyFeedback::feedbackWarning(

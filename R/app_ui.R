@@ -203,6 +203,15 @@ app_ui <- function(request) {
                   ),
                  fluidRow(
                    column(12,
+                          shinydashboardPlus::box(id = "box-features",
+                                                  title = "FILE INFO",
+                                                  width = 8,
+                                                  div(textOutput("warning_features"), class = "warn-message")
+                          )
+                   )
+                 ),
+                 fluidRow(
+                   column(12,
                           selectInput("to_epoch", "Length of the epoch to use for analysis (s)", choices = c(60, 15, 10, 5, 1))
                    ),
                  ),
