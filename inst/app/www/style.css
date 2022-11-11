@@ -27,6 +27,9 @@
   width:100%;
 }
 
+.icon-widjet {
+    font-weight: 600;
+}
 
 /* Managing header so that it does not hide
 content when reducing screen width */

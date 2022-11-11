@@ -5,6 +5,7 @@
 * Updated in the guide the description of the computation of METs: "METs, by using the MET equation provided by the user (if the patient considers their sex as "undefined" or chooses the "prefer not to say" option, then equations including sex information, when selected, are used as if the patient were a female; when the "intersex" category is used, an average of the METs related respectively to a male and to a female is used with the equations using sex information; of note, at the time of writing this guide, there is no scientific data to justify any calculation for intersex people);".
 * The `compute_bmr()` and `compute_mets()` functions now use the `dplyr::case_when()` to determine the appropriate value of BMR and METs, respectively.
 * Corrected typos ("MPVA" -->"MVPA") in the english guide.
+* Add a class "icon-widjet" to the sidebar icons to keep control on the appropriate size of the icons.
 
 # activAnalyzer 1.0.5
 
