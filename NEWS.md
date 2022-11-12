@@ -8,6 +8,8 @@
 * Added a class "icon-widget" to the sidebar icons to keep control on the appropriate size of the icons.
 * Now the prepare_dataset() function imports data using the read_agd() function (instead of the PhysicalActivity::readActigraph() function). This modification now allows to import data from the GT3X device (GT3X+ and newer devices could be used only). This was not possible before because the structure of the .agd file obtained with a GT3X device is not accepted by the PhysicalActivity::readActigraph() function. 
 * There is no more constraints about the necessity to have inclinometer information in the .agd file. This information is not used anymore in the app.
+* Added a file info message (measurement information) when loading the data file.
+* Changed the `size` arguments of the internal `geom_line()` functions by `linewidth` arguments in relation to the v3.4.0 `{ggplot2}` update.
 
 # activAnalyzer 1.0.5
 
