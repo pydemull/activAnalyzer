@@ -280,8 +280,27 @@ app_ui <- function(request) {
                   ),
                   fluidRow(
                     align = "center",
-                    selectInput("Metric", "Data to visualize", metrics),
+                    column(4, 
+                           selectInput("Metric", "Data to visualize", metrics)
+                    ),
+                    column(4, 
+                           selectInput("zoom_from_weartime", "Start of the period to visualize", 
+                                       choices = c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59), hms::as_hms(60*60*23+60*59+59)),
+                                       selectize=FALSE
+                           )
+                    ),
+                    column(4,
+                           selectInput("zoom_to_weartime", "End of the period to visualize", 
+                                       choices = c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59), hms::as_hms(60*60*23+60*59+59)),
+                                       selected = hms::as_hms(60*60*23+60*59+59),
+                                       selectize=FALSE
+                           )
+                    ),
                   ),
+                 fluidRow(
+                   align = "center",
+                   actionButton("update_graphic", "Update graphic", class = "btn-return")
+                 ),
                   
                   
                   ##################################################
@@ -463,9 +482,28 @@ app_ui <- function(request) {
                        ),
                        fluidRow(
                          align = "center",
-                         selectInput("Metric2", "Data to visualize", metrics),
+                         column(4, 
+                                selectInput("Metric2", "Data to visualize", metrics)
+                                ),
+                         column(4, 
+                                selectInput("zoom_from_analysis", "Start of the period to visualize", 
+                                            choices = c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59), hms::as_hms(60*60*23+60*59+59)),
+                                            selectize=FALSE
+                                            )
+                         ),
+                         column(4,
+                                selectInput("zoom_to_analysis", "End of the period to visualize", 
+                                                   choices = c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59), hms::as_hms(60*60*23+60*59+59)),
+                                                   selected = hms::as_hms(60*60*23+60*59+59),
+                                                   selectize=FALSE
+                                            )
+                                ),
                        ),
-                      
+                       fluidRow(
+                         align = "center",
+                                actionButton("update_graphic2", "Update graphic", class = "btn-return")
+                       ),
+                            
                        #************************
                        # Table of results by day
                        #************************

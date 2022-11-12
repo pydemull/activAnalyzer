@@ -11,7 +11,9 @@ plot_data_with_intensity(
   col_nonwear = "non_wearing_count",
   col_wear = "wearing_count",
   valid_wear_time_start = "00:00:00",
-  valid_wear_time_end = "23:59:00"
+  valid_wear_time_end = "23:59:59",
+  zoom_from = "00:00:00",
+  zoom_to = "23:59:59"
 )
 }
 \arguments{
@@ -28,6 +30,10 @@ plot_data_with_intensity(
 \item{valid_wear_time_start}{A character value with the HH:MM:SS format to set the start of the daily period that will be considered for computing valid wear time.}
 
 \item{valid_wear_time_end}{A character value with the HH:MM:SS format to set the end of the daily period that will be considered for computing valid wear time.}
+
+\item{zoom_from}{A character value with the HH:MM:SS format to set the start of the daily period to visualize.}
+
+\item{zoom_to}{A character value with the HH:MM:SS format to set the end of the daily period to visualize.}
 }
 \value{
 A \code{ggplot} object.
@@ -64,7 +70,9 @@ plot_data_with_intensity(
     data = mydata_with_intensity_marks,
     metric = "vm",
     valid_wear_time_start = "00:00:00",
-    valid_wear_time_end = "23:59:00"
+    valid_wear_time_end = "23:59:59",
+    zoom_from = "02:00:00",
+    zoom_to = "23:58:00"
     )
 }
 

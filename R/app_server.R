@@ -355,7 +355,7 @@ app_server <- function(input, output, session) {
       updateNumericInput(inputId = "allowanceFrame_size", value = 2)
       updateNumericInput(inputId = "streamFrame_size", value = 30)
       updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(0))
-      updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*23+60*59))
+      updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*23+60*59+59))
     })
     
   
@@ -363,7 +363,51 @@ app_server <- function(input, output, session) {
   # Visualizing all data with nonwear time ----
   ########################################
   
+  # Creating/updating reactive values for zooming in on the plot with nonwear time
+    zoom_param <- reactiveValues(
+      metric = "axis1", 
+      zoom_from_weartime = "00:00:00", 
+      zoom_to_weartime = "23:59:59"
+    )
+    
+    observeEvent(input$validate, {
+      zoom_param$metric <- "axis1"
+      zoom_param$zoom_from_weartime <- "00:00:00"
+      zoom_param$zoom_to_weartime <- "23:59:59"
+      updateSelectInput(inputId = "Metric", selected = "axis1")
+      updateSelectInput(inputId = "zoom_from_weartime", selected = hms::as_hms(0))
+      updateSelectInput(inputId = "zoom_to_weartime", selected = hms::as_hms(60*60*23+60*59+59))
+    })
+    
+    observeEvent(input$update_graphic, {
+      zoom_param$metric <- input$Metric
+      zoom_param$zoom_from_weartime <- input$zoom_from_weartime
+      zoom_param$zoom_to_weartime <- input$zoom_to_weartime
+    })
+    
+    # Controlling for correct inputs when updating the plot with nonwear time marks
+    observeEvent(input$update_graphic,
+                 shinyFeedback::feedbackWarning(
+                   "zoom_from_weartime", 
+                   hms::as_hms(input$zoom_to_weartime) <= hms::as_hms(input$zoom_from_weartime),
+                   "Start time should be inferior to end time."
+                 )
+    )
+    
+    observeEvent(input$update_graphic,
+                 shinyFeedback::feedbackWarning(
+                   "zoom_to_weartime", 
+                   hms::as_hms(input$zoom_to_weartime) <= hms::as_hms(input$zoom_from_weartime),
+                   "End time should be superior to start time."
+                 )
+    )
+  
   output$graph <- renderPlot({
+    
+    # Waiting for correct inputs
+      req(zoom_param$zoom_from_weartime < zoom_param$zoom_to_weartime)
+    
+    # Making the plot
     
     if (as.numeric(df()$time[2] - df()$time[1]) < 10) { 
       ggplot2::ggplot() + ggplot2::geom_text(
@@ -379,7 +423,12 @@ app_server <- function(input, output, session) {
           axis.ticks = ggplot2::element_blank()
         )
     } else {
-    plot_data(data = df(), metric = input$Metric)
+    plot_data(
+      data = df(), 
+      metric = zoom_param$metric, 
+      zoom_from = zoom_param$zoom_from_weartime,
+      zoom_to = zoom_param$zoom_to_weartime
+      )
     }
   }, 
   width = "auto", 
@@ -693,7 +742,7 @@ app_server <- function(input, output, session) {
                      shinyFeedback::feedbackWarning(
                        "start_day_analysis", 
                        hms::as_hms(input$end_day_analysis) <= hms::as_hms(input$start_day_analysis),
-                       "End time should be superior to start time."
+                       "Start time should be inferior to end time."
                      )
         )
         
@@ -1032,8 +1081,55 @@ app_server <- function(input, output, session) {
            )
       })
     
+  # Creating/updating reactive values for zooming in on the plot with intensity metrics
+    zoom_param2 <- reactiveValues(
+      metric = "axis1", 
+      zoom_from_analysis = "00:00:00", 
+      zoom_to_analysis = "23:59:59"
+      )
+    
+    observeEvent(input$Run, {
+      zoom_param2$metric <- "axis1"
+      zoom_param2$zoom_from_analysis <- "00:00:00"
+      zoom_param2$zoom_to_analysis <- "23:59:59"
+      updateSelectInput(inputId = "Metric2", selected = "axis1")
+      updateSelectInput(inputId = "zoom_from_analysis", selected = hms::as_hms(0))
+      updateSelectInput(inputId = "zoom_to_analysis", selected = hms::as_hms(60*60*23+60*59+59))
+    })
+    
+    observeEvent(input$update_graphic2, {
+      zoom_param2$metric <- input$Metric2
+      zoom_param2$zoom_from_analysis <- input$zoom_from_analysis
+      zoom_param2$zoom_to_analysis <- input$zoom_to_analysis
+    })
+    
+  # Controlling for correct inputs when updating the plot with intensity marks
+    observeEvent(input$update_graphic2,
+                 shinyFeedback::feedbackWarning(
+                   "zoom_from_analysis", 
+                   hms::as_hms(input$zoom_to_analysis) <= hms::as_hms(input$zoom_from_analysis),
+                   "Start time should be inferior to end time."
+                 )
+    )
+    
+    observeEvent(input$update_graphic2,
+                 shinyFeedback::feedbackWarning(
+                   "zoom_to_analysis", 
+                   hms::as_hms(input$zoom_to_analysis) <= hms::as_hms(input$zoom_from_analysis),
+                   "End time should be superior to start time."
+                 )
+    )
+    
+
+    
   # Plotting data with intensity categories
     output$graph_int <- renderPlot({
+      
+      # Waiting for correct inputs
+        req(zoom_param2$zoom_from_analysis < zoom_param2$zoom_to_analysis)
+      
+      # Making the plot
+      
       if (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) < 10) { 
         ggplot2::ggplot() + ggplot2::geom_text(
           ggplot2::aes(
@@ -1048,10 +1144,14 @@ app_server <- function(input, output, session) {
             axis.ticks = ggplot2::element_blank()
             )
       } else {
-      plot_data_with_intensity(data = results_list()$df_with_computed_metrics, 
-                               metric = input$Metric2,
-                               valid_wear_time_start = analysis_filters()$start_day_analysis,
-                               valid_wear_time_end = analysis_filters()$end_day_analysis)
+      plot_data_with_intensity(
+        data = results_list()$df_with_computed_metrics, 
+        metric = zoom_param2$metric,
+        valid_wear_time_start = analysis_filters()$start_day_analysis,
+        valid_wear_time_end = analysis_filters()$end_day_analysis,
+        zoom_from =  zoom_param2$zoom_from_analysis,
+        zoom_to =  zoom_param2$zoom_to_analysis
+        )
       }
     }, 
     width = "auto", 
@@ -4453,15 +4553,24 @@ app_server <- function(input, output, session) {
   # Box for graph with wear time
     shinyjs::hide("myBox")
     shinyjs::hide("Metric")
+    shinyjs::hide("zoom_from_weartime")
+    shinyjs::hide("zoom_to_weartime")
+    shinyjs::hide("update_graphic")
     shinyjs::hide("graph")
     observe({
       if(nrow(df()) >=1) {
         shinyjs::show("myBox")
         shinyjs::show("Metric")
+        shinyjs::show("zoom_from_weartime")
+        shinyjs::show("zoom_to_weartime")
+        shinyjs::show("update_graphic")
         shinyjs::show("graph")
       } else {
         shinyjs::hide("myBox")
         shinyjs::hide("Metric")
+        shinyjs::hide("zoom_from_weartime")
+        shinyjs::hide("zoom_to_weartime")
+        shinyjs::hide("update_graphic")
         shinyjs::hide("graph")
       }
     })
@@ -4469,6 +4578,9 @@ app_server <- function(input, output, session) {
   # Boxes for graph with PA categories and results
     shinyjs::hide("myBox2")
     shinyjs::hide("Metric2")
+    shinyjs::hide("zoom_from_analysis")
+    shinyjs::hide("zoom_to_analysis")
+    shinyjs::hide("update_graphic2")
     shinyjs::hide("graph_int")
     shinyjs::hide("BoxResByDay")
     shinyjs::hide("BoxResMeans")
@@ -4477,6 +4589,9 @@ app_server <- function(input, output, session) {
       if(nrow(results_list()$df_with_computed_metrics) >=1) {
       shinyjs::show("myBox2")
       shinyjs::show("Metric2")
+      shinyjs::show("zoom_from_analysis")
+      shinyjs::show("zoom_to_analysis")
+      shinyjs::show("update_graphic2")
       shinyjs::show("graph_int")
       shinyjs::show("BoxResByDay")
       shinyjs::show("BoxResMeans")
@@ -4484,6 +4599,9 @@ app_server <- function(input, output, session) {
       } else {
       shinyjs::hide("myBox2")
       shinyjs::hide("Metric2")
+      shinyjs::hide("zoom_from_analysis")
+      shinyjs::hide("zoom_to_analysis")
+      shinyjs::hide("update_graphic2")
       shinyjs::hide("graph_int")
       shinyjs::hide("BoxResByDay")
       shinyjs::hide("BoxResMeans")

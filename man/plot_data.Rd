@@ -9,7 +9,9 @@ plot_data(
   metric = "axis1",
   col_time = "time",
   col_nonwear = "non_wearing_count",
-  col_wear = "wearing_count"
+  col_wear = "wearing_count",
+  zoom_from = "00:00:00",
+  zoom_to = "23:59:59"
 )
 }
 \arguments{
@@ -22,6 +24,10 @@ plot_data(
 \item{col_nonwear}{A character value to indicate the name of the variable used to count nonwear time.}
 
 \item{col_wear}{A character value to indicate the name of the variable used to count wear time.}
+
+\item{zoom_from}{A character value with the HH:MM:SS format to set the start of the daily period to visualize.}
+
+\item{zoom_to}{A character value with the HH:MM:SS format to set the end of the daily period to visualize.}
 }
 \value{
 A \code{ggplot} object.
@@ -47,7 +53,9 @@ plot_data(
     metric = "vm", 
     col_time = "time", 
     col_nonwear = "non_wearing_count", 
-    col_wear = "wearing_count"
+    col_wear = "wearing_count",
+    zoom_from = "02:00:00",
+    zoom_to = "23:58:00"
     )
 
 }
