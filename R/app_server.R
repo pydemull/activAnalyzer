@@ -5321,9 +5321,48 @@ app_server <- function(input, output, session) {
       shiny::exportTestValues(df = df())
     })
     
-  # Exporting plot showing nonwear/wear time
+  # Exporting plot showing nonwear/wear time ("Validate configuration" button)
     observeEvent(input$validate, {
-      shiny::exportTestValues(gg_plot_data = plot_data(data = df(), metric = input$Metric))
+      shiny::exportTestValues(gg_plot_data_init = plot_data(
+        data = df(), 
+        metric = input$Metric,
+        zoom_from = input$zoom_from_weartime,
+        zoom_to = input$zoom_to_weartime
+        )
+      )
+    })
+    
+  # Exporting plot showing nonwear/wear time ("Update graphic" button)
+    observeEvent(input$update_graphic, {
+      shiny::exportTestValues(gg_plot_data_update = plot_data(
+        data = df(), 
+        metric = input$Metric,
+        zoom_from = input$zoom_from_weartime,
+        zoom_to = input$zoom_to_weartime
+        )
+    )
+    })
+    
+  # Exporting plot showing physical activity intensity marks ("Run" button)
+    observeEvent(input$Run, {
+      shiny::exportTestValues(gg_plot_data_int_init = plot_data_with_intensity(
+        data = results_list()$df_with_computed_metrics, 
+        metric = input$Metric2,
+        zoom_from = input$zoom_from_analysis,
+        zoom_to = input$zoom_to_analysis
+       )
+      )
+    })
+    
+   # Exporting plot showing physical activity intensity marks ("Update graphic" button)
+    observeEvent(input$update_graphic2, {
+      shiny::exportTestValues(gg_plot_data_int_update = plot_data_with_intensity(
+        data = results_list()$df_with_computed_metrics, 
+        metric = input$Metric2,
+        zoom_from = input$zoom_from_analysis,
+        zoom_to = input$zoom_to_analysis
+      )
+      )
     })
     
   # Exporting dataframe for the results by day

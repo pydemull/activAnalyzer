@@ -212,6 +212,15 @@ app_ui <- function(request) {
                  ),
                  fluidRow(
                    column(12,
+                          shinydashboardPlus::box(id = "box-demo",
+                                                  title = "NOTE",
+                                                  width = 8,
+                                                  div(textOutput("warning_demo"), class = "warn-message")
+                          )
+                   )
+                 ),
+                 fluidRow(
+                   column(12,
                           selectInput("to_epoch", "Length of the epoch to use for analysis (s)", choices = c(60, 15, 10, 5, 1))
                    ),
                  ),
@@ -250,15 +259,6 @@ app_ui <- function(request) {
                                                   width = 8,
                                                   div(textOutput("warning_auto_fill_char"), class = "warn-message")
                           ),                   ),
-                 ),
-                 fluidRow(
-                   column(12,
-                          shinydashboardPlus::box(id = "box-demo",
-                                                  title = "NOTE",
-                                                  width = 8,
-                                                  div(textOutput("warning_demo"), class = "warn-message")
-                          )
-                   )
                  ),
                   fluidRow(
                     column(3,

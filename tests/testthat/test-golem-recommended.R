@@ -207,10 +207,43 @@ test_that("The server functions correctly work", {
        expect_equal(actual_list, test_list)
        
     
-    # Testing plot showing nonwear/wear time
+    # Testing plot showing nonwear/wear time after clicking the "Validate configuration"
+    # button for the first time
+       
+       app$setInputs(validate = "click")
       
        test_gg_nonwear <- str(plot_data(test_df))
-       actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data"]])
+       actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_init"]])
+       expect_equal(actual_gg_nonwear, test_gg_nonwear)
+       
+    # Testing plot showing nonwear/wear time after clicking the "Update graphic" button 
+       
+       app$setInputs(
+         Metric = "vm", 
+         zoom_from_weartime = "10:00:00", 
+         zoom_to_weartime = "20:00:00", 
+         update_graphic = "click"
+         )
+       
+       test_gg_nonwear <- 
+         str(
+           plot_data(
+             data = test_df,
+             metric = "vm",
+             zoom_from = "10:00:00",
+             zoom_to = "20:00:00"
+             )
+           )
+       actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_update"]])
+       expect_equal(actual_gg_nonwear, test_gg_nonwear)  
+       
+     # Testing plot showing nonwear/wear time after clicking the "Validate configuration"
+     # button after using the "Update graphic" button
+       
+       app$setInputs(validate = "click")
+       
+       test_gg_nonwear <- str(plot_data(test_df))
+       actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_init"]])
        expect_equal(actual_gg_nonwear, test_gg_nonwear)
        
     # Testing auto-filling activity intensity analyzis
@@ -506,7 +539,62 @@ test_that("The server functions correctly work", {
         )
       
       expect_equal(actual_set_proactive, test_set_proactive)
-         
+     
+   # Testing plot showing PA intensity marks after clicking the "Run"
+   # button for the first time
+      
+      # Set dataset for test
+      test_results <-
+        test_df %>%
+        mark_intensity(
+          col_axis = "axis1", 
+          sed_cutpoint = 100, 
+          mpa_cutpoint = 1952, 
+          vpa_cutpoint = 5725,
+          equation = "Freedson et al. (1998) [Adults]", 
+          age = 47, 
+          weight = 78, 
+          sex = "female"
+        ) 
+       
+      app$setInputs(Run = "click")
+      
+      test_gg_nonwear <- str(plot_data_with_intensity(
+        test_results
+        ))
+      actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_int_init"]])
+      expect_equal(actual_gg_nonwear, test_gg_nonwear)
+      
+    # Testing plot showing PA intensity marks after clicking the "Update graphic"
+    # button
+      
+      app$setInputs(
+        Metric2 = "vm", 
+        zoom_from_analysis = "10:00:00", 
+        zoom_to_analysis = "20:00:00", 
+        update_graphic2 = "click"
+        )
+      
+      test_gg_nonwear <- 
+        str(
+          plot_data_with_intensity(
+            data = test_results,
+            metric = "vm",
+            zoom_from = "10:00:00",
+            zoom_to = "20:00:00"
+          )
+        )
+      actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_int_update"]])
+      expect_equal(actual_gg_nonwear, test_gg_nonwear)  
+
+    # Testing plot showing PA intensity marks after clicking the "Run"
+    # button after using the "Update graphic" button
+      
+      app$setInputs(Run = "click")
+      
+      test_gg_nonwear <- str(plot_data(test_results))
+      actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_int_init"]])
+      expect_equal(actual_gg_nonwear, test_gg_nonwear)    
        
     # Testing dataframe with daily summary
        app$setInputs(minimum_wear_time_for_analysis = 12)
