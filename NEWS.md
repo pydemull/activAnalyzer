@@ -10,6 +10,7 @@
 * There is no more constraints about the necessity to have inclinometer information in the .agd file. This information is not used anymore in the app.
 * Added a file info message (measurement information) when loading the data file.
 * Changed the `size` arguments of the internal `geom_line()` functions by `linewidth` arguments in relation to the v3.4.0 `{ggplot2}` update.
+* Added the possibility to zoom in on the figures of the app.
 
 # activAnalyzer 1.0.5
 

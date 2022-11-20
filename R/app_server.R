@@ -446,8 +446,147 @@ app_server <- function(input, output, session) {
    return(height)
     }, 
   res = 120)
-    
   
+  #####################################################
+  # Adding missing physical activity information if any ----
+  #####################################################
+  
+  # Setting reactive buttons
+    period_buttons_1 <- mod_control_pa_period_view_server("period_1")
+    period_buttons_2 <- mod_control_pa_period_view_server("period_2", add_period_btn = period_buttons_1$add_period_btn)
+    period_buttons_3 <- mod_control_pa_period_view_server("period_3", add_period_btn = period_buttons_2$add_period_btn)
+    period_buttons_4 <- mod_control_pa_period_view_server("period_4", add_period_btn = period_buttons_3$add_period_btn)
+    period_buttons_5 <- mod_control_pa_period_view_server("period_5", add_period_btn = period_buttons_4$add_period_btn)
+    period_buttons_6 <- mod_control_pa_period_view_server("period_6", add_period_btn = period_buttons_5$add_period_btn)
+    period_buttons_7 <- mod_control_pa_period_view_server("period_7", add_period_btn = period_buttons_6$add_period_btn)
+    period_buttons_8 <- mod_control_pa_period_view_server("period_8", add_period_btn = period_buttons_7$add_period_btn)
+    period_buttons_9 <- mod_control_pa_period_view_server("period_9", add_period_btn = period_buttons_8$add_period_btn)
+    period_buttons_10 <- mod_control_pa_period_view_server("period_10", add_period_btn = period_buttons_9$add_period_btn)
+    period_buttons_11 <- mod_control_pa_period_view_server("period_11", add_period_btn = period_buttons_10$add_period_btn)
+    period_buttons_12 <- mod_control_pa_period_view_server("period_12", add_period_btn = period_buttons_11$add_period_btn)
+    period_buttons_13 <- mod_control_pa_period_view_server("period_13", add_period_btn = period_buttons_12$add_period_btn)
+    period_buttons_14 <- mod_control_pa_period_view_server("period_14", add_period_btn = period_buttons_13$add_period_btn)
+    period_buttons_15 <- mod_control_pa_period_view_server("period_15", add_period_btn = period_buttons_14$add_period_btn)
+
+  
+  # Control row of inputs
+    # Row 1
+    mod_report_pa_period_server("period_1")
+    mod_control_pa_period_view_server("period_1", 
+                                      remove_period_btn = period_buttons_2$remove_period_btn)
+    
+    # Row 2
+    mod_report_pa_period_server("period_2", 
+                                add_period_btn = period_buttons_1$add_period_btn, 
+                                remove_period_btn = period_buttons_2$remove_period_btn)
+    mod_control_pa_period_view_server("period_2", 
+                                      add_period_btn = period_buttons_1$add_period_btn, 
+                                      remove_period_btn = period_buttons_3$remove_period_btn)
+    
+    # Row 3
+    mod_report_pa_period_server("period_3", 
+                                add_period_btn = period_buttons_2$add_period_btn, 
+                                remove_period_btn = period_buttons_3$remove_period_btn)
+    mod_control_pa_period_view_server("period_3", 
+                                      add_period_btn = period_buttons_2$add_period_btn, 
+                                      remove_period_btn = period_buttons_4$remove_period_btn)
+    
+    # Row 4
+    mod_report_pa_period_server("period_4", 
+                                add_period_btn = period_buttons_3$add_period_btn, 
+                                remove_period_btn = period_buttons_4$remove_period_btn)
+    mod_control_pa_period_view_server("period_4", 
+                                      add_period_btn = period_buttons_3$add_period_btn, 
+                                      remove_period_btn = period_buttons_5$remove_period_btn)
+    
+    # Row 5
+    mod_report_pa_period_server("period_5", 
+                                add_period_btn = period_buttons_4$add_period_btn, 
+                                remove_period_btn = period_buttons_5$remove_period_btn)
+    mod_control_pa_period_view_server("period_5", 
+                                      add_period_btn = period_buttons_4$add_period_btn, 
+                                      remove_period_btn = period_buttons_6$remove_period_btn)
+    
+    # Row 6
+    mod_report_pa_period_server("period_6", 
+                                add_period_btn = period_buttons_5$add_period_btn, 
+                                remove_period_btn = period_buttons_6$remove_period_btn)
+    mod_control_pa_period_view_server("period_6", 
+                                      add_period_btn = period_buttons_5$add_period_btn, 
+                                      remove_period_btn = period_buttons_7$remove_period_btn)
+    
+    # Row 7
+    mod_report_pa_period_server("period_7", 
+                                add_period_btn = period_buttons_6$add_period_btn, 
+                                remove_period_btn = period_buttons_7$remove_period_btn)
+    mod_control_pa_period_view_server("period_7", 
+                                      add_period_btn = period_buttons_6$add_period_btn, 
+                                      remove_period_btn = period_buttons_8$remove_period_btn)
+    
+    # Row 8
+    mod_report_pa_period_server("period_8", 
+                                add_period_btn = period_buttons_7$add_period_btn, 
+                                remove_period_btn = period_buttons_8$remove_period_btn)
+    mod_control_pa_period_view_server("period_8", 
+                                      add_period_btn = period_buttons_7$add_period_btn, 
+                                      remove_period_btn = period_buttons_9$remove_period_btn)
+    
+    # Row 9
+    mod_report_pa_period_server("period_9", 
+                                add_period_btn = period_buttons_8$add_period_btn, 
+                                remove_period_btn = period_buttons_9$remove_period_btn)
+    mod_control_pa_period_view_server("period_9", 
+                                      add_period_btn = period_buttons_8$add_period_btn, 
+                                      remove_period_btn = period_buttons_10$remove_period_btn)
+    
+    # Row 10
+    mod_report_pa_period_server("period_10", 
+                                add_period_btn = period_buttons_9$add_period_btn, 
+                                remove_period_btn = period_buttons_10$remove_period_btn)
+    mod_control_pa_period_view_server("period_10", 
+                                      add_period_btn = period_buttons_9$add_period_btn, 
+                                      remove_period_btn = period_buttons_11$remove_period_btn)
+    
+    # Row 11
+    mod_report_pa_period_server("period_11", 
+                                add_period_btn = period_buttons_10$add_period_btn, 
+                                remove_period_btn = period_buttons_11$remove_period_btn)
+    mod_control_pa_period_view_server("period_11", 
+                                      add_period_btn = period_buttons_10$add_period_btn, 
+                                      remove_period_btn = period_buttons_12$remove_period_btn)
+    
+    # Row 12
+    mod_report_pa_period_server("period_12", 
+                                add_period_btn = period_buttons_11$add_period_btn, 
+                                remove_period_btn = period_buttons_12$remove_period_btn)
+    mod_control_pa_period_view_server("period_12", 
+                                      add_period_btn = period_buttons_11$add_period_btn, 
+                                      remove_period_btn = period_buttons_13$remove_period_btn)
+    
+    # Row 13
+    mod_report_pa_period_server("period_13", 
+                                add_period_btn = period_buttons_12$add_period_btn, 
+                                remove_period_btn = period_buttons_13$remove_period_btn)
+    mod_control_pa_period_view_server("period_13", 
+                                      add_period_btn = period_buttons_12$add_period_btn, 
+                                      remove_period_btn = period_buttons_14$remove_period_btn)
+    
+    # Row 14
+    mod_report_pa_period_server("period_14", 
+                                add_period_btn = period_buttons_13$add_period_btn, 
+                                remove_period_btn = period_buttons_14$remove_period_btn)
+    mod_control_pa_period_view_server("period_14", 
+                                      add_period_btn = period_buttons_13$add_period_btn, 
+                                      remove_period_btn = period_buttons_15$remove_period_btn)
+    
+    # Row 15
+    mod_report_pa_period_server("period_15", 
+                                add_period_btn = period_buttons_14$add_period_btn, 
+                                remove_period_btn = period_buttons_15$remove_period_btn)
+    mod_control_pa_period_view_server("period_15", 
+                                      add_period_btn = period_buttons_14$add_period_btn)
+    
+    
   ###################################################
   # Getting results when clicking on the "Run" button ----
   ###################################################

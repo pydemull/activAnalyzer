@@ -299,7 +299,7 @@ app_ui <- function(request) {
                   ),
                  fluidRow(
                    align = "center",
-                   actionButton("update_graphic", "Update graphic", class = "btn-return")
+                   shiny::actionButton("update_graphic", "Update graphic", class = "btn-return")
                  ),
                   
                   
@@ -331,7 +331,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12,
-                           h3("Choose a MET equation"),
+                           h3("Choose a MET equation and appropriate cut-points"),
                            hr(),
                            selectInput("equation_mets", with_red_star("Equation"), equations)
                     ),
@@ -399,7 +399,69 @@ app_ui <- function(request) {
                           shiny::actionButton("auto_fill_intensity", "Default settings",  class = "btn-return", style = "margin-top: 10px"),
                    ),
                  ),
+              
+                 #************************************************************************
+                 # Enter information related to relevant missing physical activity periods
+                 #************************************************************************
+                 
+                 fluidRow(
+                   column(12,
+                          h3("Enter information related to relevant missing physical activity periods (if any)"),
+                          hr()
+                          ),
+                 ),
+                 fluidRow(
+                   column(12,
+                   mod_report_pa_period_ui("period_1"),
+                   mod_control_pa_period_view_ui("period_1"),
                   
+                   mod_report_pa_period_ui("period_2"),
+                   mod_control_pa_period_view_ui("period_2"),
+                   
+                   mod_report_pa_period_ui("period_3"),
+                   mod_control_pa_period_view_ui("period_3"),
+                
+                   mod_report_pa_period_ui("period_4"),
+                   mod_control_pa_period_view_ui("period_4"),
+                   
+                   mod_report_pa_period_ui("period_5"),
+                   mod_control_pa_period_view_ui("period_5"),
+                   
+                   mod_report_pa_period_ui("period_6"),
+                   mod_control_pa_period_view_ui("period_6"),
+                   
+                   mod_report_pa_period_ui("period_7"),
+                   mod_control_pa_period_view_ui("period_7"),
+                   
+                   mod_report_pa_period_ui("period_8"),
+                   mod_control_pa_period_view_ui("period_8"),
+                   
+                   mod_report_pa_period_ui("period_9"),
+                   mod_control_pa_period_view_ui("period_9"),
+                   
+                   mod_report_pa_period_ui("period_10"),
+                   mod_control_pa_period_view_ui("period_10"),
+                   
+                   mod_report_pa_period_ui("period_11"),
+                   mod_control_pa_period_view_ui("period_11"),
+                   
+                   mod_report_pa_period_ui("period_12"),
+                   mod_control_pa_period_view_ui("period_12"),
+                   
+                   mod_report_pa_period_ui("period_13"),
+                   mod_control_pa_period_view_ui("period_13"),
+                   
+                   mod_report_pa_period_ui("period_14"),
+                   mod_control_pa_period_view_ui("period_14"),
+                   
+                   mod_report_pa_period_ui("period_15"),
+                   mod_control_pa_period_view_ui("period_15"),
+                 ),
+                 ),
+
+  
+                 
+
                   #********************************
                   # Minimum wear time for valid day
                   #********************************
@@ -501,7 +563,7 @@ app_ui <- function(request) {
                        ),
                        fluidRow(
                          align = "center",
-                                actionButton("update_graphic2", "Update graphic", class = "btn-return")
+                         shiny::actionButton("update_graphic2", "Update graphic", class = "btn-return")
                        ),
                             
                        #************************
