@@ -93,12 +93,12 @@ tribble(
   autofit()
 ```
 
-If the patient considers their sex as "undefined", then an equation for females is used. These equations provide BMR in kcal/day, but the app also silently computes BMR in kcal/min to use it in specific calculations. Then, the following variables are computed for each epoch of the dataset:
+If the patient considers their sex as "undefined" or chooses the "prefer not to say" option, then an equation for females is used. If the patient falls into the "intersex" category, then the average of the results for a male and for a female of the considered age is used (WARNING: At the time of writing this guide, there is no scientific data to justify any calculation for intersex people). These equations provide BMR in kcal/day, but the app also silently computes BMR in kcal/min to use it in specific calculations. Then, the following variables are computed for each epoch of the dataset:
 
 * SED, LPA, MPA, VPA categories based on the axis and the cut-points configured by the user;
-* METs, by using the MET equation provided by the user;
+* METs, by using the MET equation provided by the user (if the patient considers their sex as "undefined" or chooses the "prefer not to say" option, then equations including sex information, when selected, are used as if the patient were a female; when the "intersex" category is used, an average of the METs related respectively to a male and to a female is used with the equations using sex information; of note, at the time of writing this guide, there is no scientific data to justify any calculation for intersex people);
 * Kilocalories. For non-SED epochs, the computed MET values are multiplied by BMR expressed in kcal/min when using the Santos-Lozano et al. [-@santos-lozanoActigraphGT3XValidation2013] equations since, in that study, METs were multiples of the measured (not standard) resting metabolic rate. When using the  Sasaki et al. [-@sasakiValidationComparisonActiGraph2011] and Freedson et al. [-@freedsonCalibrationComputerScience1998] equations, the computed MET values are multiplied by weight and 1/60 since, in those studies, METs were multiples of standard resting metabolic rate (i.e., 3.5 mLO$_{2}$/min/kg) and a standard MET is approximately equivalent to 1 kcal/kg/h [@butteAssessingPhysicalActivity2012]. For SED epochs, BMR expressed in kcal/min is directly used;
-* MET-hours related to MPVA, by multiplying the computed MET value by the time (1/60e of an hour), only when the MET value is $\geqslant$ 3.
+* MET-hours related to MVPA, by multiplying the computed MET value by the time (1/60e of an hour), only when the MET value is $\geqslant$ 3.
 
 Once these new variables added to the initial dataset, the app summarizes the results by day using valid wear time only, this for the following metrics: 
 
@@ -118,7 +118,7 @@ Once these new variables added to the initial dataset, the app summarizes the re
 * `percent_LPA`: proportion of wear time spent in LPA behavior. 
 * `percent_MPA`: proportion of wear time spent in MPA behavior.
 * `percent_VPA`: proportion of wear time spent in VPA behavior. 
-* `percent_MVPA`: proportion of wear time spent in MPVA behavior.
+* `percent_MVPA`: proportion of wear time spent in MVPA behavior.
 * `max_steps_60min`: best step accumulation per minute averaged over a window of 60 continuous minutes.
 * `max_steps_30min`: best step accumulation per minute averaged over a window of 30 continuous minutes.
 * `max_steps_20min`: best step accumulation per minute averaged over a window of 20 continuous minutes.
@@ -129,7 +129,7 @@ Once these new variables added to the initial dataset, the app summarizes the re
 * `peak_steps_20min`: step accumulation per minute averaged over the best 20 continuous or discontinuous minutes.
 * `peak_steps_5min`: step accumulation per minute averaged over the best 5 continuous or discontinuous minutes.
 * `peak_steps_1min`: step accumulation per minute over the best minute (same result as for `max_steps_1min`).
-* `mets_hours_mvpa`: total MET-hours spent during MPVA behavior.
+* `mets_hours_mvpa`: total MET-hours spent during MVPA behavior.
 * `ratio_mvpa_sed`: ratio between MVPA and SED times (`minutes_MVPA` / `minutes_SED`).
 
 

@@ -9,7 +9,7 @@ compute_mets(
   equation = c("Sasaki et al. (2011) [Adults]", "Santos-Lozano et al. (2013) [Adults]",
     "Freedson et al. (1998) [Adults]", "Santos-Lozano et al. (2013) [Older adults]"),
   weight = 70,
-  sex = c("male", "female", "undefined")
+  sex = c("male", "female", "intersex", "undefined", "prefer not to say")
 )
 }
 \arguments{

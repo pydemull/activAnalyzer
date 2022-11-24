@@ -67,7 +67,7 @@ app_server <- function(input, output, session) {
           "inclinesitting" %in% names(init$file) &&
           "inclinelying" %in% names(init$file) &&
           (
-            !(input$sex %in% c("female", "male", "undefined")) |
+            !(input$sex %in% c("female", "male", "intersex", "undefined", "prefer not to say")) |
             !(input$age > 0) |
             !(input$weight > 0)
           )
@@ -410,7 +410,7 @@ app_server <- function(input, output, session) {
         observeEvent(input$Run,
                     shinyFeedback::feedbackWarning(
                       "sex", 
-                      (input$sex %in% c("male", "female", "undefined")) == FALSE,
+                      (input$sex %in% c("male", "female", "intersex", "undefined", "prefer not to say")) == FALSE,
                       "Please provide a value for sex."
                     )
         )
@@ -567,11 +567,11 @@ app_server <- function(input, output, session) {
         shinyjs::hide("warning_intensity_inputs")
         observeEvent(input$Run, {
           if (
-              (input$sex %in% c("male", "female", "undefined")) == FALSE |
+              (input$sex %in% c("male", "female", "intersex", "undefined", "prefer not to say")) == FALSE |
               (is.numeric(input$age) == FALSE | input$age <= 0) |
               (is.numeric(input$weight) == FALSE | input$weight <= 0) |
               (
-                (!input$sex %in% c("male", "female", "undefined") | 
+                (!input$sex %in% c("male", "female", "intersex", "undefined", "prefer not to say") | 
                  !is.numeric(input$age) |
                  input$age <= 0 | 
                  !is.numeric(input$weight) |
@@ -960,7 +960,7 @@ app_server <- function(input, output, session) {
           
             # Waiting for required conditions 
               req(
-                input$sex %in% c("male", "female", "undefined") &
+                input$sex %in% c("male", "female", "intersex", "undefined", "prefer not to say") &
                 is.numeric(input$age) & 
                 input$age > 0 &
                 is.numeric(input$weight) &
