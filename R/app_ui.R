@@ -456,11 +456,17 @@ app_ui <- function(request) {
                    
                    mod_report_pa_period_ui("period_15"),
                    mod_control_pa_period_view_ui("period_15"),
+                  ),
                  ),
+                 fluidRow(
+                   column(12,
+                          shinydashboardPlus::box(id = "box-pa-periods-inputs",
+                                                  title = "NOTE",
+                                                  width = 8,
+                                                  div(textOutput("warning_pa_periods_inputs"), class = "warn-message")
+                          ),                   ),
                  ),
 
-  
-                 
 
                   #********************************
                   # Minimum wear time for valid day

@@ -452,9 +452,10 @@ app_server <- function(input, output, session) {
   #####################################################
   
   # Initializing reactive values for measurement dates
-  
   dates_inputs <- reactiveValues(dates = NULL)
   
+  # Updating reactive values for measurement dates when clicking on the "Validate
+  # configuration" button
   observeEvent(input$validate, {
     dates_inputs$dates <- attributes(as.factor(df()$date))$levels
   })
@@ -479,12 +480,15 @@ app_server <- function(input, output, session) {
   
   # Control row of inputs
     # Row 1
-    mod_report_pa_period_server("period_1", dates_inputs = dates_inputs)
+    period_info_1 <- mod_report_pa_period_server("period_1", 
+                                dates_inputs = dates_inputs)
     mod_control_pa_period_view_server("period_1", 
+                                      # Below the input is set to allow keeping visible the "Add"
+                                      # button of the first row after removing the 2nde row
                                       remove_period_btn = period_buttons_2$remove_period_btn)
     
     # Row 2
-    mod_report_pa_period_server("period_2",
+    period_info_2 <- mod_report_pa_period_server("period_2",
                                 add_period_btn = period_buttons_1$add_period_btn, 
                                 remove_period_btn = period_buttons_2$remove_period_btn, 
                                 dates_inputs = dates_inputs)
@@ -493,7 +497,7 @@ app_server <- function(input, output, session) {
                                       remove_period_btn = period_buttons_3$remove_period_btn)
     
     # Row 3
-    mod_report_pa_period_server("period_3", 
+    period_info_3 <- mod_report_pa_period_server("period_3", 
                                 add_period_btn = period_buttons_2$add_period_btn, 
                                 remove_period_btn = period_buttons_3$remove_period_btn, 
                                 dates_inputs = dates_inputs)
@@ -502,7 +506,7 @@ app_server <- function(input, output, session) {
                                       remove_period_btn = period_buttons_4$remove_period_btn)
     
     # Row 4
-    mod_report_pa_period_server("period_4", 
+    period_info_4 <- mod_report_pa_period_server("period_4", 
                                 add_period_btn = period_buttons_3$add_period_btn, 
                                 remove_period_btn = period_buttons_4$remove_period_btn, 
                                 dates_inputs = dates_inputs)
@@ -511,7 +515,7 @@ app_server <- function(input, output, session) {
                                       remove_period_btn = period_buttons_5$remove_period_btn)
     
     # Row 5
-    mod_report_pa_period_server("period_5", 
+    period_info_5 <- mod_report_pa_period_server("period_5", 
                                 add_period_btn = period_buttons_4$add_period_btn, 
                                 remove_period_btn = period_buttons_5$remove_period_btn, 
                                 dates_inputs = dates_inputs)
@@ -520,7 +524,7 @@ app_server <- function(input, output, session) {
                                       remove_period_btn = period_buttons_6$remove_period_btn)
     
     # Row 6
-    mod_report_pa_period_server("period_6", 
+    period_info_6 <- mod_report_pa_period_server("period_6", 
                                 add_period_btn = period_buttons_5$add_period_btn, 
                                 remove_period_btn = period_buttons_6$remove_period_btn, 
                                 dates_inputs = dates_inputs)
@@ -529,7 +533,7 @@ app_server <- function(input, output, session) {
                                       remove_period_btn = period_buttons_7$remove_period_btn)
     
     # Row 7
-    mod_report_pa_period_server("period_7", 
+    period_info_7 <- mod_report_pa_period_server("period_7", 
                                 add_period_btn = period_buttons_6$add_period_btn, 
                                 remove_period_btn = period_buttons_7$remove_period_btn, 
                                 dates_inputs = dates_inputs)
@@ -538,7 +542,7 @@ app_server <- function(input, output, session) {
                                       remove_period_btn = period_buttons_8$remove_period_btn)
     
     # Row 8
-    mod_report_pa_period_server("period_8", 
+    period_info_8 <- mod_report_pa_period_server("period_8", 
                                 add_period_btn = period_buttons_7$add_period_btn, 
                                 remove_period_btn = period_buttons_8$remove_period_btn, 
                                 dates_inputs = dates_inputs)
@@ -547,7 +551,7 @@ app_server <- function(input, output, session) {
                                       remove_period_btn = period_buttons_9$remove_period_btn)
     
     # Row 9
-    mod_report_pa_period_server("period_9", 
+    period_info_9 <- mod_report_pa_period_server("period_9", 
                                 add_period_btn = period_buttons_8$add_period_btn, 
                                 remove_period_btn = period_buttons_9$remove_period_btn, 
                                 dates_inputs = dates_inputs)
@@ -556,7 +560,7 @@ app_server <- function(input, output, session) {
                                       remove_period_btn = period_buttons_10$remove_period_btn)
     
     # Row 10
-    mod_report_pa_period_server("period_10", 
+    period_info_10 <- mod_report_pa_period_server("period_10", 
                                 add_period_btn = period_buttons_9$add_period_btn, 
                                 remove_period_btn = period_buttons_10$remove_period_btn, 
                                 dates_inputs = dates_inputs)
@@ -565,7 +569,7 @@ app_server <- function(input, output, session) {
                                       remove_period_btn = period_buttons_11$remove_period_btn)
     
     # Row 11
-    mod_report_pa_period_server("period_11", 
+    period_info_11 <- mod_report_pa_period_server("period_11", 
                                 add_period_btn = period_buttons_10$add_period_btn, 
                                 remove_period_btn = period_buttons_11$remove_period_btn, 
                                 dates_inputs = dates_inputs)
@@ -574,7 +578,7 @@ app_server <- function(input, output, session) {
                                       remove_period_btn = period_buttons_12$remove_period_btn)
     
     # Row 12
-    mod_report_pa_period_server("period_12", 
+    period_info_12 <- mod_report_pa_period_server("period_12", 
                                 add_period_btn = period_buttons_11$add_period_btn, 
                                 remove_period_btn = period_buttons_12$remove_period_btn, 
                                 dates_inputs = dates_inputs)
@@ -583,7 +587,7 @@ app_server <- function(input, output, session) {
                                       remove_period_btn = period_buttons_13$remove_period_btn)
     
     # Row 13
-    mod_report_pa_period_server("period_13", 
+    period_info_13 <- mod_report_pa_period_server("period_13", 
                                 add_period_btn = period_buttons_12$add_period_btn, 
                                 remove_period_btn = period_buttons_13$remove_period_btn, 
                                 dates_inputs = dates_inputs)
@@ -592,7 +596,7 @@ app_server <- function(input, output, session) {
                                       remove_period_btn = period_buttons_14$remove_period_btn)
     
     # Row 14
-    mod_report_pa_period_server("period_14", 
+    period_info_14 <- mod_report_pa_period_server("period_14", 
                                 add_period_btn = period_buttons_13$add_period_btn, 
                                 remove_period_btn = period_buttons_14$remove_period_btn, 
                                 dates_inputs = dates_inputs)
@@ -601,14 +605,45 @@ app_server <- function(input, output, session) {
                                       remove_period_btn = period_buttons_15$remove_period_btn)
     
     # Row 15
-    mod_report_pa_period_server("period_15", 
+    period_info_15 <- mod_report_pa_period_server("period_15", 
                                 add_period_btn = period_buttons_14$add_period_btn, 
                                 remove_period_btn = period_buttons_15$remove_period_btn, 
                                 dates_inputs = dates_inputs)
     mod_control_pa_period_view_server("period_15", 
                                       add_period_btn = period_buttons_14$add_period_btn)
     
+   
+    # Making a dataframe with the inputs set to indicate relevant missing PA periods
+    # when clicking on the Run button
+    recap_pa_perdiods <- eventReactive(input$Run, {
+       df_1  <- get_pa_period_info(period = period_info_1)
+       df_2  <- get_pa_period_info(period = period_info_2)
+       df_3  <- get_pa_period_info(period = period_info_3)
+       df_4  <- get_pa_period_info(period = period_info_4)
+       df_5  <- get_pa_period_info(period = period_info_5)
+       df_6  <- get_pa_period_info(period = period_info_6)
+       df_7  <- get_pa_period_info(period = period_info_7)
+       df_8  <- get_pa_period_info(period = period_info_8)
+       df_9  <- get_pa_period_info(period = period_info_9)
+       df_10 <- get_pa_period_info(period = period_info_10)
+       df_11 <- get_pa_period_info(period = period_info_11)
+       df_12 <- get_pa_period_info(period = period_info_12)
+       df_13 <- get_pa_period_info(period = period_info_13)
+       df_14 <- get_pa_period_info(period = period_info_14)
+       df_15 <- get_pa_period_info(period = period_info_15)
+      
+      recap <-
+        dplyr::bind_rows(
+          df_1, df_2, df_3, df_4, df_5,
+          df_6, df_7, df_8, df_9, df_10,
+          df_11, df_12, df_13, df_14, df_15
+          ) %>%
+        dplyr::filter(date != "...")
+
+      return(recap)
+    }) 
     
+
   ###################################################
   # Getting results when clicking on the "Run" button ----
   ###################################################
@@ -897,7 +932,133 @@ app_server <- function(input, output, session) {
           }
         })
         
-        
+      
+      # Warning regarding missing PA period information when inappropriate inputs are provided
+      
+        output$warning_pa_periods_inputs <- renderText({
+            "For each period, the end time should be superior or equal to the start time (with values >= 0
+            for both), and the METs value should be >= 0."
+          })
+          
+          shinyjs::hide("box-pa-periods-inputs")
+          shinyjs::hide("warning_pa_periods_inputs")
+          
+        observeEvent(input$Run, {
+          if (
+            period_info_1$corr_start_time_hh() < 0 | 
+            period_info_2$corr_start_time_hh() < 0 | 
+            period_info_3$corr_start_time_hh() < 0 | 
+            period_info_4$corr_start_time_hh() < 0 | 
+            period_info_5$corr_start_time_hh() < 0 | 
+            period_info_6$corr_start_time_hh() < 0 | 
+            period_info_7$corr_start_time_hh() < 0 | 
+            period_info_8$corr_start_time_hh() < 0 | 
+            period_info_9$corr_start_time_hh() < 0 | 
+            period_info_10$corr_start_time_hh() < 0 | 
+            period_info_11$corr_start_time_hh() < 0 | 
+            period_info_12$corr_start_time_hh() < 0 | 
+            period_info_13$corr_start_time_hh() < 0 | 
+            period_info_14$corr_start_time_hh() < 0 | 
+            period_info_15$corr_start_time_hh() < 0 | 
+            period_info_1$corr_start_time_mm() < 0 | 
+            period_info_2$corr_start_time_mm() < 0 | 
+            period_info_3$corr_start_time_mm() < 0 | 
+            period_info_4$corr_start_time_mm() < 0 | 
+            period_info_5$corr_start_time_mm() < 0 | 
+            period_info_6$corr_start_time_mm() < 0 | 
+            period_info_7$corr_start_time_mm() < 0 | 
+            period_info_8$corr_start_time_mm() < 0 | 
+            period_info_9$corr_start_time_mm() < 0 | 
+            period_info_10$corr_start_time_mm() < 0 | 
+            period_info_11$corr_start_time_mm() < 0 | 
+            period_info_12$corr_start_time_mm() < 0 | 
+            period_info_13$corr_start_time_mm() < 0 | 
+            period_info_14$corr_start_time_mm() < 0 | 
+            period_info_15$corr_start_time_mm() < 0 | 
+            period_info_1$corr_end_time_hh() < 0 | 
+            period_info_2$corr_end_time_hh() < 0 | 
+            period_info_3$corr_end_time_hh() < 0 | 
+            period_info_4$corr_end_time_hh() < 0 | 
+            period_info_5$corr_end_time_hh() < 0 | 
+            period_info_6$corr_end_time_hh() < 0 | 
+            period_info_7$corr_end_time_hh() < 0 | 
+            period_info_8$corr_end_time_hh() < 0 | 
+            period_info_9$corr_end_time_hh() < 0 | 
+            period_info_10$corr_end_time_hh() < 0 | 
+            period_info_11$corr_end_time_hh() < 0 | 
+            period_info_12$corr_end_time_hh() < 0 | 
+            period_info_13$corr_end_time_hh() < 0 | 
+            period_info_14$corr_end_time_hh() < 0 | 
+            period_info_15$corr_end_time_hh() < 0 | 
+            period_info_1$corr_end_time_mm() < 0 | 
+            period_info_2$corr_end_time_mm() < 0 | 
+            period_info_3$corr_end_time_mm() < 0 | 
+            period_info_4$corr_end_time_mm() < 0 | 
+            period_info_5$corr_end_time_mm() < 0 | 
+            period_info_6$corr_end_time_mm() < 0 | 
+            period_info_7$corr_end_time_mm() < 0 | 
+            period_info_8$corr_end_time_mm() < 0 | 
+            period_info_9$corr_end_time_mm() < 0 | 
+            period_info_10$corr_end_time_mm() < 0 | 
+            period_info_11$corr_end_time_mm() < 0 | 
+            period_info_12$corr_end_time_mm() < 0 | 
+            period_info_13$corr_end_time_mm() < 0 | 
+            period_info_14$corr_end_time_mm() < 0 | 
+            period_info_15$corr_end_time_mm() < 0 |
+            hms::as_hms(period_info_1$corr_start_time_hh()*3600 + period_info_1$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_1$corr_end_time_hh()*3600 + period_info_1$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_2$corr_start_time_hh()*3600 + period_info_2$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_2$corr_end_time_hh()*3600 + period_info_2$corr_end_time_mm()*60) | 
+            hms::as_hms(period_info_3$corr_start_time_hh()*3600 + period_info_3$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_3$corr_end_time_hh()*3600 + period_info_3$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_4$corr_start_time_hh()*3600 + period_info_4$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_4$corr_end_time_hh()*3600 + period_info_4$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_5$corr_start_time_hh()*3600 + period_info_5$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_5$corr_end_time_hh()*3600 + period_info_5$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_6$corr_start_time_hh()*3600 + period_info_6$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_6$corr_end_time_hh()*3600 + period_info_6$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_7$corr_start_time_hh()*3600 + period_info_7$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_7$corr_end_time_hh()*3600 + period_info_7$corr_end_time_mm()*60) | 
+            hms::as_hms(period_info_8$corr_start_time_hh()*3600 + period_info_8$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_8$corr_end_time_hh()*3600 + period_info_8$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_9$corr_start_time_hh()*3600 + period_info_9$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_9$corr_end_time_hh()*3600 + period_info_9$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_10$corr_start_time_hh()*3600 + period_info_10$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_10$corr_end_time_hh()*3600 + period_info_10$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_11$corr_start_time_hh()*3600 + period_info_11$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_11$corr_end_time_hh()*3600 + period_info_11$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_12$corr_start_time_hh()*3600 + period_info_12$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_12$corr_end_time_hh()*3600 + period_info_12$corr_end_time_mm()*60) | 
+            hms::as_hms(period_info_13$corr_start_time_hh()*3600 + period_info_13$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_13$corr_end_time_hh()*3600 + period_info_13$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_14$corr_start_time_hh()*3600 + period_info_14$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_14$corr_end_time_hh()*3600 + period_info_14$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_15$corr_start_time_hh()*3600 + period_info_15$corr_start_time_mm()*60) >
+            hms::as_hms(period_info_15$corr_end_time_hh()*3600 + period_info_15$corr_end_time_mm()*60) |
+            period_info_1$corr_mets() < 0 |
+            period_info_2$corr_mets() < 0 |
+            period_info_3$corr_mets() < 0 |
+            period_info_4$corr_mets() < 0 |
+            period_info_5$corr_mets() < 0 |
+            period_info_6$corr_mets() < 0 |
+            period_info_7$corr_mets() < 0 |
+            period_info_8$corr_mets() < 0 |
+            period_info_9$corr_mets() < 0 |
+            period_info_10$corr_mets() < 0 |
+            period_info_11$corr_mets() < 0 |
+            period_info_12$corr_mets() < 0 |
+            period_info_13$corr_mets() < 0 |
+            period_info_14$corr_mets() < 0 |
+            period_info_15$corr_mets() < 0
+          ) {
+          shinyjs::show("box-pa-periods-inputs")
+          shinyjs::show("warning_pa_periods_inputs")
+          } else {
+          shinyjs::hide("box-pa-periods-inputs")
+          shinyjs::hide("warning_pa_periods_inputs")
+          }
+        })
+           
       # Controlling PROactive settings
         observeEvent(input$Run,
                      shinyFeedback::feedbackWarning(
@@ -1091,6 +1252,7 @@ app_server <- function(input, output, session) {
     })
   
     
+    
   # Getting list of results: dataset with metrics; results by day corresponding 
   # to valid wear time  (except for total kcal that also uses nonwear time with
   # attribution of BMR to nonwear epochs); selected equations and cut-points
@@ -1179,11 +1341,14 @@ app_server <- function(input, output, session) {
           
             # Waiting for required conditions 
               req(
+                # Patient's characteristics
                 input$sex %in% c("male", "female", "intersex", "undefined", "prefer not to say") &
                 is.numeric(input$age) & 
                 input$age > 0 &
                 is.numeric(input$weight) &
                 input$weight > 0 &
+                  
+                # Analysis settings
                 input$equation_mets != "..." &
                 (isTruthy(input$sed_cutpoint != "...") | isTruthy(input$sed_cutpoint == "Personalized..." & is.numeric(input$perso_sed_cutpoint))) &
                 (isTruthy(input$mvpa_cutpoint != "...") | isTruthy(input$mvpa_cutpoint == "Personalized..." & ((is.numeric(input$perso_mpa_cutpoint)) & (is.numeric(input$perso_vpa_cutpoint))))) &
@@ -1192,7 +1357,114 @@ app_server <- function(input, output, session) {
                 cut_points()$mpa_cutpoint_chosen < cut_points()$vpa_cutpoint_chosen & 
                 is.numeric(input$minimum_wear_time_for_analysis) &
                 input$minimum_wear_time_for_analysis >= 0 &
-                hms::as_hms(input$end_day_analysis) > hms::as_hms(input$start_day_analysis)
+                hms::as_hms(input$end_day_analysis) > hms::as_hms(input$start_day_analysis) &
+                
+                # Missing PA period information
+                period_info_1$corr_start_time_hh() >= 0 & 
+                period_info_2$corr_start_time_hh() >= 0 & 
+                period_info_3$corr_start_time_hh() >= 0 & 
+                period_info_4$corr_start_time_hh() >= 0 & 
+                period_info_5$corr_start_time_hh() >= 0 & 
+                period_info_6$corr_start_time_hh() >= 0 & 
+                period_info_7$corr_start_time_hh() >= 0 & 
+                period_info_8$corr_start_time_hh() >= 0 & 
+                period_info_9$corr_start_time_hh() >= 0 & 
+                period_info_10$corr_start_time_hh() >= 0 & 
+                period_info_11$corr_start_time_hh() >= 0 & 
+                period_info_12$corr_start_time_hh() >= 0 & 
+                period_info_13$corr_start_time_hh() >= 0 & 
+                period_info_14$corr_start_time_hh() >= 0 & 
+                period_info_15$corr_start_time_hh() >= 0 & 
+                period_info_1$corr_start_time_mm() >= 0 & 
+                period_info_2$corr_start_time_mm() >= 0 & 
+                period_info_3$corr_start_time_mm() >= 0 & 
+                period_info_4$corr_start_time_mm() >= 0 & 
+                period_info_5$corr_start_time_mm() >= 0 & 
+                period_info_6$corr_start_time_mm() >= 0 & 
+                period_info_7$corr_start_time_mm() >= 0 & 
+                period_info_8$corr_start_time_mm() >= 0 & 
+                period_info_9$corr_start_time_mm() >= 0 & 
+                period_info_10$corr_start_time_mm() >= 0 & 
+                period_info_11$corr_start_time_mm() >= 0 & 
+                period_info_12$corr_start_time_mm() >= 0 & 
+                period_info_13$corr_start_time_mm() >= 0 & 
+                period_info_14$corr_start_time_mm() >= 0 & 
+                period_info_15$corr_start_time_mm() >= 0 & 
+                period_info_1$corr_end_time_hh() >= 0 & 
+                period_info_2$corr_end_time_hh() >= 0 & 
+                period_info_3$corr_end_time_hh() >= 0 & 
+                period_info_4$corr_end_time_hh() >= 0 & 
+                period_info_5$corr_end_time_hh() >= 0 & 
+                period_info_6$corr_end_time_hh() >= 0 & 
+                period_info_7$corr_end_time_hh() >= 0 & 
+                period_info_8$corr_end_time_hh() >= 0 & 
+                period_info_9$corr_end_time_hh() >= 0 & 
+                period_info_10$corr_end_time_hh() >= 0 & 
+                period_info_11$corr_end_time_hh() >= 0 & 
+                period_info_12$corr_end_time_hh() >= 0 & 
+                period_info_13$corr_end_time_hh() >= 0 & 
+                period_info_14$corr_end_time_hh() >= 0 & 
+                period_info_15$corr_end_time_hh() >= 0 & 
+                period_info_1$corr_end_time_mm() >= 0 & 
+                period_info_2$corr_end_time_mm() >= 0 & 
+                period_info_3$corr_end_time_mm() >= 0 & 
+                period_info_4$corr_end_time_mm() >= 0 & 
+                period_info_5$corr_end_time_mm() >= 0 & 
+                period_info_6$corr_end_time_mm() >= 0 & 
+                period_info_7$corr_end_time_mm() >= 0 & 
+                period_info_8$corr_end_time_mm() >= 0 & 
+                period_info_9$corr_end_time_mm() >= 0 & 
+                period_info_10$corr_end_time_mm() >= 0 & 
+                period_info_11$corr_end_time_mm() >= 0 & 
+                period_info_12$corr_end_time_mm() >= 0 & 
+                period_info_13$corr_end_time_mm() >= 0 & 
+                period_info_14$corr_end_time_mm() >= 0 & 
+                period_info_15$corr_end_time_mm() >= 0 &
+                hms::as_hms(period_info_1$corr_start_time_hh()*3600 + period_info_1$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_1$corr_end_time_hh()*3600 + period_info_1$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_2$corr_start_time_hh()*3600 + period_info_2$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_2$corr_end_time_hh()*3600 + period_info_2$corr_end_time_mm()*60) & 
+                hms::as_hms(period_info_3$corr_start_time_hh()*3600 + period_info_3$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_3$corr_end_time_hh()*3600 + period_info_3$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_4$corr_start_time_hh()*3600 + period_info_4$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_4$corr_end_time_hh()*3600 + period_info_4$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_5$corr_start_time_hh()*3600 + period_info_5$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_5$corr_end_time_hh()*3600 + period_info_5$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_6$corr_start_time_hh()*3600 + period_info_6$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_6$corr_end_time_hh()*3600 + period_info_6$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_7$corr_start_time_hh()*3600 + period_info_7$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_7$corr_end_time_hh()*3600 + period_info_7$corr_end_time_mm()*60) & 
+                hms::as_hms(period_info_8$corr_start_time_hh()*3600 + period_info_8$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_8$corr_end_time_hh()*3600 + period_info_8$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_9$corr_start_time_hh()*3600 + period_info_9$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_9$corr_end_time_hh()*3600 + period_info_9$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_10$corr_start_time_hh()*3600 + period_info_10$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_10$corr_end_time_hh()*3600 + period_info_10$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_11$corr_start_time_hh()*3600 + period_info_11$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_11$corr_end_time_hh()*3600 + period_info_11$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_12$corr_start_time_hh()*3600 + period_info_12$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_12$corr_end_time_hh()*3600 + period_info_12$corr_end_time_mm()*60) & 
+                hms::as_hms(period_info_13$corr_start_time_hh()*3600 + period_info_13$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_13$corr_end_time_hh()*3600 + period_info_13$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_14$corr_start_time_hh()*3600 + period_info_14$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_14$corr_end_time_hh()*3600 + period_info_14$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_15$corr_start_time_hh()*3600 + period_info_15$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_15$corr_end_time_hh()*3600 + period_info_15$corr_end_time_mm()*60) &
+                period_info_1$corr_mets() >= 0,
+                period_info_2$corr_mets() >= 0,
+                period_info_3$corr_mets() >= 0,
+                period_info_4$corr_mets() >= 0,
+                period_info_5$corr_mets() >= 0,
+                period_info_6$corr_mets() >= 0,
+                period_info_7$corr_mets() >= 0,
+                period_info_8$corr_mets() >= 0,
+                period_info_9$corr_mets() >= 0,
+                period_info_10$corr_mets() >= 0,
+                period_info_11$corr_mets() >= 0,
+                period_info_12$corr_mets() >= 0,
+                period_info_13$corr_mets() >= 0,
+                period_info_14$corr_mets() >= 0,
+                period_info_15$corr_mets() >= 0,
                 )
        
 

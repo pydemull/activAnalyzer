@@ -90,11 +90,6 @@ mod_report_pa_period_server <- function(id, add_period_btn = NULL, remove_period
   moduleServer(id, function(input, output, session){
     
     ns <- session$ns
-    
-    # Updating date inputs
-   observe({
-     updateSelectInput(session, "corr_date", choices = c("...", dates_inputs$dates))
-     })
 
     # Hidding inputs when starting the app except the first row of inputs
     if (id != "period_1") {
@@ -106,9 +101,15 @@ mod_report_pa_period_server <- function(id, add_period_btn = NULL, remove_period
       shinyjs::hide("corr_mets")
     }
     
+    # Updating date inputs when appropriate
+    observeEvent(dates_inputs$dates, {
+      updateSelectInput(session, "corr_date", choices = c("...", dates_inputs$dates))
+    })
+    
     # Showing the row of inputs when clicking on the dedicated button
     if (!(is.null(add_period_btn))) {
       observeEvent(add_period_btn(), {
+        updateSelectInput(session, "corr_date", choices = c("...", dates_inputs$dates))
         shinyjs::show("corr_date")
         shinyjs::show("corr_start_time_hh")
         shinyjs::show("corr_start_time_mm")
@@ -118,7 +119,7 @@ mod_report_pa_period_server <- function(id, add_period_btn = NULL, remove_period
       })
     }
 
-    # Hidding the row of inputs when clicking on the dedicated button
+    # Hidding the row of inputs (and resetting them) when clicking on the dedicated button
     if (!(is.null(remove_period_btn))) {
       observeEvent(remove_period_btn(), {
         shinyjs::hide("corr_date")
@@ -127,11 +128,63 @@ mod_report_pa_period_server <- function(id, add_period_btn = NULL, remove_period
         shinyjs::hide("corr_end_time_hh")
         shinyjs::hide("corr_end_time_mm")
         shinyjs::hide("corr_mets")
+        
+        updateSelectInput(session, "corr_date", choices = c("..."))
+        updateNumericInput(session, "corr_start_time_hh", value = 0)
+        updateNumericInput(session, "corr_start_time_mm", value = 0)
+        updateNumericInput(session, "corr_end_time_hh", value = 0)
+        updateNumericInput(session, "corr_end_time_mm", value = 0)
         updateNumericInput(session, "corr_mets", value = 0)
       })
     }
-
     
+    # Providing warnings when inputs are inappropriate
+    observe(
+      shinyFeedback::feedbackWarning(
+                   "corr_start_time_hh", 
+                   input$corr_start_time_hh < 0 | (!is.numeric(input$corr_start_time_hh)),
+                   "Please provide a value >= 0."
+                 )
+    )
+    observe(
+      shinyFeedback::feedbackWarning(
+        "corr_start_time_mm", 
+        input$corr_start_time_mm < 0 | (!is.numeric(input$corr_start_time_mm)),
+        "Please provide a value >= 0."
+      )
+    )
+    observe(
+      shinyFeedback::feedbackWarning(
+        "corr_end_time_hh", 
+        input$corr_end_time_hh < 0 | (!is.numeric(input$corr_end_time_hh)),
+        "Please provide a value >= 0."
+      )
+    )
+    observe(
+      shinyFeedback::feedbackWarning(
+        "corr_end_time_mm", 
+        input$corr_end_time_mm < 0 | (!is.numeric(input$corr_end_time_mm)),
+        "Please provide a value >= 0."
+      )
+    )
+    observe(
+      shinyFeedback::feedbackWarning(
+        "corr_mets", 
+        input$corr_mets < 0 | (!is.numeric(input$corr_mets)),
+        "Please provide a value >= 0."
+      )
+    )
+
+    param <- list(
+      corr_date = reactive(input$corr_date), 
+      corr_start_time_hh = reactive(input$corr_start_time_hh),
+      corr_start_time_mm = reactive(input$corr_start_time_mm),
+      corr_end_time_hh = reactive(input$corr_end_time_hh),
+      corr_end_time_mm = reactive(input$corr_end_time_mm),
+      corr_mets = reactive(input$corr_mets)
+      )
+    
+    return(param)
   })
 }
     
