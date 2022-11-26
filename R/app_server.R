@@ -214,7 +214,7 @@ app_server <- function(input, output, session) {
   # Selecting days required for analysis
     output$select_days <- renderUI({
       dates <- paste0(attributes(as.factor(df()$date))$levels, " (", weekdays(as.Date(attributes(as.factor(df()$date))$levels)), ")")
-      checkboxGroupInput("selected_days", h3("Select the days to keep for analyzis (please only select the 7 appropriate days if your analyzis is related to PROactive framework)"), dates, selected = dates, inline = TRUE)
+      checkboxGroupInput("selected_days", h3("Select the days to keep for analysis (please only select the 7 appropriate days if your analysis is related to PROactive framework)"), dates, selected = dates, inline = TRUE)
     })  
     
   
@@ -613,34 +613,41 @@ app_server <- function(input, output, session) {
                                       add_period_btn = period_buttons_14$add_period_btn)
     
    
-    # Making a dataframe with the inputs set to indicate relevant missing PA periods
-    # when clicking on the Run button
-    recap_pa_perdiods <- eventReactive(input$Run, {
-       df_1  <- get_pa_period_info(period = period_info_1)
-       df_2  <- get_pa_period_info(period = period_info_2)
-       df_3  <- get_pa_period_info(period = period_info_3)
-       df_4  <- get_pa_period_info(period = period_info_4)
-       df_5  <- get_pa_period_info(period = period_info_5)
-       df_6  <- get_pa_period_info(period = period_info_6)
-       df_7  <- get_pa_period_info(period = period_info_7)
-       df_8  <- get_pa_period_info(period = period_info_8)
-       df_9  <- get_pa_period_info(period = period_info_9)
-       df_10 <- get_pa_period_info(period = period_info_10)
-       df_11 <- get_pa_period_info(period = period_info_11)
-       df_12 <- get_pa_period_info(period = period_info_12)
-       df_13 <- get_pa_period_info(period = period_info_13)
-       df_14 <- get_pa_period_info(period = period_info_14)
-       df_15 <- get_pa_period_info(period = period_info_15)
-      
-      recap <-
-        dplyr::bind_rows(
-          df_1, df_2, df_3, df_4, df_5,
-          df_6, df_7, df_8, df_9, df_10,
-          df_11, df_12, df_13, df_14, df_15
-          ) %>%
-        dplyr::filter(date != "...")
-
-      return(recap)
+    # Making a dataframe (based on the inputs set to indicate relevant missing PA periods)
+    # when clicking on the Run button ; this dataframe will be used to replace data from the
+    # initial accelerometer dataset by the data of the present dataframe for the corresponding 
+    # epochs
+    
+        # Getting inputs
+        recap_pa_perdiods <- eventReactive(input$Run, {
+           df_1  <- get_pa_period_info(period = period_info_1)
+           df_2  <- get_pa_period_info(period = period_info_2)
+           df_3  <- get_pa_period_info(period = period_info_3)
+           df_4  <- get_pa_period_info(period = period_info_4)
+           df_5  <- get_pa_period_info(period = period_info_5)
+           df_6  <- get_pa_period_info(period = period_info_6)
+           df_7  <- get_pa_period_info(period = period_info_7)
+           df_8  <- get_pa_period_info(period = period_info_8)
+           df_9  <- get_pa_period_info(period = period_info_9)
+           df_10 <- get_pa_period_info(period = period_info_10)
+           df_11 <- get_pa_period_info(period = period_info_11)
+           df_12 <- get_pa_period_info(period = period_info_12)
+           df_13 <- get_pa_period_info(period = period_info_13)
+           df_14 <- get_pa_period_info(period = period_info_14)
+           df_15 <- get_pa_period_info(period = period_info_15)
+          
+        # Making dataframe
+        recap <-
+          dplyr::bind_rows(
+            df_1, df_2, df_3, df_4, df_5,
+            df_6, df_7, df_8, df_9, df_10,
+            df_11, df_12, df_13, df_14, df_15
+            ) %>%
+          dplyr::filter(date != "...") 
+        
+        # Returning dataframe
+        return(recap)
+        
     }) 
     
 
@@ -1252,7 +1259,6 @@ app_server <- function(input, output, session) {
     })
   
     
-    
   # Getting list of results: dataset with metrics; results by day corresponding 
   # to valid wear time  (except for total kcal that also uses nonwear time with
   # attribution of BMR to nonwear epochs); selected equations and cut-points
@@ -1482,7 +1488,126 @@ app_server <- function(input, output, session) {
                   sex = input$sex,
                   dates = input$selected_days
                   )
+              
+            # Modifying the dataset based on the PA periods reported by the user if any
+             
+              if (nrow(recap_pa_perdiods()) >= 1) {
+                
+                    # Setting correction factor for determining kcal and MET-hrs per epoch
+                    cor_factor = 60 / (as.numeric(df()$time[2] - df()$time[1]))
+                    
+                    # Computing basal metabolic rate
+                    bmr_kcal_min <- suppressMessages(
+                      compute_bmr(age = input$age, sex = input$sex, weight = input$weight) / (24*60)
+                    )
+                    
+                    # Correcting wearing, METs, SED, LPA, MPA, VPA, kcal and MET-hr columns
+                    for (i in 1:nrow(recap_pa_perdiods())) {
+                      
+                      df_with_computed_metrics$wearing <- dplyr::if_else(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"],
+                        factor(c("w"), levels = c("nw", "w")), df_with_computed_metrics$wearing)
+                      
+                      df_with_computed_metrics$non_wearing_count <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"],
+                        0, df_with_computed_metrics$non_wearing_count)
+                     
+                      df_with_computed_metrics$wearing_count <- ifelse(
+                       df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                         df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                         df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"],
+                       1, df_with_computed_metrics$wearing_count)
+                      
+                      df_with_computed_metrics$METS <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"],
+                        recap_pa_perdiods()[i, "METS"], df_with_computed_metrics$METS)
+                      
+                      df_with_computed_metrics$SED <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                          recap_pa_perdiods()[i, "METS"] <= 1.5, 1, 
+                        ifelse(
+                          df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                            df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                            df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                            recap_pa_perdiods()[i, "METS"] > 1.5, 0, df_with_computed_metrics$SED)
+                      )
+                      
+                      df_with_computed_metrics$LPA <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                          recap_pa_perdiods()[i, "METS"] > 1.5 & recap_pa_perdiods()[i, "METS"] < 3, 1,
+                        ifelse(
+                          df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                            df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                            df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                            (recap_pa_perdiods()[i, "METS"] <= 1.5 | recap_pa_perdiods()[i, "METS"] >= 3), 0,
+                             df_with_computed_metrics$LPA)
+                        )
+                      
+                      df_with_computed_metrics$MPA <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                          recap_pa_perdiods()[i, "METS"] >= 3 & recap_pa_perdiods()[i, "METS"] < 6, 1,
+                        ifelse(
+                          df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                            df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                            df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                            (recap_pa_perdiods()[i, "METS"] < 3 | recap_pa_perdiods()[i, "METS"] >= 6), 0,
+                             df_with_computed_metrics$MPA)
+                        )
+                      
+                      df_with_computed_metrics$VPA <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                          recap_pa_perdiods()[i, "METS"] >= 6, 1,
+                        ifelse(
+                          df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                            df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                            df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                            recap_pa_perdiods()[i, "METS"] < 6, 0, df_with_computed_metrics$VPA)
+                      )
+                      
+                      df_with_computed_metrics$kcal <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                          recap_pa_perdiods()[i, "METS"] <= 1.5, bmr_kcal_min / cor_factor, 
+                               ifelse(
+                                 df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                                   df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                                   df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                                   recap_pa_perdiods()[i, "METS"] > 1.5, df_with_computed_metrics$METS * bmr_kcal_min / cor_factor,
+                                 df_with_computed_metrics$kcal)
+                      )
+                      
+                      df_with_computed_metrics$mets_hours_mvpa <- ifelse(df_with_computed_metrics$METS >= 3, df_with_computed_metrics$METS * 1/60 / cor_factor, 0)
     
+                  } 
+                    
+                      # Marking the bouts based on intensity categories
+                      df_with_computed_metrics$intensity_category <- 
+                        ifelse(df_with_computed_metrics$non_wearing_count == 1, "Nonwear", 
+                               ifelse(df_with_computed_metrics$SED == 1, "SED", 
+                                      ifelse(df_with_computed_metrics$LPA == 1, "LPA", "MVPA")))
+                      
+                      # Thanks to https://stackoverflow.com/questions/29661269/increment-by-1-for-every-change-in-column 
+                      # for the code block below
+                      df_with_computed_metrics$intensity_category <- as.factor(df_with_computed_metrics$intensity_category)
+                      df_with_computed_metrics$intensity_category_num <- as.numeric(as.character(forcats::fct_recode(df_with_computed_metrics$intensity_category , "0" = "Nonwear", "1" = "SED", "2" = "LPA", "3" = "MVPA")))
+                      df_with_computed_metrics$bout <- cumsum(c(1, as.numeric(diff(df_with_computed_metrics$intensity_category_num))!= 0))
+              }
+              
              # Creating a dataframe with results by day and corresponding to valid wear time only  
                results_by_day <-
                  df_with_computed_metrics %>%
@@ -1496,13 +1621,15 @@ app_server <- function(input, output, session) {
     
      
              # Returning the list of the results and chosen parameters
-               return(list(df_with_computed_metrics = df_with_computed_metrics,
-                           results_by_day = results_by_day, 
-                           axis_sed_chosen_name = cut_points()$axis_sed_chosen_name, 
-                           sed_cutpoint_chosen = cut_points()$sed_cutpoint_chosen, 
-                           axis_mvpa_chosen_name = cut_points()$axis_mvpa_chosen_name,
-                           mpa_cutpoint_chosen = cut_points()$mpa_cutpoint_chosen,
-                           vpa_cutpoint_chosen = cut_points()$vpa_cutpoint_chosen))
+               return(list(
+                 df_with_computed_metrics = df_with_computed_metrics,
+                 results_by_day = results_by_day, 
+                 axis_sed_chosen_name = cut_points()$axis_sed_chosen_name, 
+                 sed_cutpoint_chosen = cut_points()$sed_cutpoint_chosen, 
+                 axis_mvpa_chosen_name = cut_points()$axis_mvpa_chosen_name,
+                 mpa_cutpoint_chosen = cut_points()$mpa_cutpoint_chosen,
+                 vpa_cutpoint_chosen = cut_points()$vpa_cutpoint_chosen)
+                 )
     })
  
       
@@ -5813,7 +5940,7 @@ app_server <- function(input, output, session) {
       shiny::exportTestValues(results_summary_medians = results_summary_medians())
     })
 
-  # Exporting inputs after setting activity intensity analyzis
+  # Exporting inputs after setting activity intensity analysis
     observeEvent(input$auto_fill_intensity, {
       shiny::exportTestValues(equation_mets = input$equation_mets)
       shiny::exportTestValues(sed_cutpoint = input$sed_cutpoint)

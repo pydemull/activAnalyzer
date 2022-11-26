@@ -13,7 +13,7 @@ get_pa_period_info <- function(period) {
   start_mm  <- period$corr_start_time_mm()
   end_hh    <- period$corr_end_time_hh()
   end_mm    <- period$corr_end_time_mm()
-  mets      <- period$corr_mets() 
+  METS      <- period$corr_mets() 
   
   # Building dataframe from module inputs
   df <- 
@@ -23,13 +23,13 @@ get_pa_period_info <- function(period) {
       start_mm = start_mm,
       end_hh   = end_hh,
       end_mm   = end_mm,
-      mets     = mets
+      METS     = METS
     ) %>%
     dplyr::mutate(
       start = hms::as_hms(start_hh*3600 + start_mm*60),
       end = hms::as_hms(end_hh*3600 + end_mm*60),
     ) %>%
-    dplyr::select(date, start, end, mets)
+    dplyr::select(date, start, end, METS)
   
   # Return dataframe
   return(df)
