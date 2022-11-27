@@ -32,7 +32,7 @@ app_ui <- function(request) {
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
         ),
-        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 1.0.5"), titleWidth = 237
+        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer dev"), titleWidth = 237
                                       ),
       shinydashboardPlus::dashboardSidebar( 
         tags$style(HTML(".sidebar-menu li a {font-size: 17px;}")),
@@ -408,7 +408,18 @@ app_ui <- function(request) {
                    column(12,
                           h3("Enter information related to relevant missing physical activity periods (if any)"),
                           hr()
-                          ),
+                   ),
+                   column(12,
+                          h3("READ THIS: This part of the section is not mandatory. It allows you to modify the data contained in the accelerometer dataset. Each line for which 
+                             a date is selected will be used to modify the dataset, whatever the MET value provided. Be careful to provide non-overlapping 
+                             periods. If a period overlaps with a previous period, the data of the last period will be used.")
+                   ),
+                 ),
+                fluidRow(
+                  column(12,
+                         h4(""),
+                         h4("")
+                  ),
                  ),
                  fluidRow(
                    column(12,

@@ -5903,6 +5903,13 @@ app_server <- function(input, output, session) {
     )
     })
     
+   # Exporting inputs for missing PA infos ("Validate configuration" button)
+   # observeEvent(input$Run, {
+   #   shiny::exportTestValues(
+   #     recap_pa_perdiods = recap_pa_perdiods()
+   #   )
+   # })
+    
   # Exporting plot showing physical activity intensity marks ("Run" button)
     observeEvent(input$Run, {
       shiny::exportTestValues(gg_plot_data_int_init = plot_data_with_intensity(

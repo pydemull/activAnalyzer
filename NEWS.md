@@ -11,6 +11,8 @@
 * Added a file info message (measurement information) when loading the data file.
 * Changed the `size` arguments of the internal `geom_line()` functions by `linewidth` arguments in relation to the v3.4.0 `{ggplot2}` update.
 * Added the possibility to zoom in on the figures of the app.
+* Added the possibility to provide information about potential relevant physical activity periods that would have modified physical activity level but that could not be recorded due to accelerometer removal.
+* Added alert message for the figure with steps (report) when the score is beyond the upper limit of the x axis.
 
 # activAnalyzer 1.0.5
 
