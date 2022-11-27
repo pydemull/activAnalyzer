@@ -42,7 +42,7 @@ if (language == "en" && score <= 65) {
   g_mvpa <-
     ggplot() +
     geom_rect(data = grid_mvpa, aes(xmin = 0, xmax = 65, ymin = 0.2, ymax = 2.1), fill = "white", color = "grey50") + 
-    geom_line(data = grid_mvpa, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+    geom_line(data = grid_mvpa, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
     geom_point(data = score_mvpa, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
     geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
     geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
@@ -84,7 +84,7 @@ if (language == "fr" && score <= 65) {
   g_mvpa <-
     ggplot() +
     geom_rect(data = grid_mvpa, aes(xmin = 0, xmax = 65, ymin = 0.2, ymax = 2.1), fill = "white", color = "grey50") + 
-    geom_line(data = grid_mvpa, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+    geom_line(data = grid_mvpa, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
     geom_point(data = score_mvpa, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
     geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
     geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
@@ -126,7 +126,7 @@ if (language == "fr" && score <= 65) {
     g_mvpa <-
       ggplot() +
       geom_rect(data = grid_mvpa, aes(xmin = 0, xmax = 65, ymin = 0.2, ymax = 2.1), fill = "white", color = "grey50") + 
-      geom_line(data = grid_mvpa, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+      geom_line(data = grid_mvpa, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
       geom_point(data = score_mvpa, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
       scale_y_continuous(trans = scales::log2_trans(), breaks = seq(0.2, 2.1, 0.1)) +
       scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 65, 13)) +
@@ -167,7 +167,7 @@ if (language == "fr" && score <= 65) {
     g_mvpa <-
       ggplot() +
       geom_rect(data = grid_mvpa, aes(xmin = 0, xmax = 65, ymin = 0.2, ymax = 2.1), fill = "white", color = "grey50") + 
-      geom_line(data = grid_mvpa, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+      geom_line(data = grid_mvpa, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
       geom_point(data = score_mvpa, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
       scale_y_continuous(trans = scales::log2_trans(), breaks = seq(0.2, 2.1, 0.1)) +
       scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 65, 13)) +

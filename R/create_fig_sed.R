@@ -42,7 +42,7 @@ if (language == "en" && score/60 >= 6 && score/60 <= 12) {
   g_sed <-
     ggplot() +
     geom_rect(data = grid_sed, aes(xmin = 6, xmax = 12, ymin = 0.5,  ymax = 3.1), fill = "white", color = "grey50") + 
-    geom_line(data = grid_sed, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+    geom_line(data = grid_sed, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
     geom_point(data = score_sed, aes(x = 7.5, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
     geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
     geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
@@ -84,7 +84,7 @@ if (language == "fr" && score/60 >= 6 && score/60 <= 12) {
   g_sed <-
     ggplot() +
     geom_rect(data = grid_sed, aes(xmin = 6, xmax = 12, ymin = 0.5,  ymax = 3.1), fill = "white", color = "grey50") + 
-    geom_line(data = grid_sed, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+    geom_line(data = grid_sed, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
     geom_point(data = score_sed, aes(x = 7.5, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
     geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
     geom_point(data = score_sed, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
@@ -127,7 +127,7 @@ if (language == "fr" && score/60 >= 6 && score/60 <= 12) {
     g_sed <-
       ggplot() +
       geom_rect(data = grid_sed, aes(xmin = 6, xmax = 12, ymin = 0.5,  ymax = 3.1), fill = "white", color = "grey50") + 
-      geom_line(data = grid_sed, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+      geom_line(data = grid_sed, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
       geom_point(data = score_sed, aes(x = 7.5, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
       scale_y_continuous(trans = scales::log2_trans()) +
       scale_x_continuous(limits = c(1, 15), breaks = seq(6, 12, 1)) +
@@ -168,7 +168,7 @@ if (language == "fr" && score/60 >= 6 && score/60 <= 12) {
     g_sed <-
       ggplot() +
       geom_rect(data = grid_sed, aes(xmin = 6, xmax = 12, ymin = 0.5,  ymax = 3.1), fill = "white", color = "grey50") + 
-      geom_line(data = grid_sed, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+      geom_line(data = grid_sed, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
       geom_point(data = score_sed, aes(x = 7.5, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
       scale_y_continuous(trans = scales::log2_trans()) +
       scale_x_continuous(limits = c(1, 15), breaks = seq(6, 12, 1)) +

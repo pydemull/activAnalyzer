@@ -62,14 +62,10 @@ app_server <- function(input, output, session) {
           "axis2" %in% names(init$file) &&
           "axis3" %in% names(init$file) &&
           "steps" %in% names(init$file) && 
-          "inclineoff" %in% names(init$file) &&
-          "inclinestanding" %in% names(init$file) &&
-          "inclinesitting" %in% names(init$file) &&
-          "inclinelying" %in% names(init$file) &&
           (
             !(input$sex %in% c("female", "male", "intersex", "undefined", "prefer not to say")) |
-            !(input$age > 0) |
-            !(input$weight > 0)
+            !(input$age > 0 & is.numeric(input$age)) |
+            !(input$weight > 0 & is.numeric(input$weight))
           )
       ) {
         shinyjs::show("box-auto_fill_char")
@@ -97,14 +93,43 @@ app_server <- function(input, output, session) {
         "axis1" %in% names(init$file) & 
         "axis2" %in% names(init$file) & 
         "axis3" %in% names(init$file) &
-        "steps" %in% names(init$file) & 
-        "inclineoff" %in% names(init$file) &
-        "inclinestanding" %in% names(init$file) &
-        "inclinesitting" %in% names(init$file) &
-        "inclinelying" %in% names(init$file)
+        "steps" %in% names(init$file)
           )
       init$data <- prepare_dataset(input$upload$datapath)
     })
+    
+  # Showing file features
+    output$warning_features <- renderText({
+      
+      if (attributes(file())$devicename == "GT3X") {
+        sampling_rate <- "XX"
+      } else {
+        sampling_rate <- paste(attributes(file())$`original sample rate`, " Hz")
+      }
+      
+      paste0(
+        "Start date: ", attributes(file())$startdatetime,
+        " | End date: ", attributes(file())$stopdatetime,
+        " | Device: ", attributes(file())$devicename,
+        " | Sampling rate: ", sampling_rate,
+        " | Filter: ", attributes(file())$filter
+      )
+    })
+    
+    shinyjs::hide("box-features")
+    shinyjs::hide("warning_features")
+    observe({
+      req(!is.null(init$name))
+      init$name 
+      if(nrow(data()) >= 1) {
+        shinyjs::show("box-features")
+        shinyjs::show("warning_features")
+      } else {
+        shinyjs::hide("box-features")
+        shinyjs::hide("warning_features")
+      }
+    })
+    
     
   # Getting demo data if any
     observeEvent(input$demo, {
@@ -127,11 +152,7 @@ app_server <- function(input, output, session) {
         "axis1" %in% names(init$file) & 
         "axis2" %in% names(init$file) & 
         "axis3" %in% names(init$file) &
-        "steps" %in% names(init$file) & 
-        "inclineoff" %in% names(init$file) &
-        "inclinestanding" %in% names(init$file) &
-        "inclinesitting" %in% names(init$file) &
-        "inclinelying" %in% names(init$file)
+        "steps" %in% names(init$file)
         )
       isolate(init$file)
       })
@@ -144,11 +165,7 @@ app_server <- function(input, output, session) {
           "axis1" %in% names(init$file) & 
           "axis2" %in% names(init$file) & 
           "axis3" %in% names(init$file) &
-          "steps" %in% names(init$file) & 
-          "inclineoff" %in% names(init$file) &
-          "inclinestanding" %in% names(init$file) &
-          "inclinesitting" %in% names(init$file) &
-          "inclinelying" %in% names(init$file)
+          "steps" %in% names(init$file)
       )
       isolate(init$data)
       })
@@ -161,11 +178,7 @@ app_server <- function(input, output, session) {
         "axis1" %in% names(init$file) &&
         "axis2" %in% names(init$file) &&
         "axis3" %in% names(init$file) &&
-        "steps" %in% names(init$file) && 
-        "inclineoff" %in% names(init$file) &&
-        "inclinestanding" %in% names(init$file) &&
-        "inclinesitting" %in% names(init$file) &&
-        "inclinelying" %in% names(init$file)
+        "steps" %in% names(init$file)
         ){
      shinyjs::show("validate")
      } else {
@@ -181,11 +194,7 @@ app_server <- function(input, output, session) {
                     "axis1" %in% names(init$file) & 
                     "axis2" %in% names(init$file) & 
                     "axis3" %in% names(init$file) &
-                    "steps" %in% names(init$file) & 
-                    "inclineoff" %in% names(init$file) &
-                    "inclinestanding" %in% names(init$file) &
-                    "inclinesitting" %in% names(init$file) &
-                    "inclinelying" %in% names(init$file)
+                    "steps" %in% names(init$file)
                   )),
                   "Invalid file. Choose an appropriate .agd file (cf. guide)."
                 )
@@ -205,7 +214,7 @@ app_server <- function(input, output, session) {
   # Selecting days required for analysis
     output$select_days <- renderUI({
       dates <- paste0(attributes(as.factor(df()$date))$levels, " (", weekdays(as.Date(attributes(as.factor(df()$date))$levels)), ")")
-      checkboxGroupInput("selected_days", h3("Select the days to keep for analyzis (please only select the 7 appropriate days if your analyzis is related to PROactive framework)"), dates, selected = dates, inline = TRUE)
+      checkboxGroupInput("selected_days", h3("Select the days to keep for analysis (please only select the 7 appropriate days if your analysis is related to PROactive framework)"), dates, selected = dates, inline = TRUE)
     })  
     
   
@@ -214,7 +223,7 @@ app_server <- function(input, output, session) {
   ###########################################################################################
     
   # Controlling for correct inputs
-  
+   
     # File epoch length
       observeEvent(input$validate,
                   shinyFeedback::feedbackWarning(
@@ -346,7 +355,7 @@ app_server <- function(input, output, session) {
       updateNumericInput(inputId = "allowanceFrame_size", value = 2)
       updateNumericInput(inputId = "streamFrame_size", value = 30)
       updateSelectInput(inputId = "start_day_analysis", selected = hms::as_hms(0))
-      updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*23+60*59))
+      updateSelectInput(inputId = "end_day_analysis", selected = hms::as_hms(60*60*23+60*59+59))
     })
     
   
@@ -354,7 +363,51 @@ app_server <- function(input, output, session) {
   # Visualizing all data with nonwear time ----
   ########################################
   
+  # Creating/updating reactive values for zooming in on the plot with nonwear time
+    zoom_param <- reactiveValues(
+      metric = "axis1", 
+      zoom_from_weartime = "00:00:00", 
+      zoom_to_weartime = "23:59:59"
+    )
+    
+    observeEvent(input$validate, {
+      zoom_param$metric <- "axis1"
+      zoom_param$zoom_from_weartime <- "00:00:00"
+      zoom_param$zoom_to_weartime <- "23:59:59"
+      updateSelectInput(inputId = "Metric", selected = "axis1")
+      updateSelectInput(inputId = "zoom_from_weartime", selected = hms::as_hms(0))
+      updateSelectInput(inputId = "zoom_to_weartime", selected = hms::as_hms(60*60*23+60*59+59))
+    })
+    
+    observeEvent(input$update_graphic, {
+      zoom_param$metric <- input$Metric
+      zoom_param$zoom_from_weartime <- input$zoom_from_weartime
+      zoom_param$zoom_to_weartime <- input$zoom_to_weartime
+    })
+    
+    # Controlling for correct inputs when updating the plot with nonwear time marks
+    observeEvent(input$update_graphic,
+                 shinyFeedback::feedbackWarning(
+                   "zoom_from_weartime", 
+                   hms::as_hms(input$zoom_to_weartime) <= hms::as_hms(input$zoom_from_weartime),
+                   "Start time should be inferior to end time."
+                 )
+    )
+    
+    observeEvent(input$update_graphic,
+                 shinyFeedback::feedbackWarning(
+                   "zoom_to_weartime", 
+                   hms::as_hms(input$zoom_to_weartime) <= hms::as_hms(input$zoom_from_weartime),
+                   "End time should be superior to start time."
+                 )
+    )
+  
   output$graph <- renderPlot({
+    
+    # Waiting for correct inputs
+      req(zoom_param$zoom_from_weartime < zoom_param$zoom_to_weartime)
+    
+    # Making the plot
     
     if (as.numeric(df()$time[2] - df()$time[1]) < 10) { 
       ggplot2::ggplot() + ggplot2::geom_text(
@@ -370,7 +423,12 @@ app_server <- function(input, output, session) {
           axis.ticks = ggplot2::element_blank()
         )
     } else {
-    plot_data(data = df(), metric = input$Metric)
+    plot_data(
+      data = df(), 
+      metric = zoom_param$metric, 
+      zoom_from = zoom_param$zoom_from_weartime,
+      zoom_to = zoom_param$zoom_to_weartime
+      )
     }
   }, 
   width = "auto", 
@@ -388,8 +446,211 @@ app_server <- function(input, output, session) {
    return(height)
     }, 
   res = 120)
-    
   
+  #####################################################
+  # Adding missing physical activity information if any ----
+  #####################################################
+  
+  # Initializing reactive values for measurement dates
+  dates_inputs <- reactiveValues(dates = NULL)
+  
+  # Updating reactive values for measurement dates when clicking on the "Validate
+  # configuration" button
+  observeEvent(input$validate, {
+    dates_inputs$dates <- attributes(as.factor(df()$date))$levels
+  })
+  
+  # Setting reactive buttons
+    period_buttons_1 <- mod_control_pa_period_view_server("period_1")
+    period_buttons_2 <- mod_control_pa_period_view_server("period_2", add_period_btn = period_buttons_1$add_period_btn)
+    period_buttons_3 <- mod_control_pa_period_view_server("period_3", add_period_btn = period_buttons_2$add_period_btn)
+    period_buttons_4 <- mod_control_pa_period_view_server("period_4", add_period_btn = period_buttons_3$add_period_btn)
+    period_buttons_5 <- mod_control_pa_period_view_server("period_5", add_period_btn = period_buttons_4$add_period_btn)
+    period_buttons_6 <- mod_control_pa_period_view_server("period_6", add_period_btn = period_buttons_5$add_period_btn)
+    period_buttons_7 <- mod_control_pa_period_view_server("period_7", add_period_btn = period_buttons_6$add_period_btn)
+    period_buttons_8 <- mod_control_pa_period_view_server("period_8", add_period_btn = period_buttons_7$add_period_btn)
+    period_buttons_9 <- mod_control_pa_period_view_server("period_9", add_period_btn = period_buttons_8$add_period_btn)
+    period_buttons_10 <- mod_control_pa_period_view_server("period_10", add_period_btn = period_buttons_9$add_period_btn)
+    period_buttons_11 <- mod_control_pa_period_view_server("period_11", add_period_btn = period_buttons_10$add_period_btn)
+    period_buttons_12 <- mod_control_pa_period_view_server("period_12", add_period_btn = period_buttons_11$add_period_btn)
+    period_buttons_13 <- mod_control_pa_period_view_server("period_13", add_period_btn = period_buttons_12$add_period_btn)
+    period_buttons_14 <- mod_control_pa_period_view_server("period_14", add_period_btn = period_buttons_13$add_period_btn)
+    period_buttons_15 <- mod_control_pa_period_view_server("period_15", add_period_btn = period_buttons_14$add_period_btn)
+
+  
+  # Control row of inputs
+    # Row 1
+    period_info_1 <- mod_report_pa_period_server("period_1", 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_1", 
+                                      # Below the input is set to allow keeping visible the "Add"
+                                      # button of the first row after removing the 2nde row
+                                      remove_period_btn = period_buttons_2$remove_period_btn)
+    
+    # Row 2
+    period_info_2 <- mod_report_pa_period_server("period_2",
+                                add_period_btn = period_buttons_1$add_period_btn, 
+                                remove_period_btn = period_buttons_2$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_2", 
+                                      add_period_btn = period_buttons_1$add_period_btn, 
+                                      remove_period_btn = period_buttons_3$remove_period_btn)
+    
+    # Row 3
+    period_info_3 <- mod_report_pa_period_server("period_3", 
+                                add_period_btn = period_buttons_2$add_period_btn, 
+                                remove_period_btn = period_buttons_3$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_3", 
+                                      add_period_btn = period_buttons_2$add_period_btn, 
+                                      remove_period_btn = period_buttons_4$remove_period_btn)
+    
+    # Row 4
+    period_info_4 <- mod_report_pa_period_server("period_4", 
+                                add_period_btn = period_buttons_3$add_period_btn, 
+                                remove_period_btn = period_buttons_4$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_4", 
+                                      add_period_btn = period_buttons_3$add_period_btn, 
+                                      remove_period_btn = period_buttons_5$remove_period_btn)
+    
+    # Row 5
+    period_info_5 <- mod_report_pa_period_server("period_5", 
+                                add_period_btn = period_buttons_4$add_period_btn, 
+                                remove_period_btn = period_buttons_5$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_5", 
+                                      add_period_btn = period_buttons_4$add_period_btn, 
+                                      remove_period_btn = period_buttons_6$remove_period_btn)
+    
+    # Row 6
+    period_info_6 <- mod_report_pa_period_server("period_6", 
+                                add_period_btn = period_buttons_5$add_period_btn, 
+                                remove_period_btn = period_buttons_6$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_6", 
+                                      add_period_btn = period_buttons_5$add_period_btn, 
+                                      remove_period_btn = period_buttons_7$remove_period_btn)
+    
+    # Row 7
+    period_info_7 <- mod_report_pa_period_server("period_7", 
+                                add_period_btn = period_buttons_6$add_period_btn, 
+                                remove_period_btn = period_buttons_7$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_7", 
+                                      add_period_btn = period_buttons_6$add_period_btn, 
+                                      remove_period_btn = period_buttons_8$remove_period_btn)
+    
+    # Row 8
+    period_info_8 <- mod_report_pa_period_server("period_8", 
+                                add_period_btn = period_buttons_7$add_period_btn, 
+                                remove_period_btn = period_buttons_8$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_8", 
+                                      add_period_btn = period_buttons_7$add_period_btn, 
+                                      remove_period_btn = period_buttons_9$remove_period_btn)
+    
+    # Row 9
+    period_info_9 <- mod_report_pa_period_server("period_9", 
+                                add_period_btn = period_buttons_8$add_period_btn, 
+                                remove_period_btn = period_buttons_9$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_9", 
+                                      add_period_btn = period_buttons_8$add_period_btn, 
+                                      remove_period_btn = period_buttons_10$remove_period_btn)
+    
+    # Row 10
+    period_info_10 <- mod_report_pa_period_server("period_10", 
+                                add_period_btn = period_buttons_9$add_period_btn, 
+                                remove_period_btn = period_buttons_10$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_10", 
+                                      add_period_btn = period_buttons_9$add_period_btn, 
+                                      remove_period_btn = period_buttons_11$remove_period_btn)
+    
+    # Row 11
+    period_info_11 <- mod_report_pa_period_server("period_11", 
+                                add_period_btn = period_buttons_10$add_period_btn, 
+                                remove_period_btn = period_buttons_11$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_11", 
+                                      add_period_btn = period_buttons_10$add_period_btn, 
+                                      remove_period_btn = period_buttons_12$remove_period_btn)
+    
+    # Row 12
+    period_info_12 <- mod_report_pa_period_server("period_12", 
+                                add_period_btn = period_buttons_11$add_period_btn, 
+                                remove_period_btn = period_buttons_12$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_12", 
+                                      add_period_btn = period_buttons_11$add_period_btn, 
+                                      remove_period_btn = period_buttons_13$remove_period_btn)
+    
+    # Row 13
+    period_info_13 <- mod_report_pa_period_server("period_13", 
+                                add_period_btn = period_buttons_12$add_period_btn, 
+                                remove_period_btn = period_buttons_13$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_13", 
+                                      add_period_btn = period_buttons_12$add_period_btn, 
+                                      remove_period_btn = period_buttons_14$remove_period_btn)
+    
+    # Row 14
+    period_info_14 <- mod_report_pa_period_server("period_14", 
+                                add_period_btn = period_buttons_13$add_period_btn, 
+                                remove_period_btn = period_buttons_14$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_14", 
+                                      add_period_btn = period_buttons_13$add_period_btn, 
+                                      remove_period_btn = period_buttons_15$remove_period_btn)
+    
+    # Row 15
+    period_info_15 <- mod_report_pa_period_server("period_15", 
+                                add_period_btn = period_buttons_14$add_period_btn, 
+                                remove_period_btn = period_buttons_15$remove_period_btn, 
+                                dates_inputs = dates_inputs)
+    mod_control_pa_period_view_server("period_15", 
+                                      add_period_btn = period_buttons_14$add_period_btn)
+    
+   
+    # Making a dataframe (based on the inputs set to indicate relevant missing PA periods)
+    # when clicking on the Run button ; this dataframe will be used to replace data from the
+    # initial accelerometer dataset by the data of the present dataframe for the corresponding 
+    # epochs
+    
+        # Getting inputs
+        recap_pa_perdiods <- eventReactive(input$Run, {
+           df_1  <- get_pa_period_info(period = period_info_1)
+           df_2  <- get_pa_period_info(period = period_info_2)
+           df_3  <- get_pa_period_info(period = period_info_3)
+           df_4  <- get_pa_period_info(period = period_info_4)
+           df_5  <- get_pa_period_info(period = period_info_5)
+           df_6  <- get_pa_period_info(period = period_info_6)
+           df_7  <- get_pa_period_info(period = period_info_7)
+           df_8  <- get_pa_period_info(period = period_info_8)
+           df_9  <- get_pa_period_info(period = period_info_9)
+           df_10 <- get_pa_period_info(period = period_info_10)
+           df_11 <- get_pa_period_info(period = period_info_11)
+           df_12 <- get_pa_period_info(period = period_info_12)
+           df_13 <- get_pa_period_info(period = period_info_13)
+           df_14 <- get_pa_period_info(period = period_info_14)
+           df_15 <- get_pa_period_info(period = period_info_15)
+          
+        # Making dataframe
+        recap <-
+          dplyr::bind_rows(
+            df_1, df_2, df_3, df_4, df_5,
+            df_6, df_7, df_8, df_9, df_10,
+            df_11, df_12, df_13, df_14, df_15
+            ) %>%
+          dplyr::filter(date != "...") 
+        
+        # Returning dataframe
+        return(recap)
+        
+    }) 
+    
+
   ###################################################
   # Getting results when clicking on the "Run" button ----
   ###################################################
@@ -678,13 +939,139 @@ app_server <- function(input, output, session) {
           }
         })
         
-        
+      
+      # Warning regarding missing PA period information when inappropriate inputs are provided
+      
+        output$warning_pa_periods_inputs <- renderText({
+            "For each period, the end time should be superior or equal to the start time (with values >= 0
+            for both), and the METs value should be >= 0."
+          })
+          
+          shinyjs::hide("box-pa-periods-inputs")
+          shinyjs::hide("warning_pa_periods_inputs")
+          
+        observeEvent(input$Run, {
+          if (
+            period_info_1$corr_start_time_hh() < 0 | 
+            period_info_2$corr_start_time_hh() < 0 | 
+            period_info_3$corr_start_time_hh() < 0 | 
+            period_info_4$corr_start_time_hh() < 0 | 
+            period_info_5$corr_start_time_hh() < 0 | 
+            period_info_6$corr_start_time_hh() < 0 | 
+            period_info_7$corr_start_time_hh() < 0 | 
+            period_info_8$corr_start_time_hh() < 0 | 
+            period_info_9$corr_start_time_hh() < 0 | 
+            period_info_10$corr_start_time_hh() < 0 | 
+            period_info_11$corr_start_time_hh() < 0 | 
+            period_info_12$corr_start_time_hh() < 0 | 
+            period_info_13$corr_start_time_hh() < 0 | 
+            period_info_14$corr_start_time_hh() < 0 | 
+            period_info_15$corr_start_time_hh() < 0 | 
+            period_info_1$corr_start_time_mm() < 0 | 
+            period_info_2$corr_start_time_mm() < 0 | 
+            period_info_3$corr_start_time_mm() < 0 | 
+            period_info_4$corr_start_time_mm() < 0 | 
+            period_info_5$corr_start_time_mm() < 0 | 
+            period_info_6$corr_start_time_mm() < 0 | 
+            period_info_7$corr_start_time_mm() < 0 | 
+            period_info_8$corr_start_time_mm() < 0 | 
+            period_info_9$corr_start_time_mm() < 0 | 
+            period_info_10$corr_start_time_mm() < 0 | 
+            period_info_11$corr_start_time_mm() < 0 | 
+            period_info_12$corr_start_time_mm() < 0 | 
+            period_info_13$corr_start_time_mm() < 0 | 
+            period_info_14$corr_start_time_mm() < 0 | 
+            period_info_15$corr_start_time_mm() < 0 | 
+            period_info_1$corr_end_time_hh() < 0 | 
+            period_info_2$corr_end_time_hh() < 0 | 
+            period_info_3$corr_end_time_hh() < 0 | 
+            period_info_4$corr_end_time_hh() < 0 | 
+            period_info_5$corr_end_time_hh() < 0 | 
+            period_info_6$corr_end_time_hh() < 0 | 
+            period_info_7$corr_end_time_hh() < 0 | 
+            period_info_8$corr_end_time_hh() < 0 | 
+            period_info_9$corr_end_time_hh() < 0 | 
+            period_info_10$corr_end_time_hh() < 0 | 
+            period_info_11$corr_end_time_hh() < 0 | 
+            period_info_12$corr_end_time_hh() < 0 | 
+            period_info_13$corr_end_time_hh() < 0 | 
+            period_info_14$corr_end_time_hh() < 0 | 
+            period_info_15$corr_end_time_hh() < 0 | 
+            period_info_1$corr_end_time_mm() < 0 | 
+            period_info_2$corr_end_time_mm() < 0 | 
+            period_info_3$corr_end_time_mm() < 0 | 
+            period_info_4$corr_end_time_mm() < 0 | 
+            period_info_5$corr_end_time_mm() < 0 | 
+            period_info_6$corr_end_time_mm() < 0 | 
+            period_info_7$corr_end_time_mm() < 0 | 
+            period_info_8$corr_end_time_mm() < 0 | 
+            period_info_9$corr_end_time_mm() < 0 | 
+            period_info_10$corr_end_time_mm() < 0 | 
+            period_info_11$corr_end_time_mm() < 0 | 
+            period_info_12$corr_end_time_mm() < 0 | 
+            period_info_13$corr_end_time_mm() < 0 | 
+            period_info_14$corr_end_time_mm() < 0 | 
+            period_info_15$corr_end_time_mm() < 0 |
+            hms::as_hms(period_info_1$corr_start_time_hh()*3600 + period_info_1$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_1$corr_end_time_hh()*3600 + period_info_1$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_2$corr_start_time_hh()*3600 + period_info_2$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_2$corr_end_time_hh()*3600 + period_info_2$corr_end_time_mm()*60) | 
+            hms::as_hms(period_info_3$corr_start_time_hh()*3600 + period_info_3$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_3$corr_end_time_hh()*3600 + period_info_3$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_4$corr_start_time_hh()*3600 + period_info_4$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_4$corr_end_time_hh()*3600 + period_info_4$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_5$corr_start_time_hh()*3600 + period_info_5$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_5$corr_end_time_hh()*3600 + period_info_5$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_6$corr_start_time_hh()*3600 + period_info_6$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_6$corr_end_time_hh()*3600 + period_info_6$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_7$corr_start_time_hh()*3600 + period_info_7$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_7$corr_end_time_hh()*3600 + period_info_7$corr_end_time_mm()*60) | 
+            hms::as_hms(period_info_8$corr_start_time_hh()*3600 + period_info_8$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_8$corr_end_time_hh()*3600 + period_info_8$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_9$corr_start_time_hh()*3600 + period_info_9$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_9$corr_end_time_hh()*3600 + period_info_9$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_10$corr_start_time_hh()*3600 + period_info_10$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_10$corr_end_time_hh()*3600 + period_info_10$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_11$corr_start_time_hh()*3600 + period_info_11$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_11$corr_end_time_hh()*3600 + period_info_11$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_12$corr_start_time_hh()*3600 + period_info_12$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_12$corr_end_time_hh()*3600 + period_info_12$corr_end_time_mm()*60) | 
+            hms::as_hms(period_info_13$corr_start_time_hh()*3600 + period_info_13$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_13$corr_end_time_hh()*3600 + period_info_13$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_14$corr_start_time_hh()*3600 + period_info_14$corr_start_time_mm()*60) >
+              hms::as_hms(period_info_14$corr_end_time_hh()*3600 + period_info_14$corr_end_time_mm()*60) |
+            hms::as_hms(period_info_15$corr_start_time_hh()*3600 + period_info_15$corr_start_time_mm()*60) >
+            hms::as_hms(period_info_15$corr_end_time_hh()*3600 + period_info_15$corr_end_time_mm()*60) |
+            period_info_1$corr_mets() < 0 |
+            period_info_2$corr_mets() < 0 |
+            period_info_3$corr_mets() < 0 |
+            period_info_4$corr_mets() < 0 |
+            period_info_5$corr_mets() < 0 |
+            period_info_6$corr_mets() < 0 |
+            period_info_7$corr_mets() < 0 |
+            period_info_8$corr_mets() < 0 |
+            period_info_9$corr_mets() < 0 |
+            period_info_10$corr_mets() < 0 |
+            period_info_11$corr_mets() < 0 |
+            period_info_12$corr_mets() < 0 |
+            period_info_13$corr_mets() < 0 |
+            period_info_14$corr_mets() < 0 |
+            period_info_15$corr_mets() < 0
+          ) {
+          shinyjs::show("box-pa-periods-inputs")
+          shinyjs::show("warning_pa_periods_inputs")
+          } else {
+          shinyjs::hide("box-pa-periods-inputs")
+          shinyjs::hide("warning_pa_periods_inputs")
+          }
+        })
+           
       # Controlling PROactive settings
         observeEvent(input$Run,
                      shinyFeedback::feedbackWarning(
                        "start_day_analysis", 
                        hms::as_hms(input$end_day_analysis) <= hms::as_hms(input$start_day_analysis),
-                       "End time should be superior to start time."
+                       "Start time should be inferior to end time."
                      )
         )
         
@@ -960,11 +1347,14 @@ app_server <- function(input, output, session) {
           
             # Waiting for required conditions 
               req(
+                # Patient's characteristics
                 input$sex %in% c("male", "female", "intersex", "undefined", "prefer not to say") &
                 is.numeric(input$age) & 
                 input$age > 0 &
                 is.numeric(input$weight) &
                 input$weight > 0 &
+                  
+                # Analysis settings
                 input$equation_mets != "..." &
                 (isTruthy(input$sed_cutpoint != "...") | isTruthy(input$sed_cutpoint == "Personalized..." & is.numeric(input$perso_sed_cutpoint))) &
                 (isTruthy(input$mvpa_cutpoint != "...") | isTruthy(input$mvpa_cutpoint == "Personalized..." & ((is.numeric(input$perso_mpa_cutpoint)) & (is.numeric(input$perso_vpa_cutpoint))))) &
@@ -973,7 +1363,114 @@ app_server <- function(input, output, session) {
                 cut_points()$mpa_cutpoint_chosen < cut_points()$vpa_cutpoint_chosen & 
                 is.numeric(input$minimum_wear_time_for_analysis) &
                 input$minimum_wear_time_for_analysis >= 0 &
-                hms::as_hms(input$end_day_analysis) > hms::as_hms(input$start_day_analysis)
+                hms::as_hms(input$end_day_analysis) > hms::as_hms(input$start_day_analysis) &
+                
+                # Missing PA period information
+                period_info_1$corr_start_time_hh() >= 0 & 
+                period_info_2$corr_start_time_hh() >= 0 & 
+                period_info_3$corr_start_time_hh() >= 0 & 
+                period_info_4$corr_start_time_hh() >= 0 & 
+                period_info_5$corr_start_time_hh() >= 0 & 
+                period_info_6$corr_start_time_hh() >= 0 & 
+                period_info_7$corr_start_time_hh() >= 0 & 
+                period_info_8$corr_start_time_hh() >= 0 & 
+                period_info_9$corr_start_time_hh() >= 0 & 
+                period_info_10$corr_start_time_hh() >= 0 & 
+                period_info_11$corr_start_time_hh() >= 0 & 
+                period_info_12$corr_start_time_hh() >= 0 & 
+                period_info_13$corr_start_time_hh() >= 0 & 
+                period_info_14$corr_start_time_hh() >= 0 & 
+                period_info_15$corr_start_time_hh() >= 0 & 
+                period_info_1$corr_start_time_mm() >= 0 & 
+                period_info_2$corr_start_time_mm() >= 0 & 
+                period_info_3$corr_start_time_mm() >= 0 & 
+                period_info_4$corr_start_time_mm() >= 0 & 
+                period_info_5$corr_start_time_mm() >= 0 & 
+                period_info_6$corr_start_time_mm() >= 0 & 
+                period_info_7$corr_start_time_mm() >= 0 & 
+                period_info_8$corr_start_time_mm() >= 0 & 
+                period_info_9$corr_start_time_mm() >= 0 & 
+                period_info_10$corr_start_time_mm() >= 0 & 
+                period_info_11$corr_start_time_mm() >= 0 & 
+                period_info_12$corr_start_time_mm() >= 0 & 
+                period_info_13$corr_start_time_mm() >= 0 & 
+                period_info_14$corr_start_time_mm() >= 0 & 
+                period_info_15$corr_start_time_mm() >= 0 & 
+                period_info_1$corr_end_time_hh() >= 0 & 
+                period_info_2$corr_end_time_hh() >= 0 & 
+                period_info_3$corr_end_time_hh() >= 0 & 
+                period_info_4$corr_end_time_hh() >= 0 & 
+                period_info_5$corr_end_time_hh() >= 0 & 
+                period_info_6$corr_end_time_hh() >= 0 & 
+                period_info_7$corr_end_time_hh() >= 0 & 
+                period_info_8$corr_end_time_hh() >= 0 & 
+                period_info_9$corr_end_time_hh() >= 0 & 
+                period_info_10$corr_end_time_hh() >= 0 & 
+                period_info_11$corr_end_time_hh() >= 0 & 
+                period_info_12$corr_end_time_hh() >= 0 & 
+                period_info_13$corr_end_time_hh() >= 0 & 
+                period_info_14$corr_end_time_hh() >= 0 & 
+                period_info_15$corr_end_time_hh() >= 0 & 
+                period_info_1$corr_end_time_mm() >= 0 & 
+                period_info_2$corr_end_time_mm() >= 0 & 
+                period_info_3$corr_end_time_mm() >= 0 & 
+                period_info_4$corr_end_time_mm() >= 0 & 
+                period_info_5$corr_end_time_mm() >= 0 & 
+                period_info_6$corr_end_time_mm() >= 0 & 
+                period_info_7$corr_end_time_mm() >= 0 & 
+                period_info_8$corr_end_time_mm() >= 0 & 
+                period_info_9$corr_end_time_mm() >= 0 & 
+                period_info_10$corr_end_time_mm() >= 0 & 
+                period_info_11$corr_end_time_mm() >= 0 & 
+                period_info_12$corr_end_time_mm() >= 0 & 
+                period_info_13$corr_end_time_mm() >= 0 & 
+                period_info_14$corr_end_time_mm() >= 0 & 
+                period_info_15$corr_end_time_mm() >= 0 &
+                hms::as_hms(period_info_1$corr_start_time_hh()*3600 + period_info_1$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_1$corr_end_time_hh()*3600 + period_info_1$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_2$corr_start_time_hh()*3600 + period_info_2$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_2$corr_end_time_hh()*3600 + period_info_2$corr_end_time_mm()*60) & 
+                hms::as_hms(period_info_3$corr_start_time_hh()*3600 + period_info_3$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_3$corr_end_time_hh()*3600 + period_info_3$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_4$corr_start_time_hh()*3600 + period_info_4$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_4$corr_end_time_hh()*3600 + period_info_4$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_5$corr_start_time_hh()*3600 + period_info_5$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_5$corr_end_time_hh()*3600 + period_info_5$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_6$corr_start_time_hh()*3600 + period_info_6$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_6$corr_end_time_hh()*3600 + period_info_6$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_7$corr_start_time_hh()*3600 + period_info_7$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_7$corr_end_time_hh()*3600 + period_info_7$corr_end_time_mm()*60) & 
+                hms::as_hms(period_info_8$corr_start_time_hh()*3600 + period_info_8$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_8$corr_end_time_hh()*3600 + period_info_8$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_9$corr_start_time_hh()*3600 + period_info_9$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_9$corr_end_time_hh()*3600 + period_info_9$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_10$corr_start_time_hh()*3600 + period_info_10$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_10$corr_end_time_hh()*3600 + period_info_10$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_11$corr_start_time_hh()*3600 + period_info_11$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_11$corr_end_time_hh()*3600 + period_info_11$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_12$corr_start_time_hh()*3600 + period_info_12$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_12$corr_end_time_hh()*3600 + period_info_12$corr_end_time_mm()*60) & 
+                hms::as_hms(period_info_13$corr_start_time_hh()*3600 + period_info_13$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_13$corr_end_time_hh()*3600 + period_info_13$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_14$corr_start_time_hh()*3600 + period_info_14$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_14$corr_end_time_hh()*3600 + period_info_14$corr_end_time_mm()*60) &
+                hms::as_hms(period_info_15$corr_start_time_hh()*3600 + period_info_15$corr_start_time_mm()*60) <=
+                  hms::as_hms(period_info_15$corr_end_time_hh()*3600 + period_info_15$corr_end_time_mm()*60) &
+                period_info_1$corr_mets() >= 0,
+                period_info_2$corr_mets() >= 0,
+                period_info_3$corr_mets() >= 0,
+                period_info_4$corr_mets() >= 0,
+                period_info_5$corr_mets() >= 0,
+                period_info_6$corr_mets() >= 0,
+                period_info_7$corr_mets() >= 0,
+                period_info_8$corr_mets() >= 0,
+                period_info_9$corr_mets() >= 0,
+                period_info_10$corr_mets() >= 0,
+                period_info_11$corr_mets() >= 0,
+                period_info_12$corr_mets() >= 0,
+                period_info_13$corr_mets() >= 0,
+                period_info_14$corr_mets() >= 0,
+                period_info_15$corr_mets() >= 0,
                 )
        
 
@@ -991,7 +1488,126 @@ app_server <- function(input, output, session) {
                   sex = input$sex,
                   dates = input$selected_days
                   )
+              
+            # Modifying the dataset based on the PA periods reported by the user if any
+             
+              if (nrow(recap_pa_perdiods()) >= 1) {
+                
+                    # Setting correction factor for determining kcal and MET-hrs per epoch
+                    cor_factor = 60 / (as.numeric(df()$time[2] - df()$time[1]))
+                    
+                    # Computing basal metabolic rate
+                    bmr_kcal_min <- suppressMessages(
+                      compute_bmr(age = input$age, sex = input$sex, weight = input$weight) / (24*60)
+                    )
+                    
+                    # Correcting wearing, METs, SED, LPA, MPA, VPA, kcal and MET-hr columns
+                    for (i in 1:nrow(recap_pa_perdiods())) {
+                      
+                      df_with_computed_metrics$wearing <- dplyr::if_else(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"],
+                        factor(c("w"), levels = c("nw", "w")), df_with_computed_metrics$wearing)
+                      
+                      df_with_computed_metrics$non_wearing_count <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"],
+                        0, df_with_computed_metrics$non_wearing_count)
+                     
+                      df_with_computed_metrics$wearing_count <- ifelse(
+                       df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                         df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                         df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"],
+                       1, df_with_computed_metrics$wearing_count)
+                      
+                      df_with_computed_metrics$METS <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"],
+                        recap_pa_perdiods()[i, "METS"], df_with_computed_metrics$METS)
+                      
+                      df_with_computed_metrics$SED <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                          recap_pa_perdiods()[i, "METS"] <= 1.5, 1, 
+                        ifelse(
+                          df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                            df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                            df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                            recap_pa_perdiods()[i, "METS"] > 1.5, 0, df_with_computed_metrics$SED)
+                      )
+                      
+                      df_with_computed_metrics$LPA <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                          recap_pa_perdiods()[i, "METS"] > 1.5 & recap_pa_perdiods()[i, "METS"] < 3, 1,
+                        ifelse(
+                          df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                            df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                            df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                            (recap_pa_perdiods()[i, "METS"] <= 1.5 | recap_pa_perdiods()[i, "METS"] >= 3), 0,
+                             df_with_computed_metrics$LPA)
+                        )
+                      
+                      df_with_computed_metrics$MPA <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                          recap_pa_perdiods()[i, "METS"] >= 3 & recap_pa_perdiods()[i, "METS"] < 6, 1,
+                        ifelse(
+                          df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                            df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                            df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                            (recap_pa_perdiods()[i, "METS"] < 3 | recap_pa_perdiods()[i, "METS"] >= 6), 0,
+                             df_with_computed_metrics$MPA)
+                        )
+                      
+                      df_with_computed_metrics$VPA <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                          recap_pa_perdiods()[i, "METS"] >= 6, 1,
+                        ifelse(
+                          df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                            df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                            df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                            recap_pa_perdiods()[i, "METS"] < 6, 0, df_with_computed_metrics$VPA)
+                      )
+                      
+                      df_with_computed_metrics$kcal <- ifelse(
+                        df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                          df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                          df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                          recap_pa_perdiods()[i, "METS"] <= 1.5, bmr_kcal_min / cor_factor, 
+                               ifelse(
+                                 df_with_computed_metrics$date == recap_pa_perdiods()[i, "date"] &
+                                   df_with_computed_metrics$time >= recap_pa_perdiods()[i, "start"] & 
+                                   df_with_computed_metrics$time <= recap_pa_perdiods()[i, "end"] & 
+                                   recap_pa_perdiods()[i, "METS"] > 1.5, df_with_computed_metrics$METS * bmr_kcal_min / cor_factor,
+                                 df_with_computed_metrics$kcal)
+                      )
+                      
+                      df_with_computed_metrics$mets_hours_mvpa <- ifelse(df_with_computed_metrics$METS >= 3, df_with_computed_metrics$METS * 1/60 / cor_factor, 0)
     
+                  } 
+                    
+                      # Marking the bouts based on intensity categories
+                      df_with_computed_metrics$intensity_category <- 
+                        ifelse(df_with_computed_metrics$non_wearing_count == 1, "Nonwear", 
+                               ifelse(df_with_computed_metrics$SED == 1, "SED", 
+                                      ifelse(df_with_computed_metrics$LPA == 1, "LPA", "MVPA")))
+                      
+                      # Thanks to https://stackoverflow.com/questions/29661269/increment-by-1-for-every-change-in-column 
+                      # for the code block below
+                      df_with_computed_metrics$intensity_category <- as.factor(df_with_computed_metrics$intensity_category)
+                      df_with_computed_metrics$intensity_category_num <- as.numeric(as.character(forcats::fct_recode(df_with_computed_metrics$intensity_category , "0" = "Nonwear", "1" = "SED", "2" = "LPA", "3" = "MVPA")))
+                      df_with_computed_metrics$bout <- cumsum(c(1, as.numeric(diff(df_with_computed_metrics$intensity_category_num))!= 0))
+              }
+              
              # Creating a dataframe with results by day and corresponding to valid wear time only  
                results_by_day <-
                  df_with_computed_metrics %>%
@@ -1005,13 +1621,17 @@ app_server <- function(input, output, session) {
     
      
              # Returning the list of the results and chosen parameters
-               return(list(df_with_computed_metrics = df_with_computed_metrics,
-                           results_by_day = results_by_day, 
-                           axis_sed_chosen_name = cut_points()$axis_sed_chosen_name, 
-                           sed_cutpoint_chosen = cut_points()$sed_cutpoint_chosen, 
-                           axis_mvpa_chosen_name = cut_points()$axis_mvpa_chosen_name,
-                           mpa_cutpoint_chosen = cut_points()$mpa_cutpoint_chosen,
-                           vpa_cutpoint_chosen = cut_points()$vpa_cutpoint_chosen))
+               return(
+                 list(
+                   df_with_computed_metrics = df_with_computed_metrics,
+                   results_by_day = results_by_day, 
+                   axis_sed_chosen_name = cut_points()$axis_sed_chosen_name, 
+                   sed_cutpoint_chosen = cut_points()$sed_cutpoint_chosen, 
+                   axis_mvpa_chosen_name = cut_points()$axis_mvpa_chosen_name,
+                   mpa_cutpoint_chosen = cut_points()$mpa_cutpoint_chosen,
+                   vpa_cutpoint_chosen = cut_points()$vpa_cutpoint_chosen
+                   )
+                 )
     })
  
       
@@ -1023,8 +1643,55 @@ app_server <- function(input, output, session) {
            )
       })
     
+  # Creating/updating reactive values for zooming in on the plot with intensity metrics
+    zoom_param2 <- reactiveValues(
+      metric = "axis1", 
+      zoom_from_analysis = "00:00:00", 
+      zoom_to_analysis = "23:59:59"
+      )
+    
+    observeEvent(input$Run, {
+      zoom_param2$metric <- "axis1"
+      zoom_param2$zoom_from_analysis <- "00:00:00"
+      zoom_param2$zoom_to_analysis <- "23:59:59"
+      updateSelectInput(inputId = "Metric2", selected = "axis1")
+      updateSelectInput(inputId = "zoom_from_analysis", selected = hms::as_hms(0))
+      updateSelectInput(inputId = "zoom_to_analysis", selected = hms::as_hms(60*60*23+60*59+59))
+    })
+    
+    observeEvent(input$update_graphic2, {
+      zoom_param2$metric <- input$Metric2
+      zoom_param2$zoom_from_analysis <- input$zoom_from_analysis
+      zoom_param2$zoom_to_analysis <- input$zoom_to_analysis
+    })
+    
+  # Controlling for correct inputs when updating the plot with intensity marks
+    observeEvent(input$update_graphic2,
+                 shinyFeedback::feedbackWarning(
+                   "zoom_from_analysis", 
+                   hms::as_hms(input$zoom_to_analysis) <= hms::as_hms(input$zoom_from_analysis),
+                   "Start time should be inferior to end time."
+                 )
+    )
+    
+    observeEvent(input$update_graphic2,
+                 shinyFeedback::feedbackWarning(
+                   "zoom_to_analysis", 
+                   hms::as_hms(input$zoom_to_analysis) <= hms::as_hms(input$zoom_from_analysis),
+                   "End time should be superior to start time."
+                 )
+    )
+    
+
+    
   # Plotting data with intensity categories
     output$graph_int <- renderPlot({
+      
+      # Waiting for correct inputs
+        req(zoom_param2$zoom_from_analysis < zoom_param2$zoom_to_analysis)
+      
+      # Making the plot
+      
       if (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) < 10) { 
         ggplot2::ggplot() + ggplot2::geom_text(
           ggplot2::aes(
@@ -1039,10 +1706,14 @@ app_server <- function(input, output, session) {
             axis.ticks = ggplot2::element_blank()
             )
       } else {
-      plot_data_with_intensity(data = results_list()$df_with_computed_metrics, 
-                               metric = input$Metric2,
-                               valid_wear_time_start = analysis_filters()$start_day_analysis,
-                               valid_wear_time_end = analysis_filters()$end_day_analysis)
+      plot_data_with_intensity(
+        data = results_list()$df_with_computed_metrics, 
+        metric = zoom_param2$metric,
+        valid_wear_time_start = analysis_filters()$start_day_analysis,
+        valid_wear_time_end = analysis_filters()$end_day_analysis,
+        zoom_from =  zoom_param2$zoom_from_analysis,
+        zoom_to =  zoom_param2$zoom_to_analysis
+        )
       }
     }, 
     width = "auto", 
@@ -4444,15 +5115,24 @@ app_server <- function(input, output, session) {
   # Box for graph with wear time
     shinyjs::hide("myBox")
     shinyjs::hide("Metric")
+    shinyjs::hide("zoom_from_weartime")
+    shinyjs::hide("zoom_to_weartime")
+    shinyjs::hide("update_graphic")
     shinyjs::hide("graph")
     observe({
       if(nrow(df()) >=1) {
         shinyjs::show("myBox")
         shinyjs::show("Metric")
+        shinyjs::show("zoom_from_weartime")
+        shinyjs::show("zoom_to_weartime")
+        shinyjs::show("update_graphic")
         shinyjs::show("graph")
       } else {
         shinyjs::hide("myBox")
         shinyjs::hide("Metric")
+        shinyjs::hide("zoom_from_weartime")
+        shinyjs::hide("zoom_to_weartime")
+        shinyjs::hide("update_graphic")
         shinyjs::hide("graph")
       }
     })
@@ -4460,6 +5140,9 @@ app_server <- function(input, output, session) {
   # Boxes for graph with PA categories and results
     shinyjs::hide("myBox2")
     shinyjs::hide("Metric2")
+    shinyjs::hide("zoom_from_analysis")
+    shinyjs::hide("zoom_to_analysis")
+    shinyjs::hide("update_graphic2")
     shinyjs::hide("graph_int")
     shinyjs::hide("BoxResByDay")
     shinyjs::hide("BoxResMeans")
@@ -4468,6 +5151,9 @@ app_server <- function(input, output, session) {
       if(nrow(results_list()$df_with_computed_metrics) >=1) {
       shinyjs::show("myBox2")
       shinyjs::show("Metric2")
+      shinyjs::show("zoom_from_analysis")
+      shinyjs::show("zoom_to_analysis")
+      shinyjs::show("update_graphic2")
       shinyjs::show("graph_int")
       shinyjs::show("BoxResByDay")
       shinyjs::show("BoxResMeans")
@@ -4475,6 +5161,9 @@ app_server <- function(input, output, session) {
       } else {
       shinyjs::hide("myBox2")
       shinyjs::hide("Metric2")
+      shinyjs::hide("zoom_from_analysis")
+      shinyjs::hide("zoom_to_analysis")
+      shinyjs::hide("update_graphic2")
       shinyjs::hide("graph_int")
       shinyjs::hide("BoxResByDay")
       shinyjs::hide("BoxResMeans")
@@ -5194,9 +5883,55 @@ app_server <- function(input, output, session) {
       shiny::exportTestValues(df = df())
     })
     
-  # Exporting plot showing nonwear/wear time
+  # Exporting plot showing nonwear/wear time ("Validate configuration" button)
     observeEvent(input$validate, {
-      shiny::exportTestValues(gg_plot_data = plot_data(data = df(), metric = input$Metric))
+      shiny::exportTestValues(gg_plot_data_init = plot_data(
+        data = df(), 
+        metric = input$Metric,
+        zoom_from = input$zoom_from_weartime,
+        zoom_to = input$zoom_to_weartime
+        )
+      )
+    })
+    
+  # Exporting plot showing nonwear/wear time ("Update graphic" button)
+    observeEvent(input$update_graphic, {
+      shiny::exportTestValues(gg_plot_data_update = plot_data(
+        data = df(), 
+        metric = input$Metric,
+        zoom_from = input$zoom_from_weartime,
+        zoom_to = input$zoom_to_weartime
+        )
+    )
+    })
+    
+  # Exporting inputs for missing PA infos ("Run analysis" button)
+    observeEvent(input$Run, {
+     shiny::exportTestValues(
+       recap_pa_perdiods = recap_pa_perdiods()
+     )
+   })
+    
+  # Exporting plot showing physical activity intensity marks ("Run" button)
+    observeEvent(input$Run, {
+      shiny::exportTestValues(gg_plot_data_int_init = plot_data_with_intensity(
+        data = results_list()$df_with_computed_metrics, 
+        metric = input$Metric2,
+        zoom_from = input$zoom_from_analysis,
+        zoom_to = input$zoom_to_analysis
+       )
+      )
+    })
+    
+   # Exporting plot showing physical activity intensity marks ("Update graphic" button)
+    observeEvent(input$update_graphic2, {
+      shiny::exportTestValues(gg_plot_data_int_update = plot_data_with_intensity(
+        data = results_list()$df_with_computed_metrics, 
+        metric = input$Metric2,
+        zoom_from = input$zoom_from_analysis,
+        zoom_to = input$zoom_to_analysis
+      )
+      )
     })
     
   # Exporting dataframe for the results by day
@@ -5214,7 +5949,7 @@ app_server <- function(input, output, session) {
       shiny::exportTestValues(results_summary_medians = results_summary_medians())
     })
 
-  # Exporting inputs after setting activity intensity analyzis
+  # Exporting inputs after setting activity intensity analysis
     observeEvent(input$auto_fill_intensity, {
       shiny::exportTestValues(equation_mets = input$equation_mets)
       shiny::exportTestValues(sed_cutpoint = input$sed_cutpoint)

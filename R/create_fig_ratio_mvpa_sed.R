@@ -42,7 +42,7 @@ if (language == "en" && score <= 0.25) {
   g_ratio <-
     ggplot() +
     geom_rect(data = grid_ratio, aes(xmin = 0, xmax = 0.25, ymin = 0.1, ymax = 1.25), fill = "white", color = "grey50") + 
-    geom_line(data = grid_ratio, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+    geom_line(data = grid_ratio, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
     geom_point(data = score_ratio, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
     geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
     geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
@@ -83,7 +83,7 @@ if (language == "fr" && score <= 0.25) {
   g_ratio <-
     ggplot() +
     geom_rect(data = grid_ratio, aes(xmin = 0, xmax = 0.25, ymin = 0.1, ymax = 1.25), fill = "white", color = "grey50") + 
-    geom_line(data = grid_ratio, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+    geom_line(data = grid_ratio, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
     geom_point(data = score_ratio, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
     geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
     geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
@@ -126,7 +126,7 @@ if (language == "fr" && score <= 0.25) {
     g_ratio <-
       ggplot() +
       geom_rect(data = grid_ratio, aes(xmin = 0, xmax = 0.25, ymin = 0.1, ymax = 1.25), fill = "white", color = "grey50") + 
-      geom_line(data = grid_ratio, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+      geom_line(data = grid_ratio, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
       geom_point(data = score_ratio, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
       scale_x_continuous(limits = c(0, 0.25), breaks = seq(0, 0.25, 0.05)) +
       coord_cartesian(xlim = c(0, 0.25), ylim = c(0.1, 1.25), expand = FALSE, clip = "off") +
@@ -167,7 +167,7 @@ if (language == "fr" && score <= 0.25) {
     g_ratio <-
       ggplot() +
       geom_rect(data = grid_ratio, aes(xmin = 0, xmax = 0.25, ymin = 0.1, ymax = 1.25), fill = "white", color = "grey50") + 
-      geom_line(data = grid_ratio, aes (x = x, y = mid), size = 1, colour = "#3366FF") +
+      geom_line(data = grid_ratio, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
       geom_point(data = score_ratio, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
       scale_x_continuous(limits = c(0, 0.25), breaks = seq(0, 0.25, 0.05)) +
       coord_cartesian(xlim = c(0, 0.25), ylim = c(0.1, 1.25), expand = FALSE, clip = "off") +

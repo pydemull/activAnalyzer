@@ -8,6 +8,8 @@
 #' @param col_time A character value to indicate the name of the variable to plot time data.
 #' @param col_nonwear A character value to indicate the name of the variable used to count nonwear time.
 #' @param col_wear A character value to indicate the name of the variable used to count wear time.
+#' @param zoom_from A character value with the HH:MM:SS format to set the start of the daily period to visualize.
+#' @param zoom_to A character value with the HH:MM:SS format to set the end of the daily period to visualize.
 #'
 #' @return
 #' A `ggplot` object.
@@ -31,14 +33,20 @@
 #'     metric = "vm", 
 #'     col_time = "time", 
 #'     col_nonwear = "non_wearing_count", 
-#'     col_wear = "wearing_count"
+#'     col_wear = "wearing_count",
+#'     zoom_from = "02:00:00",
+#'     zoom_to = "23:58:00"
 #'     )
 #' 
-plot_data <- function(data, 
-                      metric = "axis1", 
-                      col_time = "time", 
-                      col_nonwear = "non_wearing_count",
-                      col_wear = "wearing_count"){
+plot_data <- function(
+    data, 
+    metric = "axis1", 
+    col_time = "time", 
+    col_nonwear = "non_wearing_count",
+    col_wear = "wearing_count",
+    zoom_from = "00:00:00",
+    zoom_to = "23:59:59"
+    ){
 
   # Setting the format of the time variable
     format_hm <- function(sec) stringr::str_sub(format(sec), end = -4L)
@@ -47,33 +55,34 @@ plot_data <- function(data,
     
 
   # Creating the plot
-    ggplot(data = data, aes(x = .data[[col_time]])) +
-    geom_ribbon(
-      aes(
-      ymin = 0, 
-      ymax = ifelse(.data[[col_nonwear]] == 1, Inf, 0),
-      fill = "Nonwear"
-      )
-    ) +
-    geom_ribbon(
-      aes(
-      ymin = 0, 
-      ymax = ifelse(.data[[col_wear]] == 1, Inf, 0),
-      fill = "Wear"
-      )
+    p <-
+    ggplot(data = data %>% dplyr::filter(.data[[col_time]] >= hms::as_hms(zoom_from) & .data[[col_time]] <= hms::as_hms(zoom_to))) +
+    geom_rect(aes(
+        xmin = time, 
+        xmax =  time + hms::as_hms(60), 
+        ymin = -Inf, 
+        ymax = Inf, 
+        color = as.factor(.data[[col_nonwear]]),
+        fill = as.factor(.data[[col_nonwear]])
+       )
     ) +
     geom_line(
-      aes(
-        y = .data[[metric]]
-      )
-    ) +
-    scale_x_time(breaks = hms::hms(seq(3600, 23*3600, 2*3600)), 
-                expand = c(0, 0), 
-                labels = format_hm
-                 ) +
+        aes(
+          x = .data[[col_time]],
+          y = .data[[metric]]
+          )
+      ) +
+    scale_x_time(
+      limits = c(hms::as_hms(zoom_from), hms::as_hms(zoom_to)),
+      breaks = hms::hms(seq(as.numeric(hms::as_hms(zoom_from)), as.numeric(hms::as_hms(zoom_to)), 2*3600)), 
+      expand = c(0, 0),
+      labels = format_hm
+      ) +
     scale_y_continuous(position = "right", expand = c(0, 0)) +
-    scale_fill_manual(values = c("lemonchiffon3", "lemonchiffon1")) +
-    labs(x = "Time (hh:mm)", y = metric, fill = "") +
+    scale_color_manual(breaks = c("1", "0"), values = c("lemonchiffon3", "lemonchiffon1"), labels = c("Nonwear", "Wear")) +
+    scale_fill_manual(breaks = c("1", "0"), values = c("lemonchiffon3", "lemonchiffon1"), labels = c("Nonwear", "Wear")) +
+    labs(x = "Time (hh:mm)", y = metric, fill = "", color = "") +
+    guides(color = NULL) +
     theme_bw() +
     theme(legend.position = "bottom",
           legend.key = element_rect(color = "grey"),
@@ -104,6 +113,6 @@ plot_data <- function(data,
     geom_vline(aes(xintercept = 3600*22),   linetype = "dotted", color = "grey50") +
     geom_vline(aes(xintercept = 3600*23),   linetype = "dotted", color = "grey50")
     
-
+    suppressWarnings(print(p))
 }
   

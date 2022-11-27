@@ -42,9 +42,9 @@ if (language == "en") {
   g_pal <-
     ggplot(data = table_pal, aes(x = x, y = start)) +
     geom_rect(aes(ymin = start,  ymax = end, fill = label), xmin = -Inf, xmax = Inf, alpha = 0.5) +
-    geom_vline(aes(xintercept = 0.51), size = 0.4, color = "grey30") +
-    geom_vline(aes(xintercept = 0.25), size = 0.5, color = "grey30", linetype ="dotted") +
-    geom_segment(x = 0, xend = 0.51, y = score, yend = score, size = 0.5, color = "grey30", linetype ="dotted") +
+    geom_vline(aes(xintercept = 0.51), linewidth = 0.4, color = "grey30") +
+    geom_vline(aes(xintercept = 0.25), linewidth = 0.5, color = "grey30", linetype ="dotted") +
+    geom_segment(x = 0, xend = 0.51, y = score, yend = score, linewidth = 0.5, color = "grey30", linetype ="dotted") +
     geom_point(aes(x = 0.25, y = score, color = "Patient's result (daily mean)"), size = 7, shape = 1) +
     geom_point(aes(x = 0.25, y = score, color = "Patient's result (daily mean)"), size = 4, shape = 16) +
     geom_point(aes(x = 0.25, y = score, color = "Patient's result (daily mean)"), size = 7, shape = 3) +
@@ -64,7 +64,7 @@ if (language == "en") {
           legend.title = element_text(face = "bold" , size = 10),
           legend.text = element_text(face = "bold", size = 17),
           legend.background = element_rect(fill = "beige"),
-          legend.key = element_rect(fill = "beige", size = 15),
+          legend.key = element_rect(fill = "beige", linewidth = 15),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           plot.background = element_rect(fill = "beige", color = "beige"),
@@ -87,9 +87,9 @@ if (language == "fr") {
   g_pal <-
     ggplot(data = table_pal, aes(x = x, y = start)) +
     geom_rect(aes(ymin = start,  ymax = end, fill = label), xmin = -Inf, xmax = Inf, alpha = 0.5) +
-    geom_vline(aes(xintercept = 0.51), size = 0.4, color = "grey30") +
-    geom_vline(aes(xintercept = 0.25), size = 0.5, color = "grey30", linetype ="dotted") +
-    geom_segment(x = 0, xend = 0.51, y = score, yend = score, size = 0.5, color = "grey30", linetype ="dotted") +
+    geom_vline(aes(xintercept = 0.51), linewidth = 0.4, color = "grey30") +
+    geom_vline(aes(xintercept = 0.25), linewidth = 0.5, color = "grey30", linetype ="dotted") +
+    geom_segment(x = 0, xend = 0.51, y = score, yend = score, linewidth = 0.5, color = "grey30", linetype ="dotted") +
     geom_point(aes(x = 0.25, y = score, color = "R\u00e9sultat du patient (moyenne journali\u00e8re)"), size = 7, shape = 1) +
     geom_point(aes(x = 0.25, y = score, color = "R\u00e9sultat du patient (moyenne journali\u00e8re)"), size = 4, shape = 16) +
     geom_point(aes(x = 0.25, y = score, color = "R\u00e9sultat du patient (moyenne journali\u00e8re)"), size = 7, shape = 3) +
@@ -109,7 +109,7 @@ if (language == "fr") {
           legend.title = element_text(face = "bold" , size = 10),
           legend.text = element_text(face = "bold", size = 17),
           legend.background = element_rect(fill = "beige"),
-          legend.key = element_rect(fill = "beige", size = 15),
+          legend.key = element_rect(fill = "beige", linewidth = 15),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           plot.background = element_rect(fill = "beige", color = "beige"),

@@ -10,6 +10,8 @@
 #' @param col_wear A character value to indicate the name of the variable used to count wear time.
 #' @param valid_wear_time_start A character value with the HH:MM:SS format to set the start of the daily period that will be considered for computing valid wear time.
 #' @param valid_wear_time_end A character value with the HH:MM:SS format to set the end of the daily period that will be considered for computing valid wear time.
+#' @param zoom_from A character value with the HH:MM:SS format to set the start of the daily period to visualize.
+#' @param zoom_to A character value with the HH:MM:SS format to set the end of the daily period to visualize.
 
 #'
 #' @return
@@ -45,17 +47,23 @@
 #'     data = mydata_with_intensity_marks,
 #'     metric = "vm",
 #'     valid_wear_time_start = "00:00:00",
-#'     valid_wear_time_end = "23:59:00"
+#'     valid_wear_time_end = "23:59:59",
+#'     zoom_from = "02:00:00",
+#'     zoom_to = "23:58:00"
 #'     )
 #' }
 #' 
-plot_data_with_intensity <- function(data, 
-                      metric = "axis1", 
-                      col_time = "time", 
-                      col_nonwear = "non_wearing_count",
-                      col_wear = "wearing_count",
-                      valid_wear_time_start = "00:00:00",
-                      valid_wear_time_end = "23:59:00"){
+plot_data_with_intensity <- function(
+    data, 
+    metric = "axis1", 
+    col_time = "time", 
+    col_nonwear = "non_wearing_count",
+    col_wear = "wearing_count",
+    valid_wear_time_start = "00:00:00",
+    valid_wear_time_end = "23:59:59",
+    zoom_from = "00:00:00",
+    zoom_to = "23:59:59"
+    ){
 
   # Setting the format of the time variable
     format_hm <- function(sec) stringr::str_sub(format(sec), end = -4L)
@@ -63,7 +71,8 @@ plot_data_with_intensity <- function(data,
     names(date_labs) <- data$days
     
   # Creating the plot
-    ggplot(data = data) +
+    p <-
+    ggplot(data = data %>% dplyr::filter(.data[[col_time]] >= hms::as_hms(zoom_from) & .data[[col_time]] <= hms::as_hms(zoom_to))) +
     geom_rect(aes(
       xmin = time, 
       xmax =  time + hms::as_hms(60), 
@@ -77,7 +86,7 @@ plot_data_with_intensity <- function(data,
       x = .data[[col_time]],
       y = .data[[metric]])
       ) +
-      geom_rect(aes(
+    geom_rect(aes(
         xmin = hms::as_hms(0), 
         xmax =  hms::as_hms(valid_wear_time_start), 
         ymin = -Inf, 
@@ -85,7 +94,7 @@ plot_data_with_intensity <- function(data,
         color = "grey",
         fill = "grey"
       ) +
-      geom_rect(aes(
+    geom_rect(aes(
         xmin = hms::as_hms(valid_wear_time_end), 
         xmax =  hms::as_hms("23:59:59"),
         ymin = -Inf, 
@@ -93,10 +102,12 @@ plot_data_with_intensity <- function(data,
         color = "grey",
         fill = "grey"
       ) +
-   scale_x_time(breaks = hms::hms(seq(3600, 23*3600, 2*3600)), 
-               expand = c(0, 0), 
-               labels = format_hm
-               ) +
+   scale_x_time(
+     limits = c(hms::as_hms(zoom_from), hms::as_hms(zoom_to)),
+     breaks = hms::hms(seq(as.numeric(hms::as_hms(zoom_from)), as.numeric(hms::as_hms(zoom_to)), 2*3600)), 
+     expand = c(0, 0), 
+     labels = format_hm
+     ) +
    scale_y_continuous(position = "right", expand = c(0, 0)) +
    scale_fill_manual(breaks = c("Nonwear", "SED", "LPA", "MVPA"), values = c("lemonchiffon3", "#3F51B5", "#FFFF33", "#FF0066")) +
    scale_color_manual(breaks = c("Nonwear", "SED", "LPA", "MVPA"), values = c("lemonchiffon3", "#3F51B5", "#FFFF33", "#FF0066")) +
@@ -131,6 +142,7 @@ plot_data_with_intensity <- function(data,
     geom_vline(aes(xintercept = 3600*22),   linetype = "dotted", color = "grey50") +
     geom_vline(aes(xintercept = 3600*23),   linetype = "dotted", color = "grey50")
    
+    suppressWarnings(print(p))
 
 }
   

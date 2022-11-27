@@ -32,16 +32,16 @@ app_ui <- function(request) {
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
         ),
-        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 1.0.5"), titleWidth = 237
+        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer dev"), titleWidth = 237
                                       ),
       shinydashboardPlus::dashboardSidebar( 
         tags$style(HTML(".sidebar-menu li a {font-size: 17px;}")),
         tags$style(HTML(".main-sidebar{ width: 240px; }")),
         shinydashboard::sidebarMenu(
           id = "tabs",
-          shinydashboard::menuItem("Accelerometer analysis", tabName = "app", icon = icon("fa-solid fa-chart-column", verify_fa = FALSE)),
-          shinydashboard::menuItem("PROactive questionnaire", tabName = "proactive", icon = icon("fa-solid fa-file-circle-question", verify_fa = FALSE)),
-          shinydashboard::menuItem("User's guide", tabName = "guide", icon = icon("fa-solid fa-file-lines", verify_fa = FALSE))
+          shinydashboard::menuItem("Accelerometer analysis", tabName = "app", icon = suppressMessages(icon("fa-solid fa-chart-column", class="icon-widget"))),
+          shinydashboard::menuItem("PROactive questionnaire", tabName = "proactive", icon = suppressMessages(icon("fa-solid fa-file-circle-question",  class="icon-widget"))),
+          shinydashboard::menuItem("User's guide", tabName = "guide", icon = suppressMessages(icon("fa-solid fa-file-lines",  class="icon-widget")))
         )),
       shinydashboard::dashboardBody(
 
@@ -203,6 +203,24 @@ app_ui <- function(request) {
                   ),
                  fluidRow(
                    column(12,
+                          shinydashboardPlus::box(id = "box-features",
+                                                  title = "FILE INFO",
+                                                  width = 8,
+                                                  div(textOutput("warning_features"), class = "warn-message")
+                          )
+                   )
+                 ),
+                 fluidRow(
+                   column(12,
+                          shinydashboardPlus::box(id = "box-demo",
+                                                  title = "NOTE",
+                                                  width = 8,
+                                                  div(textOutput("warning_demo"), class = "warn-message")
+                          )
+                   )
+                 ),
+                 fluidRow(
+                   column(12,
                           selectInput("to_epoch", "Length of the epoch to use for analysis (s)", choices = c(60, 15, 10, 5, 1))
                    ),
                  ),
@@ -242,15 +260,6 @@ app_ui <- function(request) {
                                                   div(textOutput("warning_auto_fill_char"), class = "warn-message")
                           ),                   ),
                  ),
-                 fluidRow(
-                   column(12,
-                          shinydashboardPlus::box(id = "box-demo",
-                                                  title = "NOTE",
-                                                  width = 8,
-                                                  div(textOutput("warning_demo"), class = "warn-message")
-                          )
-                   )
-                 ),
                   fluidRow(
                     column(3,
                            shiny::actionButton("validate", "Validate configuration", class = "btn-validate", style = "margin-bottom: 20px;"),
@@ -271,8 +280,27 @@ app_ui <- function(request) {
                   ),
                   fluidRow(
                     align = "center",
-                    selectInput("Metric", "Data to visualize", metrics),
+                    column(4, 
+                           selectInput("Metric", "Data to visualize", metrics)
+                    ),
+                    column(4, 
+                           selectInput("zoom_from_weartime", "Start of the period to visualize", 
+                                       choices = c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59), hms::as_hms(60*60*23+60*59+59)),
+                                       selectize=FALSE
+                           )
+                    ),
+                    column(4,
+                           selectInput("zoom_to_weartime", "End of the period to visualize", 
+                                       choices = c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59), hms::as_hms(60*60*23+60*59+59)),
+                                       selected = hms::as_hms(60*60*23+60*59+59),
+                                       selectize=FALSE
+                           )
+                    ),
                   ),
+                 fluidRow(
+                   align = "center",
+                   shiny::actionButton("update_graphic", "Update graphic", class = "btn-return")
+                 ),
                   
                   
                   ##################################################
@@ -303,7 +331,7 @@ app_ui <- function(request) {
                   
                   fluidRow(
                     column(12,
-                           h3("Choose a MET equation"),
+                           h3("Choose a MET equation and appropriate cut-points"),
                            hr(),
                            selectInput("equation_mets", with_red_star("Equation"), equations)
                     ),
@@ -371,7 +399,86 @@ app_ui <- function(request) {
                           shiny::actionButton("auto_fill_intensity", "Default settings",  class = "btn-return", style = "margin-top: 10px"),
                    ),
                  ),
+              
+                 #************************************************************************
+                 # Enter information related to relevant missing physical activity periods
+                 #************************************************************************
+                 
+                 fluidRow(
+                   column(12,
+                          h3("Enter information related to relevant missing physical activity periods (if any)"),
+                          hr()
+                   ),
+                   column(12,
+                          h3("READ THIS: This part of the section is not mandatory. It allows you to modify the data contained in the accelerometer dataset. Each line for which 
+                             a date is selected will be used to modify the dataset, whatever the MET value provided. Be careful to provide non-overlapping 
+                             periods. If a period overlaps with a previous period, the data of the last period will be used.")
+                   ),
+                 ),
+                fluidRow(
+                  column(12,
+                         h4(""),
+                         h4("")
+                  ),
+                 ),
+                 fluidRow(
+                   column(12,
+                   mod_report_pa_period_ui("period_1"),
+                   mod_control_pa_period_view_ui("period_1"),
                   
+                   mod_report_pa_period_ui("period_2"),
+                   mod_control_pa_period_view_ui("period_2"),
+                   
+                   mod_report_pa_period_ui("period_3"),
+                   mod_control_pa_period_view_ui("period_3"),
+                
+                   mod_report_pa_period_ui("period_4"),
+                   mod_control_pa_period_view_ui("period_4"),
+                   
+                   mod_report_pa_period_ui("period_5"),
+                   mod_control_pa_period_view_ui("period_5"),
+                   
+                   mod_report_pa_period_ui("period_6"),
+                   mod_control_pa_period_view_ui("period_6"),
+                   
+                   mod_report_pa_period_ui("period_7"),
+                   mod_control_pa_period_view_ui("period_7"),
+                   
+                   mod_report_pa_period_ui("period_8"),
+                   mod_control_pa_period_view_ui("period_8"),
+                   
+                   mod_report_pa_period_ui("period_9"),
+                   mod_control_pa_period_view_ui("period_9"),
+                   
+                   mod_report_pa_period_ui("period_10"),
+                   mod_control_pa_period_view_ui("period_10"),
+                   
+                   mod_report_pa_period_ui("period_11"),
+                   mod_control_pa_period_view_ui("period_11"),
+                   
+                   mod_report_pa_period_ui("period_12"),
+                   mod_control_pa_period_view_ui("period_12"),
+                   
+                   mod_report_pa_period_ui("period_13"),
+                   mod_control_pa_period_view_ui("period_13"),
+                   
+                   mod_report_pa_period_ui("period_14"),
+                   mod_control_pa_period_view_ui("period_14"),
+                   
+                   mod_report_pa_period_ui("period_15"),
+                   mod_control_pa_period_view_ui("period_15"),
+                  ),
+                 ),
+                 fluidRow(
+                   column(12,
+                          shinydashboardPlus::box(id = "box-pa-periods-inputs",
+                                                  title = "NOTE",
+                                                  width = 8,
+                                                  div(textOutput("warning_pa_periods_inputs"), class = "warn-message")
+                          ),                   ),
+                 ),
+
+
                   #********************************
                   # Minimum wear time for valid day
                   #********************************
@@ -454,9 +561,28 @@ app_ui <- function(request) {
                        ),
                        fluidRow(
                          align = "center",
-                         selectInput("Metric2", "Data to visualize", metrics),
+                         column(4, 
+                                selectInput("Metric2", "Data to visualize", metrics)
+                                ),
+                         column(4, 
+                                selectInput("zoom_from_analysis", "Start of the period to visualize", 
+                                            choices = c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59), hms::as_hms(60*60*23+60*59+59)),
+                                            selectize=FALSE
+                                            )
+                         ),
+                         column(4,
+                                selectInput("zoom_to_analysis", "End of the period to visualize", 
+                                                   choices = c(hms::as_hms(seq(0, 60*60*23, 60*30)), hms::as_hms(60*60*23+60*59), hms::as_hms(60*60*23+60*59+59)),
+                                                   selected = hms::as_hms(60*60*23+60*59+59),
+                                                   selectize=FALSE
+                                            )
+                                ),
                        ),
-                      
+                       fluidRow(
+                         align = "center",
+                         shiny::actionButton("update_graphic2", "Update graphic", class = "btn-return")
+                       ),
+                            
                        #************************
                        # Table of results by day
                        #************************

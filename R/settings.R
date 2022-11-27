@@ -8,7 +8,7 @@ position <- c("hip", "back")
 side <- c("...", "right", "left")
 filter <- c("...", "normal", "LFE")
 axis_weartime <- c("vector magnitude", "vertical axis")
-metrics <- c("axis1", "axis2", "axis3", "vm", "steps", "inclineStanding", "inclineSitting", "inclineLying")
+metrics <- c("axis1", "axis2", "axis3", "vm", "steps")
 equations <- c("...",
                "Freedson et al. (1998) [Adults]",
                "Santos-Lozano et al. (2013) [Adults]",

@@ -15,7 +15,7 @@ Imports:
     dplyr (>= 1.0.10),
     flextable (>= 0.8.2),
     forcats (>= 0.5.2),
-    ggplot2 (>= 3.3.6),
+    ggplot2 (>= 3.4.0),
     golem (>= 0.3.4),
     hms (>= 1.1.2),
     lubridate (>= 1.8.0),
