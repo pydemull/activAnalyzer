@@ -37,7 +37,7 @@ read_agd <- function(file, tz = "UTC") {
   data <- agdb[["data"]] %>%
     dplyr::rename_with(tolower) %>%
     dplyr::rename(
-      timestamp = .data$datatimestamp
+      timestamp = "datatimestamp"
     ) %>%
     dplyr::mutate(
       dplyr::across(tidyselect::vars_select_helpers$where(is.numeric), as.integer)
