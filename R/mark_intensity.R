@@ -18,7 +18,8 @@
 #'     metabolic rate (i.e., 3.5 mLO2/min/kg) and a standard MET is approximately equivalent to 1 kcal/kg/h (Butte et al., 2012; doi: 10.1249/MSS.0b013e3182399c0e).  
 #'     For SED epochs, BMR expressed in kcal/min is directly used. BMR is computed using the \code{\link{compute_bmr}} function that uses sex, age, and weight 
 #'     inputs, and one of the equations retrieved from the paper by Henry et al. (2005; doi: 10.1079/PHN2005801). MET-hours are obtained by multiplying METs by time 
-#'     related to each epoch (e.g., 1/60e of an hour for 1-min epochs), only when the MET value is  >=3.
+#'     related to each epoch (e.g., 1/60e of an hour for 1-min epochs), only when the MET value is  >=3. Of note, kilocalories and MET-hours are initially computed 
+#'     on a 1-min basis, and are then adjusted using a correction factor to correspond to the epoch duration chosen to analyse the accelerometer dataset.
 #'
 #' @param data A dataframe obtained using the \code{\link{prepare_dataset}} and then the \code{\link{mark_wear_time}} functions.
 #' @param col_axis A character value to indicate the name of the variable to be used for determining intensity categories. 
