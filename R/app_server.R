@@ -64,8 +64,8 @@ app_server <- function(input, output, session) {
           "steps" %in% names(init$file) && 
           (
             !(input$sex %in% c("female", "male", "intersex", "undefined", "prefer not to say")) |
-            !(input$age > 0) |
-            !(input$weight > 0)
+            !(input$age > 0 & is.numeric(input$age)) |
+            !(input$weight > 0 & is.numeric(input$weight))
           )
       ) {
         shinyjs::show("box-auto_fill_char")
@@ -1621,14 +1621,16 @@ app_server <- function(input, output, session) {
     
      
              # Returning the list of the results and chosen parameters
-               return(list(
-                 df_with_computed_metrics = df_with_computed_metrics,
-                 results_by_day = results_by_day, 
-                 axis_sed_chosen_name = cut_points()$axis_sed_chosen_name, 
-                 sed_cutpoint_chosen = cut_points()$sed_cutpoint_chosen, 
-                 axis_mvpa_chosen_name = cut_points()$axis_mvpa_chosen_name,
-                 mpa_cutpoint_chosen = cut_points()$mpa_cutpoint_chosen,
-                 vpa_cutpoint_chosen = cut_points()$vpa_cutpoint_chosen)
+               return(
+                 list(
+                   df_with_computed_metrics = df_with_computed_metrics,
+                   results_by_day = results_by_day, 
+                   axis_sed_chosen_name = cut_points()$axis_sed_chosen_name, 
+                   sed_cutpoint_chosen = cut_points()$sed_cutpoint_chosen, 
+                   axis_mvpa_chosen_name = cut_points()$axis_mvpa_chosen_name,
+                   mpa_cutpoint_chosen = cut_points()$mpa_cutpoint_chosen,
+                   vpa_cutpoint_chosen = cut_points()$vpa_cutpoint_chosen
+                   )
                  )
     })
  
@@ -5903,12 +5905,12 @@ app_server <- function(input, output, session) {
     )
     })
     
-   # Exporting inputs for missing PA infos ("Validate configuration" button)
-   # observeEvent(input$Run, {
-   #   shiny::exportTestValues(
-   #     recap_pa_perdiods = recap_pa_perdiods()
-   #   )
-   # })
+  # Exporting inputs for missing PA infos ("Run analysis" button)
+    observeEvent(input$Run, {
+     shiny::exportTestValues(
+       recap_pa_perdiods = recap_pa_perdiods()
+     )
+   })
     
   # Exporting plot showing physical activity intensity marks ("Run" button)
     observeEvent(input$Run, {
