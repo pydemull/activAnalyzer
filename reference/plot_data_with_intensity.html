@@ -64,7 +64,9 @@ with the possibility to specify the metric to visualize.</p>
 <span>  col_nonwear <span class="op">=</span> <span class="st">"non_wearing_count"</span>,</span>
 <span>  col_wear <span class="op">=</span> <span class="st">"wearing_count"</span>,</span>
 <span>  valid_wear_time_start <span class="op">=</span> <span class="st">"00:00:00"</span>,</span>
-<span>  valid_wear_time_end <span class="op">=</span> <span class="st">"23:59:00"</span></span>
+<span>  valid_wear_time_end <span class="op">=</span> <span class="st">"23:59:59"</span>,</span>
+<span>  zoom_from <span class="op">=</span> <span class="st">"00:00:00"</span>,</span>
+<span>  zoom_to <span class="op">=</span> <span class="st">"23:59:59"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -96,6 +98,14 @@ with the possibility to specify the metric to visualize.</p>
 
 <dt>valid_wear_time_end</dt>
 <dd><p>A character value with the HH:MM:SS format to set the end of the daily period that will be considered for computing valid wear time.</p></dd>
+
+
+<dt>zoom_from</dt>
+<dd><p>A character value with the HH:MM:SS format to set the start of the daily period to visualize.</p></dd>
+
+
+<dt>zoom_to</dt>
+<dd><p>A character value with the HH:MM:SS format to set the end of the daily period to visualize.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -146,7 +156,9 @@ with the possibility to specify the metric to visualize.</p>
 <span class="r-in"><span>    data <span class="op">=</span> <span class="va">mydata_with_intensity_marks</span>,</span></span>
 <span class="r-in"><span>    metric <span class="op">=</span> <span class="st">"vm"</span>,</span></span>
 <span class="r-in"><span>    valid_wear_time_start <span class="op">=</span> <span class="st">"00:00:00"</span>,</span></span>
-<span class="r-in"><span>    valid_wear_time_end <span class="op">=</span> <span class="st">"23:59:00"</span></span></span>
+<span class="r-in"><span>    valid_wear_time_end <span class="op">=</span> <span class="st">"23:59:59"</span>,</span></span>
+<span class="r-in"><span>    zoom_from <span class="op">=</span> <span class="st">"02:00:00"</span>,</span></span>
+<span class="r-in"><span>    zoom_to <span class="op">=</span> <span class="st">"23:58:00"</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_data_with_intensity-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
