@@ -3,7 +3,7 @@
 #' @param period A character string pointing to the module id from which information
 #'     have to be catched
 #'
-#' @return
+#' @return A dataframe
 #'
 get_pa_period_info <- function(period) {
   
