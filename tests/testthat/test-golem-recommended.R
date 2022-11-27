@@ -1,7 +1,7 @@
 ##############
 # TESTS FOR UI
 ##############
-
+ 
 test_that("app ui", {
   ui <- app_ui()
   golem::expect_shinytaglist(ui)
@@ -27,7 +27,7 @@ test_that("app server", {
 })
 
 # Configure this test to fit your need
-#test_that(
+# test_that(
 #  "app launches",{
 #    golem::expect_running(sleep = 5)
 #  }
@@ -38,357 +38,323 @@ test_that("The server functions correctly work", {
 
   skip_on_cran() # This is set because PhantomJS is not found on Debian platform during CRAN submission pre-tests.
   
-  # Building a new environment with variables having to be seen globally for passing tests
-    test_activAnalyzer_env <- new.env()
-    test_activAnalyzer_env$Study <- "Study"
-    test_activAnalyzer_env$Metric <- "Metric"
-    test_activAnalyzer_env$Score <- "Score"
-    test_activAnalyzer_env$Date <- "Date"
-    test_activAnalyzer_env$wear_time <- "wear_time"
-    test_activAnalyzer_env$validity <- "validity"
-    test_activAnalyzer_env$col_time_stamp <- "col_time_stamp"
-    test_activAnalyzer_env$Range <- "Range"
-    test_activAnalyzer_env$Intervalle <- "Intervalle"
-    test_activAnalyzer_env$Selected_Day_ID <- "Selected_Day_ID"
-    test_activAnalyzer_env$Steps_score <- "Steps_score"
-    test_activAnalyzer_env$VMU_score <- "VMU_score"
-    test_activAnalyzer_env$Validity <- "Validity"
-    test_activAnalyzer_env$Item <- "Item"
-    test_activAnalyzer_env$Day <- "Day"
-    test_activAnalyzer_env$score_type <- "score_type"
-    test_activAnalyzer_env$difficulty_score_raw <- "difficulty_score_raw"
-    test_activAnalyzer_env$difficulty_score_raw_diff <- "difficulty_score_raw_diff"
-    test_activAnalyzer_env$difficulty_score_raw_quant <- "difficulty_score_raw_quant"
-    test_activAnalyzer_env$difficulty_score_rasch <- "difficulty_score_rasch"
-    test_activAnalyzer_env$amount_score_raw <- "amount_score_raw"
-    test_activAnalyzer_env$amount_score_raw_diff <- "amount_score_raw_diff"
-    test_activAnalyzer_env$amount_score_raw_quant <- "amount_score_raw_quant"
-    test_activAnalyzer_env$amount_score_rasch <- "amount_score_rasch"
-    test_activAnalyzer_env$total_score_raw <- "total_score_raw"
-    test_activAnalyzer_env$total_score_rasch <- "total_score_rasch"
-    test_activAnalyzer_env$Jour <- "Jour"
-    test_activAnalyzer_env$init <- "init"
-    test_activAnalyzer_env$users <- "users"
-    assign("equations_mets", activAnalyzer:::equations_mets, envir = test_activAnalyzer_env)
-    assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = test_activAnalyzer_env)
-    assign("sed_cutpoints", activAnalyzer:::sed_cutpoints, envir = test_activAnalyzer_env)
-    
+#===============================================================================
+# Setting environment
+#===============================================================================
 
-  # Attaching new environment so that variables defined above as global can be located during testing
-    attach(test_activAnalyzer_env)
+# Building a new environment with variables having to be seen globally for passing tests
+test_activAnalyzer_env <- new.env()
+test_activAnalyzer_env$Study <- "Study"
+test_activAnalyzer_env$Metric <- "Metric"
+test_activAnalyzer_env$Score <- "Score"
+test_activAnalyzer_env$Date <- "Date"
+test_activAnalyzer_env$wear_time <- "wear_time"
+test_activAnalyzer_env$validity <- "validity"
+test_activAnalyzer_env$col_time_stamp <- "col_time_stamp"
+test_activAnalyzer_env$Range <- "Range"
+test_activAnalyzer_env$Intervalle <- "Intervalle"
+test_activAnalyzer_env$Selected_Day_ID <- "Selected_Day_ID"
+test_activAnalyzer_env$Steps_score <- "Steps_score"
+test_activAnalyzer_env$VMU_score <- "VMU_score"
+test_activAnalyzer_env$Validity <- "Validity"
+test_activAnalyzer_env$Item <- "Item"
+test_activAnalyzer_env$Day <- "Day"
+test_activAnalyzer_env$score_type <- "score_type"
+test_activAnalyzer_env$difficulty_score_raw <- "difficulty_score_raw"
+test_activAnalyzer_env$difficulty_score_raw_diff <- "difficulty_score_raw_diff"
+test_activAnalyzer_env$difficulty_score_raw_quant <- "difficulty_score_raw_quant"
+test_activAnalyzer_env$difficulty_score_rasch <- "difficulty_score_rasch"
+test_activAnalyzer_env$amount_score_raw <- "amount_score_raw"
+test_activAnalyzer_env$amount_score_raw_diff <- "amount_score_raw_diff"
+test_activAnalyzer_env$amount_score_raw_quant <- "amount_score_raw_quant"
+test_activAnalyzer_env$amount_score_rasch <- "amount_score_rasch"
+test_activAnalyzer_env$total_score_raw <- "total_score_raw"
+test_activAnalyzer_env$total_score_rasch <- "total_score_rasch"
+test_activAnalyzer_env$Jour <- "Jour"
+test_activAnalyzer_env$init <- "init"
+test_activAnalyzer_env$users <- "users"
+test_activAnalyzer_env$mod_control_pa_period_view_server <- "mod_control_pa_period_view_server"
+test_activAnalyzer_env$mod_report_pa_period_server <- "mod_report_pa_period_server"
+test_activAnalyzer_env$get_pa_period_info <- "get_pa_period_info"
+test_activAnalyzer_env$mod_report_pa_period_ui <- "mod_report_pa_period_ui"
+test_activAnalyzer_env$mod_report_pa_period_server <- "mod_report_pa_period_server"
 
- 
-  # Creating shinyDriver object
-  
-  app <- shinytest::ShinyDriver$new(
-      run_app(),
-      loadTimeout = 1e+05,
-      shinyOptions = list(test.mode = TRUE)
-  )
+assign("equations_mets", activAnalyzer:::equations_mets, envir = test_activAnalyzer_env)
+assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = test_activAnalyzer_env)
+assign("sed_cutpoints", activAnalyzer:::sed_cutpoints, envir = test_activAnalyzer_env)
   
 
-  # Loading data file inside and outside the app
-    app$uploadFile(upload = "acc.agd")
-    test_file <- "acc.agd"
-    
-  # Testing auto-filling patient information
-    app$setInputs(
-      assessor_name = "Doe",
-      assessor_surname = "John",
-      patient_name = "Doe",
-      patient_surname = "Jane", 
-      sex = "female",
-      age = 67,
-      weight = 86,
-      side = "right"
-    )
-    
-    app$setInputs(auto_fill_char = "click")
-    
-    test_list <-
-      list(
-        "Doe",
-        "John",
-        "Doe",
-        "Jane",
-        "female",
-        67,
-        86,
-        "right"
-        
-      )
-    
-    actual_list <-
-      list(
-        app$getAllValues()$export[["assessor_name"]],
-        app$getAllValues()$export[["assessor_surname"]],
-        app$getAllValues()$export[["patient_name"]],
-        app$getAllValues()$export[["patient_surname"]],
-        app$getAllValues()$export[["sex"]],
-        app$getAllValues()$export[["age"]],
-        app$getAllValues()$export[["weight"]],
-        app$getAllValues()$export[["side"]]
-      )
-    
-    expect_equal(actual_list, test_list)
+# Attaching new environment so that variables defined above as global can be located during testing
+attach(test_activAnalyzer_env)
 
-  # Testing dataframe marked for wear time
-    
-      # Test 1
-        app$setInputs(
-          to_epoch = 60,
-          axis_weartime = "vertical axis", 
-          frame_size = 60, 
-          allowanceFrame_size = 1, 
-          streamFrame_size = 20
-          )
-        
-        app$setInputs(validate = "click")
-        
-        actual_df <- app$getAllValues()$export[["df"]]
-        test_df <- 
-          prepare_dataset(data = test_file) %>%
-          mark_wear_time(
-            to_epoch = 60,
-            cts  = "axis1", 
-            frame = 60, 
-            allowanceFrame = 1, 
-            streamFrame = 20
-            ) 
-        
-        expect_equal(actual_df, test_df)
+#===============================================================================
+# Creating app object
+#===============================================================================
      
-     # Test 2
-       app$setInputs(
-         to_epoch = 60,
-         axis_weartime = "vector magnitude", 
-         frame_size = 30, 
-         allowanceFrame_size = 0, 
-         streamFrame_size = 0
-         )
-       
-       app$setInputs(validate = "click")
-       
-       actual_df <- app$getAllValues()$export[["df"]]
-       test_df <- 
-         prepare_dataset(data = test_file) %>%
-         mark_wear_time(
-           to_epoch = 60,
-           cts  = "vm", 
-           frame = 30, 
-           allowanceFrame = 0,
-           streamFrame = 0
-           )
-       
-       expect_equal(actual_df, test_df)
-       
-       
-    # Testing for reseting inputs for the configuration of nonwear/wear time analysis
-       app$setInputs(reset_nonwear = "click")
-       
-       test_list <-
-         list(
-           60,
-           "vector magnitude",
-           90,
-           2,
-           30
-           )
-       
-       actual_list <-
-         list(
-           app$getAllValues()$export[["to_epoch"]],
-           app$getAllValues()$export[["axis_weartime"]],
-           app$getAllValues()$export[["frame_size"]],
-           app$getAllValues()$export[["allowanceFrame_size"]],
-           app$getAllValues()$export[["streamFrame_size"]]
-           )
-       
-       expect_equal(actual_list, test_list)
-       
+# Creating shinyDriver object
+app <- shinytest::ShinyDriver$new(
+  run_app(),
+  loadTimeout = 1e+5,
+  shinyOptions = list(test.mode = TRUE)
+)
+  
+#===============================================================================
+# Loading data file inside and outside the app
+#===============================================================================
+
+app$uploadFile(upload = "acc.agd")
+test_file <- "acc.agd"
+
+#===============================================================================
+# Testing auto-filling patient information
+#===============================================================================
     
-    # Testing plot showing nonwear/wear time after clicking the "Validate configuration"
-    # button for the first time
-       
-       app$setInputs(validate = "click")
+# Setting reference inputs
+test_list <-
+ list(
+   "Doe",
+   "John",
+   "Doe",
+   "Jane",
+   "female",
+   67,
+   86,
+   "right"
+ )
+
+# Setting inputs in the app
+app$setInputs(auto_fill_char = "click")
+    
+# Getting actual inputs in the app
+actual_list <-
+  list(
+    app$getAllValues()$export[["assessor_name"]],
+    app$getAllValues()$export[["assessor_surname"]],
+    app$getAllValues()$export[["patient_name"]],
+    app$getAllValues()$export[["patient_surname"]],
+    app$getAllValues()$export[["sex"]],
+    app$getAllValues()$export[["age"]],
+    app$getAllValues()$export[["weight"]],
+    app$getAllValues()$export[["side"]]
+  )
+
+# Testing
+expect_equal(actual_list, test_list)
+
+#===============================================================================
+# Testing dataframe marked for wear time
+#===============================================================================
+
+# Test 1
+      # Setting reference results
+      test_df <- 
+        prepare_dataset(data = test_file) %>%
+        mark_wear_time(
+          to_epoch = 60,
+          cts  = "axis1", 
+          frame = 60, 
+          allowanceFrame = 1, 
+          streamFrame = 20
+        ) 
       
-       test_gg_nonwear <- str(plot_data(test_df))
-       actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_init"]])
-       expect_equal(actual_gg_nonwear, test_gg_nonwear)
-       
-    # Testing plot showing nonwear/wear time after clicking the "Update graphic" button 
-       
+       # Setting inputs in the app
        app$setInputs(
+           to_epoch = 60,
+           axis_weartime = "vertical axis", 
+           frame_size = 60, 
+           allowanceFrame_size = 1, 
+           streamFrame_size = 20
+          )
+          app$setInputs(validate = "click")
+          actual_df <- app$getAllValues()$export[["df"]]
+        
+
+       # Testing    
+         expect_equal(actual_df, test_df)
+     
+# Test 2
+      # Setting reference results
+         actual_df <- app$getAllValues()$export[["df"]]
+         test_df <- 
+           prepare_dataset(data = test_file) %>%
+           mark_wear_time(
+             to_epoch = 60,
+             cts  = "vm", 
+             frame = 30, 
+             allowanceFrame = 0,
+             streamFrame = 0
+           )
+         
+       # Setting inputs in the app  
+         app$setInputs(
+           to_epoch = 60,
+           axis_weartime = "vector magnitude", 
+           frame_size = 30, 
+           allowanceFrame_size = 0, 
+           streamFrame_size = 0
+           )
+         app$setInputs(validate = "click")
+       
+        # Testing    
+          expect_equal(actual_df, test_df)
+       
+#================================================================================
+# Testing for resetting inputs for the configuration of nonwear/wear time analysis
+#================================================================================
+  
+# Setting reference results
+test_list <-
+  list(
+    60,
+    "vector magnitude",
+    90,
+    2,
+    30
+  )  
+
+# Setting inputs in the app
+app$setInputs(reset_nonwear = "click")
+actual_list <-
+ list(
+   app$getAllValues()$export[["to_epoch"]],
+   app$getAllValues()$export[["axis_weartime"]],
+   app$getAllValues()$export[["frame_size"]],
+   app$getAllValues()$export[["allowanceFrame_size"]],
+   app$getAllValues()$export[["streamFrame_size"]]
+   )
+
+# Testing    
+expect_equal(actual_list, test_list)
+       
+#===================================================================================
+# Testing plot showing nonwear/wear time after clicking the "Validate configuration"
+# button for the first time
+#===================================================================================
+
+# Setting reference results
+test_gg_nonwear <- str(plot_data(test_df))
+
+# Setting inputs in the app
+app$setInputs(validate = "click")
+actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_init"]])
+
+# Testing    
+expect_equal(actual_gg_nonwear, test_gg_nonwear)
+
+#==================================================================================
+# Testing plot showing nonwear/wear time after clicking the "Update graphic" button 
+#==================================================================================
+
+# Setting reference results
+test_gg_nonwear <- 
+  str(
+    plot_data(
+      data = test_df,
+      metric = "vm",
+      zoom_from = "10:00:00",
+      zoom_to = "20:00:00"
+    )
+  )
+
+# Setting inputs in the app
+app$setInputs(
          Metric = "vm", 
          zoom_from_weartime = "10:00:00", 
          zoom_to_weartime = "20:00:00", 
          update_graphic = "click"
          )
-       
-       test_gg_nonwear <- 
-         str(
-           plot_data(
-             data = test_df,
-             metric = "vm",
-             zoom_from = "10:00:00",
-             zoom_to = "20:00:00"
-             )
-           )
-       actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_update"]])
-       expect_equal(actual_gg_nonwear, test_gg_nonwear)  
-       
-     # Testing plot showing nonwear/wear time after clicking the "Validate configuration"
-     # button after using the "Update graphic" button
-       
-       app$setInputs(validate = "click")
-       
-       test_gg_nonwear <- str(plot_data(test_df))
-       actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_init"]])
-       expect_equal(actual_gg_nonwear, test_gg_nonwear)
-       
-    # Testing auto-filling activity intensity analyzis
-       app$setInputs(
+actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_update"]])
+
+# Testing 
+expect_equal(actual_gg_nonwear, test_gg_nonwear)  
+
+#====================================================================================
+ # Testing plot showing nonwear/wear time after clicking the "Validate configuration"
+ # button after using the "Update graphic" button
+#====================================================================================
+
+# Setting reference results
+test_gg_nonwear <- str(plot_data(test_df))
+
+# Setting inputs in the app
+app$setInputs(validate = "click")
+actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_init"]])
+
+# Testing 
+expect_equal(actual_gg_nonwear, test_gg_nonwear)
+
+#===============================================================================
+# Testing auto-filling activity intensity analyzis
+#===============================================================================
+
+# Setting reference results
+test_list <-
+  list(
+    "Santos-Lozano et al. (2013) [Older adults]",
+    "Aguilar-Farias et al. (2014) [Older adults]",
+    "Santos-Lozano et al. (2013) [Older adults]"
+    
+  )
+
+# Setting inputs in the app
+app$setInputs(
          equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
          sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]",
          mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]"
        )
-       
-       app$setInputs(auto_fill_intensity = "click")
-       
-       test_list <-
-         list(
-           "Santos-Lozano et al. (2013) [Older adults]",
-           "Aguilar-Farias et al. (2014) [Older adults]",
-           "Santos-Lozano et al. (2013) [Older adults]"
-           
-         )
-       
-       actual_list <-
+app$setInputs(auto_fill_intensity = "click")
+actual_list <-
          list(
            app$getAllValues()$export[["equation_mets"]],
            app$getAllValues()$export[["sed_cutpoint"]],
            app$getAllValues()$export[["mvpa_cutpoint"]]
          )
+# Testing 
+expect_equal(actual_list, test_list)
+
        
-       
-       
-    # Testing dataframe with results by day
-       
-        # Test 1 / Equation: Sasaki et al. (2011) [Adults]; MVPA cut-points: Sasaki et al. (2011) [Adults];
-        # SED cut-point: Aguilar-Farias et al. (2014) [Older adults]
-          app$setInputs(
+#===============================================================================
+# Testing dataframe with results by day
+#===============================================================================
+
+# Test 1 / Equation: Sasaki et al. (2011) [Adults]; MVPA cut-points: Sasaki et al. (2011) [Adults];
+# SED cutpoints: Aguilar-Farias et al. (2014) [Older adults]
+
+       # Setting reference results
+       test_results_by_day <-
+         test_df %>%
+         mark_intensity(
+           col_axis = "vm", 
+           sed_cutpoint = 200, 
+           mpa_cutpoint = 2690, 
+           vpa_cutpoint = 6167,
+           equation = "Sasaki et al. (2011) [Adults]", 
+           age = 32, weight = 67, sex = "male"
+         ) %>%
+         recap_by_day(
+           age = 32, 
+           weight = 67, 
+           sex = "male"
+         )
+        
+        # Setting inputs in the app
+        app$setInputs(
             age = 32,
             weight = 67,
             sex = "male",
             equation_mets = "Sasaki et al. (2011) [Adults]",
             mvpa_cutpoint = "Sasaki et al. (2011) [Adults]",
             sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]")
-    
-           app$setInputs(Run = "click")
-           
-           actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
-           
-           test_results_by_day <-
-             test_df %>%
-             mark_intensity(
-               col_axis = "vm", 
-               sed_cutpoint = 200, 
-               mpa_cutpoint = 2690, 
-               vpa_cutpoint = 6167,
-               equation = "Sasaki et al. (2011) [Adults]", 
-               age = 32, weight = 67, sex = "male"
-               ) %>%
-             recap_by_day(
-               age = 32, 
-               weight = 67, 
-               sex = "male"
-               )
-           
-           expect_equal(actual_results_by_day, test_results_by_day)
-           
-         # Test 2 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
-         # SED cut-point: Aguilar-Farias et al. (2014) [Older adults]
-           app$setInputs(
-             age = 64,
-             weight = 67,
-             sex = "intersex",
-             equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
-             mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]",
-             sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]")
-           
-           app$setInputs(Run = "click")
-           
-           actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
-           
-           test_results_by_day <-
-             test_df %>%
-             mark_intensity(
-               col_axis = "vm", 
-               sed_cutpoint = 200, 
-               mpa_cutpoint = 2751, 
-               vpa_cutpoint = 9359,
-               equation = "Santos-Lozano et al. (2013) [Older adults]", 
-               age = 64, 
-               weight = 67,
-               sex = "intersex"
-             ) %>%
-             recap_by_day( 
-               age = 64, 
-               weight = 67,
-               sex = "intersex"
-             )
-           
-           expect_equal(actual_results_by_day, test_results_by_day)
-           
-           
-         # Test 3 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
-         # SED cut-point: Aguilar-Farias et al. (2014) [Older adults]
-           app$setInputs(
-             age = 64,
-             weight = 67,
-             sex = "prefer not to say",
-             equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
-             mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]",
-             sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]")
-           
-           app$setInputs(Run = "click")
-           
-           actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
-           
-           test_results_by_day <-
-             test_df %>%
-             mark_intensity(
-               col_axis = "vm", 
-               sed_cutpoint = 200, 
-               mpa_cutpoint = 2751, 
-               vpa_cutpoint = 9359,
-               equation = "Santos-Lozano et al. (2013) [Older adults]", 
-               age = 64, 
-               weight = 67,
-               sex = "prefer not to say"
-             ) %>%
-             recap_by_day( 
-               age = 64, 
-               weight = 67,
-               sex = "prefer not to say"
-             )
-           
-           expect_equal(actual_results_by_day, test_results_by_day)
-           
-      # Test 4 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
-      # SED cut-point: Aguilar-Farias et al. (2014) [Older adults]
-         app$setInputs(
-           age = 64,
-           weight = 67,
-           sex = "male",
-           equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
-           mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]",
-           sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]")
-         
          app$setInputs(Run = "click")
-         
          actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
-         
+           
+         # Testing 
+         expect_equal(actual_results_by_day, test_results_by_day)
+           
+# Test 2 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
+# SED cutpoints: Aguilar-Farias et al. (2014) [Older adults] ; sex: intersex
+    
+         # Setting reference results
          test_results_by_day <-
            test_df %>%
            mark_intensity(
@@ -399,33 +365,105 @@ test_that("The server functions correctly work", {
              equation = "Santos-Lozano et al. (2013) [Older adults]", 
              age = 64, 
              weight = 67,
-             sex = "male"
-             ) %>%
+             sex = "intersex"
+           ) %>%
            recap_by_day( 
              age = 64, 
              weight = 67,
-             sex = "male"
-             )
-         
-         expect_equal(actual_results_by_day, test_results_by_day)
-         
-      # Test 5 / Equation: Santos-Lozano et al. (2013) [Adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Adults];
-      # SED cut-point: Personalized
-         app$setInputs(
-           age = 47,
-           weight = 78,
-           sex = "undefined",
-           equation_mets = "Santos-Lozano et al. (2013) [Adults]",
-           mvpa_cutpoint = "Santos-Lozano et al. (2013) [Adults]",
-           sed_cutpoint = "Personalized...",
-           perso_sed_axis = "vector magnitude",
-           perso_sed_cutpoint = 150
+             sex = "intersex"
            )
          
-         app$setInputs(Run = "click")
+         # Setting inputs the app
+           app$setInputs(
+             age = 64,
+             weight = 67,
+             sex = "intersex",
+             equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
+             mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]",
+             sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]")
+           app$setInputs(Run = "click")
+           actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
+           
+        # Testing 
+        expect_equal(actual_results_by_day, test_results_by_day)
+           
+           
+# Test 3 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
+# SED cutpoints: Aguilar-Farias et al. (2014) [Older adults]; sex: prefer not to say      
+ 
+        # Setting reference results
+        test_results_by_day <-
+          test_df %>%
+          mark_intensity(
+            col_axis = "vm", 
+            sed_cutpoint = 200, 
+            mpa_cutpoint = 2751, 
+            vpa_cutpoint = 9359,
+            equation = "Santos-Lozano et al. (2013) [Older adults]", 
+            age = 64, 
+            weight = 67,
+            sex = "prefer not to say"
+          ) %>%
+          recap_by_day( 
+            age = 64, 
+            weight = 67,
+            sex = "prefer not to say"
+          )
+        
+          # Setting inputs in the app
+           app$setInputs(
+             age = 64,
+             weight = 67,
+             sex = "prefer not to say",
+             equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
+             mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]",
+             sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]")
+           app$setInputs(Run = "click")
+           actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
+           
+          # Testing 
+          expect_equal(actual_results_by_day, test_results_by_day)
+           
+# Test 4 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
+# SED cut-point: Aguilar-Farias et al. (2014) [Older adults]; sex: male
+
+          # Setting reference results
+          test_results_by_day <-
+            test_df %>%
+            mark_intensity(
+              col_axis = "vm", 
+              sed_cutpoint = 200, 
+              mpa_cutpoint = 2751, 
+              vpa_cutpoint = 9359,
+              equation = "Santos-Lozano et al. (2013) [Older adults]", 
+              age = 64, 
+              weight = 67,
+              sex = "male"
+            ) %>%
+            recap_by_day( 
+              age = 64, 
+              weight = 67,
+              sex = "male"
+            )
+          
+          # Setting inputs in the app
+          app$setInputs(
+            age = 64,
+            weight = 67,
+            sex = "male",
+            equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
+            mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]",
+            sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]")
+          app$setInputs(Run = "click")
+          actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
          
-         actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
+         # Testing  
+         expect_equal(actual_results_by_day, test_results_by_day)
          
+# Test 5 / Equation: Santos-Lozano et al. (2013) [Adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Adults];
+# SED cut-point: Personalized
+ 
+         # Setting reference results
          test_results_by_day <-
            test_df %>%
            mark_intensity(
@@ -437,17 +475,49 @@ test_that("The server functions correctly work", {
              age = 47, 
              weight = 78, 
              sex = "undefined"
-             ) %>%
+           ) %>%
            recap_by_day(
              age = 47, 
              weight = 78, 
              sex = "undefined"
-             )
+           )
          
+         # Setting inputs in the app
+         app$setInputs(
+           age = 47,
+           weight = 78,
+           sex = "undefined",
+           equation_mets = "Santos-Lozano et al. (2013) [Adults]",
+           mvpa_cutpoint = "Santos-Lozano et al. (2013) [Adults]",
+           sed_cutpoint = "Personalized...",
+           perso_sed_axis = "vector magnitude",
+           perso_sed_cutpoint = 150
+           )
+         app$setInputs(Run = "click")
+         actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
+         
+         # Testing  
          expect_equal(actual_results_by_day, test_results_by_day)
          
-      # Test 6 / Equation: Freedson et al. (1998) [Adults]; MVPA cut-points: Personalized;
-      # SED cut-point: Personalized
+# Test 6 / Equation: Freedson et al. (1998) [Adults]; MVPA cut-points: Personalized;
+# SED cut-point: Personalized
+
+        # Setting reference results
+         test_results_by_day <-
+           test_df %>%
+           mark_intensity(
+             col_axis = "axis1", 
+             sed_cutpoint = 100, 
+             mpa_cutpoint = 1952, 
+             vpa_cutpoint = 5725,
+             equation = "Freedson et al. (1998) [Adults]", 
+             age = 47, 
+             weight = 78, 
+             sex = "female"
+           ) %>%
+           recap_by_day(age = 47, weight = 78, sex = "female")
+         
+        # Setting inputs in the app
         app$setInputs(
           age = 47,
           weight = 78,
@@ -461,206 +531,222 @@ test_that("The server functions correctly work", {
           perso_sed_axis = "vertical axis",
           perso_sed_cutpoint = 100
           )
-        
         app$setInputs(Run = "click")
-        
         actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
         
-        test_results_by_day <-
-          test_df %>%
-          mark_intensity(
-            col_axis = "axis1", 
-            sed_cutpoint = 100, 
-            mpa_cutpoint = 1952, 
-            vpa_cutpoint = 5725,
-            equation = "Freedson et al. (1998) [Adults]", 
-            age = 47, 
-            weight = 78, 
-            sex = "female"
-            ) %>%
-          recap_by_day(age = 47, weight = 78, sex = "female")
+        # Testing  
+        expect_equal(actual_results_by_day, test_results_by_day)
+
+#=========================================================================================
+# Testing for setting default configuration to validate a day (period and wear time hours)
+#=========================================================================================
+
+# Setting reference results
+test_set_default <-
+ list(
+   "00:00:00",
+   "23:59:59",
+   10
+ )
+
+# Setting inputs in the app
+app$setInputs(reset_period = "click")
+actual_set_default <- 
+ list(
+   app$getAllValues()$export[["start_day_analysis"]],
+   app$getAllValues()$export[["end_day_analysis"]],
+   app$getAllValues()$export[["minimum_wear_time_for_analysis"]]
+ )
+# Testing 
+expect_equal(test_set_default, actual_set_default)
+
+#===============================================================================
+# Testing for setting proactive period (non-sleep wearing protocol)
+#===============================================================================
        
-       expect_equal(actual_results_by_day, test_results_by_day)
+# Setting reference results
+test_set_proactive <-
+          list(
+            "00:00:00",
+            "23:59:59",
+            8
+          )
+# Setting inputs in the app
+app$setInputs(pro_active_period_non_sleep = "click")
+actual_set_proactive <- 
+  list(
+    app$getAllValues()$export[["start_day_analysis"]],
+    app$getAllValues()$export[["end_day_analysis"]],
+    app$getAllValues()$export[["minimum_wear_time_for_analysis"]]
+  )
+
+# Testing 
+expect_equal(actual_set_proactive, test_set_proactive)
        
-    # Testing for setting default configuration to validate a day (period and wear time hours)
-       app$setInputs(reset_period = "click")
-       
-       test_set_default <-
-         list(
-           "00:00:00",
-           "23:59:59",
-           10
-         )
-       
-       actual_set_default <- 
-         list(
-           app$getAllValues()$export[["start_day_analysis"]],
-           app$getAllValues()$export[["end_day_analysis"]],
-           app$getAllValues()$export[["minimum_wear_time_for_analysis"]]
-         )
-       
-       expect_equal(test_set_default, actual_set_default)
-    
-    # Testing for setting proactive period (non-sleep wearing protocol)
-       app$setInputs(pro_active_period_non_sleep = "click")
-       
-       test_set_proactive <-
-         list(
-           "00:00:00",
-           "23:59:59",
-           8
-         )
-       
-       actual_set_proactive <- 
-         list(
-           app$getAllValues()$export[["start_day_analysis"]],
-           app$getAllValues()$export[["end_day_analysis"]],
-           app$getAllValues()$export[["minimum_wear_time_for_analysis"]]
-         )
-       
-       expect_equal(actual_set_proactive, test_set_proactive)
-       
-       
-    # Testing for setting proactive period (24-h wearing protocol)
-      app$setInputs(pro_active_period_24h = "click")
+#===============================================================================
+# Testing for setting proactive period (24-h wearing protocol)
+#===============================================================================
+
+# Setting reference results
+test_set_proactive <-
+  list(
+    "07:00:00",
+    "22:00:00",
+    8
+  )
+
+# Setting inputs in the app
+app$setInputs(pro_active_period_24h = "click")
+actual_set_proactive <- 
+ list(
+   app$getAllValues()$export[["start_day_analysis"]],
+   app$getAllValues()$export[["end_day_analysis"]],
+   app$getAllValues()$export[["minimum_wear_time_for_analysis"]]
+ )
       
-      test_set_proactive <-
-        list(
-          "07:00:00",
-          "22:00:00",
-          8
-        )
-      
-      actual_set_proactive <- 
-        list(
-          app$getAllValues()$export[["start_day_analysis"]],
-          app$getAllValues()$export[["end_day_analysis"]],
-          app$getAllValues()$export[["minimum_wear_time_for_analysis"]]
-        )
-      
-      expect_equal(actual_set_proactive, test_set_proactive)
-     
-   # Testing plot showing PA intensity marks after clicking the "Run"
-   # button for the first time
-      
-      # Set dataset for test
-      test_results <-
-        test_df %>%
-        mark_intensity(
-          col_axis = "axis1", 
-          sed_cutpoint = 100, 
-          mpa_cutpoint = 1952, 
-          vpa_cutpoint = 5725,
-          equation = "Freedson et al. (1998) [Adults]", 
-          age = 47, 
-          weight = 78, 
-          sex = "female"
+# Testing 
+expect_equal(actual_set_proactive, test_set_proactive)
+
+#===========================================================================================
+# Testing plot showing PA intensity marks after clicking the "Run" button for the first time
+#===========================================================================================
+
+# Setting reference results
+test_results <-
+    test_df %>%
+    mark_intensity(
+      col_axis = "axis1", 
+      sed_cutpoint = 100, 
+      mpa_cutpoint = 1952, 
+      vpa_cutpoint = 5725,
+      equation = "Freedson et al. (1998) [Adults]", 
+      age = 47, 
+      weight = 78, 
+      sex = "female"
         ) 
-       
-      app$setInputs(Run = "click")
-      
-      test_gg_nonwear <- str(plot_data_with_intensity(
+
+# Setting inputs in the app
+app$setInputs(Run = "click")
+test_gg_nonwear <- str(plot_data_with_intensity(
         test_results
         ))
-      actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_int_init"]])
-      expect_equal(actual_gg_nonwear, test_gg_nonwear)
-      
-    # Testing plot showing PA intensity marks after clicking the "Update graphic"
-    # button
-      
-      app$setInputs(
+actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_int_init"]])
+
+# Testing 
+expect_equal(actual_gg_nonwear, test_gg_nonwear)
+
+#===================================================================================
+# Testing plot showing PA intensity marks after clicking the "Update graphic" button
+#===================================================================================
+
+# Setting reference results
+test_gg_nonwear <- 
+  str(
+    plot_data_with_intensity(
+      data = test_results,
+      metric = "vm",
+      zoom_from = "10:00:00",
+      zoom_to = "20:00:00"
+    )
+  )
+
+# Setting inputs in the app
+app$setInputs(
         Metric2 = "vm", 
         zoom_from_analysis = "10:00:00", 
         zoom_to_analysis = "20:00:00", 
         update_graphic2 = "click"
         )
+actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_int_update"]])
       
-      test_gg_nonwear <- 
-        str(
-          plot_data_with_intensity(
-            data = test_results,
-            metric = "vm",
-            zoom_from = "10:00:00",
-            zoom_to = "20:00:00"
-          )
-        )
-      actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_int_update"]])
-      expect_equal(actual_gg_nonwear, test_gg_nonwear)  
+# Testing 
+expect_equal(actual_gg_nonwear, test_gg_nonwear)  
 
-    # Testing plot showing PA intensity marks after clicking the "Run"
-    # button after using the "Update graphic" button
-      
-      app$setInputs(Run = "click")
-      
-      test_gg_nonwear <- str(plot_data(test_results))
-      actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_int_init"]])
-      expect_equal(actual_gg_nonwear, test_gg_nonwear)    
+#========================================================================================
+# Testing plot showing PA intensity marks after clicking the "Run" button after using the 
+# "Update graphic" button
+#========================================================================================
+
+# Setting reference results
+test_results_summary_means <- 
+  test_df %>%
+  mark_intensity(
+    col_axis = "axis1", 
+    sed_cutpoint = 100, 
+    mpa_cutpoint = 1952, 
+    vpa_cutpoint = 5725,
+    equation = "Freedson et al. (1998) [Adults]", 
+    age = 47, 
+    weight = 78, 
+    sex = "female"
+  ) %>%
+  recap_by_day(
+    age = 47, 
+    weight = 78, 
+    sex = "female", 
+    valid_wear_time_start = "07:00:00", 
+    valid_wear_time_end = "22:00:00") %>%
+  average_results(minimum_wear_time = 12, fun = "mean")
+test_gg_nonwear <- str(plot_data(test_results))
+
+# Setting inputs in the app
+app$setInputs(Run = "click")
+  actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_int_init"]])
+
+# Testing 
+expect_equal(actual_gg_nonwear, test_gg_nonwear)    
+
+#===============================================================================
+# Testing dataframe with daily summary
+#===============================================================================
+
+# Setting reference results
+test_results_summary_medians <- 
+  test_df %>%
+  mark_intensity(
+    col_axis = "axis1", 
+    sed_cutpoint = 100, 
+    mpa_cutpoint = 1952, 
+    vpa_cutpoint = 5725,
+    equation = "Freedson et al. (1998) [Adults]", 
+    age = 47, 
+    weight = 78, 
+    sex = "female"
+  ) %>%
+  recap_by_day(
+    age = 47, 
+    weight = 78, 
+    sex = "female", 
+    valid_wear_time_start = "07:00:00", 
+    valid_wear_time_end = "22:00:00") %>%
+  average_results(minimum_wear_time = 12, fun = "median")
+
+
+# Setting inputs in the app
+app$setInputs(minimum_wear_time_for_analysis = 12)
+app$setInputs(Run = "click")
        
-    # Testing dataframe with daily summary
-       app$setInputs(minimum_wear_time_for_analysis = 12)
-       app$setInputs(Run = "click")
-       
-       # With means
-         actual_results_summary_means <- app$getAllValues()$export[["results_summary_means"]]
+  # With means
+    actual_results_summary_means <- app$getAllValues()$export[["results_summary_means"]]
+  
+  # With medians
+    actual_results_summary_medians <- app$getAllValues()$export[["results_summary_medians"]]
+  
+# Testing 
+expect_equal(actual_results_summary_means, test_results_summary_means)      
+expect_equal(actual_results_summary_medians, test_results_summary_medians)
          
-         test_results_summary_means <- 
-           test_df %>%
-           mark_intensity(
-             col_axis = "axis1", 
-             sed_cutpoint = 100, 
-             mpa_cutpoint = 1952, 
-             vpa_cutpoint = 5725,
-             equation = "Freedson et al. (1998) [Adults]", 
-             age = 47, 
-             weight = 78, 
-             sex = "female"
-             ) %>%
-           recap_by_day(
-             age = 47, 
-             weight = 78, 
-             sex = "female", 
-             valid_wear_time_start = "07:00:00", 
-             valid_wear_time_end = "22:00:00") %>%
-           average_results(minimum_wear_time = 12, fun = "mean")
-         
-         expect_equal(actual_results_summary_means, test_results_summary_means)
-         
-       
-       # With medians
-         actual_results_summary_medians <- app$getAllValues()$export[["results_summary_medians"]]
-         
-         test_results_summary_medians <- 
-           test_df %>%
-           mark_intensity(
-             col_axis = "axis1", 
-             sed_cutpoint = 100, 
-             mpa_cutpoint = 1952, 
-             vpa_cutpoint = 5725,
-             equation = "Freedson et al. (1998) [Adults]", 
-             age = 47, 
-             weight = 78, 
-             sex = "female"
-           ) %>%
-           recap_by_day(
-             age = 47, 
-             weight = 78, 
-             sex = "female", 
-             valid_wear_time_start = "07:00:00", 
-             valid_wear_time_end = "22:00:00") %>%
-           average_results(minimum_wear_time = 12, fun = "median")
-         
-         expect_equal(actual_results_summary_medians, test_results_summary_medians)
-         
-       
-       
-    # Testing BMR computation
-      test_bmr <- 9.74 * 78 + 694
-      actual_bmr <- app$getAllValues()$export[["BMR"]]
-      
-      expect_equal(actual_bmr, test_bmr)
-      
-    # Testing computed PROactive scores
-      
+#===============================================================================
+# Testing BMR computation
+#===============================================================================
+test_bmr <- 9.74 * 78 + 694
+actual_bmr <- app$getAllValues()$export[["BMR"]]
+expect_equal(actual_bmr, test_bmr)
+   
+#===============================================================================
+# Testing computed PROactive scores
+#===============================================================================
+
       # Setting inputs for all tests
         app$setInputs(
           age = 25,
@@ -1775,12 +1861,20 @@ test_that("The server functions correctly work", {
                 # Testing Total score (rasch)
                 expect_equal(mean_score_dppac_tot_rasch_fr, round((100/2*4+90/2)/5, 1))
                 
-            
-        # Detaching the environment created above
-          detach(test_activAnalyzer_env)
+ 
+#=============================================================================
+# Testing results obtained when setting additionnal PA periods (self-reported)
+#=============================================================================
+          
+                
+#===============================================================================
+# END
+#===============================================================================
+
+# Detaching the environment attached at the begining of the file (line 81)
+  detach(test_activAnalyzer_env)
                 
 })      
-    
     
     
 
