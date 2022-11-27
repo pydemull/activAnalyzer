@@ -105,7 +105,7 @@ all_days <-
   ggtitle("Results by day") +
   geom_bar(stat = "identity") +
   geom_point(size = 2, color = "red") +
-  geom_line(aes(group = 1), size = 0.7, color = "red") +
+  geom_line(aes(group = 1), linewidth = 0.7, color = "red") +
   geom_text(aes(label = round(value, 1)), size = label_text_size, vjust = -0.8) +
   labs(x = "Date", y = "", fill = "") +
   scale_y_continuous(expand = expansion(mult = c(.05, .2))) +
@@ -183,7 +183,7 @@ if (language == "fr") {
     ggtitle("R\u00e9sultats par jour") +
     geom_bar(stat = "identity") +
     geom_point(size = 2, color = "red") +
-    geom_line(aes(group = 1), size = 0.7, color = "red") +
+    geom_line(aes(group = 1), linewidth = 0.7, color = "red") +
     geom_text(aes(label = round(value, 1)), size = label_text_size, vjust = -0.8) +
     labs(x = "Date", y = "", fill = "") +
     scale_y_continuous(expand = expansion(mult = c(.05, .2))) +
