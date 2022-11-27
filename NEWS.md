@@ -13,6 +13,7 @@
 * Added the possibility to zoom in on the figures of the app.
 * Added the possibility to provide information about potential relevant physical activity periods that would have modified physical activity level but that could not be recorded due to accelerometer removal.
 * Added alert message for the figure with steps (report) when the score is beyond the upper limit of the x axis.
+* Corrected a bug: the app crashed when changing age or weight inputs after a data file was loaded. This is now fixed.
 
 # activAnalyzer 1.0.5
 

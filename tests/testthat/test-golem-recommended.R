@@ -103,7 +103,9 @@ app <- shinytest::ShinyDriver$new(
 #===============================================================================
 
 app$uploadFile(upload = "acc.agd")
+# app$uploadFile(upload = "inst/extdata/acc.agd")
 test_file <- "acc.agd"
+# test_file <- "inst/extdata/acc.agd"
 
 #===============================================================================
 # Testing auto-filling patient information
@@ -1865,7 +1867,306 @@ expect_equal(actual_bmr, test_bmr)
 #=============================================================================
 # Testing results obtained when setting additionnal PA periods (self-reported)
 #=============================================================================
-          
+
+# Table of inputs should initially have 0 line                        
+recap_pa_perdiods <- app$getAllValues()$export[["recap_pa_perdiods"]]
+n <- nrow(recap_pa_perdiods)                
+expect_equal(n, 0)
+
+# Setting reference inputs
+test_bmr <- 9.74 * 78 + 694
+
+ref_inputs_tab <- 
+  data.frame(
+    date = c(rep("2021-04-08", 4), rep("2021-04-09", 4), rep("2021-04-10", 4), rep("2021-04-11", 3)),
+    start_hh_num = c(rep(c(0, 1, 2, 3), 3), c(0, 1, 2)),
+    start_mm_num = rep(31, 15),
+    end_hh_num = c(rep(c(1, 2, 3, 4), 3), c(1, 2, 3)),
+    end_mm_num = rep(30, 15),
+    METS = c(rep(1, 4), rep(2, 4), rep(3, 4), rep(8, 3))
+  ) %>%
+  dplyr::mutate(
+    start = hms::as_hms(start_hh_num*3600 + start_mm_num*60),
+    end = hms::as_hms(end_hh_num*3600 + end_mm_num*60)
+  ) %>%
+  dplyr::select(date, start, end, METS)
+
+test_results_summary <- 
+  test_df %>%
+  mark_intensity(
+    col_axis = "axis1", 
+    sed_cutpoint = 100, 
+    mpa_cutpoint = 1952, 
+    vpa_cutpoint = 5725,
+    equation = "Freedson et al. (1998) [Adults]", 
+    age = 47, 
+    weight = 78, 
+    sex = "female"
+  ) %>%
+  recap_by_day(
+    age = 47, 
+    weight = 78, 
+    sex = "female"
+    ) %>%
+  dplyr::mutate(
+    wear_time = dplyr::case_when(
+      date == "2021-04-07" ~ wear_time,
+      date == "2021-04-08" ~ wear_time + 4*60,
+      date == "2021-04-09" ~ wear_time + 4*60,
+      date == "2021-04-10" ~ wear_time + 4*60,
+      date == "2021-04-11" ~ wear_time + 3*60,
+      date == "2021-04-12" ~ wear_time
+    ),
+    total_kcal = dplyr::case_when(
+      date == "2021-04-07" ~ total_kcal,
+      date == "2021-04-08" ~ total_kcal,
+      date == "2021-04-09" ~ total_kcal - 4*60*(test_bmr/24/60) + 4*60*2*(test_bmr/24/60),
+      date == "2021-04-10" ~ total_kcal - 4*60*(test_bmr/24/60) + 4*60*3*(test_bmr/24/60),
+      date == "2021-04-11" ~ total_kcal - 3*60*(test_bmr/24/60) + 3*60*8*(test_bmr/24/60),
+      date == "2021-04-12" ~ total_kcal
+    ),
+    minutes_SED = dplyr::case_when(
+      date == "2021-04-07" ~ minutes_SED,
+      date == "2021-04-08" ~ minutes_SED + 4*60,
+      date == "2021-04-09" ~ minutes_SED,
+      date == "2021-04-10" ~ minutes_SED,
+      date == "2021-04-11" ~ minutes_SED,
+      date == "2021-04-12" ~ minutes_SED
+    ),
+    minutes_LPA = dplyr::case_when(
+      date == "2021-04-07" ~ minutes_LPA,
+      date == "2021-04-08" ~ minutes_LPA,
+      date == "2021-04-09" ~ minutes_LPA + 4*60,
+      date == "2021-04-10" ~ minutes_LPA,
+      date == "2021-04-11" ~ minutes_LPA,
+      date == "2021-04-12" ~ minutes_LPA
+    ),
+    minutes_MPA = dplyr::case_when(
+      date == "2021-04-07" ~ minutes_MPA,
+      date == "2021-04-08" ~ minutes_MPA,
+      date == "2021-04-09" ~ minutes_MPA,
+      date == "2021-04-10" ~ minutes_MPA + 4*60,
+      date == "2021-04-11" ~ minutes_MPA,
+      date == "2021-04-12" ~ minutes_MPA
+    ),
+    minutes_VPA = dplyr::case_when(
+      date == "2021-04-07" ~ minutes_VPA,
+      date == "2021-04-08" ~ minutes_VPA,
+      date == "2021-04-09" ~ minutes_VPA,
+      date == "2021-04-10" ~ minutes_VPA,
+      date == "2021-04-11" ~ minutes_VPA + 3*60,
+      date == "2021-04-12" ~ minutes_VPA
+    ),
+    mets_hours_mvpa = dplyr::case_when(
+      date == "2021-04-07" ~ mets_hours_mvpa,
+      date == "2021-04-08" ~ mets_hours_mvpa,
+      date == "2021-04-09" ~ mets_hours_mvpa,
+      date == "2021-04-10" ~ mets_hours_mvpa + 4*60/60*3,
+      date == "2021-04-11" ~ mets_hours_mvpa + 3*60/60*8,
+      date == "2021-04-12" ~ mets_hours_mvpa
+    ),
+    total_kcal = round(total_kcal, 2)
+      
+  ) %>%
+  dplyr::select(
+    date, 
+    wear_time, 
+    total_counts_axis1,
+    total_counts_vm,
+    total_steps,
+    total_kcal, 
+    minutes_SED, 
+    minutes_LPA, 
+    minutes_MPA,
+    minutes_VPA,
+    max_steps_60min,
+    max_steps_30min,
+    max_steps_20min,
+    max_steps_5min,
+    max_steps_1min,
+    peak_steps_60min,
+    peak_steps_30min,
+    peak_steps_20min,
+    peak_steps_5min,
+    peak_steps_1min,
+    mets_hours_mvpa
+    )
+
+
+# Getting inputs from the app
+app$setInputs(
+  
+  # Period 1
+  `period_1-corr_date` = "2021-04-08", 
+  `period_1-corr_start_time_hh` = 0, 
+  `period_1-corr_start_time_mm` = 31,
+  `period_1-corr_end_time_hh` = 1,
+  `period_1-corr_end_time_mm` = 30,
+  `period_1-corr_mets` = 1,
+
+  # Period 2
+  `period_2-corr_date` = "2021-04-08", 
+  `period_2-corr_start_time_hh` = 1, 
+  `period_2-corr_start_time_mm` = 31,
+  `period_2-corr_end_time_hh` = 2,
+  `period_2-corr_end_time_mm` = 30,
+  `period_2-corr_mets` = 1,
+  
+  # Period 3
+  `period_3-corr_date` = "2021-04-08", 
+  `period_3-corr_start_time_hh` = 2, 
+  `period_3-corr_start_time_mm` = 31,
+  `period_3-corr_end_time_hh` = 3,
+  `period_3-corr_end_time_mm` = 30,
+  `period_3-corr_mets` = 1,
+  
+  # period 4
+  `period_4-corr_date` = "2021-04-08", 
+  `period_4-corr_start_time_hh` = 3, 
+  `period_4-corr_start_time_mm` = 31,
+  `period_4-corr_end_time_hh` = 4,
+  `period_4-corr_end_time_mm` = 30,
+  `period_4-corr_mets` = 1,
+  
+  # period 5
+  `period_5-corr_date` = "2021-04-09", 
+  `period_5-corr_start_time_hh` = 0, 
+  `period_5-corr_start_time_mm` = 31,
+  `period_5-corr_end_time_hh` = 1,
+  `period_5-corr_end_time_mm` = 30,
+  `period_5-corr_mets` = 2,
+  
+  # period 6
+  `period_6-corr_date` = "2021-04-09", 
+  `period_6-corr_start_time_hh` = 1, 
+  `period_6-corr_start_time_mm` = 31,
+  `period_6-corr_end_time_hh` = 2,
+  `period_6-corr_end_time_mm` = 30,
+  `period_6-corr_mets` = 2,
+  
+  # period 7
+  `period_7-corr_date` = "2021-04-09", 
+  `period_7-corr_start_time_hh` = 2, 
+  `period_7-corr_start_time_mm` = 31,
+  `period_7-corr_end_time_hh` = 3,
+  `period_7-corr_end_time_mm` = 30,
+  `period_7-corr_mets` = 2,
+  
+  # period 8
+  `period_8-corr_date` = "2021-04-09", 
+  `period_8-corr_start_time_hh` = 3, 
+  `period_8-corr_start_time_mm` = 31,
+  `period_8-corr_end_time_hh` = 4,
+  `period_8-corr_end_time_mm` = 30,
+  `period_8-corr_mets` = 2,
+  
+  # period 9
+  `period_9-corr_date` = "2021-04-10", 
+  `period_9-corr_start_time_hh` = 0, 
+  `period_9-corr_start_time_mm` = 31,
+  `period_9-corr_end_time_hh` = 1,
+  `period_9-corr_end_time_mm` = 30,
+  `period_9-corr_mets` = 3,
+  
+  # period 10
+  `period_10-corr_date` = "2021-04-10", 
+  `period_10-corr_start_time_hh` = 1, 
+  `period_10-corr_start_time_mm` = 31,
+  `period_10-corr_end_time_hh` = 2,
+  `period_10-corr_end_time_mm` = 30,
+  `period_10-corr_mets` = 3,
+  
+  # period 11
+  `period_11-corr_date` = "2021-04-10", 
+  `period_11-corr_start_time_hh` = 2, 
+  `period_11-corr_start_time_mm` = 31,
+  `period_11-corr_end_time_hh` = 3,
+  `period_11-corr_end_time_mm` = 30,
+  `period_11-corr_mets` = 3,
+  
+  # period 12
+  `period_12-corr_date` = "2021-04-10", 
+  `period_12-corr_start_time_hh` = 3, 
+  `period_12-corr_start_time_mm` = 31,
+  `period_12-corr_end_time_hh` = 4,
+  `period_12-corr_end_time_mm` = 30,
+  `period_12-corr_mets` = 3,
+  
+  # period 13
+  `period_13-corr_date` = "2021-04-11", 
+  `period_13-corr_start_time_hh` = 0, 
+  `period_13-corr_start_time_mm` = 31,
+  `period_13-corr_end_time_hh` = 1,
+  `period_13-corr_end_time_mm` = 30,
+  `period_13-corr_mets` = 8,
+  
+  # period 14
+  `period_14-corr_date` = "2021-04-11", 
+  `period_14-corr_start_time_hh` = 1, 
+  `period_14-corr_start_time_mm` = 31,
+  `period_14-corr_end_time_hh` = 2,
+  `period_14-corr_end_time_mm` = 30,
+  `period_14-corr_mets` = 8,
+  
+  # period 15
+  `period_15-corr_date` = "2021-04-11", 
+  `period_15-corr_start_time_hh` = 2, 
+  `period_15-corr_start_time_mm` = 31,
+  `period_15-corr_end_time_hh` = 3,
+  `period_15-corr_end_time_mm` = 30,
+  `period_15-corr_mets` = 8,
+  
+  # other inputs
+    age = 47,
+    weight = 78,
+    sex = "female",
+    equation_mets = "Freedson et al. (1998) [Adults]",
+    mvpa_cutpoint = "Personalized...",
+    perso_mvpa_axis = "vertical axis",
+    perso_mpa_cutpoint = 1952,
+    perso_vpa_cutpoint = 5725,
+    sed_cutpoint = "Personalized...",
+    perso_sed_axis = "vertical axis",
+    perso_sed_cutpoint = 100,
+    reset_period = "click",
+  
+  # Click on the Run button
+  Run = "click"
+)
+
+recap_pa_perdiods <- app$getAllValues()$export[["recap_pa_perdiods"]]
+actual_results_summary <- app$getAllValues()$export[["results_by_day"]] %>%
+  dplyr::select(
+    date, 
+    wear_time, 
+    total_counts_axis1,
+    total_counts_vm,
+    total_steps,
+    total_kcal, 
+    minutes_SED, 
+    minutes_LPA, 
+    minutes_MPA,
+    minutes_VPA,
+    max_steps_60min,
+    max_steps_30min,
+    max_steps_20min,
+    max_steps_5min,
+    max_steps_1min,
+    peak_steps_60min,
+    peak_steps_30min,
+    peak_steps_20min,
+    peak_steps_5min,
+    peak_steps_1min,
+    mets_hours_mvpa
+  )
+
+# Testing correct inputs
+expect_equal(recap_pa_perdiods, ref_inputs_tab)
+
+# Testing correct results summary
+expect_equal(actual_results_summary, test_results_summary)
+
+
                 
 #===============================================================================
 # END
