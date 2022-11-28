@@ -11,9 +11,6 @@ mod_report_pa_period_ui <- function(id){
   ns <- NS(id)
   tagList(
     fluidRow(
-      column(12,
-             fluidRow(
-               
                # Date
                column(2,
                       selectInput(
@@ -79,8 +76,6 @@ mod_report_pa_period_ui <- function(id){
                ),
              ),
       )
-    )
-  )
 }
     
 #' report_pa_period Server Functions

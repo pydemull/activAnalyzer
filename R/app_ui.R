@@ -406,13 +406,17 @@ app_ui <- function(request) {
                  
                  fluidRow(
                    column(12,
-                          h3("Enter information related to relevant missing physical activity periods (if any)"),
+                          h3("Enter information relating to relevant physical activity periods that would be missing due to device removal (if any)"),
                           hr()
                    ),
                    column(12,
-                          h3("READ THIS: This part of the section is not mandatory. It allows you to modify the data contained in the accelerometer dataset. Each line for which 
+                          wellPanel(
+                          h3("This part of the section is not mandatory. It allows you to manually modify the data contained in the accelerometer dataset. Each line for which 
                              a date is selected will be used to modify the dataset, whatever the MET value provided. Be careful to provide non-overlapping 
-                             periods. If a period overlaps with a previous period, the data of the last period will be used.")
+                             periods. If a period overlaps with a previous period, the data of the last period will be used.",
+                             style = "line-height: 1.4em"),
+                          style = "padding-top: 0px; padding-bottom: 10px; padding-right: 10px; padding-left: 10px"
+                          )
                    ),
                  ),
                 fluidRow(
@@ -3461,7 +3465,8 @@ app_ui <- function(request) {
                               avoid modifying the inputs after generating satisfactory results). In addition to a general 
                               analysis of physical behavior, the app also allows to implement the Daily\u002d and Clinical visit\u002dPROactive 
                               Physical Activity in COPD (D\u002dPPAC and C\u002dPPAC) instruments. Please read the user\u2019s guide for 
-                              details about how the app works."),
+                              details about how the app works.", 
+                              style = "line-height: 1.4em"),
                         ),
                            downloadButton("user_guide_en", "Download user's guide (EN) (.pdf)", class = "btn-guide"),
                            downloadButton("user_guide_fr", "Download user's guide (FR) (.pdf)", class = "btn-guide")
