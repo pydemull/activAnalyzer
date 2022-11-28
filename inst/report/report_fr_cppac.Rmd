@@ -172,7 +172,8 @@ flextable::set_flextable_defaults(fonts_ignore = TRUE)
 flextable::flextable(params$cppac_table) %>%
    flextable::theme_zebra() %>%
    flextable::align(align = "left", part = "all" ) %>%
-   flextable::width(width = 2.1) %>%
+   flextable::width(width = 1.9) %>%
+   flextable::width(j = "Item", width = 2.3) %>%
    flextable::align(j = "Score de difficulté", align = "center", part = "body") %>%
    flextable::align(j = "Score de quantité", align = "center", part = "body") %>%
    flextable::align(j = "Score de difficulté", align = "center", part = "header") %>%
