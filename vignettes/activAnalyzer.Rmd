@@ -34,7 +34,7 @@ mydata <- prepare_dataset(data = file)
 ```
 
 ## Getting nonwear/wear time marks
-```{r, eval = FALSE}
+```{r, message = FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
 mydata_with_wear_marks <- 
   mydata %>%
   mark_wear_time(
@@ -48,25 +48,8 @@ mydata_with_wear_marks <-
 plot_data(data = mydata_with_wear_marks, metric = "vm")
 ```
 
-```{r, message = FALSE, echo = FALSE, fig.width = 7, fig.height = 5, fig.align='center'}
-mydata_with_wear_marks <- 
-  mydata %>%
-  mark_wear_time(
-    to_epoch = 60,
-    cts = "vm",
-    frame = 90, 
-    allowanceFrame = 2, 
-    streamFrame = 30
-    )
-
-p <- plot_data(data = mydata_with_wear_marks, metric = "vm")
-#p$theme$plot.background$fill <- "#FEF9E7"
-#p$theme$legend.background$fill <- "#FEF9E7"
-p
-```
-
 ## Getting physical activity intensity marks
-```{r, eval = FALSE}
+```{r, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
 mydata_with_intensity_marks <- 
   mark_intensity(
      data = mydata_with_wear_marks, 
@@ -80,34 +63,7 @@ mydata_with_intensity_marks <-
      sex = "male",
     )
 
-plot_data_with_intensity(
-  mydata_with_intensity_marks,
-  metric = "vm"
-  )
-```
-
-```{r, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 7, fig.height = 5, fig.align='center'}
-mydata_with_intensity_marks <- 
-  mark_intensity(
-     data = mydata_with_wear_marks, 
-     col_axis = "vm", 
-     equation = "Sasaki et al. (2011) [Adults]",
-     sed_cutpoint = 200, 
-     mpa_cutpoint = 2690, 
-     vpa_cutpoint = 6167, 
-     age = 32,
-     weight = 67,
-     sex = "male",
-    )
-
-p <- plot_data_with_intensity(
-  mydata_with_intensity_marks,
-  metric = "vm"
-  )
-
-#p$theme$plot.background$fill <- "#FEF9E7"
-#p$theme$legend.background$fill <- "#FEF9E7"
-p
+plot_data_with_intensity(mydata_with_intensity_marks, metric = "vm" )
 ```
 
 

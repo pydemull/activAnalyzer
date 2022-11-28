@@ -2172,7 +2172,7 @@ expect_equal(actual_results_summary, test_results_summary)
 # END
 #===============================================================================
 
-# Detaching the environment attached at the begining of the file (line 81)
+# Detaching the environment attached at the begining of the file
   detach(test_activAnalyzer_env)
                 
 })      
