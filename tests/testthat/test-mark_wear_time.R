@@ -30,7 +30,7 @@ test_that("Total wear time is correctly computed", {
     streamFrame = 30
   )
   
-  total_wear_time <- sum(mydata_with_wear_marks$wearing_count)
+  total_wear_time <- sum(mydata_with_wear_marks$wearing_count, na.rm = TRUE) / 6
   
-  expect_equal(total_wear_time/6, 3839)
+  expect_equal(total_wear_time, 3839)
 })
