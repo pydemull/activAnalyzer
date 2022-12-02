@@ -11,7 +11,7 @@ coverage](https://codecov.io/gh/pydemull/activAnalyzer/branch/master/graph/badge
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/pydemull/activAnalyzer/workflows/R-CMD-check/badge.svg)](https://github.com/pydemull/activAnalyzer/actions)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/activAnalyzer?color=blue)](https://cran.r-project.org/package=activAnalyzer)
-[![status](https://joss.theoj.org/papers/5d6659af1bf8ca2fb977c189039b8315/status.svg)](https://joss.theoj.org/papers/5d6659af1bf8ca2fb977c189039b8315)
+[![status](https://joss.theoj.org/papers/5d6659af1bf8ca2fb977c189039b8315/status.svg)](https://joss.theoj.org/papers/10.21105/joss.04741)
 <!-- badges: end -->
 
 activAnalyzer is a Shiny app that has been developed to analyze daily
@@ -72,17 +72,16 @@ There are three different ways to use the activAnalyzer app:
   allow the app to work as expected but Mozilla Firefox does not seem to
   allow resetting all the inputs when required.
 - On your machine via [R software](https://CRAN.R-project.org/)
-  (version: $\ge$ 3.4.0), the [RStudio
-  environment](https://www.rstudio.com/) (recommended versions: Prairie
-  Trillium \[2022.02\] and newer), and the [activAnalyzer
-  package](https://github.com/pydemull/activAnalyzer) installable from
-  CRAN (stable version) or from GitHub (development version). To be able
-  to generate .pdf reports, you will have to install the [TinyTeX
-  distribution](https://yihui.org/tinytex/). The first time you will
-  generate a .pdf report, you will have to wait some time so that the
-  required packages are installed on your machine. In short, after
-  installing R and RStudio, you can run the following command lines in
-  the RStudio console:
+  (version: $\ge$ 3.4.0), the [RStudio environment](https://posit.co/)
+  (recommended versions: Prairie Trillium \[2022.02\] and newer), and
+  the [activAnalyzer package](https://github.com/pydemull/activAnalyzer)
+  installable from CRAN (stable version) or from GitHub (development
+  version). To be able to generate .pdf reports, you will have to
+  install the [TinyTeX distribution](https://yihui.org/tinytex/). The
+  first time you will generate a .pdf report, you will have to wait some
+  time so that the required packages are installed on your machine. In
+  short, after installing R and RStudio, you can run the following
+  command lines in the RStudio console:
 
 ``` r
 # For CRAN version:
