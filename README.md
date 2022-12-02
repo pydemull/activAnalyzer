@@ -37,7 +37,7 @@ for details about how the app works.
 There are three different ways to use the activAnalyzer app:
 
 - [On the web via a shinyapps.io
-  plateform](https://pydemull.shinyapps.io/activAnalyzer/) (stable
+  platform](https://pydemull.shinyapps.io/activAnalyzer/) (stable
   version). For information, as indicated by
   [RStudio](https://www.shinyapps.io/), “*shinyapps.io is
   secure-by-design. Each Shiny application runs in its own protected
