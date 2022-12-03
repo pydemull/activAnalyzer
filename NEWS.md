@@ -1,3 +1,5 @@
+# activAnalyzer (development version)
+
 # activAnalyzer 1.1.0
  
 * Added the `intersex` and `prefer not to say` categories to provide a more inclusive classification of sex. As it seems there is no scientific study about what should be the calculation of resting and activity energy expenditures for intersex people, the values provided for Basal metabolic rate (BMR) and METs are the averages of two values: the value that would be computed for a male, and the value that would be computed for a female. For people reporting `prefer not to say`, computations for females are used by default.
