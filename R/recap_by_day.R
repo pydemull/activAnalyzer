@@ -198,7 +198,7 @@ recap_by_day <- function(
                axis1_per_min = round(sum(axis1, na.rm = TRUE) / wear_time, 2),
                vm_per_min = round(sum(vm, na.rm = TRUE) / wear_time, 2),
                total_steps = sum(steps, na.rm = TRUE),
-               total_kcal = round(sum(kcal, na.rm = TRUE) + bmr_kcal_min * (24*60 - wear_time), 2),
+               total_kcal = round(sum(kcal, na.rm = TRUE) + bmr_kcal_min * (as.numeric(hms::as_hms(valid_wear_time_end) - hms::as_hms(valid_wear_time_start))/60 - wear_time), 2),
                minutes_SED = round(sum(SED, na.rm = TRUE) / cor_factor, 2),
                minutes_LPA = round(sum(LPA, na.rm = TRUE) / cor_factor, 2),
                minutes_MPA = round(sum(MPA, na.rm = TRUE) / cor_factor, 2),
@@ -214,7 +214,7 @@ recap_by_day <- function(
                
                # Computing physical activity level (PAL), that is, total EE / BMR. BMR is assigned to nonwear time; 
                # the term 10/9 is used to take into account the thermic effect of food
-               pal = round(total_kcal * (10/9) / (bmr_kcal_min * (24*60)), 2)) %>%
+               pal = round(total_kcal * (10/9) / (bmr_kcal_min * (as.numeric(hms::as_hms(valid_wear_time_end) - hms::as_hms(valid_wear_time_start))/60)), 2)) %>%
              dplyr::ungroup()
          
              df3 <- 
