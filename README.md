@@ -100,6 +100,10 @@ tinytex::install_tinytex()
 ## Code for installing the activAnalyzer package (development version)
 install.packages("devtools")
 devtools::install_github("pydemull/activAnalyzer")
+
+## Code for installing the TinyTex distribution
+install.packages("tinytex")
+tinytex::install_tinytex()
 ```
 
 ## Example
