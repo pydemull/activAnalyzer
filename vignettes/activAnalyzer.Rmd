@@ -14,26 +14,31 @@ knitr::opts_chunk$set(
 )
 ```
 
+<style>
+    h2 {
+        font-size: 1.7rem;
+    }
+</style>
+
 The activAnalyzer package was primarily built for working through a Shiny app. The procedure for using the app is explained in the related [user's guide](https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf). The functions used in this app can also be used to analyze data outside the app, as shown below.
 
-## Loading packages
+## Loading packages 
 ```{r setup}
 library(activAnalyzer)
 library(magrittr)
 ```
 
-
-## Getting file
+## Getting file 
 ```{r}
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 ```
 
-## Preparing dataset
+## Preparing dataset 
 ```{r, warning=FALSE, message=FALSE}
 mydata <- prepare_dataset(data = file)
 ```
 
-## Getting nonwear/wear time marks
+## Getting nonwear/wear time marks 
 ```{r, message = FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
 mydata_with_wear_marks <- 
   mydata %>%
@@ -44,11 +49,24 @@ mydata_with_wear_marks <-
     allowanceFrame = 2, 
     streamFrame = 30
     )
+```
 
+## Viewing data with nonwear/wear time marks 
+```{r}
 plot_data(data = mydata_with_wear_marks, metric = "vm")
 ```
 
-## Getting physical activity intensity marks
+## Viewing data with nonwear/wear time marks with a zoom in on the figure 
+```{r}
+plot_data(
+  data = mydata_with_wear_marks, 
+  metric = "vm",
+  zoom_from = "16:00:00",
+  zoom_to = "18:00:00"
+  )
+```
+
+## Getting activity intensity marks 
 ```{r, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
 mydata_with_intensity_marks <- 
   mark_intensity(
@@ -60,15 +78,42 @@ mydata_with_intensity_marks <-
      vpa_cutpoint = 6167, 
      age = 32,
      weight = 67,
-     sex = "male",
+     sex = "male"
     )
-
-plot_data_with_intensity(mydata_with_intensity_marks, metric = "vm" )
 ```
 
+## Viewing data with activity intensity marks 
+```{r}
+plot_data_with_intensity(
+  mydata_with_intensity_marks, 
+  metric = "vm",
+  valid_wear_time_start = "00:00:00",
+  valid_wear_time_end = "23:59:59"
+  )
+```
 
-## Getting results by day
-```{r, eval = FALSE}
+## Viewing data with activity intensity marks and grey bands to highlight the considered daily period for analysis 
+```{r}
+plot_data_with_intensity(
+  mydata_with_intensity_marks, 
+  metric = "vm",
+  valid_wear_time_start = "07:00:00",
+  valid_wear_time_end = "22:00:00"
+  )
+```
+
+## Viewing data with activity intensity marks with a zoom in on the figure 
+```{r}
+plot_data_with_intensity(
+  mydata_with_intensity_marks, 
+  metric = "vm",
+  zoom_from = "13:00:00",
+  zoom_to = "16:30:00"
+  )
+```
+
+## Getting results by day 
+```{r}
 results_by_day <-
   mydata_with_intensity_marks %>%
   recap_by_day(
@@ -78,21 +123,9 @@ results_by_day <-
     valid_wear_time_start = "07:00:00",
     valid_wear_time_end = "22:00:00"
     )
-
-results_by_day
 ```
 
 ```{r, echo = FALSE, message= FALSE}
-results_by_day <-
-  mydata_with_intensity_marks %>%
-  recap_by_day(
-    age = 32, 
-    weight = 67, 
-    sex = "male",
-    valid_wear_time_start = "00:00:00",
-    valid_wear_time_end = "23:59:59"
-    )
-
 results_by_day %>%  
   reactable::reactable(  
            striped = TRUE,
@@ -130,7 +163,7 @@ results_by_day %>%
            )
 ```
 
-## Getting results averaged over valid days
+## Getting mean values of the metrics over the valid days 
 ```{r, eval = FALSE}
 averaged_results <-
   results_by_day %>%
@@ -142,7 +175,7 @@ averaged_results
 ```{r, echo = FALSE}
 averaged_results <-
   results_by_day %>%
-  average_results(minimum_wear_time = 10)
+  average_results(minimum_wear_time = 10, fun = "mean")
 
 averaged_results %>% 
     reactable::reactable(
@@ -181,6 +214,55 @@ averaged_results %>%
   )
 ```
 
+## Getting median values of the metrics over the valid days 
+```{r, eval = FALSE}
+median_results <-
+  results_by_day %>%
+  average_results(minimum_wear_time = 10, fun = "median")
 
+median_results
+```
+
+```{r, echo = FALSE}
+median_results <-
+  results_by_day %>%
+  average_results(minimum_wear_time = 10, fun = "median")
+
+median_results %>% 
+    reactable::reactable(
+    list(valid_days = reactable::colDef(minWidth = 150),
+         wear_time = reactable::colDef(minWidth = 150),
+         total_counts_axis1 = reactable::colDef(minWidth = 190),
+         total_counts_vm = reactable::colDef(minWidth = 170),
+         axis1_per_min = reactable::colDef(minWidth = 170),
+         vm_per_min = reactable::colDef(minWidth = 170),
+         total_steps = reactable::colDef(minWidth = 170),
+         minutes_SED = reactable::colDef(minWidth = 150),
+         minutes_LPA = reactable::colDef(minWidth = 150),
+         minutes_MPA = reactable::colDef(minWidth = 150),
+         minutes_VPA = reactable::colDef(minWidth = 150),
+         minutes_MVPA = reactable::colDef(minWidth = 155),
+         percent_SED = reactable::colDef(minWidth = 150),
+         percent_LPA = reactable::colDef(minWidth = 150),
+         percent_MPA = reactable::colDef(minWidth = 150),
+         percent_VPA = reactable::colDef(minWidth = 150),
+         percent_MVPA = reactable::colDef(minWidth = 155),
+         ratio_mvpa_sed = reactable::colDef(minWidth = 160),
+         total_kcal = reactable::colDef(minWidth = 205),
+         mets_hours_mvpa = reactable::colDef(minWidth = 195),
+         max_steps_60min = reactable::colDef(minWidth = 205),
+         max_steps_30min = reactable::colDef(minWidth = 205),
+         max_steps_20min = reactable::colDef(minWidth = 205),
+         max_steps_5min = reactable::colDef(minWidth = 205),
+         max_steps_1min = reactable::colDef(minWidth = 205),
+         peak_steps_60min = reactable::colDef(minWidth = 205),
+         peak_steps_30min = reactable::colDef(minWidth = 205),
+         peak_steps_20min = reactable::colDef(minWidth = 205),
+         peak_steps_5min = reactable::colDef(minWidth = 205),
+         peak_steps_1min = reactable::colDef(minWidth = 205)
+         ),
+    striped = TRUE
+  )
+```
 
 
