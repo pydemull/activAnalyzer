@@ -2164,7 +2164,7 @@ actual_results_summary <- app$getAllValues()$export[["results_by_day"]] %>%
 expect_equal(recap_pa_perdiods, ref_inputs_tab)
 
 # Testing correct results summary
-expect_equal(round(actual_results_summary, 1), round(test_results_summary, 1))
+expect_equal(round(actual_results_summary %>% dplyr::select(-date), 0), round(test_results_summary %>% dplyr::select(-date), 0))
 
 
                 
