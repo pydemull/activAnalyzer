@@ -1,3 +1,9 @@
+# activAnalyzer (development version)
+
+* Added a test for the `recap_by_day()` function.
+* Updated the vignette.
+* Total kcal and PAL are now correctly computed when the user does not analyse the whole day. There was no problem when the entire day was considered. However, when the user wanted to analyse a given period of the day, BMR information used in the calculations of kcal and PAL was still related to the whole day, not the period of the day to analyse. Total kcal and PAL were thus wrong when the period of the day to be analysed was not the entire day. This has been corrected ([#28](https://github.com/pydemull/activAnalyzer/issues/28)).
+
 # activAnalyzer 1.1.0
  
 * Added the `intersex` and `prefer not to say` categories to provide a more inclusive classification of sex. As it seems there is no scientific study about what should be the calculation of resting and activity energy expenditures for intersex people, the values provided for Basal metabolic rate (BMR) and METs are the averages of two values: the value that would be computed for a male, and the value that would be computed for a female. For people reporting `prefer not to say`, computations for females are used by default.
