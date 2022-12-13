@@ -1863,7 +1863,7 @@ app_server <- function(input, output, session) {
             (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60))
       
       # Getting metrics
-      compute_frag_metrics(
+      compute_accumulation_metrics(
         data = results_list()$df_with_computed_metrics,
         behaviour = "sed",
         dates = attributes(as.factor(
@@ -1939,7 +1939,7 @@ app_server <- function(input, output, session) {
            (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60))
      
     # Getting metrics
-     compute_frag_metrics(
+     compute_accumulation_metrics(
        data = results_list()$df_with_computed_metrics,
        behaviour = "pa",
        dates = attributes(as.factor(
