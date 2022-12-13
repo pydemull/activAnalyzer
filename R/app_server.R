@@ -2519,7 +2519,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-             if(nrow(results_list()$results_by_day) < 1 | results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+             if(nrow(results_list()$results_by_day) < 1 || results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                reactable::reactable(
                  tibble::tribble(
                    ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2582,7 +2582,7 @@ app_server <- function(input, output, session) {
                 )
             
               # Information to show depending on the available data
-                if(nrow(results_list()$results_by_day) < 1 | results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+                if(nrow(results_list()$results_by_day) < 1 || results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                   reactable::reactable(
                     tibble::tribble(
                       ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2644,7 +2644,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 2 | results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 2 || results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2706,7 +2706,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 2 | results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 2 || results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2768,7 +2768,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 3 | results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 3 || results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2830,7 +2830,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 3 | results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 3 || results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.",  
@@ -2891,7 +2891,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 4 | results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 4 || results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2954,7 +2954,7 @@ app_server <- function(input, output, session) {
             )
           
           # Information to show depending on the available data
-            if(nrow(results_list()$results_by_day) < 4 | results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+            if(nrow(results_list()$results_by_day) < 4 || results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
               reactable::reactable(
                 tibble::tribble(
                   ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -3016,7 +3016,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 5 | results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 5 || results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -3078,7 +3078,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 5 | results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 5 || results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -3140,7 +3140,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data  
-              if(nrow(results_list()$results_by_day) < 6 | results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 6 || results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -3202,7 +3202,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data  
-              if(nrow(results_list()$results_by_day) < 6 | results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 6 || results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -3264,7 +3264,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data  
-              if(nrow(results_list()$results_by_day) < 7 | results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 7 || results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -3325,7 +3325,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data   
-              if(nrow(results_list()$results_by_day) < 7 | results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 7 || results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.",  
@@ -3387,7 +3387,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data  
-              if(nrow(results_list()$results_by_day) < 1 | results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 1 || results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.",  
@@ -3449,7 +3449,7 @@ app_server <- function(input, output, session) {
               )
             
            # Information to show depending on the available data 
-             if(nrow(results_list()$results_by_day) < 1 | results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+             if(nrow(results_list()$results_by_day) < 1 || results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                reactable::reactable(
                  tibble::tribble(
                    ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3511,7 +3511,7 @@ app_server <- function(input, output, session) {
             )
           
           # Information to show depending on the available data 
-            if(nrow(results_list()$results_by_day) < 2 | results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+            if(nrow(results_list()$results_by_day) < 2 || results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
               reactable::reactable(
                 tibble::tribble(
                   ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3573,7 +3573,7 @@ app_server <- function(input, output, session) {
             )
           
           # Information to show depending on the available data 
-            if(nrow(results_list()$results_by_day) < 2 | results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+            if(nrow(results_list()$results_by_day) < 2 || results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
               reactable::reactable(
                 tibble::tribble(
                   ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3635,7 +3635,7 @@ app_server <- function(input, output, session) {
             )
           
           # Information to show depending on the available data 
-            if(nrow(results_list()$results_by_day) < 3 | results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+            if(nrow(results_list()$results_by_day) < 3 || results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
               reactable::reactable(
                 tibble::tribble(
                   ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3697,7 +3697,7 @@ app_server <- function(input, output, session) {
               )
           
             # Information to show depending on the available data 
-              if(nrow(results_list()$results_by_day) < 3 | results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 3 || results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3759,7 +3759,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data     
-              if(nrow(results_list()$results_by_day) < 4 | results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 4 || results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3821,7 +3821,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data  
-              if(nrow(results_list()$results_by_day) < 4 | results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 4 || results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.",  
@@ -3883,7 +3883,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data  
-              if(nrow(results_list()$results_by_day) < 5 | results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 5 || results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3945,7 +3945,7 @@ app_server <- function(input, output, session) {
               )
               
             # Information to show depending on the available data 
-              if(nrow(results_list()$results_by_day) < 5 | results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 5 || results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -4007,7 +4007,7 @@ app_server <- function(input, output, session) {
               )
             
              # Information to show depending on the available data 
-               if(nrow(results_list()$results_by_day) < 6 | results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+               if(nrow(results_list()$results_by_day) < 6 || results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                  reactable::reactable(
                    tibble::tribble(
                      ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -4069,7 +4069,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data 
-              if(nrow(results_list()$results_by_day) < 6 | results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 6 || results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -4132,7 +4132,7 @@ app_server <- function(input, output, session) {
             
             
             # Information to show depending on the available data 
-              if(nrow(results_list()$results_by_day) < 7 | results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 7 || results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -4194,7 +4194,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data 
-              if(nrow(results_list()$results_by_day) < 7 | results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 7 || results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -5279,7 +5279,7 @@ app_server <- function(input, output, session) {
        
              
   #########################
-  # Hiding / showing boxes ----
+  # Hidding / showing boxes ----
   #########################
   
   # Box for graph with wear time
@@ -5385,7 +5385,7 @@ app_server <- function(input, output, session) {
     
   
   ###################################
-  # Hiding / showing Download buttons ----
+  # Hidding / showing Download buttons ----
   ###################################
     shinyjs::hide("ExpDataset")
     shinyjs::hide("ExpResultsByDays")
@@ -5413,7 +5413,7 @@ app_server <- function(input, output, session) {
       shinyjs::hide("ExpDailySummaryMedians")
     }
       
-    if(results_summary_means()$valid_days >=1 | results_summary_medians()$valid_days >=1) {
+    if(results_summary_means()$valid_days >=1 || results_summary_medians()$valid_days >=1) {
       shinyjs::show("report_en")
       shinyjs::show("report_fr") 
       shinyjs::show("go_to_proactive_q")
@@ -5423,7 +5423,7 @@ app_server <- function(input, output, session) {
       shinyjs::hide("go_to_proactive_q")
     }
       
-    if(!is.na(steps_score_cppac_median()) & !is.na(vmu_score_cppac_median())) {
+    if(!is.na(steps_score_cppac_median()) && !is.na(vmu_score_cppac_median())) {
       shinyjs::show("get_cppac_summary_en")
       shinyjs::show("get_cppac_summary_fr")
       shinyjs::show("get_dppac_summary_en")
@@ -5472,7 +5472,7 @@ app_server <- function(input, output, session) {
       shinyjs::hide("report_fr_dppac")
     }
   })
-  
+
   
   ###################
   # Exporting results ----
@@ -5531,7 +5531,7 @@ app_server <- function(input, output, session) {
     
     shinyjs::hide("box-no-valid-days")
     observe({
-      if(results_summary_medians()$valid_days == 0 & results_summary_means()$valid_days == 0) {
+      if(results_summary_medians()$valid_days == 0 && results_summary_means()$valid_days == 0) {
         shinyjs::show("box-no-valid-days")
       } else {
         shinyjs::hide("box-no-valid-days")
