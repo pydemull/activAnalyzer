@@ -1683,6 +1683,15 @@ app_server <- function(input, output, session) {
     )
     
 
+  # Showing section title for activity volume metrics
+    output$title_activity_volume_metrics <- renderUI({
+      
+      # Waiting for needed data
+      req(nrow(results_list()$df_with_computed_metrics) >=1)
+      
+      # Showing title
+      h3("Activity volume metrics")
+    })  
     
   # Plotting data with intensity categories
     output$graph_int <- renderPlot({
@@ -1833,6 +1842,159 @@ app_server <- function(input, output, session) {
       
     })
     
+    
+  # Showing section title for pattern of accumulation of sedentary behaviour
+    output$title_SB_accum_metrics <- renderUI({
+      
+      # Title  will be shown only if dataset has been processed using 60-s epochs
+      req(nrow(results_list()$df_with_computed_metrics) >=1 &
+            (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60))
+      
+      # Showing title
+      h3("Sedentary behaviour accumulation metrics")
+      
+    })  
+
+  # Computing metrics for pattern of accumulation of sedentary behaviour
+    metrics_accum_sed <- eventReactive(input$Run, {
+      
+      # Metrics will be computed only if dataset has been processed using 60-s epochs
+      req(nrow(results_list()$df_with_computed_metrics) >=1 &
+            (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60))
+      
+      # Getting metrics
+      compute_frag_metrics(
+        data = results_list()$df_with_computed_metrics,
+        behaviour = "sed",
+        dates = attributes(as.factor(
+          (results_list()$results_by_day %>% 
+            dplyr::filter(wear_time >= input$minimum_wear_time_for_analysis * 60))$date)
+          )$levels,
+        valid_wear_time_start = input$start_day_analysis,
+        valid_wear_time_end = input$end_day_analysis,
+        zoom_from = "00:00:00",
+        zoom_to = "23:59:59"
+      )
+    
+    })
+    
+  # Plotting temporal distribution of sedentary bouts
+    output$graph_breaks_SB <- renderPlot({
+  
+       metrics_accum_sed()$p_breaks
+       }, 
+       width = "auto", 
+       height = function(){
+         height <- dplyr::case_when(
+           nlevels(as.factor(results_list()$results_by_day$date)) >= 8 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 95,
+           nlevels(as.factor(results_list()$results_by_day$date)) == 7 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 105,
+           nlevels(as.factor(results_list()$results_by_day$date)) == 6 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 107,
+           nlevels(as.factor(results_list()$results_by_day$date)) == 5 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 110,
+           nlevels(as.factor(results_list()$results_by_day$date)) == 4 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 115,
+           nlevels(as.factor(results_list()$results_by_day$date)) == 3 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 130,
+           nlevels(as.factor(results_list()$results_by_day$date)) == 2 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 150,
+           nlevels(as.factor(results_list()$results_by_day$date)) == 1 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 205
+         )
+         return(height)
+       }, res = 120
+       )
+  
+  # Plotting alpha for sedentary bouts
+    output$graph_alpha_SB <- renderPlot({
+      metrics_accum_sed()$p_alpha
+    }, width = "auto", height = 500, res = 100)
+    
+  # Plotting MBD for sedentary bouts
+     output$graph_mbd_SB <- renderPlot({
+       metrics_accum_sed()$p_MBD
+     }, width = "auto", height = 500, res = 100)
+     
+  # Plotting UBD for sedentary bouts
+    output$graph_ubd_SB <- renderPlot({
+      metrics_accum_sed()$p_UBD
+    }, width = "auto", height = 500, res = 100)
+  
+  # Plotting Gini index for sedentary bouts
+    output$graph_gini_SB <- renderPlot({
+      metrics_accum_sed()$p_gini
+    }, width = "auto", height = 500, res = 100)
+  
+  
+  # Showing section title for pattern of accumulation of physical activity
+    output$title_PA_accum_metrics <- renderUI({
+      
+      # Title  will be shown only if dataset has been processed using 60-s epochs
+      req(nrow(results_list()$df_with_computed_metrics) >=1 &
+            (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60))
+      
+      # Showing title
+      h3("Physical activity accumulation metrics")
+    })
+    
+  # Computing metrics for pattern of accumulation of physical activity
+    metrics_accum_pa <- eventReactive(input$Run, {
+     
+     # Metrics will be computed only if dataset has been processed using 60-s epochs
+      req(nrow(results_list()$df_with_computed_metrics) >=1 &
+           (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60))
+     
+    # Getting metrics
+     compute_frag_metrics(
+       data = results_list()$df_with_computed_metrics,
+       behaviour = "pa",
+       dates = attributes(as.factor(
+         (results_list()$results_by_day %>% 
+            dplyr::filter(wear_time >= input$minimum_wear_time_for_analysis * 60))$date)
+       )$levels,
+       valid_wear_time_start = input$start_day_analysis,
+       valid_wear_time_end = input$end_day_analysis,
+       zoom_from = "00:00:00",
+       zoom_to = "23:59:59"
+     )
+     
+   })
+  
+  # Plotting temporal distribution of physical activity bouts
+    output$graph_breaks_PA <- renderPlot({
+      
+      metrics_accum_pa()$p_breaks
+    }, 
+    width = "auto", 
+    height = function(){
+      height <- dplyr::case_when(
+        nlevels(as.factor(results_list()$results_by_day$date)) >= 8 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 95,
+        nlevels(as.factor(results_list()$results_by_day$date)) == 7 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 105,
+        nlevels(as.factor(results_list()$results_by_day$date)) == 6 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 107,
+        nlevels(as.factor(results_list()$results_by_day$date)) == 5 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 110,
+        nlevels(as.factor(results_list()$results_by_day$date)) == 4 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 115,
+        nlevels(as.factor(results_list()$results_by_day$date)) == 3 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 130,
+        nlevels(as.factor(results_list()$results_by_day$date)) == 2 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 150,
+        nlevels(as.factor(results_list()$results_by_day$date)) == 1 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 205
+      )
+      return(height)
+    }, res = 120
+    )
+  
+  # Plotting alpha for  physical activity bouts
+    output$graph_alpha_PA <- renderPlot({
+      metrics_accum_pa()$p_alpha
+    }, width = "auto", height = 500, res = 100)
+  
+  # Plotting MBD for  physical activity bouts
+    output$graph_mbd_PA <- renderPlot({
+      metrics_accum_pa()$p_MBD
+    }, width = "auto", height = 500, res = 100)
+    
+  # Plotting UBD for  physical activity bouts
+    output$graph_ubd_PA <- renderPlot({
+      metrics_accum_pa()$p_UBD
+    }, width = "auto", height = 500, res = 100)
+  
+  # Plotting Gini index for  physical activity bouts
+    output$graph_gini_PA <- renderPlot({
+      metrics_accum_pa()$p_gini
+    }, width = "auto", height = 500, res = 100)
+  
   
   #########################################
   # Getting PROACTIVE questionnaire results ----
@@ -5168,6 +5330,46 @@ app_server <- function(input, output, session) {
       shinyjs::hide("BoxResByDay")
       shinyjs::hide("BoxResMeans")
       shinyjs::hide("BoxResMedians")
+      }
+    })
+    
+    # Boxes for graphs showing accumulation of behaviour over time
+    shinyjs::hide("BoxBreaksSB")
+    shinyjs::hide("BoxAlphaSB")
+    shinyjs::hide("BoxMBDSB")
+    shinyjs::hide("BoxUBDSB")
+    shinyjs::hide("BoxGiniSB")
+    shinyjs::hide("BoxBreaksPA")
+    shinyjs::hide("BoxAlphaPA")
+    shinyjs::hide("BoxMBDPA")
+    shinyjs::hide("BoxUBDPA")
+    shinyjs::hide("BoxGiniPA")
+    
+       # Boxes will be shown only if dataset has been processed using 60-s epochs
+    observe({
+      if(nrow(results_list()$df_with_computed_metrics) >=1 &
+         (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)) {
+        shinyjs::show("BoxBreaksSB")
+        shinyjs::show("BoxAlphaSB")
+        shinyjs::show("BoxMBDSB")
+        shinyjs::show("BoxUBDSB")
+        shinyjs::show("BoxGiniSB")
+        shinyjs::show("BoxBreaksPA")
+        shinyjs::show("BoxAlphaPA")
+        shinyjs::show("BoxMBDPA")
+        shinyjs::show("BoxUBDPA")
+        shinyjs::show("BoxGiniPA")
+      } else {
+        shinyjs::hide("BoxBreaksSB")
+        shinyjs::hide("BoxAlphaSB")
+        shinyjs::hide("BoxMBDSB")
+        shinyjs::hide("BoxUBDSB")
+        shinyjs::hide("BoxGiniSB")
+        shinyjs::hide("BoxBreaksPA")
+        shinyjs::hide("BoxAlphaPA")
+        shinyjs::hide("BoxMBDPA")
+        shinyjs::hide("BoxUBDPA")
+        shinyjs::hide("BoxGiniPA")
       }
     })
     

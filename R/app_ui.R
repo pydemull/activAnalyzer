@@ -551,6 +551,15 @@ app_ui <- function(request) {
                   #********
                   # Results
                   #********
+                
+                  fluidRow(
+                    column(12,
+                           tags$div(align = "left",
+                                    uiOutput("title_activity_volume_metrics"),
+                           )
+                    ),
+                  ),
+                     
               
                        #*************************
                        # Box showing monitor data
@@ -558,7 +567,7 @@ app_ui <- function(request) {
 
                        fluidRow(
                          shinydashboardPlus::box(id = "myBox2", 
-                                                 title = "Physical behavior intensity analysis",
+                                                 title = "Temporal distribution of activity intensity",
                                                  shinycssloaders::withSpinner(plotOutput("graph_int", height = "auto")), 
                                                  width = 12, 
                                                  height = NULL)
@@ -625,8 +634,128 @@ app_ui <- function(request) {
                            width = 12, 
                            height = "auto")
                        ),
-                       
 
+                      #**********************************************************************************
+                      # Panels with metrics describing the pattern of accumulation of sedentary behaviour
+                      #**********************************************************************************
+
+                      fluidRow(
+                        column(12,
+                               tags$div(align = "left",
+                                        uiOutput("title_SB_accum_metrics"),
+                               )
+                        ),
+                      ),
+                      fluidRow(
+                        shinydashboardPlus::box(
+                          id = "BoxBreaksSB",
+                          title = "Temporal distribution of sedentary bouts",
+                          shinycssloaders::withSpinner(plotOutput("graph_breaks_SB", height = "auto")), 
+                          width = 12, 
+                          height = NULL
+                          )
+                     ),
+                     fluidRow(
+                       column(3,
+                              shinydashboardPlus::box(
+                                id = "BoxAlphaSB",
+                                title = "Alpha coefficient",
+                                shinycssloaders::withSpinner(plotOutput("graph_alpha_SB", height = "auto")), 
+                                width = NULL, 
+                                height = NULL
+                              )
+                              ),
+                       column(3,
+                              shinydashboardPlus::box(
+                                id = "BoxMBDSB",
+                                title = "Median Bout Duration (MBD)",
+                                shinycssloaders::withSpinner(plotOutput("graph_mbd_SB", height = "auto")), 
+                                width = NULL, 
+                                height = NULL
+                                )
+                       ),
+                       column(3,
+                              shinydashboardPlus::box(
+                                id = "BoxUBDSB",
+                                title = "Usual Bout Duration (UBD)",
+                                shinycssloaders::withSpinner(plotOutput("graph_ubd_SB", height = "auto")), 
+                                width = NULL, 
+                                height = NULL
+                              )
+                       ),
+                       column(3,
+                              shinydashboardPlus::box(
+                                id = "BoxGiniSB",
+                                title = "Gini index",
+                                shinycssloaders::withSpinner(plotOutput("graph_gini_SB", height = "auto")), 
+                                width = NULL, 
+                                height = NULL
+                              )
+                       ),
+                       
+                     ),
+                
+                      #*******************************************************************************
+                      # Panel with metrics describing the pattern of accumulation of physical activity
+                      #*******************************************************************************
+                      
+                      fluidRow(
+                        column(12,
+                               tags$div(align = "left",
+                                        uiOutput("title_PA_accum_metrics"),
+                               )
+                        ),
+                      ),
+                      fluidRow(
+                        shinydashboardPlus::box(
+                          id = "BoxBreaksPA",
+                          title = "Temporal distribution of physical activity bouts",
+                          shinycssloaders::withSpinner(plotOutput("graph_breaks_PA", height = "auto")), 
+                          width = 12, 
+                          height = NULL
+                        )
+                      ),
+                      fluidRow(
+                        column(3,
+                               shinydashboardPlus::box(
+                                 id = "BoxAlphaPA",
+                                 title = "Alpha coefficient",
+                                 shinycssloaders::withSpinner(plotOutput("graph_alpha_PA", height = "auto")), 
+                                 width = NULL, 
+                                 height = NULL
+                               )
+                        ),
+                        column(3,
+                               shinydashboardPlus::box(
+                                 id = "BoxMBDPA",
+                                 title = "Median Bout Duration (MBD)",
+                                 shinycssloaders::withSpinner(plotOutput("graph_mbd_PA", height = "auto")), 
+                                 width = NULL, 
+                                 height = NULL
+                               )
+                        ),
+                        column(3,
+                               shinydashboardPlus::box(
+                                 id = "BoxUBDPA",
+                                 title = "Usual Bout Duration (UBD)",
+                                 shinycssloaders::withSpinner(plotOutput("graph_ubd_PA", height = "auto")), 
+                                 width = NULL, 
+                                 height = NULL
+                               )
+                        ),
+                        column(3,
+                               shinydashboardPlus::box(
+                                 id = "BoxGiniPA",
+                                 title = "Gini index",
+                                 shinycssloaders::withSpinner(plotOutput("graph_gini_PA", height = "auto")), 
+                                 width = NULL, 
+                                 height = NULL
+                               )
+                        ),
+                        
+                      ),
+                             
+      
                   #******************
                   # Export
                   #******************

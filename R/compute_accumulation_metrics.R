@@ -1,0 +1,424 @@
+#' Compute activity accumulation metrics
+#' 
+#' This function computes metrics that summarise the pattern of accumulation 
+#'     of either sedentary behaviour or physical activity (depending on the 
+#'     configuration of the function) over time: 
+#' \itemize{
+#'    \item \strong{mean_breaks}: mean daily number of transitions from a sedentary bout to a 
+#'     physical activity bout (or from a physical activity bout to a sedentary bout); 
+#'     this actually corresponds to the mean daily total number of sedentary (or physical activity) bouts detected.
+#'     
+#'    \item \strong{alpha}: provides information on the relative proportion of
+#'     short and long bouts.  The higher the alpha coefficient, the more the individual tends to 
+#'     accumulate sedentary (or physical activity) time using relatively short bouts. Alpha is 
+#'     computed using all the bouts of the days and periods of the day considered for analysis. Alpha
+#'     is computed using the following equation provided by Chastin et al. (2010; doi: 10.1016/j.gaitpost.2009.09.002):
+#'     \eqn{\alpha = 1 + n \left[\sum_{i = 1}^{n}{ln}\frac{x_{i}}{x_{min}}\right]^{-1}}, with \eqn{n} the total number of bouts, 
+#'     \eqn{x_{i}} the duration of the bout \eqn{i}, and \eqn{x_{min}} the shortest recorded bout duration.
+#'     
+#'    \item \strong{median bout duration (MBD)}: refers to the median sedentary (or physical activity) bout duration. 
+#'     MBD is computed using all the bouts of the days and periods of the day considered for analysis. MBD
+#'     is computed using the following equation provided by Chastin et al. (2010; doi: 10.1016/j.gaitpost.2009.09.002):
+#'     \eqn{MBD = 2^{1 / (\alpha - 1)x_{min}}}.
+#'     
+#'    \item \strong{usual bout duration (UBD)}: refers to the bout duration under/above which 50% of sedentary 
+#'    (or physical activity) time is accumulated. UBD is computed using all the bouts of the day and periods 
+#'    of the day considered for analysis. UBD is determined as described in Belletiere et al. (2021; doi: 10.1123/jmpb.2020-0036)
+#'    supplementary files. More precisely, UBD is found using non-linear regression with the following model: \eqn{y = \frac{t^n}{t^n + UBD^n}},
+#'    with \eqn{t} the bout duration, \eqn{n} a free parameter, and \eqn{y} the fraction of total time accumulated in bouts ≤ \eqn{t}.
+#'     
+#'    \item \strong{Gini index}: provides information on the equality with which bout durations
+#'     contribute to total sedentary (or physical activity) time. A value of 1 reveals perfect
+#'     inequality, and a value of 0 reveals perfect equality. Gini index is computed using all 
+#'     the bouts of the days and periods of the day considered for analysis. Gini index is computed following
+#'     the procedure described at the following link: https://www.statology.org/gini-coefficient-excel/. This method
+#'     provides similar results as the frequency method implemented in the `Gini` function from the `DescTools` R package.
+#'     }
+#'  
+#' @param data  A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then the \code{\link{mark_intensity}} functions.
+#'     The dataframe shoud have 60-s epochs. Otherwise, unexpected graphics will be obtained.
+#' @param col_time A character value to indicate the name of the variable to plot time data.
+#' @param col_bout A character value indicating the name of the variable where bout IDs have been identified.
+#' @param col_cat_int A character value indicating the name of the variable where intensity category (SED, LPA, MVPA) is provided.
+#' @param behaviour A character value indicating whether metrics should be computed for sedentary behaviour or physical activity.
+#' @param dates A character vector containing the dates to be retained for analysis. The dates must be with the "YYYY-MM-DD" format.
+#' @param valid_wear_time_start A character value with the HH:MM:SS format to set the start of the daily period that will be considered for computing metrics.
+#' @param valid_wear_time_end A character value with the HH:MM:SS format to set the end of the daily period that will be considered for computing metrics.
+#' @param zoom_from A character value with the HH:MM:SS format to set the start of the daily period to visualize.
+#' @param zoom_to A character value with the HH:MM:SS format to set the end of the daily period to visualize.
+#'
+#' @return A list of numeric and graphic objects related to mean daily total breaks, alpha, MBD, UBD and Gini index. The list also contains
+#'     the processed datasets that were used to provide these metrics: `recap_bouts_by_day` used to compute `mean_break`, `recap_bouts` used 
+#'     to compute `alpha` and `MBD`, `summarised_bouts` used to compute `UBD`, and `summarised_bouts2` used to compute `Gini index`.
+#' @export
+#' @import ggplot2
+#'
+#' @examples
+#' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
+#' mydata <- prepare_dataset(data = file)
+#' mydata_with_wear_marks <- mark_wear_time(
+#'     dataset = mydata, 
+#'     TS = "TimeStamp", 
+#'     to_epoch = 60,
+#'     cts  = "vm",
+#'     frame = 90, 
+#'     allowanceFrame = 2, 
+#'     streamFrame = 30
+#'     )
+#' mydata_with_intensity_marks <- mark_intensity(
+#'     data = mydata_with_wear_marks, 
+#'     col_axis = "vm", 
+#'     equation = "Sasaki et al. (2011) [Adults]",
+#'     sed_cutpoint = 200, 
+#'     mpa_cutpoint = 2690, 
+#'     vpa_cutpoint = 6167, 
+#'     age = 32,
+#'     weight = 67,
+#'     sex = "male",
+#'     )
+#' compute_frag_metrics(
+#'    data = mydata_with_intensity_marks,
+#'    behaviour = "sed",
+#'    dates = c("2021-04-07", "2021-04-08", "2021-04-09", "2021-04-10", "2021-04-11"),
+#'    valid_wear_time_start = "00:00:00",
+#'    valid_wear_time_end = "23:59:59",
+#'    zoom_from = "00:00:00",
+#'    zoom_to = "23:59:59"
+#'     )
+#' 
+compute_accumulation_metrics <- function(
+    data, 
+    col_time = "time",
+    col_bout = "bout", 
+    col_cat_int = "intensity_category", 
+    behaviour = c("sed", "pa"),
+    dates = NULL,
+    valid_wear_time_start = "00:00:00",
+    valid_wear_time_end = "23:59:59",
+    zoom_from = "00:00:00",
+    zoom_to = "23:59:59"
+    ){
+  
+# Filtering data based on selected dates and time periods
+if (is.null(dates)) {
+  selected_dates <- attributes(as.factor(data$date))$levels
+} else {
+    selected_dates <- attributes(as.factor(dates))$levels
+    }
+data <- 
+  data %>% 
+  dplyr::filter(date %in% as.Date(selected_dates) &
+                  .data[[col_time]] >= hms::as_hms(valid_wear_time_start) &
+                  .data[[col_time]] <= hms::as_hms(valid_wear_time_end)
+                )
+  
+# Getting arguments
+behaviour <- match.arg(behaviour)
+if(behaviour == "sed") {BEHAV <- "SED"; color_fill = c("#D9DBE5", "#A6ADD5", "#6A78C3", "#3F51B5"); auto_text = "sedentary"} 
+if(behaviour == "pa") {BEHAV <- c("LPA", "MVPA"); color_fill = c("#EDD3DD", "#F38DB6", "#FA3B87", "#FF0066"); auto_text = "physical activity"} 
+  
+# Getting correction factor related to the epoch duration (reference epoch = 60 s);
+# bout durations are computed in minutes
+cor_factor = 60 / (as.numeric(data$time[2] - data$time[1]))
+ 
+# Summarising bout durations (in minutes) of interest by day
+recap_bouts_by_day <-
+  data %>%
+  dplyr::group_by(date, .data[[col_bout]], .data[[col_cat_int]]) %>%
+  dplyr::summarise(
+    duration = dplyr::n() / cor_factor,
+    start = hms::as_hms(min(.data[[col_time]])),
+    end = hms::as_hms(max(.data[[col_time]]))
+    ) %>%
+  dplyr::filter(intensity_category %in% c(BEHAV)) %>%
+  dplyr::mutate(
+    dur_cat = dplyr::case_when(
+      duration < 30            ~ "0-29" ,
+      duration %in% c(30:59)   ~ "30-59",
+      duration %in% c(60:89)   ~ "60-89",
+      duration >= 90           ~ "90+"
+    )
+  )
+
+# Computing mean daily number of breaks
+mean_breaks <-
+  recap_bouts_by_day %>%
+  dplyr::ungroup(tidyselect::all_of(col_bout), tidyselect::all_of(col_cat_int)) %>%
+  dplyr::summarise(n_breaks = dplyr::n()) %>%
+  dplyr::summarise(mean_breaks = round(mean(n_breaks), 2)) %>%
+  dplyr::pull(mean_breaks)
+
+# Building graphic for breaks
+
+  # Setting the format of the time variable
+  format_hm <- function(sec) stringr::str_sub(format(sec), end = -4L)
+  date_labs <- format(data$date, "%d-%m-%y")
+  names(date_labs) <- data$days
+  
+  # Building the graphic
+    p_breaks <-
+     ggplot(data = recap_bouts_by_day) +
+     geom_rect(
+       data = recap_bouts_by_day,
+       aes(
+         xmin = start, 
+         xmax =  end, 
+         ymin = 0, 
+         ymax = 1, 
+         color = dur_cat,
+         fill = dur_cat
+         )
+     ) +
+     geom_rect(aes(
+       xmin = hms::as_hms(0), 
+       xmax =  hms::as_hms(valid_wear_time_start), 
+       ymin = -Inf, 
+       ymax = Inf), 
+       color = "grey",
+       fill = "grey"
+     ) +
+     geom_rect(aes(
+       xmin = hms::as_hms(valid_wear_time_end), 
+       xmax =  hms::as_hms("23:59:59"),
+       ymin = -Inf, 
+       ymax = Inf), 
+       color = "grey",
+       fill = "grey"
+     ) +
+     scale_x_time(
+       limits = c(hms::as_hms(zoom_from), hms::as_hms(zoom_to)),
+       breaks = hms::hms(seq(as.numeric(hms::as_hms(zoom_from)), as.numeric(hms::as_hms(zoom_to)), 2*3600)), 
+       expand = c(0, 0), 
+       labels = format_hm
+     ) +
+     scale_y_continuous(position = "right", expand = c(0, 0)) +
+     scale_fill_manual(values = color_fill) +
+     scale_color_manual(values = color_fill) +
+     labs(x = "Time (hh:mm)", y = "", fill = "Duration (min)", color = "Duration (min)") +
+     theme_bw() +
+     theme(
+       legend.position = "bottom",
+       legend.key = element_rect(color = "grey"),
+       panel.grid.major = element_blank(), 
+       panel.grid.minor = element_blank(),
+       axis.text.y = element_blank(),
+       axis.ticks.y = element_blank()
+           ) +
+     facet_grid(date ~ ., switch = "y", labeller = labeller(days = date_labs)) +
+     geom_vline(aes(xintercept = 3600*1),    linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*2),    linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*3),    linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*4),    linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*5),    linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*6),    linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*7),    linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*8),    linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*9),    linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*10),   linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*11),   linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*12),   linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*13),   linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*14),   linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*15),   linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*16),   linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*17),   linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*18),   linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*19),   linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*20),   linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*21),   linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*22),   linetype = "dotted", color = "grey50") +
+     geom_vline(aes(xintercept = 3600*23),   linetype = "dotted", color = "grey50")
+
+# Summarising bout durations (in minutes) of interest without grouping by day
+recap_bouts <-
+  data %>%
+  dplyr::group_by(.data[[col_bout]], .data[[col_cat_int]]) %>%
+  dplyr::summarise(duration = dplyr::n() / cor_factor) %>%
+  dplyr::filter(intensity_category %in% c(BEHAV)) %>%
+  dplyr::mutate(
+    dur_cat = dplyr::case_when(
+      duration < 30            ~ "0-29" ,
+      duration %in% c(30:59)   ~ "30-59",
+      duration %in% c(60:89)   ~ "60-89",
+      duration >= 90           ~ "90+"
+    )
+  )
+
+# Computing alpha
+xmin <- min(recap_bouts$duration)
+alpha <- 1 + nrow(recap_bouts) * sum(log(recap_bouts$duration / xmin))^(-1)
+
+# Computing MBD
+MBD <- 2 ^ (1 / ((alpha - 1) * xmin))
+
+# Counting the number of bouts per bout duration, and the cumulated fractions
+# of sedentary (or physical activity) time and bouts, respectively
+summarised_bouts <-
+  recap_bouts %>%
+  dplyr::ungroup(bout) %>%
+  dplyr::count(duration) %>%
+  dplyr::mutate(
+    dur_cat = dplyr::case_when(
+      duration < 30            ~ "0-29" ,
+      duration %in% c(30:59)   ~ "30-59",
+      duration %in% c(60:89)   ~ "60-89",
+      duration >= 90           ~ "90+"
+    ),
+    prod = duration * n,
+    cum_frac_time = cumsum(prod / sum(prod)),
+    cum_frac_bout = cumsum(n/sum(n))
+  )
+
+# Fitting cumulated fraction of time vs bout duration
+model <- nls(
+  cum_frac_time ~ duration^x / (duration^x + UBD^x), 
+  data = summarised_bouts, 
+  start = list(x = 1, UBD = 10),
+  lower = c(0.5, 1),
+  upper = c(3, 90),
+  algorithm = "port"
+)
+
+# Getting coefficients for showing UBD in a graphic
+n <- summary(model)$coefficients[1, 1]
+UBD <- summary(model)$coefficients[2, 1]
+
+# Building a graphic for alpha
+
+  # Getting predictions
+  df_pred_alpha <- 
+    data.frame(
+      duration = seq(1, max(summarised_bouts$duration), 0.1)
+    ) %>% 
+    dplyr::mutate(pred = duration ^ (-alpha) * max(summarised_bouts$n, na.rm = TRUE)) 
+  
+  # Building the graphic
+   p_alpha <-
+     ggplot(data = recap_bouts) + 
+     geom_histogram(aes(x = duration, fill = dur_cat), binwidth = 1) +
+     scale_fill_manual(values = color_fill) +
+     labs(x = "Bout duration (min)", y = "n", fill = "Duration (min)") +
+     geom_line(data = df_pred_alpha, aes(x = duration, y = pred), linewidth = 0.8, color = "grey10") +
+     annotate("text", x = max(summarised_bouts$duration)/2, y = max(summarised_bouts$n, na.rm = TRUE)/2, label = paste("alpha =", round(alpha, 2)), hjust = 0.5, size = 6, vjust = 0.5) +
+     theme_bw() +
+     theme(legend.position = "bottom")
+
+# Building a graphic for MBD
+p_MBD <-
+  ggplot(data = recap_bouts) + 
+  geom_histogram(aes(x = duration, fill = dur_cat), binwidth = 1) +
+  geom_segment(aes(x = MBD, xend = MBD, y = 0, yend = max(summarised_bouts$n, na.rm = TRUE)), linetype = "dashed") +
+  scale_fill_manual(values = color_fill) +
+  labs(x = "Bout duration (min)", y = "n", fill = "Duration (min)") +
+  geom_segment(
+    x = max(summarised_bouts$duration)/2, y = max(summarised_bouts$n, na.rm = TRUE)/2, xend = MBD, yend = 0,
+    arrow = arrow(length = unit(0.02, "npc")),
+    linewidth = 0.3
+    ) +
+  annotate("text", x = max(summarised_bouts$duration)/2, y = max(summarised_bouts$n, na.rm = TRUE)/2, label = paste(" MBD =", round(MBD, 1), "min"), hjust = 0, size = 6, vjust = 0) +
+  theme_bw() +
+  theme(legend.position = "bottom")
+
+# Building a graphic for UBD
+  
+  # Getting predictions
+    df_pred_UBD <- 
+      data.frame(
+        duration = seq(1, max(summarised_bouts$duration), 0.1)
+        ) %>% 
+      dplyr::mutate(pred = duration^n / (duration^n + UBD^n)) 
+
+   # Building the graphic
+     p_UBD <-
+       ggplot(data = summarised_bouts, aes(x = duration, y = cum_frac_time)) +
+       geom_point(aes(color = dur_cat), size = 6) +
+       geom_segment(aes(x = 0, y = 0.5, xend = UBD, yend = 0.5), linetype = "dashed", linewidth = 0.5) +
+       geom_segment(aes(x = UBD, y = 0.5, xend = UBD, yend = 0), linetype = "dashed", linewidth = 0.5) +
+       geom_line(data = df_pred_UBD, aes(x = duration, y = pred), linewidth = 0.8, color = "grey10") +
+       geom_segment(aes(x = max(summarised_bouts$duration)/2, y = 0.4, xend = UBD, yend = 0), arrow = arrow(length = unit(0.02, "npc"))) +
+       annotate("text", x = max(summarised_bouts$duration)/2, y = 0.4, label = paste(" UBD =", round(UBD, 1), "min"), hjust = 0, size = 6, vjust = 0) +
+       labs(x = "Bout duration (min)", y = paste("Cumulated fraction of total", auto_text, "time"), color = "Duration (min)") +
+       scale_color_manual(values = color_fill) +
+       theme_bw() +
+       coord_cartesian(
+         xlim = c(0 - max(summarised_bouts$duration)*1/200, max(summarised_bouts$duration) + max(summarised_bouts$duration)*5/100), 
+         ylim = c(0, 1.05),
+         expand = FALSE
+         ) +
+       theme(legend.position = "bottom")
+
+# Counting the number of bouts per bout duration, and the cumulated fractions
+# of sedentary (or physical activity) time and bouts, respectively, with the
+# reverse order of bout durations
+summarised_bouts2 <-
+    recap_bouts %>%
+    dplyr::ungroup(bout) %>%
+    dplyr::count(duration) %>%
+    dplyr::mutate(
+      dur_cat = dplyr::case_when(
+        duration < 30            ~ "0-29" ,
+        duration %in% c(30:59)   ~ "30-59",
+        duration %in% c(60:89)   ~ "60-89",
+        duration >= 90           ~ "90+"
+      ),
+      prod = duration * n
+    ) %>%
+    dplyr::arrange(-duration) %>%
+    dplyr::mutate(
+      cum_frac_time = cumsum(prod / sum(prod)),
+      cum_frac_bout = cumsum(n/sum(n))
+    ) 
+
+# Computing Gini index 
+gini_df <- 
+  dplyr::bind_rows(data.frame(cum_frac_bout = 0, cum_frac_time = 0, seg = 0), summarised_bouts2) %>%
+  dplyr::mutate(lorenz_area = (cum_frac_bout - dplyr::lag(cum_frac_bout)) * (cum_frac_time + dplyr::lag(cum_frac_time)) * 0.5)
+gini <- (1 - 2 * sum(gini_df$lorenz_area, na.rm = TRUE)) * -1 # Based on: https://www.statology.org/gini-coefficient-excel/
+
+# Building a graphic for Gini index
+p_gini <-
+  ggplot(
+    data = gini_df, 
+    aes(x = cum_frac_bout, y = cum_frac_time)) +
+  geom_ribbon(aes(x = cum_frac_bout, ymin = cum_frac_time, ymax = cum_frac_bout), fill = alpha(color_fill[[2]], 0.3)) +
+  geom_point(data = summarised_bouts2, aes(color = dur_cat), size = 6) +
+  geom_segment(x = 0, xend = 1, y = 0, yend = 1, linewidth = 0.3) +
+  geom_line(linewidth = 0.6) +
+  scale_color_manual(values = color_fill) +
+  coord_cartesian(xlim = c(0, 1), y = c(0, 1)) +
+  labs(
+    x = paste("Fraction of the number of bouts of duration > x"), 
+    y = paste("Cumulated fraction of total", auto_text, "time"),
+    color = "Duration (min)"
+    ) +
+  annotate("text", x = 0.52, y = 0.31, label = paste("Gini =", round(gini, 2)), hjust = 0, size = 6, vjust = 0.5) +
+  theme_bw() +
+  theme(legend.position = "bottom")
+
+# Making a dataframe with mean_breaks, alpha, UBD, and Gini
+  metrics <- data.frame(
+    mean_breaks = mean_breaks,
+    alpha = round(alpha, 2),
+    MBD = round(MBD, 2),
+    UBD = round(UBD, 2),
+    gini = round(gini, 2) 
+  )
+  
+  
+# Return list of objects
+  return(list(
+    metrics = metrics, 
+    p_breaks = p_breaks,
+    p_alpha = p_alpha, 
+    p_MBD = p_MBD,
+    p_UBD = p_UBD, 
+    p_gini = p_gini,
+    recap_bouts_by_day = recap_bouts_by_day,
+    recap_bouts = recap_bouts,
+    summarised_bouts = summarised_bouts,
+    summarised_bouts2 = summarised_bouts2
+    )
+    )
+  
+   }
+  
