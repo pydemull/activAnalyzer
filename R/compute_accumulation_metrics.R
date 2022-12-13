@@ -76,7 +76,7 @@
 #'     weight = 67,
 #'     sex = "male",
 #'     )
-#' compute_frag_metrics(
+#' compute_accumulation_metrics(
 #'    data = mydata_with_intensity_marks,
 #'    behaviour = "sed",
 #'    dates = c("2021-04-07", "2021-04-08", "2021-04-09", "2021-04-10", "2021-04-11"),
@@ -385,7 +385,7 @@ p_gini <-
   geom_segment(x = 0, xend = 1, y = 0, yend = 1, linewidth = 0.3) +
   geom_line(linewidth = 0.6) +
   scale_color_manual(values = color_fill) +
-  coord_cartesian(xlim = c(0, 1), y = c(0, 1)) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1)) +
   labs(
     x = paste("Fraction of the number of bouts of duration > x"), 
     y = paste("Cumulated fraction of total", auto_text, "time"),

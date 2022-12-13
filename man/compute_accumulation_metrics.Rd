@@ -103,7 +103,7 @@ mydata_with_intensity_marks <- mark_intensity(
     weight = 67,
     sex = "male",
     )
-compute_frag_metrics(
+compute_accumulation_metrics(
    data = mydata_with_intensity_marks,
    behaviour = "sed",
    dates = c("2021-04-07", "2021-04-08", "2021-04-09", "2021-04-10", "2021-04-11"),
