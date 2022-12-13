@@ -1847,8 +1847,10 @@ app_server <- function(input, output, session) {
     output$title_SB_accum_metrics <- renderUI({
       
       # Title  will be shown only if dataset has been processed using 60-s epochs
-      req(nrow(results_list()$df_with_computed_metrics) >=1 &
-            (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60))
+      req(
+        results_summary_means()$valid_days >=1 &
+        (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)
+      )
       
       # Showing title
       h3("Sedentary behaviour accumulation metrics")
@@ -1859,8 +1861,10 @@ app_server <- function(input, output, session) {
     metrics_accum_sed <- eventReactive(input$Run, {
       
       # Metrics will be computed only if dataset has been processed using 60-s epochs
-      req(nrow(results_list()$df_with_computed_metrics) >=1 &
-            (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60))
+      req(
+        results_summary_means()$valid_days >=1 &
+          (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)
+      )
       
       # Getting metrics
       compute_accumulation_metrics(
@@ -1924,8 +1928,10 @@ app_server <- function(input, output, session) {
     output$title_PA_accum_metrics <- renderUI({
       
       # Title  will be shown only if dataset has been processed using 60-s epochs
-      req(nrow(results_list()$df_with_computed_metrics) >=1 &
-            (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60))
+      req(
+        results_summary_means()$valid_days >=1 &
+          (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)
+      )
       
       # Showing title
       h3("Physical activity accumulation metrics")
@@ -1935,9 +1941,11 @@ app_server <- function(input, output, session) {
     metrics_accum_pa <- eventReactive(input$Run, {
      
      # Metrics will be computed only if dataset has been processed using 60-s epochs
-      req(nrow(results_list()$df_with_computed_metrics) >=1 &
-           (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60))
-     
+      req(
+        results_summary_means()$valid_days >=1 &
+          (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)
+      )
+      
     # Getting metrics
      compute_accumulation_metrics(
        data = results_list()$df_with_computed_metrics,
@@ -5347,8 +5355,10 @@ app_server <- function(input, output, session) {
     
        # Boxes will be shown only if dataset has been processed using 60-s epochs
     observe({
-      if(nrow(results_list()$df_with_computed_metrics) >=1 &
-         (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)) {
+      if(
+        results_summary_means()$valid_days >=1 &&
+         (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)
+        ) {
         shinyjs::show("BoxBreaksSB")
         shinyjs::show("BoxAlphaSB")
         shinyjs::show("BoxMBDSB")
