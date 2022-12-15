@@ -108,7 +108,7 @@ recap_by_day <- function(
     )
   
   # Correction factor to get results in minutes during following analyzes
-    cor_factor = 60 / (as.numeric(data$time[2] - data$time[1]))
+    cor_factor = 60 / (as.numeric(data[[col_time]][2] - data[[col_time]][1]))
   
   # Getting results by day
       
@@ -120,7 +120,7 @@ recap_by_day <- function(
            
          # Getting step-based metrics for each day of measurement (using a 1-min epoch)
            
-           if (as.numeric(data$time[2] - data$time[1]) == 60) { 
+           if (as.numeric(data[[col_time]][2] - data[[col_time]][1]) == 60) { 
              
            df1 <- 
              data %>%
@@ -133,8 +133,8 @@ recap_by_day <- function(
              ) %>%
              dplyr::group_by(date, .drop = FALSE) %>%
              dplyr::filter(
-               .data[[col_time]] >= hms::as_hms(valid_wear_time_start) &
-                 .data[[col_time]] <= hms::as_hms(valid_wear_time_end)
+               time >= hms::as_hms(valid_wear_time_start) &
+                 time <= hms::as_hms(valid_wear_time_end)
                ) %>%
             dplyr::summarise(
               max_steps_60min = round(my_max(zoo::rollmean(steps, align = "center", k = 60L, fill = NA)), 2),
@@ -165,8 +165,8 @@ recap_by_day <- function(
                ) %>%
                dplyr::group_by(date, .drop = FALSE) %>%
                dplyr::filter(
-                 .data[[col_time]] >= hms::as_hms(valid_wear_time_start) &
-                   .data[[col_time]] <= hms::as_hms(valid_wear_time_end)
+                 time >= hms::as_hms(valid_wear_time_start) &
+                   time <= hms::as_hms(valid_wear_time_end)
                ) %>%
                dplyr::summarise(
                  max_steps_60min = round(my_max(zoo::rollmean(steps, align = "center", k = 60L, fill = NA)), 2),

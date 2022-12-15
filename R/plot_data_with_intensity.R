@@ -74,8 +74,8 @@ plot_data_with_intensity <- function(
     p <-
     ggplot(data = data %>% dplyr::filter(.data[[col_time]] >= hms::as_hms(zoom_from) & .data[[col_time]] <= hms::as_hms(zoom_to))) +
     geom_rect(aes(
-      xmin = time, 
-      xmax =  time + hms::as_hms(60), 
+      xmin = .data[[col_time]], 
+      xmax =  .data[[col_time]] + hms::as_hms(60), 
       ymin = -Inf, 
       ymax = Inf, 
       color = intensity_category,
