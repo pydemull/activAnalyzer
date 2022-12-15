@@ -23,8 +23,6 @@ The dataframe shoud have 60-s epochs. Otherwise, unexpected graphics will be obt
 
 \item{col_time}{A character value to indicate the name of the variable to plot time data.}
 
-\item{col_bout}{A character value indicating the name of the variable where bout IDs have been identified.}
-
 \item{col_cat_int}{A character value indicating the name of the variable where intensity category (SED, LPA, MVPA) is provided.}
 
 \item{behaviour}{A character value indicating whether metrics should be computed for sedentary behaviour or physical activity.}
