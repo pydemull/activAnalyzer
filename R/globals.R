@@ -108,5 +108,7 @@ utils::globalVariables(c(
   "duration",
   "cum_frac_time",
   "cum_frac_bout",
-  "nls"
+  "nls",
+  "new_bout",
+  "new_intensity_category"
   ))
