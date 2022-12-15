@@ -38,7 +38,6 @@
 #' @param data  A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then the \code{\link{mark_intensity}} functions.
 #'     The dataframe shoud have 60-s epochs. Otherwise, unexpected graphics will be obtained.
 #' @param col_time A character value to indicate the name of the variable to plot time data.
-#' @param col_bout A character value indicating the name of the variable where bout IDs have been identified.
 #' @param col_cat_int A character value indicating the name of the variable where intensity category (SED, LPA, MVPA) is provided.
 #' @param behaviour A character value indicating whether metrics should be computed for sedentary behaviour or physical activity.
 #' @param dates A character vector containing the dates to be retained for analysis. The dates must be with the "YYYY-MM-DD" format.
@@ -99,7 +98,8 @@ compute_accumulation_metrics <- function(
     zoom_to = "23:59:59"
     ){
   
-# Filtering data based on selected dates and time periods
+# Filtering data based on selected dates and time periods, and adding a 
+# column containing "SED", NON-SED", or "Nonwear" labels
 if (is.null(dates)) {
   selected_dates <- attributes(as.factor(data$date))$levels
 } else {
@@ -110,27 +110,38 @@ data <-
   dplyr::filter(date %in% as.Date(selected_dates) &
                   .data[[col_time]] >= hms::as_hms(valid_wear_time_start) &
                   .data[[col_time]] <= hms::as_hms(valid_wear_time_end)
-                )
-  
+                ) %>%
+  dplyr::mutate(new_intensity_category = dplyr::case_when(
+    .data[[col_cat_int]] == "LPA" | .data[[col_cat_int]] == "MVPA" ~ "PA",
+    .data[[col_cat_int]] == "SED" ~ "SED",
+    .data[[col_cat_int]] == "Nonwear" ~ "Nonwear"
+                                                    )
+    )
+
+# Updating bouts IDs
+data$new_intensity_category <- as.factor(data$new_intensity_category)
+data$new_intensity_category_num <- as.numeric(as.character(forcats::fct_recode(data$new_intensity_category , "0" = "Nonwear", "1" = "SED", "2" = "PA")))
+data$new_bout <- cumsum(c(1, as.numeric(diff(data$new_intensity_category_num))!= 0))
+
 # Getting arguments
 behaviour <- match.arg(behaviour)
 if(behaviour == "sed") {BEHAV <- "SED"; color_fill = c("#D9DBE5", "#A6ADD5", "#6A78C3", "#3F51B5"); auto_text = "sedentary"} 
-if(behaviour == "pa") {BEHAV <- c("LPA", "MVPA"); color_fill = c("#EDD3DD", "#F38DB6", "#FA3B87", "#FF0066"); auto_text = "physical activity"} 
+if(behaviour == "pa") {BEHAV <- "PA"; color_fill = c("#EDD3DD", "#F38DB6", "#FA3B87", "#FF0066"); auto_text = "physical activity"} 
   
 # Getting correction factor related to the epoch duration (reference epoch = 60 s);
 # bout durations are computed in minutes
-cor_factor = 60 / (as.numeric(data$time[2] - data$time[1]))
+cor_factor = 60 / (as.numeric(data[[col_time]][2] - data[[col_time]][1]))
  
 # Summarising bout durations (in minutes) of interest by day
 recap_bouts_by_day <-
   data %>%
-  dplyr::group_by(date, .data[[col_bout]], .data[[col_cat_int]]) %>%
+  dplyr::group_by(date, new_bout, new_intensity_category) %>%
   dplyr::summarise(
     duration = dplyr::n() / cor_factor,
     start = hms::as_hms(min(.data[[col_time]])),
     end = hms::as_hms(max(.data[[col_time]]))
     ) %>%
-  dplyr::filter(intensity_category %in% c(BEHAV)) %>%
+  dplyr::filter(new_intensity_category %in% c(BEHAV)) %>%
   dplyr::mutate(
     dur_cat = dplyr::case_when(
       duration < 30            ~ "0-29" ,
@@ -143,7 +154,7 @@ recap_bouts_by_day <-
 # Computing mean daily number of breaks
 mean_breaks <-
   recap_bouts_by_day %>%
-  dplyr::ungroup(tidyselect::all_of(col_bout), tidyselect::all_of(col_cat_int)) %>%
+  dplyr::ungroup(new_bout, new_intensity_category) %>%
   dplyr::summarise(n_breaks = dplyr::n()) %>%
   dplyr::summarise(mean_breaks = round(mean(n_breaks), 2)) %>%
   dplyr::pull(mean_breaks)
@@ -194,7 +205,7 @@ mean_breaks <-
      scale_y_continuous(position = "right", expand = c(0, 0)) +
      scale_fill_manual(values = color_fill) +
      scale_color_manual(values = color_fill) +
-     labs(x = "Time (hh:mm)", y = "", fill = "Duration (min)", color = "Duration (min)") +
+     labs(title = paste("Mean daily number of breaks:", mean_breaks), x = "Time (hh:mm)", y = "", fill = "Duration (min)", color = "Duration (min)") +
      theme_bw() +
      theme(
        legend.position = "bottom",
@@ -232,9 +243,9 @@ mean_breaks <-
 # Summarising bout durations (in minutes) of interest without grouping by day
 recap_bouts <-
   data %>%
-  dplyr::group_by(.data[[col_bout]], .data[[col_cat_int]]) %>%
+  dplyr::group_by(new_bout, new_intensity_category) %>%
   dplyr::summarise(duration = dplyr::n() / cor_factor) %>%
-  dplyr::filter(intensity_category %in% c(BEHAV)) %>%
+  dplyr::filter(new_intensity_category %in% c(BEHAV)) %>%
   dplyr::mutate(
     dur_cat = dplyr::case_when(
       duration < 30            ~ "0-29" ,
@@ -255,7 +266,7 @@ MBD <- 2 ^ (1 / ((alpha - 1) * xmin))
 # of sedentary (or physical activity) time and bouts, respectively
 summarised_bouts <-
   recap_bouts %>%
-  dplyr::ungroup(bout) %>%
+  dplyr::ungroup(new_bout) %>%
   dplyr::count(duration) %>%
   dplyr::mutate(
     dur_cat = dplyr::case_when(
@@ -283,12 +294,15 @@ model <- nls(
 n <- summary(model)$coefficients[1, 1]
 UBD <- summary(model)$coefficients[2, 1]
 
+# Getting maximum bout duration to build future graphics
+max_bout_duration <- max(summarised_bouts$duration)
+
 # Building a graphic for alpha
 
   # Getting predictions
   df_pred_alpha <- 
     data.frame(
-      duration = seq(1, max(summarised_bouts$duration), 0.1)
+      duration = seq(1, max_bout_duration, 0.1)
     ) %>% 
     dplyr::mutate(pred = duration ^ (-alpha) * max(summarised_bouts$n, na.rm = TRUE)) 
   
@@ -299,7 +313,7 @@ UBD <- summary(model)$coefficients[2, 1]
      scale_fill_manual(values = color_fill) +
      labs(x = "Bout duration (min)", y = "n", fill = "Duration (min)") +
      geom_line(data = df_pred_alpha, aes(x = duration, y = pred), linewidth = 0.8, color = "grey10") +
-     annotate("text", x = max(summarised_bouts$duration)/2, y = max(summarised_bouts$n, na.rm = TRUE)/2, label = paste("alpha =", round(alpha, 2)), hjust = 0.5, size = 6, vjust = 0.5) +
+     annotate("text", x = max_bout_duration/2, y = max(summarised_bouts$n, na.rm = TRUE)/2, label = paste("alpha =", round(alpha, 2)), hjust = 0.5, size = 6, vjust = 0.5) +
      theme_bw() +
      theme(legend.position = "bottom")
 
@@ -311,11 +325,11 @@ p_MBD <-
   scale_fill_manual(values = color_fill) +
   labs(x = "Bout duration (min)", y = "n", fill = "Duration (min)") +
   geom_segment(
-    x = max(summarised_bouts$duration)/2, y = max(summarised_bouts$n, na.rm = TRUE)/2, xend = MBD, yend = 0,
+    x = max_bout_duration/2, y = max(summarised_bouts$n, na.rm = TRUE)/2, xend = MBD, yend = 0,
     arrow = arrow(length = unit(0.02, "npc")),
     linewidth = 0.3
     ) +
-  annotate("text", x = max(summarised_bouts$duration)/2, y = max(summarised_bouts$n, na.rm = TRUE)/2, label = paste(" MBD =", round(MBD, 1), "min"), hjust = 0, size = 6, vjust = 0) +
+  annotate("text", x = max_bout_duration/2, y = max(summarised_bouts$n, na.rm = TRUE)/2, label = paste(" MBD =", round(MBD, 1), "min"), hjust = 0, size = 6, vjust = 0) +
   theme_bw() +
   theme(legend.position = "bottom")
 
@@ -324,7 +338,7 @@ p_MBD <-
   # Getting predictions
     df_pred_UBD <- 
       data.frame(
-        duration = seq(1, max(summarised_bouts$duration), 0.1)
+        duration = seq(1, max_bout_duration, 0.1)
         ) %>% 
       dplyr::mutate(pred = duration^n / (duration^n + UBD^n)) 
 
@@ -335,13 +349,13 @@ p_MBD <-
        geom_segment(aes(x = 0, y = 0.5, xend = UBD, yend = 0.5), linetype = "dashed", linewidth = 0.5) +
        geom_segment(aes(x = UBD, y = 0.5, xend = UBD, yend = 0), linetype = "dashed", linewidth = 0.5) +
        geom_line(data = df_pred_UBD, aes(x = duration, y = pred), linewidth = 0.8, color = "grey10") +
-       geom_segment(aes(x = max(summarised_bouts$duration)/2, y = 0.4, xend = UBD, yend = 0), arrow = arrow(length = unit(0.02, "npc"))) +
-       annotate("text", x = max(summarised_bouts$duration)/2, y = 0.4, label = paste(" UBD =", round(UBD, 1), "min"), hjust = 0, size = 6, vjust = 0) +
+       geom_segment(aes(x = max_bout_duration/2, y = 0.4, xend = UBD, yend = 0), arrow = arrow(length = unit(0.02, "npc"))) +
+       annotate("text", x = max_bout_duration/2, y = 0.4, label = paste(" UBD =", round(UBD, 1), "min"), hjust = 0, size = 6, vjust = 0) +
        labs(x = "Bout duration (min)", y = paste("Cumulated fraction of total", auto_text, "time"), color = "Duration (min)") +
        scale_color_manual(values = color_fill) +
        theme_bw() +
        coord_cartesian(
-         xlim = c(0 - max(summarised_bouts$duration)*1/200, max(summarised_bouts$duration) + max(summarised_bouts$duration)*5/100), 
+         xlim = c(0 - max_bout_duration*1/200, max_bout_duration + max_bout_duration*5/100), 
          ylim = c(0, 1.05),
          expand = FALSE
          ) +
@@ -352,7 +366,7 @@ p_MBD <-
 # reverse order of bout durations
 summarised_bouts2 <-
     recap_bouts %>%
-    dplyr::ungroup(bout) %>%
+    dplyr::ungroup(new_bout) %>%
     dplyr::count(duration) %>%
     dplyr::mutate(
       dur_cat = dplyr::case_when(
