@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_ratio_mvpa_sed_comment.R
 \name{get_ratio_mvpa_sed_comment}
 \alias{get_ratio_mvpa_sed_comment}
-\title{Get comment about the MPVA/SED ratio}
+\title{Get comment about the MVPA/SED ratio}
 \usage{
 get_ratio_mvpa_sed_comment(value, language = c("en", "fr"))
 }
@@ -15,7 +15,7 @@ get_ratio_mvpa_sed_comment(value, language = c("en", "fr"))
 A character string.
 }
 \description{
-Get comment about the MPVA/SED ratio
+Get comment about the MVPA/SED ratio
 }
 \examples{
 get_ratio_mvpa_sed_comment(value = 0.03)

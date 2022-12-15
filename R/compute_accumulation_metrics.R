@@ -88,7 +88,6 @@
 compute_accumulation_metrics <- function(
     data, 
     col_time = "time",
-    col_bout = "bout", 
     col_cat_int = "intensity_category", 
     behaviour = c("sed", "pa"),
     dates = NULL,
