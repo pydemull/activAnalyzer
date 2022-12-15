@@ -1,4 +1,4 @@
-#' Get comment about the MPVA/SED ratio
+#' Get comment about the MVPA/SED ratio
 #'
 #' @param value A numeric value to indicate the daily mean of MVPA/SED ratio.
 #' @param language A character value for setting the language with which the table should be created: `en` for english; `fr` for french.
