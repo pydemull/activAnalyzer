@@ -47,6 +47,8 @@
 #'   
 #' @param data A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then the \code{\link{mark_intensity}} functions.
 #' @param col_time A character value indicating the name of the variable where time information is provided.
+#' @param col_nonwear A character value to indicate the name of the variable used to count nonwear time.
+#' @param col_wear A character value to indicate the name of the variable used to count wear time.
 #' @param valid_wear_time_start A character value with the HH:MM:SS format to set the start of the daily period to consider for computing valid wear time.
 #' @param valid_wear_time_end A character value with the HH:MM:SS format to set the end of the daily period to consider for computing valid wear time.
 #' @param age A numeric value in yr.
@@ -93,6 +95,8 @@
 recap_by_day <- function(
   data, 
   col_time = "time",
+  col_nonwear = "non_wearing_count",
+  col_wear = "wearing_count",
   valid_wear_time_start = "00:00:00",
   valid_wear_time_end = "23:59:59",
   age = 40, 
@@ -192,7 +196,7 @@ recap_by_day <- function(
                  .data[[col_time]] <= hms::as_hms(valid_wear_time_end) &
                  wearing == "w") %>%
              dplyr::summarise(
-               wear_time = sum(wearing_count, na.rm = TRUE) / cor_factor,
+               wear_time = sum(.data[[col_wear]], na.rm = TRUE) / cor_factor,
                total_counts_axis1 = sum(axis1, na.rm = TRUE),
                total_counts_vm = sum(vm, na.rm = TRUE),
                axis1_per_min = round(sum(axis1, na.rm = TRUE) / wear_time, 2),

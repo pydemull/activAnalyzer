@@ -23,6 +23,9 @@
 #'
 #' @param data A dataframe obtained using the \code{\link{prepare_dataset}} and then the \code{\link{mark_wear_time}} functions.
 #' @param col_axis A character value to indicate the name of the variable to be used for determining intensity categories. 
+#' @param col_time A character value to indicate the name of the variable to plot time data.
+#' @param col_nonwear A character value to indicate the name of the variable used to count nonwear time.
+#' @param col_wear A character value to indicate the name of the variable used to count wear time.
 #' @param equation A character string to indicate the equation to be used for estimating METs.
 #' @param sed_cutpoint A numeric value below which time is considered as spent in sedentary behavior (in counts/min). 
 #'                     You must convert to counts/min if you want to use a cut-point initially developed using an epoch shorter than 60 s. In the case where the epoch of the 
@@ -70,7 +73,10 @@
 #' head(mydata_with_intensity_marks)
 #' 
 mark_intensity <- function(data, 
-                           col_axis = "vm", 
+                           col_axis = c("vm", "axis1"),
+                           col_time = "time",
+                           col_nonwear = "non_wearing_count",
+                           col_wear = "wearing_count",
                            sed_cutpoint = 200, 
                            mpa_cutpoint = 2690, 
                            vpa_cutpoint = 6167, 
@@ -87,11 +93,12 @@ mark_intensity <- function(data,
   if (is.null(dates)) {selected_dates <- attributes(as.factor(data$date))$levels}
   else {selected_dates <- attributes(as.factor(dates))$levels}
   
+  col_axis  <- match.arg(col_axis)
   equation <- match.arg(equation)
   sex <- match.arg(sex)
   
   # Correction factor for determining intensity from cut-points and equations
-    cor_factor = 60 / (as.numeric(data$time[2] - data$time[1]))
+    cor_factor = 60 / (as.numeric(data[[col_time]][2] - data[[col_time]][1]))
   
   # Computing basal metabolic rate
     bmr_kcal_min <- suppressMessages(
@@ -131,7 +138,7 @@ mark_intensity <- function(data,
       
 
   # Marking the bouts based on intensity categories
-    df$intensity_category <- ifelse(df$non_wearing_count == 1, "Nonwear", 
+    df$intensity_category <- ifelse(df[[col_nonwear]] == 1, "Nonwear", 
                                     ifelse(df$SED == 1, "SED", 
                                            ifelse(df$LPA == 1, "LPA", "MVPA")))
     
