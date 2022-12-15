@@ -1890,14 +1890,14 @@ app_server <- function(input, output, session) {
        width = "auto", 
        height = function(){
          height <- dplyr::case_when(
-           nlevels(as.factor(results_list()$results_by_day$date)) >= 8 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 95,
-           nlevels(as.factor(results_list()$results_by_day$date)) == 7 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 105,
-           nlevels(as.factor(results_list()$results_by_day$date)) == 6 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 107,
-           nlevels(as.factor(results_list()$results_by_day$date)) == 5 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 110,
-           nlevels(as.factor(results_list()$results_by_day$date)) == 4 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 115,
-           nlevels(as.factor(results_list()$results_by_day$date)) == 3 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 130,
-           nlevels(as.factor(results_list()$results_by_day$date)) == 2 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 150,
-           nlevels(as.factor(results_list()$results_by_day$date)) == 1 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 205
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) >= 8 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 95,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 7 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 105,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 6 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 107,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 5 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 110,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 4 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 115,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 3 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 130,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 2 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 150,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 1 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 205
          )
          return(height)
        }, res = 120
@@ -1970,14 +1970,14 @@ app_server <- function(input, output, session) {
     width = "auto", 
     height = function(){
       height <- dplyr::case_when(
-        nlevels(as.factor(results_list()$results_by_day$date)) >= 8 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 95,
-        nlevels(as.factor(results_list()$results_by_day$date)) == 7 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 105,
-        nlevels(as.factor(results_list()$results_by_day$date)) == 6 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 107,
-        nlevels(as.factor(results_list()$results_by_day$date)) == 5 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 110,
-        nlevels(as.factor(results_list()$results_by_day$date)) == 4 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 115,
-        nlevels(as.factor(results_list()$results_by_day$date)) == 3 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 130,
-        nlevels(as.factor(results_list()$results_by_day$date)) == 2 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 150,
-        nlevels(as.factor(results_list()$results_by_day$date)) == 1 ~ nlevels(as.factor(results_list()$results_by_day$date)) * 205
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) >= 8 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 95,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 7 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 105,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 6 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 107,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 5 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 110,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 4 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 115,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 3 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 130,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 2 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 150,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 1 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 205
       )
       return(height)
     }, res = 120

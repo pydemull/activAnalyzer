@@ -163,7 +163,7 @@ mean_breaks <-
   # Setting the format of the time variable
   format_hm <- function(sec) stringr::str_sub(format(sec), end = -4L)
   date_labs <- format(data$date, "%d-%m-%y")
-  names(date_labs) <- data$days
+  names(date_labs) <- data$date
   
   # Building the graphic
     p_breaks <-
@@ -214,7 +214,7 @@ mean_breaks <-
        axis.text.y = element_blank(),
        axis.ticks.y = element_blank()
            ) +
-     facet_grid(date ~ ., switch = "y", labeller = labeller(days = date_labs)) +
+     facet_grid(date ~ ., switch = "y", labeller = labeller(date = date_labs)) +
      geom_vline(aes(xintercept = 3600*1),    linetype = "dotted", color = "grey50") +
      geom_vline(aes(xintercept = 3600*2),    linetype = "dotted", color = "grey50") +
      geom_vline(aes(xintercept = 3600*3),    linetype = "dotted", color = "grey50") +
