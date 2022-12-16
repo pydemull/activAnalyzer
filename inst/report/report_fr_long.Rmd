@@ -358,8 +358,8 @@ if(length(params$p_breaks_pa) == 1) {
   cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
 } else {
   
-  p1 <- params$p_alpha_sed + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = FALSE, fill = FALSE)
-  p2 <- params$p_MBD_sed  + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = FALSE, fill = FALSE)
+  p1 <- params$p_alpha_sed + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = "none", fill = "none")
+  p2 <- params$p_MBD_sed  + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = "none", fill = "none")
   p3 <- params$p_UBD_sed  + labs(x = "Durée de période (min)", y = "Fraction cumulée du temps total sédentaire", color = "Durée (min)", fill = "Durée (min)") 
   p4 <- params$p_gini_sed + labs(x = "Fraction du nombre de périodes de durée > x", y = "Fraction cumulée du temps total sédentaire", color = "Durée (min)", fill = "Durée (min)")
   
@@ -384,8 +384,8 @@ if (params$rendered_by_shiny)
 if(length(params$p_breaks_pa) == 1) {
   cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
 } else {
-  p1 <- params$p_alpha_pa + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = FALSE, fill = FALSE)
-  p2 <- params$p_MBD_pa  + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = FALSE, fill = FALSE)
+  p1 <- params$p_alpha_pa + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = "none", fill = "none")
+  p2 <- params$p_MBD_pa  + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = "none", fill = "none")
   p3 <- params$p_UBD_pa  + labs(x = "Durée de période (min)", y = "Fraction cumulée du temps total d'activité physique", color = "Durée (min)", fill = "Durée (min)") 
   p4 <- params$p_gini_pa + labs(x = "Fraction du nombre de périodes de durée > x", y = "Fraction cumulée du temps total d'activité physique", color = "Durée (min)", fill = "Durée (min)") 
   

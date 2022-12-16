@@ -343,8 +343,8 @@ if(length(params$p_breaks_sed) == 1) {
   cat("No result. Results can be obtained using 60-s epochs only.")
 } else {
   
-  p1 <- params$p_alpha_sed + guides(color = FALSE, fill = FALSE)
-  p2 <- params$p_MBD_sed   + guides(color = FALSE, fill = FALSE)
+  p1 <- params$p_alpha_sed + guides(color = "none", fill = "none")
+  p2 <- params$p_MBD_sed   + guides(color = "none", fill = "none")
   p3 <- params$p_UBD_sed
   p4 <- params$p_gini_sed
  
@@ -369,8 +369,8 @@ if (params$rendered_by_shiny)
 if(length(params$p_breaks_pa) == 1) {
   cat("No result. Results can be obtained using 60-s epochs only.")
 } else {
-  p1 <- params$p_alpha_pa + guides(color = FALSE, fill = FALSE)
-  p2 <- params$p_MBD_pa   + guides(color = FALSE, fill = FALSE)
+  p1 <- params$p_alpha_pa + guides(color = "none", fill = "none")
+  p2 <- params$p_MBD_pa   + guides(color = "none", fill = "none")
   p3 <- params$p_UBD_pa
   p4 <- params$p_gini_pa
  
