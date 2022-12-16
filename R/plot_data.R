@@ -74,7 +74,7 @@ plot_data <- function(
       ) +
     scale_x_time(
       limits = c(hms::as_hms(zoom_from), hms::as_hms(zoom_to)),
-      breaks = hms::hms(seq(as.numeric(hms::as_hms(zoom_from)), as.numeric(hms::as_hms(zoom_to)), 2*3600)), 
+      breaks = hms::hms(seq(as.numeric(hms::as_hms(zoom_from) + hms::hms(3600)), as.numeric(hms::as_hms(zoom_to) - hms::hms(3599)), 2*3600)), 
       expand = c(0, 0),
       labels = format_hm
       ) +

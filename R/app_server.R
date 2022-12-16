@@ -5393,8 +5393,10 @@ app_server <- function(input, output, session) {
     shinyjs::hide("ExpResultsByDays")
     shinyjs::hide("ExpDailySummaryMeans")
     shinyjs::hide("ExpDailySummaryMedians")
-    shinyjs::hide("report_en")
-    shinyjs::hide("report_fr")
+    shinyjs::hide("report_en_long")
+    shinyjs::hide("report_fr_long")
+    shinyjs::hide("report_en_short")
+    shinyjs::hide("report_fr_short")
     shinyjs::hide("go_to_proactive_q")
    
   # Showing main buttons
@@ -5411,12 +5413,16 @@ app_server <- function(input, output, session) {
       shinyjs::hide("ExpDailySummaryMedians")
     }
      if(results_summary_means()$valid_days >=1 || results_summary_medians()$valid_days >=1) {
-       shinyjs::show("report_en")
-       shinyjs::show("report_fr") 
+       shinyjs::show("report_en_long")
+       shinyjs::show("report_fr_long")
+       shinyjs::show("report_en_short")
+       shinyjs::show("report_fr_short") 
        shinyjs::show("go_to_proactive_q")
      } else {
-       shinyjs::hide("report_en")
-       shinyjs::hide("report_fr") 
+       shinyjs::hide("report_en_long")
+       shinyjs::hide("report_fr_long")
+       shinyjs::hide("report_en_short")
+       shinyjs::hide("report_fr_short") 
        shinyjs::hide("go_to_proactive_q")
      }
    })
@@ -5653,22 +5659,154 @@ app_server <- function(input, output, session) {
   # Generating reports ----
   ####################
   
-  # Generating general report EN
-    output$report_en <- downloadHandler(
+    # Initializing the list of accumulation metrics for the long reports
+      list_accum_metrics <- reactiveValues(
+        mean_breaks_sed = NA,
+        p_breaks_sed = NA,
+        p_alpha_sed = NA,
+        p_MBD_sed = NA,
+        p_UBD_sed = NA,
+        p_gini_sed = NA,
+        mean_breaks_pa = NA,
+        p_breaks_pa = NA,
+        p_alpha_pa = NA,
+        p_MBD_pa = NA,
+        p_UBD_pa = NA,
+        p_gini_pa = NA
+      )
+    
+    # Updating the list of accumulation metrics for the long reports
+      observeEvent(results_summary_means(), {
+        if(results_summary_means()$valid_days >=1 && (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)) {
+        list_accum_metrics$mean_breaks_sed <- metrics_accum_sed()$metrics$mean_breaks
+        list_accum_metrics$p_breaks_sed <- metrics_accum_sed()$p_breaks
+        list_accum_metrics$p_alpha_sed <- metrics_accum_sed()$p_alpha
+        list_accum_metrics$p_MBD_sed <- metrics_accum_sed()$p_MBD
+        list_accum_metrics$p_UBD_sed <- metrics_accum_sed()$p_UBD
+        list_accum_metrics$p_gini_sed <- metrics_accum_sed()$p_gini
+        
+        list_accum_metrics$mean_breaks_pa <- metrics_accum_pa()$metrics$mean_breaks
+        list_accum_metrics$p_breaks_pa <- metrics_accum_pa()$p_breaks
+        list_accum_metrics$p_alpha_pa <- metrics_accum_pa()$p_alpha
+        list_accum_metrics$p_MBD_pa <- metrics_accum_pa()$p_MBD
+        list_accum_metrics$p_UBD_pa <- metrics_accum_pa()$p_UBD
+        list_accum_metrics$p_gini_pa <- metrics_accum_pa()$p_gini
+        } else {
+        list_accum_metrics$mean_breaks_sed <- NA
+        list_accum_metrics$p_breaks_sed <- NA
+        list_accum_metrics$p_alpha_sed <- NA
+        list_accum_metrics$p_MBD_sed <- NA
+        list_accum_metrics$p_UBD_sed <- NA
+        list_accum_metrics$p_gini_sed <- NA
+        list_accum_metrics$mean_breaks_pa <- NA
+        list_accum_metrics$p_breaks_pa <- NA
+        list_accum_metrics$p_alpha_pa <- NA
+        list_accum_metrics$p_MBD_pa <-NA
+        list_accum_metrics$p_UBD_pa <- NA
+        list_accum_metrics$p_gini_pa <- NA
+        }
+      })
+    
+    # Generating general report EN LONG (HTML) ======================================================================================
+    output$report_en_long <- downloadHandler(
+      
+      
+      filename = "long_report.html",
+      content = function(file) {
+        
+        
+        withProgress(message = 'Please wait...', {
+          
+          report <- system.file("report", "report_en_long.Rmd", package = "activAnalyzer")
+          
+          # Copy the report file to a temporary directory before processing it, in
+          # case we don't have write permissions to the current working dir (which
+          # can happen when deployed). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
+          tempReport <- file.path(tempdir(), "report_en_long.Rmd")
+          file.copy(report, tempReport, overwrite = TRUE)
+          
+          # Set up parameters to pass to Rmd document
+          params <- list(
+            assessor_name = input$assessor_name,
+            assessor_surname = input$assessor_surname,
+            patient_name = input$patient_name,
+            patient_surname = input$patient_surname,
+            sex = input$sex,
+            age = input$age,
+            weight = input$weight,
+            start_date = attributes(file())$startdatetime,
+            end_date = attributes(file())$stopdatetime,
+            device = attributes(file())$devicename,
+            position = input$position,
+            side = input$side,
+            sampling_rate = attributes(file())$`original sample rate`,
+            filter = attributes(file())$filter,
+            epoch = as.numeric(input$to_epoch),
+            start_day_analysis = input$start_day_analysis,
+            end_day_analysis = input$end_day_analysis,
+            axis_weartime = input$axis_weartime,
+            frame_size = input$frame_size,
+            allowanceFrame_size = input$allowanceFrame_size,
+            streamFrame_size = input$streamFrame_size,
+            equation_mets = input$equation_mets,
+            bmr_kcal_d = bmr_kcal_d(),
+            axis_sed = results_list()$axis_sed_chosen_name,
+            axis_mvpa = results_list()$axis_mvpa_chosen_name,
+            sed_cutpoint = results_list()$sed_cutpoint_chosen,
+            mpa_cutpoint = results_list()$mpa_cutpoint_chosen,
+            vpa_cutpoint = results_list()$vpa_cutpoint_chosen,
+            minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
+            results_by_day = results_list()$results_by_day,
+            results_summary_means =  results_summary_means(),
+            results_summary_medians =  results_summary_medians(),
+            df_with_computed_metrics = results_list()$df_with_computed_metrics,
+            
+            mean_breaks_sed = list_accum_metrics$mean_breaks_sed,
+            p_breaks_sed    = list_accum_metrics$p_breaks_sed,
+            p_alpha_sed     = list_accum_metrics$p_alpha_sed,
+            p_MBD_sed       = list_accum_metrics$p_MBD_sed,
+            p_UBD_sed       = list_accum_metrics$p_UBD_sed,
+            p_gini_sed      = list_accum_metrics$p_gini_sed,
+            mean_breaks_pa = list_accum_metrics$mean_breaks_pa,
+            p_breaks_pa     = list_accum_metrics$p_breaks_pa,
+            p_alpha_pa      = list_accum_metrics$p_alpha_pa,
+            p_MBD_pa        = list_accum_metrics$p_MBD_pa,
+            p_UBD_pa        = list_accum_metrics$p_UBD_pa,
+            p_gini_pa       = list_accum_metrics$p_gini_pa,
+ 
+            rendered_by_shiny = TRUE
+          )
+          
+          # Knit the document, passing in the `params` list, and eval it in a
+          # child of the global environment (this isolates the code in the document
+          # from the code in this app). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
+          out <- rmarkdown::render(tempReport,
+                                   params = params,
+                                   envir = new.env(parent = globalenv())
+          )
+          out <- file.rename(out, file)
+          
+        })
+        
+      }
+    )
+    
+  # Generating general report EN SHORT (PDF) ======================================================================================
+    output$report_en_short <- downloadHandler(
     
     
-    filename = "report.pdf",
+    filename = "short_report.pdf",
     content = function(file) {
       
       
       withProgress(message = 'Please wait...', {
         
-        report <- system.file("report", "report_en.Rmd", package = "activAnalyzer")
+        report <- system.file("report", "report_en_short.Rmd", package = "activAnalyzer")
 
         # Copy the report file to a temporary directory before processing it, in
         # case we don't have write permissions to the current working dir (which
         # can happen when deployed). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
-        tempReport <- file.path(tempdir(), "report_en.Rmd")
+        tempReport <- file.path(tempdir(), "report_en_short.Rmd")
         file.copy(report, tempReport, overwrite = TRUE)
         
         # Set up parameters to pass to Rmd document
@@ -5723,22 +5861,106 @@ app_server <- function(input, output, session) {
     }
   )
   
-  # Generating general report FR
-    output$report_fr <- downloadHandler(
+    # Generating general report FR LONG (HTML) ======================================================================================
+    output$report_fr_long <- downloadHandler(
+      
+      
+      filename = "long_report.html",
+      content = function(file) {
+        
+        
+        withProgress(message = 'Please wait...', {
+          
+          report <- system.file("report", "report_fr_long.Rmd", package = "activAnalyzer")
+          
+          # Copy the report file to a temporary directory before processing it, in
+          # case we don't have write permissions to the current working dir (which
+          # can happen when deployed). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
+          tempReport <- file.path(tempdir(), "report_fr_long.Rmd")
+          file.copy(report, tempReport, overwrite = TRUE)
+          
+          # Set up parameters to pass to Rmd document
+          params <- list(
+            assessor_name = input$assessor_name,
+            assessor_surname = input$assessor_surname,
+            patient_name = input$patient_name,
+            patient_surname = input$patient_surname,
+            sex = input$sex,
+            age = input$age,
+            weight = input$weight,
+            start_date = attributes(file())$startdatetime,
+            end_date = attributes(file())$stopdatetime,
+            device = attributes(file())$devicename,
+            position = input$position,
+            side = input$side,
+            sampling_rate = attributes(file())$`original sample rate`,
+            filter = attributes(file())$filter,
+            epoch = as.numeric(input$to_epoch),
+            start_day_analysis = input$start_day_analysis,
+            end_day_analysis = input$end_day_analysis,
+            axis_weartime = input$axis_weartime,
+            frame_size = input$frame_size,
+            allowanceFrame_size = input$allowanceFrame_size,
+            streamFrame_size = input$streamFrame_size,
+            equation_mets = input$equation_mets,
+            bmr_kcal_d = bmr_kcal_d(),
+            axis_sed = results_list()$axis_sed_chosen_name,
+            axis_mvpa = results_list()$axis_mvpa_chosen_name,
+            sed_cutpoint = results_list()$sed_cutpoint_chosen,
+            mpa_cutpoint = results_list()$mpa_cutpoint_chosen,
+            vpa_cutpoint = results_list()$vpa_cutpoint_chosen,
+            minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
+            results_by_day = results_list()$results_by_day,
+            results_summary_means =  results_summary_means(),
+            results_summary_medians =  results_summary_medians(),
+            df_with_computed_metrics = results_list()$df_with_computed_metrics,
+            
+            mean_breaks_sed = list_accum_metrics$mean_breaks_sed,
+            p_breaks_sed    = list_accum_metrics$p_breaks_sed,
+            p_alpha_sed     = list_accum_metrics$p_alpha_sed,
+            p_MBD_sed       = list_accum_metrics$p_MBD_sed,
+            p_UBD_sed       = list_accum_metrics$p_UBD_sed,
+            p_gini_sed      = list_accum_metrics$p_gini_sed,
+            mean_breaks_pa = list_accum_metrics$mean_breaks_pa,
+            p_breaks_pa     = list_accum_metrics$p_breaks_pa,
+            p_alpha_pa      = list_accum_metrics$p_alpha_pa,
+            p_MBD_pa        = list_accum_metrics$p_MBD_pa,
+            p_UBD_pa        = list_accum_metrics$p_UBD_pa,
+            p_gini_pa       = list_accum_metrics$p_gini_pa,          
+            
+            rendered_by_shiny = TRUE
+          )
+          
+          # Knit the document, passing in the `params` list, and eval it in a
+          # child of the global environment (this isolates the code in the document
+          # from the code in this app). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
+          out <- rmarkdown::render(tempReport,
+                                   params = params,
+                                   envir = new.env(parent = globalenv())
+          )
+          out <- file.rename(out, file)
+          
+        })
+        
+      }
+    )
+    
+  # Generating general report FR SHORT (PDF) ======================================================================================
+    output$report_fr_short <- downloadHandler(
     
       
-    filename = "rapport.pdf",
+    filename = "short_report.pdf",
     content = function(file) {
       
       
       withProgress(message = 'Please wait...', {
         
-        report <- system.file("report", "report_fr.Rmd", package = "activAnalyzer")
+        report <- system.file("report", "report_fr_short.Rmd", package = "activAnalyzer")
         
         # Copy the report file to a temporary directory before processing it, in
         # case we don't have write permissions to the current working dir (which
         # can happen when deployed). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
-        tempReport <- file.path(tempdir(), "report_fr.Rmd")
+        tempReport <- file.path(tempdir(), "report_fr_short.Rmd")
         file.copy(report, tempReport, overwrite = TRUE)
         
         # Set up parameters to pass to Rmd document
@@ -5793,7 +6015,7 @@ app_server <- function(input, output, session) {
     }
   )
     
-  # Generating C-PPAC report EN
+  # Generating C-PPAC report EN ======================================================================================
     output$report_en_cppac <- downloadHandler(
       
       
@@ -5871,7 +6093,7 @@ app_server <- function(input, output, session) {
       }
     )
     
-    # Generating C-PPAC report FR
+    # Generating C-PPAC report FR ======================================================================================
     output$report_fr_cppac <- downloadHandler(
       
       
@@ -5951,7 +6173,7 @@ app_server <- function(input, output, session) {
     )
   
     
-    # Generating D-PPAC report EN
+    # Generating D-PPAC report EN ======================================================================================
     output$report_en_dppac <- downloadHandler(
       
       
@@ -6028,7 +6250,7 @@ app_server <- function(input, output, session) {
       }
     )
     
-    # Generating D-PPAC report FR
+    # Generating D-PPAC report FR ======================================================================================
     output$report_fr_dppac <- downloadHandler(
       
       

@@ -696,7 +696,7 @@ app_ui <- function(request) {
                      ),
                 
                       #*******************************************************************************
-                      # Panel with metrics describing the pattern of accumulation of physical activity
+                      # Panels with metrics describing the pattern of accumulation of physical activity
                       #*******************************************************************************
                       
                       fluidRow(
@@ -770,8 +770,10 @@ app_ui <- function(request) {
                   ),
                   fluidRow(
                     column(12,
-                           downloadButton("report_en", "Generate report (EN) (.pdf)", class = "btn-report"),
-                           downloadButton("report_fr", "Generate report (FR) (.pdf)", class = "btn-report"),
+                           downloadButton("report_en_long", "Generate long report (EN) (.html)", class = "btn-report"),
+                           downloadButton("report_fr_long", "Generate long report (FR) (.html)", class = "btn-report"),
+                           downloadButton("report_en_short", "Generate short report (EN) (.pdf)", class = "btn-report"),
+                           downloadButton("report_fr_short", "Generate short report (FR) (.pdf)", class = "btn-report"),
                            downloadButton("ExpDataset", "Export marked dataset (.csv)", class = "btn-secondary"),
                            downloadButton("ExpResultsByDays", "Export results by day (.csv)", class = "btn-secondary"),
                            downloadButton("ExpDailySummaryMeans", "Export daily summary (means) (.csv)", class = "btn-secondary"),
