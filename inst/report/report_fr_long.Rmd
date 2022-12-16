@@ -170,7 +170,7 @@ g <- plot_data_with_intensity(
   valid_wear_time_end = params$end_day_analysis
   )
 ```
-```{r, out.width='100%',  fig.height = height_factor1}
+```{r, fig.height = height_factor1, fig.width=13}
 g + labs(x = "Temps (hh:mm)", color = "Durée de période (min)", fill = "Durée de période (min)")
 ```
 
@@ -344,7 +344,7 @@ Selon la *[Food and Agriculture Organization of the United Nations (FAO)](http:/
 
 ## Indicateurs d'accumulation du comportement sédentaire obtenus à partir des jours valides
 ### Distribution temporelle des périodes de comportement sédentaire
-```{r, out.width='100%', fig.height = height_factor2}
+```{r, fig.height = height_factor2, fig.width=13}
 if(length(params$p_breaks_sed) == 1) {
   cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
 } else {
@@ -358,8 +358,8 @@ if(length(params$p_breaks_pa) == 1) {
   cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
 } else {
   
-  p1 <- params$p_alpha_sed + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + theme(legend.position = "none")
-  p2 <- params$p_MBD_sed  + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + theme(legend.position = "none")
+  p1 <- params$p_alpha_sed + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = FALSE, fill = FALSE)
+  p2 <- params$p_MBD_sed  + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = FALSE, fill = FALSE)
   p3 <- params$p_UBD_sed  + labs(x = "Durée de période (min)", y = "Fraction cumulée du temps total sédentaire", color = "Durée (min)", fill = "Durée (min)") 
   p4 <- params$p_gini_sed + labs(x = "Fraction du nombre de périodes de durée > x", y = "Fraction cumulée du temps total sédentaire", color = "Durée (min)", fill = "Durée (min)")
   
@@ -369,7 +369,7 @@ if(length(params$p_breaks_pa) == 1) {
 
 ## Indicateurs d'accumulation de l'activité physique obtenus à partir des jours valides
 ### Distribution temporelle des périodes d'activité physique
-```{r, out.width='100%', fig.height = height_factor2}
+```{r, fig.height = height_factor2, fig.width=13}
 if(length(params$p_breaks_pa) == 1) {
   cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
 } else {
@@ -384,8 +384,8 @@ if (params$rendered_by_shiny)
 if(length(params$p_breaks_pa) == 1) {
   cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
 } else {
-  p1 <- params$p_alpha_pa + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + theme(legend.position = "none")
-  p2 <- params$p_MBD_pa  + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + theme(legend.position = "none")
+  p1 <- params$p_alpha_pa + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = FALSE, fill = FALSE)
+  p2 <- params$p_MBD_pa  + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = FALSE, fill = FALSE)
   p3 <- params$p_UBD_pa  + labs(x = "Durée de période (min)", y = "Fraction cumulée du temps total d'activité physique", color = "Durée (min)", fill = "Durée (min)") 
   p4 <- params$p_gini_pa + labs(x = "Fraction du nombre de périodes de durée > x", y = "Fraction cumulée du temps total d'activité physique", color = "Durée (min)", fill = "Durée (min)") 
   

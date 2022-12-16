@@ -142,7 +142,7 @@ options("scipen"=100, "digits"=4)
 
 ## Activity volume metrics
 ### Temporal distribution of activity intensity
-```{r, out.width='100%',  fig.height = height_factor1}
+```{r,  fig.height = height_factor1, fig.width=13}
 plot_data_with_intensity(
   data = params$df_with_computed_metrics, 
   metric = axis_mvpa_graph,
@@ -329,7 +329,7 @@ According to the [Food and Agriculture Organization of the United Nations (FAO)]
 
 ## Sedentary behaviour accumulation metrics based on valid days
 ### Temporal distribution of sedentary bouts
-```{r, out.width='100%', fig.height = height_factor2}
+```{r, fig.height = height_factor2, fig.width=13}
 if(length(params$p_breaks_sed) == 1) {
   cat("No result. Results can be obtained using 60-s epochs only.")
 } else {
@@ -342,13 +342,19 @@ if(length(params$p_breaks_sed) == 1) {
 if(length(params$p_breaks_sed) == 1) {
   cat("No result. Results can be obtained using 60-s epochs only.")
 } else {
-  ((params$p_alpha_sed + theme(legend.position = "none")) | (params$p_MBD_sed + theme(legend.position = "none"))) / (params$p_UBD_sed | params$p_gini_sed) + plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+  
+  p1 <- params$p_alpha_sed + guides(color = FALSE, fill = FALSE)
+  p2 <- params$p_MBD_sed   + guides(color = FALSE, fill = FALSE)
+  p3 <- params$p_UBD_sed
+  p4 <- params$p_gini_sed
+ 
+  (p1  | p2) / (p3 | p4) + plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 }
 ```
 
 ## Physical activity accumulation metrics based on valid days
 ### Temporal distribution of physical activity bouts
-```{r, out.width='100%', fig.height = height_factor2}
+```{r, fig.height = height_factor2, fig.width=13}
 if(length(params$p_breaks_pa) == 1) {
   cat("No result. Results can be obtained using 60-s epochs only.")
 } else {
@@ -363,6 +369,11 @@ if (params$rendered_by_shiny)
 if(length(params$p_breaks_pa) == 1) {
   cat("No result. Results can be obtained using 60-s epochs only.")
 } else {
-  ((params$p_alpha_pa + theme(legend.position = "none")) | (params$p_MBD_pa + + theme(legend.position = "none"))) / (params$p_UBD_pa | params$p_gini_pa) + plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+  p1 <- params$p_alpha_pa + guides(color = FALSE, fill = FALSE)
+  p2 <- params$p_MBD_pa   + guides(color = FALSE, fill = FALSE)
+  p3 <- params$p_UBD_pa
+  p4 <- params$p_gini_pa
+ 
+  (p1  | p2) / (p3 | p4) + plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 }
 ```
