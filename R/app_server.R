@@ -5675,7 +5675,7 @@ app_server <- function(input, output, session) {
         p_gini_pa = NA
       )
     
-    # Updating the list of accumulation metrics for the long reports
+    # Updating the list of accumulation metrics for the long reports (NA is returned for non 60-s epoch analysis)
       observeEvent(results_summary_means(), {
         if(results_summary_means()$valid_days >=1 && (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)) {
         list_accum_metrics$mean_breaks_sed <- metrics_accum_sed()$metrics$mean_breaks
