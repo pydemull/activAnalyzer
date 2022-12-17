@@ -101,5 +101,14 @@ utils::globalVariables(c(
   "amount_score_raw_quant",
   "amount_score_rasch",
   "total_score_raw",
-  "total_score_rasch"
+  "total_score_rasch",
+  "n_breaks",
+  "dur_cat",
+  "bout",
+  "duration",
+  "cum_frac_time",
+  "cum_frac_bout",
+  "nls",
+  "new_bout",
+  "new_intensity_category"
   ))

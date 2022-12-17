@@ -1,0 +1,394 @@
+---
+title: Résultats de la mesure du comportement physique
+output: 
+  html_document:
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+    number_sections: yes
+    df_print: paged
+toc-title: "Sommaire"
+params:
+  assessor_title: NA
+  assessor_name: NA
+  assessor_surname: NA
+  patient_title: NA
+  patient_name: NA
+  patient_surname: NA
+  sex: NA
+  age: NA
+  weight: NA
+  epoch: NA
+  start_date: NA
+  end_date: NA
+  device: NA
+  position: NA
+  side: NA
+  sampling_rate: NA
+  filter: NA
+  start_day_analysis: NA
+  end_day_analysis: NA
+  axis_weartime: NA
+  frame_size: NA
+  allowanceFrame_size: NA
+  streamFrame_size: NA
+  equation_mets: NA
+  bmr_kcal_d: NA
+  axis_sed: NA
+  axis_mvpa: NA
+  sed_cutpoint: NA
+  mpa_cutpoint: NA
+  vpa_cutpoint: NA
+  minimum_wear_time_for_analysis: NA
+  results_by_day: NA
+  results_summary_means: NA
+  results_summary_medians: NA
+  mvpa_lines: NA
+  sed_lines: NA
+  ratio_lines: NA
+  df_with_computed_metrics: NA
+  mean_breaks_sed: NA
+  p_breaks_sed: NA
+  p_alpha_sed: NA 
+  p_MBD_sed: NA
+  p_UBD_sed: NA 
+  p_gini_sed: NA
+  mean_breaks_pa: NA
+  p_breaks_pa: NA 
+  p_alpha_pa: NA
+  p_MBD_pa: NA
+  p_UBD_pa: NA
+  p_gini_pa: NA
+  rendered_by_shiny: FALSE
+  geometry: "left=2cm, right=2cm, top=1cm, bottom=1cm"
+
+---
+
+```{css, echo=FALSE}
+.title {
+  font-weight: bold;
+}
+
+
+h1 {
+  font-size: 25px;
+  font-weight: bold;
+}
+h2 {
+  font-size: 23px;
+  font-weight: bold;
+}
+h3 {
+  font-size: 23px;
+}
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+```
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, echo = FALSE)
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+
+df1_means <- params$results_summary_means
+df1_medians <- params$results_summary_medians
+df2 <- params$results_by_day
+
+sex <- ifelse(params$sex == "male", "masculin", 
+              ifelse(params$sex == "female", "féminin",
+                     "non défini"))
+position <- ifelse(params$position == "hip", "hanche", 
+              ifelse(params$position == "wrist", "poignet",
+                     ifelse(params$position == "thigh", "cuisse",
+                            ifelse(params$position == "ankle", "cheville", "NA"))))
+
+side <- ifelse(params$side == "right", "droit", 
+              ifelse(params$side == "left", "gauche",
+                     "non défini"))
+
+axis_weartime <- ifelse(params$axis_weartime == "vertical axis", "l'axe vertical", 
+              ifelse(params$axis_weartime == "vector magnitude", "le vecteur magnitude",
+                     "non défini"))
+
+axis_mvpa <- ifelse(params$axis_mvpa == "vertical axis", "axe vertical", 
+              ifelse(params$axis_mvpa == "vector magnitude", "vecteur magnitude",
+                     "non défini"))
+
+axis_mvpa_graph <- ifelse(params$axis_mvpa == "vertical axis", "axis1", 
+              ifelse(params$axis_mvpa == "vector magnitude", "vm",
+                     "na"))
+
+height_factor1 = nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.75
+height_factor1 <- ifelse(height_factor1 <= 6, nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.9, height_factor1)
+height_factor2 = params$results_summary_means$valid_days * 0.75
+height_factor2 <- ifelse(height_factor2 <= 6, nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.9, height_factor2)
+
+options("scipen"=100, "digits"=4)
+```
+
+# Informations
+<hr>
+
+**Patient :** `r params$patient_surname` `r params$patient_name`  | **Date :**  `r Sys.Date()` | **Évaluateur :** `r params$assessor_surname` `r params$assessor_name`
+
+**Age :** `r params$age` ans | **Sexe :**  `r sex` | **Masse :** `r params$weight` kg | **Période de mesure :** `r format(params$start_date, "%d/%m/%Y %H:%M:%S")` au `r format(params$end_date, "%d/%m/%Y %H:%M:%S")` | **Estimation du métabolisme de base :** `r format(round(params$bmr_kcal_d, 2), nsmall = 2)` kcal/jour (Estimation à partir des équations de Henry [2005, doi: 10.1079/PHN2005801])
+
+**Appareil :** `r params$device` | **Position :** `r position` | **Côté :** `r side` | **Fréquence d'échantillonnage :** `r params$sampling_rate` Hz | **Filtre :** `r params$filter`
+
+**'Epoch' :** `r params$epoch` s | **Temps de non-port :** Basé sur `r axis_weartime`, intervalle de `r params$frame_size` min avec zéro count pour la détection du temps de non-port, intervalle de `r params$allowanceFrame_size` min avec counts différents de 0 autorisé durant une période de non-port, intervalle de `r params$streamFrame_size` min avec zéro count autour de la période d'activité détectée pour confirmer le non-port | **Équation de prédiction des METs :** `r params$equation_mets` | **Axe utilisé pour catégoriser l'intensité d'activité physique :** `r axis_mvpa` | **Valeurs seuils :** <`r params$sed_cutpoint` counts/min pour SED, $\geqslant$ `r params$mpa_cutpoint` counts/min pour MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min pour VPA
+
+**Période journalière considérée pour compter le temps de port :** de `r params$start_day_analysis` à `r params$end_day_analysis`
+
+**Nombre minimum d'heures avec temps de port pour valider un jour :** `r params$minimum_wear_time_for_analysis` heures
+
+**Abréviations :** SED = sédentaire, LPA =  activité physique légère, MPA = activité physique modérée, VPA = activité physique vigoureuse, MVPA = activité physique modérée à vigoureuse, NAP = niveau d'activité physique
+
+
+# Résultats
+<hr>
+
+## Indicateurs de volume d'activité
+### Distribution temporelle de l'intensité
+```{r, include=FALSE}
+g <- plot_data_with_intensity(
+  data = params$df_with_computed_metrics, 
+  metric = axis_mvpa_graph,
+  valid_wear_time_start = params$start_day_analysis,
+  valid_wear_time_end = params$end_day_analysis
+  )
+```
+```{r, fig.height = height_factor1, fig.width=13}
+g + labs(x = "Temps (hh:mm)", color = "Durée de période (min)", fill = "Durée de période (min)")
+```
+
+### Résultats par jour
+```{r}
+reactable::reactable(params$results_by_day %>%
+                       dplyr::rename(
+                        Date = date,
+                        "Temps de port" = wear_time,
+                        "Total des counts Axe 1" = total_counts_axis1,
+                        "Total des counts VM" = total_counts_vm,
+                        "Axe 1 par min" = axis1_per_min,
+                        "VM par min" = vm_per_min,
+                        "Total des pas" = total_steps,
+                        "Total des kcal" = total_kcal,
+                        "Minutes SED" = minutes_SED,
+                        "Minutes LPA" = minutes_LPA,
+                        "Minutes MPA" = minutes_MPA,
+                        "Minutes VPA" = minutes_VPA,
+                        "Minutes MVPA" = minutes_MVPA,
+                        "% temps de port SED" = percent_SED,
+                        "% temps de port LPA" = percent_LPA,
+                        "% temps de port MPA" = percent_MPA,
+                        "% temps de port VPA" = percent_VPA,
+                        "% temps de port MVPA" = percent_MVPA,
+                        "Max pas 60 min" = max_steps_60min,
+                        "Max pas 30 min" = max_steps_30min,
+                        "Max pas 20 min" = max_steps_20min,
+                        "Max pas 5 min" = max_steps_5min,
+                        "Max pas 1 min" = max_steps_1min,
+                        "Peak pas 60 min" = peak_steps_60min,
+                        "Peak pas 30 min" = peak_steps_30min,
+                        "Peak pas 20 min" = peak_steps_20min,
+                        "Peak pas 5 min" = peak_steps_5min,
+                        "Peak pas 1 min" = peak_steps_1min,
+                        "MVPA MET-hr" = mets_hours_mvpa,
+                        "MVPA/SED ratio" = ratio_mvpa_sed,
+                        "NAP" = pal
+                       ),  
+                striped = TRUE,
+                list(
+                     "Date" = reactable::colDef(
+                       style = list(position = "sticky", left = 0, background = "#CCCCCC", zIndex = 1),
+                       headerStyle = list(position = "sticky", left = 0,  background = "#fff", zIndex = 1)
+                     ),
+                     "Temps de port"          = reactable::colDef(minWidth = 160),
+                     "Total des counts Axe 1" = reactable::colDef(minWidth = 160),
+                     "Total des counts VM"     = reactable::colDef(minWidth = 160),
+                     "Axe 1 par min"      = reactable::colDef(minWidth = 160),
+                     "VM par min"          = reactable::colDef(minWidth = 160),
+                     "Total des pas"          = reactable::colDef(minWidth = 160),
+                     "Total des kcal"          = reactable::colDef(minWidth = 160),
+                     "Minutes SED"         = reactable::colDef(minWidth = 160),
+                     "Minutes LPA"         = reactable::colDef(minWidth = 160),
+                     "Minutes MPA"         = reactable::colDef(minWidth = 160),
+                     "Minutes VPA"         = reactable::colDef(minWidth = 160),
+                     "Minutes MVPA"        = reactable::colDef(minWidth = 160),
+                     "% temps de port SED"     = reactable::colDef(minWidth = 160),
+                     "% temps de port LPA"     = reactable::colDef(minWidth = 160),
+                     "% temps de port MPA"     = reactable::colDef(minWidth = 160),
+                     "% temps de port VPA"     = reactable::colDef(minWidth = 160),
+                     "% temps de port MVPA"    = reactable::colDef(minWidth = 160),
+                     "Max pas 60 min"    = reactable::colDef(minWidth = 160),
+                     "Max pas 30 min"    = reactable::colDef(minWidth = 160),
+                     "Max pas 20 min"    = reactable::colDef(minWidth = 160),
+                     "Max pas 5 min"     = reactable::colDef(minWidth = 160),
+                     "Max pas 1 min"     = reactable::colDef(minWidth = 160),
+                     "Peak pas 60 min"   = reactable::colDef(minWidth = 160),
+                     "Peak pas 30 min"   = reactable::colDef(minWidth = 160),
+                     "Peak pas 20 min"   = reactable::colDef(minWidth = 160),
+                     "Peak pas 5 min"    = reactable::colDef(minWidth = 160),
+                     "Peak pas 1 min"    = reactable::colDef(minWidth = 160),
+                     "MVPA MET-hr"         = reactable::colDef(minWidth = 160),
+                     "MVPA/SED ratio"      = reactable::colDef(minWidth = 160),
+                     "NAP"                 = reactable::colDef(minWidth = 160)
+                     )
+                )
+```
+
+### Résultats résumés à partir des jours valides (indicateurs principaux)
+```{r, out.width='100%'}
+reactable::reactable(
+  tibble::tibble(
+        Indicateur = c(
+          "Nombre de jours valides",                
+          "Temps de port", 
+          "Kilocalories",                           
+          "NAP",       
+          "Nombre total de pas", 
+          "Temps SED",                              
+          "Temps LPA",                              
+          "Temps MVPA",                             
+          "Proportion de temps de port SED",        
+          "Proportion de temps de port LPA",        
+          "Proportion de temps de port MVPA",       
+          "Dose MVPA",                              
+          "Ratio MVPA/SED"                       
+        ),
+        
+        "Moyenne | m\xc3\xa9diane journali\xc3\xa8re obtenue \xc3\xa0 partir des jours valides" = c(
+          paste0(df1_means[["valid_days"]], " jour(s)"),
+          paste0(format(round(df1_means[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["wear_time"]]), ") | ",  
+                 format(round(df1_medians[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["wear_time"]]), ")"),  
+          paste0(format(round(df1_means[["total_kcal"]], 2), nsmall = 2),   " kcal | ", format(round(df1_medians[["total_kcal"]], 2), nsmall = 2), " kcal"),
+          paste0(format(round(df1_means[["pal"]], 2), nsmall = 2),  " | ", format(round(df1_medians[["pal"]], 2), nsmall = 2)),  
+          paste0(round(df1_means[["total_steps"]], 0), " pas | ", round(df1_medians[["total_steps"]], 0), " pas"), 
+          paste0(format(round(df1_means[["minutes_SED"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_SED"]]), ") | ",  
+                 format(round(df1_medians[["minutes_SED"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_SED"]]), ")"),  
+          paste0(format(round(df1_means[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_LPA"]]), ") | ",  
+                 format(round(df1_medians[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_LPA"]]), ")"), 
+          paste0(format(round(df1_means[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_MVPA"]]), ") | ",
+                 format(round(df1_medians[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_MVPA"]]), ")"),  
+          paste0(format(round(df1_means[["percent_SED"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_SED"]], 1), nsmall = 1), " %"),
+          paste0(format(round(df1_means[["percent_LPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_LPA"]], 1), nsmall = 1), " %"),        
+          paste0(format(round(df1_means[["percent_MVPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_MVPA"]], 1), nsmall = 1), " %"),                 
+          paste0(format(round(df1_means[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr | ", format(round(df1_medians[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr"),         
+          paste0(format(round(df1_means[["ratio_mvpa_sed"]], 2), nsmall = 2), " | ", format(round(df1_medians[["ratio_mvpa_sed"]], 2), nsmall = 2)))
+      ),   striped = TRUE, defaultPageSize = 15
+)
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.5)  # set progress to 50%
+```
+
+### Résumé graphique
+```{r, fig.height=18, fig.width = 17, warning=FALSE, message=FALSE}
+# PAL
+g_pal <- create_fig_pal(score = df1_means[["pal"]], "fr") + theme(plot.margin = margin(2, 1, 0.5, 1, "cm"))
+
+# Steps
+g_steps <- create_fig_steps(score = df1_means[["total_steps"]], "fr") + theme(plot.margin = margin(0, 1, 0.5, 1, "cm"))
+
+# MVPA
+g_mvpa <- create_fig_mvpa(score = df1_means[["minutes_MVPA"]], "fr") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+
+
+# SED
+g_sed <- create_fig_sed(score = df1_means[["minutes_SED"]], "fr") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+
+# MVPA/SED ratio
+g_ratio <- create_fig_ratio_mvpa_sed(score = df1_means[["ratio_mvpa_sed"]], "fr") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+
+
+# Daily results
+g_all_days <- create_fig_res_by_day(
+  df2, 
+  params$minimum_wear_time_for_analysis, 
+  params$start_day_analysis, 
+  params$end_day_analysis, 
+  language = "fr"
+  ) + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+
+# Whole figure
+g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_all_days + 
+    plot_layout(heights = c(0.8, 0.7, 1.5, 4)) & theme(legend.justification = "center")
+  
+```
+
+
+### Commentaires
+
+```{r, echo = F}
+# Determining physical activity guidelines status
+guidelines_status <- get_guidelines_status(df1_means[["mets_hours_mvpa"]], language = "fr")
+
+# Determining PAL status
+pal_status <- get_pal_status(df1_means[["pal"]], language = "fr")
+```
+
+Selon la *[Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf)*, le NAP du patient pourrait être décrit comme **`r pal_status`**. Après avoir fait la conversion des minutes MPA et VPA vers les MET-heures, l'estimation du volume MVPA moyen journalier pour le patient est de `r paste0(format(round(df1_means[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hr, ce qui pourrait correspondre au fait de tomber **`r guidelines_status`** (i.e., 7.5-15.0 MET-hr par semaine, ou 1.07-2.14 MET-hr par jour).
+
+## Indicateurs d'accumulation du comportement sédentaire obtenus à partir des jours valides
+### Distribution temporelle des périodes de comportement sédentaire
+```{r, fig.height = height_factor2, fig.width=13}
+if(length(params$p_breaks_sed) == 1) {
+  cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
+} else {
+  params$p_breaks_sed + labs(title = paste("Nombre journalier moyen de 'breaks':", params$mean_breaks_sed), x = "Temps (hh:mm)", color = "Durée de période (min)", fill = "Durée de période (min)")
+}
+```
+
+### Coefficient alpha, durée médiane des périodes (MBD), durée usuelle des périodes (UBD), et indice Gini
+```{r, out.width='100%', out.height='60%', fig.height=11, fig.width=11}
+if(length(params$p_breaks_pa) == 1) {
+  cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
+} else {
+  
+  p1 <- params$p_alpha_sed + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = "none", fill = "none")
+  p2 <- params$p_MBD_sed  + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = "none", fill = "none")
+  p3 <- params$p_UBD_sed  + labs(x = "Durée de période (min)", y = "Fraction cumulée du temps total sédentaire", color = "Durée (min)", fill = "Durée (min)") 
+  p4 <- params$p_gini_sed + labs(x = "Fraction du nombre de périodes de durée > x", y = "Fraction cumulée du temps total sédentaire", color = "Durée (min)", fill = "Durée (min)")
+  
+  (p1 | p2) / (p3 | p4) + plot_layout(guides = "collect")  & theme(legend.position = 'bottom')
+}
+```
+
+## Indicateurs d'accumulation de l'activité physique obtenus à partir des jours valides
+### Distribution temporelle des périodes d'activité physique
+```{r, fig.height = height_factor2, fig.width=13}
+if(length(params$p_breaks_pa) == 1) {
+  cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
+} else {
+  params$p_breaks_pa + labs(title = paste("Nombre journalier moyen de 'breaks':", params$mean_breaks_pa), x = "Temps (hh:mm)", color = "Durée de période (min)", fill = "Durée de période (min)")
+}
+if (params$rendered_by_shiny)
+  shiny::setProgress(1)  # set progress to 100%
+```
+
+### Coefficient alpha, durée médiane des périodes (MBD), durée usuelle des périodes (UBD), et indice Gini
+```{r, out.width='100%', out.height='60%', fig.height=11, fig.width=11}
+if(length(params$p_breaks_pa) == 1) {
+  cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
+} else {
+  p1 <- params$p_alpha_pa + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = "none", fill = "none")
+  p2 <- params$p_MBD_pa  + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = "none", fill = "none")
+  p3 <- params$p_UBD_pa  + labs(x = "Durée de période (min)", y = "Fraction cumulée du temps total d'activité physique", color = "Durée (min)", fill = "Durée (min)") 
+  p4 <- params$p_gini_pa + labs(x = "Fraction du nombre de périodes de durée > x", y = "Fraction cumulée du temps total d'activité physique", color = "Durée (min)", fill = "Durée (min)") 
+  
+  (p1 | p2) / (p3 | p4) + plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+}
+```

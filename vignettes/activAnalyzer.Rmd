@@ -23,9 +23,11 @@ knitr::opts_chunk$set(
 The activAnalyzer package was primarily built for working through a Shiny app. The procedure for using the app is explained in the related [user's guide](https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf). The functions used in this app can also be used to analyze data outside the app, as shown below.
 
 ## Loading packages 
-```{r setup}
+```{r setup, warning=FALSE, message=FALSE}
 library(activAnalyzer)
 library(magrittr)
+library(ggplot2)
+library(patchwork)
 ```
 
 ## Getting file 
@@ -39,7 +41,7 @@ mydata <- prepare_dataset(data = file)
 ```
 
 ## Getting nonwear/wear time marks 
-```{r, message = FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
+```{r, message = FALSE}
 mydata_with_wear_marks <- 
   mydata %>%
   mark_wear_time(
@@ -51,13 +53,17 @@ mydata_with_wear_marks <-
     )
 ```
 
+```{r, include=FALSE}
+height_factor <- nlevels(as.factor(mydata_with_wear_marks$date)) * 0.80
+```
+
 ## Viewing data with nonwear/wear time marks 
-```{r}
+```{r, fig.height = height_factor, fig.width=7, fig.align="center"}
 plot_data(data = mydata_with_wear_marks, metric = "vm")
 ```
 
 ## Viewing data with nonwear/wear time marks with a zoom in on the figure 
-```{r}
+```{r, fig.height = height_factor, fig.width=7, fig.align="center"}
 plot_data(
   data = mydata_with_wear_marks, 
   metric = "vm",
@@ -67,7 +73,7 @@ plot_data(
 ```
 
 ## Getting activity intensity marks 
-```{r, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = "center"}
+```{r, warning = FALSE, message = FALSE}
 mydata_with_intensity_marks <- 
   mark_intensity(
      data = mydata_with_wear_marks, 
@@ -83,7 +89,7 @@ mydata_with_intensity_marks <-
 ```
 
 ## Viewing data with activity intensity marks 
-```{r}
+```{r, fig.height = height_factor, fig.width=7, fig.align="center"}
 plot_data_with_intensity(
   mydata_with_intensity_marks, 
   metric = "vm",
@@ -93,7 +99,7 @@ plot_data_with_intensity(
 ```
 
 ## Viewing data with activity intensity marks and grey bands to highlight the considered daily period for analysis 
-```{r}
+```{r, fig.height = height_factor, fig.width=7, fig.align="center"}
 plot_data_with_intensity(
   mydata_with_intensity_marks, 
   metric = "vm",
@@ -103,7 +109,7 @@ plot_data_with_intensity(
 ```
 
 ## Viewing data with activity intensity marks with a zoom in on the figure 
-```{r}
+```{r, fig.height = height_factor, fig.width=7, fig.align="center"}
 plot_data_with_intensity(
   mydata_with_intensity_marks, 
   metric = "vm",
@@ -264,5 +270,63 @@ median_results %>%
     striped = TRUE
   )
 ```
+
+## Exploring sedentary behaviour accumulation metrics based on valid days
+
+### Getting results
+```{r}
+accum_metrics_sed <- 
+  compute_accumulation_metrics(
+    data = mydata_with_intensity_marks, 
+    behaviour = "sed",
+    dates = c("2021-04-07", "2021-04-08", "2021-04-09", "2021-04-10", "2021-04-11")
+    )
+```
+
+### Temporal distribution of sedentary bouts
+```{r, fig.height = height_factor/0.75*0.85, fig.width=7, fig.align="center"}
+accum_metrics_sed$p_breaks
+```
+
+### Alpha coefficient, median bout duration (MBD), usual bout duration (UBD), and Gini index
+```{r, out.width='100%', out.height='60%', fig.height=11, fig.width=11, fig.align="center"}
+p1 <- accum_metrics_sed$p_alpha  + guides(color = "none", fill = "none")
+p2 <- accum_metrics_sed$p_MBD    + guides(color = "none", fill = "none")
+p3 <- accum_metrics_sed$p_UBD
+p4 <- accum_metrics_sed$p_gini
+
+(p1 | p2) / (p3 | p4) + plot_layout(guides = "collect") & theme(legend.position = 'bottom') 
+```
+
+
+## Exploring physical activity accumulation metrics based on valid days
+
+### Getting results
+```{r}
+accum_metrics_pa <- 
+  compute_accumulation_metrics(
+    mydata_with_intensity_marks, 
+    behaviour = "pa",
+    dates = c("2021-04-07", "2021-04-08", "2021-04-09", "2021-04-10", "2021-04-11")
+    )
+```
+
+### Temporal distribution of physical activity bouts
+```{r, fig.height = height_factor/0.75*0.85, fig.width=7, fig.align="center"}
+accum_metrics_pa$p_breaks
+```
+
+### Alpha coefficient, median bout duration (MBD), usual bout duration (UBD), and Gini index
+```{r, out.width='100%', out.height='60%', fig.height=11, fig.width=11, fig.align="center"}
+p1 <- accum_metrics_pa$p_alpha  + guides(color = "none", fill = "none")
+p2 <- accum_metrics_pa$p_MBD    + guides(color = "none", fill = "none")
+p3 <- accum_metrics_pa$p_UBD
+p4 <- accum_metrics_pa$p_gini
+
+(p1 | p2) / (p3 | p4) + plot_layout(guides = "collect") & theme(legend.position = 'bottom') 
+```
+
+
+
 
 

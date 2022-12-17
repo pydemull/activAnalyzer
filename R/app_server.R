@@ -1683,6 +1683,15 @@ app_server <- function(input, output, session) {
     )
     
 
+  # Showing section title for activity volume metrics
+    output$title_activity_volume_metrics <- renderUI({
+      
+      # Waiting for needed data
+      req(nrow(results_list()$df_with_computed_metrics) >=1)
+      
+      # Showing title
+      h3("Activity volume metrics")
+    })  
     
   # Plotting data with intensity categories
     output$graph_int <- renderPlot({
@@ -1833,6 +1842,167 @@ app_server <- function(input, output, session) {
       
     })
     
+    
+  # Showing section title for pattern of accumulation of sedentary behaviour
+    output$title_SB_accum_metrics <- renderUI({
+      
+      # Title  will be shown only if dataset has been processed using 60-s epochs
+      req(
+        results_summary_means()$valid_days >=1 &
+        (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)
+      )
+      
+      # Showing title
+      h3("Sedentary behaviour accumulation metrics")
+      
+    })  
+
+  # Computing metrics for pattern of accumulation of sedentary behaviour
+    metrics_accum_sed <- eventReactive(input$Run, {
+      
+      # Metrics will be computed only if dataset has been processed using 60-s epochs
+      req(
+        results_summary_means()$valid_days >=1 &
+          (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)
+      )
+      
+      # Getting metrics
+      compute_accumulation_metrics(
+        data = results_list()$df_with_computed_metrics,
+        behaviour = "sed",
+        dates = attributes(as.factor(
+          (results_list()$results_by_day %>% 
+            dplyr::filter(wear_time >= input$minimum_wear_time_for_analysis * 60))$date)
+          )$levels,
+        valid_wear_time_start = input$start_day_analysis,
+        valid_wear_time_end = input$end_day_analysis,
+        zoom_from = "00:00:00",
+        zoom_to = "23:59:59"
+      )
+    
+    })
+    
+  # Plotting temporal distribution of sedentary bouts
+    output$graph_breaks_SB <- renderPlot({
+  
+       metrics_accum_sed()$p_breaks
+       }, 
+       width = "auto", 
+       height = function(){
+         height <- dplyr::case_when(
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) >= 8 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 95,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 7 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 105,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 6 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 107,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 5 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 110,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 4 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 115,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 3 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 130,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 2 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 150,
+           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 1 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 205
+         )
+         return(height)
+       }, res = 120
+       )
+  
+  # Plotting alpha for sedentary bouts
+    output$graph_alpha_SB <- renderPlot({
+      metrics_accum_sed()$p_alpha
+    }, width = "auto", height = 500, res = 100)
+    
+  # Plotting MBD for sedentary bouts
+     output$graph_mbd_SB <- renderPlot({
+       metrics_accum_sed()$p_MBD
+     }, width = "auto", height = 500, res = 100)
+     
+  # Plotting UBD for sedentary bouts
+    output$graph_ubd_SB <- renderPlot({
+      metrics_accum_sed()$p_UBD
+    }, width = "auto", height = 500, res = 100)
+  
+  # Plotting Gini index for sedentary bouts
+    output$graph_gini_SB <- renderPlot({
+      metrics_accum_sed()$p_gini
+    }, width = "auto", height = 500, res = 100)
+  
+  
+  # Showing section title for pattern of accumulation of physical activity
+    output$title_PA_accum_metrics <- renderUI({
+      
+      # Title  will be shown only if dataset has been processed using 60-s epochs
+      req(
+        results_summary_means()$valid_days >=1 &
+          (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)
+      )
+      
+      # Showing title
+      h3("Physical activity accumulation metrics")
+    })
+    
+  # Computing metrics for pattern of accumulation of physical activity
+    metrics_accum_pa <- eventReactive(input$Run, {
+     
+     # Metrics will be computed only if dataset has been processed using 60-s epochs
+      req(
+        results_summary_means()$valid_days >=1 &
+          (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)
+      )
+      
+    # Getting metrics
+     compute_accumulation_metrics(
+       data = results_list()$df_with_computed_metrics,
+       behaviour = "pa",
+       dates = attributes(as.factor(
+         (results_list()$results_by_day %>% 
+            dplyr::filter(wear_time >= input$minimum_wear_time_for_analysis * 60))$date)
+       )$levels,
+       valid_wear_time_start = input$start_day_analysis,
+       valid_wear_time_end = input$end_day_analysis,
+       zoom_from = "00:00:00",
+       zoom_to = "23:59:59"
+     )
+     
+   })
+  
+  # Plotting temporal distribution of physical activity bouts
+    output$graph_breaks_PA <- renderPlot({
+      
+      metrics_accum_pa()$p_breaks
+    }, 
+    width = "auto", 
+    height = function(){
+      height <- dplyr::case_when(
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) >= 8 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 95,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 7 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 105,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 6 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 107,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 5 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 110,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 4 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 115,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 3 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 130,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 2 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 150,
+        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 1 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 205
+      )
+      return(height)
+    }, res = 120
+    )
+  
+  # Plotting alpha for  physical activity bouts
+    output$graph_alpha_PA <- renderPlot({
+      metrics_accum_pa()$p_alpha
+    }, width = "auto", height = 500, res = 100)
+  
+  # Plotting MBD for  physical activity bouts
+    output$graph_mbd_PA <- renderPlot({
+      metrics_accum_pa()$p_MBD
+    }, width = "auto", height = 500, res = 100)
+    
+  # Plotting UBD for  physical activity bouts
+    output$graph_ubd_PA <- renderPlot({
+      metrics_accum_pa()$p_UBD
+    }, width = "auto", height = 500, res = 100)
+  
+  # Plotting Gini index for  physical activity bouts
+    output$graph_gini_PA <- renderPlot({
+      metrics_accum_pa()$p_gini
+    }, width = "auto", height = 500, res = 100)
+  
   
   #########################################
   # Getting PROACTIVE questionnaire results ----
@@ -2349,7 +2519,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-             if(nrow(results_list()$results_by_day) < 1 | results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+             if(nrow(results_list()$results_by_day) < 1 || results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                reactable::reactable(
                  tibble::tribble(
                    ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2412,7 +2582,7 @@ app_server <- function(input, output, session) {
                 )
             
               # Information to show depending on the available data
-                if(nrow(results_list()$results_by_day) < 1 | results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+                if(nrow(results_list()$results_by_day) < 1 || results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                   reactable::reactable(
                     tibble::tribble(
                       ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2474,7 +2644,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 2 | results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 2 || results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2536,7 +2706,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 2 | results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 2 || results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2598,7 +2768,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 3 | results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 3 || results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2660,7 +2830,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 3 | results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 3 || results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.",  
@@ -2721,7 +2891,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 4 | results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 4 || results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2784,7 +2954,7 @@ app_server <- function(input, output, session) {
             )
           
           # Information to show depending on the available data
-            if(nrow(results_list()$results_by_day) < 4 | results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+            if(nrow(results_list()$results_by_day) < 4 || results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
               reactable::reactable(
                 tibble::tribble(
                   ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2846,7 +3016,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 5 | results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 5 || results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2908,7 +3078,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data
-              if(nrow(results_list()$results_by_day) < 5 | results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 5 || results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -2970,7 +3140,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data  
-              if(nrow(results_list()$results_by_day) < 6 | results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 6 || results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -3032,7 +3202,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data  
-              if(nrow(results_list()$results_by_day) < 6 | results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 6 || results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -3094,7 +3264,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data  
-              if(nrow(results_list()$results_by_day) < 7 | results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 7 || results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.", 
@@ -3155,7 +3325,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data   
-              if(nrow(results_list()$results_by_day) < 7 | results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 7 || results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"Sorry, no results is available due to an insufficient number of selected days or due to insufficient wear time for this day.",  
@@ -3217,7 +3387,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data  
-              if(nrow(results_list()$results_by_day) < 1 | results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 1 || results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.",  
@@ -3279,7 +3449,7 @@ app_server <- function(input, output, session) {
               )
             
            # Information to show depending on the available data 
-             if(nrow(results_list()$results_by_day) < 1 | results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+             if(nrow(results_list()$results_by_day) < 1 || results_list()$results_by_day[1, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                reactable::reactable(
                  tibble::tribble(
                    ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3341,7 +3511,7 @@ app_server <- function(input, output, session) {
             )
           
           # Information to show depending on the available data 
-            if(nrow(results_list()$results_by_day) < 2 | results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+            if(nrow(results_list()$results_by_day) < 2 || results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
               reactable::reactable(
                 tibble::tribble(
                   ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3403,7 +3573,7 @@ app_server <- function(input, output, session) {
             )
           
           # Information to show depending on the available data 
-            if(nrow(results_list()$results_by_day) < 2 | results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+            if(nrow(results_list()$results_by_day) < 2 || results_list()$results_by_day[2, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
               reactable::reactable(
                 tibble::tribble(
                   ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3465,7 +3635,7 @@ app_server <- function(input, output, session) {
             )
           
           # Information to show depending on the available data 
-            if(nrow(results_list()$results_by_day) < 3 | results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+            if(nrow(results_list()$results_by_day) < 3 || results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
               reactable::reactable(
                 tibble::tribble(
                   ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3527,7 +3697,7 @@ app_server <- function(input, output, session) {
               )
           
             # Information to show depending on the available data 
-              if(nrow(results_list()$results_by_day) < 3 | results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 3 || results_list()$results_by_day[3, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3589,7 +3759,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data     
-              if(nrow(results_list()$results_by_day) < 4 | results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 4 || results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3651,7 +3821,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data  
-              if(nrow(results_list()$results_by_day) < 4 | results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 4 || results_list()$results_by_day[4, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.",  
@@ -3713,7 +3883,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data  
-              if(nrow(results_list()$results_by_day) < 5 | results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 5 || results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3775,7 +3945,7 @@ app_server <- function(input, output, session) {
               )
               
             # Information to show depending on the available data 
-              if(nrow(results_list()$results_by_day) < 5 | results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 5 || results_list()$results_by_day[5, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3837,7 +4007,7 @@ app_server <- function(input, output, session) {
               )
             
              # Information to show depending on the available data 
-               if(nrow(results_list()$results_by_day) < 6 | results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+               if(nrow(results_list()$results_by_day) < 6 || results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                  reactable::reactable(
                    tibble::tribble(
                      ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3899,7 +4069,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data 
-              if(nrow(results_list()$results_by_day) < 6 | results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 6 || results_list()$results_by_day[6, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -3962,7 +4132,7 @@ app_server <- function(input, output, session) {
             
             
             # Information to show depending on the available data 
-              if(nrow(results_list()$results_by_day) < 7 | results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 7 || results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -4024,7 +4194,7 @@ app_server <- function(input, output, session) {
               )
             
             # Information to show depending on the available data 
-              if(nrow(results_list()$results_by_day) < 7 | results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
+              if(nrow(results_list()$results_by_day) < 7 || results_list()$results_by_day[7, ][["wear_time"]] < input$minimum_wear_time_for_analysis * 60) {
                 reactable::reactable(
                   tibble::tribble(
                     ~"D\u00e9sol\u00e9, aucun r\u00e9sultat n'est disponible en raison d'un nombre insuffisant de jours s\u00e9lectionn\u00e9s ou d'un temps de port insuffisant pour ce jour.", 
@@ -4449,7 +4619,7 @@ app_server <- function(input, output, session) {
             # Value Boxes (means of valid days)
 
               # Making summary table
-                recap_ddpac_en <- eventReactive(input$get_dppac_summary_en, {
+                recap_dppac_en <- eventReactive(input$get_dppac_summary_en, {
                   
                   # Waiting for required conditions
                     req(!is.na(steps_score_cppac_median()) & !is.na(vmu_score_cppac_median())) 
@@ -4494,7 +4664,7 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(round(recap_ddpac_en()$mean_difficulty_score_raw[1], 1), " / 20"), style = "color: white;"),
+                    tags$h3(paste0(round(recap_dppac_en()$mean_difficulty_score_raw[1], 1), " / 20"), style = "color: white;"),
                     "Mean difficulty score (raw)", icon = NULL,
                     color = "aqua",
                     width = 4
@@ -4511,7 +4681,7 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(round(recap_ddpac_en()$mean_amount_score_raw[1], 1), " / 17"), style = "color: white;"), 
+                    tags$h3(paste0(round(recap_dppac_en()$mean_amount_score_raw[1], 1), " / 17"), style = "color: white;"), 
                     "Mean amount score (raw)", icon = NULL,
                     color = "teal",
                     width = 4
@@ -4528,7 +4698,7 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(round(recap_ddpac_en()$mean_total_score_raw[1], 1), " / 37"),  style = "color: white;"), 
+                    tags$h3(paste0(round(recap_dppac_en()$mean_total_score_raw[1], 1), " / 37"),  style = "color: white;"), 
                     "Mean total score (raw)",  icon = NULL,
                     color = "purple",
                     width = 4
@@ -4544,7 +4714,7 @@ app_server <- function(input, output, session) {
                 
                 # Waiting for required conditions
                   shinydashboard::valueBox(
-                    tags$h3(paste0(round(recap_ddpac_en()$mean_difficulty_score_rasch[1], 1), " / 100"), style = "color: white;"),
+                    tags$h3(paste0(round(recap_dppac_en()$mean_difficulty_score_rasch[1], 1), " / 100"), style = "color: white;"),
                     "Mean difficulty score (Rasch)", icon = NULL,
                     color = "aqua",
                     width = 4
@@ -4561,7 +4731,7 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(round(recap_ddpac_en()$mean_amount_score_rasch[1], 1), " / 100"), style = "color: white;"), 
+                    tags$h3(paste0(round(recap_dppac_en()$mean_amount_score_rasch[1], 1), " / 100"), style = "color: white;"), 
                     "Mean amount score (Rasch)", icon = NULL,
                     color = "teal",
                     width = 4
@@ -4579,7 +4749,7 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(round(recap_ddpac_en()$mean_total_score_rasch[1], 1),
+                    tags$h3(paste0(round(recap_dppac_en()$mean_total_score_rasch[1], 1),
                                    " / 100"),  style = "color: white;"), 
                     "Mean total score (Rasch)",  icon = NULL,
                     color = "purple",
@@ -4967,7 +5137,7 @@ app_server <- function(input, output, session) {
             # Value Boxes
               
               # Making summary table
-                recap_ddpac_fr <- eventReactive(input$get_dppac_summary_fr, {
+                recap_dppac_fr <- eventReactive(input$get_dppac_summary_fr, {
                 
                   # Waiting for required conditions
                     req(!is.na(steps_score_cppac_median()) & !is.na(vmu_score_cppac_median())) 
@@ -5011,7 +5181,7 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(round(recap_ddpac_fr()$mean_difficulty_score_raw[1], 1), " / 20"), style = "color: white;"),
+                    tags$h3(paste0(round(recap_dppac_fr()$mean_difficulty_score_raw[1], 1), " / 20"), style = "color: white;"),
                     "Score de difficult\u00e9 moyen (brut)", icon = NULL,
                     color = "aqua",
                     width = 4
@@ -5028,7 +5198,7 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(round(recap_ddpac_fr()$mean_amount_score_raw[1], 1), " / 17"), style = "color: white;"), 
+                    tags$h3(paste0(round(recap_dppac_fr()$mean_amount_score_raw[1], 1), " / 17"), style = "color: white;"), 
                     "Score de quantit\u00e9 moyen (brut)", icon = NULL,
                     color = "teal",
                     width = 4
@@ -5045,7 +5215,7 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(round(recap_ddpac_fr()$mean_total_score_raw[1], 1), " / 37"),  style = "color: white;"), 
+                    tags$h3(paste0(round(recap_dppac_fr()$mean_total_score_raw[1], 1), " / 37"),  style = "color: white;"), 
                     "Score total moyen (brut)",  icon = NULL,
                     color = "purple",
                     width = 4
@@ -5063,7 +5233,7 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(round(recap_ddpac_fr()$mean_difficulty_score_rasch[1], 1), " / 100"), style = "color: white;"),
+                    tags$h3(paste0(round(recap_dppac_fr()$mean_difficulty_score_rasch[1], 1), " / 100"), style = "color: white;"),
                     "Score de difficult\u00e9 moyen (Rasch)", icon = NULL,
                     color = "aqua",
                     width = 4
@@ -5081,7 +5251,7 @@ app_server <- function(input, output, session) {
                 
                 # Box
                   shinydashboard::valueBox(
-                    tags$h3(paste0(round(recap_ddpac_fr()$mean_amount_score_rasch[1], 1), " / 100"), style = "color: white;"), 
+                    tags$h3(paste0(round(recap_dppac_fr()$mean_amount_score_rasch[1], 1), " / 100"), style = "color: white;"), 
                     "Score de quantit\u00e9 moyen (Rasch)", icon = NULL,
                     color = "teal",
                     width = 4
@@ -5099,7 +5269,7 @@ app_server <- function(input, output, session) {
                 
                 # Box
                  shinydashboard::valueBox(
-                   tags$h3(paste0(round(recap_ddpac_fr()$mean_total_score_rasch[1], 1),
+                   tags$h3(paste0(round(recap_dppac_fr()$mean_total_score_rasch[1], 1),
                      " / 100"),  style = "color: white;"), 
                    "Score total moyen (Rasch)",  icon = NULL,
                    color = "purple",
@@ -5109,7 +5279,7 @@ app_server <- function(input, output, session) {
        
              
   #########################
-  # Hiding / showing boxes ----
+  # Hidding / showing boxes ----
   #########################
   
   # Box for graph with wear time
@@ -5171,24 +5341,66 @@ app_server <- function(input, output, session) {
       }
     })
     
+    # Boxes for graphs showing accumulation of behaviour over time
+    shinyjs::hide("BoxBreaksSB")
+    shinyjs::hide("BoxAlphaSB")
+    shinyjs::hide("BoxMBDSB")
+    shinyjs::hide("BoxUBDSB")
+    shinyjs::hide("BoxGiniSB")
+    shinyjs::hide("BoxBreaksPA")
+    shinyjs::hide("BoxAlphaPA")
+    shinyjs::hide("BoxMBDPA")
+    shinyjs::hide("BoxUBDPA")
+    shinyjs::hide("BoxGiniPA")
+    
+       # Boxes will be shown only if dataset has been processed using 60-s epochs
+    observe({
+      if(
+        results_summary_means()$valid_days >=1 &&
+         (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)
+        ) {
+        shinyjs::show("BoxBreaksSB")
+        shinyjs::show("BoxAlphaSB")
+        shinyjs::show("BoxMBDSB")
+        shinyjs::show("BoxUBDSB")
+        shinyjs::show("BoxGiniSB")
+        shinyjs::show("BoxBreaksPA")
+        shinyjs::show("BoxAlphaPA")
+        shinyjs::show("BoxMBDPA")
+        shinyjs::show("BoxUBDPA")
+        shinyjs::show("BoxGiniPA")
+      } else {
+        shinyjs::hide("BoxBreaksSB")
+        shinyjs::hide("BoxAlphaSB")
+        shinyjs::hide("BoxMBDSB")
+        shinyjs::hide("BoxUBDSB")
+        shinyjs::hide("BoxGiniSB")
+        shinyjs::hide("BoxBreaksPA")
+        shinyjs::hide("BoxAlphaPA")
+        shinyjs::hide("BoxMBDPA")
+        shinyjs::hide("BoxUBDPA")
+        shinyjs::hide("BoxGiniPA")
+      }
+    })
+    
   
-  ###################################
-  # Hiding / showing Download buttons ----
-  ###################################
+  ####################################
+  # Hidding / showing Download buttons ----
+  ####################################
+  
+  # Hidding main buttons
     shinyjs::hide("ExpDataset")
     shinyjs::hide("ExpResultsByDays")
     shinyjs::hide("ExpDailySummaryMeans")
     shinyjs::hide("ExpDailySummaryMedians")
-    shinyjs::hide("report_en")
-    shinyjs::hide("report_fr")
+    shinyjs::hide("report_en_long")
+    shinyjs::hide("report_fr_long")
+    shinyjs::hide("report_en_short")
+    shinyjs::hide("report_fr_short")
     shinyjs::hide("go_to_proactive_q")
-    shinyjs::hide("get_cppac_summary_en")
-    shinyjs::hide("get_cppac_summary_fr")
-    shinyjs::hide("get_dppac_summary_en")
-    shinyjs::hide("get_dppac_summary_fr")
-    shinyjs::hide("report_en_cppac")
-    shinyjs::hide("report_fr_cppac")
-  observe({
+   
+  # Showing main buttons
+   observe({
     if(nrow(results_list()$df_with_computed_metrics) >=1) {
       shinyjs::show("ExpDataset")
       shinyjs::show("ExpResultsByDays")
@@ -5200,67 +5412,184 @@ app_server <- function(input, output, session) {
       shinyjs::hide("ExpDailySummaryMeans")
       shinyjs::hide("ExpDailySummaryMedians")
     }
-      
-    if(results_summary_means()$valid_days >=1 | results_summary_medians()$valid_days >=1) {
-      shinyjs::show("report_en")
-      shinyjs::show("report_fr") 
-      shinyjs::show("go_to_proactive_q")
-    } else {
-      shinyjs::hide("report_en")
-      shinyjs::hide("report_fr") 
-      shinyjs::hide("go_to_proactive_q")
-    }
-      
-    if(!is.na(steps_score_cppac_median()) & !is.na(vmu_score_cppac_median())) {
-      shinyjs::show("get_cppac_summary_en")
-      shinyjs::show("get_cppac_summary_fr")
-      shinyjs::show("get_dppac_summary_en")
-      shinyjs::show("get_dppac_summary_fr")
-    } else {
-      shinyjs::hide("get_cppac_summary_en")
-      shinyjs::hide("get_cppac_summary_fr")
-      shinyjs::hide("get_dppac_summary_en")
-      shinyjs::hide("get_dppac_summary_fr")
-    }
+     if(results_summary_means()$valid_days >=1 || results_summary_medians()$valid_days >=1) {
+       shinyjs::show("report_en_long")
+       shinyjs::show("report_fr_long")
+       shinyjs::show("report_en_short")
+       shinyjs::show("report_fr_short") 
+       shinyjs::show("go_to_proactive_q")
+     } else {
+       shinyjs::hide("report_en_long")
+       shinyjs::hide("report_fr_long")
+       shinyjs::hide("report_en_short")
+       shinyjs::hide("report_fr_short") 
+       shinyjs::hide("go_to_proactive_q")
+     }
+   })
+   ######################################
+   # Hidding / showing PROactive elements ----
+   ######################################
+    
+   # Hidding CPPAC-EN elements
+     shinyjs::hide("get_cppac_summary_en")
+     shinyjs::hide("PROactive_scores_cppac_summary_en")
+     shinyjs::hide("infoBox_cppac_en_total_diff")
+     shinyjs::hide("infoBox_cppac_en_total_amount")
+     shinyjs::hide("infoBox_cppac_en_total_all")
+     shinyjs::hide("infoBox_cppac_en_total_diff_rasch")
+     shinyjs::hide("infoBox_cppac_en_total_amount_rasch")
+     shinyjs::hide("infoBox_cppac_en_total_all_rasch")
+     shinyjs::hide("report_en_cppac")
+     
+   # Hidding CPPAC-FR elements
+     shinyjs::hide("get_cppac_summary_fr")
+     shinyjs::hide("PROactive_scores_cppac_summary_fr")
+     shinyjs::hide("infoBox_cppac_fr_total_diff")
+     shinyjs::hide("infoBox_cppac_fr_total_amount")
+     shinyjs::hide("infoBox_cppac_fr_total_all")
+     shinyjs::hide("infoBox_cppac_fr_total_diff_rasch")
+     shinyjs::hide("infoBox_cppac_fr_total_amount_rasch")
+     shinyjs::hide("infoBox_cppac_fr_total_all_rasch")
+     shinyjs::hide("report_fr_cppac")
+     
+   # Hidding DPPAC-EN elements
+     shinyjs::hide("get_dppac_summary_en")
+     shinyjs::hide("PROactive_scores_dppac_summary_en")
+     shinyjs::hide("infoBox_dppac_en_total_diff")
+     shinyjs::hide("infoBox_dppac_en_total_amount")
+     shinyjs::hide("infoBox_dppac_en_total_all")
+     shinyjs::hide("infoBox_dppac_en_total_diff_rasch")
+     shinyjs::hide("infoBox_dppac_en_total_amount_rasch")
+     shinyjs::hide("infoBox_dppac_en_total_all_rasch")
+     shinyjs::hide("report_en_dppac")
+     
+   # Hidding DPPAC-FR elements
+     shinyjs::hide("get_dppac_summary_fr")
+     shinyjs::hide("PROactive_scores_dppac_summary_fr")
+     shinyjs::hide("infoBox_dppac_fr_total_diff")
+     shinyjs::hide("infoBox_dppac_fr_total_amount")
+     shinyjs::hide("infoBox_dppac_fr_total_all")
+     shinyjs::hide("infoBox_dppac_fr_total_diff_rasch")
+     shinyjs::hide("infoBox_dppac_fr_total_amount_rasch")
+     shinyjs::hide("infoBox_dppac_fr_total_all_rasch")
+     shinyjs::hide("report_fr_dppac") 
+   
 
-  })
+   # Showing the button to be clicked for getting results summary
+     observe({
+      if(!is.na(steps_score_cppac_median()) && !is.na(vmu_score_cppac_median())) {
+        shinyjs::show("get_cppac_summary_en")
+        shinyjs::show("get_cppac_summary_fr")
+        shinyjs::show("get_dppac_summary_en")
+        shinyjs::show("get_dppac_summary_fr")
+      } else {
+        shinyjs::hide("get_cppac_summary_en")
+        shinyjs::hide("get_cppac_summary_fr")
+        shinyjs::hide("get_dppac_summary_en")
+        shinyjs::hide("get_dppac_summary_fr")
+      }
+    })
     
-  shinyjs::hide("report_en_cppac")
-  observe({  
-    if(nrow(tab_cppac_summary_en()) >= 1) {
-      shinyjs::show("report_en_cppac")
-    } else {
-      shinyjs::hide("report_en_cppac")
-    }
-  })
-    
-  shinyjs::hide("report_fr_cppac")
-  observe({  
-    if(nrow(tab_cppac_summary_fr()) >= 1) {
-      shinyjs::show("report_fr_cppac")
-    } else {
-      shinyjs::hide("report_fr_cppac")
-    }
-  })
-  
-  shinyjs::hide("report_en_dppac")
-  observe({  
-    if(nrow(tab_dppac_summary_en()) >= 1) {
-      shinyjs::show("report_en_dppac")
-    } else {
-      shinyjs::hide("report_en_dppac")
-    }
-  })
-  
-  shinyjs::hide("report_fr_dppac")
-  observe({  
-    if(nrow(tab_dppac_summary_fr()) >= 1) {
-      shinyjs::show("report_fr_dppac")
-    } else {
-      shinyjs::hide("report_fr_dppac")
-    }
-  })
-  
+   # Showing CPPAC-EN results
+     observeEvent(input$get_cppac_summary_en, {
+       shinyjs::show("PROactive_scores_cppac_summary_en")
+       shinyjs::show("infoBox_cppac_en_total_diff")
+       shinyjs::show("infoBox_cppac_en_total_amount")
+       shinyjs::show("infoBox_cppac_en_total_all")
+       shinyjs::show("infoBox_cppac_en_total_diff_rasch")
+       shinyjs::show("infoBox_cppac_en_total_amount_rasch")
+       shinyjs::show("infoBox_cppac_en_total_all_rasch")
+       shinyjs::show("report_en_cppac")
+     })
+     
+     
+   # Showing CPPAC-FR results
+     observeEvent(input$get_cppac_summary_fr, {
+       shinyjs::show("PROactive_scores_cppac_summary_fr")
+       shinyjs::show("infoBox_cppac_fr_total_diff")
+       shinyjs::show("infoBox_cppac_fr_total_amount")
+       shinyjs::show("infoBox_cppac_fr_total_all")
+       shinyjs::show("infoBox_cppac_fr_total_diff_rasch")
+       shinyjs::show("infoBox_cppac_fr_total_amount_rasch")
+       shinyjs::show("infoBox_cppac_fr_total_all_rasch")
+       shinyjs::show("report_fr_cppac")
+     })
+     
+   # Showing DPPAC-EN results
+     observeEvent(input$get_dppac_summary_en, {
+       shinyjs::show("PROactive_scores_dppac_summary_en")
+       shinyjs::show("infoBox_dppac_en_total_diff")
+       shinyjs::show("infoBox_dppac_en_total_amount")
+       shinyjs::show("infoBox_dppac_en_total_all")
+       shinyjs::show("infoBox_dppac_en_total_diff_rasch")
+       shinyjs::show("infoBox_dppac_en_total_amount_rasch")
+       shinyjs::show("infoBox_dppac_en_total_all_rasch")
+       shinyjs::show("report_en_dppac")
+     })
+   
+
+   # Showing DPPAC-FR results
+     observeEvent(input$get_dppac_summary_fr, {
+       shinyjs::show("PROactive_scores_dppac_summary_fr")
+       shinyjs::show("infoBox_dppac_fr_total_diff")
+       shinyjs::show("infoBox_dppac_fr_total_amount")
+       shinyjs::show("infoBox_dppac_fr_total_all")
+       shinyjs::show("infoBox_dppac_fr_total_diff_rasch")
+       shinyjs::show("infoBox_dppac_fr_total_amount_rasch")
+       shinyjs::show("infoBox_dppac_fr_total_all_rasch")
+       shinyjs::show("report_fr_dppac")
+     })
+     
+   # Hidding again all PROactive results
+     observeEvent(input$Run,{
+       if(is.na(steps_score_cppac_median()) || is.na(vmu_score_cppac_median())) {
+       
+       # Hidding CPPAC-EN elements
+       shinyjs::hide("get_cppac_summary_en")
+       shinyjs::hide("PROactive_scores_cppac_summary_en")
+       shinyjs::hide("infoBox_cppac_en_total_diff")
+       shinyjs::hide("infoBox_cppac_en_total_amount")
+       shinyjs::hide("infoBox_cppac_en_total_all")
+       shinyjs::hide("infoBox_cppac_en_total_diff_rasch")
+       shinyjs::hide("infoBox_cppac_en_total_amount_rasch")
+       shinyjs::hide("infoBox_cppac_en_total_all_rasch")
+       shinyjs::hide("report_en_cppac")
+       
+       # Hidding CPPAC-FR elements
+       shinyjs::hide("get_cppac_summary_fr")
+       shinyjs::hide("PROactive_scores_cppac_summary_fr")
+       shinyjs::hide("infoBox_cppac_fr_total_diff")
+       shinyjs::hide("infoBox_cppac_fr_total_amount")
+       shinyjs::hide("infoBox_cppac_fr_total_all")
+       shinyjs::hide("infoBox_cppac_fr_total_diff_rasch")
+       shinyjs::hide("infoBox_cppac_fr_total_amount_rasch")
+       shinyjs::hide("infoBox_cppac_fr_total_all_rasch")
+       shinyjs::hide("report_fr_cppac")
+       
+       # Hidding DPPAC-EN elements
+       shinyjs::hide("get_dppac_summary_en")
+       shinyjs::hide("PROactive_scores_dppac_summary_en")
+       shinyjs::hide("infoBox_dppac_en_total_diff")
+       shinyjs::hide("infoBox_dppac_en_total_amount")
+       shinyjs::hide("infoBox_dppac_en_total_all")
+       shinyjs::hide("infoBox_dppac_en_total_diff_rasch")
+       shinyjs::hide("infoBox_dppac_en_total_amount_rasch")
+       shinyjs::hide("infoBox_dppac_en_total_all_rasch")
+       shinyjs::hide("report_en_dppac")
+       
+       # Hidding DPPAC-FR elements
+       shinyjs::hide("get_dppac_summary_fr")
+       shinyjs::hide("PROactive_scores_dppac_summary_fr")
+       shinyjs::hide("infoBox_dppac_fr_total_diff")
+       shinyjs::hide("infoBox_dppac_fr_total_amount")
+       shinyjs::hide("infoBox_dppac_fr_total_all")
+       shinyjs::hide("infoBox_dppac_fr_total_diff_rasch")
+       shinyjs::hide("infoBox_dppac_fr_total_amount_rasch")
+       shinyjs::hide("infoBox_dppac_fr_total_all_rasch")
+       shinyjs::hide("report_fr_dppac") 
+       }
+     })
+     
   
   ###################
   # Exporting results ----
@@ -5319,7 +5648,7 @@ app_server <- function(input, output, session) {
     
     shinyjs::hide("box-no-valid-days")
     observe({
-      if(results_summary_medians()$valid_days == 0 & results_summary_means()$valid_days == 0) {
+      if(results_summary_medians()$valid_days == 0 && results_summary_means()$valid_days == 0) {
         shinyjs::show("box-no-valid-days")
       } else {
         shinyjs::hide("box-no-valid-days")
@@ -5330,22 +5659,154 @@ app_server <- function(input, output, session) {
   # Generating reports ----
   ####################
   
-  # Generating general report EN
-    output$report_en <- downloadHandler(
+    # Initializing the list of accumulation metrics for the long reports
+      list_accum_metrics <- reactiveValues(
+        mean_breaks_sed = NA,
+        p_breaks_sed = NA,
+        p_alpha_sed = NA,
+        p_MBD_sed = NA,
+        p_UBD_sed = NA,
+        p_gini_sed = NA,
+        mean_breaks_pa = NA,
+        p_breaks_pa = NA,
+        p_alpha_pa = NA,
+        p_MBD_pa = NA,
+        p_UBD_pa = NA,
+        p_gini_pa = NA
+      )
+    
+    # Updating the list of accumulation metrics for the long reports (NA is returned for non 60-s epoch analysis)
+      observeEvent(results_summary_means(), {
+        if(results_summary_means()$valid_days >=1 && (as.numeric(results_list()$df_with_computed_metrics$time[2] - results_list()$df_with_computed_metrics$time[1]) == 60)) {
+        list_accum_metrics$mean_breaks_sed <- metrics_accum_sed()$metrics$mean_breaks
+        list_accum_metrics$p_breaks_sed <- metrics_accum_sed()$p_breaks
+        list_accum_metrics$p_alpha_sed <- metrics_accum_sed()$p_alpha
+        list_accum_metrics$p_MBD_sed <- metrics_accum_sed()$p_MBD
+        list_accum_metrics$p_UBD_sed <- metrics_accum_sed()$p_UBD
+        list_accum_metrics$p_gini_sed <- metrics_accum_sed()$p_gini
+        
+        list_accum_metrics$mean_breaks_pa <- metrics_accum_pa()$metrics$mean_breaks
+        list_accum_metrics$p_breaks_pa <- metrics_accum_pa()$p_breaks
+        list_accum_metrics$p_alpha_pa <- metrics_accum_pa()$p_alpha
+        list_accum_metrics$p_MBD_pa <- metrics_accum_pa()$p_MBD
+        list_accum_metrics$p_UBD_pa <- metrics_accum_pa()$p_UBD
+        list_accum_metrics$p_gini_pa <- metrics_accum_pa()$p_gini
+        } else {
+        list_accum_metrics$mean_breaks_sed <- NA
+        list_accum_metrics$p_breaks_sed <- NA
+        list_accum_metrics$p_alpha_sed <- NA
+        list_accum_metrics$p_MBD_sed <- NA
+        list_accum_metrics$p_UBD_sed <- NA
+        list_accum_metrics$p_gini_sed <- NA
+        list_accum_metrics$mean_breaks_pa <- NA
+        list_accum_metrics$p_breaks_pa <- NA
+        list_accum_metrics$p_alpha_pa <- NA
+        list_accum_metrics$p_MBD_pa <-NA
+        list_accum_metrics$p_UBD_pa <- NA
+        list_accum_metrics$p_gini_pa <- NA
+        }
+      })
+    
+    # Generating general report EN LONG (HTML) ======================================================================================
+    output$report_en_long <- downloadHandler(
+      
+      
+      filename = "long_report.html",
+      content = function(file) {
+        
+        
+        withProgress(message = 'Please wait...', {
+          
+          report <- system.file("report", "report_en_long.Rmd", package = "activAnalyzer")
+          
+          # Copy the report file to a temporary directory before processing it, in
+          # case we don't have write permissions to the current working dir (which
+          # can happen when deployed). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
+          tempReport <- file.path(tempdir(), "report_en_long.Rmd")
+          file.copy(report, tempReport, overwrite = TRUE)
+          
+          # Set up parameters to pass to Rmd document
+          params <- list(
+            assessor_name = input$assessor_name,
+            assessor_surname = input$assessor_surname,
+            patient_name = input$patient_name,
+            patient_surname = input$patient_surname,
+            sex = input$sex,
+            age = input$age,
+            weight = input$weight,
+            start_date = attributes(file())$startdatetime,
+            end_date = attributes(file())$stopdatetime,
+            device = attributes(file())$devicename,
+            position = input$position,
+            side = input$side,
+            sampling_rate = attributes(file())$`original sample rate`,
+            filter = attributes(file())$filter,
+            epoch = as.numeric(input$to_epoch),
+            start_day_analysis = input$start_day_analysis,
+            end_day_analysis = input$end_day_analysis,
+            axis_weartime = input$axis_weartime,
+            frame_size = input$frame_size,
+            allowanceFrame_size = input$allowanceFrame_size,
+            streamFrame_size = input$streamFrame_size,
+            equation_mets = input$equation_mets,
+            bmr_kcal_d = bmr_kcal_d(),
+            axis_sed = results_list()$axis_sed_chosen_name,
+            axis_mvpa = results_list()$axis_mvpa_chosen_name,
+            sed_cutpoint = results_list()$sed_cutpoint_chosen,
+            mpa_cutpoint = results_list()$mpa_cutpoint_chosen,
+            vpa_cutpoint = results_list()$vpa_cutpoint_chosen,
+            minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
+            results_by_day = results_list()$results_by_day,
+            results_summary_means =  results_summary_means(),
+            results_summary_medians =  results_summary_medians(),
+            df_with_computed_metrics = results_list()$df_with_computed_metrics,
+            
+            mean_breaks_sed = list_accum_metrics$mean_breaks_sed,
+            p_breaks_sed    = list_accum_metrics$p_breaks_sed,
+            p_alpha_sed     = list_accum_metrics$p_alpha_sed,
+            p_MBD_sed       = list_accum_metrics$p_MBD_sed,
+            p_UBD_sed       = list_accum_metrics$p_UBD_sed,
+            p_gini_sed      = list_accum_metrics$p_gini_sed,
+            mean_breaks_pa = list_accum_metrics$mean_breaks_pa,
+            p_breaks_pa     = list_accum_metrics$p_breaks_pa,
+            p_alpha_pa      = list_accum_metrics$p_alpha_pa,
+            p_MBD_pa        = list_accum_metrics$p_MBD_pa,
+            p_UBD_pa        = list_accum_metrics$p_UBD_pa,
+            p_gini_pa       = list_accum_metrics$p_gini_pa,
+ 
+            rendered_by_shiny = TRUE
+          )
+          
+          # Knit the document, passing in the `params` list, and eval it in a
+          # child of the global environment (this isolates the code in the document
+          # from the code in this app). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
+          out <- rmarkdown::render(tempReport,
+                                   params = params,
+                                   envir = new.env(parent = globalenv())
+          )
+          out <- file.rename(out, file)
+          
+        })
+        
+      }
+    )
+    
+  # Generating general report EN SHORT (PDF) ======================================================================================
+    output$report_en_short <- downloadHandler(
     
     
-    filename = "report.pdf",
+    filename = "short_report.pdf",
     content = function(file) {
       
       
       withProgress(message = 'Please wait...', {
         
-        report <- system.file("report", "report_en.Rmd", package = "activAnalyzer")
+        report <- system.file("report", "report_en_short.Rmd", package = "activAnalyzer")
 
         # Copy the report file to a temporary directory before processing it, in
         # case we don't have write permissions to the current working dir (which
         # can happen when deployed). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
-        tempReport <- file.path(tempdir(), "report_en.Rmd")
+        tempReport <- file.path(tempdir(), "report_en_short.Rmd")
         file.copy(report, tempReport, overwrite = TRUE)
         
         # Set up parameters to pass to Rmd document
@@ -5400,22 +5861,106 @@ app_server <- function(input, output, session) {
     }
   )
   
-  # Generating general report FR
-    output$report_fr <- downloadHandler(
+    # Generating general report FR LONG (HTML) ======================================================================================
+    output$report_fr_long <- downloadHandler(
+      
+      
+      filename = "long_report.html",
+      content = function(file) {
+        
+        
+        withProgress(message = 'Please wait...', {
+          
+          report <- system.file("report", "report_fr_long.Rmd", package = "activAnalyzer")
+          
+          # Copy the report file to a temporary directory before processing it, in
+          # case we don't have write permissions to the current working dir (which
+          # can happen when deployed). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
+          tempReport <- file.path(tempdir(), "report_fr_long.Rmd")
+          file.copy(report, tempReport, overwrite = TRUE)
+          
+          # Set up parameters to pass to Rmd document
+          params <- list(
+            assessor_name = input$assessor_name,
+            assessor_surname = input$assessor_surname,
+            patient_name = input$patient_name,
+            patient_surname = input$patient_surname,
+            sex = input$sex,
+            age = input$age,
+            weight = input$weight,
+            start_date = attributes(file())$startdatetime,
+            end_date = attributes(file())$stopdatetime,
+            device = attributes(file())$devicename,
+            position = input$position,
+            side = input$side,
+            sampling_rate = attributes(file())$`original sample rate`,
+            filter = attributes(file())$filter,
+            epoch = as.numeric(input$to_epoch),
+            start_day_analysis = input$start_day_analysis,
+            end_day_analysis = input$end_day_analysis,
+            axis_weartime = input$axis_weartime,
+            frame_size = input$frame_size,
+            allowanceFrame_size = input$allowanceFrame_size,
+            streamFrame_size = input$streamFrame_size,
+            equation_mets = input$equation_mets,
+            bmr_kcal_d = bmr_kcal_d(),
+            axis_sed = results_list()$axis_sed_chosen_name,
+            axis_mvpa = results_list()$axis_mvpa_chosen_name,
+            sed_cutpoint = results_list()$sed_cutpoint_chosen,
+            mpa_cutpoint = results_list()$mpa_cutpoint_chosen,
+            vpa_cutpoint = results_list()$vpa_cutpoint_chosen,
+            minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis,
+            results_by_day = results_list()$results_by_day,
+            results_summary_means =  results_summary_means(),
+            results_summary_medians =  results_summary_medians(),
+            df_with_computed_metrics = results_list()$df_with_computed_metrics,
+            
+            mean_breaks_sed = list_accum_metrics$mean_breaks_sed,
+            p_breaks_sed    = list_accum_metrics$p_breaks_sed,
+            p_alpha_sed     = list_accum_metrics$p_alpha_sed,
+            p_MBD_sed       = list_accum_metrics$p_MBD_sed,
+            p_UBD_sed       = list_accum_metrics$p_UBD_sed,
+            p_gini_sed      = list_accum_metrics$p_gini_sed,
+            mean_breaks_pa = list_accum_metrics$mean_breaks_pa,
+            p_breaks_pa     = list_accum_metrics$p_breaks_pa,
+            p_alpha_pa      = list_accum_metrics$p_alpha_pa,
+            p_MBD_pa        = list_accum_metrics$p_MBD_pa,
+            p_UBD_pa        = list_accum_metrics$p_UBD_pa,
+            p_gini_pa       = list_accum_metrics$p_gini_pa,          
+            
+            rendered_by_shiny = TRUE
+          )
+          
+          # Knit the document, passing in the `params` list, and eval it in a
+          # child of the global environment (this isolates the code in the document
+          # from the code in this app). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
+          out <- rmarkdown::render(tempReport,
+                                   params = params,
+                                   envir = new.env(parent = globalenv())
+          )
+          out <- file.rename(out, file)
+          
+        })
+        
+      }
+    )
+    
+  # Generating general report FR SHORT (PDF) ======================================================================================
+    output$report_fr_short <- downloadHandler(
     
       
-    filename = "rapport.pdf",
+    filename = "short_report.pdf",
     content = function(file) {
       
       
       withProgress(message = 'Please wait...', {
         
-        report <- system.file("report", "report_fr.Rmd", package = "activAnalyzer")
+        report <- system.file("report", "report_fr_short.Rmd", package = "activAnalyzer")
         
         # Copy the report file to a temporary directory before processing it, in
         # case we don't have write permissions to the current working dir (which
         # can happen when deployed). Code retrieved from https://shiny.rstudio.com/articles/generating-reports.html.
-        tempReport <- file.path(tempdir(), "report_fr.Rmd")
+        tempReport <- file.path(tempdir(), "report_fr_short.Rmd")
         file.copy(report, tempReport, overwrite = TRUE)
         
         # Set up parameters to pass to Rmd document
@@ -5470,7 +6015,7 @@ app_server <- function(input, output, session) {
     }
   )
     
-  # Generating C-PPAC report EN
+  # Generating C-PPAC report EN ======================================================================================
     output$report_en_cppac <- downloadHandler(
       
       
@@ -5548,7 +6093,7 @@ app_server <- function(input, output, session) {
       }
     )
     
-    # Generating C-PPAC report FR
+    # Generating C-PPAC report FR ======================================================================================
     output$report_fr_cppac <- downloadHandler(
       
       
@@ -5628,7 +6173,7 @@ app_server <- function(input, output, session) {
     )
   
     
-    # Generating D-PPAC report EN
+    # Generating D-PPAC report EN ======================================================================================
     output$report_en_dppac <- downloadHandler(
       
       
@@ -5681,12 +6226,12 @@ app_server <- function(input, output, session) {
             results_summary_means =  results_summary_means(),
             results_summary_medians =  results_summary_medians(),
             dppac_table = tab_dppac_summary_en(),
-            dppac_diff_raw = round(recap_ddpac_en()$mean_difficulty_score_raw[1], 1),
-            dppac_amount_raw =round(recap_ddpac_en()$mean_amount_score_raw[1], 1),
-            dppac_total_raw = round(recap_ddpac_en()$mean_total_score_raw[1], 1),
-            dppac_diff_rasch = round(recap_ddpac_en()$mean_difficulty_score_rasch[1], 1),
-            dppac_amount_rasch = round(recap_ddpac_en()$mean_amount_score_rasch[1], 1),
-            dppac_total_rasch = round(recap_ddpac_en()$mean_total_score_rasch[1], 1),
+            dppac_diff_raw = round(recap_dppac_en()$mean_difficulty_score_raw[1], 1),
+            dppac_amount_raw =round(recap_dppac_en()$mean_amount_score_raw[1], 1),
+            dppac_total_raw = round(recap_dppac_en()$mean_total_score_raw[1], 1),
+            dppac_diff_rasch = round(recap_dppac_en()$mean_difficulty_score_rasch[1], 1),
+            dppac_amount_rasch = round(recap_dppac_en()$mean_amount_score_rasch[1], 1),
+            dppac_total_rasch = round(recap_dppac_en()$mean_total_score_rasch[1], 1),
             
             rendered_by_shiny = TRUE
           )
@@ -5705,7 +6250,7 @@ app_server <- function(input, output, session) {
       }
     )
     
-    # Generating D-PPAC report FR
+    # Generating D-PPAC report FR ======================================================================================
     output$report_fr_dppac <- downloadHandler(
       
       
@@ -5758,12 +6303,12 @@ app_server <- function(input, output, session) {
             results_summary_means =  results_summary_means(),
             results_summary_medians =  results_summary_medians(),
             dppac_table = tab_dppac_summary_fr(),
-            dppac_diff_raw = round(recap_ddpac_fr()$mean_difficulty_score_raw[1], 1),
-            dppac_amount_raw =round(recap_ddpac_fr()$mean_amount_score_raw[1], 1),
-            dppac_total_raw = round(recap_ddpac_fr()$mean_total_score_raw[1], 1),
-            dppac_diff_rasch = round(recap_ddpac_fr()$mean_difficulty_score_rasch[1], 1),
-            dppac_amount_rasch = round(recap_ddpac_fr()$mean_amount_score_rasch[1], 1),
-            dppac_total_rasch = round(recap_ddpac_fr()$mean_total_score_rasch[1], 1),
+            dppac_diff_raw = round(recap_dppac_fr()$mean_difficulty_score_raw[1], 1),
+            dppac_amount_raw =round(recap_dppac_fr()$mean_amount_score_raw[1], 1),
+            dppac_total_raw = round(recap_dppac_fr()$mean_total_score_raw[1], 1),
+            dppac_diff_rasch = round(recap_dppac_fr()$mean_difficulty_score_rasch[1], 1),
+            dppac_amount_rasch = round(recap_dppac_fr()$mean_amount_score_rasch[1], 1),
+            dppac_total_rasch = round(recap_dppac_fr()$mean_total_score_rasch[1], 1),
             
             rendered_by_shiny = TRUE
           )
@@ -5998,15 +6543,15 @@ app_server <- function(input, output, session) {
     
   # Exporting PROactive accelerometer scores for D-PPAC
     observeEvent(input$get_dppac_summary_en, {
-      shiny::exportTestValues(score_dppac_diff_en = recap_ddpac_en()$mean_difficulty_score_raw[1])
-      shiny::exportTestValues(score_dppac_quant_en = recap_ddpac_en()$mean_amount_score_raw[1])
-      shiny::exportTestValues(score_dppac_tot_rasch_en = round(recap_ddpac_en()$mean_total_score_rasch[1], 1))
+      shiny::exportTestValues(score_dppac_diff_en = recap_dppac_en()$mean_difficulty_score_raw[1])
+      shiny::exportTestValues(score_dppac_quant_en = recap_dppac_en()$mean_amount_score_raw[1])
+      shiny::exportTestValues(score_dppac_tot_rasch_en = round(recap_dppac_en()$mean_total_score_rasch[1], 1))
       })
     
     observeEvent(input$get_dppac_summary_fr, {
-      shiny::exportTestValues(score_dppac_diff_fr = recap_ddpac_fr()$mean_difficulty_score_raw[1])
-      shiny::exportTestValues(score_dppac_quant_fr = recap_ddpac_fr()$mean_amount_score_raw[1])
-      shiny::exportTestValues(score_dppac_tot_rasch_fr = round(recap_ddpac_fr()$mean_total_score_rasch[1], 1))
+      shiny::exportTestValues(score_dppac_diff_fr = recap_dppac_fr()$mean_difficulty_score_raw[1])
+      shiny::exportTestValues(score_dppac_quant_fr = recap_dppac_fr()$mean_amount_score_raw[1])
+      shiny::exportTestValues(score_dppac_tot_rasch_fr = round(recap_dppac_fr()$mean_total_score_rasch[1], 1))
     })
     
       

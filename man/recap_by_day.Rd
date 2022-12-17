@@ -7,6 +7,8 @@
 recap_by_day(
   data,
   col_time = "time",
+  col_nonwear = "non_wearing_count",
+  col_wear = "wearing_count",
   valid_wear_time_start = "00:00:00",
   valid_wear_time_end = "23:59:59",
   age = 40,
@@ -18,6 +20,10 @@ recap_by_day(
 \item{data}{A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then the \code{\link{mark_intensity}} functions.}
 
 \item{col_time}{A character value indicating the name of the variable where time information is provided.}
+
+\item{col_nonwear}{A character value to indicate the name of the variable used to count nonwear time.}
+
+\item{col_wear}{A character value to indicate the name of the variable used to count wear time.}
 
 \item{valid_wear_time_start}{A character value with the HH:MM:SS format to set the start of the daily period to consider for computing valid wear time.}
 

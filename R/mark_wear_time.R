@@ -65,7 +65,7 @@ mark_wear_time <- function(
         date, 
         time, 
         everything(),
-        -TimeStamp
+        -.data[[TS]]
           )
     
   } else {
@@ -88,7 +88,7 @@ mark_wear_time <- function(
      date, 
      time, 
      everything(),
-     -TimeStamp
+     -.data[[TS]]
    )
   
   }

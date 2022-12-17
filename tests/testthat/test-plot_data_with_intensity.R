@@ -21,5 +21,20 @@ test_that("A plot with data marked for intensity is obtained", {
   expect_s3_class(g, "ggplot") 
   
 })
+
+
+test_that("The function works with customized variable names", {
+  file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
+  g <- 
+    prepare_dataset(data = file) %>%
+    dplyr::rename(TIMESTAMP = "TimeStamp") %>%
+    mark_wear_time(TS = "TIMESTAMP") %>% 
+    dplyr::rename(TIME = "time", NON_WEARING_COUNT = "non_wearing_count", WEARING_COUNT = "wearing_count") %>%
+    mark_intensity(col_time = "TIME", col_nonwear  = "NON_WEARING_COUNT", col_wear = "WEARING_COUNT") %>%
+    plot_data_with_intensity(col_time = "TIME", col_nonwear  = "NON_WEARING_COUNT", col_wear = "WEARING_COUNT")
   
+  # Testing that g is a ggplot object
+  expect_s3_class(g, "ggplot") 
+  
+})  
 

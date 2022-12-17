@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.12.7)  7 DEC 2022 16:18
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.12.7)  15 DEC 2022 12:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -905,23 +905,23 @@ Underfull \hbox (badness 3108) in paragraph at lines 178--179
 []\TU/lmr/m/n/10 L’équation \TU/lmtt/m/n/10 Santos-Lozano et al. (2013) [Older adults] \TU/lmr/m/n/10 ([]Santos-Lozano et al.,
  []
 
-[9] [10] [11] [12]
+[9] [10] [11] [12] [13] [14
+
+]
 Section 4.
-[13
+[15] [16] [17
 
-] [14] [15
-
-] [16] (./user_guide_fr.aux)
+] [18] (./user_guide_fr.aux)
 Package rerunfilecheck Info: File `user_guide_fr.out' has not changed.
 (rerunfilecheck)             Checksum: 7E0432D8B7FC2F82B1CB54FCC3BD0092;1428.
  ) 
 Here is how much of TeX's memory you used:
- 18796 strings out of 477620
- 349037 string characters out of 5837822
+ 18800 strings out of 477620
+ 349089 string characters out of 5837822
  872611 words of memory out of 5000000
- 39692 multiletter control sequences out of 15000+600000
+ 39696 multiletter control sequences out of 15000+600000
  475726 words of font info for 83 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 86i,11n,121p,3291b,408s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 86i,11n,121p,3291b,431s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on user_guide_fr.pdf (16 pages).
+Output written on user_guide_fr.pdf (18 pages).

@@ -6,7 +6,10 @@
 \usage{
 mark_intensity(
   data,
-  col_axis = "vm",
+  col_axis = c("vm", "axis1"),
+  col_time = "time",
+  col_nonwear = "non_wearing_count",
+  col_wear = "wearing_count",
   sed_cutpoint = 200,
   mpa_cutpoint = 2690,
   vpa_cutpoint = 6167,
@@ -22,6 +25,12 @@ mark_intensity(
 \item{data}{A dataframe obtained using the \code{\link{prepare_dataset}} and then the \code{\link{mark_wear_time}} functions.}
 
 \item{col_axis}{A character value to indicate the name of the variable to be used for determining intensity categories.}
+
+\item{col_time}{A character value to indicate the name of the variable to plot time data.}
+
+\item{col_nonwear}{A character value to indicate the name of the variable used to count nonwear time.}
+
+\item{col_wear}{A character value to indicate the name of the variable used to count wear time.}
 
 \item{sed_cutpoint}{A numeric value below which time is considered as spent in sedentary behavior (in counts/min).
 You must convert to counts/min if you want to use a cut-point initially developed using an epoch shorter than 60 s. In the case where the epoch of the
