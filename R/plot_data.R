@@ -53,6 +53,8 @@ plot_data <- function(
     date_labs <- format(data$date, "%d-%m-%y")
     names(date_labs) <- data$days
     
+  # Getting epoch length
+    epoch <- as.numeric(data[[col_time]][2] - data[[col_time]][1])
 
   # Creating the plot
     p <-
@@ -81,7 +83,7 @@ plot_data <- function(
     scale_y_continuous(position = "right", expand = c(0, 0)) +
     scale_color_manual(breaks = c("1", "0"), values = c("lemonchiffon3", "lemonchiffon1"), labels = c("Nonwear", "Wear")) +
     scale_fill_manual(breaks = c("1", "0"), values = c("lemonchiffon3", "lemonchiffon1"), labels = c("Nonwear", "Wear")) +
-    labs(x = "Time (hh:mm)", y = metric, fill = "", color = "") +
+    labs(x = "Time (hh:mm)", y = paste0(metric, "/", epoch, "s"), fill = "", color = "") +
     guides(color = NULL) +
     theme_bw() +
     theme(legend.position = "bottom",

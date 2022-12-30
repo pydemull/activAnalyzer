@@ -70,6 +70,9 @@ plot_data_with_intensity <- function(
     date_labs <- format(data$date, "%d-%m-%y")
     names(date_labs) <- data$days
     
+  # Getting epoch length
+    epoch <- as.numeric(data[[col_time]][2] - data[[col_time]][1])
+    
   # Creating the plot
     p <-
     ggplot(data = data %>% dplyr::filter(.data[[col_time]] >= hms::as_hms(zoom_from) & .data[[col_time]] <= hms::as_hms(zoom_to))) +
@@ -111,8 +114,8 @@ plot_data_with_intensity <- function(
    scale_y_continuous(position = "right", expand = c(0, 0)) +
    scale_fill_manual(breaks = c("Nonwear", "SED", "LPA", "MVPA"), values = c("lemonchiffon3", "#3F51B5", "#FFFF33", "#FF0066")) +
    scale_color_manual(breaks = c("Nonwear", "SED", "LPA", "MVPA"), values = c("lemonchiffon3", "#3F51B5", "#FFFF33", "#FF0066")) +
-   labs(x = "Time (hh:mm)", y = metric, fill = "", color = "") +
-   theme_bw() +
+      labs(x = "Time (hh:mm)", y = paste0(metric, "/", epoch, "s"), fill = "", color = "") +
+  theme_bw() +
    theme(legend.position = "bottom",
          legend.key = element_rect(color = "grey"),
          panel.grid.major = element_blank(), 
