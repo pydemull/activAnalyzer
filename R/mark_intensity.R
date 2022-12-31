@@ -23,22 +23,16 @@
 #'
 #' @param data A dataframe obtained using the \code{\link{prepare_dataset}} and then the \code{\link{mark_wear_time}} functions.
 #' @param col_axis A character value to indicate the name of the variable to be used for determining intensity categories. 
-#' @param col_time A character value to indicate the name of the variable to plot time data.
+#' @param col_time A character value to indicate the name of the variable related to time data.
 #' @param col_nonwear A character value to indicate the name of the variable used to count nonwear time.
 #' @param col_wear A character value to indicate the name of the variable used to count wear time.
 #' @param equation A character string to indicate the equation to be used for estimating METs.
-#' @param sed_cutpoint A numeric value below which time is considered as spent in sedentary behavior (in counts/min). 
-#'                     You must convert to counts/min if you want to use a cut-point initially developed using an epoch shorter than 60 s. In the case where the epoch of the 
-#'                     dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
-#'                     You must provide a value inferior or equal to 60.
-#' @param mpa_cutpoint A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity (in counts/min). 
-#'                     You must convert to counts/min if you want to use a cut-point initially developed using an epoch shorter than 60 s. In the case where the epoch of the 
-#'                     dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
-#'                     You must provide a value inferior or equal to 60.
-#' @param vpa_cutpoint A numeric value at and above which time is considered as spent in vigorous physical activity (in counts/min). 
-#'                     You must convert to counts/min if you want to use a cut-point initially developed using an epoch shorter than 60 s. In the case where the epoch of the 
-#'                     dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
-#'                     You must provide a value inferior or equal to 60.
+#' @param sed_cutpoint A numeric value below which time is considered as spent in sedentary behavior (in counts/min). In the case where the epoch of the 
+#'                     dataset would be shorter than 60 s, the function will divide the cut-point value so that it corresponds to the epoch length used.
+#' @param mpa_cutpoint A numeric value at and above which time is considered as spent in moderate physical activity (in counts/min). In the case where the epoch of the 
+#'                     dataset would be shorter than 60 s, the function will divide the cut-point value so that it corresponds to the epoch length used.
+#' @param vpa_cutpoint A numeric value at and above which time is considered as spent in vigorous physical activity (in counts/min). In the case where the epoch of the 
+#'                     dataset would be shorter than 60 s, the function will divide the cut-point value so that it corresponds to the epoch length used.
 #' @param age A numeric value in yr.
 #' @param weight A numeric value in kg.
 #' @param sex A character value.
@@ -122,14 +116,14 @@ mark_intensity <- function(data,
                                               sex = sex)
                                  ),
          kcal = dplyr::case_when(
-         SED == 1 ~ bmr_kcal_min / cor_factor,
-         equation == "Sasaki et al. (2011) [Adults]" | equation == "Freedson et al. (1998) [Adults]" ~ METS * weight * 1/60 / cor_factor,
-         equation == "Santos-Lozano et al. (2013) [Adults]" | equation == "Santos-Lozano et al. (2013) [Older adults]" ~ METS * bmr_kcal_min / cor_factor
+           SED == 1 ~ bmr_kcal_min / cor_factor,
+           equation == "Sasaki et al. (2011) [Adults]" | equation == "Freedson et al. (1998) [Adults]" ~ METS * weight * (1/60) / cor_factor,
+           equation == "Santos-Lozano et al. (2013) [Adults]" | equation == "Santos-Lozano et al. (2013) [Older adults]" ~ METS * bmr_kcal_min / cor_factor
         ),
           
 
       # Computing MET-hr corresponding to MVPA only, for each epoch
-        mets_hours_mvpa = ifelse(METS >= 3, METS * 1/60 / cor_factor, 0),
+        mets_hours_mvpa = ifelse(METS >= 3, METS * (1/60) / cor_factor, 0),
 
       ) %>%
       
