@@ -1,22 +1,22 @@
 #' Compute intensity distribution metrics
 #'
-#' This function computes metrics that describe the distribution of intensity.
+#' This function computes metrics that describe the distribution of intensity for each day of a dataset. Computations are performed 
+#' based on the daily periods set for analysis and on the detected wear time.
 #' 
 #' @param data  A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then the \code{\link{mark_intensity}} functions.
-#' @param col_time A character value to indicate the name of the variable to be used to determine the epoch duration of the dataset.
 #' @param col_axis A character value to indicate the name of the variable to be used to compute total time per bin of intensity.
-#' @param dates A character vector containing the dates to be retained for analysis. The dates must be with the "YYYY-MM-DD" format.
+#' @param col_time A character value to indicate the name of the variable to be used to determine the epoch length of the dataset.
 #' @param valid_wear_time_start A character value with the HH:MM:SS format to set the start of the daily period that will be considered for computing metrics.
 #' @param valid_wear_time_end A character value with the HH:MM:SS format to set the end of the daily period that will be considered for computing metrics.
 #' @param start_first_bin A numeric value to set the lower bound of the first bin of the intensity band (in counts/epoch duration).
 #' @param start_last_bin A numeric value to set the lower bound of the last bin of the intensity band (in counts/epoch duration).
 #' @param bin_width A numeric value to set the width of the bins of the intensity band (in counts/epoch duration).
 #'
-#' @return A list of objects: `p_band`,`p_log`, and `model_log`. The graphic `band` shows the distribution of time spent in the configured bins of intensity.
-#'     The graphic `p_log` shows the relationship between the natural log of time spent in each bin with the natural log of the middle values of the bins.
-#'     `model_log` is the summary of a linear model that has been built with the natural log of time spent in each bin as the dependent variable and the 
-#'     natural of the middle values of the bins as the independant variable.
-#' @export
+#' @return A list of objects: `metrics`, `p_band`, and `p_log`. `metrics` is a dataframe containing 
+#'     the intensity gradients and the MX metrics (in counts/epoch duration used) as described in Rowlands et al. (2018; doi:10.1249/MSS.0000000000001561).
+#'     The graphic `p_band` shows the distribution of time spent in the configured bins of intensity for each day of the dataset. 
+#'     The graphic `p_log` shows, for each day, the relationship between the natural log of time spent in each bin with the natural 
+#'     log of the middle values of the intensity bins. 
 #'
 #' @examples
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
@@ -39,11 +39,12 @@
 #'     vpa_cutpoint = 6167, 
 #'     age = 32,
 #'     weight = 67,
-#'     sex = "male",
+#'     sex = "male"
 #'     )
 #' compute_intensity_distri_metrics(
 #'    data = mydata_with_intensity_marks,
-#'    dates = c("2021-04-07", "2021-04-08", "2021-04-09", "2021-04-10", "2021-04-11"),
+#'    col_axis = "vm",
+#'    col_time = "time",
 #'    valid_wear_time_start = "00:00:00",
 #'    valid_wear_time_end = "23:59:59",
 #'    start_first_bin = 0,
@@ -55,130 +56,115 @@ compute_intensity_distri_metrics <- function(
     data,
     col_axis = "vm",
     col_time = "time",
-    dates = NULL,
     valid_wear_time_start = "00:00:00",
     valid_wear_time_end = "23:59:59",
-    zoom_from = "00:00:00",
-    zoom_to = "23:59:59",
     start_first_bin = 0,
     start_last_bin = 10000,
     bin_width = 500
 ){
   
   
-#=================================================================
-# Setting the table of bins that will be used for summing time by 
-# intensity bins
-#=================================================================
-
-# Setting correction factor
+#=================================================================================
+# Setting correction factor to compute time spent in the intensity bins in minutes
+#=================================================================================
 cor_factor = 60 / (as.numeric(data[[col_time]][2] - data[[col_time]][1]))
 
-# Filtering data based on selected dates and time periods
-if (is.null(dates)) {
-  selected_dates <- attributes(as.factor(data$date))$levels
-} else {
-  selected_dates <- attributes(as.factor(dates))$levels
-}
+#==============================
+# Getting all dates of interest
+#==============================
+
+all_dates <- levels(as.factor(data$date))
+
+#======================
+# Nesting dataset
+#======================
+
 data <- 
   data %>% 
-  dplyr::filter(date %in% as.Date(selected_dates) &
-                  .data[[col_time]] >= hms::as_hms(valid_wear_time_start) &
-                  .data[[col_time]] <= hms::as_hms(valid_wear_time_end)
+  dplyr::filter(date %in% as.Date(all_dates)) %>%
+  dplyr::group_by(days) %>%
+  tidyr::nest()
+
+#=========================================================================
+# Getting the list of intensity gradients for each day and related figures
+#=========================================================================
+
+# Running `get_ig_results()` function for each day of the dataset and storing results
+res <- lapply(
+  data$data, 
+  get_ig_results, # `get_ig_results` is an internal function   
+  col_axis = col_axis,
+  col_time = col_time,
+  valid_wear_time_start = valid_wear_time_start,
+  valid_wear_time_end = valid_wear_time_end,
+  start_first_bin = start_first_bin,
+  start_last_bin = start_last_bin,
+  bin_width = bin_width,
+  cor_factor = cor_factor
+  ) 
+
+# Getting dataframe with all ig values
+df_ig <- data.frame(
+  date = all_dates,
+  ig = rep(NA, nlevels(as.factor(all_dates)))
   )
 
-# Initializing table of bins
-df_bins <-
-  data.frame(bin_start = seq(start_first_bin, start_last_bin, bin_width)) %>%
-  dplyr::mutate(
-    bin_end = bin_start + bin_width,
-    bin_start = bin_start + 1,
-    bin_num = seq_along(bin_start)
-  )
+for (i in 1:length(res)){
+  df_ig$ig <- ifelse(res[[i]]$date == df_ig$date, res[[i]]$ig, df_ig$ig)
+  }
 
-# Correcting the lower bound of the first bin
-df_bins[1, "bin_start"] <- 0
+# Getting figure with all `p_band` plots
+plot_list_p_band <- vector("list", length = nlevels(as.factor(all_dates)))
 
-# Getting middles of the bins
-df_bins$bin_mid <- (df_bins$bin_start +  df_bins$bin_end) / 2
-
-# Getting labels
-df_bins$bin_label <- paste0(df_bins$bin_start,"-", df_bins$bin_end)
-
-# Correcting the value of the upper bound of the last bin
-df_bins[nrow(df_bins), "bin_end"] <- 50000
-
-# Correcting the label of the last bin
-df_bins[nrow(df_bins), "bin_label"] <- paste0(">",df_bins[nrow(df_bins), "bin_start"]-1)
-
-
-#========================================
-# Marking the dataset with intensity bins
-#========================================
-
-# Initializing vectors for labelling the dataset
-data$bin_num <- vector("double", nrow(data))
-data$bin_mid <- vector("double", nrow(data))
-data$bin_label <- vector("character", nrow(data))
-
-# Marking the dataset
-for (i in 1:nrow(df_bins)) {
-  
-  data$bin_num <- ifelse(
-    data[[col_axis]] >= df_bins[i, "bin_start"],
-    df_bins[i, "bin_num"],
-    data$bin_num 
-  )
-  
-  data$bin_mid <- ifelse(
-    data[[col_axis]] >= df_bins[i, "bin_start"],
-    df_bins[i, "bin_mid"],
-    data$bin_mid 
-  )
-  
-  data$bin_label <- ifelse(
-    data[[col_axis]] >= df_bins[i, "bin_start"],
-    df_bins[i, "bin_label"],
-    data$bin_label 
-  )
-  
+for (i in 1:length(res)){
+  plot_list_p_band[[i]] <- res[[i]]$p_band
 }
 
-#=======================================
-# Getting intensity distribution results
-#=======================================
+p_band <- patchwork::wrap_plots(plot_list_p_band)
 
-# Getting summarised data
-recap_bins_int <-
+# Getting figure with all `p_log` plots
+plot_list_p_log <- vector("list", length = nlevels(as.factor(all_dates)))
+
+for (i in 1:length(res)){
+  plot_list_p_log[[i]] <- res[[i]]$p_log
+}
+
+p_log <- patchwork::wrap_plots(plot_list_p_log)
+
+
+#===================================
+# Getting MX metrics
+#===================================
+
+# Getting MX metrics by day
+df_mx <-
   data %>%
-  dplyr::group_by(bin_mid, bin_label) %>%
-  dplyr::filter(wearing == "w") %>%
-  dplyr::summarise(duration = dplyr::n() / cor_factor)
+  tidyr::unnest(data) %>%
+  dplyr::group_by(date, .drop = FALSE) %>%
+  dplyr::filter(.data[[col_time]] >= hms::as_hms(valid_wear_time_start) &
+                  .data[[col_time]] <= hms::as_hms(valid_wear_time_end) &
+                  wearing == "w"
+  ) %>%
+  dplyr::summarise(
+    `M1/3` = mean(head(sort(.data[[col_axis]], decreasing = TRUE), n = 8 * 60 * cor_factor), na.rm = TRUE) %>% round(., 2),
+    M120 = mean(head(sort(.data[[col_axis]], decreasing = TRUE), n = 120 * cor_factor), na.rm = TRUE) %>% round(., 2),
+    M60 = mean(head(sort(.data[[col_axis]], decreasing = TRUE), n = 60 * cor_factor), na.rm = TRUE) %>% round(., 2),
+    M30 = mean(head(sort(.data[[col_axis]], decreasing = TRUE), n = 30 * cor_factor), na.rm = TRUE) %>% round(., 2),
+    M15 = mean(head(sort(.data[[col_axis]], decreasing = TRUE), n = 15 * cor_factor), na.rm = TRUE) %>% round(., 2),
+    M5 = mean(head(sort(.data[[col_axis]], decreasing = TRUE), n = 5 * cor_factor), na.rm = TRUE) %>% round(., 2)
+  ) 
+  
 
-
-# Building log mofel
-model_log <- summary(lm(log(duration) ~ log(bin_mid), data = recap_bins_int))
-
-# Plotting accumulated minutes vs Intensity band
-p1 <- ggplot(data = recap_bins_int, aes(x = forcats::fct_reorder(bin_label, bin_mid), y = duration)) +
-  geom_bar(stat = "identity") +
-  labs(x = "Intensity band (counts/min)", y = "Accumulated minutes" ) +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-# Getting Log-Log plot
-p2 <- ggplot(data = recap_bins_int, aes(x = log(bin_mid), y = log(duration))) +
-  geom_point(size = 4, alpha = 0.5) +
-  geom_smooth(method = "lm") +
-  theme_bw() +
-  annotate(
-    x = min(log(recap_bins_int$bin_mid)), 
-    y = min(log(recap_bins_int$duration)), "text", 
-    label = paste0("y = ", round(model_log$coefficient[2, 1], 2), "x + ", round(model_log$coefficient[1, 1], 2)),
-    hjust = 0, size = 10
+#==========================
+# Returning list of results
+#==========================
+results <- 
+  list(
+    metrics = dplyr::left_join(df_ig %>% dplyr::mutate(date = as.Date(date)), df_mx, key = "date"), 
+    p_band = p_band, 
+    p_log = p_log
     )
 
-# Making list of graphics
-results <- list(p_band = p1, p_log = p2, model_log = model_log)
 return(results)
+
 }
