@@ -29,7 +29,7 @@ test_that("The function provides similar summary by day for appropriate metrics 
     age = 32, 
     weight = 67, 
     sex = "male",
-  ) %>%
+  )$df_all_metrics %>%
     dplyr::select(wear_time:vm_per_min)
   
 
@@ -62,7 +62,7 @@ test_that("The function provides similar summary by day for appropriate metrics 
       age = 32, 
       weight = 67, 
       sex = "male",
-    ) %>%
+    )$df_all_metrics %>%
     dplyr::select(wear_time: vm_per_min)
     
   # Test
@@ -106,14 +106,14 @@ test_that("Kilocalories are correctly summed when changing the period of the day
       age = 32, 
       weight = 67, 
       sex = "male",
-    ) %>%
+    )$df_all_metrics %>%
     dplyr::select(total_kcal, pal) %>%
     as.data.frame()
   
   recap2 <-
     data.frame(
       total_kcal = 10*60*2,
-      pal = (10*60*2) *(10/9) / (compute_bmr(age = 32, sex = "male", weight = 67) / (24*60) * 10*60)
+      pal = (10*60*2) * (10/9) / (compute_bmr(age = 32, sex = "male", weight = 67) / (24*60) * 10*60)
     )
   
   expect_equal(round(recap1,1), round(recap2,1))
@@ -160,7 +160,7 @@ recap1 <-
     age = 32, 
     weight = 67, 
     sex = "male"
-  ) %>%
+  )$df_all_metrics %>%
   dplyr::select(total_kcal, pal) %>%
   as.data.frame()
 
