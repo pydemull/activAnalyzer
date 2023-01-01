@@ -51,7 +51,7 @@ recap_by_day(
 A list of objects: \code{df_all_metrics}, \code{p_band}, and \code{p_log}.
 \code{df_all_metrics} is a dataframe containing all the metrics for each day.
 \code{p_band} is a figure that shows the distribution of time spent in the configured bins of intensity for each day of the dataset.
-\code{p_log} is a figure that shows, for each day, the relationship between the natural log of time spent in each bin with the natural
+\code{p_log} is a figure that shows, for each day, the relationship between the natural log of time spent in each intensity bin with the natural
 log of the middle values of the intensity bins.
 }
 \description{

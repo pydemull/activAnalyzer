@@ -38,7 +38,7 @@ test_that("The function provides numeric and graphic objects", {
   df_actual <- data.frame(
     mean_breaks = 68.6,
     alpha = 2.18,
-    MBD = 1.8,
+    MBD = 2,
     UBD = 7.56,
     gini = 0.57
   )
@@ -101,7 +101,7 @@ list_test <-
 df_actual <- data.frame(
   mean_breaks = 68.6,
   alpha = 2.18,
-  MBD = 1.8,
+  MBD = 2,
   UBD = 7.56,
   gini = 0.57
 )
