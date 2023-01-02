@@ -2,25 +2,37 @@
 % Please edit documentation in R/create_fig_mx_by_day.R
 \name{create_fig_mx_by_day}
 \alias{create_fig_mx_by_day}
-\title{Create a radar plot for MX metrics relating to a measurement of physical behaviour}
+\title{Create a radar plot for MX metrics relating to each day of the measurement of physical behavior}
 \usage{
-create_fig_mx_by_day(data, labels = NULL)
+create_fig_mx_by_day(
+  data,
+  labels = NULL,
+  mpa_cutpoint = 2690,
+  vpa_cutpoint = 6167
+)
 }
 \arguments{
-\item{data}{A dataframe with physical behavior metrics summarised for each day. It should have been obtained using
-the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, and
+\item{data}{A dataframe with physical behavior metrics summarised for each day of the measurement. It should have been obtained using
+the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, and then
 the \code{\link{recap_by_day}} functions.}
 
-\item{labels}{A vector of numeric values setting the breaks of the radar plot. Default is a vector of 6 values with
-a start at 0 and and end at the maximum of all the computed MX metrics.}
+\item{labels}{A vector of numeric values setting the breaks of the Y axis of the radar plot. Default is a vector of 6 values with
+a start at 0 and an end at the maximum of all the computed MX metrics.}
+
+\item{mpa_cutpoint}{A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity (in counts/epoch length used to compute MX metrics).
+Defaut value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude in counts/min.}
+
+\item{vpa_cutpoint}{A numeric value at and above which time is considered as spent in vigorous physical activity (in counts/epoch length used to compute MX metrics).
+Defaut value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude in counts/min.}
 }
 \value{
 A ggplot object
 }
 \description{
-Create a radar plot for MX metrics relating to a measurement of physical behaviour
+Create a radar plot for MX metrics relating to each day of the measurement of physical behavior
 }
 \examples{
+file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 mydata <- prepare_dataset(data = file)
 mydata_with_wear_marks <- mark_wear_time(
     dataset = mydata, 
@@ -55,7 +67,7 @@ summary_by_day <- recap_by_day(
     bin_width = 500
     )$df_all_metrics
 create_fig_mx_by_day(
-    data = summary_by_day
-    labels = seq(0, 10000, 2500)
+    data = summary_by_day,
+    labels = seq(2500, 12500, 2500)
 )
 }
