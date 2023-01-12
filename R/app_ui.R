@@ -641,6 +641,18 @@ app_ui <- function(request) {
                          ),
                        ),
                 
+                       fluidRow(
+                         column(12,
+                                shinydashboardPlus::box(
+                                  id = "BoxCompaNormsFig", 
+                                  title = "Comparisons with norms or recommendations",
+                                  shinycssloaders::withSpinner(plotOutput("compa_norms_fig", height = "auto")), 
+                                  width = NULL, 
+                                  height = NULL
+                                )
+                         )
+                       ),
+                
                       #*********************************************************
                       # Panels with metrics describing step accumulation metrics
                       #*********************************************************
