@@ -4,7 +4,7 @@ output:
   html_document:
     theme: cosmo
     toc: yes
-    toc_depth: 2
+    toc_depth: 3
     toc_float: yes
     number_sections: yes
     df_print: paged
@@ -48,6 +48,8 @@ params:
   sed_lines: NA
   ratio_lines: NA
   df_with_computed_metrics: NA
+  graph_int_distri_bands: NA
+  graph_int_distri_models: NA
   mean_breaks_sed: NA
   p_breaks_sed: NA
   p_alpha_sed: NA 
@@ -79,7 +81,7 @@ h2 {
   font-weight: bold;
 }
 h3 {
-  font-size: 23px;
+  font-size: 21px;
 }
 p.caption {
   color: #777;
@@ -114,6 +116,7 @@ height_factor1 = nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.75
 height_factor1 <- ifelse(height_factor1 <= 6, nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.9, height_factor1)
 height_factor2 = params$results_summary_means$valid_days * 0.75
 height_factor2 <- ifelse(height_factor2 <= 6, nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.9, height_factor2)
+height_factor3 = nlevels(as.factor(params$df_with_computed_metrics$date)) * 1.5
 
 options("scipen"=100, "digits"=4)
 ```
@@ -140,7 +143,8 @@ options("scipen"=100, "digits"=4)
 # Results
 <hr>
 
-## Activity volume metrics
+## Activity volume  metrics
+
 ### Temporal distribution of activity intensity
 ```{r,  fig.height = height_factor1, fig.width=13}
 plot_data_with_intensity(
@@ -151,41 +155,31 @@ plot_data_with_intensity(
   )
 ```
 
-### Results by day
+### Results by day: Tabular view
 ```{r}
-reactable::reactable(params$results_by_day %>%
+reactable::reactable(params$results_by_day %>% dplyr::select(date:total_steps) %>%
                        dplyr::rename(
                         Date = date,
-                        "Wear time" = wear_time,
-                        "Total counts Axis 1" = total_counts_axis1,
-                        "Total counts VM" = total_counts_vm,
-                        "Axis 1 per min" = axis1_per_min,
-                        "VM per min" = vm_per_min,
-                        "Total steps" = total_steps,
-                        "Total kcal" = total_kcal,
-                        "Minutes SED" = minutes_SED,
-                        "Minutes LPA" = minutes_LPA,
-                        "Minutes MPA" = minutes_MPA,
-                        "Minutes VPA" = minutes_VPA,
-                        "Minutes MVPA" = minutes_MVPA,
-                        "% wear time SED" = percent_SED,
-                        "% wear time LPA" = percent_LPA,
-                        "% wear time MPA" = percent_MPA,
-                        "% wear time VPA" = percent_VPA,
-                        "% wear time MVPA" = percent_MVPA,
-                        "Max steps 60 min" = max_steps_60min,
-                        "Max steps 30 min" = max_steps_30min,
-                        "Max steps 20 min" = max_steps_20min,
-                        "Max steps 5 min" = max_steps_5min,
-                        "Max steps 1 min" = max_steps_1min,
-                        "Peak steps 60 min" = peak_steps_60min,
-                        "Peak steps 30 min" = peak_steps_30min,
-                        "Peak steps 20 min" = peak_steps_20min,
-                        "Peak steps 5 min" = peak_steps_5min,
-                        "Peak steps 1 min" = peak_steps_1min,
-                        "MVPA MET-hr" = mets_hours_mvpa,
-                        "MVPA/SED ratio" = ratio_mvpa_sed,
-                        "PAL" = pal
+                        "Wear time (min)"                =  wear_time,
+                        "Axis 1 total counts"            =  total_counts_axis1,
+                        "VM total counts"                =  total_counts_vm,
+                        "Axis 1 mean (counts/min)"       =  axis1_per_min,
+                        "VM mean (counts/min)"           =  vm_per_min,
+                        "SED time (min)"                 =  minutes_SED, 
+                        "LPA time (min)"                 =  minutes_LPA,
+                        "MPA time (min)"                 =  minutes_MPA,
+                        "VPA time (min)"                 =  minutes_VPA,
+                        "MVPA time (min)"                =  minutes_MVPA,
+                        "SED wear time proportion (%)"   =  percent_SED,
+                        "LPA wear time proportion (%)"   =  percent_LPA,
+                        "MPA wear time proportion (%)"   =  percent_MPA,
+                        "VPA wear time proportion (%)"   =  percent_VPA,
+                        "MVPA wear time proportion (%)"  =  percent_MVPA,
+                        "Ratio MVPA / SED"               =  ratio_mvpa_sed,
+                        "Total MVPA MET-hr"              =  mets_hours_mvpa, 
+                        "Total kcal"                     =  total_kcal,
+                        "PAL"                            =  pal,
+                        "Total steps"                    =  total_steps
                        ),  
                 striped = TRUE,
                 list(
@@ -193,98 +187,137 @@ reactable::reactable(params$results_by_day %>%
                        style = list(position = "sticky", left = 0, background = "#CCCCCC", zIndex = 1),
                        headerStyle = list(position = "sticky", left = 0,  background = "#fff", zIndex = 1)
                      ),
-                     "Wear time"          = reactable::colDef(minWidth = 160),
-                     "Total counts Axis 1" = reactable::colDef(minWidth = 160),
-                     "Total counts VM"     = reactable::colDef(minWidth = 160),
-                     "Axis 1 per min"      = reactable::colDef(minWidth = 160),
-                     "VM per min"          = reactable::colDef(minWidth = 160),
-                     "Total steps"          = reactable::colDef(minWidth = 160),
-                     "Total kcal"          = reactable::colDef(minWidth = 160),
-                     "Minutes SED"         = reactable::colDef(minWidth = 160),
-                     "Minutes LPA"         = reactable::colDef(minWidth = 160),
-                     "Minutes MPA"         = reactable::colDef(minWidth = 160),
-                     "Minutes VPA"         = reactable::colDef(minWidth = 160),
-                     "Minutes MVPA"        = reactable::colDef(minWidth = 160),
-                     "% wear time SED"     = reactable::colDef(minWidth = 160),
-                     "% wear time LPA"     = reactable::colDef(minWidth = 160),
-                     "% wear time MPA"     = reactable::colDef(minWidth = 160),
-                     "% wear time VPA"     = reactable::colDef(minWidth = 160),
-                     "% wear time MVPA"    = reactable::colDef(minWidth = 160),
-                     "Max steps 60 min"    = reactable::colDef(minWidth = 160),
-                     "Max steps 30 min"    = reactable::colDef(minWidth = 160),
-                     "Max steps 20 min"    = reactable::colDef(minWidth = 160),
-                     "Max steps 5 min"     = reactable::colDef(minWidth = 160),
-                     "Max steps 1 min"     = reactable::colDef(minWidth = 160),
-                     "Peak steps 60 min"   = reactable::colDef(minWidth = 160),
-                     "Peak steps 30 min"   = reactable::colDef(minWidth = 160),
-                     "Peak steps 20 min"   = reactable::colDef(minWidth = 160),
-                     "Peak steps 5 min"    = reactable::colDef(minWidth = 160),
-                     "Peak steps 1 min"    = reactable::colDef(minWidth = 160),
-                     "MVPA MET-hr"         = reactable::colDef(minWidth = 160),
-                     "MVPA/SED ratio"      = reactable::colDef(minWidth = 160),
-                     "PAL"                 = reactable::colDef(minWidth = 160)
+                     "Wear time (min)"               = reactable::colDef(minWidth = 140),
+                     "Axis 1 total counts"           = reactable::colDef(minWidth = 160),
+                     "VM total counts"               = reactable::colDef(minWidth = 160),
+                     "Axis 1 mean (counts/min)"      = reactable::colDef(minWidth = 160),
+                     "VM mean (counts/min)"          = reactable::colDef(minWidth = 160),
+                     "SED time (min)"                 = reactable::colDef(minWidth = 160),
+                     "LPA time (min)"                = reactable::colDef(minWidth = 160),
+                     "MPA time (min)"                = reactable::colDef(minWidth = 160),
+                     "VPA time (min)"                = reactable::colDef(minWidth = 160),
+                     "MVPA time (min)"               = reactable::colDef(minWidth = 160),
+                     "SED wear time proportion (%)"  = reactable::colDef(minWidth = 160),
+                     "LPA wear time proportion (%)"  = reactable::colDef(minWidth = 160),
+                     "MPA wear time proportion (%)"  = reactable::colDef(minWidth = 160),
+                     "VPA wear time proportion (%)"  = reactable::colDef(minWidth = 160),
+                     "MVPA wear time proportion (%)" = reactable::colDef(minWidth = 160),
+                     "Ratio MVPA / SED"              = reactable::colDef(minWidth = 160),
+                     "Total MVPA MET-hr"             = reactable::colDef(minWidth = 160),
+                     "Total kcal"                    = reactable::colDef(minWidth = 160),
+                     "PAL"                           = reactable::colDef(minWidth = 160),
+                     "Total steps"                   = reactable::colDef(minWidth = 160)
                      )
                 )
 ```
 
-### Results summarized over valid days (main metrics)
+### Results by day: Graphical view
+```{r, fig.height=10, fig.width = 17, warning=FALSE, message=FALSE}
+create_fig_res_by_day(
+  df2, 
+  params$minimum_wear_time_for_analysis, 
+  params$start_day_analysis, 
+  params$end_day_analysis, 
+  language = "en",
+  metrics = "volume"
+  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"))
+```
+
+### Means | Medians computed using valid days
 ```{r, out.width='100%'}
 reactable::reactable(
   tibble::tibble(
           Metric = c("Number of valid days",
                      "Wear time",
-                     "Total kilocalories",
-                     "Physical activity level (PAL)",
-                     "Total number of steps",
+                     "Total counts Axis 1",
+                     "Total counts VM",
+                     "Axis 1 per min",
+                     "VM per min",
                      "SED time",
                      "LPA time",
                      "MVPA time",
                      "SED wear time proportion",     
                      "LPA wear time proportion",     
                      "MVPA wear time proportion",    
+                     "MVPA/SED ratio",
                      "MVPA dose",                        
-                     "MVPA/SED ratio"
+                     "Total kilocalories",
+                     "Physical activity level (PAL)",
+                     "Total number of steps"
           ),
           
-          "Daily mean | median over valid days" = c(
+          "Daily mean | median" = c(
+            
+          # Number of valid days
             paste0(df1_means[["valid_days"]], " day(s)"),
             
+          # Wear time
             paste0(format(round(df1_means[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["wear_time"]]), ") | ",
                    format(round(df1_medians[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["wear_time"]]), ")"),  
             
-            paste0(format(round(df1_means[["total_kcal"]], 2), nsmall = 2),   " kcal | ", format(round(df1_medians[["total_kcal"]], 2), nsmall = 2), " kcal"),
-            
-            paste0(format(round(df1_means[["pal"]], 2), nsmall = 2),  " | ", format(round(df1_medians[["pal"]], 2), nsmall = 2)),  
-            
-            paste0(round(df1_means[["total_steps"]], 0), " steps | ", round(df1_medians[["total_steps"]], 0), " steps"), 
-            
+          # Total counts Axis 1
+            paste0(format(round(df1_means[["total_counts_axis1"]], 1), nsmall = 1), " counts | ",
+                   format(round(df1_medians[["total_counts_axis1"]], 1), nsmall = 1), " counts"), 
+          
+          # Total counts VM
+            paste0(format(round(df1_means[["total_counts_vm"]], 1), nsmall = 1), " counts | ",
+                   format(round(df1_medians[["total_counts_vm"]], 1), nsmall = 1), " counts"), 
+          
+          # Axis 1 per min
+            paste0(format(round(df1_means[["axis1_per_min"]], 1), nsmall = 1), " counts/min | ",
+                   format(round(df1_medians[["axis1_per_min"]], 1), nsmall = 1), " counts/min"), 
+          
+          # VM per min
+            paste0(format(round(df1_means[["vm_per_min"]], 1), nsmall = 1), " counts/min | ",
+                   format(round(df1_medians[["vm_per_min"]], 1), nsmall = 1), " counts/min"), 
+          
+          # SED time
             paste0(format(round(df1_means[["minutes_SED"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_SED"]]), ") | ",  
                    format(round(df1_medians[["minutes_SED"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_SED"]]), ")"),  
-            
+           
+          # LPA time 
             paste0(format(round(df1_means[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_LPA"]]), ") | ",  
                    format(round(df1_medians[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_LPA"]]), ")"), 
             
+          # MVPA time
             paste0(format(round(df1_means[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_MVPA"]]), ") | ",
                    format(round(df1_medians[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_MVPA"]]), ")"),  
-            
+           
+          # Percent time SED 
             paste0(format(round(df1_means[["percent_SED"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_SED"]], 1), nsmall = 1), " %"),
-            
+          
+          # Percent time LPA 
             paste0(format(round(df1_means[["percent_LPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_LPA"]], 1), nsmall = 1), " %"),      
-            
+         
+          # Percent time MVPA  
             paste0(format(round(df1_means[["percent_MVPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_MVPA"]], 1), nsmall = 1), " %"),                 
-            
+          
+          # Ratio MVPA/SED
+            paste0(format(round(df1_means[["ratio_mvpa_sed"]], 2), nsmall = 2), " | ", format(round(df1_medians[["ratio_mvpa_sed"]], 2), nsmall = 2)),
+          
+          # MET-hr MVPA
             paste0(format(round(df1_means[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr | ", format(round(df1_medians[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr"),         
+
+          # Total kilocalories
+            paste0(format(round(df1_means[["total_kcal"]], 2), nsmall = 2),   " kcal | ", format(round(df1_medians[["total_kcal"]], 2), nsmall = 2), " kcal"),
+          
+          # Physical activity level (PAL) 
+            paste0(format(round(df1_means[["pal"]], 2), nsmall = 2),  " | ", format(round(df1_medians[["pal"]], 2), nsmall = 2)),  
             
-            paste0(format(round(df1_means[["ratio_mvpa_sed"]], 2), nsmall = 2), " | ", format(round(df1_medians[["ratio_mvpa_sed"]], 2), nsmall = 2)))
-        ),   striped = TRUE, defaultPageSize = 15
+          # Total number of steps
+            paste0(round(df1_means[["total_steps"]], 0), " steps | ", round(df1_medians[["total_steps"]], 0), " steps")
+
+          )
+
+        ),   striped = TRUE, defaultPageSize = 17
 )
 
 if (params$rendered_by_shiny)
   shiny::setProgress(0.5)  # set progress to 50%
 ```
 
-### Graphical summary
-```{r, fig.height=18, fig.width = 17, warning=FALSE, message=FALSE}
+### Comparisons with norms or recommendations
+```{r, fig.height=9, fig.width = 17, warning=FALSE, message=FALSE}
 # PAL
 g_pal <- create_fig_pal(score = df1_means[["pal"]], "en") + theme(plot.margin = margin(2, 1, 0.5, 1, "cm"))
   
@@ -298,25 +331,14 @@ g_mvpa <- create_fig_mvpa(score = df1_means[["minutes_MVPA"]], "en") + theme(plo
 g_sed <- create_fig_sed(score = df1_means[["minutes_SED"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
 
 # MVPA/SED ratio
-g_ratio <- create_fig_ratio_mvpa_sed(score = df1_means[["ratio_mvpa_sed"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
-
-# Daily results
-g_all_days <- create_fig_res_by_day(
-  df2, 
-  params$minimum_wear_time_for_analysis, 
-  params$start_day_analysis, 
-  params$end_day_analysis, 
-  language = "en"
-  ) + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+g_ratio <- create_fig_ratio_mvpa_sed(score = df1_means[["ratio_mvpa_sed"]], "en") + theme(plot.margin = margin(0, 1, 1, 1, "cm"))
 
 # Whole figure
-g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_all_days + 
-    plot_layout(heights = c(0.8, 0.7, 1.5, 4)) & theme(legend.justification = "center")
+g_pal / g_steps / (g_mvpa | g_sed | g_ratio) + 
+    plot_layout(heights = c(0.8, 0.7, 1.5)) & theme(legend.justification = "center")
 ```
 
-
 ### Comments
-
 ```{r, echo = F}
 # Determining physical activity guidelines status
 guidelines_status <- get_guidelines_status(df1_means[["mets_hours_mvpa"]], language = "en")
@@ -327,7 +349,230 @@ pal_status <- get_pal_status(df1_means[["pal"]], language = "en")
 
 According to the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the PAL of the patient could be characterized as **`r pal_status`**. After converting moderate and vigorous physical activity minutes to MET-hours, the estimate of the daily mean of MVPA volume for the patient is `r paste0(format(round(df1_means[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hr, which could correspond to falling **`r guidelines_status`** (i.e., 7.5-15.0 MET-hr a week, or 1.07-2.14 MET-hr a day).
 
+
+## Step accumulation metrics
+
+### Results by day: Tabular view
+```{r}
+reactable::reactable(params$results_by_day %>% dplyr::select(date, max_steps_60min:peak_steps_1min) %>%
+                       dplyr::rename(
+                        Date = date,
+                        "Max step acc. 60 min (steps/min)"  = max_steps_60min,
+                        "Max step acc. 30 min (steps/min)"  = max_steps_30min,
+                        "Max step acc. 20 min (steps/min)"  = max_steps_20min,
+                        "Max step acc. 5 min (steps/min)"   = max_steps_5min,
+                        "Max step acc. 1 min (steps/min)"   = max_steps_1min,
+                        "Peak step acc. 60 min (steps/min)" = peak_steps_60min,
+                        "Peak step acc. 30 min (steps/min)" = peak_steps_30min,
+                        "Peak step acc. 20 min (steps/min)" = peak_steps_20min,
+                        "Peak step acc. 5 min (steps/min)"  = peak_steps_5min,
+                        "Peak step acc. 1 min (steps/min)"  = peak_steps_1min
+                       ),  
+                striped = TRUE,
+                list(
+                     "Date" = reactable::colDef(
+                       style = list(position = "sticky", left = 0, background = "#CCCCCC", zIndex = 1),
+                       headerStyle = list(position = "sticky", left = 0,  background = "#fff", zIndex = 1)
+                     ),
+                     "Max step acc. 60 min (steps/min)"   = reactable::colDef(minWidth = 160),
+                     "Max step acc. 30 min (steps/min)"   = reactable::colDef(minWidth = 160),
+                     "Max step acc. 20 min (steps/min)"   = reactable::colDef(minWidth = 160),
+                     "Max step acc. 5 min (steps/min)"    = reactable::colDef(minWidth = 160),
+                     "Max step acc. 1 min (steps/min)"    = reactable::colDef(minWidth = 160),
+                     "Peak step acc. 60 min (steps/min)"  = reactable::colDef(minWidth = 160),
+                     "Peak step acc. 30 min (steps/min)"  = reactable::colDef(minWidth = 160),
+                     "Peak step acc. 20 min (steps/min)"  = reactable::colDef(minWidth = 160),
+                     "Peak step acc. 5 min (steps/min)"   = reactable::colDef(minWidth = 160),
+                     "Peak step acc. 1 min (steps/min)"   = reactable::colDef(minWidth = 160)
+                     )
+                )
+```
+
+### Results by day: Graphical view
+```{r, fig.height=7, fig.width = 17, warning=FALSE, message=FALSE}
+create_fig_res_by_day(
+  df2, 
+  params$minimum_wear_time_for_analysis, 
+  params$start_day_analysis, 
+  params$end_day_analysis, 
+  language = "en",
+  metrics = "step_acc"
+  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"))
+```
+
+### Means | Medians computed using valid days
+```{r, out.width='100%'}
+reactable::reactable(
+  tibble::tibble(
+          Metric = c("Number of valid days",
+                     "Max step acc. 60 min (steps/min)",
+                     "Max step acc. 30 min (steps/min)",
+                     "Max step acc. 20 min (steps/min)",
+                     "Max step acc. 5 min (steps/min)",
+                     "Max step acc. 1 min (steps/min)",
+                     "Peak step acc. 60 min (steps/min)",
+                     "Peak step acc. 30 min (steps/min)",
+                     "Peak step acc. 20 min (steps/min)",
+                     "Peak step acc. 5 min (steps/min)",
+                     "Peak step acc. 1 min (steps/min)"
+          ),
+          
+          "Daily mean | median" = c(
+            
+          # Number of valid days
+            paste0(df1_means[["valid_days"]], " day(s)"),
+            
+          # Max step accum 60min
+            paste0(format(round(df1_means[["max_steps_60min"]], 2), nsmall = 2), " | ", format(round(df1_medians[["max_steps_60min"]], 2), nsmall = 2)),
+          
+          # Max step accum 30min
+            paste0(format(round(df1_means[["max_steps_30min"]], 2), nsmall = 2), " | ", format(round(df1_medians[["max_steps_30min"]], 2), nsmall = 2)),
+          
+          # Max step accum 20min
+            paste0(format(round(df1_means[["max_steps_20min"]], 2), nsmall = 2), " | ", format(round(df1_medians[["max_steps_20min"]], 2), nsmall = 2)),
+          
+          # Max step accum 5min
+            paste0(format(round(df1_means[["max_steps_5min"]], 2), nsmall = 2), " | ", format(round(df1_medians[["max_steps_5min"]], 2), nsmall = 2)),
+          
+          # Max step accum 1min
+            paste0(format(round(df1_means[["max_steps_1min"]], 2), nsmall = 2), " | ", format(round(df1_medians[["max_steps_1min"]], 2), nsmall = 2)),
+          
+          # Peak step accum 60min
+            paste0(format(round(df1_means[["peak_steps_60min"]], 2), nsmall = 2), " | ", format(round(df1_medians[["peak_steps_60min"]], 2), nsmall = 2)),
+          
+          # Peak step accum 30min
+            paste0(format(round(df1_means[["peak_steps_30min"]], 2), nsmall = 2), " | ", format(round(df1_medians[["peak_steps_30min"]], 2), nsmall = 2)),
+          
+          # Peak step accum 20min
+            paste0(format(round(df1_means[["peak_steps_20min"]], 2), nsmall = 2), " | ", format(round(df1_medians[["peak_steps_20min"]], 2), nsmall = 2)),
+          
+          # Peak step accum 5min
+            paste0(format(round(df1_means[["peak_steps_5min"]], 2), nsmall = 2), " | ", format(round(df1_medians[["peak_steps_5min"]], 2), nsmall = 2)),
+          
+          # Peak step accum 1min
+            paste0(format(round(df1_means[["peak_steps_1min"]], 2), nsmall = 2), " | ", format(round(df1_medians[["peak_steps_1min"]], 2), nsmall = 2))
+          )
+
+        ),   striped = TRUE, defaultPageSize = 17
+)
+```
+
+
+## Intensity distribution metrics
+
+### Distribution of time spent in intensity bins
+```{r, fig.height = height_factor3, fig.width=13}
+params$graph_int_distri_bands
+```
+
+### Log-log models
+```{r, fig.height = height_factor3, fig.width=13}
+params$graph_int_distri_models
+```
+
+### Results by day: Tabular view
+```{r}
+epoch_label <- as.name(paste0(params$epoch,"s"))
+reactable::reactable(params$results_by_day %>% dplyr::select(date, ig:M5) %>%
+                       dplyr::rename(
+                        Date = date,
+                        "Intensity gradient"   = ig,
+                        "M1/3 (counts/{{epoch_label}})"  :=  "M1/3",
+                        "M120 (counts/{{epoch_label}})"  := M120,
+                        "M60 (counts/{{epoch_label}})"   := M60, 
+                        "M30 (counts/{{epoch_label}})"   := M30,
+                        "M15 (counts/{{epoch_label}})"   := M15,
+                        "M5 (counts/{{epoch_label}})"    := M5 
+                       ),  
+                striped = TRUE,
+                list(
+                     "Date" = reactable::colDef(
+                       style = list(position = "sticky", left = 0, background = "#CCCCCC", zIndex = 1),
+                       headerStyle = list(position = "sticky", left = 0,  background = "#fff", zIndex = 1)
+                     )
+                     )
+                )
+```
+
+### Results by day: Graphical view
+```{r, fig.height=9, fig.width = 17, warning=FALSE, message=FALSE}
+create_fig_res_by_day(
+  df2, 
+  params$minimum_wear_time_for_analysis, 
+  params$start_day_analysis, 
+  params$end_day_analysis, 
+  language = "en",
+  metrics = "int_distri",
+  epoch_label = paste0(params$epoch, "s")
+  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"))
+```
+
+### Means | Medians computed using valid days
+```{r, out.width='100%'}
+reactable::reactable(
+  tibble::tibble(
+          Metric = c("Number of valid days",
+                     "Intensity gradient",
+                     "M1/3",
+                     "M120",
+                     "M60",
+                     "M30",
+                     "M15",
+                     "M5"
+          ),
+          
+          "Daily mean | median" = c(
+            
+          # Number of valid days
+            paste0(df1_means[["valid_days"]], " day(s)"),
+            
+          # Intensity gradient
+            paste0(format(round(df1_means[["ig"]], 2), nsmall = 2), " | ", format(round(df1_medians[["ig"]], 2), nsmall = 2)),
+                    
+          # M1/3
+            paste0(format(round(df1_means[["M1/3"]], 1), nsmall = 1), " counts/", params$epoch, "s | ",
+                   format(round(df1_medians[["M1/3"]], 1), nsmall = 1), " counts/", params$epoch, "s"), 
+
+          # M120
+            paste0(format(round(df1_means[["M120"]], 1), nsmall = 1), " counts/", params$epoch, "s | ",
+                   format(round(df1_medians[["M120"]], 1), nsmall = 1), " counts/", params$epoch, "s"), 
+                    
+          # M60
+            paste0(format(round(df1_means[["M60"]], 1), nsmall = 1), " counts/", params$epoch, "s | ",
+                   format(round(df1_medians[["M60"]], 1), nsmall = 1), " counts/", params$epoch, "s"), 
+                    
+          # M30
+            paste0(format(round(df1_means[["M30"]], 1), nsmall = 1), " counts/", params$epoch, "s | ",
+                   format(round(df1_medians[["M30"]], 1), nsmall = 1), " counts/", params$epoch, "s"),
+                    
+          # M15
+            paste0(format(round(df1_means[["M15"]], 1), nsmall = 1), " counts/", params$epoch, "s | ",
+                   format(round(df1_medians[["M15"]], 1), nsmall = 1), " counts/", params$epoch, "s"), 
+                    
+          # M5
+            paste0(format(round(df1_means[["M5"]], 1), nsmall = 1), " counts/", params$epoch, "s | ",
+                   format(round(df1_medians[["M5"]], 1), nsmall = 1), " counts/", params$epoch, "s")
+
+          )
+
+        ),   striped = TRUE, defaultPageSize = 17
+)
+```
+
+### Radar view based on means of valid days
+```{r, fig.align = "center", out.width='50%', out.height='50%', fig.width=8, fig.height=8}
+cor_factor <- 60 / params$epoch
+
+create_fig_mx_summary(
+data = df1_means,
+labels = NULL,
+mpa_cutpoint = params$mpa_cutpoint / cor_factor, 
+vpa_cutpoint = params$vpa_cutpoint / cor_factor
+)
+```
+
 ## Sedentary behaviour accumulation metrics based on valid days
+
 ### Temporal distribution of sedentary bouts
 ```{r, fig.height = height_factor2, fig.width=13}
 if(length(params$p_breaks_sed) == 1) {
@@ -338,7 +583,7 @@ if(length(params$p_breaks_sed) == 1) {
 ```
 
 ### Alpha coefficient, median bout duration (MBD), usual bout duration (UBD), and Gini index
-```{r, out.width='100%', out.height='60%', fig.height=11, fig.width=11}
+```{r, out.width='100%', out.height='10%', fig.height=6, fig.width=20}
 if(length(params$p_breaks_sed) == 1) {
   cat("No result. Results can be obtained using 60-s epochs only.")
 } else {
@@ -348,11 +593,16 @@ if(length(params$p_breaks_sed) == 1) {
   p3 <- params$p_UBD_sed
   p4 <- params$p_gini_sed
  
-  (p1  | p2) / (p3 | p4) + plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+  (p1  | p2 | p3 | p4) + plot_layout(guides = "collect") & 
+    theme(legend.position = 'bottom',
+          axis.title = element_text(size = 15),
+          axis.text = element_text(size = 10)
+          )
 }
 ```
 
 ## Physical activity accumulation metrics based on valid days
+
 ### Temporal distribution of physical activity bouts
 ```{r, fig.height = height_factor2, fig.width=13}
 if(length(params$p_breaks_pa) == 1) {
@@ -365,7 +615,7 @@ if (params$rendered_by_shiny)
 ```
 
 ### Alpha coefficient, median bout duration (MBD), usual bout duration (UBD), and Gini index
-```{r, out.width='100%', out.height='60%', fig.height=11, fig.width=11}
+```{r, out.width='100%', out.height='10%', fig.height=6, fig.width=20}
 if(length(params$p_breaks_pa) == 1) {
   cat("No result. Results can be obtained using 60-s epochs only.")
 } else {
@@ -374,6 +624,10 @@ if(length(params$p_breaks_pa) == 1) {
   p3 <- params$p_UBD_pa
   p4 <- params$p_gini_pa
  
-  (p1  | p2) / (p3 | p4) + plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+  (p1  | p2 | p3 | p4) + plot_layout(guides = "collect") & 
+    theme(legend.position = 'bottom',
+          axis.title = element_text(size = 15),
+          axis.text = element_text(size = 10)
+          )
 }
 ```
