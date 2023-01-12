@@ -153,6 +153,8 @@ plot_data_with_intensity(
   valid_wear_time_start = params$start_day_analysis,
   valid_wear_time_end = params$end_day_analysis
   )
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.25)  # set progress to 25%
 ```
 
 ### Results by day: Tabular view
@@ -509,6 +511,8 @@ reactable::reactable(params$results_by_day %>% dplyr::select(date, ig:M5) %>%
                      )
                      )
                 )
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.75)  # set progress to 75%
 ```
 
 ### Results by day: Graphical view

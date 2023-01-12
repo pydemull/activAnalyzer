@@ -177,6 +177,9 @@ g <- plot_data_with_intensity(
 ```
 ```{r, fig.height = height_factor1, fig.width=13}
 g + labs(x = "Temps (hh:mm)", color = "Durée de période (min)", fill = "Durée de période (min)")
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.25)  # set progress to 25%
 ```
 
 ### Résultats par jour : Vue tabulaire
@@ -534,6 +537,9 @@ reactable::reactable(params$results_by_day %>% dplyr::select(date, ig:M5) %>%
                      )
                      )
                 )
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.75)  # set progress to 75%
 ```
 
 ### Résultats par jour : Vue graphique
