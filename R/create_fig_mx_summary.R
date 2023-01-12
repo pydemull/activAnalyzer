@@ -9,6 +9,7 @@
 #'    Defaut value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude.
 #' @param vpa_cutpoint A numeric value at and above which time is considered as spent in vigorous physical activity (in counts/epoch length used to compute MX metrics). 
 #'    Defaut value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude.
+#'    
 #' @return A ggplot object
 #' 
 #' @export
