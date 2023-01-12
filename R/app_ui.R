@@ -205,7 +205,7 @@ app_ui <- function(request) {
                    column(12,
                           shinydashboardPlus::box(id = "box-features",
                                                   title = "FILE INFO",
-                                                  width = 8,
+                                                  width = 12,
                                                   div(textOutput("warning_features"), class = "warn-message")
                           )
                    )
@@ -214,7 +214,7 @@ app_ui <- function(request) {
                    column(12,
                           shinydashboardPlus::box(id = "box-demo",
                                                   title = "NOTE",
-                                                  width = 8,
+                                                  width = 12,
                                                   div(textOutput("warning_demo"), class = "warn-message")
                           )
                    )
@@ -228,7 +228,7 @@ app_ui <- function(request) {
                    column(12,
                           shinydashboardPlus::box(id = "box-epoch",
                                                   title = "NOTE",
-                                                  width = 8,
+                                                  width = 12,
                                                   div(textOutput("warning_epoch"), class = "warn-message")
                           ),
                    ),
@@ -256,14 +256,13 @@ app_ui <- function(request) {
                    column(12,
                           shinydashboardPlus::box(id = "box-auto_fill_char",
                                                   title = "NOTE",
-                                                  width = 8,
+                                                  width = 12,
                                                   div(textOutput("warning_auto_fill_char"), class = "warn-message")
                           ),                   ),
                  ),
                   fluidRow(
-                    column(3,
-                           shiny::actionButton("validate", "Validate configuration", class = "btn-validate", style = "margin-bottom: 20px;"),
-                    ),
+                    align = "center",                           
+                    shiny::actionButton("validate", "Validate configuration", class = "btn-validate", style = "margin-bottom: 20px;"),
                   ),
                  
                   
@@ -477,7 +476,7 @@ app_ui <- function(request) {
                    column(12,
                           shinydashboardPlus::box(id = "box-pa-periods-inputs",
                                                   title = "NOTE",
-                                                  width = 8,
+                                                  width = 12,
                                                   div(textOutput("warning_pa_periods_inputs"), class = "warn-message")
                           ),                   ),
                  ),
@@ -523,7 +522,7 @@ app_ui <- function(request) {
                    column(12,
                           shinydashboardPlus::box(id = "box-intensity_inputs",
                                                   title = "NOTE",
-                                                  width = 8,
+                                                  width = 12,
                                                   div(textOutput("warning_intensity_inputs"), class = "warn-message")
                           ),                   ),
                  ),
@@ -533,10 +532,9 @@ app_ui <- function(request) {
                   #*****************
                   
                   fluidRow(
-                    column(3,
-                           shiny::actionButton("Run", "Run analysis",  class = "btn-validate"),
+                    align = "center",
+                    shiny::actionButton("Run", "Run analysis",  class = "btn-validate")
                     ),
-                  ),
                   
                   #############################
                   # Section 4. Results & Export ----
@@ -548,23 +546,17 @@ app_ui <- function(request) {
                     ),
                   ),  
                   
-                  #********
-                  # Results
-                  #********
+                       #***********************************************
+                       # Panels with metrics describing activity volume
+                       #***********************************************
                 
-                  fluidRow(
-                    column(12,
-                           tags$div(align = "left",
-                                    uiOutput("title_activity_volume_metrics"),
-                           )
-                    ),
-                  ),
-                     
-              
-                       #*************************
-                       # Box showing monitor data
-                       #*************************
-
+                       fluidRow(
+                         column(12,
+                                tags$div(align = "left",
+                                         uiOutput("title_activity_volume_metrics"),
+                                )
+                         ),
+                       ),
                        fluidRow(
                          shinydashboardPlus::box(id = "myBox2", 
                                                  title = "Temporal distribution of activity intensity",
@@ -595,45 +587,218 @@ app_ui <- function(request) {
                          align = "center",
                          shiny::actionButton("update_graphic2", "Update graphic", class = "btn-return")
                        ),
-                            
-                       #************************
-                       # Table of results by day
-                       #************************
                       
+                      fluidRow(
+                        column(12,
+                          shinydashboardPlus::box(
+                            id = "BoxResByDayVolTab", 
+                            title = "Results by day: Tabular view",
+                            shinycssloaders::withSpinner(reactable::reactableOutput("results_by_day_vol_tab")),
+                            width = NULL, 
+                            height = NULL
+                          )
+                        )
+                      ),
+                        fluidRow(
+                          column(12,
+                          shinydashboardPlus::box(
+                           id = "BoxResByDayVolFig", 
+                           title = "Results by day: Graphical view",
+                           shinycssloaders::withSpinner(plotOutput("results_by_day_vol_fig", height = "auto")), 
+                           width = NULL, 
+                           height = NULL
+                         )
+                          )
+                       ),
+
+                                 #****************************************************
+                                 # Table of results summarized over valid days: Means
+                                 #****************************************************
+                       
                        fluidRow(
+                         column(12,
                          shinydashboardPlus::box(
-                           id = "BoxResByDay", 
-                           title = "Results by day",
-                           shinycssloaders::withSpinner(reactable::reactableOutput("results_by_day")),
+                           id = "BoxResVolMeans",
+                           title = "Means computed using valid days: Tabular view",
+                                shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_vol_means")),
                            width = 12, 
                            height = "auto")
+                         ),
                        ),
+                       
+                                 #******************************************************
+                                 # Table of results summarized over valid days: Medians
+                                 #******************************************************
+                       
+                       fluidRow(
+                         column(12,
+                         shinydashboardPlus::box(
+                           id = "BoxResVolMedians",
+                           title = "Medians computed using valid days: Tabular view",
+                                shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_vol_medians")),
+                           width = 12, 
+                           height = "auto")
+                         ),
+                       ),
+                
+                      #*********************************************************
+                      # Panels with metrics describing step accumulation metrics
+                      #*********************************************************
                       
-                       #****************************************************
-                       # Table of results summarized over valid days (means)
-                       #****************************************************
-                       
-                       fluidRow(
-                         shinydashboardPlus::box(
-                           id = "BoxResMeans",
-                           title = "Results summarized over valid days (means)",
-                                shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_means")),
-                           width = 12, 
-                           height = "auto")
+                      fluidRow(
+                        column(12,
+                               tags$div(align = "left",
+                                        uiOutput("title_step_acc_metrics"),
+                               )
+                        ),
+                      ),
+                      fluidRow(
+                        column(12,
+                               shinydashboardPlus::box(
+                                 id = "BoxResByDayStepTab", 
+                                 title = "Results by day: Tabular view",
+                                 shinycssloaders::withSpinner(reactable::reactableOutput("results_by_day_step_tab")),
+                                 width = NULL, 
+                                 height = NULL
+                               )
+                        )
+                      ),
+                      fluidRow(
+                        column(12,
+                               shinydashboardPlus::box(
+                                 id = "BoxResByDayStepFig", 
+                                 title = "Results by day: Graphical view",
+                                 shinycssloaders::withSpinner(plotOutput("results_by_day_step_fig", height = "auto")), 
+                                 width = NULL, 
+                                 height = NULL
+                               )
+                        )
+                      ),
+                                               #****************************************************
+                                               # Table of results summarized over valid days: Means
+                                               #****************************************************
+                      
+                      fluidRow(
+                        column(12,
+                               shinydashboardPlus::box(
+                                 id = "BoxResStepMeans",
+                                 title = "Means computed using valid days: Tabular view",
+                                 shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_step_means")),
+                                 width = 12, 
+                                 height = "auto")
+                        ),
+                      ),
+                      
+                                                #******************************************************
+                                                # Table of results summarized over valid days: Medians
+                                                #******************************************************
+                      
+                      fluidRow(
+                        column(12,
+                               shinydashboardPlus::box(
+                                 id = "BoxResStepMedians",
+                                 title = "Medians computed using valid days: Tabular view",
+                                 shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_step_medians")),
+                                 width = 12, 
+                                 height = "auto")
+                        ),
+                      ),
+                      
+                     #*******************************************************
+                     # Panels with metrics describing intensity distribution
+                     #*******************************************************
+                     
+                     fluidRow(
+                       column(12,
+                              tags$div(align = "left",
+                                       uiOutput("title_int_distri_metrics"),
+                              )
+                       ),
+                     ),
+                
+                     fluidRow(
+                       column(6,
+                              shinydashboardPlus::box(
+                                id = "BoxResByDayIntDistFig1", 
+                                title = "Intensity distribution analysis: Bins",
+                                shinycssloaders::withSpinner(plotOutput("int_dist_analysis_fig1", height = "auto")), 
+                                width = NULL, 
+                                height = NULL
+                              )
+                       ),
+                       column(6,
+                              shinydashboardPlus::box(
+                                id = "BoxResByDayIntDistFig1Bis", 
+                                title = "Intensity distribution analysis: Log-log models",
+                                shinycssloaders::withSpinner(plotOutput("int_dist_analysis_fig1bis", height = "auto")), 
+                                width = NULL, 
+                                height = NULL
+                              )
                        ),
                        
-                       #******************************************************
-                       # Table of results summarized over valid days (medians)
-                       #******************************************************
-                       
+                     ),
+                     
                        fluidRow(
-                         shinydashboardPlus::box(
-                           id = "BoxResMedians",
-                           title = "Results summarized over valid days (medians)",
-                                shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_medians")),
-                           width = 12, 
-                           height = "auto")
+                         column(12,
+                                shinydashboardPlus::box(
+                                  id = "BoxResByDayIntDistTab", 
+                                  title = "Results by day: Tabular view",
+                                  shinycssloaders::withSpinner(reactable::reactableOutput("results_by_day_int_dist_tab")),
+                                  width = NULL, 
+                                  height = NULL
+                                )
+                         )
                        ),
+                       fluidRow(
+                         column(6,
+                                shinydashboardPlus::box(
+                                  id = "BoxResByDayIntDistFig2", 
+                                  title = "Results by day: Graphical view",
+                                  shinycssloaders::withSpinner(plotOutput("results_by_day_int_dist_fig", height = "auto")), 
+                                  width = NULL, 
+                                  height = NULL
+                                )
+                       ),
+                         column(6,
+                                shinydashboardPlus::box(
+                                  id = "BoxSummaryIntDistFig", 
+                                  title = "Means computed using valid days: Graphical view",
+                                  shinycssloaders::withSpinner(plotOutput("results_summary_int_dist_fig", height = "auto")), 
+                                  width = NULL, 
+                                  height = NULL
+                                )
+                         )
+                       ),
+                                     
+                                           #****************************************************
+                                           # Table of results summarized over valid days: Means
+                                           #****************************************************
+                      
+                      fluidRow(
+                        column(12,
+                               shinydashboardPlus::box(
+                                 id = "BoxResIntDistMeans",
+                                 title = "Means computed using valid days: Tabular view",
+                                 shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_int_dist_means")),
+                                 width = 12, 
+                                 height = "auto")
+                        ),
+                      ),
+                      
+                                           #******************************************************
+                                           # Table of results summarized over valid days: Medians
+                                           #******************************************************
+                      
+                      fluidRow(
+                        column(12,
+                               shinydashboardPlus::box(
+                                 id = "BoxResIntDistMedians",
+                                 title = "Medians computed using valid days: Tabular view",
+                                 shinycssloaders::withSpinner(reactable::reactableOutput("results_summary_int_dist_medians")),
+                                 width = 12, 
+                                 height = "auto")
+                        ),
+                      ),
 
                       #**********************************************************************************
                       # Panels with metrics describing the pattern of accumulation of sedentary behaviour
@@ -763,7 +928,7 @@ app_ui <- function(request) {
                     column(12,
                            shinydashboardPlus::box(id = "box-no-valid-days",
                                                    title = "NOTE",
-                                                   width = 8,
+                                                   width = 12,
                                                    div(textOutput("warning_no_valid_days"), class = "warn-message")
                            )
                     ),

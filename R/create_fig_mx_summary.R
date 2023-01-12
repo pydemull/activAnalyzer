@@ -111,7 +111,7 @@ p <-
   coord_radar(start = 0) +
   scale_x_continuous(breaks = seq(0, 300, 60), labels = c("M1/3", "M120", "M60", "M30", "M15", "M5")) +
   scale_y_continuous(breaks = selected_labels, minor_breaks = mpa_cutpoint, labels = selected_labels) +
-  scale_linetype_manual(values = c("dashed", "dotdash"), labels = c("MVPA cutpoint", "VPA cutpoint")) + 
+  scale_linetype_manual(values = c("dashed", "dotdash"), labels = c("MVPA cut-point", "VPA cut-point")) + 
   labs(x = NULL, y = NULL, linetype = "") +
   theme_bw() +
   theme(

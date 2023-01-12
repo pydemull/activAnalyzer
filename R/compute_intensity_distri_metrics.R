@@ -120,7 +120,7 @@ for (i in 1:length(res)){
   plot_list_p_band[[i]] <- res[[i]]$p_band
 }
 
-p_band <- patchwork::wrap_plots(plot_list_p_band)
+p_band <- patchwork::wrap_plots(plot_list_p_band, ncol = 3)
 
 # Getting figure with all `p_log` plots
 plot_list_p_log <- vector("list", length = nlevels(as.factor(all_dates)))
@@ -129,7 +129,7 @@ for (i in 1:length(res)){
   plot_list_p_log[[i]] <- res[[i]]$p_log
 }
 
-p_log <- patchwork::wrap_plots(plot_list_p_log)
+p_log <- patchwork::wrap_plots(plot_list_p_log, ncol = 3)
 
 
 #===================================
