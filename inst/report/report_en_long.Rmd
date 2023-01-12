@@ -228,22 +228,26 @@ create_fig_res_by_day(
 reactable::reactable(
   tibble::tibble(
           Metric = c("Number of valid days",
-                     "Wear time",
-                     "Total counts Axis 1",
-                     "Total counts VM",
-                     "Axis 1 per min",
-                     "VM per min",
-                     "SED time",
-                     "LPA time",
-                     "MVPA time",
-                     "SED wear time proportion",     
-                     "LPA wear time proportion",     
-                     "MVPA wear time proportion",    
-                     "MVPA/SED ratio",
-                     "MVPA dose",                        
-                     "Total kilocalories",
-                     "Physical activity level (PAL)",
-                     "Total number of steps"
+                     "Wear time (min)",              
+                     "Axis 1 total counts",          
+                     "VM total counts",              
+                     "Axis 1 mean (counts/min)",     
+                     "VM mean (counts/min)",         
+                     "SED time (min)",               
+                     "LPA time (min)",               
+                     "MPA time (min)",               
+                     "VPA time (min)",               
+                     "MVPA time (min)",              
+                     "SED wear time proportion (%)", 
+                     "LPA wear time proportion (%)", 
+                     "MPA wear time proportion (%)", 
+                     "VPA wear time proportion (%)", 
+                     "MVPA wear time proportion (%)",
+                     "Ratio MVPA / SED",             
+                     "Total MVPA MET-hr",            
+                     "Total kcal",                   
+                     "PAL",                          
+                     "Total steps"                  
           ),
           
           "Daily mean | median" = c(
@@ -279,6 +283,14 @@ reactable::reactable(
             paste0(format(round(df1_means[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_LPA"]]), ") | ",  
                    format(round(df1_medians[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_LPA"]]), ")"), 
             
+          # MPA time 
+            paste0(format(round(df1_means[["minutes_MPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_MPA"]]), ") | ",  
+                   format(round(df1_medians[["minutes_MPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_MPA"]]), ")"), 
+          
+          # VPA time 
+            paste0(format(round(df1_means[["minutes_VPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_VPA"]]), ") | ",  
+                   format(round(df1_medians[["minutes_VPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_VPA"]]), ")"), 
+          
           # MVPA time
             paste0(format(round(df1_means[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_MVPA"]]), ") | ",
                    format(round(df1_medians[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_MVPA"]]), ")"),  
@@ -287,7 +299,13 @@ reactable::reactable(
             paste0(format(round(df1_means[["percent_SED"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_SED"]], 1), nsmall = 1), " %"),
           
           # Percent time LPA 
-            paste0(format(round(df1_means[["percent_LPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_LPA"]], 1), nsmall = 1), " %"),      
+            paste0(format(round(df1_means[["percent_LPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_LPA"]], 1), nsmall = 1), " %"),
+          
+          # Percent time MPA 
+            paste0(format(round(df1_means[["percent_MPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_MPA"]], 1), nsmall = 1), " %"),      
+         
+          # Percent time VPA 
+            paste0(format(round(df1_means[["percent_VPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_VPA"]], 1), nsmall = 1), " %"),  
          
           # Percent time MVPA  
             paste0(format(round(df1_means[["percent_MVPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_MVPA"]], 1), nsmall = 1), " %"),                 
@@ -297,7 +315,6 @@ reactable::reactable(
           
           # MET-hr MVPA
             paste0(format(round(df1_means[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr | ", format(round(df1_medians[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr"),         
-
           # Total kilocalories
             paste0(format(round(df1_means[["total_kcal"]], 2), nsmall = 2),   " kcal | ", format(round(df1_medians[["total_kcal"]], 2), nsmall = 2), " kcal"),
           
@@ -309,7 +326,7 @@ reactable::reactable(
 
           )
 
-        ),   striped = TRUE, defaultPageSize = 17
+        ),   striped = TRUE, defaultPageSize = 21
 )
 
 if (params$rendered_by_shiny)
@@ -596,7 +613,8 @@ if(length(params$p_breaks_sed) == 1) {
   (p1  | p2 | p3 | p4) + plot_layout(guides = "collect") & 
     theme(legend.position = 'bottom',
           axis.title = element_text(size = 15),
-          axis.text = element_text(size = 10)
+          axis.text = element_text(size = 10),
+          legend.text = element_text(size = 15)
           )
 }
 ```
@@ -627,7 +645,8 @@ if(length(params$p_breaks_pa) == 1) {
   (p1  | p2 | p3 | p4) + plot_layout(guides = "collect") & 
     theme(legend.position = 'bottom',
           axis.title = element_text(size = 15),
-          axis.text = element_text(size = 10)
+          axis.text = element_text(size = 10),
+          legend.text = element_text(size = 15)
           )
 }
 ```
