@@ -9,6 +9,7 @@
 #' @param language A character value for setting the language with which the figure should be created: `en` for english; `fr` for french.
 #' @param metrics A character value for setting the metrics to be shown in the figure. "volume" refers to "activity volume" metrics, step_acc" refers 
 #'     to "step accumlulation" metrics, and "int_distri" refers to intensity distribution metrics. By default, the function provides all computed metrics.
+#' @param epoch_label A character value to be pasted into the names of the variables to build the figure
 #'
 #' @return A ggplot object
 #' @export
@@ -55,16 +56,18 @@ create_fig_res_by_day <- function(
     start_day_analysis = "00:00:00", 
     end_day_analysis = "23:59:00", 
     language = c("en", "fr"),
-    metrics = c("all", "volume", "step_acc", "int_distri")
+    metrics = c("all", "volume", "step_acc", "int_distri"),
+    epoch_label = "60s"
     ){
 
 # Get arguments
 metrics <- match.arg(metrics)
 language <- match.arg(language)
+epoch_label = as.name(epoch_label)
 
 # Set text sizes
 strip_text = 10
-title_text_size = 8
+title_text_size = 10
 label_text_size = 3
 
 # Create figure for english language ========================================================================
@@ -105,12 +108,12 @@ if (language == "en") {
       "Peak step acc. 5 min (steps/min)",
       "Peak step acc. 1 min (steps/min)",
       "Intensity gradient",
-      "M1/3 (counts/epoch)",
-      "M120 (counts/epoch)",
-      "M60 (counts/epoch)", 
-      "M30 (counts/epoch)",
-      "M15 (counts/epoch)",
-      "M5 (counts/epoch)"
+      paste0("M1/3 (counts/", epoch_label, ")"),
+      paste0("M120 (counts/", epoch_label, ")"),
+      paste0("M60 (counts/", epoch_label, ")"), 
+      paste0("M30 (counts/", epoch_label, ")"),
+      paste0("M15 (counts/", epoch_label, ")"),
+      paste0("M5 (counts/", epoch_label, ")")
     )
     
     fig_title <- "All metrics"
@@ -169,12 +172,12 @@ if (language == "en") {
   if (metrics == "int_distri") {
     selected_metrics <- c(
       "Intensity gradient",
-      "M1/3 (counts/epoch)",
-      "M120 (counts/epoch)",
-      "M60 (counts/epoch)", 
-      "M30 (counts/epoch)",
-      "M15 (counts/epoch)",
-      "M5 (counts/epoch)"
+      paste0("M1/3 (counts/", epoch_label, ")"),
+      paste0("M120 (counts/", epoch_label, ")"),
+      paste0("M60 (counts/", epoch_label, ")"), 
+      paste0("M30 (counts/", epoch_label, ")"),
+      paste0("M15 (counts/", epoch_label, ")"),
+      paste0("M5 (counts/", epoch_label, ")")
     )
     
     fig_title <- "Intensity distribution metrics"
@@ -301,12 +304,12 @@ if (language == "en") {
       "Peak step acc. 5 min (steps/min)" ="peak_steps_5min",
       "Peak step acc. 1 min (steps/min)" ="peak_steps_1min",
       "Intensity gradient" = "ig",
-      "M1/3 (counts/epoch)" = "M1/3",
-      "M120 (counts/epoch)" = "M120",
-      "M60 (counts/epoch)" = "M60", 
-      "M30 (counts/epoch)" = "M30",
-      "M15 (counts/epoch)" = "M15",
-      "M5 (counts/epoch)" = "M5"
+      "M1/3 (counts/{{epoch_label}})"  := "M1/3",
+      "M120 (counts/{{epoch_label}})"  := "M120",
+      "M60 (counts/{{epoch_label}})"   := "M60", 
+      "M30 (counts/{{epoch_label}})"   := "M30",
+      "M15 (counts/{{epoch_label}})"   := "M15",
+      "M5 (counts/{{epoch_label}})"    := "M5"
     )
     ) %>%
     dplyr::filter(variable %in% selected_metrics) %>%
@@ -388,12 +391,12 @@ if (metrics == "all") {
    "Acc. pas pic 5 min (pas/min)",
    "Acc. pas pic 1 min (pas/min)",
    "Gradient d'intensité",
-   "M1/3 (counts/période)",
-   "M120 (counts/période)",
-   "M60 (counts/période)",
-   "M30 (counts/période)",
-   "M15 (counts/période)",
-   "M5 (counts/période)"
+   paste0("M1/3 (counts/", epoch_label, ")"),
+   paste0("M120 (counts/", epoch_label, ")"),
+   paste0("M60 (counts/", epoch_label, ")"), 
+   paste0("M30 (counts/", epoch_label, ")"),
+   paste0("M15 (counts/", epoch_label, ")"),
+   paste0("M5 (counts/", epoch_label, ")")
  )
  
  fig_title <- "Tous les indicateurs"
@@ -452,12 +455,12 @@ if (metrics == "step_acc") {
 if (metrics == "int_distri") {
  selected_metrics <- c(
    "Gradient d'intensité",
-   "M1/3 (counts/période)",
-   "M120 (counts/période)",
-   "M60 (counts/période)",
-   "M30 (counts/période)",
-   "M15 (counts/période)",
-   "M5 (counts/période)"
+   paste0("M1/3 (counts/", epoch_label, ")"),
+   paste0("M120 (counts/", epoch_label, ")"),
+   paste0("M60 (counts/", epoch_label, ")"), 
+   paste0("M30 (counts/", epoch_label, ")"),
+   paste0("M15 (counts/", epoch_label, ")"),
+   paste0("M5 (counts/", epoch_label, ")")
  )
  
  fig_title <- "Indicateurs de distribution de l'intensité"
@@ -584,12 +587,12 @@ plot <-
    "Acc. pas pic 5 min (pas/min)" ="peak_steps_5min",
    "Acc. pas pic 1 min (pas/min)" ="peak_steps_1min",
    "Gradient d'intensité" = "ig",
-   "M1/3 (counts/période)" = "M1/3",
-   "M120 (counts/période)" = "M120",
-   "M60 (counts/période)" = "M60", 
-   "M30 (counts/période)" = "M30",
-   "M15 (counts/période)" = "M15",
-   "M5 (counts/période)" = "M5"
+   "M1/3 (counts/{{epoch_label}})"  := "M1/3",
+   "M120 (counts/{{epoch_label}})"  := "M120",
+   "M60 (counts/{{epoch_label}})"   := "M60", 
+   "M30 (counts/{{epoch_label}})"   := "M30",
+   "M15 (counts/{{epoch_label}})"   := "M15",
+   "M5 (counts/{{epoch_label}})"    := "M5"
  )
  ) %>%
  dplyr::filter(variable %in% selected_metrics) %>%

@@ -12,18 +12,18 @@ create_fig_mx_summary(
 )
 }
 \arguments{
-\item{data}{A dataframe with physical behavior metrics summarised using means or medians of of valid days. It should have
+\item{data}{A dataframe with physical behavior metrics summarised using means or medians of valid days. It should have
 been obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, \code{\link{mark_intensity}},
-the \code{\link{recap_by_day}}, and then the \code{\link{average_results}} functions.}
+\code{\link{recap_by_day}}, and then the \code{\link{average_results}} functions.}
 
 \item{labels}{A vector of numeric values setting the breaks of the Y axis of the radar plot. Default is a vector of 6 values with
 a start at 0 and an end at the maximum of all the computed MX metrics.}
 
 \item{mpa_cutpoint}{A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity (in counts/epoch length used to compute MX metrics).
-Defaut value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003 relating to vector magnitude.}
+Defaut value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude.}
 
 \item{vpa_cutpoint}{A numeric value at and above which time is considered as spent in vigorous physical activity (in counts/epoch length used to compute MX metrics).
-Defaut value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003 relating to vector magnitude.}
+Defaut value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude.}
 }
 \value{
 A ggplot object
@@ -69,7 +69,7 @@ summary_by_day <- recap_by_day(
 recap <- average_results(data = summary_by_day, minimum_wear_time = 10, fun  = "median")
 create_fig_mx_summary(
     data = recap,
-    labels = seq(0, 10000, 2500)
+    labels = seq(2500, 12500, 2500)
  )
  
 }

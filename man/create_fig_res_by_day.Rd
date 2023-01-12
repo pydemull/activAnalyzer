@@ -10,7 +10,8 @@ create_fig_res_by_day(
   start_day_analysis = "00:00:00",
   end_day_analysis = "23:59:00",
   language = c("en", "fr"),
-  metrics = c("all", "volume", "step_acc", "int_distri")
+  metrics = c("all", "volume", "step_acc", "int_distri"),
+  epoch_label = "60s"
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ create_fig_res_by_day(
 
 \item{metrics}{A character value for setting the metrics to be shown in the figure. "volume" refers to "activity volume" metrics, step_acc" refers
 to "step accumlulation" metrics, and "int_distri" refers to intensity distribution metrics. By default, the function provides all computed metrics.}
+
+\item{epoch_label}{A character value to be pasted into the names of the variables to build the figure}
 }
 \value{
 A ggplot object
