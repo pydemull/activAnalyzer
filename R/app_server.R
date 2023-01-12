@@ -1858,6 +1858,30 @@ app_server <- function(input, output, session) {
     })
     
     
+    # Plotting activity volume metrics with comparisons with norms or recommendations
+    output$compa_norms_fig <- renderPlot({
+      
+      # PAL
+      g_pal <- create_fig_pal(score = results_summary_means()[["pal"]], "en") + theme(plot.margin = margin(2, 1, 0.5, 1, "cm"))
+      
+      # Steps
+      g_steps <- create_fig_steps(score = results_summary_means()[["total_steps"]], "en") + theme(plot.margin = margin(0, 1, 0.5, 1, "cm"))
+      
+      # MVPA
+      g_mvpa <- create_fig_mvpa(score = results_summary_means()[["minutes_MVPA"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+      
+      # SED
+      g_sed <- create_fig_sed(score = results_summary_means()[["minutes_SED"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+      
+      # MVPA/SED ratio
+      g_ratio <- create_fig_ratio_mvpa_sed(score = results_summary_means()[["ratio_mvpa_sed"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+      
+      # Whole figure
+      g_pal / g_steps / (g_mvpa | g_sed | g_ratio) + 
+        plot_layout(heights = c(0.8, 0.7, 1.5)) & theme(legend.justification = "center")
+    }, width = "auto", height = 1000, res = 100)
+    
+    
   # Step accumulation metrics =========================================================================================
   
   # Showing section title for intstep accumulation metrics
@@ -1977,8 +2001,9 @@ app_server <- function(input, output, session) {
       minimum_wear_time_for_analysis = input$minimum_wear_time_for_analysis, 
       start_day_analysis = analysis_filters()$start_day_analysis,
       end_day_analysis = analysis_filters()$end_day_analysis,
-      metrics = "int_distri"
-    )
+      metrics = "int_distri",
+      epoch_label = paste0(input$to_epoch, "s")
+    ) + theme(axis.text.x = element_text(angle = 90))
   }, width = "auto", height = 800, res = 100)
   
   # Plotting intensity distribution metrics summary
@@ -5498,6 +5523,7 @@ app_server <- function(input, output, session) {
     shinyjs::hide("BoxResByDayVolFig")
     shinyjs::hide("BoxResVolMeans")
     shinyjs::hide("BoxResVolMedians")
+    shinyjs::hide("BoxCompaNormsFig")
     shinyjs::hide("BoxResByDayStepTab")
     shinyjs::hide("BoxResByDayStepFig")
     shinyjs::hide("BoxResStepMeans")
@@ -5521,6 +5547,7 @@ app_server <- function(input, output, session) {
       shinyjs::show("BoxResByDayVolFig")
       shinyjs::show("BoxResVolMeans")
       shinyjs::show("BoxResVolMedians")
+      shinyjs::show("BoxCompaNormsFig")
       shinyjs::show("BoxResByDayStepTab")
       shinyjs::show("BoxResByDayStepFig")
       shinyjs::show("BoxResStepMeans")
@@ -5543,6 +5570,7 @@ app_server <- function(input, output, session) {
       shinyjs::hide("BoxResByDayVolFig")
       shinyjs::hide("BoxResVolMeans")
       shinyjs::hide("BoxResVolMedians")
+      shinyjs::hide("BoxCompaNormsFig")
       shinyjs::hide("BoxResByDayStepTab")
       shinyjs::hide("BoxResByDayStepFig")
       shinyjs::hide("BoxResStepMeans")
