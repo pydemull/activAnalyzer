@@ -287,13 +287,13 @@ reactable::reactable(
           paste0(format(round(df1_means[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["wear_time"]]), ") | ",  
                  format(round(df1_medians[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["wear_time"]]), ")"),  
 
-          # Total Axis 1
-          paste0(format(round(df1_means[["total_counts_axis1"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["total_counts_axis1"]]), ") | ",  
-                 format(round(df1_medians[["total_counts_axis1"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["total_counts_axis1"]]), ")"), 
+          # Total counts Axis 1
+            paste0(format(round(df1_means[["total_counts_axis1"]], 1), nsmall = 1), " counts | ",
+                   format(round(df1_medians[["total_counts_axis1"]], 1), nsmall = 1), " counts"), 
           
-          # Total VM
-          paste0(format(round(df1_means[["total_counts_vm"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["total_counts_vm"]]), ") | ",  
-                 format(round(df1_medians[["total_counts_vm"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["total_counts_vm"]]), ")"), 
+          # Total counts VM
+            paste0(format(round(df1_means[["total_counts_vm"]], 1), nsmall = 1), " counts | ",
+                   format(round(df1_medians[["total_counts_vm"]], 1), nsmall = 1), " counts"), 
           
           # Axis 1 par min
             paste0(format(round(df1_means[["axis1_per_min"]], 1), nsmall = 1), " counts/min | ",

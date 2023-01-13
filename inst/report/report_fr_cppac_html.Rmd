@@ -1,0 +1,226 @@
+---
+title: Résultats du C-PPAC
+output: 
+  html_document:
+    theme: cosmo
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+    number_sections: yes
+    df_print: paged
+toc-title: "Sommaire"
+params:
+  assessor_title: NA
+  assessor_name: NA
+  assessor_surname: NA
+  patient_title: NA
+  patient_name: NA
+  patient_surname: NA
+  sex: NA
+  age: NA
+  weight: NA
+  epoch: NA
+  start_date: NA
+  end_date: NA
+  device: NA
+  position: NA
+  side: NA
+  sampling_rate: NA
+  filter: NA
+  start_day_analysis: NA
+  end_day_analysis: NA
+  axis_weartime: NA
+  frame_size: NA
+  allowanceFrame_size: NA
+  streamFrame_size: NA
+  equation_mets: NA
+  bmr_kcal_d: NA
+  axis_sed: NA
+  axis_mvpa: NA
+  sed_cutpoint: NA
+  mpa_cutpoint: NA
+  vpa_cutpoint: NA
+  minimum_wear_time_for_analysis: NA
+  results_by_day: NA
+  results_summary_means: NA
+  results_summary_medians: NA
+  cppac_table: NA
+  cppac_diff_raw: NA
+  cppac_amount_raw: NA
+  cppac_total_raw: NA
+  cppac_diff_rasch: NA
+  cppac_amount_rasch: NA
+  cppac_total_rasch: NA 
+  rendered_by_shiny: FALSE
+  geometry: "left=2cm, right=2cm, top=1cm, bottom=1cm"
+
+---
+
+```{css, echo=FALSE}
+.title {
+  font-weight: bold;
+}
+
+
+h1 {
+  font-size: 25px;
+  font-weight: bold;
+}
+h2 {
+  font-size: 23px;
+  font-weight: bold;
+}
+h3 {
+  font-size: 21px;
+}
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, echo = FALSE)
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+
+sex <- ifelse(params$sex == "male", "masculin", 
+              ifelse(params$sex == "female", "féminin",
+                     "non défini"))
+position <- ifelse(params$position == "hip", "hanche", 
+              ifelse(params$position == "wrist", "poignet",
+                     ifelse(params$position == "thigh", "cuisse",
+                            ifelse(params$position == "ankle", "cheville", "NA"))))
+
+side <- ifelse(params$side == "right", "droit", 
+              ifelse(params$side == "left", "gauche",
+                     "non défini"))
+
+axis_weartime <- ifelse(params$axis_weartime == "vertical axis", "l'axe vertical", 
+              ifelse(params$axis_weartime == "vector magnitude", "le vecteur magnitude",
+                     "non défini"))
+
+axis_mvpa <- ifelse(params$axis_mvpa == "vertical axis", "axe vertical", 
+              ifelse(params$axis_mvpa == "vector magnitude", "vecteur magnitude",
+                     "non défini"))
+
+options("scipen"=100, "digits"=4)
+```
+
+# Informations
+
+
+**Patient :** `r params$patient_surname` `r params$patient_name`  | **Date :**  `r Sys.Date()` | **Évaluateur :** `r params$assessor_surname` `r params$assessor_name`
+
+**Age :** `r params$age` ans | **Sexe :**  `r sex` | **Masse :** `r params$weight` kg | **Période de mesure :** `r format(params$start_date, "%d/%m/%Y %H:%M:%S")` au `r format(params$end_date, "%d/%m/%Y %H:%M:%S")`
+
+**Appareil :** `r params$device` | **Position :** `r position` | **Côté :** `r side` | **Fréquence d'échantillonnage :** `r params$sampling_rate` Hz | **Filtre :** `r params$filter`
+
+**'Epoch' :** `r params$epoch` s | **Temps de non-port :** Basé sur `r axis_weartime`, intervalle de `r params$frame_size` min avec zéro count pour la détection du temps de non-port, intervalle de `r params$allowanceFrame_size` min avec counts différents de 0 autorisé durant une période de non-port, intervalle de `r params$streamFrame_size` min avec zéro count autour de la période d'activité détectée pour confirmer le non-port
+
+**Période journalière considérée pour compter le temps de port :** de `r params$start_day_analysis` à `r params$end_day_analysis`
+
+**Nombre minimum d'heures avec temps de port pour valider un jour:**  `r params$minimum_wear_time_for_analysis` heures
+
+
+# Résumé
+```{r, fig.width=12}
+
+diff_raw <-
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_diff_raw), aes(x, y, label = paste0(label, " / 40"))) +
+  geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  annotate("text", x = 0.1, y = 0.2, label = "Score de difficulté (brut)", color = "white", fontface = "bold", hjust = 0, size = 6) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#00CEF1", color = "white", size = 10)
+  )
+
+amount_raw <-
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_amount_raw), aes(x, y, label = paste0(label, " / 15"))) +
+  geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  annotate("text", x = 0.1, y = 0.2, label = "Score de quantité (brut)", color = "white", fontface = "bold", hjust = 0, size = 6) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#39cccc", color = "white", size = 10)
+  )
+
+total_raw <-
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_total_raw), aes(x, y, label = paste0(label, " / 55"))) +
+  geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  annotate("text", x = 0.1, y = 0.2, label = "Score total (brut)", color = "white", fontface = "bold", hjust = 0, size = 6) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#605ca8", color = "white", size = 10)
+  )
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.5)  # set progress to 50%
+
+diff_rasch <-
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_diff_rasch), aes(x, y, label = paste0(label, " / 100"))) +
+  geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  annotate("text", x = 0.1, y = 0.2, label = "Score de difficulté (Rasch)", color = "white", fontface = "bold", hjust = 0, size = 6) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#00CEF1", color = "white", size = 10)
+  )
+
+amount_rasch <-
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_amount_rasch), aes(x, y, label = paste0(label, " / 100"))) +
+  geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  annotate("text", x = 0.1, y = 0.2, label = "Score de quantité (Rasch)", color = "white", fontface = "bold", hjust = 0, size = 6) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#39cccc", color = "white", size = 10)
+  )
+
+total_rasch <-
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_total_rasch), aes(x, y, label = paste0(label, " / 100"))) +
+  geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  annotate("text", x = 0.1, y = 0.2, label = "Score total (Rasch)", color = "white", fontface = "bold", hjust = 0, size = 6) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#605ca8", color = "white", size = 10)
+  )
+  
+(diff_raw | amount_raw | total_raw) / (diff_rasch | amount_rasch | total_rasch)
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(1)  # set progress to 100%
+```
+
+\pagebreak 
+
+# Détails
+```{r}
+flextable::set_flextable_defaults(fonts_ignore = TRUE)
+flextable::flextable(params$cppac_table) %>%
+   flextable::theme_zebra() %>%
+   flextable::align(align = "left", part = "all" ) %>%
+   flextable::width(width = 3) %>%
+   flextable::align(j = "Score de difficulté", align = "center", part = "body") %>%
+   flextable::align(j = "Score de quantité", align = "center", part = "body") %>%
+   flextable::align(j = "Score de difficulté", align = "center", part = "header") %>%
+   flextable::align(j = "Score de quantité", align = "center", part = "header")
+```
+
+
+
+

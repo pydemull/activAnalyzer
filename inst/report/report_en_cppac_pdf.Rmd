@@ -1,0 +1,167 @@
+---
+title: |
+       | \vspace{-2.5cm} C-PPAC results
+output: 
+   pdf_document:
+     latex_engine: xelatex
+params:
+  assessor_title: NA
+  assessor_name: NA
+  assessor_surname: NA
+  patient_title: NA
+  patient_name: NA
+  patient_surname: NA
+  sex: NA
+  age: NA
+  weight: NA
+  epoch: NA
+  start_date: NA
+  end_date: NA
+  device: NA
+  position: NA
+  side: NA
+  sampling_rate: NA
+  filter: NA
+  start_day_analysis: NA
+  end_day_analysis: NA
+  axis_weartime: NA
+  frame_size: NA
+  allowanceFrame_size: NA
+  streamFrame_size: NA
+  equation_mets: NA
+  bmr_kcal_d: NA
+  axis_sed: NA
+  axis_mvpa: NA
+  sed_cutpoint: NA
+  mpa_cutpoint: NA
+  vpa_cutpoint: NA
+  minimum_wear_time_for_analysis: NA
+  results_by_day: NA
+  results_summary_means: NA
+  results_summary_medians: NA
+  cppac_table: NA
+  cppac_diff_raw: NA
+  cppac_amount_raw: NA
+  cppac_total_raw: NA
+  cppac_diff_rasch: NA
+  cppac_amount_rasch: NA
+  cppac_total_rasch: NA 
+  rendered_by_shiny: FALSE
+  geometry: "left=2cm, right=2cm, top=1cm, bottom=1cm"
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, echo = FALSE)
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+
+options("scipen"=100, "digits"=4)
+```
+
+# Information
+
+**Patient:** `r params$patient_surname` `r params$patient_name`  | **Date:**  `r Sys.Date()` | **Assessor:**  `r params$assessor_surname` `r params$assessor_name`
+
+**Age:** `r params$age` yr | **Sex:**  `r params$sex` | **Weight:** `r params$weight` kg | **Measurement period:** `r format(params$start_date, "%Y-%m-%d %H:%M:%S")` to `r format(params$end_date, "%Y-%m-%d %H:%M:%S")`
+
+**Device:** `r params$device` | **Position:** `r params$position` | **Side:** `r params$side` | **Sampling rate:** `r params$sampling_rate` Hz | **Filter:** `r params$filter`
+
+**Epoch:** `r params$epoch` s | **Nonwear time:** Based on `r params$axis_weartime`, interval of `r params$frame_size` min with zero count for nonwear time detection, interval of `r params$allowanceFrame_size` min with nonzero counts allowed during a nonwear period, interval of `r params$streamFrame_size` min with zero count around detected activity to confirm nonwear time
+
+**Period of the day considered to count wear time:** from `r params$start_day_analysis` to `r params$end_day_analysis`
+
+**Minimum number of hours with wear time to validate a day:** `r params$minimum_wear_time_for_analysis` hours
+
+
+# Summary
+```{r, fig.width=12}
+
+diff_raw <-
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_diff_raw), aes(x, y, label = paste0(label, " / 40"))) +
+  geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  annotate("text", x = 0.1, y = 0.2, label = "Difficulty score (raw)", color = "white", fontface = "bold", hjust = 0, size = 6) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#00CEF1", color = "white", size = 10)
+  )
+
+amount_raw <-
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_amount_raw), aes(x, y, label = paste0(label, " / 15"))) +
+  geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  annotate("text", x = 0.1, y = 0.2, label = "Amount score (raw)", color = "white", fontface = "bold", hjust = 0, size = 6) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#39cccc", color = "white", size = 10)
+  )
+
+total_raw <-
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_total_raw), aes(x, y, label = paste0(label, " / 55"))) +
+  geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  annotate("text", x = 0.1, y = 0.2, label = "Total score (raw)", color = "white", fontface = "bold", hjust = 0, size = 6) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#605ca8", color = "white", size = 10)
+  )
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.5)  # set progress to 50%
+
+diff_rasch <-
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_diff_rasch), aes(x, y, label = paste0(label, " / 100"))) +
+  geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  annotate("text", x = 0.1, y = 0.2, label = "Difficulty score (Rasch)", color = "white", fontface = "bold", hjust = 0, size = 6) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#00CEF1", color = "white", size = 10)
+  )
+
+amount_rasch <-
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_amount_rasch), aes(x, y, label = paste0(label, " / 100"))) +
+  geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  annotate("text", x = 0.1, y = 0.2, label = "Amount score (Rasch)", color = "white", fontface = "bold", hjust = 0, size = 6) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#39cccc", color = "white", size = 10)
+  )
+
+total_rasch <-
+  ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$cppac_total_rasch), aes(x, y, label = paste0(label, " / 100"))) +
+  geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  annotate("text", x = 0.1, y = 0.2, label = "Total score (Rasch)", color = "white", fontface = "bold", hjust = 0, size = 6) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#605ca8", color = "white", size = 10)
+  )
+  
+(diff_raw | amount_raw | total_raw) / (diff_rasch | amount_rasch | total_rasch)
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(1)  # set progress to 100%
+```
+
+\pagebreak 
+
+# Details
+```{r}
+flextable::set_flextable_defaults(fonts_ignore = TRUE)
+flextable::flextable(params$cppac_table) %>%
+   flextable::theme_zebra() %>%
+   flextable::align(align = "left", part = "all" ) %>%
+   flextable::width(width = 2.1) %>%
+   flextable::align(j = "Difficulty score", align = "center", part = "body") %>%
+   flextable::align(j = "Amount score", align = "center", part = "body") %>%
+   flextable::align(j = "Difficulty score", align = "center", part = "header") %>%
+   flextable::align(j = "Amount score", align = "center", part = "header")
+```
+
+
+
+
