@@ -398,6 +398,28 @@ app_ui <- function(request) {
                           shiny::actionButton("auto_fill_intensity", "Default settings",  class = "btn-return", style = "margin-top: 10px"),
                    ),
                  ),
+                 
+                 #*************************************
+                 # Choosing intensity bins
+                 #*************************************
+                 
+                 fluidRow(
+                   column(12,
+                          h3("Choose parameters to determine bins of intensity"),
+                          hr(),
+                          ),
+                 ),
+                 fluidRow(
+                   column(3,
+                          numericInput("start_first_bin", "Start of the first bin (counts/chosen epoch duration)", value = 0, min = 0)
+                   ),  
+                   column(3,
+                          numericInput("start_last_bin", "Start of the last bin (counts/chosen epoch duration)", value = 10000, min = 0)
+                   ),
+                   column(3,
+                          numericInput("bin_width", "Width of the bins (counts/chosen epoch duration)", value = 500, min = 0)
+                   )
+                 ),
               
                  #************************************************************************
                  # Enter information related to relevant missing physical activity periods
@@ -645,7 +667,7 @@ app_ui <- function(request) {
                          column(12,
                                 shinydashboardPlus::box(
                                   id = "BoxCompaNormsFig", 
-                                  title = "Comparisons with norms or recommendations",
+                                  title = "Comparisons with norms and recommendations",
                                   shinycssloaders::withSpinner(plotOutput("compa_norms_fig", height = "auto")), 
                                   width = NULL, 
                                   height = NULL
@@ -1293,10 +1315,11 @@ app_ui <- function(request) {
                       
                     ),
                     fluidRow(
-                      column(2,
+                      column(12,
                              h4(""),
                              h4(""),
-                             downloadButton("report_en_cppac", "Generate C-PPAC report (.pdf)", class = "btn-report")
+                             downloadButton("report_en_cppac_html", "Generate C-PPAC report (.html)", class = "btn-report"),
+                             downloadButton("report_en_cppac_pdf", "Generate C-PPAC report (.pdf)", class = "btn-report")
                              )
                     )
                     
@@ -2350,10 +2373,11 @@ app_ui <- function(request) {
                          ),
                        ),
                        fluidRow(
-                         column(2,
+                         column(12,
                                 h4(""),
                                 h4(""),
-                                downloadButton("report_en_dppac", "Generate D-PPAC report (.pdf)", class = "btn-report")
+                                downloadButton("report_en_dppac_html", "Generate D-PPAC report (.html)", class = "btn-report"),
+                                downloadButton("report_en_dppac_pdf", "Generate D-PPAC report (.pdf)", class = "btn-report")
                          )
                        )
                        
@@ -2683,10 +2707,11 @@ app_ui <- function(request) {
                           ),
                           ),
                         fluidRow(
-                          column(4,
+                          column(12,
                                  h4(""),
                                  h4(""),
-                                 downloadButton("report_fr_cppac", "G\u00e9n\u00e9rer le rapport du C-PPAC (.pdf)", class = "btn-report")
+                                 downloadButton("report_fr_cppac_html", "G\u00e9n\u00e9rer le rapport du C-PPAC (.html)", class = "btn-report"),
+                                 downloadButton("report_fr_cppac_pdf", "G\u00e9n\u00e9rer le rapport du C-PPAC (.pdf)", class = "btn-report")
                                  )
                         ),
                 ), # End of tabPanel
@@ -3739,10 +3764,11 @@ app_ui <- function(request) {
                            ),
                          ),
                          fluidRow(
-                           column(2,
+                           column(12,
                                   h4(""),
                                   h4(""),
-                                  downloadButton("report_fr_dppac", "G\u00e9n\u00e9rer le rapport du D-PPAC (.pdf)", class = "btn-report")
+                                  downloadButton("report_fr_dppac_html", "G\u00e9n\u00e9rer le rapport du D-PPAC (.html)", class = "btn-report"),
+                                  downloadButton("report_fr_dppac_pdf", "G\u00e9n\u00e9rer le rapport du D-PPAC (.pdf)", class = "btn-report")
                            ),
                          ),
                 ),
@@ -3805,7 +3831,7 @@ app_ui <- function(request) {
       ), # End dashboardBody 
       
       footer = shinydashboardPlus::dashboardFooter(
-        left = "\u00a9 2021-2022 Conceived by Pierre-Yves de M\u00fcllenheim and Arnaud Chambellan. Developed by Pierre-Yves de M\u00fcllenheim - GNU General Public License Version 3.0",
+        left = "\u00a9 2021-2023 Conceived by Pierre-Yves de M\u00fcllenheim and Arnaud Chambellan. Developed by Pierre-Yves de M\u00fcllenheim - GNU General Public License Version 3.0",
       )
     )
   )
