@@ -48,6 +48,19 @@ plot_data <- function(
     zoom_to = "23:59:59"
     ){
 
+  
+  # Setting parameters for computation of breaks labels
+  if (as.numeric(hms::as_hms(zoom_to)) - as.numeric(hms::as_hms(zoom_from)) < 2*3600) {
+    breaks_control_1 = hms::hms(0)
+    breaks_control_2 = hms::hms(0)
+    breaks_control_3 = 3600/2
+  } else {
+    breaks_control_1 = hms::hms(3600)
+    breaks_control_2 = hms::hms(3599)
+    breaks_control_3 = 2*3600
+  }
+  
+  
   # Setting the format of the time variable
     format_hm <- function(sec) stringr::str_sub(format(sec), end = -4L)
     date_labs <- format(data$date, "%d-%m-%y")
@@ -76,7 +89,7 @@ plot_data <- function(
       ) +
     scale_x_time(
       limits = c(hms::as_hms(zoom_from), hms::as_hms(zoom_to)),
-      breaks = hms::hms(seq(as.numeric(hms::as_hms(zoom_from) + hms::hms(3600)), as.numeric(hms::as_hms(zoom_to) - hms::hms(3599)), 2*3600)), 
+      breaks = hms::hms(seq(as.numeric(hms::as_hms(zoom_from) + breaks_control_1), as.numeric(hms::as_hms(zoom_to) - breaks_control_2), breaks_control_3)), 
       expand = c(0, 0),
       labels = format_hm
       ) +
