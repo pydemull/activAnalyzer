@@ -255,68 +255,68 @@ reactable::reactable(
           "Daily mean | median" = c(
             
           # Number of valid days
-            paste0(df1_means[["valid_days"]], " day(s)"),
+            paste0(df1_means[["valid_days"]]),
             
           # Wear time
-            paste0(format(round(df1_means[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["wear_time"]]), ") | ",
-                   format(round(df1_medians[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["wear_time"]]), ")"),  
+            paste0(format(round(df1_means[["wear_time"]], 1), nsmall = 1), " (", hms::hms(minutes = df1_means[["wear_time"]]), ") | ",
+                   format(round(df1_medians[["wear_time"]], 1), nsmall = 1), " (", hms::hms(minutes = df1_medians[["wear_time"]]), ")"),  
             
           # Total counts Axis 1
-            paste0(format(round(df1_means[["total_counts_axis1"]], 1), nsmall = 1), " counts | ",
-                   format(round(df1_medians[["total_counts_axis1"]], 1), nsmall = 1), " counts"), 
+            paste0(format(round(df1_means[["total_counts_axis1"]], 1), nsmall = 1), " | ",
+                   format(round(df1_medians[["total_counts_axis1"]], 1), nsmall = 1)), 
           
           # Total counts VM
-            paste0(format(round(df1_means[["total_counts_vm"]], 1), nsmall = 1), " counts | ",
-                   format(round(df1_medians[["total_counts_vm"]], 1), nsmall = 1), " counts"), 
+            paste0(format(round(df1_means[["total_counts_vm"]], 1), nsmall = 1), " | ",
+                   format(round(df1_medians[["total_counts_vm"]], 1), nsmall = 1)), 
           
           # Axis 1 per min
-            paste0(format(round(df1_means[["axis1_per_min"]], 1), nsmall = 1), " counts/min | ",
-                   format(round(df1_medians[["axis1_per_min"]], 1), nsmall = 1), " counts/min"), 
+            paste0(format(round(df1_means[["axis1_per_min"]], 1), nsmall = 1), " | ",
+                   format(round(df1_medians[["axis1_per_min"]], 1), nsmall = 1)), 
           
           # VM per min
-            paste0(format(round(df1_means[["vm_per_min"]], 1), nsmall = 1), " counts/min | ",
-                   format(round(df1_medians[["vm_per_min"]], 1), nsmall = 1), " counts/min"), 
+            paste0(format(round(df1_means[["vm_per_min"]], 1), nsmall = 1), " | ",
+                   format(round(df1_medians[["vm_per_min"]], 1), nsmall = 1)), 
           
           # SED time
-            paste0(format(round(df1_means[["minutes_SED"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_SED"]]), ") | ",  
-                   format(round(df1_medians[["minutes_SED"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_SED"]]), ")"),  
+            paste0(format(round(df1_means[["minutes_SED"]], 1), nsmall = 1), " (", hms::hms(minutes = df1_means[["minutes_SED"]]), ") | ",  
+                   format(round(df1_medians[["minutes_SED"]], 1), nsmall = 1), " (", hms::hms(minutes = df1_medians[["minutes_SED"]]), ")"),  
            
           # LPA time 
-            paste0(format(round(df1_means[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_LPA"]]), ") | ",  
-                   format(round(df1_medians[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_LPA"]]), ")"), 
+            paste0(format(round(df1_means[["minutes_LPA"]], 1), nsmall = 1), " (", hms::hms(minutes = df1_means[["minutes_LPA"]]), ") | ",  
+                   format(round(df1_medians[["minutes_LPA"]], 1), nsmall = 1), " (", hms::hms(minutes = df1_medians[["minutes_LPA"]]), ")"), 
             
           # MPA time 
-            paste0(format(round(df1_means[["minutes_MPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_MPA"]]), ") | ",  
-                   format(round(df1_medians[["minutes_MPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_MPA"]]), ")"), 
+            paste0(format(round(df1_means[["minutes_MPA"]], 1), nsmall = 1), " (", hms::hms(minutes = df1_means[["minutes_MPA"]]), ") | ",  
+                   format(round(df1_medians[["minutes_MPA"]], 1), nsmall = 1), " (", hms::hms(minutes = df1_medians[["minutes_MPA"]]), ")"), 
           
           # VPA time 
-            paste0(format(round(df1_means[["minutes_VPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_VPA"]]), ") | ",  
-                   format(round(df1_medians[["minutes_VPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_VPA"]]), ")"), 
+            paste0(format(round(df1_means[["minutes_VPA"]], 1), nsmall = 1), " (", hms::hms(minutes = df1_means[["minutes_VPA"]]), ") | ",  
+                   format(round(df1_medians[["minutes_VPA"]], 1), nsmall = 1), " (", hms::hms(minutes = df1_medians[["minutes_VPA"]]), ")"), 
           
           # MVPA time
-            paste0(format(round(df1_means[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_means[["minutes_MVPA"]]), ") | ",
-                   format(round(df1_medians[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = df1_medians[["minutes_MVPA"]]), ")"),  
+            paste0(format(round(df1_means[["minutes_MVPA"]], 1), nsmall = 1), " (", hms::hms(minutes = df1_means[["minutes_MVPA"]]), ") | ",
+                   format(round(df1_medians[["minutes_MVPA"]], 1), nsmall = 1), " (", hms::hms(minutes = df1_medians[["minutes_MVPA"]]), ")"),  
            
           # Percent time SED 
-            paste0(format(round(df1_means[["percent_SED"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_SED"]], 1), nsmall = 1), " %"),
+            paste0(format(round(df1_means[["percent_SED"]], 1), nsmall = 1), " | ", format(round(df1_medians[["percent_SED"]], 1), nsmall = 1)),
           
           # Percent time LPA 
-            paste0(format(round(df1_means[["percent_LPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_LPA"]], 1), nsmall = 1), " %"),
+            paste0(format(round(df1_means[["percent_LPA"]], 1), nsmall = 1), " | ", format(round(df1_medians[["percent_LPA"]], 1), nsmall = 1)),
           
           # Percent time MPA 
-            paste0(format(round(df1_means[["percent_MPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_MPA"]], 1), nsmall = 1), " %"),      
+            paste0(format(round(df1_means[["percent_MPA"]], 1), nsmall = 1), " | ", format(round(df1_medians[["percent_MPA"]], 1), nsmall = 1)),      
          
           # Percent time VPA 
-            paste0(format(round(df1_means[["percent_VPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_VPA"]], 1), nsmall = 1), " %"),  
+            paste0(format(round(df1_means[["percent_VPA"]], 1), nsmall = 1), " | ", format(round(df1_medians[["percent_VPA"]], 1), nsmall = 1)),  
          
           # Percent time MVPA  
-            paste0(format(round(df1_means[["percent_MVPA"]], 1), nsmall = 1), " % | ", format(round(df1_medians[["percent_MVPA"]], 1), nsmall = 1), " %"),                 
+            paste0(format(round(df1_means[["percent_MVPA"]], 1), nsmall = 1), " | ", format(round(df1_medians[["percent_MVPA"]], 1), nsmall = 1)),                 
           
           # Ratio MVPA/SED
             paste0(format(round(df1_means[["ratio_mvpa_sed"]], 2), nsmall = 2), " | ", format(round(df1_medians[["ratio_mvpa_sed"]], 2), nsmall = 2)),
           
           # MET-hr MVPA
-            paste0(format(round(df1_means[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr | ", format(round(df1_medians[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr"),         
+            paste0(format(round(df1_means[["mets_hours_mvpa"]], 2), nsmall = 2), " | ", format(round(df1_medians[["mets_hours_mvpa"]], 2), nsmall = 2)),         
           # Total kilocalories
             paste0(format(round(df1_means[["total_kcal"]], 2), nsmall = 2),   " kcal | ", format(round(df1_medians[["total_kcal"]], 2), nsmall = 2), " kcal"),
           
@@ -324,7 +324,7 @@ reactable::reactable(
             paste0(format(round(df1_means[["pal"]], 2), nsmall = 2),  " | ", format(round(df1_medians[["pal"]], 2), nsmall = 2)),  
             
           # Total number of steps
-            paste0(round(df1_means[["total_steps"]], 0), " steps | ", round(df1_medians[["total_steps"]], 0), " steps")
+            paste0(round(df1_means[["total_steps"]], 0), " | ", round(df1_medians[["total_steps"]], 0))
 
           )
 
@@ -439,7 +439,7 @@ reactable::reactable(
           "Daily mean | median" = c(
             
           # Number of valid days
-            paste0(df1_means[["valid_days"]], " day(s)"),
+            paste0(df1_means[["valid_days"]]),
             
           # Max step accum 60min
             paste0(format(round(df1_means[["max_steps_60min"]], 2), nsmall = 2), " | ", format(round(df1_medians[["max_steps_60min"]], 2), nsmall = 2)),
@@ -534,45 +534,45 @@ reactable::reactable(
   tibble::tibble(
           Metric = c("Number of valid days",
                      "Intensity gradient",
-                     "M1/3",
-                     "M120",
-                     "M60",
-                     "M30",
-                     "M15",
-                     "M5"
+                     paste0("M1/3", " (counts/", params$epoch, "s)"),
+                     paste0("M120", " (counts/", params$epoch, "s)"),
+                     paste0("M60", " (counts/", params$epoch, "s)"),
+                     paste0("M30", " (counts/", params$epoch, "s)"),
+                     paste0("M15", " (counts/", params$epoch, "s)"),
+                     paste0("M5", " (counts/", params$epoch, "s)")
           ),
           
           "Daily mean | median" = c(
             
           # Number of valid days
-            paste0(df1_means[["valid_days"]], " day(s)"),
+            paste0(df1_means[["valid_days"]]),
             
           # Intensity gradient
             paste0(format(round(df1_means[["ig"]], 2), nsmall = 2), " | ", format(round(df1_medians[["ig"]], 2), nsmall = 2)),
                     
           # M1/3
-            paste0(format(round(df1_means[["M1/3"]], 1), nsmall = 1), " counts/", params$epoch, "s | ",
-                   format(round(df1_medians[["M1/3"]], 1), nsmall = 1), " counts/", params$epoch, "s"), 
+            paste0(format(round(df1_means[["M1/3"]], 1), nsmall = 1), " | ",
+                   format(round(df1_medians[["M1/3"]], 1), nsmall = 1)), 
 
           # M120
-            paste0(format(round(df1_means[["M120"]], 1), nsmall = 1), " counts/", params$epoch, "s | ",
-                   format(round(df1_medians[["M120"]], 1), nsmall = 1), " counts/", params$epoch, "s"), 
+            paste0(format(round(df1_means[["M120"]], 1), nsmall = 1), " | ",
+                   format(round(df1_medians[["M120"]], 1), nsmall = 1)), 
                     
           # M60
-            paste0(format(round(df1_means[["M60"]], 1), nsmall = 1), " counts/", params$epoch, "s | ",
-                   format(round(df1_medians[["M60"]], 1), nsmall = 1), " counts/", params$epoch, "s"), 
+            paste0(format(round(df1_means[["M60"]], 1), nsmall = 1), " | ",
+                   format(round(df1_medians[["M60"]], 1), nsmall = 1)), 
                     
           # M30
-            paste0(format(round(df1_means[["M30"]], 1), nsmall = 1), " counts/", params$epoch, "s | ",
-                   format(round(df1_medians[["M30"]], 1), nsmall = 1), " counts/", params$epoch, "s"),
+            paste0(format(round(df1_means[["M30"]], 1), nsmall = 1), " | ",
+                   format(round(df1_medians[["M30"]], 1), nsmall = 1)),
                     
           # M15
-            paste0(format(round(df1_means[["M15"]], 1), nsmall = 1), " counts/", params$epoch, "s | ",
-                   format(round(df1_medians[["M15"]], 1), nsmall = 1), " counts/", params$epoch, "s"), 
+            paste0(format(round(df1_means[["M15"]], 1), nsmall = 1), " | ",
+                   format(round(df1_medians[["M15"]], 1), nsmall = 1)), 
                     
           # M5
-            paste0(format(round(df1_means[["M5"]], 1), nsmall = 1), " counts/", params$epoch, "s | ",
-                   format(round(df1_medians[["M5"]], 1), nsmall = 1), " counts/", params$epoch, "s")
+            paste0(format(round(df1_means[["M5"]], 1), nsmall = 1), " | ",
+                   format(round(df1_medians[["M5"]], 1), nsmall = 1))
 
           )
 
@@ -617,7 +617,7 @@ if(length(params$p_breaks_sed) == 1) {
   (p1  | p2 | p3 | p4) + plot_layout(guides = "collect") & 
     theme(legend.position = 'bottom',
           axis.title = element_text(size = 15),
-          axis.text = element_text(size = 10),
+          legend.title = element_text(size = 17),
           legend.text = element_text(size = 15)
           )
 }
@@ -650,6 +650,7 @@ if(length(params$p_breaks_pa) == 1) {
     theme(legend.position = 'bottom',
           axis.title = element_text(size = 15),
           axis.text = element_text(size = 10),
+          legend.title = element_text(size = 17),
           legend.text = element_text(size = 15)
           )
 }

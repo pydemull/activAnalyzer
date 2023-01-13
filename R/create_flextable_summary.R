@@ -111,12 +111,12 @@ flextable::set_flextable_defaults(fonts_ignore = TRUE)
         "Peak step acc. 5 min (steps/min)",
         "Peak step acc. 1 min (steps/min)",
         "Intensity gradient",
-        "M1/3",
-        "M120",
-        "M60",
-        "M30",
-        "M15",
-        "M5"
+        paste0("M1/3", " (counts/", epoch_label, ")"),
+        paste0("M120", " (counts/", epoch_label, ")"),
+        paste0("M60", " (counts/", epoch_label, ")"),
+        paste0("M30", " (counts/", epoch_label, ")"),
+        paste0("M15", " (counts/", epoch_label, ")"),
+        paste0("M5", " (counts/", epoch_label, ")")
       )
       
     } 
@@ -166,12 +166,12 @@ flextable::set_flextable_defaults(fonts_ignore = TRUE)
     if (metrics == "int_distri") {
       selected_metrics <- c(
         "Intensity gradient",
-        "M1/3",
-        "M120",
-        "M60",
-        "M30",
-        "M15",
-        "M5"
+        paste0("M1/3", " (counts/", epoch_label, ")"),
+        paste0("M120", " (counts/", epoch_label, ")"),
+        paste0("M60", " (counts/", epoch_label, ")"),
+        paste0("M30", " (counts/", epoch_label, ")"),
+        paste0("M15", " (counts/", epoch_label, ")"),
+        paste0("M5", " (counts/", epoch_label, ")")
       )
       
     } 
@@ -211,89 +211,88 @@ flextable::set_flextable_defaults(fonts_ignore = TRUE)
                      "Peak step acc. 5 min (steps/min)",
                      "Peak step acc. 1 min (steps/min)",
                      "Intensity gradient",
-                     "M1/3",
-                     "M120",
-                     "M60",
-                     "M30",
-                     "M15",
-                     "M5"
+                     paste0("M1/3", " (counts/", epoch_label, ")"),
+                     paste0("M120", " (counts/", epoch_label, ")"),
+                     paste0("M60", " (counts/", epoch_label, ")"),
+                     paste0("M30", " (counts/", epoch_label, ")"),
+                     paste0("M15", " (counts/", epoch_label, ")"),
+                     paste0("M5", " (counts/", epoch_label, ")")
                      
           ),
           
           "Daily mean | median" = c(
             
             # Number of valid days
-            paste0(results_summary_means[["valid_days"]], " day(s)"),
+            paste0(results_summary_means[["valid_days"]]),
             
             # Wear time
-            paste0(format(round(results_summary_means[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["wear_time"]]), ") | ",
-                   format(round(results_summary_medians[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["wear_time"]]), ")"),  
+            paste0(format(round(results_summary_means[["wear_time"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_means[["wear_time"]]), ") | ",
+                   format(round(results_summary_medians[["wear_time"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_medians[["wear_time"]]), ")"),  
             
             # Total counts Axis 1
-            paste0(format(round(df1_means[["total_counts_axis1"]], 1), nsmall = 1), " counts | ",
-                   format(round(df1_medians[["total_counts_axis1"]], 1), nsmall = 1), " counts"), 
+            paste0(format(round(results_summary_means[["total_counts_axis1"]], 1), nsmall = 1), " | ",
+                   format(round(results_summary_medians[["total_counts_axis1"]], 1), nsmall = 1)), 
             
             # Total counts VM
-            paste0(format(round(df1_means[["total_counts_vm"]], 1), nsmall = 1), " counts | ",
-                   format(round(df1_medians[["total_counts_vm"]], 1), nsmall = 1), " counts"), 
+            paste0(format(round(results_summary_means[["total_counts_vm"]], 1), nsmall = 1), " | ",
+                   format(round(results_summary_medians[["total_counts_vm"]], 1), nsmall = 1)), 
             
-            # Axis 1 par min
-            paste0(format(round(df1_means[["axis1_per_min"]], 1), nsmall = 1), " counts/min | ",
-                   format(round(df1_medians[["axis1_per_min"]], 1), nsmall = 1), " counts/min"), 
+            # Axis 1 per min
+            paste0(format(round(results_summary_means[["axis1_per_min"]], 1), nsmall = 1), " | ",
+                   format(round(results_summary_medians[["axis1_per_min"]], 1), nsmall = 1)), 
             
-            # VM par min
-            paste0(format(round(df1_means[["vm_per_min"]], 1), nsmall = 1), " counts/min | ",
-                   format(round(df1_medians[["vm_per_min"]], 1), nsmall = 1), " counts/min"),  
+            # VM per min
+            paste0(format(round(results_summary_means[["vm_per_min"]], 1), nsmall = 1), " | ",
+                   format(round(results_summary_medians[["vm_per_min"]], 1), nsmall = 1)), 
             
             # SED time
-            paste0(format(round(results_summary_means[["minutes_SED"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["minutes_SED"]]), ") | ",  
-                   format(round(results_summary_medians[["minutes_SED"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["minutes_SED"]]), ")"),  
+            paste0(format(round(results_summary_means[["minutes_SED"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_means[["minutes_SED"]]), ") | ",  
+                   format(round(results_summary_medians[["minutes_SED"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_medians[["minutes_SED"]]), ")"),  
             
             # LPA time 
-            paste0(format(round(results_summary_means[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["minutes_LPA"]]), ") | ",  
-                   format(round(results_summary_medians[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["minutes_LPA"]]), ")"), 
+            paste0(format(round(results_summary_means[["minutes_LPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_means[["minutes_LPA"]]), ") | ",  
+                   format(round(results_summary_medians[["minutes_LPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_medians[["minutes_LPA"]]), ")"), 
             
             # MPA time 
-            paste0(format(round(results_summary_means[["minutes_MPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["minutes_MPA"]]), ") | ",  
-                   format(round(results_summary_medians[["minutes_MPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["minutes_MPA"]]), ")"), 
+            paste0(format(round(results_summary_means[["minutes_MPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_means[["minutes_MPA"]]), ") | ",  
+                   format(round(results_summary_medians[["minutes_MPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_medians[["minutes_MPA"]]), ")"), 
             
             # VPA time 
-            paste0(format(round(results_summary_means[["minutes_VPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["minutes_VPA"]]), ") | ",  
-                   format(round(results_summary_medians[["minutes_VPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["minutes_VPA"]]), ")"), 
+            paste0(format(round(results_summary_means[["minutes_VPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_means[["minutes_VPA"]]), ") | ",  
+                   format(round(results_summary_medians[["minutes_VPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_medians[["minutes_VPA"]]), ")"), 
             
             # MVPA time
-            paste0(format(round(results_summary_means[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["minutes_MVPA"]]), ") | ",
-                   format(round(results_summary_medians[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["minutes_MVPA"]]), ")"),  
+            paste0(format(round(results_summary_means[["minutes_MVPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_means[["minutes_MVPA"]]), ") | ",
+                   format(round(results_summary_medians[["minutes_MVPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_medians[["minutes_MVPA"]]), ")"),  
             
             # Percent time SED 
-            paste0(format(round(results_summary_means[["percent_SED"]], 1), nsmall = 1), " % | ", format(round(results_summary_medians[["percent_SED"]], 1), nsmall = 1), " %"),
+            paste0(format(round(results_summary_means[["percent_SED"]], 1), nsmall = 1), " | ", format(round(results_summary_medians[["percent_SED"]], 1), nsmall = 1)),
             
             # Percent time LPA 
-            paste0(format(round(results_summary_means[["percent_LPA"]], 1), nsmall = 1), " % | ", format(round(results_summary_medians[["percent_LPA"]], 1), nsmall = 1), " %"),
+            paste0(format(round(results_summary_means[["percent_LPA"]], 1), nsmall = 1), " | ", format(round(results_summary_medians[["percent_LPA"]], 1), nsmall = 1)),
             
             # Percent time MPA 
-            paste0(format(round(results_summary_means[["percent_MPA"]], 1), nsmall = 1), " % | ", format(round(results_summary_medians[["percent_MPA"]], 1), nsmall = 1), " %"),      
+            paste0(format(round(results_summary_means[["percent_MPA"]], 1), nsmall = 1), " | ", format(round(results_summary_medians[["percent_MPA"]], 1), nsmall = 1)),      
             
             # Percent time VPA 
-            paste0(format(round(results_summary_means[["percent_VPA"]], 1), nsmall = 1), " % | ", format(round(results_summary_medians[["percent_VPA"]], 1), nsmall = 1), " %"),  
+            paste0(format(round(results_summary_means[["percent_VPA"]], 1), nsmall = 1), " | ", format(round(results_summary_medians[["percent_VPA"]], 1), nsmall = 1)),  
             
             # Percent time MVPA  
-            paste0(format(round(results_summary_means[["percent_MVPA"]], 1), nsmall = 1), " % | ", format(round(results_summary_medians[["percent_MVPA"]], 1), nsmall = 1), " %"),                 
+            paste0(format(round(results_summary_means[["percent_MVPA"]], 1), nsmall = 1), " | ", format(round(results_summary_medians[["percent_MVPA"]], 1), nsmall = 1)),                 
             
             # Ratio MVPA/SED
             paste0(format(round(results_summary_means[["ratio_mvpa_sed"]], 2), nsmall = 2), " | ", format(round(results_summary_medians[["ratio_mvpa_sed"]], 2), nsmall = 2)),
             
             # MET-hr MVPA
-            paste0(format(round(results_summary_means[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr | ", format(round(results_summary_medians[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr"),         
-           
-             # Total kilocalories
-            paste0(format(round(results_summary_means[["total_kcal"]], 2), nsmall = 2),   " kcal | ", format(round(results_summary_medians[["total_kcal"]], 2), nsmall = 2), " kcal"),
+            paste0(format(round(results_summary_means[["mets_hours_mvpa"]], 2), nsmall = 2), " | ", format(round(results_summary_medians[["mets_hours_mvpa"]], 2), nsmall = 2)),         
+            # Total kilocalories
+            paste0(format(round(results_summary_means[["total_kcal"]], 2), nsmall = 2),   " | ", format(round(results_summary_medians[["total_kcal"]], 2), nsmall = 2)),
             
             # Physical activity level (PAL) 
             paste0(format(round(results_summary_means[["pal"]], 2), nsmall = 2),  " | ", format(round(results_summary_medians[["pal"]], 2), nsmall = 2)),  
             
             # Total number of steps
-            paste0(round(results_summary_means[["total_steps"]], 0), " steps | ", round(results_summary_medians[["total_steps"]], 0), " steps"),
+            paste0(round(results_summary_means[["total_steps"]], 0), " | ", round(results_summary_medians[["total_steps"]], 0)),
             
             # Max step accum 60min
             paste0(format(round(results_summary_means[["max_steps_60min"]], 2), nsmall = 2), " | ", format(round(results_summary_medians[["max_steps_60min"]], 2), nsmall = 2)),
@@ -329,28 +328,28 @@ flextable::set_flextable_defaults(fonts_ignore = TRUE)
             paste0(format(round(results_summary_means[["ig"]], 2), nsmall = 2), " | ", format(round(results_summary_medians[["ig"]], 2), nsmall = 2)),
             
             # M1/3
-            paste0(format(round(results_summary_means[["M1/3"]], 1), nsmall = 1), " counts/", epoch_label, " | ",
-                   format(round(results_summary_medians[["M1/3"]], 1), nsmall = 1), " counts/", epoch_label), 
+            paste0(format(round(results_summary_means[["M1/3"]], 1), nsmall = 1), " | ",
+                   format(round(results_summary_medians[["M1/3"]], 1), nsmall = 1)), 
             
             # M120
-            paste0(format(round(results_summary_means[["M120"]], 1), nsmall = 1), " counts/", epoch_label, " | ",
-                   format(round(results_summary_medians[["M120"]], 1), nsmall = 1), " counts/", epoch_label), 
+            paste0(format(round(results_summary_means[["M120"]], 1), nsmall = 1), " | ",
+                   format(round(results_summary_medians[["M120"]], 1), nsmall = 1)), 
             
             # M60
-            paste0(format(round(results_summary_means[["M60"]], 1), nsmall = 1), " counts/", epoch_label, " | ",
-                   format(round(results_summary_medians[["M60"]], 1), nsmall = 1), " counts/", epoch_label), 
+            paste0(format(round(results_summary_means[["M60"]], 1), nsmall = 1), " | ",
+                   format(round(results_summary_medians[["M60"]], 1), nsmall = 1)), 
             
             # M30
-            paste0(format(round(results_summary_means[["M30"]], 1), nsmall = 1), " counts/", epoch_label, " | ",
-                   format(round(results_summary_medians[["M30"]], 1), nsmall = 1), " counts/", epoch_label),
+            paste0(format(round(results_summary_means[["M30"]], 1), nsmall = 1), " | ",
+                   format(round(results_summary_medians[["M30"]], 1), nsmall = 1)),
             
             # M15
-            paste0(format(round(results_summary_means[["M15"]], 1), nsmall = 1), " counts/", epoch_label, " | ",
-                   format(round(results_summary_medians[["M15"]], 1), nsmall = 1), " counts/", epoch_label), 
+            paste0(format(round(results_summary_means[["M15"]], 1), nsmall = 1), " | ",
+                   format(round(results_summary_medians[["M15"]], 1), nsmall = 1)), 
             
             # M5
-            paste0(format(round(results_summary_means[["M5"]], 1), nsmall = 1), " counts/", epoch_label, " | ",
-                   format(round(results_summary_medians[["M5"]], 1), nsmall = 1), " counts/", epoch_label)
+            paste0(format(round(results_summary_means[["M5"]], 1), nsmall = 1), " | ",
+                   format(round(results_summary_medians[["M5"]], 1), nsmall = 1))
             
           )
         ) %>% dplyr::filter(Metric %in% c("Number of valid days", selected_metrics))
@@ -400,12 +399,12 @@ if (language == "fr") {
       "Acc. pas pic 5 min (pas/min)",
       "Acc. pas pic 1 min (pas/min)",
       "Gradient d'intensité",
-      "M1/3",
-      "M120",
-      "M60",
-      "M30",
-      "M15",
-      "M5"
+      paste0("M1/3", " (counts/", epoch_label, ")"),
+      paste0("M120", " (counts/", epoch_label, ")"),
+      paste0("M60", " (counts/", epoch_label, ")"),
+      paste0("M30", " (counts/", epoch_label, ")"),
+      paste0("M15", " (counts/", epoch_label, ")"),
+      paste0("M5", " (counts/", epoch_label, ")")
     )
 
     
@@ -458,12 +457,12 @@ if (language == "fr") {
   if (metrics == "int_distri") {
     selected_metrics <- c(
       "Gradient d'intensité",
-      "M1/3",
-      "M120",
-      "M60",
-      "M30",
-      "M15",
-      "M5"
+      paste0("M1/3", " (counts/", epoch_label, ")"),
+      paste0("M120", " (counts/", epoch_label, ")"),
+      paste0("M60", " (counts/", epoch_label, ")"),
+      paste0("M30", " (counts/", epoch_label, ")"),
+      paste0("M15", " (counts/", epoch_label, ")"),
+      paste0("M5", " (counts/", epoch_label, ")")
     )
     
   } 
@@ -505,90 +504,90 @@ if (language == "fr") {
           "Acc. pas pic 5 min (pas/min)",  
           "Acc. pas pic 1 min (pas/min)",
           "Gradient d'intensité",
-          "M1/3",
-          "M120",
-          "M60",
-          "M30",
-          "M15",
-          "M5"
+          paste0("M1/3", " (counts/", epoch_label, ")"),
+          paste0("M120", " (counts/", epoch_label, ")"),
+          paste0("M60", " (counts/", epoch_label, ")"),
+          paste0("M30", " (counts/", epoch_label, ")"),
+          paste0("M15", " (counts/", epoch_label, ")"),
+          paste0("M5", " (counts/", epoch_label, ")")
           
         ),
         
         "Moyenne | m\xc3\xa9diane journali\xc3\xa8re obtenue \xc3\xa0 partir des jours valides" = c(
           
           # Nombre de jours valides
-          paste0(results_summary_means[["valid_days"]], " jour(s)"),
+          paste0(results_summary_means[["valid_days"]]),
           
           # Temps de port
-          paste0(format(round(results_summary_means[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["wear_time"]]), ") | ",  
-                 format(round(results_summary_medians[["wear_time"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["wear_time"]]), ")"),  
+          paste0(format(round(results_summary_means[["wear_time"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_means[["wear_time"]]), ") | ",  
+                 format(round(results_summary_medians[["wear_time"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_medians[["wear_time"]]), ")"),  
           
-          # Total Axis 1
-          paste0(format(round(results_summary_means[["total_counts_axis1"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["total_counts_axis1"]]), ") | ",  
-                 format(round(results_summary_medians[["total_counts_axis1"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["total_counts_axis1"]]), ")"), 
+          # Total counts Axis 1
+          paste0(format(round(results_summary_means[["total_counts_axis1"]], 1), nsmall = 1), " | ",
+                 format(round(results_summary_medians[["total_counts_axis1"]], 1), nsmall = 1)), 
           
-          # Total VM
-          paste0(format(round(results_summary_means[["total_counts_vm"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["total_counts_vm"]]), ") | ",  
-                 format(round(results_summary_medians[["total_counts_vm"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["total_counts_vm"]]), ")"), 
+          # Total counts VM
+          paste0(format(round(results_summary_means[["total_counts_vm"]], 1), nsmall = 1), " | ",
+                 format(round(results_summary_medians[["total_counts_vm"]], 1), nsmall = 1)), 
           
           # Axis 1 par min
-          paste0(format(round(results_summary_means[["axis1_per_min"]], 1), nsmall = 1), " counts/min | ",
-                 format(round(results_summary_medians[["axis1_per_min"]], 1), nsmall = 1), " counts/min"), 
+          paste0(format(round(results_summary_means[["axis1_per_min"]], 1), nsmall = 1), " | ",
+                 format(round(results_summary_medians[["axis1_per_min"]], 1), nsmall = 1)), 
           
           # VM par min
-          paste0(format(round(results_summary_means[["vm_per_min"]], 1), nsmall = 1), " counts/min | ",
-                 format(round(results_summary_medians[["vm_per_min"]], 1), nsmall = 1), " counts/min"), 
+          paste0(format(round(results_summary_means[["vm_per_min"]], 1), nsmall = 1), " | ",
+                 format(round(results_summary_medians[["vm_per_min"]], 1), nsmall = 1)), 
           
           # Minutes SED
-          paste0(format(round(results_summary_means[["minutes_SED"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["minutes_SED"]]), ") | ",  
-                 format(round(results_summary_medians[["minutes_SED"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["minutes_SED"]]), ")"), 
+          paste0(format(round(results_summary_means[["minutes_SED"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_means[["minutes_SED"]]), ") | ",  
+                 format(round(results_summary_medians[["minutes_SED"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_medians[["minutes_SED"]]), ")"), 
           
           # Minutes LPA
-          paste0(format(round(results_summary_means[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["minutes_LPA"]]), ") | ",  
-                 format(round(results_summary_medians[["minutes_LPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["minutes_LPA"]]), ")"),
+          paste0(format(round(results_summary_means[["minutes_LPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_means[["minutes_LPA"]]), ") | ",  
+                 format(round(results_summary_medians[["minutes_LPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_medians[["minutes_LPA"]]), ")"),
           
           # Minutes MPA
-          paste0(format(round(results_summary_means[["minutes_MPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["minutes_MPA"]]), ") | ",  
-                 format(round(results_summary_medians[["minutes_MPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["minutes_MPA"]]), ")"),
+          paste0(format(round(results_summary_means[["minutes_MPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_means[["minutes_MPA"]]), ") | ",  
+                 format(round(results_summary_medians[["minutes_MPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_medians[["minutes_MPA"]]), ")"),
           
           # Minutes VPA
-          paste0(format(round(results_summary_means[["minutes_VPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["minutes_VPA"]]), ") | ",  
-                 format(round(results_summary_medians[["minutes_VPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["minutes_VPA"]]), ")"),
+          paste0(format(round(results_summary_means[["minutes_VPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_means[["minutes_VPA"]]), ") | ",  
+                 format(round(results_summary_medians[["minutes_VPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_medians[["minutes_VPA"]]), ")"),
           
           # Minutes MVPA
-          paste0(format(round(results_summary_means[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_means[["minutes_MVPA"]]), ") | ",
-                 format(round(results_summary_medians[["minutes_MVPA"]], 1), nsmall = 1), " min (", hms::hms(minutes = results_summary_medians[["minutes_MVPA"]]), ")"), 
+          paste0(format(round(results_summary_means[["minutes_MVPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_means[["minutes_MVPA"]]), ") | ",
+                 format(round(results_summary_medians[["minutes_MVPA"]], 1), nsmall = 1), " (", hms::hms(minutes = results_summary_medians[["minutes_MVPA"]]), ")"), 
           
           # % SED
-          paste0(format(round(results_summary_means[["percent_SED"]], 1), nsmall = 1), " % | ", format(round(results_summary_medians[["percent_SED"]], 1), nsmall = 1), " %"),
+          paste0(format(round(results_summary_means[["percent_SED"]], 1), nsmall = 1), " | ", format(round(results_summary_medians[["percent_SED"]], 1), nsmall = 1)),
           
           # % LPA
-          paste0(format(round(results_summary_means[["percent_LPA"]], 1), nsmall = 1), " % | ", format(round(results_summary_medians[["percent_LPA"]], 1), nsmall = 1), " %"),  
+          paste0(format(round(results_summary_means[["percent_LPA"]], 1), nsmall = 1), " | ", format(round(results_summary_medians[["percent_LPA"]], 1), nsmall = 1)),  
           
           # % MPA
-          paste0(format(round(results_summary_means[["percent_MPA"]], 1), nsmall = 1), " % | ", format(round(results_summary_medians[["percent_MPA"]], 1), nsmall = 1), " %"), 
+          paste0(format(round(results_summary_means[["percent_MPA"]], 1), nsmall = 1), " | ", format(round(results_summary_medians[["percent_MPA"]], 1), nsmall = 1)), 
           
           # % VPA
-          paste0(format(round(results_summary_means[["percent_VPA"]], 1), nsmall = 1), " % | ", format(round(results_summary_medians[["percent_VPA"]], 1), nsmall = 1), " %"), 
+          paste0(format(round(results_summary_means[["percent_VPA"]], 1), nsmall = 1), " | ", format(round(results_summary_medians[["percent_VPA"]], 1), nsmall = 1)), 
           
           
           # % MVPA
-          paste0(format(round(results_summary_means[["percent_MVPA"]], 1), nsmall = 1), " % | ", format(round(results_summary_medians[["percent_MVPA"]], 1), nsmall = 1), " %"),  
+          paste0(format(round(results_summary_means[["percent_MVPA"]], 1), nsmall = 1), " | ", format(round(results_summary_medians[["percent_MVPA"]], 1), nsmall = 1)),  
           
           # Ratio MVPA/SED
           paste0(format(round(results_summary_means[["ratio_mvpa_sed"]], 2), nsmall = 2), " | ", format(round(results_summary_medians[["ratio_mvpa_sed"]], 2), nsmall = 2)),
           
           # Total METs-hr
-          paste0(format(round(results_summary_means[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr | ", format(round(results_summary_medians[["mets_hours_mvpa"]], 2), nsmall = 2), " MET-hr"),
+          paste0(format(round(results_summary_means[["mets_hours_mvpa"]], 2), nsmall = 2), " | ", format(round(results_summary_medians[["mets_hours_mvpa"]], 2), nsmall = 2)),
           
           # Total kcal
-          paste0(format(round(results_summary_means[["total_kcal"]], 2), nsmall = 2),   " kcal | ", format(round(results_summary_medians[["total_kcal"]], 2), nsmall = 2), " kcal"),
+          paste0(format(round(results_summary_means[["total_kcal"]], 2), nsmall = 2),   " | ", format(round(results_summary_medians[["total_kcal"]], 2), nsmall = 2)),
           
           # NAP
           paste0(format(round(results_summary_means[["pal"]], 2), nsmall = 2),  " | ", format(round(results_summary_medians[["pal"]], 2), nsmall = 2)),  
           
           # Total pas
-          paste0(round(results_summary_means[["total_steps"]], 0), " pas | ", round(results_summary_medians[["total_steps"]], 0), " pas"),
+          paste0(round(results_summary_means[["total_steps"]], 0), " | ", round(results_summary_medians[["total_steps"]], 0)),
           
           # Max step accum 60min
           paste0(format(round(results_summary_means[["max_steps_60min"]], 2), nsmall = 2), " | ", format(round(results_summary_medians[["max_steps_60min"]], 2), nsmall = 2)),
@@ -624,28 +623,28 @@ if (language == "fr") {
           paste0(format(round(results_summary_means[["ig"]], 2), nsmall = 2), " | ", format(round(results_summary_medians[["ig"]], 2), nsmall = 2)),
           
           # M1/3
-          paste0(format(round(results_summary_means[["M1/3"]], 1), nsmall = 1), " counts/", epoch_label, " | ",
-                 format(round(results_summary_medians[["M1/3"]], 1), nsmall = 1), " counts/", epoch_label), 
+          paste0(format(round(results_summary_means[["M1/3"]], 1), nsmall = 1), " | ",
+                 format(round(results_summary_medians[["M1/3"]], 1), nsmall = 1)), 
           
           # M120
-          paste0(format(round(results_summary_means[["M120"]], 1), nsmall = 1), " counts/", epoch_label, " | ",
-                 format(round(results_summary_medians[["M120"]], 1), nsmall = 1), " counts/", epoch_label), 
+          paste0(format(round(results_summary_means[["M120"]], 1), nsmall = 1), " | ",
+                 format(round(results_summary_medians[["M120"]], 1), nsmall = 1)), 
           
           # M60
-          paste0(format(round(results_summary_means[["M60"]], 1), nsmall = 1), " counts/", epoch_label, " | ",
-                 format(round(results_summary_medians[["M60"]], 1), nsmall = 1), " counts/", epoch_label), 
+          paste0(format(round(results_summary_means[["M60"]], 1), nsmall = 1), " | ",
+                 format(round(results_summary_medians[["M60"]], 1), nsmall = 1)), 
           
           # M30
-          paste0(format(round(results_summary_means[["M30"]], 1), nsmall = 1), " counts/", epoch_label, " | ",
-                 format(round(results_summary_medians[["M30"]], 1), nsmall = 1), " counts/", epoch_label),
+          paste0(format(round(results_summary_means[["M30"]], 1), nsmall = 1), " | ",
+                 format(round(results_summary_medians[["M30"]], 1), nsmall = 1)),
           
           # M15
-          paste0(format(round(results_summary_means[["M15"]], 1), nsmall = 1), " counts/", epoch_label, " | ",
-                 format(round(results_summary_medians[["M15"]], 1), nsmall = 1), " counts/", epoch_label), 
+          paste0(format(round(results_summary_means[["M15"]], 1), nsmall = 1), " | ",
+                 format(round(results_summary_medians[["M15"]], 1), nsmall = 1)), 
           
           # M5
-          paste0(format(round(results_summary_means[["M5"]], 1), nsmall = 1), " counts/", epoch_label, " | ",
-                 format(round(results_summary_medians[["M5"]], 1), nsmall = 1), " counts/", epoch_label)
+          paste0(format(round(results_summary_means[["M5"]], 1), nsmall = 1), " | ",
+                 format(round(results_summary_medians[["M5"]], 1), nsmall = 1))
           
         )
       ) %>% dplyr::filter(Indicateur %in% c("Nombre de jours valides", selected_metrics))
