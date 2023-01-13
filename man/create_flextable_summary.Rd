@@ -7,7 +7,9 @@
 create_flextable_summary(
   results_summary_means,
   results_summary_medians,
-  language = c("en", "fr")
+  language = c("en", "fr"),
+  metrics = c("all", "volume", "step_acc", "int_distri"),
+  epoch_label = "60s"
 )
 }
 \arguments{
@@ -15,7 +17,12 @@ create_flextable_summary(
 
 \item{results_summary_medians}{A dataframe with median results obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, \code{\link{recap_by_day}}, and then the \code{\link{average_results}} functions.}
 
-\item{language}{A character value for setting the language with which the table should be created: \code{en} for english; \code{fr} for french.}
+\item{language}{A character value for setting the language with which the figure should be created: \code{en} for english; \code{fr} for french.}
+
+\item{metrics}{A character value for setting the metrics to be shown in the figure. "volume" refers to "activity volume" metrics, step_acc" refers
+to "step accumlulation" metrics, and "int_distri" refers to intensity distribution metrics. By default, the function provides all computed metrics.}
+
+\item{epoch_label}{A character value to be pasted into the names of the variables to build the figure}
 }
 \value{
 A flextable object
@@ -52,7 +59,7 @@ summary_by_day <- recap_by_day(
     sex = "male",
     valid_wear_time_start = "07:00:00",
     valid_wear_time_end = "22:00:00"
-    )
+    )$df_all_metrics
 results_summary_means <- average_results(
     data = summary_by_day, 
     minimum_wear_time = 10, 
