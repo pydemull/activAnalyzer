@@ -357,280 +357,280 @@ return(plot)
 # Create figure for french language ===============================================================================
 if (language == "fr") {
   
-# Generate figure
-if (metrics == "all") {
- selected_metrics <- c(
-   "Temps de port (min)",
-   "Total counts Axe 1 ",
-   "Total counts VM",
-   "Moyenne Axe 1 (counts/min)",
-   "Moyenne VM (counts/min)",
-   "Temps SED (min)", 
-   "Temps LPA (min)", 
-   "Temps MPA (min)",
-   "Temps VPA (min)",
-   "Temps MVPA (min)",
-   "Proportion du temps de port SED (%)",
-   "Proportion du temps de port LPA (%)",
-   "Proportion du temps de port MPA (%)",
-   "Proportion du temps de port VPA (%)",
-   "Proportion du temps de port MVPA (%)",
-   "Ratio MVPA / SED",
-   "Total MET-hr", 
-   "Total kcal",
-   "NAP",
-   "Total pas",
-   "Acc. pas max. 60 min (pas/min)",
-   "Acc. pas max. 30 min (pas/min)",
-   "Acc. pas max. 20 min (pas/min)",
-   "Acc. pas max. 5 min (pas/min)",
-   "Acc. pas max. 1 min (pas/min)",
-   "Acc. pas pic 60 min (pas/min)",
-   "Acc. pas pic 30 min (pas/min)",
-   "Acc. pas pic 20 min (pas/min)",
-   "Acc. pas pic 5 min (pas/min)",
-   "Acc. pas pic 1 min (pas/min)",
-   "Gradient d'intensité",
-   paste0("M1/3 (counts/", epoch_label, ")"),
-   paste0("M120 (counts/", epoch_label, ")"),
-   paste0("M60 (counts/", epoch_label, ")"), 
-   paste0("M30 (counts/", epoch_label, ")"),
-   paste0("M15 (counts/", epoch_label, ")"),
-   paste0("M5 (counts/", epoch_label, ")")
- )
- 
- fig_title <- "Tous les indicateurs"
- n_col = 5
- 
-} 
-
-if (metrics == "volume") {
- selected_metrics <- c(
-   "Temps de port (min)",
-   "Total counts Axe 1 ",
-   "Total counts VM",
-   "Moyenne Axe 1 (counts/min)",
-   "Moyenne VM (counts/min)",
-   "Temps SED (min)", 
-   "Temps LPA (min)", 
-   "Temps MPA (min)",
-   "Temps VPA (min)",
-   "Temps MVPA (min)",
-   "Proportion du temps de port SED (%)",
-   "Proportion du temps de port LPA (%)",
-   "Proportion du temps de port MPA (%)",
-   "Proportion du temps de port VPA (%)",
-   "Proportion du temps de port MVPA (%)",
-   "Ratio MVPA / SED",
-   "Total MET-hr", 
-   "Total kcal",
-   "NAP",
-   "Total pas"
- )
- 
- fig_title <- "Indicteurs de volume d'activité"
- n_col = 5
- 
-} 
-
-if (metrics == "step_acc") {
- selected_metrics <- c(
-   "Acc. pas max. 60 min (pas/min)",
-   "Acc. pas max. 30 min (pas/min)",
-   "Acc. pas max. 20 min (pas/min)",
-   "Acc. pas max. 5 min (pas/min)",
-   "Acc. pas max. 1 min (pas/min)",
-   "Acc. pas pic 60 min (pas/min)",
-   "Acc. pas pic 30 min (pas/min)",
-   "Acc. pas pic 20 min (pas/min)",
-   "Acc. pas pic 5 min (pas/min)",
-   "Acc. pas pic 1 min (pas/min)"
- )
- 
- fig_title <- "Indicateurs d'accumulation de pas"
- n_col = 5
- 
-} 
-
-if (metrics == "int_distri") {
- selected_metrics <- c(
-   "Gradient d'intensité",
-   paste0("M1/3 (counts/", epoch_label, ")"),
-   paste0("M120 (counts/", epoch_label, ")"),
-   paste0("M60 (counts/", epoch_label, ")"), 
-   paste0("M30 (counts/", epoch_label, ")"),
-   paste0("M15 (counts/", epoch_label, ")"),
-   paste0("M5 (counts/", epoch_label, ")")
- )
- 
- fig_title <- "Indicateurs de distribution de l'intensité"
- n_col = 3
- 
-} 
-
-# Make figure
-plot <-
- data %>%
- dplyr::mutate(date = as.factor(date),
-               validity = ifelse(wear_time >= minimum_wear_time_for_analysis * 60, "Valid day", "Non valid day"),
-               validity =  forcats::fct_relevel(validity, "Valid day", "Non valid day")) %>%
- tidyr::pivot_longer(cols = c(
-   wear_time,
-   total_counts_axis1,
-   total_counts_vm,
-   axis1_per_min,
-   vm_per_min,
-   minutes_SED,
-   minutes_LPA,
-   minutes_MPA,
-   minutes_VPA,
-   minutes_MVPA,
-   percent_SED,
-   percent_LPA,
-   percent_MPA,
-   percent_VPA,
-   percent_MVPA,
-   ratio_mvpa_sed,
-   mets_hours_mvpa, 
-   total_kcal,
-   pal,
-   total_steps,
-   max_steps_60min,
-   max_steps_30min,
-   max_steps_20min,
-   max_steps_5min, 
-   max_steps_1min, 
-   peak_steps_60min, 
-   peak_steps_30min, 
-   peak_steps_20min, 
-   peak_steps_5min,
-   peak_steps_1min,
-   ig,
-   "M1/3",
-   M120,
-   M60, 
-   M30,
-   M15,
-   M5
- ),
- names_to = "variable", values_to = "value") %>%
- dplyr::mutate(variable =  forcats::fct_relevel(
-   variable, 
-   "wear_time",
-   "total_counts_axis1",
-   "total_counts_vm",
-   "axis1_per_min",
-   "vm_per_min",
-   "minutes_SED",
-   "minutes_LPA",
-   "minutes_MPA",
-   "minutes_VPA",
-   "minutes_MVPA",
-   "percent_SED",
-   "percent_LPA",
-   "percent_MPA",
-   "percent_VPA",
-   "percent_MVPA",
-   "ratio_mvpa_sed",
-   "mets_hours_mvpa", 
-   "total_kcal",
-   "pal",
-   "total_steps",
-   "max_steps_60min",
-   "max_steps_30min",
-   "max_steps_20min",
-   "max_steps_5min", 
-   "max_steps_1min", 
-   "peak_steps_60min", 
-   "peak_steps_30min", 
-   "peak_steps_20min", 
-   "peak_steps_5min",
-   "peak_steps_1min",
-   "ig",
-   "M1/3",
-   "M120",
-   "M60", 
-   "M30",
-   "M15",
-   "M5"
- ),
- variable = forcats::fct_recode(
-   variable, 
-   "Temps de port (min)" = "wear_time",
-   "Total counts Axe 1 "= "total_counts_axis1",
-   "Total counts VM" = "total_counts_vm",
-   "Moyenne Axe 1 (counts/min)" = "axis1_per_min",
-   "Moyenne VM (counts/min)" = "vm_per_min",
-   "Temps SED (min)" = "minutes_SED", 
-   "Temps LPA (min)" = "minutes_LPA", 
-   "Temps MPA (min)" = "minutes_MPA",
-   "Temps VPA (min)" = "minutes_VPA",
-   "Temps MVPA (min)" = "minutes_MVPA",
-   "Proportion du temps de port SED (%)" = "percent_SED",
-   "Proportion du temps de port LPA (%)" = "percent_LPA",
-   "Proportion du temps de port MPA (%)" = "percent_MPA",
-   "Proportion du temps de port VPA (%)" = "percent_VPA",
-   "Proportion du temps de port MVPA (%)" = "percent_MVPA",
-   "Ratio MVPA / SED" = "ratio_mvpa_sed",
-   "Total MET-hr" = "mets_hours_mvpa", 
-   "Total kcal" = "total_kcal",
-   "NAP" = "pal",
-   "Total pas" = "total_steps",
-   "Acc. pas max. 60 min (pas/min)" = "max_steps_60min",
-   "Acc. pas max. 30 min (pas/min)" ="max_steps_30min",
-   "Acc. pas max. 20 min (pas/min)" ="max_steps_20min",
-   "Acc. pas max. 5 min (pas/min)" ="max_steps_5min", 
-   "Acc. pas max. 1 min (pas/min)" ="max_steps_1min", 
-   "Acc. pas pic 60 min (pas/min)" ="peak_steps_60min", 
-   "Acc. pas pic 30 min (pas/min)" ="peak_steps_30min", 
-   "Acc. pas pic 20 min (pas/min)" ="peak_steps_20min", 
-   "Acc. pas pic 5 min (pas/min)"  ="peak_steps_5min",
-   "Acc. pas pic 1 min (pas/min)"  ="peak_steps_1min",
-   "Gradient d'intensité" = "ig",
-   "M1/3 (counts/{{epoch_label}})"  := "M1/3",
-   "M120 (counts/{{epoch_label}})"  := "M120",
-   "M60 (counts/{{epoch_label}})"   := "M60", 
-   "M30 (counts/{{epoch_label}})"   := "M30",
-   "M15 (counts/{{epoch_label}})"   := "M15",
-   "M5 (counts/{{epoch_label}})"    := "M5"
- )
- ) %>%
- dplyr::filter(variable %in% selected_metrics) %>%
- dplyr::mutate(value_maj = ifelse(is.na(value), 0, value)) %>%
- ggplot(aes(x = date, y = value_maj, fill = validity, color = validity)) +
- ggtitle(fig_title) +
- geom_bar(stat = "identity") +
- geom_point(size = 2, color = "red") +
- geom_line(aes(group = 1), linewidth = 0.7, color = "red") +
- geom_text(aes(label = ifelse(is.na(value), "NA", round(value, 1))), size = label_text_size, vjust = -0.6, color = "black") +
- labs(x = "Date", y = "", fill = "") +
- scale_y_continuous(expand = expansion(mult = c(.05, .2))) +
- scale_fill_manual(labels = c("Jour valide", 
-                              paste0("Jour non valide (<", 
-                                     minimum_wear_time_for_analysis, 
-                                     " heures entre ", start_day_analysis, 
-                                     " et ", end_day_analysis, ")")),
-                   values = c("#00BE6C", "#FC717F")) +
- scale_color_manual(labels = c("Jour valide", 
-                               paste0("Jour non valide(<", 
-                                      minimum_wear_time_for_analysis, 
-                                      " heures entre ", start_day_analysis, 
-                                      " et ", end_day_analysis, ")")),
-                    values = c("#00BE6C", "#FC717F")) +
- theme_bw() + 
- theme(legend.position = "bottom",
-       legend.text = element_text(size = 15),
-       legend.background = element_rect(fill = "beige", colour = "beige"),
-       axis.title.x = element_blank(),
-       axis.text.x = element_text(size = title_text_size, angle = 45, hjust = 1, vjust = 1.1),
-       axis.text.y = element_blank(),
-       axis.ticks = element_blank(),
-       plot.background = element_rect(fill = "beige", color = "beige"),
-       plot.margin = margin(1, 1, 0.5, 1, "cm"),
-       strip.text.x = element_text(size = strip_text),
-       plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
- facet_wrap(. ~ variable, scales = "free_y", ncol = n_col) +
- guides(color = "none")
+   # Set list of metrics and parameters to be used for filerting table of results and creating the figure
+   if (metrics == "all") {
+    selected_metrics <- c(
+      "Temps de port (min)",
+      "Total counts Axe 1 ",
+      "Total counts VM",
+      "Moyenne Axe 1 (counts/min)",
+      "Moyenne VM (counts/min)",
+      "Temps SED (min)", 
+      "Temps LPA (min)", 
+      "Temps MPA (min)",
+      "Temps VPA (min)",
+      "Temps MVPA (min)",
+      "Proportion du temps de port SED (%)",
+      "Proportion du temps de port LPA (%)",
+      "Proportion du temps de port MPA (%)",
+      "Proportion du temps de port VPA (%)",
+      "Proportion du temps de port MVPA (%)",
+      "Ratio MVPA / SED",
+      "Total MET-hr", 
+      "Total kcal",
+      "NAP",
+      "Total pas",
+      "Acc. pas max. 60 min (pas/min)",
+      "Acc. pas max. 30 min (pas/min)",
+      "Acc. pas max. 20 min (pas/min)",
+      "Acc. pas max. 5 min (pas/min)",
+      "Acc. pas max. 1 min (pas/min)",
+      "Acc. pas pic 60 min (pas/min)",
+      "Acc. pas pic 30 min (pas/min)",
+      "Acc. pas pic 20 min (pas/min)",
+      "Acc. pas pic 5 min (pas/min)",
+      "Acc. pas pic 1 min (pas/min)",
+      "Gradient d'intensité",
+      paste0("M1/3 (counts/", epoch_label, ")"),
+      paste0("M120 (counts/", epoch_label, ")"),
+      paste0("M60 (counts/", epoch_label, ")"), 
+      paste0("M30 (counts/", epoch_label, ")"),
+      paste0("M15 (counts/", epoch_label, ")"),
+      paste0("M5 (counts/", epoch_label, ")")
+    )
+    
+    fig_title <- "Tous les indicateurs"
+    n_col = 5
+    
+   } 
+   
+   if (metrics == "volume") {
+    selected_metrics <- c(
+      "Temps de port (min)",
+      "Total counts Axe 1 ",
+      "Total counts VM",
+      "Moyenne Axe 1 (counts/min)",
+      "Moyenne VM (counts/min)",
+      "Temps SED (min)", 
+      "Temps LPA (min)", 
+      "Temps MPA (min)",
+      "Temps VPA (min)",
+      "Temps MVPA (min)",
+      "Proportion du temps de port SED (%)",
+      "Proportion du temps de port LPA (%)",
+      "Proportion du temps de port MPA (%)",
+      "Proportion du temps de port VPA (%)",
+      "Proportion du temps de port MVPA (%)",
+      "Ratio MVPA / SED",
+      "Total MET-hr", 
+      "Total kcal",
+      "NAP",
+      "Total pas"
+    )
+    
+    fig_title <- "Indicteurs de volume d'activité"
+    n_col = 5
+    
+   } 
+   
+   if (metrics == "step_acc") {
+    selected_metrics <- c(
+      "Acc. pas max. 60 min (pas/min)",
+      "Acc. pas max. 30 min (pas/min)",
+      "Acc. pas max. 20 min (pas/min)",
+      "Acc. pas max. 5 min (pas/min)",
+      "Acc. pas max. 1 min (pas/min)",
+      "Acc. pas pic 60 min (pas/min)",
+      "Acc. pas pic 30 min (pas/min)",
+      "Acc. pas pic 20 min (pas/min)",
+      "Acc. pas pic 5 min (pas/min)",
+      "Acc. pas pic 1 min (pas/min)"
+    )
+    
+    fig_title <- "Indicateurs d'accumulation de pas"
+    n_col = 5
+    
+   } 
+   
+   if (metrics == "int_distri") {
+    selected_metrics <- c(
+      "Gradient d'intensité",
+      paste0("M1/3 (counts/", epoch_label, ")"),
+      paste0("M120 (counts/", epoch_label, ")"),
+      paste0("M60 (counts/", epoch_label, ")"), 
+      paste0("M30 (counts/", epoch_label, ")"),
+      paste0("M15 (counts/", epoch_label, ")"),
+      paste0("M5 (counts/", epoch_label, ")")
+    )
+    
+    fig_title <- "Indicateurs de distribution de l'intensité"
+    n_col = 3
+    
+   } 
+   
+  # Make figure
+  plot <-
+   data %>%
+   dplyr::mutate(date = as.factor(date),
+                 validity = ifelse(wear_time >= minimum_wear_time_for_analysis * 60, "Valid day", "Non valid day"),
+                 validity =  forcats::fct_relevel(validity, "Valid day", "Non valid day")) %>%
+   tidyr::pivot_longer(cols = c(
+     wear_time,
+     total_counts_axis1,
+     total_counts_vm,
+     axis1_per_min,
+     vm_per_min,
+     minutes_SED,
+     minutes_LPA,
+     minutes_MPA,
+     minutes_VPA,
+     minutes_MVPA,
+     percent_SED,
+     percent_LPA,
+     percent_MPA,
+     percent_VPA,
+     percent_MVPA,
+     ratio_mvpa_sed,
+     mets_hours_mvpa, 
+     total_kcal,
+     pal,
+     total_steps,
+     max_steps_60min,
+     max_steps_30min,
+     max_steps_20min,
+     max_steps_5min, 
+     max_steps_1min, 
+     peak_steps_60min, 
+     peak_steps_30min, 
+     peak_steps_20min, 
+     peak_steps_5min,
+     peak_steps_1min,
+     ig,
+     "M1/3",
+     M120,
+     M60, 
+     M30,
+     M15,
+     M5
+   ),
+   names_to = "variable", values_to = "value") %>%
+   dplyr::mutate(variable =  forcats::fct_relevel(
+     variable, 
+     "wear_time",
+     "total_counts_axis1",
+     "total_counts_vm",
+     "axis1_per_min",
+     "vm_per_min",
+     "minutes_SED",
+     "minutes_LPA",
+     "minutes_MPA",
+     "minutes_VPA",
+     "minutes_MVPA",
+     "percent_SED",
+     "percent_LPA",
+     "percent_MPA",
+     "percent_VPA",
+     "percent_MVPA",
+     "ratio_mvpa_sed",
+     "mets_hours_mvpa", 
+     "total_kcal",
+     "pal",
+     "total_steps",
+     "max_steps_60min",
+     "max_steps_30min",
+     "max_steps_20min",
+     "max_steps_5min", 
+     "max_steps_1min", 
+     "peak_steps_60min", 
+     "peak_steps_30min", 
+     "peak_steps_20min", 
+     "peak_steps_5min",
+     "peak_steps_1min",
+     "ig",
+     "M1/3",
+     "M120",
+     "M60", 
+     "M30",
+     "M15",
+     "M5"
+   ),
+   variable = forcats::fct_recode(
+     variable, 
+     "Temps de port (min)" = "wear_time",
+     "Total counts Axe 1 "= "total_counts_axis1",
+     "Total counts VM" = "total_counts_vm",
+     "Moyenne Axe 1 (counts/min)" = "axis1_per_min",
+     "Moyenne VM (counts/min)" = "vm_per_min",
+     "Temps SED (min)" = "minutes_SED", 
+     "Temps LPA (min)" = "minutes_LPA", 
+     "Temps MPA (min)" = "minutes_MPA",
+     "Temps VPA (min)" = "minutes_VPA",
+     "Temps MVPA (min)" = "minutes_MVPA",
+     "Proportion du temps de port SED (%)" = "percent_SED",
+     "Proportion du temps de port LPA (%)" = "percent_LPA",
+     "Proportion du temps de port MPA (%)" = "percent_MPA",
+     "Proportion du temps de port VPA (%)" = "percent_VPA",
+     "Proportion du temps de port MVPA (%)" = "percent_MVPA",
+     "Ratio MVPA / SED" = "ratio_mvpa_sed",
+     "Total MET-hr" = "mets_hours_mvpa", 
+     "Total kcal" = "total_kcal",
+     "NAP" = "pal",
+     "Total pas" = "total_steps",
+     "Acc. pas max. 60 min (pas/min)" = "max_steps_60min",
+     "Acc. pas max. 30 min (pas/min)" ="max_steps_30min",
+     "Acc. pas max. 20 min (pas/min)" ="max_steps_20min",
+     "Acc. pas max. 5 min (pas/min)" ="max_steps_5min", 
+     "Acc. pas max. 1 min (pas/min)" ="max_steps_1min", 
+     "Acc. pas pic 60 min (pas/min)" ="peak_steps_60min", 
+     "Acc. pas pic 30 min (pas/min)" ="peak_steps_30min", 
+     "Acc. pas pic 20 min (pas/min)" ="peak_steps_20min", 
+     "Acc. pas pic 5 min (pas/min)"  ="peak_steps_5min",
+     "Acc. pas pic 1 min (pas/min)"  ="peak_steps_1min",
+     "Gradient d'intensité" = "ig",
+     "M1/3 (counts/{{epoch_label}})"  := "M1/3",
+     "M120 (counts/{{epoch_label}})"  := "M120",
+     "M60 (counts/{{epoch_label}})"   := "M60", 
+     "M30 (counts/{{epoch_label}})"   := "M30",
+     "M15 (counts/{{epoch_label}})"   := "M15",
+     "M5 (counts/{{epoch_label}})"    := "M5"
+   )
+   ) %>%
+   dplyr::filter(variable %in% selected_metrics) %>%
+   dplyr::mutate(value_maj = ifelse(is.na(value), 0, value)) %>%
+   ggplot(aes(x = date, y = value_maj, fill = validity, color = validity)) +
+   ggtitle(fig_title) +
+   geom_bar(stat = "identity") +
+   geom_point(size = 2, color = "red") +
+   geom_line(aes(group = 1), linewidth = 0.7, color = "red") +
+   geom_text(aes(label = ifelse(is.na(value), "NA", round(value, 1))), size = label_text_size, vjust = -0.6, color = "black") +
+   labs(x = "Date", y = "", fill = "") +
+   scale_y_continuous(expand = expansion(mult = c(.05, .2))) +
+   scale_fill_manual(labels = c("Jour valide", 
+                                paste0("Jour non valide (<", 
+                                       minimum_wear_time_for_analysis, 
+                                       " heures entre ", start_day_analysis, 
+                                       " et ", end_day_analysis, ")")),
+                     values = c("#00BE6C", "#FC717F")) +
+   scale_color_manual(labels = c("Jour valide", 
+                                 paste0("Jour non valide(<", 
+                                        minimum_wear_time_for_analysis, 
+                                        " heures entre ", start_day_analysis, 
+                                        " et ", end_day_analysis, ")")),
+                      values = c("#00BE6C", "#FC717F")) +
+   theme_bw() + 
+   theme(legend.position = "bottom",
+         legend.text = element_text(size = 15),
+         legend.background = element_rect(fill = "beige", colour = "beige"),
+         axis.title.x = element_blank(),
+         axis.text.x = element_text(size = title_text_size, angle = 45, hjust = 1, vjust = 1.1),
+         axis.text.y = element_blank(),
+         axis.ticks = element_blank(),
+         plot.background = element_rect(fill = "beige", color = "beige"),
+         plot.margin = margin(1, 1, 0.5, 1, "cm"),
+         strip.text.x = element_text(size = strip_text),
+         plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+   facet_wrap(. ~ variable, scales = "free_y", ncol = n_col) +
+   guides(color = "none")
 
 # Return plot
 return(plot)
