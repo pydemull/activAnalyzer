@@ -6,7 +6,7 @@
 #' @param results_summary_medians A dataframe with median results obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, \code{\link{recap_by_day}}, and then the \code{\link{average_results}} functions.
 #' @param language A character value for setting the language with which the figure should be created: `en` for english; `fr` for french.
 #' @param metrics A character value for setting the metrics to be shown in the figure. "volume" refers to "activity volume" metrics, step_acc" refers 
-#'     to "step accumlulation" metrics, and "int_distri" refers to intensity distribution metrics. By default, the function provides all computed metrics.
+#'     to "step accumulation" metrics, and "int_distri" refers to intensity distribution metrics. By default, the function provides all computed metrics.
 #' @param epoch_label A character value to be pasted into the names of the variables to build the figure
 #'
 #' @return A flextable object
@@ -398,7 +398,7 @@ if (language == "fr") {
       "Acc. pas pic 20 min (pas/min)",
       "Acc. pas pic 5 min (pas/min)",
       "Acc. pas pic 1 min (pas/min)",
-      "Gradient d'intensité",
+      "Gradient d'intensit\xc3\xa9",
       paste0("M1/3", " (counts/", epoch_label, ")"),
       paste0("M120", " (counts/", epoch_label, ")"),
       paste0("M60", " (counts/", epoch_label, ")"),
@@ -456,7 +456,7 @@ if (language == "fr") {
   
   if (metrics == "int_distri") {
     selected_metrics <- c(
-      "Gradient d'intensité",
+      "Gradient d'intensit\xc3\xa9",
       paste0("M1/3", " (counts/", epoch_label, ")"),
       paste0("M120", " (counts/", epoch_label, ")"),
       paste0("M60", " (counts/", epoch_label, ")"),
@@ -503,7 +503,7 @@ if (language == "fr") {
           "Acc. pas pic 20 min (pas/min)", 
           "Acc. pas pic 5 min (pas/min)",  
           "Acc. pas pic 1 min (pas/min)",
-          "Gradient d'intensité",
+          "Gradient d'intensit\xc3\xa9",
           paste0("M1/3", " (counts/", epoch_label, ")"),
           paste0("M120", " (counts/", epoch_label, ")"),
           paste0("M60", " (counts/", epoch_label, ")"),
@@ -619,7 +619,7 @@ if (language == "fr") {
           # Peak step accum 1min
           paste0(format(round(results_summary_means[["peak_steps_1min"]], 2), nsmall = 2), " | ", format(round(results_summary_medians[["peak_steps_1min"]], 2), nsmall = 2)),
           
-          # Gradient d'intensité
+          # Gradient d'intensit\xc3\xa9
           paste0(format(round(results_summary_means[["ig"]], 2), nsmall = 2), " | ", format(round(results_summary_medians[["ig"]], 2), nsmall = 2)),
           
           # M1/3

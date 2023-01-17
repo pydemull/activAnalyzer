@@ -8,7 +8,7 @@
 #' @param end_day_analysis A character value to indicate the end of the period that was considered to validate a day based on wear time.
 #' @param language A character value for setting the language with which the figure should be created: `en` for english; `fr` for french.
 #' @param metrics A character value for setting the metrics to be shown in the figure. "volume" refers to "activity volume" metrics, step_acc" refers 
-#'     to "step accumlulation" metrics, and "int_distri" refers to intensity distribution metrics. By default, the function provides all computed metrics.
+#'     to "step accumulation" metrics, and "int_distri" refers to intensity distribution metrics. By default, the function provides all computed metrics.
 #' @param epoch_label A character value to be pasted into the names of the variables to build the figure
 #'
 #' @return A ggplot object
@@ -390,7 +390,7 @@ if (language == "fr") {
       "Acc. pas pic 20 min (pas/min)",
       "Acc. pas pic 5 min (pas/min)",
       "Acc. pas pic 1 min (pas/min)",
-      "Gradient d'intensité",
+      "Gradient d'intensit\xc3\xa9",
       paste0("M1/3 (counts/", epoch_label, ")"),
       paste0("M120 (counts/", epoch_label, ")"),
       paste0("M60 (counts/", epoch_label, ")"), 
@@ -428,7 +428,7 @@ if (language == "fr") {
       "Total pas"
     )
     
-    fig_title <- "Indicteurs de volume d'activité"
+    fig_title <- "Indicteurs de volume d'activit\xc3\xa9"
     n_col = 5
     
    } 
@@ -454,7 +454,7 @@ if (language == "fr") {
    
    if (metrics == "int_distri") {
     selected_metrics <- c(
-      "Gradient d'intensité",
+      "Gradient d'intensit\xc3\xa9",
       paste0("M1/3 (counts/", epoch_label, ")"),
       paste0("M120 (counts/", epoch_label, ")"),
       paste0("M60 (counts/", epoch_label, ")"), 
@@ -463,7 +463,7 @@ if (language == "fr") {
       paste0("M5 (counts/", epoch_label, ")")
     )
     
-    fig_title <- "Indicateurs de distribution de l'intensité"
+    fig_title <- "Indicateurs de distribution de l'intensit\xc3\xa9"
     n_col = 3
     
    } 
@@ -586,7 +586,7 @@ if (language == "fr") {
      "Acc. pas pic 20 min (pas/min)" ="peak_steps_20min", 
      "Acc. pas pic 5 min (pas/min)"  ="peak_steps_5min",
      "Acc. pas pic 1 min (pas/min)"  ="peak_steps_1min",
-     "Gradient d'intensité" = "ig",
+     "Gradient d'intensit\xc3\xa9" = "ig",
      "M1/3 (counts/{{epoch_label}})"  := "M1/3",
      "M120 (counts/{{epoch_label}})"  := "M120",
      "M60 (counts/{{epoch_label}})"   := "M60", 

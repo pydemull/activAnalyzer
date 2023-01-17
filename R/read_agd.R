@@ -3,7 +3,7 @@
 #' Read ActiGraph sleep watch data from a database stored in an
 #'     AGD file. Return a tibble. 
 #'     (Code is from actigraph.sleepr package <https://github.com/dipetkov/actigraph.sleepr/>. 
-#'     See LICENCE.note file in the app skeleton.)
+#'     See LICENSE.note file in the app skeleton.)
 #' 
 #' @param file Full path to an agd file to read.
 #' @param tz Time zone to convert DateTime ticks to POSIX time.

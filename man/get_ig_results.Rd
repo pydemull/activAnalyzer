@@ -33,6 +33,9 @@ and then the \code{\link{mark_intensity}} functions. Data should be grouped by d
 \item{start_last_bin}{A numeric value to set the lower bound of the last bin of the intensity band (in counts/epoch duration).}
 
 \item{bin_width}{A numeric value to set the width of the bins of the intensity band (in counts/epoch duration).}
+
+\item{cor_factor}{A numeric value resulting from the ratio between 60s and the epoch length of the analysed dataset. This is used to convert
+the number of rows into minutes when getting the results.}
 }
 \value{
 A list of objects.

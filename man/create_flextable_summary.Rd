@@ -20,7 +20,7 @@ create_flextable_summary(
 \item{language}{A character value for setting the language with which the figure should be created: \code{en} for english; \code{fr} for french.}
 
 \item{metrics}{A character value for setting the metrics to be shown in the figure. "volume" refers to "activity volume" metrics, step_acc" refers
-to "step accumlulation" metrics, and "int_distri" refers to intensity distribution metrics. By default, the function provides all computed metrics.}
+to "step accumulation" metrics, and "int_distri" refers to intensity distribution metrics. By default, the function provides all computed metrics.}
 
 \item{epoch_label}{A character value to be pasted into the names of the variables to build the figure}
 }

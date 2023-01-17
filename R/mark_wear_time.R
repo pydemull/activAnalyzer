@@ -65,7 +65,7 @@ mark_wear_time <- function(
         date, 
         time, 
         everything(),
-        -.data[[TS]]
+        -tidyselect::all_of(TS)
           )
     
   } else {
@@ -88,7 +88,7 @@ mark_wear_time <- function(
      date, 
      time, 
      everything(),
-     -.data[[TS]]
+     -tidyselect::all_of(TS)
    )
   
   }

@@ -7,7 +7,7 @@
 #' @param data A data frame of raw activity counts.
 #' @param settings A data frame of device settings.
 #' @return A tibble containing accelerometer data and having measurement settings as attributes.
-#' 
+#' @noRd 
 tbl_agd <- function(data, settings) {
   assertthat::assert_that(
     is.data.frame(data),

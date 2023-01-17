@@ -20,16 +20,17 @@ the \code{\link{recap_by_day}} functions.}
 a start at 0 and an end at the maximum of all the computed MX metrics.}
 
 \item{mpa_cutpoint}{A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity (in counts/epoch length used to compute MX metrics).
-Defaut value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude in counts/min.}
+Default value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude in counts/min.}
 
 \item{vpa_cutpoint}{A numeric value at and above which time is considered as spent in vigorous physical activity (in counts/epoch length used to compute MX metrics).
-Defaut value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude in counts/min.}
+Default value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude in counts/min.}
 }
 \value{
 A ggplot object
 }
 \description{
-Create a radar plot for MX metrics relating to each day of the measurement of physical behavior
+This function creates radar plots in relation to MX metrics as illustrated in Rowlands et al.
+(2018; doi:10.1249/MSS.0000000000001561) paper, here for each day of an accelerometer measurement.
 }
 \examples{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")

@@ -65,7 +65,7 @@ plot_data_with_intensity <- function(
     zoom_to = "23:59:59"
     ){
 
-  # Setting parameters for computation of breaks labels
+  # Setting parameters for computation of axis breaks labels
   if (as.numeric(hms::as_hms(zoom_to)) - as.numeric(hms::as_hms(zoom_from)) < 2*3600) {
     breaks_control_1 = hms::hms(0)
     breaks_control_2 = hms::hms(0)

@@ -12,6 +12,8 @@
 #' @param start_first_bin A numeric value to set the lower bound of the first bin of the intensity band (in counts/epoch duration).
 #' @param start_last_bin A numeric value to set the lower bound of the last bin of the intensity band (in counts/epoch duration).
 #' @param bin_width A numeric value to set the width of the bins of the intensity band (in counts/epoch duration).
+#' @param cor_factor A numeric value resulting from the ratio between 60s and the epoch length of the analysed dataset. This is used to convert 
+#'     the number of rows into minutes when getting the results.
 
 #' @return A list of objects.
 #'
@@ -154,7 +156,7 @@ get_ig_results <- function(
              label = label_eq,
              hjust = 0, size = 5
            ) +
-           labs(title = date, x = "Log(Middle intensity bin)", y = "Log(Duration)")
+           labs(title = date, x = "Log(Middle of intensity bin)", y = "Log(Duration)")
        } else {
          blank_plot
        }

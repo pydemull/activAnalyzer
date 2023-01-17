@@ -1,4 +1,7 @@
 #' Create a radar plot for the mean or median MX metrics relating to the measurement of physical behavior
+#' 
+#' This function creates a radar plot in relation to MX metrics as illustrated in Rowlands et al. 
+#'     (2018; doi:10.1249/MSS.0000000000001561) paper.
 #'
 #' @param data A dataframe with physical behavior metrics summarised using means or medians of valid days. It should have 
 #' been obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, 

@@ -5,13 +5,24 @@
 #'     https://stackoverflow.com/questions/36579767/add-unit-labels-to-radar-plot-and-remove-outer-ring-ggplot2-spider-web-plot-co.
 #'     For information, because this piece of code was on Stack Overflow website, it is under CC 4.0 license, which is compatible 
 #'     with the licence GPL v3 that is used for the {activAnalyzer} package (see: https://creativecommons.org/share-your-work/licensing-considerations/compatible-licenses/).
-#'
+#' The function `ggrename()` is from ggplot2 package (listed in DESCRIPTION file) by Hadley Wickham et al.: 
+#'     https://github.com/tidyverse/ggplot2/blob/main/R/utilities-grid.r.
+#' 
 #' @param theta A character value.
 #' @param start  A numeric value.
 #' @param direction A numeric value.
 #'
 #' @return A function setting a new coordinate system.
-#'
+#'  
+# Name ggplot grid object
+# Convenience function to name grid objects
+#
+# @keyword internal
+ggname <- function(prefix, grob) {
+  grob$name <- grid::grobName(grob, prefix)
+  grob
+}
+
 coord_radar <- function (theta = "x", start = 0, direction = 1) 
 {
   theta <- match.arg(theta, c("x", "y"))
@@ -56,16 +67,16 @@ coord_radar <- function (theta = "x", start = 0, direction = 1)
             minortheta <- paste("panel.grid.minor.", self$theta, sep = "")
             majorr     <- paste("panel.grid.major.", self$r,     sep = "")
             
-            ggplot2:::ggname("grill", grid::grobTree(
-              ggplot2:::element_render(theme, "panel.background"),
-              if (length(theta) > 0) ggplot2:::element_render(
+            ggname("grill", grid::grobTree(
+              ggplot2::element_render(theme, "panel.background"),
+              if (length(theta) > 0) ggplot2::element_render(
                 theme, majortheta, name = "angle",
                 x = c(rbind(0, 0.45 * sin(theta))) + 0.5,
                 y = c(rbind(0, 0.45 * cos(theta))) + 0.5,
                 id.lengths = rep(2, length(theta)),
                 default.units = "native"
               ),
-              if (length(thetamin) > 0) ggplot2:::element_render(
+              if (length(thetamin) > 0) ggplot2::element_render(
                 theme, minortheta, name = "angle",
                 x = c(rbind(0, 0.45 * sin(thetamin))) + 0.5,
                 y = c(rbind(0, 0.45 * cos(thetamin))) + 0.5,
@@ -73,7 +84,7 @@ coord_radar <- function (theta = "x", start = 0, direction = 1)
                 default.units = "native"
               ),
               
-              ggplot2:::element_render(
+              ggplot2::element_render(
                 theme, majorr, name = "radius",
                 x = rep(rfine, each = length(thetafine)) * sin(thetafine) + 0.5,
                 y = rep(rfine, each = length(thetafine)) * cos(thetafine) + 0.5,

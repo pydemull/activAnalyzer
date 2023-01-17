@@ -3,6 +3,7 @@
 export(average_results)
 export(compute_accumulation_metrics)
 export(compute_bmr)
+export(compute_intensity_distri_metrics)
 export(compute_mets)
 export(compute_pro_actigraph_score)
 export(compute_pro_score_cppac)

@@ -17,7 +17,8 @@
 #'     The graphic `p_band` shows the distribution of time spent in the configured bins of intensity for each day of the dataset. 
 #'     The graphic `p_log` shows, for each day, the relationship between the natural log of time spent in each bin with the natural 
 #'     log of the middle values of the intensity bins. 
-#'
+#' @export
+#' 
 #' @examples
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 #' mydata <- prepare_dataset(data = file)

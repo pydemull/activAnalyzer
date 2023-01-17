@@ -29,7 +29,8 @@ Defaut value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relat
 A ggplot object
 }
 \description{
-Create a radar plot for the mean or median MX metrics relating to the measurement of physical behavior
+This function creates a radar plot in relation to MX metrics as illustrated in Rowlands et al.
+(2018; doi:10.1249/MSS.0000000000001561) paper.
 }
 \examples{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
