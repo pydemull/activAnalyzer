@@ -78,6 +78,28 @@ test_activAnalyzer_env$mod_report_pa_period_server <- "mod_report_pa_period_serv
 test_activAnalyzer_env$get_pa_period_info <- "get_pa_period_info"
 test_activAnalyzer_env$mod_report_pa_period_ui <- "mod_report_pa_period_ui"
 test_activAnalyzer_env$mod_report_pa_period_server <- "mod_report_pa_period_server"
+test_activAnalyzer_env$total_steps <- "total_steps"
+test_activAnalyzer_env$valid_days <- "valid_days"
+test_activAnalyzer_env$theme <- "theme"
+test_activAnalyzer_env$margin <- "margin"
+test_activAnalyzer_env$max_steps_60min <- "max_steps_60min"
+test_activAnalyzer_env$max_steps_30min <- "max_steps_30min"
+test_activAnalyzer_env$max_steps_20min <- "max_steps_20min"
+test_activAnalyzer_env$max_steps_5min <- "max_steps_5min"
+test_activAnalyzer_env$max_steps_1min <- "max_steps_1min"
+test_activAnalyzer_env$peack_steps_60min <- "peack_steps_60min"
+test_activAnalyzer_env$peack_steps_30min <- "peack_steps_30min"
+test_activAnalyzer_env$peack_steps_20min <- "peack_steps_20min"
+test_activAnalyzer_env$peack_steps_5min <- "peack_steps_5min"
+test_activAnalyzer_env$peak_steps_1min <- "peak_steps_1min"
+test_activAnalyzer_env$ig <- "ig"
+test_activAnalyzer_env$`M1/3` <- "M1/3"
+test_activAnalyzer_env$M120 <- "M120"
+test_activAnalyzer_env$M60 <- "M60"
+test_activAnalyzer_env$M30 <- "M30"
+test_activAnalyzer_env$M15 <- "M15"
+test_activAnalyzer_env$M5 <- "M5"
+test_activAnalyzer_env$element_text <- "element_text"
 
 assign("equations_mets", activAnalyzer:::equations_mets, envir = test_activAnalyzer_env)
 assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = test_activAnalyzer_env)
@@ -351,7 +373,7 @@ expect_equal(actual_list, test_list)
          actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
            
          # Testing 
-         expect_equal(actual_results_by_day, test_results_by_day)
+         expect_equal(actual_results_by_day, test_results_by_day$df_all_metrics)
            
 # Test 2 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
 # SED cutpoints: Aguilar-Farias et al. (2014) [Older adults] ; sex: intersex
@@ -387,7 +409,7 @@ expect_equal(actual_list, test_list)
            actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
            
         # Testing 
-        expect_equal(actual_results_by_day, test_results_by_day)
+        expect_equal(actual_results_by_day, test_results_by_day$df_all_metrics)
            
            
 # Test 3 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
@@ -424,7 +446,7 @@ expect_equal(actual_list, test_list)
            actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
            
           # Testing 
-          expect_equal(actual_results_by_day, test_results_by_day)
+          expect_equal(actual_results_by_day, test_results_by_day$df_all_metrics)
            
 # Test 4 / Equation: Santos-Lozano et al. (2013) [Older adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Older adults];
 # SED cut-point: Aguilar-Farias et al. (2014) [Older adults]; sex: male
@@ -460,7 +482,7 @@ expect_equal(actual_list, test_list)
           actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
          
          # Testing  
-         expect_equal(actual_results_by_day, test_results_by_day)
+         expect_equal(actual_results_by_day, test_results_by_day$df_all_metrics)
          
 # Test 5 / Equation: Santos-Lozano et al. (2013) [Adults]; MVPA cut-points: Santos-Lozano et al. (2013) [Adults];
 # SED cut-point: Personalized
@@ -499,7 +521,7 @@ expect_equal(actual_list, test_list)
          actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
          
          # Testing  
-         expect_equal(actual_results_by_day, test_results_by_day)
+         expect_equal(actual_results_by_day, test_results_by_day$df_all_metrics)
          
 # Test 6 / Equation: Freedson et al. (1998) [Adults]; MVPA cut-points: Personalized;
 # SED cut-point: Personalized
@@ -537,7 +559,7 @@ expect_equal(actual_list, test_list)
         actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
         
         # Testing  
-        expect_equal(actual_results_by_day, test_results_by_day)
+        expect_equal(actual_results_by_day, test_results_by_day$df_all_metrics)
 
 #=========================================================================================
 # Testing for setting default configuration to validate a day (period and wear time hours)
@@ -671,7 +693,7 @@ expect_equal(actual_gg_nonwear, test_gg_nonwear)
 
 # Setting reference results
 test_results_summary_means <- 
-  test_df %>%
+  (test_df %>%
   mark_intensity(
     col_axis = "axis1", 
     sed_cutpoint = 100, 
@@ -687,7 +709,7 @@ test_results_summary_means <-
     weight = 78, 
     sex = "female", 
     valid_wear_time_start = "07:00:00", 
-    valid_wear_time_end = "22:00:00") %>%
+    valid_wear_time_end = "22:00:00"))$df_all_metrics %>%
   average_results(minimum_wear_time = 12, fun = "mean")
 test_gg_nonwear <- str(plot_data(test_results))
 
@@ -704,7 +726,7 @@ expect_equal(actual_gg_nonwear, test_gg_nonwear)
 
 # Setting reference results
 test_results_summary_medians <- 
-  test_df %>%
+  (test_df %>%
   mark_intensity(
     col_axis = "axis1", 
     sed_cutpoint = 100, 
@@ -720,7 +742,7 @@ test_results_summary_medians <-
     weight = 78, 
     sex = "female", 
     valid_wear_time_start = "07:00:00", 
-    valid_wear_time_end = "22:00:00") %>%
+    valid_wear_time_end = "22:00:00"))$df_all_metrics %>%
   average_results(minimum_wear_time = 12, fun = "median")
 
 
@@ -1892,7 +1914,7 @@ ref_inputs_tab <-
   dplyr::select(date, start, end, METS)
 
 test_results_summary <- 
-  test_df %>%
+  (test_df %>%
   mark_intensity(
     col_axis = "axis1", 
     sed_cutpoint = 100, 
@@ -1907,7 +1929,7 @@ test_results_summary <-
     age = 47, 
     weight = 78, 
     sex = "female"
-    ) %>%
+    ))$df_all_metrics %>%
   dplyr::mutate(
     wear_time = dplyr::case_when(
       date == "2021-04-07" ~ wear_time,
