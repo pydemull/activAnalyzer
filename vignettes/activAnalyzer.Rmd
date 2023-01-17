@@ -275,7 +275,7 @@ create_flextable_summary(
 ```
 <br>
 
-### Radar views
+### Radar view based on the means of valid days
 ```{r, fig.align = "center", out.width='50%', out.height='50%', fig.width=8, fig.height=8}
 create_fig_mx_summary(
 data = mean_results,
