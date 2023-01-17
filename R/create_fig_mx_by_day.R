@@ -1,4 +1,7 @@
 #' Create a radar plot for MX metrics relating to each day of the measurement of physical behavior
+#' 
+#' This function creates radar plots in relation to MX metrics as illustrated in Rowlands et al. 
+#'     (2018; doi:10.1249/MSS.0000000000001561) paper, here for each day of an accelerometer measurement.
 #'
 #' @param data A dataframe with physical behavior metrics summarised for each day of the measurement. It should have been obtained using 
 #'     the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, and then 
@@ -6,9 +9,9 @@
 #' @param labels A vector of numeric values setting the breaks of the Y axis of the radar plot. Default is a vector of 6 values with
 #'     a start at 0 and an end at the maximum of all the computed MX metrics.
 #' @param mpa_cutpoint A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity (in counts/epoch length used to compute MX metrics). 
-#'    Defaut value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude in counts/min.
+#'    Default value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude in counts/min.
 #' @param vpa_cutpoint A numeric value at and above which time is considered as spent in vigorous physical activity (in counts/epoch length used to compute MX metrics). 
-#'    Defaut value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude in counts/min.
+#'    Default value is from Sasaki et al. (2011; doi:10.1016/j.jsams.2011.04.003) relating to vector magnitude in counts/min.
 #' 
 #'
 #' @return A ggplot object

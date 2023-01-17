@@ -13,7 +13,7 @@
 #' @param direction A numeric value.
 #'
 #' @return A function setting a new coordinate system.
-#'  
+#' @noRd
 # Name ggplot grid object
 # Convenience function to name grid objects
 #
