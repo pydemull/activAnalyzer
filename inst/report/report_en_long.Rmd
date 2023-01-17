@@ -318,7 +318,7 @@ reactable::reactable(
           # MET-hr MVPA
             paste0(format(round(df1_means[["mets_hours_mvpa"]], 2), nsmall = 2), " | ", format(round(df1_medians[["mets_hours_mvpa"]], 2), nsmall = 2)),         
           # Total kilocalories
-            paste0(format(round(df1_means[["total_kcal"]], 2), nsmall = 2),   " kcal | ", format(round(df1_medians[["total_kcal"]], 2), nsmall = 2), " kcal"),
+            paste0(format(round(df1_means[["total_kcal"]], 2), nsmall = 2),   " | ", format(round(df1_medians[["total_kcal"]], 2), nsmall = 2)),
           
           # Physical activity level (PAL) 
             paste0(format(round(df1_means[["pal"]], 2), nsmall = 2),  " | ", format(round(df1_medians[["pal"]], 2), nsmall = 2)),  

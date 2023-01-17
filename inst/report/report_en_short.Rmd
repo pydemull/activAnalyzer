@@ -145,7 +145,7 @@ if (params$rendered_by_shiny)
   shiny::setProgress(0.5)  # set progress to 50%
 ```
 
-### Comparisons with norms or recommendations
+### Comparisons with norms and recommendations
 ```{r, fig.height=9, fig.width = 17, warning=FALSE, message=FALSE}
 # PAL
 g_pal <- create_fig_pal(score = df1_means[["pal"]], "en") + theme(plot.margin = margin(2, 1, 0.5, 1, "cm"))
