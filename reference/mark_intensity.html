@@ -140,7 +140,7 @@ on a 1-min basis, and are then adjusted using a correction factor to correspond 
 
 
 <dt>col_time</dt>
-<dd><p>A character value to indicate the name of the variable to plot time data.</p></dd>
+<dd><p>A character value to indicate the name of the variable related to time data.</p></dd>
 
 
 <dt>col_nonwear</dt>
@@ -152,24 +152,18 @@ on a 1-min basis, and are then adjusted using a correction factor to correspond 
 
 
 <dt>sed_cutpoint</dt>
-<dd><p>A numeric value below which time is considered as spent in sedentary behavior (in counts/min).
-You must convert to counts/min if you want to use a cut-point initially developed using an epoch shorter than 60 s. In the case where the epoch of the
-dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
-You must provide a value inferior or equal to 60.</p></dd>
+<dd><p>A numeric value below which time is considered as spent in sedentary behavior (in counts/min). In the case where the epoch of the
+dataset would be shorter than 60 s, the function will divide the cut-point value so that it corresponds to the epoch length used.</p></dd>
 
 
 <dt>mpa_cutpoint</dt>
-<dd><p>A numeric value at and above which time is considered as spent in moderate-to-vigorous physical activity (in counts/min).
-You must convert to counts/min if you want to use a cut-point initially developed using an epoch shorter than 60 s. In the case where the epoch of the
-dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
-You must provide a value inferior or equal to 60.</p></dd>
+<dd><p>A numeric value at and above which time is considered as spent in moderate physical activity (in counts/min). In the case where the epoch of the
+dataset would be shorter than 60 s, the function will divide the cut-point value so that it corresponds to the epoch length used.</p></dd>
 
 
 <dt>vpa_cutpoint</dt>
-<dd><p>A numeric value at and above which time is considered as spent in vigorous physical activity (in counts/min).
-You must convert to counts/min if you want to use a cut-point initially developed using an epoch shorter than 60 s. In the case where the epoch of the
-dataset would be shorter than 60 s, the function will multiply the counts data so that it corresponds to the cut-point expressed in counts/min.
-You must provide a value inferior or equal to 60.</p></dd>
+<dd><p>A numeric value at and above which time is considered as spent in vigorous physical activity (in counts/min). In the case where the epoch of the
+dataset would be shorter than 60 s, the function will divide the cut-point value so that it corresponds to the epoch length used.</p></dd>
 
 
 <dt>equation</dt>

@@ -13,13 +13,11 @@ is computed using the following equation provided by Chastin et al. (2010; doi: 
 \(\alpha = 1 + n \left[\sum_{i = 1}^{n}{ln}\frac{x_{i}}{x_{min}}\right]^{-1}\), with \(n\) the total number of bouts,
 \(x_{i}\) the duration of the bout \(i\), and \(x_{min}\) the shortest recorded bout duration.
 median bout duration (MBD): refers to the median sedentary (or physical activity) bout duration.
-MBD is computed using all the bouts of the days and periods of the day considered for analysis. MBD
-is computed using the following equation provided by Chastin et al. (2010; doi: 10.1016/j.gaitpost.2009.09.002):
-\(MBD = 2^{1 / (\alpha - 1)x_{min}}\).
+MBD is computed using all the bouts of the days and periods of the day considered for analysis.
 usual bout duration (UBD): refers to the bout duration under/above which 50% of sedentary
-(or physical activity) time is accumulated. UBD is computed using all the bouts of the day and periods
-of the day considered for analysis. UBD is determined as described in Belletiere et al. (2021; doi: 10.1123/jmpb.2020-0036)
-supplementary files. More precisely, UBD is found using non-linear regression with the following model: \(y = \frac{t^n}{t^n + UBD^n}\),
+(or physical activity) time is accumulated. UBD is computed using all the bouts of the days and periods
+of the day considered for analysis. UBD is determined as described in Belletiere al. (2017; doi:10.1371/journal.pone.0180119)
+supplementary file 1. More precisely, UBD is found using non-linear regression with the following model: \(y = \frac{t^n}{t^n + UBD^n}\),
 with \(t\) the bout duration, \(n\) a free parameter, and \(y\) the fraction of total time accumulated in bouts ≤ \(t\).
 Gini index: provides information on the equality with which bout durations
 contribute to total sedentary (or physical activity) time. A value of 1 reveals perfect
@@ -28,7 +26,8 @@ the bouts of the days and periods of the day considered for analysis. Gini index
 the procedure described at the following link: https://www.statology.org/gini-coefficient-excel/. This method
 provides similar results as the frequency method implemented in the Gini function from the DescTools R package.
 
-"><title>Compute activity accumulation metrics — compute_accumulation_metrics • activAnalyzer</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Compute activity accumulation metrics — compute_accumulation_metrics"><meta property="og:description" content="This function computes metrics that summarise the pattern of accumulation
+
+The appearance of the graphics generated by the function has been inspired by the supplementary file provided by Belletiere al. (2017; doi:10.1371/journal.pone.0180119)."><title>Compute activity accumulation metrics — compute_accumulation_metrics • activAnalyzer</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Compute activity accumulation metrics — compute_accumulation_metrics"><meta property="og:description" content="This function computes metrics that summarise the pattern of accumulation
 of either sedentary behaviour or physical activity (depending on the
 configuration of the function) over time:
 mean_breaks: mean daily number of transitions from a sedentary bout to a
@@ -42,13 +41,11 @@ is computed using the following equation provided by Chastin et al. (2010; doi: 
 \(\alpha = 1 + n \left[\sum_{i = 1}^{n}{ln}\frac{x_{i}}{x_{min}}\right]^{-1}\), with \(n\) the total number of bouts,
 \(x_{i}\) the duration of the bout \(i\), and \(x_{min}\) the shortest recorded bout duration.
 median bout duration (MBD): refers to the median sedentary (or physical activity) bout duration.
-MBD is computed using all the bouts of the days and periods of the day considered for analysis. MBD
-is computed using the following equation provided by Chastin et al. (2010; doi: 10.1016/j.gaitpost.2009.09.002):
-\(MBD = 2^{1 / (\alpha - 1)x_{min}}\).
+MBD is computed using all the bouts of the days and periods of the day considered for analysis.
 usual bout duration (UBD): refers to the bout duration under/above which 50% of sedentary
-(or physical activity) time is accumulated. UBD is computed using all the bouts of the day and periods
-of the day considered for analysis. UBD is determined as described in Belletiere et al. (2021; doi: 10.1123/jmpb.2020-0036)
-supplementary files. More precisely, UBD is found using non-linear regression with the following model: \(y = \frac{t^n}{t^n + UBD^n}\),
+(or physical activity) time is accumulated. UBD is computed using all the bouts of the days and periods
+of the day considered for analysis. UBD is determined as described in Belletiere al. (2017; doi:10.1371/journal.pone.0180119)
+supplementary file 1. More precisely, UBD is found using non-linear regression with the following model: \(y = \frac{t^n}{t^n + UBD^n}\),
 with \(t\) the bout duration, \(n\) a free parameter, and \(y\) the fraction of total time accumulated in bouts ≤ \(t\).
 Gini index: provides information on the equality with which bout durations
 contribute to total sedentary (or physical activity) time. A value of 1 reveals perfect
@@ -57,7 +54,8 @@ the bouts of the days and periods of the day considered for analysis. Gini index
 the procedure described at the following link: https://www.statology.org/gini-coefficient-excel/. This method
 provides similar results as the frequency method implemented in the Gini function from the DescTools R package.
 
-"><meta property="og:image" content="https://pydemull.github.io/activAnalyzer/logo.png"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+
+The appearance of the graphics generated by the function has been inspired by the supplementary file provided by Belletiere al. (2017; doi:10.1371/journal.pone.0180119)."><meta property="og:image" content="https://pydemull.github.io/activAnalyzer/logo.png"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body>
@@ -120,13 +118,11 @@ is computed using the following equation provided by Chastin et al. (2010; doi: 
 \(\alpha = 1 + n \left[\sum_{i = 1}^{n}{ln}\frac{x_{i}}{x_{min}}\right]^{-1}\), with \(n\) the total number of bouts,
 \(x_{i}\) the duration of the bout \(i\), and \(x_{min}\) the shortest recorded bout duration.</p></li>
 <li><p><strong>median bout duration (MBD)</strong>: refers to the median sedentary (or physical activity) bout duration.
-MBD is computed using all the bouts of the days and periods of the day considered for analysis. MBD
-is computed using the following equation provided by Chastin et al. (2010; doi: 10.1016/j.gaitpost.2009.09.002):
-\(MBD = 2^{1 / (\alpha - 1)x_{min}}\).</p></li>
+MBD is computed using all the bouts of the days and periods of the day considered for analysis.</p></li>
 <li><p><strong>usual bout duration (UBD)</strong>: refers to the bout duration under/above which 50% of sedentary
-(or physical activity) time is accumulated. UBD is computed using all the bouts of the day and periods
-of the day considered for analysis. UBD is determined as described in Belletiere et al. (2021; doi: 10.1123/jmpb.2020-0036)
-supplementary files. More precisely, UBD is found using non-linear regression with the following model: \(y = \frac{t^n}{t^n + UBD^n}\),
+(or physical activity) time is accumulated. UBD is computed using all the bouts of the days and periods
+of the day considered for analysis. UBD is determined as described in Belletiere al. (2017; doi:10.1371/journal.pone.0180119)
+supplementary file 1. More precisely, UBD is found using non-linear regression with the following model: \(y = \frac{t^n}{t^n + UBD^n}\),
 with \(t\) the bout duration, \(n\) a free parameter, and \(y\) the fraction of total time accumulated in bouts ≤ \(t\).</p></li>
 <li><p><strong>Gini index</strong>: provides information on the equality with which bout durations
 contribute to total sedentary (or physical activity) time. A value of 1 reveals perfect
@@ -134,7 +130,8 @@ inequality, and a value of 0 reveals perfect equality. Gini index is computed us
 the bouts of the days and periods of the day considered for analysis. Gini index is computed following
 the procedure described at the following link: https://www.statology.org/gini-coefficient-excel/. This method
 provides similar results as the frequency method implemented in the <code>Gini</code> function from the <code>DescTools</code> R package.</p></li>
-</ul></div>
+</ul><p>The appearance of the graphics generated by the function has been inspired by the supplementary file provided by Belletiere al. (2017; doi:10.1371/journal.pone.0180119).</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
@@ -154,12 +151,11 @@ provides similar results as the frequency method implemented in the <code>Gini</
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>A dataframe obtained using the <code><a href="prepare_dataset.html">prepare_dataset</a></code>, <code><a href="mark_wear_time.html">mark_wear_time</a></code>, and then the <code><a href="mark_intensity.html">mark_intensity</a></code> functions.
-The dataframe shoud have 60-s epochs. Otherwise, unexpected graphics will be obtained.</p></dd>
+<dd><p>A dataframe obtained using the <code><a href="prepare_dataset.html">prepare_dataset</a></code>, <code><a href="mark_wear_time.html">mark_wear_time</a></code>, and then the <code><a href="mark_intensity.html">mark_intensity</a></code> functions.</p></dd>
 
 
 <dt>col_time</dt>
-<dd><p>A character value to indicate the name of the variable to plot time data.</p></dd>
+<dd><p>A character value to indicate the name of the variable containing time data.</p></dd>
 
 
 <dt>col_cat_int</dt>
@@ -171,7 +167,7 @@ The dataframe shoud have 60-s epochs. Otherwise, unexpected graphics will be obt
 
 
 <dt>dates</dt>
-<dd><p>A character vector containing the dates to be retained for analysis. The dates must be with the "YYYY-MM-DD" format.</p></dd>
+<dd><p>A character vector containing the dates to be retained for analysis. The dates must be with the "YYYY-MM-DD" format. Default is NULL.</p></dd>
 
 
 <dt>valid_wear_time_start</dt>
@@ -183,11 +179,11 @@ The dataframe shoud have 60-s epochs. Otherwise, unexpected graphics will be obt
 
 
 <dt>zoom_from</dt>
-<dd><p>A character value with the HH:MM:SS format to set the start of the daily period to visualize.</p></dd>
+<dd><p>A character value with the HH:MM:SS format to set the start of the daily period to visualize regarding the daily breaks.</p></dd>
 
 
 <dt>zoom_to</dt>
-<dd><p>A character value with the HH:MM:SS format to set the end of the daily period to visualize.</p></dd>
+<dd><p>A character value with the HH:MM:SS format to set the end of the daily period to visualize regarding the daily breaks.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -246,7 +242,7 @@ to compute <code>alpha</code> and <code>MBD</code>, <code>summarised_bouts</code
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $metrics</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   mean_breaks alpha MBD  UBD gini</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        68.6  2.18 1.8 7.56 0.57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        68.6  2.18   2 7.56 0.57</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $p_breaks</span>
 <span class="r-plt img"><img src="compute_accumulation_metrics-1.png" alt="" width="700" height="433"></span>

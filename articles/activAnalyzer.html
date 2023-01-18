@@ -73,8 +73,9 @@
 
 
 
-<script src="activAnalyzer_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="activAnalyzer_files/core-js-2.5.3/shim.min.js"></script><script src="activAnalyzer_files/react-17.0.0/react.min.js"></script><script src="activAnalyzer_files/react-17.0.0/react-dom.min.js"></script><script src="activAnalyzer_files/reactwidget-1.0.0/react-tools.js"></script><script src="activAnalyzer_files/htmlwidgets-1.6.0/htmlwidgets.js"></script><link href="activAnalyzer_files/reactable-0.4.1/reactable.css" rel="stylesheet">
-<script src="activAnalyzer_files/reactable-binding-0.4.1/reactable.js"></script><div class="row">
+<script src="activAnalyzer_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="activAnalyzer_files/core-js-2.5.3/shim.min.js"></script><script src="activAnalyzer_files/react-17.0.0/react.min.js"></script><script src="activAnalyzer_files/react-17.0.0/react-dom.min.js"></script><script src="activAnalyzer_files/reactwidget-1.0.0/react-tools.js"></script><script src="activAnalyzer_files/htmlwidgets-1.6.1/htmlwidgets.js"></script><link href="activAnalyzer_files/reactable-0.4.3/reactable.css" rel="stylesheet">
+<script src="activAnalyzer_files/reactable-binding-0.4.3/reactable.js"></script><link href="activAnalyzer_files/tabwid-1.1.2/tabwid.css" rel="stylesheet">
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>activAnalyzer</h1>
             
@@ -98,7 +99,8 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pydemull.github.io/activAnalyzer/">activAnalyzer</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="getting-file">Getting file<a class="anchor" aria-label="anchor" href="#getting-file"></a>
@@ -137,7 +139,7 @@
 <p><img src="activAnalyzer_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
-<h2 id="viewing-data-with-nonwearwear-time-marks-with-a-zoom-in-on-the-figure">Viewing data with nonwear/wear time marks with a zoom in on the figure<a class="anchor" aria-label="anchor" href="#viewing-data-with-nonwearwear-time-marks-with-a-zoom-in-on-the-figure"></a>
+<h2 id="viewing-data-with-nonwearwear-time-marks-and-with-a-zoom-in-on-the-figure">Viewing data with nonwear/wear time marks and with a zoom in on the figure<a class="anchor" aria-label="anchor" href="#viewing-data-with-nonwearwear-time-marks-and-with-a-zoom-in-on-the-figure"></a>
 </h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_data.html">plot_data</a></span><span class="op">(</span></span>
@@ -178,7 +180,7 @@
 <p><img src="activAnalyzer_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
-<h2 id="viewing-data-with-activity-intensity-marks-and-grey-bands-to-highlight-the-considered-daily-period-for-analysis">Viewing data with activity intensity marks and grey bands to highlight the considered daily period for analysis<a class="anchor" aria-label="anchor" href="#viewing-data-with-activity-intensity-marks-and-grey-bands-to-highlight-the-considered-daily-period-for-analysis"></a>
+<h2 id="viewing-data-with-activity-intensity-marks-and-grey-bands-to-highlight-the-daily-period-considered-for-analysis">Viewing data with activity intensity marks and grey bands to highlight the daily period considered for analysis<a class="anchor" aria-label="anchor" href="#viewing-data-with-activity-intensity-marks-and-grey-bands-to-highlight-the-daily-period-considered-for-analysis"></a>
 </h2>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_data_with_intensity.html">plot_data_with_intensity</a></span><span class="op">(</span></span>
@@ -190,7 +192,7 @@
 <p><img src="activAnalyzer_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
-<h2 id="viewing-data-with-activity-intensity-marks-with-a-zoom-in-on-the-figure">Viewing data with activity intensity marks with a zoom in on the figure<a class="anchor" aria-label="anchor" href="#viewing-data-with-activity-intensity-marks-with-a-zoom-in-on-the-figure"></a>
+<h2 id="viewing-data-with-activity-intensity-marks-and-a-zoom-in-on-the-figure">Viewing data with activity intensity marks and a zoom in on the figure<a class="anchor" aria-label="anchor" href="#viewing-data-with-activity-intensity-marks-and-a-zoom-in-on-the-figure"></a>
 </h2>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_data_with_intensity.html">plot_data_with_intensity</a></span><span class="op">(</span></span>
@@ -202,7 +204,7 @@
 <p><img src="activAnalyzer_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
-<h2 id="getting-results-by-day">Getting results by day<a class="anchor" aria-label="anchor" href="#getting-results-by-day"></a>
+<h2 id="getting-activity-metrics-by-day">Getting activity metrics by day<a class="anchor" aria-label="anchor" href="#getting-activity-metrics-by-day"></a>
 </h2>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results_by_day</span> <span class="op">&lt;-</span></span>
@@ -212,46 +214,529 @@
 <span>    weight <span class="op">=</span> <span class="fl">67</span>, </span>
 <span>    sex <span class="op">=</span> <span class="st">"male"</span>,</span>
 <span>    valid_wear_time_start <span class="op">=</span> <span class="st">"07:00:00"</span>,</span>
-<span>    valid_wear_time_end <span class="op">=</span> <span class="st">"22:00:00"</span></span>
-<span>    <span class="op">)</span></span>
-<span><span class="co">#&gt; You have computed results with the recap_by_day() function using the following inputs: </span></span>
-<span><span class="co">#&gt;          age = 32</span></span>
-<span><span class="co">#&gt;          weight = 67</span></span>
-<span><span class="co">#&gt;          sex = male</span></span></code></pre></div>
-<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-15a40fa7a4fb16452b88" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-15a40fa7a4fb16452b88">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"date":["2021-04-07","2021-04-08","2021-04-09","2021-04-10","2021-04-11","2021-04-12"],"wear_time":[720,811,718,770,820,0],"total_counts_axis1":[359125,495257,1222315,320847,167999,0],"total_counts_vm":[721645.79,946481.61,1945733.91,806592.09,431269.63,0],"axis1_per_min":[498.78,610.67,1702.39,416.68,204.88,"NaN"],"vm_per_min":[1002.29,1167.06,2709.94,1047.52,525.94,"NaN"],"total_steps":[14056,14595,21635,13744,10315,0],"total_kcal":[1510.89,1694.79,2694.09,1548.93,1201.52,965.25],"minutes_SED":[288,292,295,201,339,0],"minutes_LPA":[355,407,208,519,470,0],"minutes_MPA":[73,105,51,49,11,0],"minutes_VPA":[4,7,164,1,0,0],"minutes_MVPA":[77,112,215,50,11,0],"percent_SED":[40,36,41.09,26.1,41.34,"NaN"],"percent_LPA":[49.31,50.18,28.97,67.4,57.32,"NaN"],"percent_MPA":[10.14,12.95,7.1,6.36,1.34,"NaN"],"percent_VPA":[0.56,0.86,22.84,0.13,0,"NaN"],"percent_MVPA":[10.69,13.81,29.94,6.49,1.34,"NaN"],"max_steps_60min":[75.18,50.9,101.33,38.85,23,"NA"],"max_steps_30min":[100.93,71.63,104.9,43.9,28.9,"NA"],"max_steps_20min":[102.8,83.05,107.55,47.5,30.55,"NA"],"max_steps_5min":[119,116.8,112.8,85.6,41.8,"NA"],"max_steps_1min":[121,120,118,118,68,"NA"],"peak_steps_60min":[89.03,70.88,110.07,57.73,45.3,"NaN"],"peak_steps_30min":[114.33,86.73,112.23,68.7,51,"NaN"],"peak_steps_20min":[117.55,97.7,113.4,76.15,53.95,"NaN"],"peak_steps_5min":[120,117.6,117.2,109.6,61.8,"NaN"],"peak_steps_1min":[121,120,118,118,68,"NaN"],"mets_hours_mvpa":[5.56,7.84,26.15,3.02,0.59,0],"ratio_mvpa_sed":[0.27,0.38,0.73,0.25,0.03,"NaN"],"pal":[1.74,1.95,3.1,1.78,1.38,1.11]},"columns":[{"id":"date","name":"date","type":"Date","minWidth":140},{"id":"wear_time","name":"wear_time","type":"numeric","minWidth":150},{"id":"total_counts_axis1","name":"total_counts_axis1","type":"numeric","minWidth":190},{"id":"total_counts_vm","name":"total_counts_vm","type":"numeric","minWidth":170},{"id":"axis1_per_min","name":"axis1_per_min","type":"numeric","minWidth":170},{"id":"vm_per_min","name":"vm_per_min","type":"numeric","minWidth":170},{"id":"total_steps","name":"total_steps","type":"numeric","minWidth":170},{"id":"total_kcal","name":"total_kcal","type":"numeric","minWidth":205},{"id":"minutes_SED","name":"minutes_SED","type":"numeric","minWidth":150},{"id":"minutes_LPA","name":"minutes_LPA","type":"numeric","minWidth":150},{"id":"minutes_MPA","name":"minutes_MPA","type":"numeric","minWidth":150},{"id":"minutes_VPA","name":"minutes_VPA","type":"numeric","minWidth":150},{"id":"minutes_MVPA","name":"minutes_MVPA","type":"numeric","minWidth":155},{"id":"percent_SED","name":"percent_SED","type":"numeric","minWidth":150},{"id":"percent_LPA","name":"percent_LPA","type":"numeric","minWidth":150},{"id":"percent_MPA","name":"percent_MPA","type":"numeric","minWidth":150},{"id":"percent_VPA","name":"percent_VPA","type":"numeric","minWidth":150},{"id":"percent_MVPA","name":"percent_MVPA","type":"numeric","minWidth":155},{"id":"max_steps_60min","name":"max_steps_60min","type":"numeric","minWidth":205},{"id":"max_steps_30min","name":"max_steps_30min","type":"numeric","minWidth":205},{"id":"max_steps_20min","name":"max_steps_20min","type":"numeric","minWidth":205},{"id":"max_steps_5min","name":"max_steps_5min","type":"numeric","minWidth":205},{"id":"max_steps_1min","name":"max_steps_1min","type":"numeric","minWidth":205},{"id":"peak_steps_60min","name":"peak_steps_60min","type":"numeric","minWidth":205},{"id":"peak_steps_30min","name":"peak_steps_30min","type":"numeric","minWidth":205},{"id":"peak_steps_20min","name":"peak_steps_20min","type":"numeric","minWidth":205},{"id":"peak_steps_5min","name":"peak_steps_5min","type":"numeric","minWidth":205},{"id":"peak_steps_1min","name":"peak_steps_1min","type":"numeric","minWidth":205},{"id":"mets_hours_mvpa","name":"mets_hours_mvpa","type":"numeric","minWidth":205},{"id":"ratio_mvpa_sed","name":"ratio_mvpa_sed","type":"numeric","minWidth":160},{"id":"pal","name":"pal","type":"numeric"}],"striped":true,"dataKey":"c838457bd03db08c5b63629ee458bbe2"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<span>    valid_wear_time_end <span class="op">=</span> <span class="st">"22:00:00"</span>,</span>
+<span>    start_first_bin <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    start_last_bin <span class="op">=</span> <span class="fl">10000</span>,</span>
+<span>    bin_width <span class="op">=</span> <span class="fl">500</span></span>
+<span>    <span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="getting-mean-values-of-the-metrics-over-the-valid-days">Getting mean values of the metrics over the valid days<a class="anchor" aria-label="anchor" href="#getting-mean-values-of-the-metrics-over-the-valid-days"></a>
+<h2 id="computing-means-of-the-metrics-using-the-valid-days">Computing means of the metrics using the valid days<a class="anchor" aria-label="anchor" href="#computing-means-of-the-metrics-using-the-valid-days"></a>
 </h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">averaged_results</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">results_by_day</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/average_results.html">average_results</a></span><span class="op">(</span>minimum_wear_time <span class="op">=</span> <span class="fl">10</span>, fun <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">averaged_results</span></span></code></pre></div>
-<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-60c8af60271254e2f3f4" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-60c8af60271254e2f3f4">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"valid_days":[5],"wear_time":[767.8],"total_counts_axis1":[513108.6],"total_counts_vm":[970344.61],"axis1_per_min":[686.68],"vm_per_min":[1290.55],"total_steps":[14869],"total_kcal":[1730.04],"minutes_SED":[283],"minutes_LPA":[391.8],"minutes_MPA":[57.8],"minutes_VPA":[35.2],"minutes_MVPA":[93],"percent_SED":[36.91],"percent_LPA":[50.64],"percent_MPA":[7.58],"percent_VPA":[4.88],"percent_MVPA":[12.45],"max_steps_60min":[57.85],"max_steps_30min":[70.05],"max_steps_20min":[74.29],"max_steps_5min":[95.2],"max_steps_1min":[109],"peak_steps_60min":[74.6],"peak_steps_30min":[86.6],"peak_steps_20min":[91.75],"peak_steps_5min":[105.24],"peak_steps_1min":[109],"mets_hours_mvpa":[8.63],"ratio_mvpa_sed":[0.33],"pal":[1.99]},"columns":[{"id":"valid_days","name":"valid_days","type":"numeric","minWidth":150},{"id":"wear_time","name":"wear_time","type":"numeric","minWidth":150},{"id":"total_counts_axis1","name":"total_counts_axis1","type":"numeric","minWidth":190},{"id":"total_counts_vm","name":"total_counts_vm","type":"numeric","minWidth":170},{"id":"axis1_per_min","name":"axis1_per_min","type":"numeric","minWidth":170},{"id":"vm_per_min","name":"vm_per_min","type":"numeric","minWidth":170},{"id":"total_steps","name":"total_steps","type":"numeric","minWidth":170},{"id":"total_kcal","name":"total_kcal","type":"numeric","minWidth":205},{"id":"minutes_SED","name":"minutes_SED","type":"numeric","minWidth":150},{"id":"minutes_LPA","name":"minutes_LPA","type":"numeric","minWidth":150},{"id":"minutes_MPA","name":"minutes_MPA","type":"numeric","minWidth":150},{"id":"minutes_VPA","name":"minutes_VPA","type":"numeric","minWidth":150},{"id":"minutes_MVPA","name":"minutes_MVPA","type":"numeric","minWidth":155},{"id":"percent_SED","name":"percent_SED","type":"numeric","minWidth":150},{"id":"percent_LPA","name":"percent_LPA","type":"numeric","minWidth":150},{"id":"percent_MPA","name":"percent_MPA","type":"numeric","minWidth":150},{"id":"percent_VPA","name":"percent_VPA","type":"numeric","minWidth":150},{"id":"percent_MVPA","name":"percent_MVPA","type":"numeric","minWidth":155},{"id":"max_steps_60min","name":"max_steps_60min","type":"numeric","minWidth":205},{"id":"max_steps_30min","name":"max_steps_30min","type":"numeric","minWidth":205},{"id":"max_steps_20min","name":"max_steps_20min","type":"numeric","minWidth":205},{"id":"max_steps_5min","name":"max_steps_5min","type":"numeric","minWidth":205},{"id":"max_steps_1min","name":"max_steps_1min","type":"numeric","minWidth":205},{"id":"peak_steps_60min","name":"peak_steps_60min","type":"numeric","minWidth":205},{"id":"peak_steps_30min","name":"peak_steps_30min","type":"numeric","minWidth":205},{"id":"peak_steps_20min","name":"peak_steps_20min","type":"numeric","minWidth":205},{"id":"peak_steps_5min","name":"peak_steps_5min","type":"numeric","minWidth":205},{"id":"peak_steps_1min","name":"peak_steps_1min","type":"numeric","minWidth":205},{"id":"mets_hours_mvpa","name":"mets_hours_mvpa","type":"numeric","minWidth":195},{"id":"ratio_mvpa_sed","name":"ratio_mvpa_sed","type":"numeric","minWidth":160},{"id":"pal","name":"pal","type":"numeric"}],"striped":true,"dataKey":"3d588c804fae234a930e0a04b7dd98ac"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<code class="sourceCode R"><span><span class="va">mean_results</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">results_by_day</span><span class="op">$</span><span class="va">df_all_metrics</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/average_results.html">average_results</a></span><span class="op">(</span>minimum_wear_time <span class="op">=</span> <span class="fl">10</span>, fun <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="getting-median-values-of-the-metrics-over-the-valid-days">Getting median values of the metrics over the valid days<a class="anchor" aria-label="anchor" href="#getting-median-values-of-the-metrics-over-the-valid-days"></a>
+<h2 id="computing-medians-of-the-metrics-using-the-valid-days">Computing medians of the metrics using the valid days<a class="anchor" aria-label="anchor" href="#computing-medians-of-the-metrics-using-the-valid-days"></a>
 </h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">median_results</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">results_by_day</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/average_results.html">average_results</a></span><span class="op">(</span>minimum_wear_time <span class="op">=</span> <span class="fl">10</span>, fun <span class="op">=</span> <span class="st">"median"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">median_results</span></span></code></pre></div>
-<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-cfac9c2bbf3fb57ad6e6" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-cfac9c2bbf3fb57ad6e6">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"valid_days":[5],"wear_time":[770],"total_counts_axis1":[359125],"total_counts_vm":[806592.09],"axis1_per_min":[498.78],"vm_per_min":[1047.52],"total_steps":[14056],"total_kcal":[1548.93],"minutes_SED":[292],"minutes_LPA":[407],"minutes_MPA":[51],"minutes_VPA":[4],"minutes_MVPA":[77],"percent_SED":[40],"percent_LPA":[50.18],"percent_MPA":[7.1],"percent_VPA":[0.56],"percent_MVPA":[10.69],"max_steps_60min":[50.9],"max_steps_30min":[71.63],"max_steps_20min":[83.05],"max_steps_5min":[112.8],"max_steps_1min":[118],"peak_steps_60min":[70.88],"peak_steps_30min":[86.73],"peak_steps_20min":[97.7],"peak_steps_5min":[117.2],"peak_steps_1min":[118],"mets_hours_mvpa":[5.56],"ratio_mvpa_sed":[0.27],"pal":[1.78]},"columns":[{"id":"valid_days","name":"valid_days","type":"numeric","minWidth":150},{"id":"wear_time","name":"wear_time","type":"numeric","minWidth":150},{"id":"total_counts_axis1","name":"total_counts_axis1","type":"numeric","minWidth":190},{"id":"total_counts_vm","name":"total_counts_vm","type":"numeric","minWidth":170},{"id":"axis1_per_min","name":"axis1_per_min","type":"numeric","minWidth":170},{"id":"vm_per_min","name":"vm_per_min","type":"numeric","minWidth":170},{"id":"total_steps","name":"total_steps","type":"numeric","minWidth":170},{"id":"total_kcal","name":"total_kcal","type":"numeric","minWidth":205},{"id":"minutes_SED","name":"minutes_SED","type":"numeric","minWidth":150},{"id":"minutes_LPA","name":"minutes_LPA","type":"numeric","minWidth":150},{"id":"minutes_MPA","name":"minutes_MPA","type":"numeric","minWidth":150},{"id":"minutes_VPA","name":"minutes_VPA","type":"numeric","minWidth":150},{"id":"minutes_MVPA","name":"minutes_MVPA","type":"numeric","minWidth":155},{"id":"percent_SED","name":"percent_SED","type":"numeric","minWidth":150},{"id":"percent_LPA","name":"percent_LPA","type":"numeric","minWidth":150},{"id":"percent_MPA","name":"percent_MPA","type":"numeric","minWidth":150},{"id":"percent_VPA","name":"percent_VPA","type":"numeric","minWidth":150},{"id":"percent_MVPA","name":"percent_MVPA","type":"numeric","minWidth":155},{"id":"max_steps_60min","name":"max_steps_60min","type":"numeric","minWidth":205},{"id":"max_steps_30min","name":"max_steps_30min","type":"numeric","minWidth":205},{"id":"max_steps_20min","name":"max_steps_20min","type":"numeric","minWidth":205},{"id":"max_steps_5min","name":"max_steps_5min","type":"numeric","minWidth":205},{"id":"max_steps_1min","name":"max_steps_1min","type":"numeric","minWidth":205},{"id":"peak_steps_60min","name":"peak_steps_60min","type":"numeric","minWidth":205},{"id":"peak_steps_30min","name":"peak_steps_30min","type":"numeric","minWidth":205},{"id":"peak_steps_20min","name":"peak_steps_20min","type":"numeric","minWidth":205},{"id":"peak_steps_5min","name":"peak_steps_5min","type":"numeric","minWidth":205},{"id":"peak_steps_1min","name":"peak_steps_1min","type":"numeric","minWidth":205},{"id":"mets_hours_mvpa","name":"mets_hours_mvpa","type":"numeric","minWidth":195},{"id":"ratio_mvpa_sed","name":"ratio_mvpa_sed","type":"numeric","minWidth":160},{"id":"pal","name":"pal","type":"numeric"}],"striped":true,"dataKey":"e81d99e018b71b0fec775c1dce2f8485"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<span>  <span class="va">results_by_day</span><span class="op">$</span><span class="va">df_all_metrics</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/average_results.html">average_results</a></span><span class="op">(</span>minimum_wear_time <span class="op">=</span> <span class="fl">10</span>, fun <span class="op">=</span> <span class="st">"median"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="exploring-sedentary-behaviour-accumulation-metrics-based-on-valid-days">Exploring sedentary behaviour accumulation metrics based on valid days<a class="anchor" aria-label="anchor" href="#exploring-sedentary-behaviour-accumulation-metrics-based-on-valid-days"></a>
+<h2 id="showing-activity-volume-metrics">Showing activity volume metrics<a class="anchor" aria-label="anchor" href="#showing-activity-volume-metrics"></a>
+</h2>
+<div class="section level3">
+<h3 id="results-by-day-tabular-view">Results by day: Tabular view<a class="anchor" aria-label="anchor" href="#results-by-day-tabular-view"></a>
+</h3>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results_by_day</span><span class="op">$</span><span class="va">df_all_metrics</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span><span class="op">:</span><span class="va">total_steps</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html" class="external-link">reactable</a></span><span class="op">(</span>striped <span class="op">=</span> <span class="cn">TRUE</span>, defaultColDef <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span>, minWidth <span class="op">=</span> <span class="fl">180</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-72c6a0639df4af5e2bcd" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-72c6a0639df4af5e2bcd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"date":["2021-04-07","2021-04-08","2021-04-09","2021-04-10","2021-04-11","2021-04-12"],"wear_time":[720,811,718,770,820,0],"total_counts_axis1":[359125,495257,1222315,320847,167999,0],"total_counts_vm":[721645.79,946481.61,1945733.91,806592.09,431269.63,0],"axis1_per_min":[498.78,610.67,1702.39,416.68,204.88,"NaN"],"vm_per_min":[1002.29,1167.06,2709.94,1047.52,525.94,"NaN"],"minutes_SED":[288,292,295,201,339,0],"minutes_LPA":[355,407,208,519,470,0],"minutes_MPA":[73,105,51,49,11,0],"minutes_VPA":[4,7,164,1,0,0],"minutes_MVPA":[77,112,215,50,11,0],"percent_SED":[40,36,41.09,26.1,41.34,"NaN"],"percent_LPA":[49.31,50.18,28.97,67.4,57.32,"NaN"],"percent_MPA":[10.14,12.95,7.1,6.36,1.34,"NaN"],"percent_VPA":[0.56,0.86,22.84,0.13,0,"NaN"],"percent_MVPA":[10.69,13.81,29.94,6.49,1.34,"NaN"],"ratio_mvpa_sed":[0.27,0.38,0.73,0.25,0.03,"NaN"],"mets_hours_mvpa":[5.56,7.84,26.15,3.02,0.59,0],"total_kcal":[1510.89,1694.79,2694.09,1548.93,1201.52,965.25],"pal":[1.74,1.95,3.1,1.78,1.38,1.11],"total_steps":[14056,14595,21635,13744,10315,0]},"columns":[{"id":"date","name":"date","type":"Date","minWidth":180,"align":"center"},{"id":"wear_time","name":"wear_time","type":"numeric","minWidth":180,"align":"center"},{"id":"total_counts_axis1","name":"total_counts_axis1","type":"numeric","minWidth":180,"align":"center"},{"id":"total_counts_vm","name":"total_counts_vm","type":"numeric","minWidth":180,"align":"center"},{"id":"axis1_per_min","name":"axis1_per_min","type":"numeric","minWidth":180,"align":"center"},{"id":"vm_per_min","name":"vm_per_min","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_SED","name":"minutes_SED","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_LPA","name":"minutes_LPA","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_MPA","name":"minutes_MPA","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_VPA","name":"minutes_VPA","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_MVPA","name":"minutes_MVPA","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_SED","name":"percent_SED","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_LPA","name":"percent_LPA","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_MPA","name":"percent_MPA","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_VPA","name":"percent_VPA","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_MVPA","name":"percent_MVPA","type":"numeric","minWidth":180,"align":"center"},{"id":"ratio_mvpa_sed","name":"ratio_mvpa_sed","type":"numeric","minWidth":180,"align":"center"},{"id":"mets_hours_mvpa","name":"mets_hours_mvpa","type":"numeric","minWidth":180,"align":"center"},{"id":"total_kcal","name":"total_kcal","type":"numeric","minWidth":180,"align":"center"},{"id":"pal","name":"pal","type":"numeric","minWidth":180,"align":"center"},{"id":"total_steps","name":"total_steps","type":"numeric","minWidth":180,"align":"center"}],"striped":true,"dataKey":"e66d0695126897e645454547a8278d3d"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="section level3">
+<h3 id="results-by-day-graphical-view">Results by day: Graphical view<a class="anchor" aria-label="anchor" href="#results-by-day-graphical-view"></a>
+</h3>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_fig_res_by_day.html">create_fig_res_by_day</a></span><span class="op">(</span></span>
+<span>  <span class="va">results_by_day</span><span class="op">$</span><span class="va">df_all_metrics</span>, </span>
+<span>  minimum_wear_time_for_analysis <span class="op">=</span> <span class="fl">10</span>, </span>
+<span>  start_day_analysis <span class="op">=</span> <span class="st">"00:00:00"</span>, </span>
+<span>  end_day_analysis <span class="op">=</span> <span class="st">"23:59:00"</span>, </span>
+<span>  metrics <span class="op">=</span> <span class="st">"volume"</span>,</span>
+<span>  epoch_label <span class="op">=</span> <span class="st">"60s"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-15-1.png" width="1632"></p>
+</div>
+<div class="section level3">
+<h3 id="means-medians-computed-using-valid-days">Means | Medians computed using valid days<a class="anchor" aria-label="anchor" href="#means-medians-computed-using-valid-days"></a>
+</h3>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_flextable_summary.html">create_flextable_summary</a></span><span class="op">(</span></span>
+<span>  results_summary_means <span class="op">=</span> <span class="va">mean_results</span>, </span>
+<span>  results_summary_medians <span class="op">=</span> <span class="va">median_results</span>, </span>
+<span>  metrics <span class="op">=</span> <span class="st">"volume"</span>,</span>
+<span>  epoch_label <span class="op">=</span> <span class="st">"60s"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<template id="824f951d-69b8-41a3-b8fd-9ee95264f228"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  border-color: transparent;
+  caption-side: top;
+}
+.tabwid-caption-bottom table{
+  caption-side: bottom;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td, .tabwid th {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+    margin: 0 0 !important;
+}
+</style>
+<div class="tabwid">
+<style>.cl-85096096{}.cl-84fc5766{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-84fc577a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-85024612{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-85026566{width:3.25in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-85026570{width:3.25in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8502657a{width:3.25in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table class="table cl-85096096">
+<thead><tr style="overflow-wrap:break-word;">
+<th class="cl-85026566"><p class="cl-85024612"><span class="cl-84fc5766">Metric</span></p></th>
+<th class="cl-85026566"><p class="cl-85024612"><span class="cl-84fc5766">Daily mean | median</span></p></th>
+</tr></thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">Number of valid days</span></p></td>
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">5</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">Wear time (min)</span></p></td>
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">767.8 (12:47:48) | 770.0 (12:50:00)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">Axis 1 total counts</span></p></td>
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">513108.6 | 359125.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">VM total counts</span></p></td>
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">970344.6 | 806592.1</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">Axis 1 mean (counts/min)</span></p></td>
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">686.7 | 498.8</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">VM mean (counts/min)</span></p></td>
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">1290.6 | 1047.5</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">SED time (min)</span></p></td>
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">283.0 (04:43:00) | 292.0 (04:52:00)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">LPA time (min)</span></p></td>
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">391.8 (06:31:48) | 407.0 (06:47:00)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">MPA time (min)</span></p></td>
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">57.8 (00:57:48) | 51.0 (00:51:00)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">VPA time (min)</span></p></td>
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">35.2 (00:35:12) | 4.0 (00:04:00)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">MVPA time (min)</span></p></td>
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">93.0 (01:33:00) | 77.0 (01:17:00)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">SED wear time proportion (%)</span></p></td>
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">36.9 | 40.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">LPA wear time proportion (%)</span></p></td>
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">50.6 | 50.2</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">MPA wear time proportion (%)</span></p></td>
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">7.6 | 7.1</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">VPA wear time proportion (%)</span></p></td>
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">4.9 | 0.6</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">MVPA wear time proportion (%)</span></p></td>
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">12.4 | 10.7</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">Ratio MVPA / SED</span></p></td>
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">0.33 | 0.27</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">Total MVPA MET-hr</span></p></td>
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">8.63 | 5.56</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">Total kcal</span></p></td>
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">1730.04 | 1548.93</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">PAL</span></p></td>
+<td class="cl-8502657a"><p class="cl-85024612"><span class="cl-84fc577a">1.99 | 1.78</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">Total steps</span></p></td>
+<td class="cl-85026570"><p class="cl-85024612"><span class="cl-84fc577a">14869 | 14056</span></p></td>
+</tr>
+</tbody>
+</table>
+</div></template><div class="flextable-shadow-host" id="11e3a2bd-259e-4c58-8a1c-fd4e216ef68e"></div>
+<script>
+var dest = document.getElementById("11e3a2bd-259e-4c58-8a1c-fd4e216ef68e");
+var template = document.getElementById("824f951d-69b8-41a3-b8fd-9ee95264f228");
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><p><br></p>
+</div>
+<div class="section level3">
+<h3 id="comparisons-with-norms-and-recommendations">Comparisons with norms and recommendations<a class="anchor" aria-label="anchor" href="#comparisons-with-norms-and-recommendations"></a>
+</h3>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># PAL</span></span>
+<span><span class="va">g_pal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_fig_pal.html">create_fig_pal</a></span><span class="op">(</span>score <span class="op">=</span> <span class="va">mean_results</span><span class="op">[[</span><span class="st">"pal"</span><span class="op">]</span><span class="op">]</span>, <span class="st">"en"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="co"># Steps</span></span>
+<span><span class="va">g_steps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_fig_steps.html">create_fig_steps</a></span><span class="op">(</span>score <span class="op">=</span> <span class="va">mean_results</span><span class="op">[[</span><span class="st">"total_steps"</span><span class="op">]</span><span class="op">]</span>, <span class="st">"en"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># MVPA</span></span>
+<span><span class="va">g_mvpa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_fig_mvpa.html">create_fig_mvpa</a></span><span class="op">(</span>score <span class="op">=</span> <span class="va">mean_results</span><span class="op">[[</span><span class="st">"minutes_MVPA"</span><span class="op">]</span><span class="op">]</span>, <span class="st">"en"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># SED</span></span>
+<span><span class="va">g_sed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_fig_sed.html">create_fig_sed</a></span><span class="op">(</span>score <span class="op">=</span> <span class="va">mean_results</span><span class="op">[[</span><span class="st">"minutes_SED"</span><span class="op">]</span><span class="op">]</span>, <span class="st">"en"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># MVPA/SED ratio</span></span>
+<span><span class="va">g_ratio</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_fig_ratio_mvpa_sed.html">create_fig_ratio_mvpa_sed</a></span><span class="op">(</span>score <span class="op">=</span> <span class="va">mean_results</span><span class="op">[[</span><span class="st">"ratio_mvpa_sed"</span><span class="op">]</span><span class="op">]</span>, <span class="st">"en"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Whole figure</span></span>
+<span><span class="va">g_pal</span> <span class="op">/</span> <span class="va">g_steps</span> <span class="op">/</span> <span class="op">(</span><span class="va">g_mvpa</span> <span class="op">|</span> <span class="va">g_sed</span> <span class="op">|</span> <span class="va">g_ratio</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.7</span>, <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.justification <span class="op">=</span> <span class="st">"center"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-17-1.png" width="1632"></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="showing-step-accumulation-metrics">Showing step accumulation metrics<a class="anchor" aria-label="anchor" href="#showing-step-accumulation-metrics"></a>
+</h2>
+<div class="section level3">
+<h3 id="results-by-day-tabular-view-1">Results by day: Tabular view<a class="anchor" aria-label="anchor" href="#results-by-day-tabular-view-1"></a>
+</h3>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results_by_day</span><span class="op">$</span><span class="va">df_all_metrics</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">max_steps_60min</span><span class="op">:</span><span class="va">peak_steps_1min</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html" class="external-link">reactable</a></span><span class="op">(</span>striped <span class="op">=</span> <span class="cn">TRUE</span>, defaultColDef <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span>, minWidth <span class="op">=</span> <span class="fl">180</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-af8f5d9b91507a01b6b0" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-af8f5d9b91507a01b6b0">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"date":["2021-04-07","2021-04-08","2021-04-09","2021-04-10","2021-04-11","2021-04-12"],"max_steps_60min":[75.18,50.9,101.33,38.85,23,"NA"],"max_steps_30min":[100.93,71.63,104.9,43.9,28.9,"NA"],"max_steps_20min":[102.8,83.05,107.55,47.5,30.55,"NA"],"max_steps_5min":[119,116.8,112.8,85.6,41.8,"NA"],"max_steps_1min":[121,120,118,118,68,"NA"],"peak_steps_60min":[89.03,70.88,110.07,57.73,45.3,"NaN"],"peak_steps_30min":[114.33,86.73,112.23,68.7,51,"NaN"],"peak_steps_20min":[117.55,97.7,113.4,76.15,53.95,"NaN"],"peak_steps_5min":[120,117.6,117.2,109.6,61.8,"NaN"],"peak_steps_1min":[121,120,118,118,68,"NaN"]},"columns":[{"id":"date","name":"date","type":"Date","minWidth":180,"align":"center"},{"id":"max_steps_60min","name":"max_steps_60min","type":"numeric","minWidth":180,"align":"center"},{"id":"max_steps_30min","name":"max_steps_30min","type":"numeric","minWidth":180,"align":"center"},{"id":"max_steps_20min","name":"max_steps_20min","type":"numeric","minWidth":180,"align":"center"},{"id":"max_steps_5min","name":"max_steps_5min","type":"numeric","minWidth":180,"align":"center"},{"id":"max_steps_1min","name":"max_steps_1min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_60min","name":"peak_steps_60min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_30min","name":"peak_steps_30min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_20min","name":"peak_steps_20min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_5min","name":"peak_steps_5min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_1min","name":"peak_steps_1min","type":"numeric","minWidth":180,"align":"center"}],"striped":true,"dataKey":"b7ac314ea3913087cceef7eff4c66cce"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="section level3">
+<h3 id="results-by-day-graphical-view-1">Results by day: Graphical view<a class="anchor" aria-label="anchor" href="#results-by-day-graphical-view-1"></a>
+</h3>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_fig_res_by_day.html">create_fig_res_by_day</a></span><span class="op">(</span></span>
+<span>  <span class="va">results_by_day</span><span class="op">$</span><span class="va">df_all_metrics</span>, </span>
+<span>  minimum_wear_time_for_analysis <span class="op">=</span> <span class="fl">10</span>, </span>
+<span>  start_day_analysis <span class="op">=</span> <span class="st">"00:00:00"</span>, </span>
+<span>  end_day_analysis <span class="op">=</span> <span class="st">"23:59:00"</span>, </span>
+<span>  metrics <span class="op">=</span> <span class="st">"step_acc"</span>,</span>
+<span>  epoch_label <span class="op">=</span> <span class="st">"60s"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-19-1.png" width="1632"></p>
+</div>
+<div class="section level3">
+<h3 id="means-medians-computed-using-valid-days-1">Means | Medians computed using valid days<a class="anchor" aria-label="anchor" href="#means-medians-computed-using-valid-days-1"></a>
+</h3>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_flextable_summary.html">create_flextable_summary</a></span><span class="op">(</span></span>
+<span>  results_summary_means <span class="op">=</span> <span class="va">mean_results</span>, </span>
+<span>  results_summary_medians <span class="op">=</span> <span class="va">median_results</span>,</span>
+<span>  metrics <span class="op">=</span> <span class="st">"step_acc"</span>,</span>
+<span>  epoch_label <span class="op">=</span> <span class="st">"60s"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<template id="d6649645-09cc-4a22-a075-9421dfb68ab0"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  border-color: transparent;
+  caption-side: top;
+}
+.tabwid-caption-bottom table{
+  caption-side: bottom;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td, .tabwid th {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+    margin: 0 0 !important;
+}
+</style>
+<div class="tabwid">
+<style>.cl-882bcce6{}.cl-881ff682{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-881ff68c{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8825b3ba{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8825d03e{width:3.25in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8825d048{width:3.25in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8825d052{width:3.25in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table class="table cl-882bcce6">
+<thead><tr style="overflow-wrap:break-word;">
+<th class="cl-8825d03e"><p class="cl-8825b3ba"><span class="cl-881ff682">Metric</span></p></th>
+<th class="cl-8825d03e"><p class="cl-8825b3ba"><span class="cl-881ff682">Daily mean | median</span></p></th>
+</tr></thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8825d048"><p class="cl-8825b3ba"><span class="cl-881ff68c">Number of valid days</span></p></td>
+<td class="cl-8825d048"><p class="cl-8825b3ba"><span class="cl-881ff68c">5</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8825d052"><p class="cl-8825b3ba"><span class="cl-881ff68c">Max step acc. 60 min (steps/min)</span></p></td>
+<td class="cl-8825d052"><p class="cl-8825b3ba"><span class="cl-881ff68c">57.85 | 50.90</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8825d048"><p class="cl-8825b3ba"><span class="cl-881ff68c">Max step acc. 30 min (steps/min)</span></p></td>
+<td class="cl-8825d048"><p class="cl-8825b3ba"><span class="cl-881ff68c">70.05 | 71.63</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8825d052"><p class="cl-8825b3ba"><span class="cl-881ff68c">Max step acc. 20 min (steps/min)</span></p></td>
+<td class="cl-8825d052"><p class="cl-8825b3ba"><span class="cl-881ff68c">74.29 | 83.05</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8825d048"><p class="cl-8825b3ba"><span class="cl-881ff68c">Max step acc. 5 min (steps/min)</span></p></td>
+<td class="cl-8825d048"><p class="cl-8825b3ba"><span class="cl-881ff68c">95.20 | 112.80</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8825d052"><p class="cl-8825b3ba"><span class="cl-881ff68c">Max step acc. 1 min (steps/min)</span></p></td>
+<td class="cl-8825d052"><p class="cl-8825b3ba"><span class="cl-881ff68c">109.00 | 118.00</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8825d048"><p class="cl-8825b3ba"><span class="cl-881ff68c">Peak step acc. 60 min (steps/min)</span></p></td>
+<td class="cl-8825d048"><p class="cl-8825b3ba"><span class="cl-881ff68c">74.60 | 70.88</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8825d052"><p class="cl-8825b3ba"><span class="cl-881ff68c">Peak step acc. 30 min (steps/min)</span></p></td>
+<td class="cl-8825d052"><p class="cl-8825b3ba"><span class="cl-881ff68c">86.60 | 86.73</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8825d048"><p class="cl-8825b3ba"><span class="cl-881ff68c">Peak step acc. 20 min (steps/min)</span></p></td>
+<td class="cl-8825d048"><p class="cl-8825b3ba"><span class="cl-881ff68c">91.75 | 97.70</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8825d052"><p class="cl-8825b3ba"><span class="cl-881ff68c">Peak step acc. 5 min (steps/min)</span></p></td>
+<td class="cl-8825d052"><p class="cl-8825b3ba"><span class="cl-881ff68c">105.24 | 117.20</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8825d048"><p class="cl-8825b3ba"><span class="cl-881ff68c">Peak step acc. 1 min (steps/min)</span></p></td>
+<td class="cl-8825d048"><p class="cl-8825b3ba"><span class="cl-881ff68c">109.00 | 118.00</span></p></td>
+</tr>
+</tbody>
+</table>
+</div></template><div class="flextable-shadow-host" id="3e4db34b-1a03-4bee-a1cb-b57e4fd8a933"></div>
+<script>
+var dest = document.getElementById("3e4db34b-1a03-4bee-a1cb-b57e4fd8a933");
+var template = document.getElementById("d6649645-09cc-4a22-a075-9421dfb68ab0");
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><p><br></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="showing-intensity-gradient-and-mx-metrics">Showing intensity gradient and MX metrics<a class="anchor" aria-label="anchor" href="#showing-intensity-gradient-and-mx-metrics"></a>
+</h2>
+<div class="section level3">
+<h3 id="distribution-of-time-spent-in-intensity-bins">Distribution of time spent in intensity bins<a class="anchor" aria-label="anchor" href="#distribution-of-time-spent-in-intensity-bins"></a>
+</h3>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>  <span class="va">results_by_day</span><span class="op">$</span><span class="va">p_band</span></span></code></pre></div>
+<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-21-1.png" width="1440"></p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>  <span class="va">results_by_day</span><span class="op">$</span><span class="va">p_log</span></span></code></pre></div>
+<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-22-1.png" width="1440"></p>
+</div>
+<div class="section level3">
+<h3 id="results-by-day-tabular-view-2">Results by day: Tabular view<a class="anchor" aria-label="anchor" href="#results-by-day-tabular-view-2"></a>
+</h3>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results_by_day</span><span class="op">$</span><span class="va">df_all_metrics</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">ig</span><span class="op">:</span><span class="va">M5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html" class="external-link">reactable</a></span><span class="op">(</span>striped <span class="op">=</span> <span class="cn">TRUE</span>, defaultColDef <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span>, minWidth <span class="op">=</span> <span class="fl">180</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3aa56e3c7c7c08f71919" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-3aa56e3c7c7c08f71919">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"date":["2021-04-07","2021-04-08","2021-04-09","2021-04-10","2021-04-11","2021-04-12"],"ig":[-1.33,-1.36,-0.68,-2.03,-2.13,"NA"],"M1/3":[1496.84,1920.94,4049.77,1600.89,848.92,"NaN"],"M120":[3585.15,3993.83,9446.37,2864.72,1763.45,"NaN"],"M60":[4706.07,4970.81,10382.79,3416.37,2140.57,"NaN"],"M30":[5678.66,5775.53,11163.53,4033.46,2498.95,"NaN"],"M15":[6073.25,6191.16,11766.98,4678.74,2847.09,"NaN"],"M5":[6229.5,6537.62,12308.03,5822.18,3225,"NaN"]},"columns":[{"id":"date","name":"date","type":"Date","minWidth":180,"align":"center"},{"id":"ig","name":"ig","type":"numeric","minWidth":180,"align":"center"},{"id":"M1/3","name":"M1/3","type":"numeric","minWidth":180,"align":"center"},{"id":"M120","name":"M120","type":"numeric","minWidth":180,"align":"center"},{"id":"M60","name":"M60","type":"numeric","minWidth":180,"align":"center"},{"id":"M30","name":"M30","type":"numeric","minWidth":180,"align":"center"},{"id":"M15","name":"M15","type":"numeric","minWidth":180,"align":"center"},{"id":"M5","name":"M5","type":"numeric","minWidth":180,"align":"center"}],"striped":true,"dataKey":"fda40918fda35571cab9401f77214fe3"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="section level3">
+<h3 id="results-by-day-graphical-view-2">Results by day: Graphical view<a class="anchor" aria-label="anchor" href="#results-by-day-graphical-view-2"></a>
+</h3>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_fig_res_by_day.html">create_fig_res_by_day</a></span><span class="op">(</span></span>
+<span>  <span class="va">results_by_day</span><span class="op">$</span><span class="va">df_all_metrics</span>, </span>
+<span>  minimum_wear_time_for_analysis <span class="op">=</span> <span class="fl">10</span>, </span>
+<span>  start_day_analysis <span class="op">=</span> <span class="st">"00:00:00"</span>, </span>
+<span>  end_day_analysis <span class="op">=</span> <span class="st">"23:59:00"</span>, </span>
+<span>  metrics <span class="op">=</span> <span class="st">"step_acc"</span>,</span>
+<span>  epoch_label <span class="op">=</span> <span class="st">"60s"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-24-1.png" width="1632"></p>
+</div>
+<div class="section level3">
+<h3 id="means-medians-computed-using-valid-days-2">Means | Medians computed using valid days<a class="anchor" aria-label="anchor" href="#means-medians-computed-using-valid-days-2"></a>
+</h3>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_flextable_summary.html">create_flextable_summary</a></span><span class="op">(</span></span>
+<span>  results_summary_means <span class="op">=</span> <span class="va">mean_results</span>, </span>
+<span>  results_summary_medians <span class="op">=</span> <span class="va">median_results</span>,</span>
+<span>  metrics <span class="op">=</span> <span class="st">"int_distri"</span>,</span>
+<span>  epoch_label <span class="op">=</span> <span class="st">"60s"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<template id="c5d10bef-f14e-4774-bb42-64fcda6fe3ac"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  border-color: transparent;
+  caption-side: top;
+}
+.tabwid-caption-bottom table{
+  caption-side: bottom;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td, .tabwid th {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+    margin: 0 0 !important;
+}
+</style>
+<div class="tabwid">
+<style>.cl-8c62328c{}.cl-8c569314{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8c569328{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8c5bb42a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8c5bd1d0{width:3.25in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8c5bd1da{width:3.25in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8c5bd1db{width:3.25in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table class="table cl-8c62328c">
+<thead><tr style="overflow-wrap:break-word;">
+<th class="cl-8c5bd1d0"><p class="cl-8c5bb42a"><span class="cl-8c569314">Metric</span></p></th>
+<th class="cl-8c5bd1d0"><p class="cl-8c5bb42a"><span class="cl-8c569314">Daily mean | median</span></p></th>
+</tr></thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8c5bd1da"><p class="cl-8c5bb42a"><span class="cl-8c569328">Number of valid days</span></p></td>
+<td class="cl-8c5bd1da"><p class="cl-8c5bb42a"><span class="cl-8c569328">5</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8c5bd1db"><p class="cl-8c5bb42a"><span class="cl-8c569328">Intensity gradient</span></p></td>
+<td class="cl-8c5bd1db"><p class="cl-8c5bb42a"><span class="cl-8c569328">-1.51 | -1.36</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8c5bd1da"><p class="cl-8c5bb42a"><span class="cl-8c569328">M1/3 (counts/60s)</span></p></td>
+<td class="cl-8c5bd1da"><p class="cl-8c5bb42a"><span class="cl-8c569328">1983.5 | 1600.9</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8c5bd1db"><p class="cl-8c5bb42a"><span class="cl-8c569328">M120 (counts/60s)</span></p></td>
+<td class="cl-8c5bd1db"><p class="cl-8c5bb42a"><span class="cl-8c569328">4330.7 | 3585.2</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8c5bd1da"><p class="cl-8c5bb42a"><span class="cl-8c569328">M60 (counts/60s)</span></p></td>
+<td class="cl-8c5bd1da"><p class="cl-8c5bb42a"><span class="cl-8c569328">5123.3 | 4706.1</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8c5bd1db"><p class="cl-8c5bb42a"><span class="cl-8c569328">M30 (counts/60s)</span></p></td>
+<td class="cl-8c5bd1db"><p class="cl-8c5bb42a"><span class="cl-8c569328">5830.0 | 5678.7</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8c5bd1da"><p class="cl-8c5bb42a"><span class="cl-8c569328">M15 (counts/60s)</span></p></td>
+<td class="cl-8c5bd1da"><p class="cl-8c5bb42a"><span class="cl-8c569328">6311.4 | 6073.2</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8c5bd1db"><p class="cl-8c5bb42a"><span class="cl-8c569328">M5 (counts/60s)</span></p></td>
+<td class="cl-8c5bd1db"><p class="cl-8c5bb42a"><span class="cl-8c569328">6824.5 | 6229.5</span></p></td>
+</tr>
+</tbody>
+</table>
+</div></template><div class="flextable-shadow-host" id="0a637657-cc84-4958-bd90-db69c4701cce"></div>
+<script>
+var dest = document.getElementById("0a637657-cc84-4958-bd90-db69c4701cce");
+var template = document.getElementById("c5d10bef-f14e-4774-bb42-64fcda6fe3ac");
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><p><br></p>
+</div>
+<div class="section level3">
+<h3 id="radar-view-based-on-the-means-of-valid-days">Radar view based on the means of valid days<a class="anchor" aria-label="anchor" href="#radar-view-based-on-the-means-of-valid-days"></a>
+</h3>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_fig_mx_summary.html">create_fig_mx_summary</a></span><span class="op">(</span></span>
+<span>data <span class="op">=</span> <span class="va">mean_results</span>,</span>
+<span>labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>mpa_cutpoint <span class="op">=</span> <span class="fl">2690</span>, </span>
+<span>vpa_cutpoint <span class="op">=</span> <span class="fl">6167</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-26-1.png" width="50%" height="50%" style="display: block; margin: auto;"></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="showing-sedentary-behaviour-accumulation-metrics-based-on-valid-days">Showing sedentary behaviour accumulation metrics based on valid days<a class="anchor" aria-label="anchor" href="#showing-sedentary-behaviour-accumulation-metrics-based-on-valid-days"></a>
 </h2>
 <div class="section level3">
 <h3 id="getting-results">Getting results<a class="anchor" aria-label="anchor" href="#getting-results"></a>
 </h3>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">accum_metrics_sed</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu"><a href="../reference/compute_accumulation_metrics.html">compute_accumulation_metrics</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">mydata_with_intensity_marks</span>, </span>
@@ -262,30 +747,30 @@
 <div class="section level3">
 <h3 id="temporal-distribution-of-sedentary-bouts">Temporal distribution of sedentary bouts<a class="anchor" aria-label="anchor" href="#temporal-distribution-of-sedentary-bouts"></a>
 </h3>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">accum_metrics_sed</span><span class="op">$</span><span class="va">p_breaks</span></span></code></pre></div>
-<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="alpha-coefficient-median-bout-duration-mbd-usual-bout-duration-ubd-and-gini-index">Alpha coefficient, median bout duration (MBD), usual bout duration (UBD), and Gini index<a class="anchor" aria-label="anchor" href="#alpha-coefficient-median-bout-duration-mbd-usual-bout-duration-ubd-and-gini-index"></a>
 </h3>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">accum_metrics_sed</span><span class="op">$</span><span class="va">p_alpha</span>  <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"none"</span>, fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">accum_metrics_sed</span><span class="op">$</span><span class="va">p_MBD</span>    <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"none"</span>, fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="va">accum_metrics_sed</span><span class="op">$</span><span class="va">p_UBD</span></span>
 <span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="va">accum_metrics_sed</span><span class="op">$</span><span class="va">p_gini</span></span>
 <span></span>
 <span><span class="op">(</span><span class="va">p1</span> <span class="op">|</span> <span class="va">p2</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">p3</span> <span class="op">|</span> <span class="va">p4</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-20-1.png" width="100%" height="60%" style="display: block; margin: auto;"></p>
+<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-29-1.png" width="100%" height="60%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="exploring-physical-activity-accumulation-metrics-based-on-valid-days">Exploring physical activity accumulation metrics based on valid days<a class="anchor" aria-label="anchor" href="#exploring-physical-activity-accumulation-metrics-based-on-valid-days"></a>
+<h2 id="showing-physical-activity-accumulation-metrics-based-on-valid-days">Showing physical activity accumulation metrics based on valid days<a class="anchor" aria-label="anchor" href="#showing-physical-activity-accumulation-metrics-based-on-valid-days"></a>
 </h2>
 <div class="section level3">
 <h3 id="getting-results-1">Getting results<a class="anchor" aria-label="anchor" href="#getting-results-1"></a>
 </h3>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">accum_metrics_pa</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu"><a href="../reference/compute_accumulation_metrics.html">compute_accumulation_metrics</a></span><span class="op">(</span></span>
 <span>    <span class="va">mydata_with_intensity_marks</span>, </span>
@@ -296,21 +781,21 @@
 <div class="section level3">
 <h3 id="temporal-distribution-of-physical-activity-bouts">Temporal distribution of physical activity bouts<a class="anchor" aria-label="anchor" href="#temporal-distribution-of-physical-activity-bouts"></a>
 </h3>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">accum_metrics_pa</span><span class="op">$</span><span class="va">p_breaks</span></span></code></pre></div>
-<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="alpha-coefficient-median-bout-duration-mbd-usual-bout-duration-ubd-and-gini-index-1">Alpha coefficient, median bout duration (MBD), usual bout duration (UBD), and Gini index<a class="anchor" aria-label="anchor" href="#alpha-coefficient-median-bout-duration-mbd-usual-bout-duration-ubd-and-gini-index-1"></a>
 </h3>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">accum_metrics_pa</span><span class="op">$</span><span class="va">p_alpha</span>  <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"none"</span>, fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">accum_metrics_pa</span><span class="op">$</span><span class="va">p_MBD</span>    <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"none"</span>, fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="va">accum_metrics_pa</span><span class="op">$</span><span class="va">p_UBD</span></span>
 <span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="va">accum_metrics_pa</span><span class="op">$</span><span class="va">p_gini</span></span>
 <span></span>
 <span><span class="op">(</span><span class="va">p1</span> <span class="op">|</span> <span class="va">p2</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">p3</span> <span class="op">|</span> <span class="va">p4</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-23-1.png" width="100%" height="60%" style="display: block; margin: auto;"></p>
+<p><img src="activAnalyzer_files/figure-html/unnamed-chunk-32-1.png" width="100%" height="60%" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

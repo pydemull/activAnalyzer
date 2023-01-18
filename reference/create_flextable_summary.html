@@ -57,7 +57,9 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_flextable_summary</span><span class="op">(</span></span>
 <span>  <span class="va">results_summary_means</span>,</span>
 <span>  <span class="va">results_summary_medians</span>,</span>
-<span>  language <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"en"</span>, <span class="st">"fr"</span><span class="op">)</span></span>
+<span>  language <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"en"</span>, <span class="st">"fr"</span><span class="op">)</span>,</span>
+<span>  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"volume"</span>, <span class="st">"step_acc"</span>, <span class="st">"int_distri"</span><span class="op">)</span>,</span>
+<span>  epoch_label <span class="op">=</span> <span class="st">"60s"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -72,7 +74,16 @@
 
 
 <dt>language</dt>
-<dd><p>A character value for setting the language with which the table should be created: <code>en</code> for english; <code>fr</code> for french.</p></dd>
+<dd><p>A character value for setting the language with which the figure should be created: <code>en</code> for english; <code>fr</code> for french.</p></dd>
+
+
+<dt>metrics</dt>
+<dd><p>A character value for setting the metrics to be shown in the figure. "volume" refers to "activity volume" metrics, step_acc" refers
+to "step accumulation" metrics, and "int_distri" refers to intensity distribution metrics. By default, the function provides all computed metrics.</p></dd>
+
+
+<dt>epoch_label</dt>
+<dd><p>A character value to be pasted into the names of the variables to build the figure</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -124,7 +135,8 @@
 <span class="r-in"><span>    sex <span class="op">=</span> <span class="st">"male"</span>,</span></span>
 <span class="r-in"><span>    valid_wear_time_start <span class="op">=</span> <span class="st">"07:00:00"</span>,</span></span>
 <span class="r-in"><span>    valid_wear_time_end <span class="op">=</span> <span class="st">"22:00:00"</span></span></span>
-<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span><span class="op">$</span><span class="va">df_all_metrics</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = "date"</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You have computed results with the recap_by_day() function using the following inputs: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>          age = 32</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>          weight = 67</span>
@@ -145,16 +157,16 @@
 <span class="r-in"><span>    language <span class="op">=</span> <span class="st">"en"</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a flextable object.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> col_keys: `Metric`, `Daily mean | median over valid days` </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> col_keys: `Metric`, `Daily mean | median` </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> header has 1 row(s) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> body has 13 row(s) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> body has 38 row(s) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> original dataset sample: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                          Metric         Daily mean | median over valid days</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          Number of valid days                                    5 day(s)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                     Wear time 767.8 min (12:47:48) | 770.0 min (12:50:00)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            Total kilocalories                 1730.04 kcal | 1548.93 kcal</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Physical activity level (PAL)                                 1.99 | 1.78</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5         Total number of steps                   14869 steps | 14056 steps</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     Metric                 Daily mean | median</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Number of valid days                                   5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          Wear time (min) 767.8 (12:47:48) | 770.0 (12:50:00)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      Axis 1 total counts                 513108.6 | 359125.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          VM total counts                 970344.6 | 806592.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Axis 1 mean (counts/min)                       686.7 | 498.8</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -34,6 +34,9 @@
     <loc>https://pydemull.github.io/activAnalyzer/reference/compute_bmr.html</loc>
   </url>
   <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/compute_intensity_distri_metrics.html</loc>
+  </url>
+  <url>
     <loc>https://pydemull.github.io/activAnalyzer/reference/compute_mets.html</loc>
   </url>
   <url>
@@ -47,6 +50,12 @@
   </url>
   <url>
     <loc>https://pydemull.github.io/activAnalyzer/reference/create_fig_mvpa.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/create_fig_mx_by_day.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/create_fig_mx_summary.html</loc>
   </url>
   <url>
     <loc>https://pydemull.github.io/activAnalyzer/reference/create_fig_pal.html</loc>
@@ -68,6 +77,9 @@
   </url>
   <url>
     <loc>https://pydemull.github.io/activAnalyzer/reference/get_guidelines_status.html</loc>
+  </url>
+  <url>
+    <loc>https://pydemull.github.io/activAnalyzer/reference/get_ig_results.html</loc>
   </url>
   <url>
     <loc>https://pydemull.github.io/activAnalyzer/reference/get_pa_period_info.html</loc>
@@ -110,8 +122,5 @@
   </url>
   <url>
     <loc>https://pydemull.github.io/activAnalyzer/reference/run_app.html</loc>
-  </url>
-  <url>
-    <loc>https://pydemull.github.io/activAnalyzer/reference/tbl_agd.html</loc>
   </url>
 </urlset>
