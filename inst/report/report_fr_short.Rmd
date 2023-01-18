@@ -42,6 +42,21 @@ params:
   mvpa_lines: NA
   sed_lines: NA
   ratio_lines: NA
+  df_with_computed_metrics: NA
+  graph_int_distri_bands: NA
+  graph_int_distri_models: NA
+  mean_breaks_sed: NA
+  p_breaks_sed: NA
+  p_alpha_sed: NA 
+  p_MBD_sed: NA
+  p_UBD_sed: NA 
+  p_gini_sed: NA
+  mean_breaks_pa: NA
+  p_breaks_pa: NA 
+  p_alpha_pa: NA
+  p_MBD_pa: NA
+  p_UBD_pa: NA
+  p_gini_pa: NA
   rendered_by_shiny: FALSE
   geometry: "left=2cm, right=2cm, top=1cm, bottom=1cm"
 
@@ -77,13 +92,21 @@ axis_mvpa <- ifelse(params$axis_mvpa == "vertical axis", "axe vertical",
               ifelse(params$axis_mvpa == "vector magnitude", "vecteur magnitude",
                      "non défini"))
 
+axis_mvpa_graph <- ifelse(params$axis_mvpa == "vertical axis", "axis1", 
+              ifelse(params$axis_mvpa == "vector magnitude", "vm",
+                     "na"))
+
+height_factor1 = nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.75
+height_factor1 <- ifelse(height_factor1 <= 6, nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.9, height_factor1)
+height_factor2 = params$results_summary_means$valid_days * 0.75
+height_factor2 <- ifelse(height_factor2 <= 6, nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.9, height_factor2)
+height_factor3 = nlevels(as.factor(params$df_with_computed_metrics$date)) * 1.5
+
 options("scipen"=100, "digits"=4)
 ```
 
-\vspace{-1cm} 
-
 # Informations
-
+<hr>
 
 **Patient :** `r params$patient_surname` `r params$patient_name`  | **Date :**  `r Sys.Date()` | **Évaluateur :** `r params$assessor_surname` `r params$assessor_name`
 
@@ -101,25 +124,61 @@ options("scipen"=100, "digits"=4)
 
 
 # Résultats
+<hr>
 
-```{r }
-create_flextable_summary(df1_means, df1_medians, language = "fr")
+## Indicateurs de volume d'activité
+
+### Distribution temporelle de l'intensité
+```{r, include=FALSE}
+g <- plot_data_with_intensity(
+  data = params$df_with_computed_metrics, 
+  metric = axis_mvpa_graph,
+  valid_wear_time_start = params$start_day_analysis,
+  valid_wear_time_end = params$end_day_analysis
+  )
+```
+```{r, fig.height = height_factor1, fig.width=13}
+g + labs(x = "Temps (hh:mm)", color = "Durée de période (min)", fill = "Durée de période (min)")
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.25)  # set progress to 25%
 ```
 
+### Résultats par jour
+```{r, fig.height=10, fig.width = 17, warning=FALSE, message=FALSE}
+create_fig_res_by_day(
+  df2, 
+  params$minimum_wear_time_for_analysis, 
+  params$start_day_analysis, 
+  params$end_day_analysis, 
+  language = "fr",
+  metrics = "volume"
+  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"))
+```
 
-```{r, fig.height=18, fig.width = 17, warning=FALSE, message=FALSE}
+### Moyennes | Médianes calculées à partir des jours valides
+```{r }
+create_flextable_summary(
+  df1_means, 
+  df1_medians, 
+    language = "fr",
+    metrics = "volume",
+    epoch_label = paste0(params$epoch, "s")
+  )
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.5)  # set progress to 50%
+```
+
+### Comparaison avec des normes et des recommandations
+```{r, fig.height=9, fig.width = 17, warning=FALSE, message=FALSE}
 # PAL
 g_pal <- create_fig_pal(score = df1_means[["pal"]], "fr") + theme(plot.margin = margin(2, 1, 0.5, 1, "cm"))
 
 # Steps
 g_steps <- create_fig_steps(score = df1_means[["total_steps"]], "fr") + theme(plot.margin = margin(0, 1, 0.5, 1, "cm"))
 
-if (params$rendered_by_shiny)
-  shiny::setProgress(0.5)  # set progress to 50%
-
 # MVPA
 g_mvpa <- create_fig_mvpa(score = df1_means[["minutes_MVPA"]], "fr") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
-
 
 # SED
 g_sed <- create_fig_sed(score = df1_means[["minutes_SED"]], "fr") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
@@ -127,36 +186,152 @@ g_sed <- create_fig_sed(score = df1_means[["minutes_SED"]], "fr") + theme(plot.m
 # MVPA/SED ratio
 g_ratio <- create_fig_ratio_mvpa_sed(score = df1_means[["ratio_mvpa_sed"]], "fr") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
 
-
-# Daily results
-g_all_days <- create_fig_res_by_day(
-  df2, 
-  params$minimum_wear_time_for_analysis, 
-  params$start_day_analysis, 
-  params$end_day_analysis, 
-  language = "fr"
-  ) + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
-
 # Whole figure
-g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_all_days + 
-    plot_layout(heights = c(0.8, 0.7, 1.5, 4)) & theme(legend.justification = "center")
+g_pal / g_steps / (g_mvpa | g_sed | g_ratio) + 
+    plot_layout(heights = c(0.8, 0.7, 1.5)) & theme(legend.justification = "center")
   
 ```
 
-
-# Commentaires
-
+### Commentaires
 ```{r, echo = F}
 # Determining physical activity guidelines status
 guidelines_status <- get_guidelines_status(df1_means[["mets_hours_mvpa"]], language = "fr")
 
 # Determining PAL status
 pal_status <- get_pal_status(df1_means[["pal"]], language = "fr")
-
-if (params$rendered_by_shiny)
-  shiny::setProgress(1)  # set progress to 100%
 ```
 
 Selon la *[Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf)*, le NAP du patient pourrait être décrit comme **`r pal_status`**. Après avoir fait la conversion des minutes MPA et VPA vers les MET-heures, l'estimation du volume MVPA moyen journalier pour le patient est de `r paste0(format(round(df1_means[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hr, ce qui pourrait correspondre au fait de tomber **`r guidelines_status`** (i.e., 7.5-15.0 MET-hr par semaine, ou 1.07-2.14 MET-hr par jour).
 
+## Indicateurs d'accumulation des pas
 
+### Résultats par jour
+```{r, fig.height=7, fig.width = 17, warning=FALSE, message=FALSE}
+create_fig_res_by_day(
+  df2, 
+  params$minimum_wear_time_for_analysis, 
+  params$start_day_analysis, 
+  params$end_day_analysis, 
+  language = "fr",
+  metrics = "step_acc"
+  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"))
+```
+
+### Moyennes | Médianes calculées à partir des jours valides
+```{r }
+create_flextable_summary(
+  df1_means, 
+  df1_medians, 
+    language = "fr",
+    metrics = "step_acc",
+    epoch_label = paste0(params$epoch, "s")
+  )
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.75)  # set progress to 75%
+```
+
+## Indicateurs de distribution de l'intensité
+
+### Résultats par jour
+```{r, fig.height=9, fig.width = 17, warning=FALSE, message=FALSE}
+create_fig_res_by_day(
+  df2, 
+  params$minimum_wear_time_for_analysis, 
+  params$start_day_analysis, 
+  params$end_day_analysis, 
+  language = "fr",
+  metrics = "int_distri",
+  epoch_label = paste0(params$epoch, "s")
+  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"))
+```
+
+### Moyennes | Médianes calculées à partir des jours valides
+```{r }
+create_flextable_summary(
+  df1_means, 
+  df1_medians, 
+    language = "fr",
+    metrics = "int_distri",
+    epoch_label = paste0(params$epoch, "s")
+  )
+```
+
+### Vue radar conçue à partir des moyennes des jours valides
+```{r, fig.align = "center", out.width='50%', out.height='50%', fig.width=8, fig.height=8}
+cor_factor <- 60 / params$epoch
+
+create_fig_mx_summary(
+data = df1_means,
+labels = NULL,
+mpa_cutpoint = params$mpa_cutpoint / cor_factor, 
+vpa_cutpoint = params$vpa_cutpoint / cor_factor
+)  + theme(legend.position = c(0.15, 0.08))
+```
+
+\newpage
+
+## Indicateurs d'accumulation du comportement sédentaire obtenus à partir des jours valides
+
+### Distribution temporelle des périodes de comportement sédentaire
+```{r, fig.height = height_factor2, fig.width=13}
+if(length(params$p_breaks_sed) == 1) {
+  cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
+} else {
+  params$p_breaks_sed + labs(title = paste("Nombre journalier moyen de 'breaks':", params$mean_breaks_sed), x = "Temps (hh:mm)", color = "Durée de période (min)", fill = "Durée de période (min)")
+}
+```
+
+### Coefficient alpha, durée médiane des périodes (MBD), durée usuelle des périodes (UBD), et indice Gini
+```{r, fig.height=6, fig.width=19}
+if(length(params$p_breaks_pa) == 1) {
+  cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
+} else {
+  
+  p1 <- params$p_alpha_sed + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = "none", fill = "none")
+  p2 <- params$p_MBD_sed  + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = "none", fill = "none")
+  p3 <- params$p_UBD_sed  + labs(x = "Durée de période (min)", y = "Fraction cumulée du temps total sédentaire", color = "Durée (min)", fill = "Durée (min)") 
+  p4 <- params$p_gini_sed + labs(x = "Fraction du nombre de périodes de durée > x", y = "Fraction cumulée du temps total sédentaire", color = "Durée (min)", fill = "Durée (min)")
+  
+  (p1  | p2 | p3 | p4) + plot_layout(guides = "collect") & 
+    theme(legend.position = 'bottom',
+          axis.title = element_text(size = 15),
+          legend.title = element_text(size = 17),
+          legend.text = element_text(size = 15)
+          )
+}
+```
+
+\newpage
+
+## Indicateurs d'accumulation de l'activité physique obtenus à partir des jours valides
+
+### Distribution temporelle des périodes d'activité physique
+```{r, fig.height = height_factor2, fig.width=13}
+if(length(params$p_breaks_pa) == 1) {
+  cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
+} else {
+  params$p_breaks_pa + labs(title = paste("Nombre journalier moyen de 'breaks':", params$mean_breaks_pa), x = "Temps (hh:mm)", color = "Durée de période (min)", fill = "Durée de période (min)")
+}
+if (params$rendered_by_shiny)
+  shiny::setProgress(1)  # set progress to 100%
+```
+
+### Coefficient alpha, durée médiane des périodes (MBD), durée usuelle des périodes (UBD), et indice Gini
+```{r, fig.height=6, fig.width=19}
+if(length(params$p_breaks_pa) == 1) {
+  cat("Aucun résultat. Les résultats ne peuvent être obtenus qu'en utilisant des périodes de 60 s.")
+} else {
+  p1 <- params$p_alpha_pa + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = "none", fill = "none")
+  p2 <- params$p_MBD_pa  + labs(x = "Durée de période (min)", color = "Durée (min)", fill = "Durée (min)") + guides(color = "none", fill = "none")
+  p3 <- params$p_UBD_pa  + labs(x = "Durée de période (min)", y = "Fraction cumulée du temps total d'activité physique", color = "Durée (min)", fill = "Durée (min)") 
+  p4 <- params$p_gini_pa + labs(x = "Fraction du nombre de périodes de durée > x", y = "Fraction cumulée du temps total d'activité physique", color = "Durée (min)", fill = "Durée (min)") 
+  
+  (p1  | p2 | p3 | p4) + plot_layout(guides = "collect") & 
+    theme(legend.position = 'bottom',
+          axis.title = element_text(size = 15),
+          legend.title = element_text(size = 17),
+          legend.text = element_text(size = 15)
+          )
+}
+```

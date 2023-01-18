@@ -6,6 +6,7 @@
 \usage{
 recap_by_day(
   data,
+  col_axis = "vm",
   col_time = "time",
   col_nonwear = "non_wearing_count",
   col_wear = "wearing_count",
@@ -13,11 +14,16 @@ recap_by_day(
   valid_wear_time_end = "23:59:59",
   age = 40,
   weight = 70,
-  sex = c("male", "female", "intersex", "undefined", "prefer not to say")
+  sex = c("male", "female", "intersex", "undefined", "prefer not to say"),
+  start_first_bin = 0,
+  start_last_bin = 10000,
+  bin_width = 500
 )
 }
 \arguments{
 \item{data}{A dataframe obtained using the \code{\link{prepare_dataset}}, \code{\link{mark_wear_time}}, and then the \code{\link{mark_intensity}} functions.}
+
+\item{col_axis}{A character value to indicate the name of the variable to be used to compute total time per bin of intensity and then intensity gradient.}
 
 \item{col_time}{A character value indicating the name of the variable where time information is provided.}
 
@@ -34,12 +40,22 @@ recap_by_day(
 \item{weight}{A numeric value in kg.}
 
 \item{sex}{A character value.}
+
+\item{start_first_bin}{A numeric value to set the lower bound of the first bin of the intensity band (in counts/epoch duration).}
+
+\item{start_last_bin}{A numeric value to set the lower bound of the last bin of the intensity band (in counts/epoch duration).}
+
+\item{bin_width}{A numeric value to set the width of the bins of the intensity band (in counts/epoch duration).}
 }
 \value{
-A dataframe.
+A list of objects: \code{df_all_metrics}, \code{p_band}, and \code{p_log}.
+\code{df_all_metrics} is a dataframe containing all the metrics for each day.
+\code{p_band} is a figure that shows the distribution of time spent in the configured bins of intensity for each day of the dataset.
+\code{p_log} is a figure that shows, for each day, the relationship between the natural log of time spent in each intensity bin with the natural
+log of the middle values of the intensity bins.
 }
 \description{
-This function summarizes accelerometer results for each day of the measurement period.
+This function summarizes various accelerometer metrics for each day of the measurement period.
 }
 \details{
 The following metrics are computed from epochs corresponding to valid wear time:
@@ -49,8 +65,6 @@ The following metrics are computed from epochs corresponding to valid wear time:
 \item \strong{total_counts_vm:} total counts for the vector magnitude
 \item \strong{axis1_per_min:} mean of the counts per minute for the vertical axis
 \item \strong{vm_per_min:} mean of the counts per minute for the vector magnitude
-\item \strong{total_steps:} total step count
-\item \strong{total_kcal:} total kilocalories
 \item \strong{minutes_SED:} total minutes spent in SED behavior
 \item \strong{minutes_LPA:} total minutes spent in LPA behavior
 \item \strong{minutes_MPA:} total minutes spent in MPA behavior
@@ -60,7 +74,12 @@ The following metrics are computed from epochs corresponding to valid wear time:
 \item \strong{percent_LPA:} proportion of wear time spent in LPA behavior
 \item \strong{percent_MPA:} proportion of wear time spent in MPA behavior
 \item \strong{percent_VPA:} proportion of wear time spent in VPA behavior
-\item \strong{percent_MVPA:} proportion of wear time spent in MPVA behavior
+\item \strong{percent_MVPA:} proportion of wear time spent in MVPA behavior
+\item \strong{ratio_mvpa_sed:} ratio between MVPA and SED times (\code{minutes_MVPA} / \code{minutes_SED})
+\item \strong{mets_hours_mvpa:} total MET-hours spent in MVPA behavior
+\item \strong{total_kcal:} total kilocalories
+\item \strong{PAL:} physical activity level
+\item \strong{total_steps:} total step count
 \item \strong{max_steps_60min:} best step accumulation per minute averaged over a window of 60 continuous minutes
 \item \strong{max_steps_30min:} best step accumulation per minute averaged over a window of 30 continuous minutes
 \item \strong{max_steps_20min:} best step accumulation per minute averaged over a window of 20 continuous minutes
@@ -71,12 +90,17 @@ The following metrics are computed from epochs corresponding to valid wear time:
 \item \strong{peak_steps_20min:} step accumulation per minute averaged over the best 20 continuous or discontinuous minutes
 \item \strong{peak_steps_5min:} step accumulation per minute averaged over the best 5 continuous or discontinuous minutes
 \item \strong{peak_steps_1min:} step accumulation per minute over the best minute (same result as for \code{max_steps_1min})
-\item \strong{mets_hours_mvpa:} total MET-hours spent during MPVA behavior
-\item \strong{ratio_mvpa_sed:} ratio between MVPA and SED times (\code{minutes_MVPA} / \code{minutes_SED})
+\item \strong{ig:} intensity gradient
+\item \strong{M1/3:} the count value (in counts/epoch duration) above which the most active 8h were accumulated over the day
+\item \strong{M120:} the count value (in counts/epoch duration) above which the most active 120 minutes were accumulated over the day
+\item \strong{M60:} the count value (in counts/epoch duration) above which the most active 60 minutes were accumulated over the day
+\item \strong{M30:} the count value (in counts/epoch duration) above which the most active 30 minutes were accumulated over the day
+\item \strong{M15:} the count value (in counts/epoch duration) above which the most active 15 minutes were accumulated over the day
+\item \strong{M5:} the count value (in counts/epoch duration) above which the most active 5 minutes were accumulated over the day
 }
 
 PAL is computed by dividing total energy expenditure (TEE) by BMR. TEE is obtained by summing
-the kilocalories measured during valid wear time epochs and the kilocalories related to BMR expended
+the kilocalories computed for wear time epochs and the kilocalories related to BMR theoretically expended
 during nonwear time epochs (it is assumed that the periods where the device was not worn corresponded to
 sleeping periods, during which energy expenditure is near of BMR), and by multiplying this sum
 by 10/9 to take into account the thermic effect of food. Of course, such calculations may
@@ -84,6 +108,8 @@ conduct to underestimate TEE and PAL if the device was removed during prolonged 
 physical activity. Moreover, even if the device was correctly worn, the estimate of PAL is very
 approximate since both BMR and kilocalories are estimated using methods
 that may not be accurate at the individual level.
+
+The intensity gradient and the MX metrics are obtained using the \code{\link{compute_intensity_distri_metrics}} function.
 }
 \examples{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
@@ -106,15 +132,19 @@ mydata_with_intensity_marks <- mark_intensity(
     vpa_cutpoint = 6167, 
     age = 32,
     weight = 67,
-    sex = "male",
+    sex = "male"
     )
 recap_by_day(
     data = mydata_with_intensity_marks, 
+    col_axis = "vm",
     age = 32, 
     weight = 67, 
     sex = "male",
     valid_wear_time_start = "07:00:00",
-    valid_wear_time_end = "22:00:00"
+    valid_wear_time_end = "22:00:00",
+    start_first_bin = 0,
+    start_last_bin = 10000,
+    bin_width = 500
     )
 
 }

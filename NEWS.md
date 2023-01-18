@@ -1,12 +1,18 @@
 # activAnalyzer (development version)
 
-* Added a test for the `recap_by_day()` function.
-* Updated the vignette.
 * Total kcal and PAL are now correctly computed when the user does not analyse the whole day. There was no problem when the entire day was considered. However, when the user wanted to analyse a given period of the day, BMR information used in the calculations of kcal and PAL was still related to the whole day, not the period of the day to analyse. Total kcal and PAL were thus wrong when the period of the day to be analysed was not the entire day. This has been corrected ([#28](https://github.com/pydemull/activAnalyzer/issues/28)).
-* The app now provide activity accumulation metrics for sedentarty behaviour and physical activity: alpha coefficient, median bout duration, usual bout duration, Gini index.
+* The app now provides intensity distribution metrics.
+* The app now provides activity accumulation metrics for sedentary behaviour and physical activity: alpha coefficient, median bout duration, usual bout duration, Gini index.
 * The buttons and tables related to PROactive instruments panels now correctly disappear when the user runs an new analysis that leads to no valid days for the accelerometer.
-* Some variable names in the source code are no longer hard coded to provide more flexibility when analysing personal datasets without the app. Default variable names remain the same. 
+* Some variable names in the source code are no longer hard coded to provide more flexibility when analysing personal datasets outside the app. Default variable names remain the same. 
 * The app now allows to export all results to .html reports.
+* The package does not export the following function anymore: `tbl_agd`.
+* Now the Y labels of the graphics showing counts and steps data include the epoch duration for better data vizualisation context.
+* The function `create_fig_res_by_day()` now allows to visualise all metrics by day (activity volume, step accumulation, intensity distribution).
+* Added functions to get a radar plot showing MX metrics by day of measurement and for the mean or median of the considered days.
+* The app now shows all results (previously several results were shown only in the report).
+* Updated the vignette.
+
 
 # activAnalyzer 1.1.0
  
@@ -143,7 +149,7 @@ that there were some problems if any).
 # activAnalyzer 0.0.3
 
 * Added alert message when closing the web window.
-* Finally deleted the block of code initially introduced to stop the websocket server when the app is used as a desktop application. Indeed, this code led to close the app for all users when one user left the app on the shinyapps.io plateform.
+* Finally deleted the block of code initially introduced to stop the websocket server when the app is used as a desktop application. Indeed, this code led to close the app for all users when one user left the app on the shinyapps.io platform.
 
 # activAnalyzer 0.0.2
 

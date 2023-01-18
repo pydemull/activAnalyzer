@@ -30,8 +30,8 @@ test_that("generate a flextable object", {
     valid_wear_time_start = "07:00:00",
     valid_wear_time_end = "22:00:00"
   )
-  results_summary_means <- average_results(data = summary_by_day, minimum_wear_time = 10, fun = "mean")
-  results_summary_medians <- average_results(data = summary_by_day, minimum_wear_time = 10, fun = "median")
+  results_summary_means <- average_results(data = summary_by_day$df_all_metrics, minimum_wear_time = 10, fun = "mean")
+  results_summary_medians <- average_results(data = summary_by_day$df_all_metrics, minimum_wear_time = 10, fun = "median")
   
   # Creating flextable objects
   test_object_en <- create_flextable_summary(results_summary_means, results_summary_medians, "en")

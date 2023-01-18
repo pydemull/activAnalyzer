@@ -6,22 +6,29 @@
 \usage{
 create_fig_res_by_day(
   data,
-  minimum_wear_time_for_analysis,
-  start_day_analysis,
-  end_day_analysis,
-  language = c("en", "fr")
+  minimum_wear_time_for_analysis = 10,
+  start_day_analysis = "00:00:00",
+  end_day_analysis = "23:59:00",
+  language = c("en", "fr"),
+  metrics = c("all", "volume", "step_acc", "int_distri"),
+  epoch_label = "60s"
 )
 }
 \arguments{
 \item{data}{A dataframe with results obtained using the \code{\link{prepare_dataset}},  \code{\link{mark_wear_time}}, \code{\link{mark_intensity}}, and then the \code{\link{recap_by_day}} functions.}
 
-\item{minimum_wear_time_for_analysis}{A numeric value to indicate the minimum number of hours of wear time that was considered to valid a day.}
+\item{minimum_wear_time_for_analysis}{A numeric value to indicate the minimum number of hours of wear time that was considered to validate a day.}
 
-\item{start_day_analysis}{A character value to indicate the start of the period that was considered to valid a day based on wear time.}
+\item{start_day_analysis}{A character value to indicate the start of the period that was considered to validate a day based on wear time.}
 
-\item{end_day_analysis}{A character value to indicate the end of the period that was considered to valid a day based on wear time.}
+\item{end_day_analysis}{A character value to indicate the end of the period that was considered to validate a day based on wear time.}
 
 \item{language}{A character value for setting the language with which the figure should be created: \code{en} for english; \code{fr} for french.}
+
+\item{metrics}{A character value for setting the metrics to be shown in the figure. "volume" refers to "activity volume" metrics, step_acc" refers
+to "step accumulation" metrics, and "int_distri" refers to intensity distribution metrics. By default, the function provides all computed metrics.}
+
+\item{epoch_label}{A character value to be pasted into the names of the variables to build the figure}
 }
 \value{
 A ggplot object
@@ -58,7 +65,7 @@ summary_by_day <- recap_by_day(
     sex = "male",
     valid_wear_time_start = "07:00:00",
     valid_wear_time_end = "22:00:00"
-    )
+    )$df_all_metrics
 create_fig_res_by_day(summary_by_day, 
     minimum_wear_time_for_analysis = 10, 
     start_day_analysis = "00:00:00", 

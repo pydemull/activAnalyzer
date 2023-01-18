@@ -44,10 +44,14 @@
 #'     sex = "male",
 #'     valid_wear_time_start = "07:00:00",
 #'     valid_wear_time_end = "22:00:00"
-#'     )
+#'     )$df_all_metrics
 #' average_results(data = summary_by_day, minimum_wear_time = 10)
 #' 
-average_results <- function(data, minimum_wear_time = 10, fun = c("mean", "median")) {
+average_results <- function(
+    data, 
+    minimum_wear_time = 10, 
+    fun = c("mean", "median")
+    ) {
   
   fun <- match.arg(fun)
   
@@ -62,8 +66,6 @@ average_results <- function(data, minimum_wear_time = 10, fun = c("mean", "media
               total_counts_vm = round(mean(total_counts_vm), 2),
               axis1_per_min = round(mean(axis1_per_min), 2),
               vm_per_min = round(mean(vm_per_min), 2),
-              total_steps = round(mean(total_steps), 2),
-              total_kcal = round(mean(total_kcal), 2),
               minutes_SED = round(mean(minutes_SED), 2),
               minutes_LPA = round(mean(minutes_LPA), 2),
               minutes_MPA = round(mean(minutes_MPA), 2),
@@ -74,6 +76,11 @@ average_results <- function(data, minimum_wear_time = 10, fun = c("mean", "media
               percent_MPA = round(mean(percent_MPA), 2),
               percent_VPA = round(mean(percent_VPA), 2),
               percent_MVPA = round(mean(percent_MVPA), 2),
+              ratio_mvpa_sed = round(mean(ratio_mvpa_sed), 2),
+              mets_hours_mvpa = round(mean(mets_hours_mvpa), 2),
+              total_kcal = round(mean(total_kcal), 2),
+              pal = round(mean(pal), 2),
+              total_steps = round(mean(total_steps), 2),
               max_steps_60min = round(mean(max_steps_60min), 2),
               max_steps_30min = round(mean(max_steps_30min), 2),
               max_steps_20min = round(mean(max_steps_20min), 2),
@@ -84,9 +91,14 @@ average_results <- function(data, minimum_wear_time = 10, fun = c("mean", "media
               peak_steps_20min = round(mean(peak_steps_20min), 2),
               peak_steps_5min = round(mean(peak_steps_5min), 2),
               peak_steps_1min = round(mean(peak_steps_1min), 2),
-              mets_hours_mvpa = round(mean(mets_hours_mvpa), 2),
-              ratio_mvpa_sed = round(mean(ratio_mvpa_sed), 2),
-              pal = round(mean(pal), 2))
+              ig = round(mean(ig), 2),
+              `M1/3` = round(mean(`M1/3`), 2),
+              M120 = round(mean(M120), 2),
+              M60 = round(mean(M60), 2),
+              M30 = round(mean(M30), 2),
+              M15 = round(mean(M15), 2),
+              M5 = round(mean(M5), 2)
+    )
   
   return(results)
   
@@ -103,8 +115,6 @@ average_results <- function(data, minimum_wear_time = 10, fun = c("mean", "media
                        total_counts_vm = round(median(total_counts_vm), 2),
                        axis1_per_min = round(median(axis1_per_min), 2),
                        vm_per_min = round(median(vm_per_min), 2),
-                       total_steps = round(median(total_steps), 2),
-                       total_kcal = round(median(total_kcal), 2),
                        minutes_SED = round(median(minutes_SED), 2),
                        minutes_LPA = round(median(minutes_LPA), 2),
                        minutes_MPA = round(median(minutes_MPA), 2),
@@ -115,6 +125,11 @@ average_results <- function(data, minimum_wear_time = 10, fun = c("mean", "media
                        percent_MPA = round(median(percent_MPA), 2),
                        percent_VPA = round(median(percent_VPA), 2),
                        percent_MVPA = round(median(percent_MVPA), 2),
+                       ratio_mvpa_sed = round(median(ratio_mvpa_sed), 2),
+                       mets_hours_mvpa = round(median(mets_hours_mvpa), 2),
+                       total_kcal = round(median(total_kcal), 2),
+                       pal = round(median(pal), 2),
+                       total_steps = round(median(total_steps), 2),
                        max_steps_60min = round(median(max_steps_60min), 2),
                        max_steps_30min = round(median(max_steps_30min), 2),
                        max_steps_20min = round(median(max_steps_20min), 2),
@@ -125,9 +140,14 @@ average_results <- function(data, minimum_wear_time = 10, fun = c("mean", "media
                        peak_steps_20min = round(median(peak_steps_20min), 2),
                        peak_steps_5min = round(median(peak_steps_5min), 2),
                        peak_steps_1min = round(median(peak_steps_1min), 2),
-                       mets_hours_mvpa = round(median(mets_hours_mvpa), 2),
-                       ratio_mvpa_sed = round(median(ratio_mvpa_sed), 2),
-                       pal = round(median(pal), 2))
+                       ig = round(median(ig), 2),
+                       `M1/3` = round(median(`M1/3`), 2),
+                       M120 = round(median(M120), 2),
+                       M60 = round(median(M60), 2),
+                       M30 = round(median(M30), 2),
+                       M15 = round(median(M15), 2),
+                       M5 = round(median(M5), 2)
+      )
    
    return(results)
    

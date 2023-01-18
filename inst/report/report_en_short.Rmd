@@ -42,6 +42,21 @@ params:
   mvpa_lines: NA
   sed_lines: NA
   ratio_lines: NA
+  df_with_computed_metrics: NA
+  graph_int_distri_bands: NA
+  graph_int_distri_models: NA
+  mean_breaks_sed: NA
+  p_breaks_sed: NA
+  p_alpha_sed: NA 
+  p_MBD_sed: NA
+  p_UBD_sed: NA 
+  p_gini_sed: NA
+  mean_breaks_pa: NA
+  p_breaks_pa: NA 
+  p_alpha_pa: NA
+  p_MBD_pa: NA
+  p_UBD_pa: NA
+  p_gini_pa: NA
   rendered_by_shiny: FALSE
   geometry: "left=2cm, right=2cm, top=1cm, bottom=1cm"
 
@@ -56,11 +71,22 @@ library(patchwork)
 df1_means <- params$results_summary_means
 df1_medians <- params$results_summary_medians
 df2 <- params$results_by_day
+axis_mvpa_graph <- ifelse(params$axis_mvpa == "vertical axis", "axis1", 
+              ifelse(params$axis_mvpa == "vector magnitude", "vm",
+                     "na"))
+
+height_factor1 = nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.75
+height_factor1 <- ifelse(height_factor1 <= 6, nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.9, height_factor1)
+height_factor2 = params$results_summary_means$valid_days * 0.75
+height_factor2 <- ifelse(height_factor2 <= 6, nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.9, height_factor2)
+height_factor3 = nlevels(as.factor(params$df_with_computed_metrics$date)) * 1.5
 
 options("scipen"=100, "digits"=4)
 ```
 
+
 # Information
+<hr>
 
 **Patient:** `r params$patient_surname` `r params$patient_name`  | **Date:**  `r Sys.Date()` | **Assessor:**  `r params$assessor_surname` `r params$assessor_name`
 
@@ -78,21 +104,54 @@ options("scipen"=100, "digits"=4)
 
 
 # Results
+<hr>
 
-```{r }
-create_flextable_summary(df1_means, df1_medians, language = "en")
+## Activity volume  metrics
+
+### Temporal distribution of activity intensity
+```{r,  fig.height = height_factor1, fig.width=13}
+plot_data_with_intensity(
+  data = params$df_with_computed_metrics, 
+  metric = axis_mvpa_graph,
+  valid_wear_time_start = params$start_day_analysis,
+  valid_wear_time_end = params$end_day_analysis
+  )
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.25)  # set progress to 25%
 ```
 
+### Results by day
+```{r, fig.height=10, fig.width = 17, warning=FALSE, message=FALSE}
+create_fig_res_by_day(
+  df2, 
+  params$minimum_wear_time_for_analysis, 
+  params$start_day_analysis, 
+  params$end_day_analysis, 
+  language = "en",
+  metrics = "volume"
+  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"))
+```
 
-```{r, fig.height=18, fig.width = 17, warning=FALSE, message=FALSE}
+### Means | Medians computed using valid days
+```{r }
+create_flextable_summary(
+  results_summary_means = df1_means, 
+  results_summary_medians = df1_medians, 
+    language = "en",
+    metrics = "volume",
+    epoch_label = paste0(params$epoch, "s")
+  )
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.5)  # set progress to 50%
+```
+
+### Comparisons with norms and recommendations
+```{r, fig.height=9, fig.width = 17, warning=FALSE, message=FALSE}
 # PAL
 g_pal <- create_fig_pal(score = df1_means[["pal"]], "en") + theme(plot.margin = margin(2, 1, 0.5, 1, "cm"))
   
 # Steps
 g_steps <- create_fig_steps(score = df1_means[["total_steps"]], "en") + theme(plot.margin = margin(0, 1, 0.5, 1, "cm"))
-
-if (params$rendered_by_shiny)
-  shiny::setProgress(0.5)  # set progress to 50%
 
 # MVPA
 g_mvpa <- create_fig_mvpa(score = df1_means[["minutes_MVPA"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
@@ -101,35 +160,155 @@ g_mvpa <- create_fig_mvpa(score = df1_means[["minutes_MVPA"]], "en") + theme(plo
 g_sed <- create_fig_sed(score = df1_means[["minutes_SED"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
 
 # MVPA/SED ratio
-g_ratio <- create_fig_ratio_mvpa_sed(score = df1_means[["ratio_mvpa_sed"]], "en") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
-
-# Daily results
-g_all_days <- create_fig_res_by_day(
-  df2, 
-  params$minimum_wear_time_for_analysis, 
-  params$start_day_analysis, 
-  params$end_day_analysis, 
-  language = "en"
-  ) + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+g_ratio <- create_fig_ratio_mvpa_sed(score = df1_means[["ratio_mvpa_sed"]], "en") + theme(plot.margin = margin(0, 1, 1, 1, "cm"))
 
 # Whole figure
-g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_all_days + 
-    plot_layout(heights = c(0.8, 0.7, 1.5, 4)) & theme(legend.justification = "center")
+g_pal / g_steps / (g_mvpa | g_sed | g_ratio) + 
+    plot_layout(heights = c(0.8, 0.7, 1.5)) & theme(legend.justification = "center")
 ```
 
-
-# Comments
-
+### Comments
 ```{r, echo = F}
 # Determining physical activity guidelines status
 guidelines_status <- get_guidelines_status(df1_means[["mets_hours_mvpa"]], language = "en")
 
 # Determining PAL status
 pal_status <- get_pal_status(df1_means[["pal"]], language = "en")
+```
 
+According to the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the PAL of the patient could be characterized as **`r pal_status`**. After converting moderate and vigorous physical activity minutes to MET-hours, the estimate of the daily mean of MVPA volume for the patient is `r paste0(format(round(df1_means[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hr, which could correspond to falling **`r guidelines_status`** (i.e., 7.5-15.0 MET-hr a week, or 1.07-2.14 MET-hr a day).
+
+
+## Step accumulation metrics
+
+### Results by day
+```{r, fig.height=7, fig.width = 17, warning=FALSE, message=FALSE}
+create_fig_res_by_day(
+  df2, 
+  params$minimum_wear_time_for_analysis, 
+  params$start_day_analysis, 
+  params$end_day_analysis, 
+  language = "en",
+  metrics = "step_acc"
+  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"))
+```
+
+### Means | Medians computed using valid days
+```{r }
+create_flextable_summary(
+  df1_means, 
+  df1_medians, 
+    language = "en",
+    metrics = "step_acc",
+    epoch_label = paste0(params$epoch, "s")
+  )
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.75)  # set progress to 75%
+```
+
+## Intensity distribution metrics
+
+### Results by day
+```{r, fig.height=9, fig.width = 17, warning=FALSE, message=FALSE}
+create_fig_res_by_day(
+  df2, 
+  params$minimum_wear_time_for_analysis, 
+  params$start_day_analysis, 
+  params$end_day_analysis, 
+  language = "en",
+  metrics = "int_distri",
+  epoch_label = paste0(params$epoch, "s")
+  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"))
+```
+
+### Means | Medians computed using valid days
+```{r }
+create_flextable_summary(
+  df1_means, 
+  df1_medians, 
+    language = "en",
+    metrics = "int_distri",
+    epoch_label = paste0(params$epoch, "s")
+  )
+```
+
+### Radar view based on means of valid days
+```{r, fig.align = "center", out.width='50%', out.height='50%', fig.width=8, fig.height=8}
+cor_factor <- 60 / params$epoch
+
+create_fig_mx_summary(
+data = df1_means,
+labels = NULL,
+mpa_cutpoint = params$mpa_cutpoint / cor_factor, 
+vpa_cutpoint = params$vpa_cutpoint / cor_factor
+)  + theme(legend.position = c(0.15, 0.08))
+```
+
+\newpage
+
+## Sedentary behaviour accumulation metrics based on valid days
+
+### Temporal distribution of sedentary bouts
+```{r, fig.height = height_factor2, fig.width=13}
+if(length(params$p_breaks_sed) == 1) {
+  cat("No result. Results can be obtained using 60-s epochs only.")
+} else {
+  params$p_breaks_sed
+}
+```
+
+### Alpha coefficient, median bout duration (MBD), usual bout duration (UBD), and Gini index
+```{r, fig.height=6, fig.width=19}
+if(length(params$p_breaks_sed) == 1) {
+  cat("No result. Results can be obtained using 60-s epochs only.")
+} else {
+  
+  p1 <- params$p_alpha_sed + guides(color = "none", fill = "none")
+  p2 <- params$p_MBD_sed   + guides(color = "none", fill = "none")
+  p3 <- params$p_UBD_sed
+  p4 <- params$p_gini_sed
+ 
+  (p1  | p2 | p3 | p4) + plot_layout(guides = "collect") & 
+    theme(legend.position = 'bottom',
+          axis.title = element_text(size = 15),
+          legend.title = element_text(size = 17),
+          legend.text = element_text(size = 15)
+          )
+}
+```
+
+\newpage
+
+## Physical activity accumulation metrics based on valid days
+
+### Temporal distribution of physical activity bouts
+```{r, fig.height = height_factor2, fig.width=13}
+if(length(params$p_breaks_pa) == 1) {
+  cat("No result. Results can be obtained using 60-s epochs only.")
+} else {
+  params$p_breaks_pa
+}
 if (params$rendered_by_shiny)
   shiny::setProgress(1)  # set progress to 100%
 ```
 
-According to the [Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf), the PAL of the patient could be characterized as **`r pal_status`**. After converting moderate and vigorous physical activity minutes to MET-hours, the estimate of the daily mean of MVPA volume for the patient is `r paste0(format(round(df1_means[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hr, which could correspond to falling **`r guidelines_status`** (i.e., 7.5-15.0 MET-hr a week, or 1.07-2.14 MET-hr a day).
+### Alpha coefficient, median bout duration (MBD), usual bout duration (UBD), and Gini index
+```{r, fig.height=6, fig.width=19}
+if(length(params$p_breaks_pa) == 1) {
+  cat("No result. Results can be obtained using 60-s epochs only.")
+} else {
+  p1 <- params$p_alpha_pa + guides(color = "none", fill = "none")
+  p2 <- params$p_MBD_pa   + guides(color = "none", fill = "none")
+  p3 <- params$p_UBD_pa
+  p4 <- params$p_gini_pa
+ 
+  (p1  | p2 | p3 | p4) + plot_layout(guides = "collect") & 
+    theme(legend.position = 'bottom',
+          axis.title = element_text(size = 15),
+          legend.title = element_text(size = 17),
+          legend.text = element_text(size = 15)
+          )
+}
+```
 
