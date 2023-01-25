@@ -34,12 +34,18 @@ test_that("The function correctly provides a ggplot object", {
        start_last_bin = 10000,
        bin_width = 500
        )$df_all_metrics
-   plot <- 
+   plot_1 <- 
      create_fig_mx_by_day(
        data = summary_by_day,
-       labels = seq(0, 10000, 2500)
+       labels = NULL
      )
+   plot_2 <- 
+      create_fig_mx_by_day(
+         data = summary_by_day,
+         labels = seq(0, 10000, 2500)
+      )
   
-   expect_s3_class(plot, "ggplot")
+   expect_s3_class(plot_1, "ggplot")
+   expect_s3_class(plot_2, "ggplot")
   
 })
