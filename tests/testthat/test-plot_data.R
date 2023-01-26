@@ -10,6 +10,18 @@ test_that("A plot with data marked for non wear time is obtained", {
   
 })
 
+test_that("A plot with data marked for non wear time is obtained using zoom arguments", {
+  file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
+  g <- 
+    prepare_dataset(data = file) %>%
+    mark_wear_time() %>% 
+    plot_data(zoom_from = "12:00:00", zoom_to = "13:30:30")
+  
+  # Testing that g is a ggplot object
+  expect_s3_class(g, "ggplot") 
+  
+})
+
 test_that("The function works with customized variable names", {
   file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
   g <- 

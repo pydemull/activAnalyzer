@@ -35,11 +35,16 @@ test_that("The function correctly provides a ggplot object", {
     bin_width = 500
   )$df_all_metrics
   recap <- average_results(data = summary_by_day, minimum_wear_time = 10, fun  = "median")
-  plot <- create_fig_mx_summary(
+  plot_1 <- create_fig_mx_summary(
       data = recap,
-      labels = seq(2500, 12500, 2500)
+      labels = NULL
+  )
+  plot_2 <- create_fig_mx_summary(
+    data = recap,
+    labels = seq(2500, 12500, 2500)
   )
   
-  expect_s3_class(plot, "ggplot")
+  expect_s3_class(plot_1, "ggplot")
+  expect_s3_class(plot_2, "ggplot")
   
 })

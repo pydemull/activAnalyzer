@@ -34,11 +34,25 @@ test_that("generate a flextable object", {
   results_summary_medians <- average_results(data = summary_by_day$df_all_metrics, minimum_wear_time = 10, fun = "median")
   
   # Creating flextable objects
-  test_object_en <- create_flextable_summary(results_summary_means, results_summary_medians, "en")
-  test_object_fr <- create_flextable_summary(results_summary_means, results_summary_medians, "fr")
+  test_object_1 <- create_flextable_summary(results_summary_means, results_summary_medians, language = "en", metrics = "all")
+  test_object_2 <- create_flextable_summary(results_summary_means, results_summary_medians, language = "en", metrics = "volume")
+  test_object_3 <- create_flextable_summary(results_summary_means, results_summary_medians, language = "en", metrics = "step_acc")
+  test_object_4 <- create_flextable_summary(results_summary_means, results_summary_medians, language = "en", metrics = "int_distri")
+  
+  test_object_5 <- create_flextable_summary(results_summary_means, results_summary_medians, language = "fr", metrics = "all")
+  test_object_6 <- create_flextable_summary(results_summary_means, results_summary_medians, language = "fr", metrics = "volume")
+  test_object_7 <- create_flextable_summary(results_summary_means, results_summary_medians, language = "fr", metrics = "step_acc")
+  test_object_8 <- create_flextable_summary(results_summary_means, results_summary_medians, language = "fr", metrics = "int_distri")
+  
   
   # Tests
-  expect_s3_class(test_object_en, "flextable")
-  expect_s3_class(test_object_fr, "flextable")
+  expect_s3_class(test_object_1, "flextable")
+  expect_s3_class(test_object_2, "flextable")
+  expect_s3_class(test_object_3, "flextable")
+  expect_s3_class(test_object_4, "flextable")
+  expect_s3_class(test_object_5, "flextable")
+  expect_s3_class(test_object_6, "flextable")
+  expect_s3_class(test_object_7, "flextable")
+  expect_s3_class(test_object_8, "flextable")
   
 })

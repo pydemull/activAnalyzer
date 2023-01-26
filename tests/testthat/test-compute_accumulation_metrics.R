@@ -23,7 +23,8 @@ test_that("The function provides numeric and graphic objects", {
     weight = 67,
     sex = "male",
   )
-  list_test <-
+  
+  list_test_1 <-
     compute_accumulation_metrics(
     data = mydata_with_intensity_marks,
     behaviour = "sed",
@@ -34,6 +35,18 @@ test_that("The function provides numeric and graphic objects", {
     zoom_to = "23:59:59"
   )
   
+  
+  list_test_2 <-
+    compute_accumulation_metrics(
+      data = mydata_with_intensity_marks,
+      behaviour = "pa",
+      dates = NULL,
+      valid_wear_time_start = "00:00:00",
+      valid_wear_time_end = "23:59:59",
+      zoom_from = "12:00:00",
+      zoom_to = "13:30:30"
+    )
+  
   # Setting reference dataframe
   df_actual <- data.frame(
     mean_breaks = 68.6,
@@ -43,14 +56,22 @@ test_that("The function provides numeric and graphic objects", {
     gini = 0.57
   )
   
-  # Tests
-  expect_s3_class(list_test$metrics, "data.frame")
-  expect_s3_class(list_test$p_breaks, "ggplot")
-  expect_s3_class(list_test$p_alpha, "ggplot")
-  expect_s3_class(list_test$p_MBD, "ggplot")
-  expect_s3_class(list_test$p_UBD, "ggplot")
-  expect_s3_class(list_test$p_gini, "ggplot")
-  expect_equal(list_test$metrics, df_actual)
+  # Tests_1
+  expect_s3_class(list_test_1$metrics, "data.frame")
+  expect_s3_class(list_test_1$p_breaks, "ggplot")
+  expect_s3_class(list_test_1$p_alpha, "ggplot")
+  expect_s3_class(list_test_1$p_MBD, "ggplot")
+  expect_s3_class(list_test_1$p_UBD, "ggplot")
+  expect_s3_class(list_test_1$p_gini, "ggplot")
+  expect_equal(list_test_1$metrics, df_actual)
+  
+  expect_s3_class(list_test_2$metrics, "data.frame")
+  expect_s3_class(list_test_2$p_breaks, "ggplot")
+  expect_s3_class(list_test_2$p_alpha, "ggplot")
+  expect_s3_class(list_test_2$p_MBD, "ggplot")
+  expect_s3_class(list_test_2$p_UBD, "ggplot")
+  expect_s3_class(list_test_2$p_gini, "ggplot")
+  
   
 })
 
