@@ -1,4 +1,4 @@
-# activAnalyzer (development version)
+# activAnalyzer 2.0.0
 
 * Total kcal and PAL are now correctly computed when the user does not analyse the whole day. There was no problem when the entire day was considered. However, when the user wanted to analyse a given period of the day, BMR information used in the calculations of kcal and PAL was still related to the whole day, not the period of the day to analyse. Total kcal and PAL were thus wrong when the period of the day to be analysed was not the entire day. This has been corrected ([#28](https://github.com/pydemull/activAnalyzer/issues/28)).
 * The app now provides intensity distribution metrics.
