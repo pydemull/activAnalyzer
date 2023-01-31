@@ -23,7 +23,7 @@
 #'    (or physical activity) time is accumulated. UBD is computed using all the bouts of the days and periods 
 #'    of the day considered for analysis. UBD is determined as described in Belletiere al. (2017; doi:10.1371/journal.pone.0180119)
 #'    supplementary file 1. More precisely, UBD is found using non-linear regression with the following model: \eqn{y = \frac{t^n}{t^n + UBD^n}},
-#'    with \eqn{t} the bout duration, \eqn{n} a free parameter, and \eqn{y} the fraction of total time accumulated in bouts ≤ \eqn{t}.
+#'    with \eqn{t} the bout duration, \eqn{n} a free parameter, and \eqn{y} the fraction of total time accumulated in bouts \eqn{\le} \eqn{t}.
 #'     
 #'    \item \strong{Gini index}: provides information on the equality with which bout durations
 #'     contribute to total sedentary (or physical activity) time. A value of 1 reveals perfect
