@@ -12,7 +12,7 @@ Description: A tool to analyse 'ActiGraph' accelerometer data and to implement
 License: GPL (>= 3)
 Imports: 
     dbplyr (>= 2.1.1),
-    dplyr (>= 1.0.10),
+    dplyr (>= 1.1.0),
     flextable (>= 0.8.2),
     forcats (>= 0.5.2),
     ggplot2 (>= 3.4.0),

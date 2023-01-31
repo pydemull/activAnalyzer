@@ -1,8 +1,10 @@
 # activAnalyzer 2.0.0
 
 * Total kcal and PAL are now correctly computed when the user does not analyse the whole day. There was no problem when the entire day was considered. However, when the user wanted to analyse a given period of the day, BMR information used in the calculations of kcal and PAL was still related to the whole day, not the period of the day to analyse. Total kcal and PAL were thus wrong when the period of the day to be analysed was not the entire day. This has been corrected ([#28](https://github.com/pydemull/activAnalyzer/issues/28)).
+* Updated arguments passed to `dplyr::left_join()` function following the release of dplyr package v1.1.0.
 * The app now provides intensity distribution metrics.
 * The app now provides activity accumulation metrics for sedentary behaviour and physical activity: alpha coefficient, median bout duration, usual bout duration, Gini index.
+* The addition of new metrics led to a breaking change in the package: the `recap_by_day()` function now returns a list, not a dataframe.
 * The buttons and tables related to PROactive instruments panels now correctly disappear when the user runs an new analysis that leads to no valid days for the accelerometer.
 * Some variable names in the source code are no longer hard coded to provide more flexibility when analysing personal datasets outside the app. Default variable names remain the same. 
 * The app now allows to export all results to .html reports.

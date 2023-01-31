@@ -264,8 +264,8 @@ recap_by_day <- function(
              )
          
            df_all_metrics <- 
-               dplyr::left_join(df_vol_metrics, df_step_metrics, by = "date") %>% 
-               dplyr::left_join(list_int_distri_merics$metrics, by = "date") %>% 
+               dplyr::left_join(df_vol_metrics, df_step_metrics) %>% 
+               dplyr::left_join(list_int_distri_merics$metrics) %>% 
                dplyr::select(
                    date,
                    wear_time,

@@ -161,7 +161,7 @@ df_mx <-
 #==========================
 results <- 
   list(
-    metrics = dplyr::left_join(df_ig %>% dplyr::mutate(date = as.Date(date)), df_mx, key = "date"), 
+    metrics = dplyr::left_join(df_ig %>% dplyr::mutate(date = as.Date(date)), df_mx), 
     p_band = p_band, 
     p_log = p_log
     )
