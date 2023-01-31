@@ -44,6 +44,7 @@ This function computes metrics that describe the distribution of intensity for e
 based on the daily periods set for analysis and on the detected wear time.
 }
 \examples{
+\donttest{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 mydata <- prepare_dataset(data = file)
 mydata_with_wear_marks <- mark_wear_time(
@@ -76,5 +77,6 @@ compute_intensity_distri_metrics(
    start_last_bin = 10000,
    bin_width = 500
     )
+ }
 
 }

@@ -33,6 +33,7 @@ This function creates radar plots in relation to MX metrics as illustrated in Ro
 (2018; doi:10.1249/MSS.0000000000001561) paper, here for each day of an accelerometer measurement.
 }
 \examples{
+\donttest{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 mydata <- prepare_dataset(data = file)
 mydata_with_wear_marks <- mark_wear_time(
@@ -71,4 +72,6 @@ create_fig_mx_by_day(
     data = summary_by_day,
     labels = seq(2500, 12500, 2500)
 )
+}
+
 }

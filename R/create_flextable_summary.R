@@ -13,6 +13,7 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 #' mydata <- prepare_dataset(data = file)
 #' mydata_with_wear_marks <- mark_wear_time(
@@ -57,6 +58,7 @@
 #'     results_summary_medians, 
 #'     language = "en"
 #'     )
+#' }
 #' 
 create_flextable_summary <- function(
     results_summary_means, 

@@ -31,6 +31,7 @@ A flextable object
 The function generates a formatted table with both means and medians of the metrics obtained following the physical behavior measurement.
 }
 \examples{
+\donttest{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 mydata <- prepare_dataset(data = file)
 mydata_with_wear_marks <- mark_wear_time(
@@ -75,5 +76,6 @@ create_flextable_summary(
     results_summary_medians, 
     language = "en"
     )
+}
 
 }

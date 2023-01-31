@@ -37,6 +37,7 @@ A ggplot object
 The function generates a figure with several common metrics shown for each day of the physical behavior measurement.
 }
 \examples{
+\donttest{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 mydata <- prepare_dataset(data = file)
 mydata_with_wear_marks <- mark_wear_time(
@@ -71,5 +72,6 @@ create_fig_res_by_day(summary_by_day,
     start_day_analysis = "00:00:00", 
     end_day_analysis = "23:59:00", 
     language = "en")
+}
 
 }

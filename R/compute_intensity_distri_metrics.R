@@ -20,6 +20,7 @@
 #' @export
 #' 
 #' @examples
+#' \donttest{
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 #' mydata <- prepare_dataset(data = file)
 #' mydata_with_wear_marks <- mark_wear_time(
@@ -52,6 +53,7 @@
 #'    start_last_bin = 10000,
 #'    bin_width = 500
 #'     )
+#'  }
 #'
 compute_intensity_distri_metrics <- function(
     data,

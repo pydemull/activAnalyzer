@@ -52,6 +52,7 @@
 #' @import ggplot2
 #'
 #' @examples
+#' \donttest{
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 #' mydata <- prepare_dataset(data = file)
 #' mydata_with_wear_marks <- mark_wear_time(
@@ -83,6 +84,7 @@
 #'    zoom_from = "00:00:00",
 #'    zoom_to = "23:59:59"
 #'     )
+#' }
 #' 
 compute_accumulation_metrics <- function(
     data, 

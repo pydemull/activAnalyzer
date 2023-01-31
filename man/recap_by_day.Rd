@@ -112,6 +112,7 @@ that may not be accurate at the individual level.
 The intensity gradient and the MX metrics are obtained using the \code{\link{compute_intensity_distri_metrics}} function.
 }
 \examples{
+\donttest{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 mydata <- prepare_dataset(data = file)
 mydata_with_wear_marks <- mark_wear_time(
@@ -146,5 +147,6 @@ recap_by_day(
     start_last_bin = 10000,
     bin_width = 500
     )
+}
 
 }

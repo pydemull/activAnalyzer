@@ -18,6 +18,7 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 #' mydata <- prepare_dataset(data = file)
 #' mydata_with_wear_marks <- mark_wear_time(
@@ -57,6 +58,7 @@
 #'     data = recap,
 #'     labels = seq(2500, 12500, 2500)
 #'  )
+#'  }
 #'  
 
 create_fig_mx_summary <- function(

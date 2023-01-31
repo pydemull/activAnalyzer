@@ -22,6 +22,7 @@ obtained using the \code{\link{recap_by_day}} function. The median can also
 be obtained with an appropriate configuration of the function.
 }
 \examples{
+\donttest{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 mydata <- prepare_dataset(data = file)
 mydata_with_wear_marks <- mark_wear_time(
@@ -53,5 +54,6 @@ summary_by_day <- recap_by_day(
     valid_wear_time_end = "22:00:00"
     )$df_all_metrics
 average_results(data = summary_by_day, minimum_wear_time = 10)
+}
 
 }

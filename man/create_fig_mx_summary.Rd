@@ -33,6 +33,7 @@ This function creates a radar plot in relation to MX metrics as illustrated in R
 (2018; doi:10.1249/MSS.0000000000001561) paper.
 }
 \examples{
+\donttest{
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 mydata <- prepare_dataset(data = file)
 mydata_with_wear_marks <- mark_wear_time(
@@ -72,5 +73,6 @@ create_fig_mx_summary(
     data = recap,
     labels = seq(2500, 12500, 2500)
  )
+ }
  
 }
