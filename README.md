@@ -73,9 +73,9 @@ There are three different ways to use the activAnalyzer app:
   allow resetting all the inputs when required.
 - On your machine via [R software](https://CRAN.R-project.org/)
   (version: $\ge$ 3.4.0), the [RStudio environment](https://posit.co/)
-  (recommended version: Prairie Trillium \[2022.02\]; **version Innocent
-  and Trusting \[2022-10\] does not allow to correctly quit the app from
-  the RStudio Window**), and the [activAnalyzer
+  (recommended version: Prairie Trillium \[2022.02\]; **Elsbeth Geranium
+  \[2022-12\] does not allow to correctly quit the app from the RStudio
+  window**), and the [activAnalyzer
   package](https://github.com/pydemull/activAnalyzer) installable from
   CRAN (stable version) or from GitHub (development version). To be able
   to generate a .pdf report, you will have to install the [TinyTeX
