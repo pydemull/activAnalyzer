@@ -12,7 +12,7 @@ based on the daily periods set for analysis and on the detected wear time."><met
     
     <a class="navbar-brand me-2" href="../index.html">activAnalyzer</a>
 
-    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.9000</small>
+    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,7 +116,8 @@ log of the middle values of the intensity bins.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"acc.agd"</span>, package <span class="op">=</span> <span class="st">"activAnalyzer"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"acc.agd"</span>, package <span class="op">=</span> <span class="st">"activAnalyzer"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_dataset.html">prepare_dataset</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">file</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mydata_with_wear_marks</span> <span class="op">&lt;-</span> <span class="fu"><a href="mark_wear_time.html">mark_wear_time</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    dataset <span class="op">=</span> <span class="va">mydata</span>, </span></span>
@@ -160,7 +161,7 @@ log of the middle values of the intensity bins.</p>
 <span class="r-in"><span>   start_last_bin <span class="op">=</span> <span class="fl">10000</span>,</span></span>
 <span class="r-in"><span>   bin_width <span class="op">=</span> <span class="fl">500</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = "date"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(date)`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $metrics</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         date    ig    M1/3    M120      M60      M30      M15       M5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 2021-04-07 -1.33 1496.84 3585.15  4706.07  5678.66  6073.25  6229.50</span>
@@ -181,6 +182,7 @@ log of the middle values of the intensity bins.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `geom_smooth()` using formula = 'y ~ x'</span>
 <span class="r-plt img"><img src="compute_intensity_distri_metrics-2.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

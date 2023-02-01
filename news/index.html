@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">activAnalyzer</a>
 
-    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.9000</small>
+    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,10 +48,12 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="activanalyzer-development-version">activAnalyzer (development version)<a class="anchor" aria-label="anchor" href="#activanalyzer-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.0.0" id="activanalyzer-200">activAnalyzer 2.0.0<a class="anchor" aria-label="anchor" href="#activanalyzer-200"></a></h2><p class="text-muted">CRAN release: 2023-01-31</p>
 <ul><li>Total kcal and PAL are now correctly computed when the user does not analyse the whole day. There was no problem when the entire day was considered. However, when the user wanted to analyse a given period of the day, BMR information used in the calculations of kcal and PAL was still related to the whole day, not the period of the day to analyse. Total kcal and PAL were thus wrong when the period of the day to be analysed was not the entire day. This has been corrected (<a href="https://github.com/pydemull/activAnalyzer/issues/28" class="external-link">#28</a>).</li>
+<li>Updated arguments passed to <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code> function following the release of dplyr package v1.1.0.</li>
 <li>The app now provides intensity distribution metrics.</li>
 <li>The app now provides activity accumulation metrics for sedentary behaviour and physical activity: alpha coefficient, median bout duration, usual bout duration, Gini index.</li>
+<li>The addition of new metrics led to a breaking change in the package: the <code><a href="../reference/recap_by_day.html">recap_by_day()</a></code> function now returns a list, not a dataframe.</li>
 <li>The buttons and tables related to PROactive instruments panels now correctly disappear when the user runs an new analysis that leads to no valid days for the accelerometer.</li>
 <li>Some variable names in the source code are no longer hard coded to provide more flexibility when analysing personal datasets outside the app. Default variable names remain the same.</li>
 <li>The app now allows to export all results to .html reports.</li>
