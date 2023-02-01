@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">activAnalyzer</a>
 
-    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -246,8 +246,8 @@
 <code class="sourceCode R"><span><span class="va">results_by_day</span><span class="op">$</span><span class="va">df_all_metrics</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span><span class="op">:</span><span class="va">total_steps</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html" class="external-link">reactable</a></span><span class="op">(</span>striped <span class="op">=</span> <span class="cn">TRUE</span>, defaultColDef <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span>, minWidth <span class="op">=</span> <span class="fl">180</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-cfc6a37a943b9284ed78" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-cfc6a37a943b9284ed78">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"date":["2021-04-07","2021-04-08","2021-04-09","2021-04-10","2021-04-11","2021-04-12"],"wear_time":[720,811,718,770,820,0],"total_counts_axis1":[359125,495257,1222315,320847,167999,0],"total_counts_vm":[721645.79,946481.61,1945733.91,806592.09,431269.63,0],"axis1_per_min":[498.78,610.67,1702.39,416.68,204.88,"NaN"],"vm_per_min":[1002.29,1167.06,2709.94,1047.52,525.94,"NaN"],"minutes_SED":[288,292,295,201,339,0],"minutes_LPA":[355,407,208,519,470,0],"minutes_MPA":[73,105,51,49,11,0],"minutes_VPA":[4,7,164,1,0,0],"minutes_MVPA":[77,112,215,50,11,0],"percent_SED":[40,36,41.09,26.1,41.34,"NaN"],"percent_LPA":[49.31,50.18,28.97,67.4,57.32,"NaN"],"percent_MPA":[10.14,12.95,7.1,6.36,1.34,"NaN"],"percent_VPA":[0.56,0.86,22.84,0.13,0,"NaN"],"percent_MVPA":[10.69,13.81,29.94,6.49,1.34,"NaN"],"ratio_mvpa_sed":[0.27,0.38,0.73,0.25,0.03,"NaN"],"mets_hours_mvpa":[5.56,7.84,26.15,3.02,0.59,0],"total_kcal":[1510.89,1694.79,2694.09,1548.93,1201.52,965.25],"pal":[1.74,1.95,3.1,1.78,1.38,1.11],"total_steps":[14056,14595,21635,13744,10315,0]},"columns":[{"id":"date","name":"date","type":"Date","minWidth":180,"align":"center"},{"id":"wear_time","name":"wear_time","type":"numeric","minWidth":180,"align":"center"},{"id":"total_counts_axis1","name":"total_counts_axis1","type":"numeric","minWidth":180,"align":"center"},{"id":"total_counts_vm","name":"total_counts_vm","type":"numeric","minWidth":180,"align":"center"},{"id":"axis1_per_min","name":"axis1_per_min","type":"numeric","minWidth":180,"align":"center"},{"id":"vm_per_min","name":"vm_per_min","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_SED","name":"minutes_SED","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_LPA","name":"minutes_LPA","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_MPA","name":"minutes_MPA","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_VPA","name":"minutes_VPA","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_MVPA","name":"minutes_MVPA","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_SED","name":"percent_SED","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_LPA","name":"percent_LPA","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_MPA","name":"percent_MPA","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_VPA","name":"percent_VPA","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_MVPA","name":"percent_MVPA","type":"numeric","minWidth":180,"align":"center"},{"id":"ratio_mvpa_sed","name":"ratio_mvpa_sed","type":"numeric","minWidth":180,"align":"center"},{"id":"mets_hours_mvpa","name":"mets_hours_mvpa","type":"numeric","minWidth":180,"align":"center"},{"id":"total_kcal","name":"total_kcal","type":"numeric","minWidth":180,"align":"center"},{"id":"pal","name":"pal","type":"numeric","minWidth":180,"align":"center"},{"id":"total_steps","name":"total_steps","type":"numeric","minWidth":180,"align":"center"}],"striped":true,"dataKey":"e66d0695126897e645454547a8278d3d"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-57ee188411ed4ffbec11" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-57ee188411ed4ffbec11">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"date":["2021-04-07","2021-04-08","2021-04-09","2021-04-10","2021-04-11","2021-04-12"],"wear_time":[720,811,718,770,820,0],"total_counts_axis1":[359125,495257,1222315,320847,167999,0],"total_counts_vm":[721645.79,946481.61,1945733.91,806592.09,431269.63,0],"axis1_per_min":[498.78,610.67,1702.39,416.68,204.88,"NaN"],"vm_per_min":[1002.29,1167.06,2709.94,1047.52,525.94,"NaN"],"minutes_SED":[288,292,295,201,339,0],"minutes_LPA":[355,407,208,519,470,0],"minutes_MPA":[73,105,51,49,11,0],"minutes_VPA":[4,7,164,1,0,0],"minutes_MVPA":[77,112,215,50,11,0],"percent_SED":[40,36,41.09,26.1,41.34,"NaN"],"percent_LPA":[49.31,50.18,28.97,67.4,57.32,"NaN"],"percent_MPA":[10.14,12.95,7.1,6.36,1.34,"NaN"],"percent_VPA":[0.56,0.86,22.84,0.13,0,"NaN"],"percent_MVPA":[10.69,13.81,29.94,6.49,1.34,"NaN"],"ratio_mvpa_sed":[0.27,0.38,0.73,0.25,0.03,"NaN"],"mets_hours_mvpa":[5.56,7.84,26.15,3.02,0.59,0],"total_kcal":[1510.89,1694.79,2694.09,1548.93,1201.52,965.25],"pal":[1.74,1.95,3.1,1.78,1.38,1.11],"total_steps":[14056,14595,21635,13744,10315,0]},"columns":[{"id":"date","name":"date","type":"Date","minWidth":180,"align":"center"},{"id":"wear_time","name":"wear_time","type":"numeric","minWidth":180,"align":"center"},{"id":"total_counts_axis1","name":"total_counts_axis1","type":"numeric","minWidth":180,"align":"center"},{"id":"total_counts_vm","name":"total_counts_vm","type":"numeric","minWidth":180,"align":"center"},{"id":"axis1_per_min","name":"axis1_per_min","type":"numeric","minWidth":180,"align":"center"},{"id":"vm_per_min","name":"vm_per_min","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_SED","name":"minutes_SED","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_LPA","name":"minutes_LPA","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_MPA","name":"minutes_MPA","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_VPA","name":"minutes_VPA","type":"numeric","minWidth":180,"align":"center"},{"id":"minutes_MVPA","name":"minutes_MVPA","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_SED","name":"percent_SED","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_LPA","name":"percent_LPA","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_MPA","name":"percent_MPA","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_VPA","name":"percent_VPA","type":"numeric","minWidth":180,"align":"center"},{"id":"percent_MVPA","name":"percent_MVPA","type":"numeric","minWidth":180,"align":"center"},{"id":"ratio_mvpa_sed","name":"ratio_mvpa_sed","type":"numeric","minWidth":180,"align":"center"},{"id":"mets_hours_mvpa","name":"mets_hours_mvpa","type":"numeric","minWidth":180,"align":"center"},{"id":"total_kcal","name":"total_kcal","type":"numeric","minWidth":180,"align":"center"},{"id":"pal","name":"pal","type":"numeric","minWidth":180,"align":"center"},{"id":"total_steps","name":"total_steps","type":"numeric","minWidth":180,"align":"center"}],"striped":true,"dataKey":"e66d0695126897e645454547a8278d3d"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level3">
 <h3 id="results-by-day-graphical-view">Results by day: Graphical view<a class="anchor" aria-label="anchor" href="#results-by-day-graphical-view"></a>
@@ -273,7 +273,7 @@
 <span>  metrics <span class="op">=</span> <span class="st">"volume"</span>,</span>
 <span>  epoch_label <span class="op">=</span> <span class="st">"60s"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<template id="7cd39cbd-24bc-43a3-8de4-218bdfce02ca"><style>
+<template id="b9f70639-0543-46d8-a9ef-10b5826230e6"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -313,103 +313,103 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-3f96445a{}.cl-3f88c384{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3f88c3a2{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3f8e9340{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-3f8eb726{width:3.25in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3f8eb730{width:3.25in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3f8eb73a{width:3.25in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-3f96445a">
+<style>.cl-2dbcb548{}.cl-2db12da4{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-2db12dc2{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-2db5ff6e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-2db61cce{width:3.25in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2db61ce2{width:3.25in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2db61ce3{width:3.25in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-2dbcb548">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-3f8eb726"><p class="cl-3f8e9340"><span class="cl-3f88c384">Metric</span></p></th>
-<th class="cl-3f8eb726"><p class="cl-3f8e9340"><span class="cl-3f88c384">Daily mean | median</span></p></th>
+<th class="cl-2db61cce"><p class="cl-2db5ff6e"><span class="cl-2db12da4">Metric</span></p></th>
+<th class="cl-2db61cce"><p class="cl-2db5ff6e"><span class="cl-2db12da4">Daily mean | median</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">Number of valid days</span></p></td>
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">5</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">Number of valid days</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">Wear time (min)</span></p></td>
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">767.8 (12:47:48) | 770.0 (12:50:00)</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">Wear time (min)</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">767.8 (12:47:48) | 770.0 (12:50:00)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">Axis 1 total counts</span></p></td>
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">513108.6 | 359125.0</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">Axis 1 total counts</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">513108.6 | 359125.0</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">VM total counts</span></p></td>
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">970344.6 | 806592.1</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">VM total counts</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">970344.6 | 806592.1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">Axis 1 mean (counts/min)</span></p></td>
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">686.7 | 498.8</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">Axis 1 mean (counts/min)</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">686.7 | 498.8</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">VM mean (counts/min)</span></p></td>
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">1290.6 | 1047.5</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">VM mean (counts/min)</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">1290.6 | 1047.5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">SED time (min)</span></p></td>
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">283.0 (04:43:00) | 292.0 (04:52:00)</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">SED time (min)</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">283.0 (04:43:00) | 292.0 (04:52:00)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">LPA time (min)</span></p></td>
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">391.8 (06:31:48) | 407.0 (06:47:00)</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">LPA time (min)</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">391.8 (06:31:48) | 407.0 (06:47:00)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">MPA time (min)</span></p></td>
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">57.8 (00:57:48) | 51.0 (00:51:00)</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">MPA time (min)</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">57.8 (00:57:48) | 51.0 (00:51:00)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">VPA time (min)</span></p></td>
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">35.2 (00:35:12) | 4.0 (00:04:00)</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">VPA time (min)</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">35.2 (00:35:12) | 4.0 (00:04:00)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">MVPA time (min)</span></p></td>
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">93.0 (01:33:00) | 77.0 (01:17:00)</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">MVPA time (min)</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">93.0 (01:33:00) | 77.0 (01:17:00)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">SED wear time proportion (%)</span></p></td>
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">36.9 | 40.0</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">SED wear time proportion (%)</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">36.9 | 40.0</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">LPA wear time proportion (%)</span></p></td>
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">50.6 | 50.2</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">LPA wear time proportion (%)</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">50.6 | 50.2</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">MPA wear time proportion (%)</span></p></td>
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">7.6 | 7.1</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">MPA wear time proportion (%)</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">7.6 | 7.1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">VPA wear time proportion (%)</span></p></td>
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">4.9 | 0.6</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">VPA wear time proportion (%)</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">4.9 | 0.6</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">MVPA wear time proportion (%)</span></p></td>
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">12.4 | 10.7</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">MVPA wear time proportion (%)</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">12.4 | 10.7</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">Ratio MVPA / SED</span></p></td>
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">0.33 | 0.27</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">Ratio MVPA / SED</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">0.33 | 0.27</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">Total MVPA MET-hr</span></p></td>
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">8.63 | 5.56</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">Total MVPA MET-hr</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">8.63 | 5.56</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">Total kcal</span></p></td>
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">1730.04 | 1548.93</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">Total kcal</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">1730.04 | 1548.93</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">PAL</span></p></td>
-<td class="cl-3f8eb73a"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">1.99 | 1.78</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">PAL</span></p></td>
+<td class="cl-2db61ce3"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">1.99 | 1.78</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">Total steps</span></p></td>
-<td class="cl-3f8eb730"><p class="cl-3f8e9340"><span class="cl-3f88c3a2">14869 | 14056</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">Total steps</span></p></td>
+<td class="cl-2db61ce2"><p class="cl-2db5ff6e"><span class="cl-2db12dc2">14869 | 14056</span></p></td>
 </tr>
 </tbody>
 </table>
-</div></template><div class="flextable-shadow-host" id="470d451e-144b-4de0-9af0-4dc8e21a794d"></div>
+</div></template><div class="flextable-shadow-host" id="1d6933cf-01c4-4bed-bc45-0865a84aee85"></div>
 <script>
-var dest = document.getElementById("470d451e-144b-4de0-9af0-4dc8e21a794d");
-var template = document.getElementById("7cd39cbd-24bc-43a3-8de4-218bdfce02ca");
+var dest = document.getElementById("1d6933cf-01c4-4bed-bc45-0865a84aee85");
+var template = document.getElementById("b9f70639-0543-46d8-a9ef-10b5826230e6");
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
 fantome.appendChild(templateContent);
@@ -450,8 +450,8 @@ fantome.appendChild(templateContent);
 <code class="sourceCode R"><span><span class="va">results_by_day</span><span class="op">$</span><span class="va">df_all_metrics</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">max_steps_60min</span><span class="op">:</span><span class="va">peak_steps_1min</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html" class="external-link">reactable</a></span><span class="op">(</span>striped <span class="op">=</span> <span class="cn">TRUE</span>, defaultColDef <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span>, minWidth <span class="op">=</span> <span class="fl">180</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a4f5933aed03ca16bc68" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-a4f5933aed03ca16bc68">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"date":["2021-04-07","2021-04-08","2021-04-09","2021-04-10","2021-04-11","2021-04-12"],"max_steps_60min":[75.18,50.9,101.33,38.85,23,"NA"],"max_steps_30min":[100.93,71.63,104.9,43.9,28.9,"NA"],"max_steps_20min":[102.8,83.05,107.55,47.5,30.55,"NA"],"max_steps_5min":[119,116.8,112.8,85.6,41.8,"NA"],"max_steps_1min":[121,120,118,118,68,"NA"],"peak_steps_60min":[89.03,70.88,110.07,57.73,45.3,"NaN"],"peak_steps_30min":[114.33,86.73,112.23,68.7,51,"NaN"],"peak_steps_20min":[117.55,97.7,113.4,76.15,53.95,"NaN"],"peak_steps_5min":[120,117.6,117.2,109.6,61.8,"NaN"],"peak_steps_1min":[121,120,118,118,68,"NaN"]},"columns":[{"id":"date","name":"date","type":"Date","minWidth":180,"align":"center"},{"id":"max_steps_60min","name":"max_steps_60min","type":"numeric","minWidth":180,"align":"center"},{"id":"max_steps_30min","name":"max_steps_30min","type":"numeric","minWidth":180,"align":"center"},{"id":"max_steps_20min","name":"max_steps_20min","type":"numeric","minWidth":180,"align":"center"},{"id":"max_steps_5min","name":"max_steps_5min","type":"numeric","minWidth":180,"align":"center"},{"id":"max_steps_1min","name":"max_steps_1min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_60min","name":"peak_steps_60min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_30min","name":"peak_steps_30min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_20min","name":"peak_steps_20min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_5min","name":"peak_steps_5min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_1min","name":"peak_steps_1min","type":"numeric","minWidth":180,"align":"center"}],"striped":true,"dataKey":"b7ac314ea3913087cceef7eff4c66cce"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-8aea6762796e064ed176" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-8aea6762796e064ed176">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"date":["2021-04-07","2021-04-08","2021-04-09","2021-04-10","2021-04-11","2021-04-12"],"max_steps_60min":[75.18,50.9,101.33,38.85,23,"NA"],"max_steps_30min":[100.93,71.63,104.9,43.9,28.9,"NA"],"max_steps_20min":[102.8,83.05,107.55,47.5,30.55,"NA"],"max_steps_5min":[119,116.8,112.8,85.6,41.8,"NA"],"max_steps_1min":[121,120,118,118,68,"NA"],"peak_steps_60min":[89.03,70.88,110.07,57.73,45.3,"NaN"],"peak_steps_30min":[114.33,86.73,112.23,68.7,51,"NaN"],"peak_steps_20min":[117.55,97.7,113.4,76.15,53.95,"NaN"],"peak_steps_5min":[120,117.6,117.2,109.6,61.8,"NaN"],"peak_steps_1min":[121,120,118,118,68,"NaN"]},"columns":[{"id":"date","name":"date","type":"Date","minWidth":180,"align":"center"},{"id":"max_steps_60min","name":"max_steps_60min","type":"numeric","minWidth":180,"align":"center"},{"id":"max_steps_30min","name":"max_steps_30min","type":"numeric","minWidth":180,"align":"center"},{"id":"max_steps_20min","name":"max_steps_20min","type":"numeric","minWidth":180,"align":"center"},{"id":"max_steps_5min","name":"max_steps_5min","type":"numeric","minWidth":180,"align":"center"},{"id":"max_steps_1min","name":"max_steps_1min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_60min","name":"peak_steps_60min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_30min","name":"peak_steps_30min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_20min","name":"peak_steps_20min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_5min","name":"peak_steps_5min","type":"numeric","minWidth":180,"align":"center"},{"id":"peak_steps_1min","name":"peak_steps_1min","type":"numeric","minWidth":180,"align":"center"}],"striped":true,"dataKey":"b7ac314ea3913087cceef7eff4c66cce"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level3">
 <h3 id="results-by-day-graphical-view-1">Results by day: Graphical view<a class="anchor" aria-label="anchor" href="#results-by-day-graphical-view-1"></a>
@@ -477,7 +477,7 @@ fantome.appendChild(templateContent);
 <span>  metrics <span class="op">=</span> <span class="st">"step_acc"</span>,</span>
 <span>  epoch_label <span class="op">=</span> <span class="st">"60s"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<template id="75b15a6b-8e0a-489f-8f84-f1d839d1e50e"><style>
+<template id="51864720-b566-4abb-9d80-062ec84778e4"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -517,63 +517,63 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-43f7591c{}.cl-43e9ad8a{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-43e9ad94{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-43f03b1e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-43f05de2{width:3.25in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-43f05dec{width:3.25in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-43f05df6{width:3.25in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-43f7591c">
+<style>.cl-310d6814{}.cl-30f02e34{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-30f02e3e{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3106a77c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-3106ca0e{width:3.25in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3106ca18{width:3.25in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3106ca19{width:3.25in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-310d6814">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-43f05de2"><p class="cl-43f03b1e"><span class="cl-43e9ad8a">Metric</span></p></th>
-<th class="cl-43f05de2"><p class="cl-43f03b1e"><span class="cl-43e9ad8a">Daily mean | median</span></p></th>
+<th class="cl-3106ca0e"><p class="cl-3106a77c"><span class="cl-30f02e34">Metric</span></p></th>
+<th class="cl-3106ca0e"><p class="cl-3106a77c"><span class="cl-30f02e34">Daily mean | median</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-43f05dec"><p class="cl-43f03b1e"><span class="cl-43e9ad94">Number of valid days</span></p></td>
-<td class="cl-43f05dec"><p class="cl-43f03b1e"><span class="cl-43e9ad94">5</span></p></td>
+<td class="cl-3106ca18"><p class="cl-3106a77c"><span class="cl-30f02e3e">Number of valid days</span></p></td>
+<td class="cl-3106ca18"><p class="cl-3106a77c"><span class="cl-30f02e3e">5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-43f05df6"><p class="cl-43f03b1e"><span class="cl-43e9ad94">Max step acc. 60 min (steps/min)</span></p></td>
-<td class="cl-43f05df6"><p class="cl-43f03b1e"><span class="cl-43e9ad94">57.85 | 50.90</span></p></td>
+<td class="cl-3106ca19"><p class="cl-3106a77c"><span class="cl-30f02e3e">Max step acc. 60 min (steps/min)</span></p></td>
+<td class="cl-3106ca19"><p class="cl-3106a77c"><span class="cl-30f02e3e">57.85 | 50.90</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-43f05dec"><p class="cl-43f03b1e"><span class="cl-43e9ad94">Max step acc. 30 min (steps/min)</span></p></td>
-<td class="cl-43f05dec"><p class="cl-43f03b1e"><span class="cl-43e9ad94">70.05 | 71.63</span></p></td>
+<td class="cl-3106ca18"><p class="cl-3106a77c"><span class="cl-30f02e3e">Max step acc. 30 min (steps/min)</span></p></td>
+<td class="cl-3106ca18"><p class="cl-3106a77c"><span class="cl-30f02e3e">70.05 | 71.63</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-43f05df6"><p class="cl-43f03b1e"><span class="cl-43e9ad94">Max step acc. 20 min (steps/min)</span></p></td>
-<td class="cl-43f05df6"><p class="cl-43f03b1e"><span class="cl-43e9ad94">74.29 | 83.05</span></p></td>
+<td class="cl-3106ca19"><p class="cl-3106a77c"><span class="cl-30f02e3e">Max step acc. 20 min (steps/min)</span></p></td>
+<td class="cl-3106ca19"><p class="cl-3106a77c"><span class="cl-30f02e3e">74.29 | 83.05</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-43f05dec"><p class="cl-43f03b1e"><span class="cl-43e9ad94">Max step acc. 5 min (steps/min)</span></p></td>
-<td class="cl-43f05dec"><p class="cl-43f03b1e"><span class="cl-43e9ad94">95.20 | 112.80</span></p></td>
+<td class="cl-3106ca18"><p class="cl-3106a77c"><span class="cl-30f02e3e">Max step acc. 5 min (steps/min)</span></p></td>
+<td class="cl-3106ca18"><p class="cl-3106a77c"><span class="cl-30f02e3e">95.20 | 112.80</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-43f05df6"><p class="cl-43f03b1e"><span class="cl-43e9ad94">Max step acc. 1 min (steps/min)</span></p></td>
-<td class="cl-43f05df6"><p class="cl-43f03b1e"><span class="cl-43e9ad94">109.00 | 118.00</span></p></td>
+<td class="cl-3106ca19"><p class="cl-3106a77c"><span class="cl-30f02e3e">Max step acc. 1 min (steps/min)</span></p></td>
+<td class="cl-3106ca19"><p class="cl-3106a77c"><span class="cl-30f02e3e">109.00 | 118.00</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-43f05dec"><p class="cl-43f03b1e"><span class="cl-43e9ad94">Peak step acc. 60 min (steps/min)</span></p></td>
-<td class="cl-43f05dec"><p class="cl-43f03b1e"><span class="cl-43e9ad94">74.60 | 70.88</span></p></td>
+<td class="cl-3106ca18"><p class="cl-3106a77c"><span class="cl-30f02e3e">Peak step acc. 60 min (steps/min)</span></p></td>
+<td class="cl-3106ca18"><p class="cl-3106a77c"><span class="cl-30f02e3e">74.60 | 70.88</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-43f05df6"><p class="cl-43f03b1e"><span class="cl-43e9ad94">Peak step acc. 30 min (steps/min)</span></p></td>
-<td class="cl-43f05df6"><p class="cl-43f03b1e"><span class="cl-43e9ad94">86.60 | 86.73</span></p></td>
+<td class="cl-3106ca19"><p class="cl-3106a77c"><span class="cl-30f02e3e">Peak step acc. 30 min (steps/min)</span></p></td>
+<td class="cl-3106ca19"><p class="cl-3106a77c"><span class="cl-30f02e3e">86.60 | 86.73</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-43f05dec"><p class="cl-43f03b1e"><span class="cl-43e9ad94">Peak step acc. 20 min (steps/min)</span></p></td>
-<td class="cl-43f05dec"><p class="cl-43f03b1e"><span class="cl-43e9ad94">91.75 | 97.70</span></p></td>
+<td class="cl-3106ca18"><p class="cl-3106a77c"><span class="cl-30f02e3e">Peak step acc. 20 min (steps/min)</span></p></td>
+<td class="cl-3106ca18"><p class="cl-3106a77c"><span class="cl-30f02e3e">91.75 | 97.70</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-43f05df6"><p class="cl-43f03b1e"><span class="cl-43e9ad94">Peak step acc. 5 min (steps/min)</span></p></td>
-<td class="cl-43f05df6"><p class="cl-43f03b1e"><span class="cl-43e9ad94">105.24 | 117.20</span></p></td>
+<td class="cl-3106ca19"><p class="cl-3106a77c"><span class="cl-30f02e3e">Peak step acc. 5 min (steps/min)</span></p></td>
+<td class="cl-3106ca19"><p class="cl-3106a77c"><span class="cl-30f02e3e">105.24 | 117.20</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-43f05dec"><p class="cl-43f03b1e"><span class="cl-43e9ad94">Peak step acc. 1 min (steps/min)</span></p></td>
-<td class="cl-43f05dec"><p class="cl-43f03b1e"><span class="cl-43e9ad94">109.00 | 118.00</span></p></td>
+<td class="cl-3106ca18"><p class="cl-3106a77c"><span class="cl-30f02e3e">Peak step acc. 1 min (steps/min)</span></p></td>
+<td class="cl-3106ca18"><p class="cl-3106a77c"><span class="cl-30f02e3e">109.00 | 118.00</span></p></td>
 </tr>
 </tbody>
 </table>
-</div></template><div class="flextable-shadow-host" id="68e0418e-7376-4f41-a7c7-5bb4713e8035"></div>
+</div></template><div class="flextable-shadow-host" id="f4ff77f7-bb66-4fa8-a6c9-e34614cc31d1"></div>
 <script>
-var dest = document.getElementById("68e0418e-7376-4f41-a7c7-5bb4713e8035");
-var template = document.getElementById("75b15a6b-8e0a-489f-8f84-f1d839d1e50e");
+var dest = document.getElementById("f4ff77f7-bb66-4fa8-a6c9-e34614cc31d1");
+var template = document.getElementById("51864720-b566-4abb-9d80-062ec84778e4");
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
 fantome.appendChild(templateContent);
@@ -600,8 +600,8 @@ fantome.appendChild(templateContent);
 <code class="sourceCode R"><span><span class="va">results_by_day</span><span class="op">$</span><span class="va">df_all_metrics</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">ig</span><span class="op">:</span><span class="va">M5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html" class="external-link">reactable</a></span><span class="op">(</span>striped <span class="op">=</span> <span class="cn">TRUE</span>, defaultColDef <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span>, minWidth <span class="op">=</span> <span class="fl">180</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-cfa4fcfcd79fab1d1c16" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-cfa4fcfcd79fab1d1c16">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"date":["2021-04-07","2021-04-08","2021-04-09","2021-04-10","2021-04-11","2021-04-12"],"ig":[-1.33,-1.36,-0.68,-2.03,-2.13,"NA"],"M1/3":[1496.84,1920.94,4049.77,1600.89,848.92,"NaN"],"M120":[3585.15,3993.83,9446.37,2864.72,1763.45,"NaN"],"M60":[4706.07,4970.81,10382.79,3416.37,2140.57,"NaN"],"M30":[5678.66,5775.53,11163.53,4033.46,2498.95,"NaN"],"M15":[6073.25,6191.16,11766.98,4678.74,2847.09,"NaN"],"M5":[6229.5,6537.62,12308.03,5822.18,3225,"NaN"]},"columns":[{"id":"date","name":"date","type":"Date","minWidth":180,"align":"center"},{"id":"ig","name":"ig","type":"numeric","minWidth":180,"align":"center"},{"id":"M1/3","name":"M1/3","type":"numeric","minWidth":180,"align":"center"},{"id":"M120","name":"M120","type":"numeric","minWidth":180,"align":"center"},{"id":"M60","name":"M60","type":"numeric","minWidth":180,"align":"center"},{"id":"M30","name":"M30","type":"numeric","minWidth":180,"align":"center"},{"id":"M15","name":"M15","type":"numeric","minWidth":180,"align":"center"},{"id":"M5","name":"M5","type":"numeric","minWidth":180,"align":"center"}],"striped":true,"dataKey":"fda40918fda35571cab9401f77214fe3"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b7748aa23f889bce4d80" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b7748aa23f889bce4d80">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"date":["2021-04-07","2021-04-08","2021-04-09","2021-04-10","2021-04-11","2021-04-12"],"ig":[-1.33,-1.36,-0.68,-2.03,-2.13,"NA"],"M1/3":[1496.84,1920.94,4049.77,1600.89,848.92,"NaN"],"M120":[3585.15,3993.83,9446.37,2864.72,1763.45,"NaN"],"M60":[4706.07,4970.81,10382.79,3416.37,2140.57,"NaN"],"M30":[5678.66,5775.53,11163.53,4033.46,2498.95,"NaN"],"M15":[6073.25,6191.16,11766.98,4678.74,2847.09,"NaN"],"M5":[6229.5,6537.62,12308.03,5822.18,3225,"NaN"]},"columns":[{"id":"date","name":"date","type":"Date","minWidth":180,"align":"center"},{"id":"ig","name":"ig","type":"numeric","minWidth":180,"align":"center"},{"id":"M1/3","name":"M1/3","type":"numeric","minWidth":180,"align":"center"},{"id":"M120","name":"M120","type":"numeric","minWidth":180,"align":"center"},{"id":"M60","name":"M60","type":"numeric","minWidth":180,"align":"center"},{"id":"M30","name":"M30","type":"numeric","minWidth":180,"align":"center"},{"id":"M15","name":"M15","type":"numeric","minWidth":180,"align":"center"},{"id":"M5","name":"M5","type":"numeric","minWidth":180,"align":"center"}],"striped":true,"dataKey":"fda40918fda35571cab9401f77214fe3"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level3">
 <h3 id="results-by-day-graphical-view-2">Results by day: Graphical view<a class="anchor" aria-label="anchor" href="#results-by-day-graphical-view-2"></a>
@@ -627,7 +627,7 @@ fantome.appendChild(templateContent);
 <span>  metrics <span class="op">=</span> <span class="st">"int_distri"</span>,</span>
 <span>  epoch_label <span class="op">=</span> <span class="st">"60s"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<template id="6b80353a-d741-48fe-af70-23319fd9e995"><style>
+<template id="02372335-5cbc-4969-8403-7d3d8189dc1a"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -667,51 +667,51 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-4a667b84{}.cl-4a546052{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4a5461f6{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4a5b82f6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4a5ba52e{width:3.25in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a5ba538{width:3.25in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a5ba542{width:3.25in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-4a667b84">
+<style>.cl-35cc3358{}.cl-35c02a04{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-35c02a18{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-35c5df9e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-35c5fa24{width:3.25in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c5fa2e{width:3.25in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c5fa2f{width:3.25in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-35cc3358">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-4a5ba52e"><p class="cl-4a5b82f6"><span class="cl-4a546052">Metric</span></p></th>
-<th class="cl-4a5ba52e"><p class="cl-4a5b82f6"><span class="cl-4a546052">Daily mean | median</span></p></th>
+<th class="cl-35c5fa24"><p class="cl-35c5df9e"><span class="cl-35c02a04">Metric</span></p></th>
+<th class="cl-35c5fa24"><p class="cl-35c5df9e"><span class="cl-35c02a04">Daily mean | median</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4a5ba538"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">Number of valid days</span></p></td>
-<td class="cl-4a5ba538"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">5</span></p></td>
+<td class="cl-35c5fa2e"><p class="cl-35c5df9e"><span class="cl-35c02a18">Number of valid days</span></p></td>
+<td class="cl-35c5fa2e"><p class="cl-35c5df9e"><span class="cl-35c02a18">5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4a5ba542"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">Intensity gradient</span></p></td>
-<td class="cl-4a5ba542"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">-1.51 | -1.36</span></p></td>
+<td class="cl-35c5fa2f"><p class="cl-35c5df9e"><span class="cl-35c02a18">Intensity gradient</span></p></td>
+<td class="cl-35c5fa2f"><p class="cl-35c5df9e"><span class="cl-35c02a18">-1.51 | -1.36</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4a5ba538"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">M1/3 (counts/60s)</span></p></td>
-<td class="cl-4a5ba538"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">1983.5 | 1600.9</span></p></td>
+<td class="cl-35c5fa2e"><p class="cl-35c5df9e"><span class="cl-35c02a18">M1/3 (counts/60s)</span></p></td>
+<td class="cl-35c5fa2e"><p class="cl-35c5df9e"><span class="cl-35c02a18">1983.5 | 1600.9</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4a5ba542"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">M120 (counts/60s)</span></p></td>
-<td class="cl-4a5ba542"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">4330.7 | 3585.2</span></p></td>
+<td class="cl-35c5fa2f"><p class="cl-35c5df9e"><span class="cl-35c02a18">M120 (counts/60s)</span></p></td>
+<td class="cl-35c5fa2f"><p class="cl-35c5df9e"><span class="cl-35c02a18">4330.7 | 3585.2</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4a5ba538"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">M60 (counts/60s)</span></p></td>
-<td class="cl-4a5ba538"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">5123.3 | 4706.1</span></p></td>
+<td class="cl-35c5fa2e"><p class="cl-35c5df9e"><span class="cl-35c02a18">M60 (counts/60s)</span></p></td>
+<td class="cl-35c5fa2e"><p class="cl-35c5df9e"><span class="cl-35c02a18">5123.3 | 4706.1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4a5ba542"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">M30 (counts/60s)</span></p></td>
-<td class="cl-4a5ba542"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">5830.0 | 5678.7</span></p></td>
+<td class="cl-35c5fa2f"><p class="cl-35c5df9e"><span class="cl-35c02a18">M30 (counts/60s)</span></p></td>
+<td class="cl-35c5fa2f"><p class="cl-35c5df9e"><span class="cl-35c02a18">5830.0 | 5678.7</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4a5ba538"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">M15 (counts/60s)</span></p></td>
-<td class="cl-4a5ba538"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">6311.4 | 6073.2</span></p></td>
+<td class="cl-35c5fa2e"><p class="cl-35c5df9e"><span class="cl-35c02a18">M15 (counts/60s)</span></p></td>
+<td class="cl-35c5fa2e"><p class="cl-35c5df9e"><span class="cl-35c02a18">6311.4 | 6073.2</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4a5ba542"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">M5 (counts/60s)</span></p></td>
-<td class="cl-4a5ba542"><p class="cl-4a5b82f6"><span class="cl-4a5461f6">6824.5 | 6229.5</span></p></td>
+<td class="cl-35c5fa2f"><p class="cl-35c5df9e"><span class="cl-35c02a18">M5 (counts/60s)</span></p></td>
+<td class="cl-35c5fa2f"><p class="cl-35c5df9e"><span class="cl-35c02a18">6824.5 | 6229.5</span></p></td>
 </tr>
 </tbody>
 </table>
-</div></template><div class="flextable-shadow-host" id="4be8e08c-f61f-4c4f-86c6-edc928d85147"></div>
+</div></template><div class="flextable-shadow-host" id="37106c7b-92de-4872-80ff-d4ec5ea18b22"></div>
 <script>
-var dest = document.getElementById("4be8e08c-f61f-4c4f-86c6-edc928d85147");
-var template = document.getElementById("6b80353a-d741-48fe-af70-23319fd9e995");
+var dest = document.getElementById("37106c7b-92de-4872-80ff-d4ec5ea18b22");
+var template = document.getElementById("02372335-5cbc-4969-8403-7d3d8189dc1a");
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
 fantome.appendChild(templateContent);
