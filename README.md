@@ -17,16 +17,16 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 activAnalyzer is a Shiny app that has been developed to analyze daily
 physical behavior data recorded at the hip in adults using an ActiGraph
 accelerometer (.agd files). Once analysis is completed, the app allows
-exporting results (summarized by day with means or medians of the valid
-days) to .csv files and generating a report of the measurement (in
-either an .html format or a .pdf format). All the configured inputs
-relevant for interpreting the results are recorded in the report. Be
-sure that the inputs that are configured when generating the report
-correspond to the analysis that was actually performed (in other words,
-avoid modifying the inputs after generating satisfactory results). In
-addition to a general analysis of physical behavior, the app also allows
-to implement the [Daily- and Clinical visit-PROactive Physical Activity
-in COPD (chronic obstructive pulmonary disease) instruments (D-PPAC and
+exporting results to .csv files and generating a report of the
+measurement (in either an .html format or a .pdf format). All the
+configured inputs relevant for interpreting the results are recorded in
+the report. Be sure that the inputs that are configured when generating
+the report correspond to the analysis that was actually performed (in
+other words, avoid modifying the inputs after generating satisfactory
+results). In addition to an analysis of physical behavior, the app also
+allows to implement the [Daily- and Clinical visit-PROactive Physical
+Activity in COPD (chronic obstructive pulmonary disease) instruments
+(D-PPAC and
 C-PPAC)](https://erj.ersjournals.com/content/early/2015/05/28/09031936.00183014).
 Please read the [user’s
 guide](https://github.com/pydemull/activAnalyzer/blob/master/inst/guide/user_guide_en.pdf)
@@ -73,15 +73,17 @@ There are three different ways to use the activAnalyzer app:
   allow resetting all the inputs when required.
 - On your machine via [R software](https://CRAN.R-project.org/)
   (version: $\ge$ 3.4.0), the [RStudio environment](https://posit.co/)
-  (recommended versions: Prairie Trillium \[2022.02\] and newer), and
-  the [activAnalyzer package](https://github.com/pydemull/activAnalyzer)
-  installable from CRAN (stable version) or from GitHub (development
-  version). To be able to generate a .pdf report, you will have to
-  install the [TinyTeX distribution](https://yihui.org/tinytex/). The
-  first time you will generate a .pdf report, you will have to wait some
-  time so that the required packages are installed on your machine. In
-  short, after installing R and RStudio, you can run the following
-  command lines in the RStudio console:
+  (recommended version: Prairie Trillium \[2022.02\]; **version Innocent
+  and Trusting \[2022-10\] does not allow to correctly quit the app from
+  the RStudio Window**), and the [activAnalyzer
+  package](https://github.com/pydemull/activAnalyzer) installable from
+  CRAN (stable version) or from GitHub (development version). To be able
+  to generate a .pdf report, you will have to install the [TinyTeX
+  distribution](https://yihui.org/tinytex/). The first time you will
+  generate a .pdf report, you will have to wait some time so that the
+  required packages are installed on your machine. In short, after
+  installing R and RStudio, you can run the following command lines in
+  the RStudio console:
 
 ``` r
 # For CRAN version:
