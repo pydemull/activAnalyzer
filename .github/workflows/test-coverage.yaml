@@ -48,9 +48,7 @@ jobs:
       - name: Test coverage
         run: |
           covr::codecov(
-            quiet = FALSE,
-            clean = FALSE,
-            install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package")
+            quiet = FALSE
           )
         shell: Rscript {0}
 
