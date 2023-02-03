@@ -138,7 +138,7 @@ app_server <- function(input, output, session) {
       init$file <- read_agd(system.file("extdata", "acc.agd", package = "activAnalyzer"))
       init$data <- prepare_dataset(system.file("extdata", "acc.agd", package = "activAnalyzer"))
       init$name <- system.file("extdata", "acc.agd", package = "activAnalyzer")
-      shiny::setProgress(100)
+      shiny::setProgress(1)
       })
     })
    
@@ -332,15 +332,21 @@ app_server <- function(input, output, session) {
           }
         
         # Creating reactive dataframe with wear/nonwear marks
-          df <- 
-            mark_wear_time(
-              dataset = data(),
-              to_epoch = as.numeric(input$to_epoch),
-              cts = cts, 
-              frame = input$frame_size, 
-              allowanceFrame = input$allowanceFrame_size,
-              streamFrame = input$streamFrame_size
-              ) 
+          withProgress(message = 'Please wait...', {
+          shiny::setProgress(0.1)
+            
+              df <- 
+                  mark_wear_time(
+                    dataset = data(),
+                    to_epoch = as.numeric(input$to_epoch),
+                    cts = cts, 
+                    frame = input$frame_size, 
+                    allowanceFrame = input$allowanceFrame_size,
+                    streamFrame = input$streamFrame_size
+                  ) 
+           shiny::setProgress(1)
+           
+                })
           
           return(df)
 
@@ -1370,6 +1376,8 @@ app_server <- function(input, output, session) {
       # Building the list  
         results_list <- eventReactive(input$Run, {
           
+          withProgress(message = 'Please wait...', {
+          
             # Waiting for required conditions 
               req(
                 # Patient's characteristics
@@ -1509,7 +1517,8 @@ app_server <- function(input, output, session) {
                 period_info_15$corr_mets() >= 0,
                 )
        
-
+   
+    
             # Building the dataframe with intensity marks
               df_with_computed_metrics <-
                 df() %>%
@@ -1524,6 +1533,8 @@ app_server <- function(input, output, session) {
                   sex = input$sex,
                   dates = input$selected_days
                   )
+              
+             shiny::setProgress(0.5)  # set progress to 50%
               
             # Modifying the dataset based on the PA periods reported by the user if any
              
@@ -1644,6 +1655,8 @@ app_server <- function(input, output, session) {
                       df_with_computed_metrics$bout <- cumsum(c(1, as.numeric(diff(df_with_computed_metrics$intensity_category_num))!= 0))
               }
               
+              
+              
              # Creating a list of the results by day and corresponding to valid wear time only  
                results_by_day <-
                  df_with_computed_metrics %>%
@@ -1658,7 +1671,8 @@ app_server <- function(input, output, session) {
                    bin_width = input$bin_width
                  )
     
-     
+           shiny::setProgress(1)  # set progress to 100%
+               
              # Returning the list of the results and chosen parameters
                return(
                  list(
@@ -1671,6 +1685,7 @@ app_server <- function(input, output, session) {
                    vpa_cutpoint_chosen = cut_points()$vpa_cutpoint_chosen
                    )
                  )
+          })
     })
  
       
@@ -1738,8 +1753,6 @@ app_server <- function(input, output, session) {
   # Showing section title for activity volume metrics
     output$title_activity_volume_metrics <- renderUI({
       
-      # Waiting for needed data
-      req(nrow(results_list()$df_with_computed_metrics) >=1)
       
       # Showing title
       h3("Activity volume metrics")
@@ -1926,9 +1939,6 @@ app_server <- function(input, output, session) {
   # Showing section title for intstep accumulation metrics
   output$title_step_acc_metrics <- renderUI({
     
-    # Waiting for needed data
-    req(nrow(results_list()$df_with_computed_metrics) >=1)
-    
     # Showing title
     h3("Step accumulation metrics")
   }) 
@@ -1986,9 +1996,6 @@ app_server <- function(input, output, session) {
   # Showing section title for intensity ditribution metrics
   output$title_int_distri_metrics <- renderUI({
     
-  # Waiting for needed data
-  req(nrow(results_list()$df_with_computed_metrics) >=1)
-  
   # Showing title
   h3("Intensity distribution metrics")
   }) 
@@ -2148,22 +2155,22 @@ app_server <- function(input, output, session) {
   # Plotting alpha for sedentary bouts
     output$graph_alpha_SB <- renderPlot({
       metrics_accum_sed()$p_alpha
-    }, width = "auto", height = 500, res = 100)
+    }, width = "auto", height = 400, res = 80)
     
   # Plotting MBD for sedentary bouts
      output$graph_mbd_SB <- renderPlot({
        metrics_accum_sed()$p_MBD
-     }, width = "auto", height = 500, res = 100)
+     }, width = "auto", height = 400, res = 80)
      
   # Plotting UBD for sedentary bouts
     output$graph_ubd_SB <- renderPlot({
       metrics_accum_sed()$p_UBD
-    }, width = "auto", height = 500, res = 100)
+    }, width = "auto", height = 400, res = 80)
   
   # Plotting Gini index for sedentary bouts
     output$graph_gini_SB <- renderPlot({
       metrics_accum_sed()$p_gini
-    }, width = "auto", height = 500, res = 100)
+    }, width = "auto", height = 400, res = 80)
   
     
   # Physical activity accumulation metrics panels =======================================================================
@@ -2230,22 +2237,22 @@ app_server <- function(input, output, session) {
   # Plotting alpha for  physical activity bouts
     output$graph_alpha_PA <- renderPlot({
       metrics_accum_pa()$p_alpha
-    }, width = "auto", height = 500, res = 100)
+    }, width = "auto", height = 400, res = 80)
   
   # Plotting MBD for  physical activity bouts
     output$graph_mbd_PA <- renderPlot({
       metrics_accum_pa()$p_MBD
-    }, width = "auto", height = 500, res = 100)
+    }, width = "auto", height = 400, res = 80)
     
   # Plotting UBD for  physical activity bouts
     output$graph_ubd_PA <- renderPlot({
       metrics_accum_pa()$p_UBD
-    }, width = "auto", height = 500, res = 100)
+    }, width = "auto", height = 400, res = 80)
   
   # Plotting Gini index for  physical activity bouts
     output$graph_gini_PA <- renderPlot({
       metrics_accum_pa()$p_gini
-    }, width = "auto", height = 500, res = 100)
+    }, width = "auto", height = 400, res = 80)
   
   
   #########################################
@@ -5559,21 +5566,17 @@ app_server <- function(input, output, session) {
     shinyjs::hide("update_graphic2")
     shinyjs::hide("graph_int")
     shinyjs::hide("BoxResByDayVolTab")
-    shinyjs::hide("BoxResByDayVolFig")
     shinyjs::hide("BoxResVolMeans")
     shinyjs::hide("BoxResVolMedians")
-    shinyjs::hide("BoxCompaNormsFig")
     shinyjs::hide("BoxResByDayStepTab")
-    shinyjs::hide("BoxResByDayStepFig")
     shinyjs::hide("BoxResStepMeans")
     shinyjs::hide("BoxResStepMedians")
     shinyjs::hide("BoxResByDayIntDistTab")
-    shinyjs::hide("BoxResByDayIntDistFig1")
-    shinyjs::hide("BoxResByDayIntDistFig1Bis")
-    shinyjs::hide("BoxResByDayIntDistFig2")
-    shinyjs::hide("BoxSummaryIntDistFig")
     shinyjs::hide("BoxResIntDistMeans")
     shinyjs::hide("BoxResIntDistMedians")
+    shinyjs::hide("title_activity_volume_metrics")
+    shinyjs::hide("title_step_acc_metrics")
+    shinyjs::hide("title_int_distri_metrics")
     observe({
       if(nrow(results_list()$df_with_computed_metrics) >=1) {
       shinyjs::show("myBox2")
@@ -5583,21 +5586,17 @@ app_server <- function(input, output, session) {
       shinyjs::show("update_graphic2")
       shinyjs::show("graph_int")
       shinyjs::show("BoxResByDayVolTab")
-      shinyjs::show("BoxResByDayVolFig")
       shinyjs::show("BoxResVolMeans")
       shinyjs::show("BoxResVolMedians")
-      shinyjs::show("BoxCompaNormsFig")
       shinyjs::show("BoxResByDayStepTab")
-      shinyjs::show("BoxResByDayStepFig")
       shinyjs::show("BoxResStepMeans")
       shinyjs::show("BoxResStepMedians")
       shinyjs::show("BoxResByDayIntDistTab")
-      shinyjs::show("BoxResByDayIntDistFig1")
-      shinyjs::show("BoxResByDayIntDistFig1Bis")
-      shinyjs::show("BoxResByDayIntDistFig2")
-      shinyjs::show("BoxSummaryIntDistFig")
       shinyjs::show("BoxResIntDistMeans")
       shinyjs::show("BoxResIntDistMedians")
+      shinyjs::show("title_activity_volume_metrics")
+      shinyjs::show("title_step_acc_metrics")
+      shinyjs::show("title_int_distri_metrics")
       } else {
       shinyjs::hide("myBox2")
       shinyjs::hide("Metric2")
@@ -5606,21 +5605,17 @@ app_server <- function(input, output, session) {
       shinyjs::hide("update_graphic2")
       shinyjs::hide("graph_int")
       shinyjs::hide("BoxResByDayVolTab")
-      shinyjs::hide("BoxResByDayVolFig")
       shinyjs::hide("BoxResVolMeans")
       shinyjs::hide("BoxResVolMedians")
-      shinyjs::hide("BoxCompaNormsFig")
       shinyjs::hide("BoxResByDayStepTab")
-      shinyjs::hide("BoxResByDayStepFig")
       shinyjs::hide("BoxResStepMeans")
       shinyjs::hide("BoxResStepMedians")
       shinyjs::hide("BoxResByDayIntDistTab")
-      shinyjs::hide("BoxResByDayIntDistFig1")
-      shinyjs::hide("BoxResByDayIntDistFig1Bis")
-      shinyjs::hide("BoxResByDayIntDistFig2")
-      shinyjs::hide("BoxSummaryIntDistFig")
       shinyjs::hide("BoxResIntDistMeans")
       shinyjs::hide("BoxResIntDistMedians")
+      shinyjs::hide("title_activity_volume_metrics")
+      shinyjs::hide("title_step_acc_metrics")
+      shinyjs::hide("title_int_distri_metrics")
       }
     })
     
@@ -6485,7 +6480,7 @@ app_server <- function(input, output, session) {
             cppac_diff_rasch = rasch_transform(x = sum(tab_cppac_summary_en()$"Difficulty score", na.rm = TRUE), quest = "C-PPAC", score = "difficulty"),
             cppac_amount_rasch = rasch_transform(x = sum(tab_cppac_summary_en()$"Amount score", na.rm = TRUE), quest = "C-PPAC", score = "quantity"),
             cppac_total_rasch = round((rasch_transform(x = sum(tab_cppac_summary_en()$"Difficulty score", na.rm = TRUE), quest = "C-PPAC", score = "difficulty") +
-                     rasch_transform(x = sum(tab_cppac_summary_en()$"Amount score", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1),
+            rasch_transform(x = sum(tab_cppac_summary_en()$"Amount score", na.rm = TRUE), quest = "C-PPAC", score = "quantity")) / 2, 1),
             
             rendered_by_shiny = TRUE
           )
