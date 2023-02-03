@@ -252,7 +252,7 @@ vpa_cutpoint = params$vpa_cutpoint / cor_factor
 ### Temporal distribution of sedentary bouts
 ```{r, fig.height = height_factor2, fig.width=13}
 if(length(params$p_breaks_sed) == 1) {
-  cat("No result. Results can be obtained using 60-s epochs only.")
+  cat("No results. Results can be obtained using 60-s epochs only.")
 } else {
   params$p_breaks_sed
 }
@@ -261,7 +261,7 @@ if(length(params$p_breaks_sed) == 1) {
 ### Alpha coefficient, median bout duration (MBD), usual bout duration (UBD), and Gini index
 ```{r, fig.height=6, fig.width=19}
 if(length(params$p_breaks_sed) == 1) {
-  cat("No result. Results can be obtained using 60-s epochs only.")
+  cat("No results. Results can be obtained using 60-s epochs only.")
 } else {
   
   p1 <- params$p_alpha_sed + guides(color = "none", fill = "none")
@@ -285,7 +285,7 @@ if(length(params$p_breaks_sed) == 1) {
 ### Temporal distribution of physical activity bouts
 ```{r, fig.height = height_factor2, fig.width=13}
 if(length(params$p_breaks_pa) == 1) {
-  cat("No result. Results can be obtained using 60-s epochs only.")
+  cat("No results. Results can be obtained using 60-s epochs only.")
 } else {
   params$p_breaks_pa
 }
@@ -296,7 +296,7 @@ if (params$rendered_by_shiny)
 ### Alpha coefficient, median bout duration (MBD), usual bout duration (UBD), and Gini index
 ```{r, fig.height=6, fig.width=19}
 if(length(params$p_breaks_pa) == 1) {
-  cat("No result. Results can be obtained using 60-s epochs only.")
+  cat("No results. Results can be obtained using 60-s epochs only.")
 } else {
   p1 <- params$p_alpha_pa + guides(color = "none", fill = "none")
   p2 <- params$p_MBD_pa   + guides(color = "none", fill = "none")
