@@ -140,16 +140,15 @@ recap_bouts_by_day <-
     duration = dplyr::n() / cor_factor,
     start = hms::as_hms(min(.data[[col_time]])),
     end = hms::as_hms(max(.data[[col_time]]))
-    ) %>%
+  ) %>%
   dplyr::filter(new_intensity_category %in% c(BEHAV)) %>%
   dplyr::mutate(
-    dur_cat = dplyr::case_when(
-      duration < 30            ~ "0-29" ,
-      duration %in% c(30:59)   ~ "30-59",
-      duration %in% c(60:89)   ~ "60-89",
-      duration >= 90           ~ "90+"
-    )
+    dur_cat = dplyr::if_else(duration < 30, "0-29" ,
+                             dplyr::if_else(duration %in% c(30:59),"30-59",
+                                            dplyr::if_else(duration %in% c(60:89),"60-89",
+                                                           dplyr::if_else(duration >= 90, "90+", NA))))
   )
+
 
 # Computing mean daily number of breaks
 mean_breaks <-
@@ -258,12 +257,10 @@ recap_bouts <-
   dplyr::summarise(duration = dplyr::n() / cor_factor) %>%
   dplyr::filter(new_intensity_category %in% c(BEHAV)) %>%
   dplyr::mutate(
-    dur_cat = dplyr::case_when(
-      duration < 30            ~ "0-29" ,
-      duration %in% c(30:59)   ~ "30-59",
-      duration %in% c(60:89)   ~ "60-89",
-      duration >= 90           ~ "90+"
-    )
+    dur_cat = dplyr::if_else(duration < 30, "0-29" ,
+                             dplyr::if_else(duration %in% c(30:59),"30-59",
+                                            dplyr::if_else(duration %in% c(60:89),"60-89",
+                                                           dplyr::if_else(duration >= 90, "90+", NA))))
   )
 
 # Computing alpha
@@ -275,21 +272,25 @@ MBD <- median(recap_bouts$duration)
 
 # Counting the number of bouts per bout duration, and the cumulated fractions
 # of sedentary (or physical activity) time and bouts, respectively
-summarised_bouts <-
+summarised_bouts_primer <-
   recap_bouts %>%
   dplyr::ungroup(new_bout) %>%
   dplyr::count(duration) %>%
   dplyr::mutate(
-    dur_cat = dplyr::case_when(
-      duration < 30            ~ "0-29" ,
-      duration %in% c(30:59)   ~ "30-59",
-      duration %in% c(60:89)   ~ "60-89",
-      duration >= 90           ~ "90+"
-    ),
-    prod = duration * n,
+    dur_cat = dplyr::if_else(duration < 30, "0-29" ,
+                             dplyr::if_else(duration %in% c(30:59),"30-59",
+                                            dplyr::if_else(duration %in% c(60:89),"60-89",
+                                                           dplyr::if_else(duration >= 90, "90+", NA)))),
+    prod = duration * n
+  )
+
+summarised_bouts <- 
+  summarised_bouts_primer %>%
+  dplyr::mutate(
     cum_frac_time = cumsum(prod / sum(prod)),
     cum_frac_bout = cumsum(n/sum(n))
   )
+    
 
 # Fitting cumulated fraction of time vs bout duration
 model <- nls(
@@ -379,20 +380,9 @@ p_MBD <-
 # of sedentary (or physical activity) time and bouts, respectively, with the
 # reverse order of bout durations
 summarised_bouts2 <-
-    recap_bouts %>%
-    dplyr::ungroup(new_bout) %>%
-    dplyr::count(duration) %>%
-    dplyr::mutate(
-      dur_cat = dplyr::case_when(
-        duration < 30            ~ "0-29" ,
-        duration %in% c(30:59)   ~ "30-59",
-        duration %in% c(60:89)   ~ "60-89",
-        duration >= 90           ~ "90+"
-      ),
-      prod = duration * n
-    ) %>%
-    dplyr::arrange(-duration) %>%
-    dplyr::mutate(
+  summarised_bouts_primer %>%
+  dplyr::arrange(-duration) %>%
+  dplyr::mutate(
       cum_frac_time = cumsum(prod / sum(prod)),
       cum_frac_bout = cumsum(n/sum(n))
     ) 
