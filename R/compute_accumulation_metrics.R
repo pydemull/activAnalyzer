@@ -144,8 +144,8 @@ recap_bouts_by_day <-
   dplyr::filter(new_intensity_category %in% c(BEHAV)) %>%
   dplyr::mutate(
     dur_cat = dplyr::if_else(duration < 30, "0-29" ,
-                             dplyr::if_else(duration %in% c(30:59),"30-59",
-                                            dplyr::if_else(duration %in% c(60:89),"60-89",
+                             dplyr::if_else(duration >= 30 & duration < 60,"30-59",
+                                            dplyr::if_else(duration >= 60 & duration < 90,"60-89",
                                                            dplyr::if_else(duration >= 90, "90+", NA))))
   )
 
@@ -258,8 +258,8 @@ recap_bouts <-
   dplyr::filter(new_intensity_category %in% c(BEHAV)) %>%
   dplyr::mutate(
     dur_cat = dplyr::if_else(duration < 30, "0-29" ,
-                             dplyr::if_else(duration %in% c(30:59),"30-59",
-                                            dplyr::if_else(duration %in% c(60:89),"60-89",
+                             dplyr::if_else(duration >= 30 & duration < 60,"30-59",
+                                            dplyr::if_else(duration >= 60 & duration < 90,"60-89",
                                                            dplyr::if_else(duration >= 90, "90+", NA))))
   )
 
@@ -278,8 +278,8 @@ summarised_bouts_primer <-
   dplyr::count(duration) %>%
   dplyr::mutate(
     dur_cat = dplyr::if_else(duration < 30, "0-29" ,
-                             dplyr::if_else(duration %in% c(30:59),"30-59",
-                                            dplyr::if_else(duration %in% c(60:89),"60-89",
+                             dplyr::if_else(duration >= 30 & duration < 60,"30-59",
+                                            dplyr::if_else(duration >= 60 & duration < 90,"60-89",
                                                            dplyr::if_else(duration >= 90, "90+", NA)))),
     prod = duration * n
   )
