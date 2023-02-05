@@ -1,5 +1,0 @@
-Study;Population;Activities performed;Device used;Axis used;Filter enabled;MPA cut-point (3 METs) in counts/min;VPA cut-point (6 METs) in counts/min
-Sasaki et al. (2011) [Adults];"Adults (n = 50; 22 women)";Treadmill walking (4.8 km/h, 6.4 km/h), treadmill running (9.7 km/h, 12 km/h);GT3X;Vector Magnitude;Normal;>=2 690;>=6 167
-Santos-Lozano et al. (2013) [Adults];"Adults (n = 31; 15 women)";Resting, treadmill walking (3 km/h, 5 km/h), treadmill running (7 km/h, 9 km/h), repeated sit-stands (30 times/min);GT3X;Vector Magnitude;Normal;>=3 208 ;>=8 565 
-Freedson et al. (1998) [Adults];"Adults (n=50; 25 women; 24 yr  on average)";Treadmill walking (4.8 km/h, 6.4 km/h), treadmill running (9.7 km/h);7164;Vertical Axis (counts/min);Normal;>=1952;>=5725
-Santos-Lozano et al. (2013) [Older adults];"Older adults (n = 35; 22 women)";Resting, treadmill walking (3 km/h, 5 km/h), repeated sit-stands (30 times/min);GT3X;Vector Magnitude;Normal;>=2 751;>=9 359 

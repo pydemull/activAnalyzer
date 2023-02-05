@@ -101,13 +101,9 @@ test_activAnalyzer_env$M15 <- "M15"
 test_activAnalyzer_env$M5 <- "M5"
 test_activAnalyzer_env$element_text <- "element_text"
 
-#assign("equations_mets", activAnalyzer:::equations_mets, envir = test_activAnalyzer_env)
-#assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = test_activAnalyzer_env)
-#assign("sed_cutpoints", activAnalyzer:::sed_cutpoints, envir = test_activAnalyzer_env)
-
-test_activAnalyzer_env$equations_mets <- read.csv2("equations_mets.csv") %>% tibble::as_tibble()
-test_activAnalyzer_env$mvpa_cutpoints <- read.csv2("mvpa_cutpoints.csv") %>% tibble::as_tibble()
-test_activAnalyzer_env$sed_cutpoints <- read.csv2("sed_cutpoints.csv") %>% tibble::as_tibble()
+assign("equations_mets", activAnalyzer:::equations_mets, envir = test_activAnalyzer_env)
+assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = test_activAnalyzer_env)
+assign("sed_cutpoints", activAnalyzer:::sed_cutpoints, envir = test_activAnalyzer_env)
 
 # Attaching new environment so that variables defined above as global can be located during testing
 attach(test_activAnalyzer_env)
@@ -119,7 +115,9 @@ attach(test_activAnalyzer_env)
 # Creating shinyDriver object
 app <- shinytest::ShinyDriver$new(
   run_app(),
-  loadTimeout = 1e+5,
+  loadTimeout = 30000,
+  phantomTimeout = 30000,
+  seed = 123,
   shinyOptions = list(test.mode = TRUE)
 )
   

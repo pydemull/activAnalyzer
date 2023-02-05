@@ -46,6 +46,6 @@ jobs:
           -e "if (!shinytest::dependenciesInstalled()) shinytest::installDependencies()"
 
       - name: Test coverage
-        run: covr::codecov(quiet = FALSE)
+        run: covr::codecov(quiet = FALSE, clean = FALSE)
         shell: Rscript {0}
           
