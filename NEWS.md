@@ -2,6 +2,7 @@
 
 * Increased speed of the `compute_accumulation_metrics()` function.
 * Added progress bar for waiting for initialization of graphics related to final results.
+* Corrected a bug that appeared when the width of the intensity bin set by the user to compute intensity gradient is too large, leading to time spent in only one bin during a day and thus leading to the impossibility to compute the slope of the log-log model used to get intensity gradient.
 
 # activAnalyzer 2.0.0
 

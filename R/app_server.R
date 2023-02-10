@@ -439,18 +439,21 @@ app_server <- function(input, output, session) {
   }, 
   width = "auto", 
   height = function(){
+    
+    n_levels = length(unique(df()$date))
+    
     height <- dplyr::case_when(
-      nlevels(as.factor(df()$date)) >= 8 ~ nlevels(as.factor(df()$date)) * 95,
-      nlevels(as.factor(df()$date)) == 7 ~ nlevels(as.factor(df()$date)) * 105,
-      nlevels(as.factor(df()$date)) == 6 ~ nlevels(as.factor(df()$date)) * 107,
-      nlevels(as.factor(df()$date)) == 5 ~ nlevels(as.factor(df()$date)) * 110,
-      nlevels(as.factor(df()$date)) == 4 ~ nlevels(as.factor(df()$date)) * 115,
-      nlevels(as.factor(df()$date)) == 3 ~ nlevels(as.factor(df()$date)) * 130,
-      nlevels(as.factor(df()$date)) == 2 ~ nlevels(as.factor(df()$date)) * 150,
-      nlevels(as.factor(df()$date)) == 1 ~ nlevels(as.factor(df()$date)) * 205
+      n_levels >= 8 ~ n_levels * 95,
+      n_levels == 7 ~ n_levels * 105,
+      n_levels == 6 ~ n_levels * 107,
+      n_levels == 5 ~ n_levels * 110,
+      n_levels == 4 ~ n_levels * 115,
+      n_levels == 3 ~ n_levels * 130,
+      n_levels == 2 ~ n_levels * 150,
+      n_levels == 1 ~ n_levels * 205
     )
-   return(height)
-    }, 
+    return(height)
+  }, 
   res = 120)
   
   #####################################################
@@ -1792,15 +1795,18 @@ app_server <- function(input, output, session) {
     }, 
     width = "auto", 
     height = function(){
+      
+      n_levels = length(unique(results_list()$df_with_computed_metrics$date))
+      
       height <- dplyr::case_when(
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) >= 8 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 95,
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 7 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 105,
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 6 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 107,
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 5 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 110,
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 4 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 115,
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 3 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 130,
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 2 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 150,
-        nlevels(as.factor(results_list()$df_with_computed_metrics$date)) == 1 ~ nlevels(as.factor(results_list()$df_with_computed_metrics$date)) * 205
+        n_levels >= 8 ~ n_levels * 95,
+        n_levels == 7 ~ n_levels * 105,
+        n_levels == 6 ~ n_levels * 107,
+        n_levels == 5 ~ n_levels * 110,
+        n_levels == 4 ~ n_levels * 115,
+        n_levels == 3 ~ n_levels * 130,
+        n_levels == 2 ~ n_levels * 150,
+        n_levels == 1 ~ n_levels * 205
       )
       return(height)
     }, 
@@ -2138,19 +2144,22 @@ app_server <- function(input, output, session) {
        }, 
        width = "auto", 
        height = function(){
+         
+         n_levels = length(unique(metrics_accum_sed()$recap_bouts_by_day$date))
+         
          height <- dplyr::case_when(
-           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) >= 8 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 95,
-           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 7 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 105,
-           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 6 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 107,
-           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 5 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 110,
-           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 4 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 115,
-           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 3 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 130,
-           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 2 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 150,
-           nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) == 1 ~ nlevels(as.factor(metrics_accum_sed()$recap_bouts_by_day$date)) * 205
+           n_levels >= 8 ~ n_levels * 95,
+           n_levels == 7 ~ n_levels * 105,
+           n_levels == 6 ~ n_levels * 107,
+           n_levels == 5 ~ n_levels * 110,
+           n_levels == 4 ~ n_levels * 115,
+           n_levels == 3 ~ n_levels * 130,
+           n_levels == 2 ~ n_levels * 150,
+           n_levels == 1 ~ n_levels * 205
          )
          return(height)
-       }, res = 120
-       )
+       }, 
+       res = 120)
   
   # Plotting alpha for sedentary bouts
     output$graph_alpha_SB <- renderPlot({
@@ -2220,19 +2229,22 @@ app_server <- function(input, output, session) {
     }, 
     width = "auto", 
     height = function(){
+      
+      n_levels = length(unique(metrics_accum_pa()$recap_bouts_by_day$date))
+      
       height <- dplyr::case_when(
-        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) >= 8 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 95,
-        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 7 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 105,
-        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 6 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 107,
-        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 5 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 110,
-        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 4 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 115,
-        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 3 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 130,
-        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 2 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 150,
-        nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) == 1 ~ nlevels(as.factor(metrics_accum_pa()$recap_bouts_by_day$date)) * 205
+        n_levels >= 8 ~ n_levels * 95,
+        n_levels == 7 ~ n_levels * 105,
+        n_levels == 6 ~ n_levels * 107,
+        n_levels == 5 ~ n_levels * 110,
+        n_levels == 4 ~ n_levels * 115,
+        n_levels == 3 ~ n_levels * 130,
+        n_levels == 2 ~ n_levels * 150,
+        n_levels == 1 ~ n_levels * 205
       )
       return(height)
-    }, res = 120
-    )
+    }, 
+    res = 120)
   
   # Plotting alpha for  physical activity bouts
     output$graph_alpha_PA <- renderPlot({

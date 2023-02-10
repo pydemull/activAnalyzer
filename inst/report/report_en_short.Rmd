@@ -75,7 +75,7 @@ axis_mvpa_graph <- ifelse(params$axis_mvpa == "vertical axis", "axis1",
               ifelse(params$axis_mvpa == "vector magnitude", "vm",
                      "na"))
 
-height_factor1 = nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.75
+height_factor1 = nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.8
 height_factor1 <- ifelse(height_factor1 <= 6, nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.9, height_factor1)
 height_factor2 = params$results_summary_means$valid_days * 0.75
 height_factor2 <- ifelse(height_factor2 <= 6, nlevels(as.factor(params$df_with_computed_metrics$date)) * 0.9, height_factor2)
@@ -129,7 +129,7 @@ create_fig_res_by_day(
   params$end_day_analysis, 
   language = "en",
   metrics = "volume"
-  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"))
+  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"), axis.text.x = element_text(hjust = 1.1))
 ```
 
 ### Means | Medians computed using valid days
@@ -190,7 +190,7 @@ create_fig_res_by_day(
   params$end_day_analysis, 
   language = "en",
   metrics = "step_acc"
-  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"))
+  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"), axis.text.x = element_text(hjust = 1.1))
 ```
 
 ### Means | Medians computed using valid days
@@ -219,7 +219,7 @@ create_fig_res_by_day(
   language = "en",
   metrics = "int_distri",
   epoch_label = paste0(params$epoch, "s")
-  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"))
+  ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"), axis.text.x = element_text(hjust = 1.1))
 ```
 
 ### Means | Medians computed using valid days

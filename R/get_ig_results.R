@@ -113,7 +113,7 @@ get_ig_results <- function(
   model_log <- if(nrow(data)>=1){
     summary(lm(log(duration) ~ log(bin_mid), data = recap_bins_int))
   } else {
-    NA
+    data.frame(coef = NA)
   }
   
   
@@ -142,10 +142,10 @@ get_ig_results <- function(
   # Getting Log-Log plot
       
      # Getting equation label
-       label_eq <- ifelse(nrow(data)>=1,  paste0("y = ", round(model_log$coefficient[2, 1], 2), "x + ", round(model_log$coefficient[1, 1], 2)), "")
+       label_eq <- ifelse(nrow(data)>=1 & nrow(model_log$coefficients) == 2,  paste0("y = ", round(model_log$coefficients[2, 1], 2), "x + ", round(model_log$coefficients[1, 1], 2)), "")
   
      # Getting plot
-       p2 <- if(nrow(data) >=1){
+       p2 <- if(nrow(data) >=1 && nrow(model_log$coefficients) == 2){
          ggplot(data = recap_bins_int, aes(x = log(bin_mid), y = log(duration))) +
            geom_point(size = 4, alpha = 0.5) +
            geom_smooth(method = "lm") +
@@ -163,7 +163,7 @@ get_ig_results <- function(
   
   
   # Getting intensity gradient
-  ig <- ifelse(nrow(data)>=1, round(model_log$coefficient[2, 1], 2), NA)
+  ig <- ifelse(nrow(data)>=1 & nrow(model_log$coefficients) == 2, round(model_log$coefficients[2, 1], 2), NA)
   
   
   # Making and returning list
