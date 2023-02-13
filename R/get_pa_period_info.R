@@ -1,7 +1,7 @@
 #' Get relevant missing physical activity information indicated by the user of the app
 #'
 #' @param period A character string pointing to the module id from which information
-#'     have to be catched
+#'     have to be caught.
 #'
 #' @return A dataframe
 #'
