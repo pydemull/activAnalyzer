@@ -16,7 +16,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 activAnalyzer is a Shiny app that has been developed to analyze daily
 physical behavior data recorded at the hip in adults using an ActiGraph
-accelerometer (.agd files). Once analysis is completed, the app allows
+accelerometer (.agd file from a **GT3X**, **GT3X+**, **wGT3X+** or
+**wGT3X-BT** device). Once analysis is completed, the app allows
 exporting results to .csv files and generating a report of the
 measurement (in either an .html format or a .pdf format). All the
 configured inputs relevant for interpreting the results are recorded in
