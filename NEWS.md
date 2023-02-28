@@ -1,3 +1,5 @@
+# activAnalyzer (development version)
+
 # activAnalyzer 2.0.1
 
 * Increased speed of the `compute_accumulation_metrics()` function.
