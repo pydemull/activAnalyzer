@@ -60,7 +60,7 @@ average_results <- function(
   if (fun == "mean") {
     
   results <- data %>%
-    dplyr::mutate(validity = ifelse(wear_time >= minimum_wear_time * 60, "valid", "invalid")) %>%
+    dplyr::mutate(validity = dplyr::if_else(wear_time >= minimum_wear_time * 60, "valid", "invalid")) %>%
     dplyr::filter(validity == "valid") %>%
     dplyr::summarise(valid_days = dplyr::n(),
               wear_time = round(mean(wear_time), 2),
@@ -109,7 +109,7 @@ average_results <- function(
  if (fun == "median") {
     
    results <-  data %>%
-      dplyr::mutate(validity = ifelse(wear_time >= minimum_wear_time * 60, "valid", "invalid")) %>%
+      dplyr::mutate(validity = dplyr::if_else(wear_time >= minimum_wear_time * 60, "valid", "invalid")) %>%
       dplyr::filter(validity == "valid") %>%
       dplyr::summarise(valid_days = dplyr::n(),
                        wear_time = round(median(wear_time), 2),
