@@ -13,7 +13,7 @@ app_server <- function(input, output, session) {
   # Increasing users count when starting new session
     isolate({users$count <- users$count + 1 
     })
-    
+  
   # Decreasing users count when closing session
   # Stopping app when count is 0 AND when Reset button has not been clicked
     session$onSessionEnded(function() {

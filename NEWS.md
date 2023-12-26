@@ -1,4 +1,6 @@
 # activAnalyzer (development version)
+* Corrected figure in the vignette (a step-based metrics image was used instead of a figure related IG metrics).
+* Replaced ifelse() functions by dplyr::if_else() to increase speed.
 
 # activAnalyzer 2.0.1
 
