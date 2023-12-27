@@ -1,7 +1,8 @@
 # activAnalyzer (development version)
 * Corrected figure in the vignette (a step-based metrics image was used instead of a figure related IG metrics).
 * Replaced ifelse() functions by dplyr::if_else() to increase speed.
-* updated read_agd(): ticks_to_dttm function within dplyr::across() functions has be rewritten so that it fits the requirements of the dplyr::across() function as of dplyr 1.1.0.
+* Updated read_agd(): ticks_to_dttm function within dplyr::across() functions has be rewritten so that it fits the requirements of the dplyr::across() function as of dplyr 1.1.0.
+* Updated recap_by_day() function. The separation of the timestamp column in two columns (date and time) generated NAs for rows with 00:00:00. This has been solved by formating the timestamp column before separating it.
 
 # activAnalyzer 2.0.1
 
