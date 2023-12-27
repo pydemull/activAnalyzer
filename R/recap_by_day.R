@@ -193,6 +193,7 @@ recap_by_day <- function(
              
              df_step_metrics <- 
                data %>%
+               dplyr::mutate(timestamp = format(timestamp, "%Y-%m-%d %H:%M:%S")) %>%
                tidyr::separate("timestamp", c("date", "time"), sep = " ") %>%
                dplyr::mutate(date = as.Date(date), time = hms::as_hms(time)) %>%
                dplyr::select(
@@ -225,6 +226,7 @@ recap_by_day <- function(
                  TS = "timestamp", 
                  by = 60
                ) %>%
+               dplyr::mutate(timestamp = format(timestamp, "%Y-%m-%d %H:%M:%S")) %>%
                tidyr::separate("timestamp", c("date", "time"), sep = " ") %>%
                dplyr::mutate(date = as.Date(date), time = hms::as_hms(time)) %>%
                dplyr::select(
