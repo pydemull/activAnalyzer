@@ -54,8 +54,8 @@ read_agd <- function(file, tz = "UTC") {
       values_from = "settingvalue"
     ) %>%
     dplyr::mutate(
-      dplyr::across(tidyselect::matches("dateOfBirth"), ticks_to_dttm, tz = tz),
-      dplyr::across(tidyselect::ends_with("time"), ticks_to_dttm, tz = tz),
+      dplyr::across(tidyselect::matches("dateOfBirth"), ~ ticks_to_dttm(.x, tz = tz)),
+      dplyr::across(tidyselect::ends_with("time"), ~ ticks_to_dttm(.x, tz = tz)),
       dplyr::across(tidyselect::starts_with("epoch"), as.integer)
     )
   
