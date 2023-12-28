@@ -47,23 +47,6 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           
-      - name: Find PhantomJS path
-        id: phantomjs
-        run: |
-          echo "path=$(Rscript -e 'cat(shinytest:::phantom_paths()[[1]])')" >> $GITHUB_PATH
-
-      - name: Cache PhantomJS
-        uses: actions/cache@v3
-        with:
-          path: $GITHUB_PATH
-          key: ${{ matrix.config.os }}-phantomjs
-          restore-keys: ${{ matrix.config.os }}-phantomjs
-          
-      - name: Install PhantomJS
-        run: >
-          Rscript
-          -e "if (!shinytest::dependenciesInstalled()) shinytest::installDependencies()"
-
       - uses: r-lib/actions/check-r-package@v2
 
       - name: Show testthat output

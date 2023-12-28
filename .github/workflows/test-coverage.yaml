@@ -28,23 +28,6 @@ jobs:
           extra-packages: any::covr
           needs: coverage
           
-      - name: Find PhantomJS path
-        id: phantomjs
-        run: |
-          echo "path=$(Rscript -e 'cat(shinytest:::phantom_paths()[[1]])')" >> $GITHUB_PATH
-          
-      - name: Cache PhantomJS
-        uses: actions/cache@v2
-        with:
-          path: $GITHUB_PATH
-          key: ${{ matrix.config.os }}-phantomjs
-          restore-keys: ${{ matrix.config.os }}-phantomjs
-          
-      - name: Install PhantomJS
-        run: >
-          Rscript
-          -e "if (!shinytest::dependenciesInstalled()) shinytest::installDependencies()"
-
       - name: Test coverage
         run: covr::codecov(quiet = FALSE, clean = FALSE)
         shell: Rscript {0}
