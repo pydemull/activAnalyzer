@@ -82,19 +82,19 @@ get_ig_results <- function(
   # Marking the dataset with intensity bins
   for (i in 1:nrow(df_bins)) {
     
-    data$bin_num <- ifelse(
+    data$bin_num <- dplyr::if_else(
       data[[col_axis]] >= df_bins[i, "bin_start"],
       df_bins[i, "bin_num"],
       data$bin_num 
     )
     
-    data$bin_mid <- ifelse(
+    data$bin_mid <- dplyr::if_else(
       data[[col_axis]] >= df_bins[i, "bin_start"],
       df_bins[i, "bin_mid"],
       data$bin_mid 
     )
     
-    data$bin_label <- ifelse(
+    data$bin_label <- dplyr::if_else(
       data[[col_axis]] >= df_bins[i, "bin_start"],
       df_bins[i, "bin_label"],
       data$bin_label 

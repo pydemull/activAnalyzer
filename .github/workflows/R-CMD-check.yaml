@@ -28,7 +28,7 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -47,23 +47,6 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           
-      - name: Find PhantomJS path
-        id: phantomjs
-        run: |
-          echo "::set-output name=path::$(Rscript -e 'cat(shinytest:::phantom_paths()[[1]])')"
-          
-      - name: Cache PhantomJS
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.phantomjs.outputs.path }}
-          key: ${{ matrix.config.os }}-phantomjs
-          restore-keys: ${{ matrix.config.os }}-phantomjs
-          
-      - name: Install PhantomJS
-        run: >
-          Rscript
-          -e "if (!shinytest::dependenciesInstalled()) shinytest::installDependencies()"
-
       - uses: r-lib/actions/check-r-package@v2
 
       - name: Show testthat output

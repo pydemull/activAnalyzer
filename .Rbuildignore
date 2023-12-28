@@ -28,3 +28,4 @@ $run_dev.*
 ^cran-comments\.md$
 ^doc$
 ^Meta$
+_\.new\.png$

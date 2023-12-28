@@ -8,7 +8,7 @@ get_pa_period_info(period)
 }
 \arguments{
 \item{period}{A character string pointing to the module id from which information
-have to be catched}
+have to be caught.}
 }
 \value{
 A dataframe

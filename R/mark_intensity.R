@@ -103,11 +103,11 @@ mark_intensity <- function(data,
     df <-
         data %>%
         dplyr::mutate(
-         SED = ifelse(.data[[col_axis]] < sed_cutpoint / cor_factor, 1, 0),
-         LPA = ifelse(.data[[col_axis]] >= sed_cutpoint / cor_factor & .data[[col_axis]] < mpa_cutpoint / cor_factor, 1, 0),
-         MPA = ifelse(.data[[col_axis]] >= mpa_cutpoint / cor_factor & .data[[col_axis]] < vpa_cutpoint / cor_factor, 1, 0), 
-         VPA = ifelse(.data[[col_axis]] >= vpa_cutpoint / cor_factor, 1, 0),
-         METS = suppressMessages(compute_mets(data = 
+          SED = dplyr::if_else(.data[[col_axis]] < sed_cutpoint / cor_factor, 1, 0),
+          LPA = dplyr::if_else(.data[[col_axis]] >= sed_cutpoint / cor_factor & .data[[col_axis]] < mpa_cutpoint / cor_factor, 1, 0),
+          MPA = dplyr::if_else(.data[[col_axis]] >= mpa_cutpoint / cor_factor & .data[[col_axis]] < vpa_cutpoint / cor_factor, 1, 0), 
+          VPA = dplyr::if_else(.data[[col_axis]] >= vpa_cutpoint / cor_factor, 1, 0),
+          METS = suppressMessages(compute_mets(data = 
                                                 data %>% 
                                                 dplyr::mutate(axis1 = axis1 * cor_factor,
                                                               vm = vm * cor_factor),
@@ -123,7 +123,7 @@ mark_intensity <- function(data,
           
 
       # Computing MET-hr corresponding to MVPA only, for each epoch
-        mets_hours_mvpa = ifelse(METS >= 3, METS * (1/60) / cor_factor, 0),
+        mets_hours_mvpa = dplyr::if_else(METS >= 3, METS * (1/60) / cor_factor, 0),
 
       ) %>%
       
@@ -132,9 +132,9 @@ mark_intensity <- function(data,
       
 
   # Marking the bouts based on intensity categories
-    df$intensity_category <- ifelse(df[[col_nonwear]] == 1, "Nonwear", 
-                                    ifelse(df$SED == 1, "SED", 
-                                           ifelse(df$LPA == 1, "LPA", "MVPA")))
+    df$intensity_category <- dplyr::if_else(df[[col_nonwear]] == 1, "Nonwear", 
+                                 dplyr::if_else(df$SED == 1, "SED", 
+                                     dplyr::if_else(df$LPA == 1, "LPA", "MVPA")))
     
         
       # Thanks to https://stackoverflow.com/questions/29661269/increment-by-1-for-every-change-in-column 

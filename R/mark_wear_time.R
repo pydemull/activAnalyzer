@@ -108,8 +108,8 @@ mark_wear_time <- function(
       streamFrame = streamFrame
       ) %>%
     dplyr::mutate(
-      non_wearing_count = ifelse(wearing == "nw", 1, 0),
-      wearing_count = ifelse(wearing == "w", 1, 0)
+      non_wearing_count = dplyr::if_else(wearing == "nw", 1, 0),
+      wearing_count = dplyr::if_else(wearing == "w", 1, 0)
       )
   
   return(df2)
