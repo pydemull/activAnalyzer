@@ -50,8 +50,8 @@ jobs:
       - name: Find PhantomJS path
         id: phantomjs
         run: |
-          echo "{name}={value}" >> $GITHUB_OUTPUT
-          
+          echo "path" >> $(Rscript -e 'cat(shinytest:::phantom_paths()[[1]])')
+
       - name: Cache PhantomJS
         uses: actions/cache@v2
         with:
