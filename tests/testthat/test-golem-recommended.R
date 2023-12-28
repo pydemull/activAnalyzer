@@ -36,7 +36,7 @@ test_that("app server", {
 
 test_that("The server functions correctly work", {
 
-  skip_on_cran() # This is set because PhantomJS is not found on Debian platform during CRAN submission pre-tests.
+  skip_on_cran() # Running all the tests would take too much time.
   
 #===============================================================================
 # Setting environment
@@ -100,6 +100,8 @@ test_activAnalyzer_env$M30 <- "M30"
 test_activAnalyzer_env$M15 <- "M15"
 test_activAnalyzer_env$M5 <- "M5"
 test_activAnalyzer_env$element_text <- "element_text"
+test_activAnalyzer_env$session <- "session"
+test_activAnalyzer_env$outputName <- "outputName"
 
 assign("equations_mets", activAnalyzer:::equations_mets, envir = test_activAnalyzer_env)
 assign("mvpa_cutpoints", activAnalyzer:::mvpa_cutpoints, envir = test_activAnalyzer_env)
@@ -113,23 +115,17 @@ attach(test_activAnalyzer_env)
 #===============================================================================
      
 # Creating shinyDriver object
-app <- shinytest::ShinyDriver$new(
+app <- shinytest2::AppDriver$new(
   run_app(),
-  loadTimeout = 30000,
-  phantomTimeout = 30000,
-  seed = 123,
-  shinyOptions = list(test.mode = TRUE)
+  options = list(test.mode = TRUE)
 )
   
 #===============================================================================
 # Loading data file inside and outside the app
 #===============================================================================
 
-
- app$uploadFile(upload = system.file("extdata", "acc.agd", package = "activAnalyzer"))
- test_file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
- #app$uploadFile(upload = "acc.agd")
- #test_file <- "acc.agd"
+test_file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
+app$upload_file(upload = test_file)
  
 #===============================================================================
 # Testing auto-filling patient information
@@ -149,19 +145,19 @@ test_list <-
  )
 
 # Setting inputs in the app
-app$setInputs(auto_fill_char = "click")
+app$set_inputs(auto_fill_char = "click")
     
 # Getting actual inputs in the app
 actual_list <-
   list(
-    app$getAllValues()$export[["assessor_name"]],
-    app$getAllValues()$export[["assessor_surname"]],
-    app$getAllValues()$export[["patient_name"]],
-    app$getAllValues()$export[["patient_surname"]],
-    app$getAllValues()$export[["sex"]],
-    app$getAllValues()$export[["age"]],
-    app$getAllValues()$export[["weight"]],
-    app$getAllValues()$export[["side"]]
+    app$get_values()$export[["assessor_name"]],
+    app$get_values()$export[["assessor_surname"]],
+    app$get_values()$export[["patient_name"]],
+    app$get_values()$export[["patient_surname"]],
+    app$get_values()$export[["sex"]],
+    app$get_values()$export[["age"]],
+    app$get_values()$export[["weight"]],
+    app$get_values()$export[["side"]]
   )
 
 # Testing
@@ -184,15 +180,15 @@ expect_equal(actual_list, test_list)
         ) 
       
        # Setting inputs in the app
-       app$setInputs(
+       app$set_inputs(
            to_epoch = 60,
            axis_weartime = "vertical axis", 
            frame_size = 60, 
            allowanceFrame_size = 1, 
            streamFrame_size = 20
           )
-          app$setInputs(validate = "click")
-          actual_df <- app$getAllValues()$export[["df"]]
+          app$set_inputs(validate = "click")
+          actual_df <- app$get_values()$export[["df"]]
         
 
        # Testing    
@@ -200,7 +196,7 @@ expect_equal(actual_list, test_list)
      
 # Test 2
       # Setting reference results
-         actual_df <- app$getAllValues()$export[["df"]]
+         actual_df <- app$get_values()$export[["df"]]
          test_df <- 
            prepare_dataset(data = test_file) %>%
            mark_wear_time(
@@ -212,14 +208,14 @@ expect_equal(actual_list, test_list)
            )
          
        # Setting inputs in the app  
-         app$setInputs(
+         app$set_inputs(
            to_epoch = 60,
            axis_weartime = "vector magnitude", 
            frame_size = 30, 
            allowanceFrame_size = 0, 
            streamFrame_size = 0
            )
-         app$setInputs(validate = "click")
+         app$set_inputs(validate = "click")
        
         # Testing    
           expect_equal(actual_df, test_df)
@@ -239,14 +235,14 @@ test_list <-
   )  
 
 # Setting inputs in the app
-app$setInputs(reset_nonwear = "click")
+app$set_inputs(reset_nonwear = "click")
 actual_list <-
  list(
-   app$getAllValues()$export[["to_epoch"]],
-   app$getAllValues()$export[["axis_weartime"]],
-   app$getAllValues()$export[["frame_size"]],
-   app$getAllValues()$export[["allowanceFrame_size"]],
-   app$getAllValues()$export[["streamFrame_size"]]
+   app$get_values()$export[["to_epoch"]],
+   app$get_values()$export[["axis_weartime"]],
+   app$get_values()$export[["frame_size"]],
+   app$get_values()$export[["allowanceFrame_size"]],
+   app$get_values()$export[["streamFrame_size"]]
    )
 
 # Testing    
@@ -261,8 +257,8 @@ expect_equal(actual_list, test_list)
 test_gg_nonwear <- str(plot_data(test_df))
 
 # Setting inputs in the app
-app$setInputs(validate = "click")
-actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_init"]])
+app$set_inputs(validate = "click")
+actual_gg_nonwear <- str(app$get_values()$export[["gg_plot_data_init"]])
 
 # Testing    
 expect_equal(actual_gg_nonwear, test_gg_nonwear)
@@ -283,13 +279,13 @@ test_gg_nonwear <-
   )
 
 # Setting inputs in the app
-app$setInputs(
+app$set_inputs(
          Metric = "vm", 
          zoom_from_weartime = "10:00:00", 
          zoom_to_weartime = "20:00:00", 
          update_graphic = "click"
          )
-actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_update"]])
+actual_gg_nonwear <- str(app$get_values()$export[["gg_plot_data_update"]])
 
 # Testing 
 expect_equal(actual_gg_nonwear, test_gg_nonwear)  
@@ -303,8 +299,8 @@ expect_equal(actual_gg_nonwear, test_gg_nonwear)
 test_gg_nonwear <- str(plot_data(test_df))
 
 # Setting inputs in the app
-app$setInputs(validate = "click")
-actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_init"]])
+app$set_inputs(validate = "click")
+actual_gg_nonwear <- str(app$get_values()$export[["gg_plot_data_init"]])
 
 # Testing 
 expect_equal(actual_gg_nonwear, test_gg_nonwear)
@@ -323,17 +319,17 @@ test_list <-
   )
 
 # Setting inputs in the app
-app$setInputs(
+app$set_inputs(
          equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
          sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]",
          mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]"
        )
-app$setInputs(auto_fill_intensity = "click")
+app$set_inputs(auto_fill_intensity = "click")
 actual_list <-
          list(
-           app$getAllValues()$export[["equation_mets"]],
-           app$getAllValues()$export[["sed_cutpoint"]],
-           app$getAllValues()$export[["mvpa_cutpoint"]]
+           app$get_values()$export[["equation_mets"]],
+           app$get_values()$export[["sed_cutpoint"]],
+           app$get_values()$export[["mvpa_cutpoint"]]
          )
 # Testing 
 expect_equal(actual_list, test_list)
@@ -364,15 +360,15 @@ expect_equal(actual_list, test_list)
          )
         
         # Setting inputs in the app
-        app$setInputs(
+        app$set_inputs(
             age = 32,
             weight = 67,
             sex = "male",
             equation_mets = "Sasaki et al. (2011) [Adults]",
             mvpa_cutpoint = "Sasaki et al. (2011) [Adults]",
             sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]")
-         app$setInputs(Run = "click")
-         actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
+         app$set_inputs(Run = "click")
+         actual_results_by_day <- app$get_values()$export[["results_by_day"]]
            
          # Testing 
          expect_equal(actual_results_by_day, test_results_by_day$df_all_metrics)
@@ -400,15 +396,15 @@ expect_equal(actual_list, test_list)
            )
          
          # Setting inputs the app
-           app$setInputs(
+           app$set_inputs(
              age = 64,
              weight = 67,
              sex = "intersex",
              equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
              mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]",
              sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]")
-           app$setInputs(Run = "click")
-           actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
+           app$set_inputs(Run = "click")
+           actual_results_by_day <- app$get_values()$export[["results_by_day"]]
            
         # Testing 
         expect_equal(actual_results_by_day, test_results_by_day$df_all_metrics)
@@ -437,15 +433,15 @@ expect_equal(actual_list, test_list)
           )
         
           # Setting inputs in the app
-           app$setInputs(
+           app$set_inputs(
              age = 64,
              weight = 67,
              sex = "prefer not to say",
              equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
              mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]",
              sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]")
-           app$setInputs(Run = "click")
-           actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
+           app$set_inputs(Run = "click")
+           actual_results_by_day <- app$get_values()$export[["results_by_day"]]
            
           # Testing 
           expect_equal(actual_results_by_day, test_results_by_day$df_all_metrics)
@@ -473,15 +469,15 @@ expect_equal(actual_list, test_list)
             )
           
           # Setting inputs in the app
-          app$setInputs(
+          app$set_inputs(
             age = 64,
             weight = 67,
             sex = "male",
             equation_mets = "Santos-Lozano et al. (2013) [Older adults]",
             mvpa_cutpoint = "Santos-Lozano et al. (2013) [Older adults]",
             sed_cutpoint = "Aguilar-Farias et al. (2014) [Older adults]")
-          app$setInputs(Run = "click")
-          actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
+          app$set_inputs(Run = "click")
+          actual_results_by_day <- app$get_values()$export[["results_by_day"]]
          
          # Testing  
          expect_equal(actual_results_by_day, test_results_by_day$df_all_metrics)
@@ -509,7 +505,7 @@ expect_equal(actual_list, test_list)
            )
          
          # Setting inputs in the app
-         app$setInputs(
+         app$set_inputs(
            age = 47,
            weight = 78,
            sex = "undefined",
@@ -519,8 +515,8 @@ expect_equal(actual_list, test_list)
            perso_sed_axis = "vector magnitude",
            perso_sed_cutpoint = 150
            )
-         app$setInputs(Run = "click")
-         actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
+         app$set_inputs(Run = "click")
+         actual_results_by_day <- app$get_values()$export[["results_by_day"]]
          
          # Testing  
          expect_equal(actual_results_by_day, test_results_by_day$df_all_metrics)
@@ -544,7 +540,7 @@ expect_equal(actual_list, test_list)
            recap_by_day(age = 47, weight = 78, sex = "female")
          
         # Setting inputs in the app
-        app$setInputs(
+        app$set_inputs(
           age = 47,
           weight = 78,
           sex = "female",
@@ -557,8 +553,8 @@ expect_equal(actual_list, test_list)
           perso_sed_axis = "vertical axis",
           perso_sed_cutpoint = 100
           )
-        app$setInputs(Run = "click")
-        actual_results_by_day <- app$getAllValues()$export[["results_by_day"]]
+        app$set_inputs(Run = "click")
+        actual_results_by_day <- app$get_values()$export[["results_by_day"]]
         
         # Testing  
         expect_equal(actual_results_by_day, test_results_by_day$df_all_metrics)
@@ -576,12 +572,12 @@ test_set_default <-
  )
 
 # Setting inputs in the app
-app$setInputs(reset_period = "click")
+app$set_inputs(reset_period = "click")
 actual_set_default <- 
  list(
-   app$getAllValues()$export[["start_day_analysis"]],
-   app$getAllValues()$export[["end_day_analysis"]],
-   app$getAllValues()$export[["minimum_wear_time_for_analysis"]]
+   app$get_values()$export[["start_day_analysis"]],
+   app$get_values()$export[["end_day_analysis"]],
+   app$get_values()$export[["minimum_wear_time_for_analysis"]]
  )
 # Testing 
 expect_equal(test_set_default, actual_set_default)
@@ -598,12 +594,12 @@ test_set_proactive <-
             8
           )
 # Setting inputs in the app
-app$setInputs(pro_active_period_non_sleep = "click")
+app$set_inputs(pro_active_period_non_sleep = "click")
 actual_set_proactive <- 
   list(
-    app$getAllValues()$export[["start_day_analysis"]],
-    app$getAllValues()$export[["end_day_analysis"]],
-    app$getAllValues()$export[["minimum_wear_time_for_analysis"]]
+    app$get_values()$export[["start_day_analysis"]],
+    app$get_values()$export[["end_day_analysis"]],
+    app$get_values()$export[["minimum_wear_time_for_analysis"]]
   )
 
 # Testing 
@@ -622,12 +618,12 @@ test_set_proactive <-
   )
 
 # Setting inputs in the app
-app$setInputs(pro_active_period_24h = "click")
+app$set_inputs(pro_active_period_24h = "click")
 actual_set_proactive <- 
  list(
-   app$getAllValues()$export[["start_day_analysis"]],
-   app$getAllValues()$export[["end_day_analysis"]],
-   app$getAllValues()$export[["minimum_wear_time_for_analysis"]]
+   app$get_values()$export[["start_day_analysis"]],
+   app$get_values()$export[["end_day_analysis"]],
+   app$get_values()$export[["minimum_wear_time_for_analysis"]]
  )
       
 # Testing 
@@ -652,11 +648,11 @@ test_results <-
         ) 
 
 # Setting inputs in the app
-app$setInputs(Run = "click")
+app$set_inputs(Run = "click")
 test_gg_nonwear <- str(plot_data_with_intensity(
         test_results
         ))
-actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_int_init"]])
+actual_gg_nonwear <- str(app$get_values()$export[["gg_plot_data_int_init"]])
 
 # Testing 
 expect_equal(actual_gg_nonwear, test_gg_nonwear)
@@ -677,13 +673,13 @@ test_gg_nonwear <-
   )
 
 # Setting inputs in the app
-app$setInputs(
+app$set_inputs(
         Metric2 = "vm", 
         zoom_from_analysis = "10:00:00", 
         zoom_to_analysis = "20:00:00", 
         update_graphic2 = "click"
         )
-actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_int_update"]])
+actual_gg_nonwear <- str(app$get_values()$export[["gg_plot_data_int_update"]])
       
 # Testing 
 expect_equal(actual_gg_nonwear, test_gg_nonwear)  
@@ -716,8 +712,8 @@ test_results_summary_means <-
 test_gg_nonwear <- str(plot_data(test_results))
 
 # Setting inputs in the app
-app$setInputs(Run = "click")
-  actual_gg_nonwear <- str(app$getAllValues()$export[["gg_plot_data_int_init"]])
+app$set_inputs(Run = "click")
+  actual_gg_nonwear <- str(app$get_values()$export[["gg_plot_data_int_init"]])
 
 # Testing 
 expect_equal(actual_gg_nonwear, test_gg_nonwear)    
@@ -749,14 +745,14 @@ test_results_summary_medians <-
 
 
 # Setting inputs in the app
-app$setInputs(minimum_wear_time_for_analysis = 12)
-app$setInputs(Run = "click")
+app$set_inputs(minimum_wear_time_for_analysis = 12)
+app$set_inputs(Run = "click")
        
   # With means
-    actual_results_summary_means <- app$getAllValues()$export[["results_summary_means"]]
+    actual_results_summary_means <- app$get_values()$export[["results_summary_means"]]
   
   # With medians
-    actual_results_summary_medians <- app$getAllValues()$export[["results_summary_medians"]]
+    actual_results_summary_medians <- app$get_values()$export[["results_summary_medians"]]
   
 # Testing 
 expect_equal(actual_results_summary_means, test_results_summary_means)      
@@ -766,7 +762,7 @@ expect_equal(actual_results_summary_medians, test_results_summary_medians)
 # Testing BMR computation
 #===============================================================================
 test_bmr <- 9.74 * 78 + 694
-actual_bmr <- app$getAllValues()$export[["BMR"]]
+actual_bmr <- app$get_values()$export[["BMR"]]
 expect_equal(actual_bmr, test_bmr)
    
 #===============================================================================
@@ -774,7 +770,7 @@ expect_equal(actual_bmr, test_bmr)
 #===============================================================================
 
       # Setting inputs for all tests
-        app$setInputs(
+        app$set_inputs(
           age = 25,
           weight = 50,
           sex = "female",
@@ -796,7 +792,7 @@ expect_equal(actual_bmr, test_bmr)
          #************
         
             # Setting inputs for C-PPAC tests
-              app$setInputs(
+              app$set_inputs(
                 cppac_EN_q1 = "None at all",
                 cppac_EN_q2 = "None at all",
                 cppac_EN_q3 = "None at all",
@@ -813,9 +809,9 @@ expect_equal(actual_bmr, test_bmr)
               )
            
            # Getting final scores computed with the app
-             score_cppac_diff_en <- app$getAllValues()$export[["score_cppac_diff_en"]]
-             score_cppac_quant_en <- app$getAllValues()$export[["score_cppac_quant_en"]]
-             score_cppac_tot_rasch_en <- app$getAllValues()$export[["score_cppac_tot_rasch_en"]]
+             score_cppac_diff_en <- app$get_values()$export[["score_cppac_diff_en"]]
+             score_cppac_quant_en <- app$get_values()$export[["score_cppac_quant_en"]]
+             score_cppac_tot_rasch_en <- app$get_values()$export[["score_cppac_tot_rasch_en"]]
              
            # Testing Difficulty score (raw)
              expect_equal(score_cppac_diff_en, 10*4)
@@ -832,7 +828,7 @@ expect_equal(actual_bmr, test_bmr)
         #************
               
            # Setting inputs for C-PPAC tests
-           app$setInputs(
+           app$set_inputs(
              cppac_EN_q1 = "A little bit (about 10 minutes every day)", 
              cppac_EN_q2 = "A few", 
              cppac_EN_q3 = "A little bit",
@@ -849,9 +845,9 @@ expect_equal(actual_bmr, test_bmr)
            )
              
            # Getting final scores computed with the app
-             score_cppac_diff_en <- app$getAllValues()$export[["score_cppac_diff_en"]]
-             score_cppac_quant_en <- app$getAllValues()$export[["score_cppac_quant_en"]]
-             score_cppac_tot_rasch_en <- app$getAllValues()$export[["score_cppac_tot_rasch_en"]]
+             score_cppac_diff_en <- app$get_values()$export[["score_cppac_diff_en"]]
+             score_cppac_quant_en <- app$get_values()$export[["score_cppac_quant_en"]]
+             score_cppac_tot_rasch_en <- app$get_values()$export[["score_cppac_tot_rasch_en"]]
            
            # Testing Difficulty score (raw)
              expect_equal(score_cppac_diff_en, 10*3)
@@ -867,7 +863,7 @@ expect_equal(actual_bmr, test_bmr)
           #************
             
             # Setting inputs for C-PPAC tests
-              app$setInputs(
+              app$set_inputs(
                 cppac_EN_q1 = "Some (about 30 minutes every day)", 
                 cppac_EN_q2 = "Some", 
                 cppac_EN_q3 = "Some",
@@ -884,9 +880,9 @@ expect_equal(actual_bmr, test_bmr)
               )
             
             # Getting final scores computed with the app
-              score_cppac_diff_en <- app$getAllValues()$export[["score_cppac_diff_en"]]
-              score_cppac_quant_en <- app$getAllValues()$export[["score_cppac_quant_en"]]
-              score_cppac_tot_rasch_en <- app$getAllValues()$export[["score_cppac_tot_rasch_en"]]
+              score_cppac_diff_en <- app$get_values()$export[["score_cppac_diff_en"]]
+              score_cppac_quant_en <- app$get_values()$export[["score_cppac_quant_en"]]
+              score_cppac_tot_rasch_en <- app$get_values()$export[["score_cppac_tot_rasch_en"]]
             
             # Testing Difficulty score (raw)
               expect_equal(score_cppac_diff_en, 10*2)
@@ -902,7 +898,7 @@ expect_equal(actual_bmr, test_bmr)
           #************
               
               # Setting inputs for C-PPAC tests
-                app$setInputs(
+                app$set_inputs(
                   cppac_EN_q1 = "A lot (about 1 hour every day)", 
                   cppac_EN_q2 = "A lot", 
                   cppac_EN_q3 = "A lot",
@@ -919,9 +915,9 @@ expect_equal(actual_bmr, test_bmr)
                 )
               
               # Getting final scores computed with the app
-                score_cppac_diff_en <- app$getAllValues()$export[["score_cppac_diff_en"]]
-                score_cppac_quant_en <- app$getAllValues()$export[["score_cppac_quant_en"]]
-                score_cppac_tot_rasch_en <- app$getAllValues()$export[["score_cppac_tot_rasch_en"]]
+                score_cppac_diff_en <- app$get_values()$export[["score_cppac_diff_en"]]
+                score_cppac_quant_en <- app$get_values()$export[["score_cppac_quant_en"]]
+                score_cppac_tot_rasch_en <- app$get_values()$export[["score_cppac_tot_rasch_en"]]
               
               # Testing Difficulty score (raw)
                 expect_equal(score_cppac_diff_en, 10*1)
@@ -938,7 +934,7 @@ expect_equal(actual_bmr, test_bmr)
            #************
               
               # Setting inputs for C-PPAC tests
-                app$setInputs(
+                app$set_inputs(
                   cppac_EN_q1 = "A great deal (more than 1 hour every day)", 
                   cppac_EN_q2 = "A large amount", 
                   cppac_EN_q3 = "A great deal",
@@ -955,9 +951,9 @@ expect_equal(actual_bmr, test_bmr)
                 )
                 
               # Getting final scores computed with the app
-                score_cppac_diff_en <- app$getAllValues()$export[["score_cppac_diff_en"]]
-                score_cppac_quant_en <- app$getAllValues()$export[["score_cppac_quant_en"]]
-                score_cppac_tot_rasch_en <- app$getAllValues()$export[["score_cppac_tot_rasch_en"]]
+                score_cppac_diff_en <- app$get_values()$export[["score_cppac_diff_en"]]
+                score_cppac_quant_en <- app$get_values()$export[["score_cppac_quant_en"]]
+                score_cppac_tot_rasch_en <- app$get_values()$export[["score_cppac_tot_rasch_en"]]
                 
               # Testing Difficulty score (raw)
                 expect_equal(score_cppac_diff_en, 10*0)
@@ -978,7 +974,7 @@ expect_equal(actual_bmr, test_bmr)
              #************
                 
                 # Setting inputs for C-PPAC tests
-                  app$setInputs(
+                  app$set_inputs(
                     cppac_FR_q1 = "Pas du tout",
                     cppac_FR_q2 = "Aucune",
                     cppac_FR_q3 = "Pas du tout",
@@ -995,9 +991,9 @@ expect_equal(actual_bmr, test_bmr)
                   )
                 
                 # Getting final scores computed with the app
-                  score_cppac_diff_fr <- app$getAllValues()$export[["score_cppac_diff_fr"]]
-                  score_cppac_quant_fr <- app$getAllValues()$export[["score_cppac_quant_fr"]]
-                  score_cppac_tot_rasch_fr <- app$getAllValues()$export[["score_cppac_tot_rasch_fr"]]
+                  score_cppac_diff_fr <- app$get_values()$export[["score_cppac_diff_fr"]]
+                  score_cppac_quant_fr <- app$get_values()$export[["score_cppac_quant_fr"]]
+                  score_cppac_tot_rasch_fr <- app$get_values()$export[["score_cppac_tot_rasch_fr"]]
                 
                 # Testing Difficulty score (raw)
                   expect_equal(score_cppac_diff_fr, 10*4)
@@ -1014,7 +1010,7 @@ expect_equal(actual_bmr, test_bmr)
             #************
                 
                 # Setting inputs for C-PPAC tests
-                app$setInputs(
+                app$set_inputs(
                   cppac_FR_q1 = "Un petit peu (environ 10 minutes chaque jour)", 
                   cppac_FR_q2 = "Tr\u00e8s peu", 
                   cppac_FR_q3 = "Un petit peu",
@@ -1031,9 +1027,9 @@ expect_equal(actual_bmr, test_bmr)
                 )
                 
                 # Getting final scores computed with the app
-                  score_cppac_diff_fr <- app$getAllValues()$export[["score_cppac_diff_fr"]]
-                  score_cppac_quant_fr <- app$getAllValues()$export[["score_cppac_quant_fr"]]
-                  score_cppac_tot_rasch_fr <- app$getAllValues()$export[["score_cppac_tot_rasch_fr"]]
+                  score_cppac_diff_fr <- app$get_values()$export[["score_cppac_diff_fr"]]
+                  score_cppac_quant_fr <- app$get_values()$export[["score_cppac_quant_fr"]]
+                  score_cppac_tot_rasch_fr <- app$get_values()$export[["score_cppac_tot_rasch_fr"]]
                 
                 # Testing Difficulty score (raw)
                   expect_equal(score_cppac_diff_fr, 10*3)
@@ -1049,7 +1045,7 @@ expect_equal(actual_bmr, test_bmr)
            #************
                 
                 # Setting inputs for C-PPAC tests
-                  app$setInputs(
+                  app$set_inputs(
                     cppac_FR_q1 = "Un peu (environ 30 minutes chaque jour)", 
                     cppac_FR_q2 = "Quelques-unes", 
                     cppac_FR_q3 = "Quelques-unes",
@@ -1066,9 +1062,9 @@ expect_equal(actual_bmr, test_bmr)
                   )
                 
                 # Getting final scores computed with the app
-                score_cppac_diff_fr <- app$getAllValues()$export[["score_cppac_diff_fr"]]
-                score_cppac_quant_fr <- app$getAllValues()$export[["score_cppac_quant_fr"]]
-                score_cppac_tot_rasch_fr <- app$getAllValues()$export[["score_cppac_tot_rasch_fr"]]
+                score_cppac_diff_fr <- app$get_values()$export[["score_cppac_diff_fr"]]
+                score_cppac_quant_fr <- app$get_values()$export[["score_cppac_quant_fr"]]
+                score_cppac_tot_rasch_fr <- app$get_values()$export[["score_cppac_tot_rasch_fr"]]
                 
                 # Testing Difficulty score (raw)
                   expect_equal(score_cppac_diff_fr, 10*2)
@@ -1084,7 +1080,7 @@ expect_equal(actual_bmr, test_bmr)
           #************
                 
                 # Setting inputs for C-PPAC tests
-                  app$setInputs(
+                  app$set_inputs(
                    cppac_FR_q1 = "Beaucoup (environ 1 heure chaque jour)", 
                    cppac_FR_q2 = "Beaucoup", 
                    cppac_FR_q3 = "Beaucoup",
@@ -1101,9 +1097,9 @@ expect_equal(actual_bmr, test_bmr)
                   )
                 
                 # Getting final scores computed with the app
-                score_cppac_diff_fr <- app$getAllValues()$export[["score_cppac_diff_fr"]]
-                score_cppac_quant_fr <- app$getAllValues()$export[["score_cppac_quant_fr"]]
-                score_cppac_tot_rasch_fr <- app$getAllValues()$export[["score_cppac_tot_rasch_fr"]]
+                score_cppac_diff_fr <- app$get_values()$export[["score_cppac_diff_fr"]]
+                score_cppac_quant_fr <- app$get_values()$export[["score_cppac_quant_fr"]]
+                score_cppac_tot_rasch_fr <- app$get_values()$export[["score_cppac_tot_rasch_fr"]]
                 
                 # Testing Difficulty score (raw)
                   expect_equal(score_cppac_diff_fr, 10*1)
@@ -1120,7 +1116,7 @@ expect_equal(actual_bmr, test_bmr)
           #************
                 
                 # Setting inputs for C-PPAC tests
-                  app$setInputs(
+                  app$set_inputs(
                     cppac_FR_q1 = "Enorm\u00e9ment (plus d\u20191 heure chaque jour)", 
                     cppac_FR_q2 = "Enorm\u00e9ment", 
                     cppac_FR_q3 = "Enorm\u00e9ment",
@@ -1137,9 +1133,9 @@ expect_equal(actual_bmr, test_bmr)
                   )
                   
                 # Getting final scores computed with the app
-                  score_cppac_diff_fr <- app$getAllValues()$export[["score_cppac_diff_fr"]]
-                  score_cppac_quant_fr <- app$getAllValues()$export[["score_cppac_quant_fr"]]
-                  score_cppac_tot_rasch_fr <- app$getAllValues()$export[["score_cppac_tot_rasch_fr"]]
+                  score_cppac_diff_fr <- app$get_values()$export[["score_cppac_diff_fr"]]
+                  score_cppac_quant_fr <- app$get_values()$export[["score_cppac_quant_fr"]]
+                  score_cppac_tot_rasch_fr <- app$get_values()$export[["score_cppac_tot_rasch_fr"]]
                 
                 # Testing Difficulty score (raw)
                   expect_equal(score_cppac_diff_fr, 10*0)
@@ -1160,7 +1156,7 @@ expect_equal(actual_bmr, test_bmr)
          #************
                   
                 # Setting inputs for D-PPAC tests
-                app$setInputs(
+                app$set_inputs(
                   dppac_EN_d1_q1 = "None at all",
                   dppac_EN_d1_q2 = "None at all",
                   dppac_EN_d1_q3 = "None at all",
@@ -1214,9 +1210,9 @@ expect_equal(actual_bmr, test_bmr)
                 )
                 
                 # Getting final scores computed with the app
-                mean_score_dppac_diff_en <- app$getAllValues()$export[["score_dppac_diff_en"]]
-                mean_score_dppac_quant_en <- app$getAllValues()$export[["score_dppac_quant_en"]]
-                mean_score_dppac_tot_rasch_en <- app$getAllValues()$export[["score_dppac_tot_rasch_en"]]
+                mean_score_dppac_diff_en <- app$get_values()$export[["score_dppac_diff_en"]]
+                mean_score_dppac_quant_en <- app$get_values()$export[["score_dppac_quant_en"]]
+                mean_score_dppac_tot_rasch_en <- app$get_values()$export[["score_dppac_tot_rasch_en"]]
                 
                 # Testing Difficulty score (raw)
                 expect_equal(mean_score_dppac_diff_en, 20)
@@ -1233,7 +1229,7 @@ expect_equal(actual_bmr, test_bmr)
         #************
                 
                 # Setting inputs for D-PPAC tests
-                app$setInputs(
+                app$set_inputs(
                   dppac_EN_d1_q1 = "A little bit (up to 10 minutes in total)",
                   dppac_EN_d1_q2 = "A few",
                   dppac_EN_d1_q3 = "A little bit",
@@ -1287,9 +1283,9 @@ expect_equal(actual_bmr, test_bmr)
                 )
                 
                 # Getting final scores computed with the app
-                mean_score_dppac_diff_en <- app$getAllValues()$export[["score_dppac_diff_en"]]
-                mean_score_dppac_quant_en <- app$getAllValues()$export[["score_dppac_quant_en"]]
-                mean_score_dppac_tot_rasch_en <- app$getAllValues()$export[["score_dppac_tot_rasch_en"]]
+                mean_score_dppac_diff_en <- app$get_values()$export[["score_dppac_diff_en"]]
+                mean_score_dppac_quant_en <- app$get_values()$export[["score_dppac_quant_en"]]
+                mean_score_dppac_tot_rasch_en <- app$get_values()$export[["score_dppac_tot_rasch_en"]]
                 
                 # Testing Difficulty score (raw)
                 expect_equal(mean_score_dppac_diff_en, 15)
@@ -1305,7 +1301,7 @@ expect_equal(actual_bmr, test_bmr)
         #************
                 
                 # Setting inputs for D-PPAC tests
-                app$setInputs(
+                app$set_inputs(
                   dppac_EN_d1_q1 = "Some (up to 30 minutes in total)",
                   dppac_EN_d1_q2 = "Some",
                   dppac_EN_d1_q3 = "Some",
@@ -1359,9 +1355,9 @@ expect_equal(actual_bmr, test_bmr)
                 )
                 
                 # Getting final scores computed with the app
-                mean_score_dppac_diff_en <- app$getAllValues()$export[["score_dppac_diff_en"]]
-                mean_score_dppac_quant_en <- app$getAllValues()$export[["score_dppac_quant_en"]]
-                mean_score_dppac_tot_rasch_en <- app$getAllValues()$export[["score_dppac_tot_rasch_en"]]
+                mean_score_dppac_diff_en <- app$get_values()$export[["score_dppac_diff_en"]]
+                mean_score_dppac_quant_en <- app$get_values()$export[["score_dppac_quant_en"]]
+                mean_score_dppac_tot_rasch_en <- app$get_values()$export[["score_dppac_tot_rasch_en"]]
                 
                 # Testing Difficulty score (raw)
                 expect_equal(mean_score_dppac_diff_en, 10)
@@ -1378,7 +1374,7 @@ expect_equal(actual_bmr, test_bmr)
         #************
                 
                 # Setting inputs for D-PPAC tests
-                app$setInputs(
+                app$set_inputs(
                   dppac_EN_d1_q1 = "A lot (up to 1 hour in total)",
                   dppac_EN_d1_q2 = "A lot",
                   dppac_EN_d1_q3 = "A lot",
@@ -1432,9 +1428,9 @@ expect_equal(actual_bmr, test_bmr)
                 )
                 
                 # Getting final scores computed with the app
-                mean_score_dppac_diff_en <- app$getAllValues()$export[["score_dppac_diff_en"]]
-                mean_score_dppac_quant_en <- app$getAllValues()$export[["score_dppac_quant_en"]]
-                mean_score_dppac_tot_rasch_en <- app$getAllValues()$export[["score_dppac_tot_rasch_en"]]
+                mean_score_dppac_diff_en <- app$get_values()$export[["score_dppac_diff_en"]]
+                mean_score_dppac_quant_en <- app$get_values()$export[["score_dppac_quant_en"]]
+                mean_score_dppac_tot_rasch_en <- app$get_values()$export[["score_dppac_tot_rasch_en"]]
                 
                 # Testing Difficulty score (raw)
                 expect_equal(mean_score_dppac_diff_en, 5)
@@ -1451,7 +1447,7 @@ expect_equal(actual_bmr, test_bmr)
       #************
       
                 # Setting inputs for D-PPAC tests
-                app$setInputs(
+                app$set_inputs(
                   dppac_EN_d1_q1 = "A great deal (more than 1 hour in total)",
                   dppac_EN_d1_q2 = "A large amount",
                   dppac_EN_d1_q3 = "A great deal",
@@ -1505,9 +1501,9 @@ expect_equal(actual_bmr, test_bmr)
                 )
                 
                 # Getting final scores computed with the app
-                mean_score_dppac_diff_en <- app$getAllValues()$export[["score_dppac_diff_en"]]
-                mean_score_dppac_quant_en <- app$getAllValues()$export[["score_dppac_quant_en"]]
-                mean_score_dppac_tot_rasch_en <- app$getAllValues()$export[["score_dppac_tot_rasch_en"]]
+                mean_score_dppac_diff_en <- app$get_values()$export[["score_dppac_diff_en"]]
+                mean_score_dppac_quant_en <- app$get_values()$export[["score_dppac_quant_en"]]
+                mean_score_dppac_tot_rasch_en <- app$get_values()$export[["score_dppac_tot_rasch_en"]]
                 
                 # Testing Difficulty score (raw)
                 expect_equal(mean_score_dppac_diff_en, 0)
@@ -1529,7 +1525,7 @@ expect_equal(actual_bmr, test_bmr)
      #************
                 
                 # Setting inputs for D-PPAC tests
-                app$setInputs(
+                app$set_inputs(
                   dppac_FR_d1_q1 = "Pas du tout",
                   dppac_FR_d1_q2 = "Aucune",
                   dppac_FR_d1_q3 = "Pas du tout",
@@ -1583,9 +1579,9 @@ expect_equal(actual_bmr, test_bmr)
                 )
                 
                 # Getting final scores computed with the app
-                mean_score_dppac_diff_fr <- app$getAllValues()$export[["score_dppac_diff_fr"]]
-                mean_score_dppac_quant_fr <- app$getAllValues()$export[["score_dppac_quant_fr"]]
-                mean_score_dppac_tot_rasch_fr <- app$getAllValues()$export[["score_dppac_tot_rasch_fr"]]
+                mean_score_dppac_diff_fr <- app$get_values()$export[["score_dppac_diff_fr"]]
+                mean_score_dppac_quant_fr <- app$get_values()$export[["score_dppac_quant_fr"]]
+                mean_score_dppac_tot_rasch_fr <- app$get_values()$export[["score_dppac_tot_rasch_fr"]]
                 
                 # Testing Difficulty score (raw)
                 expect_equal(mean_score_dppac_diff_fr, 20)
@@ -1602,7 +1598,7 @@ expect_equal(actual_bmr, test_bmr)
        #************
        
                 # Setting inputs for D-PPAC tests
-                app$setInputs(
+                app$set_inputs(
                   dppac_FR_d1_q1 = "Un petit peu (jusqu’à 10 minutes au total)",
                   dppac_FR_d1_q2 = "Très peu",
                   dppac_FR_d1_q3 = "Un petit peu",
@@ -1656,9 +1652,9 @@ expect_equal(actual_bmr, test_bmr)
                 )
                 
                 # Getting final scores computed with the app
-                mean_score_dppac_diff_fr <- app$getAllValues()$export[["score_dppac_diff_fr"]]
-                mean_score_dppac_quant_fr <- app$getAllValues()$export[["score_dppac_quant_fr"]]
-                mean_score_dppac_tot_rasch_fr <- app$getAllValues()$export[["score_dppac_tot_rasch_fr"]]
+                mean_score_dppac_diff_fr <- app$get_values()$export[["score_dppac_diff_fr"]]
+                mean_score_dppac_quant_fr <- app$get_values()$export[["score_dppac_quant_fr"]]
+                mean_score_dppac_tot_rasch_fr <- app$get_values()$export[["score_dppac_tot_rasch_fr"]]
                 
                 # Testing Difficulty score (raw)
                 expect_equal(mean_score_dppac_diff_fr, 15)
@@ -1674,7 +1670,7 @@ expect_equal(actual_bmr, test_bmr)
       #************
                 
                 # Setting inputs for D-PPAC tests
-                app$setInputs(
+                app$set_inputs(
                   dppac_FR_d1_q1 = "Un peu (jusqu’à 30 minutes au total)",
                   dppac_FR_d1_q2 = "Quelques-unes",
                   dppac_FR_d1_q3 = "Quelques-unes",
@@ -1728,9 +1724,9 @@ expect_equal(actual_bmr, test_bmr)
                 )
                 
                 # Getting final scores computed with the app
-                mean_score_dppac_diff_fr <- app$getAllValues()$export[["score_dppac_diff_fr"]]
-                mean_score_dppac_quant_fr <- app$getAllValues()$export[["score_dppac_quant_fr"]]
-                mean_score_dppac_tot_rasch_fr <- app$getAllValues()$export[["score_dppac_tot_rasch_fr"]]
+                mean_score_dppac_diff_fr <- app$get_values()$export[["score_dppac_diff_fr"]]
+                mean_score_dppac_quant_fr <- app$get_values()$export[["score_dppac_quant_fr"]]
+                mean_score_dppac_tot_rasch_fr <- app$get_values()$export[["score_dppac_tot_rasch_fr"]]
                 
                 # Testing Difficulty score (raw)
                 expect_equal(mean_score_dppac_diff_fr, 10)
@@ -1747,7 +1743,7 @@ expect_equal(actual_bmr, test_bmr)
     #************
                 
                 # Setting inputs for D-PPAC tests
-                app$setInputs(
+                app$set_inputs(
                   dppac_FR_d1_q1 = "Beaucoup (jusqu’à 1 heure au total)",
                   dppac_FR_d1_q2 = "Beaucoup",
                   dppac_FR_d1_q3 = "Beaucoup",
@@ -1801,9 +1797,9 @@ expect_equal(actual_bmr, test_bmr)
                 )
                 
                 # Getting final scores computed with the app
-                mean_score_dppac_diff_fr <- app$getAllValues()$export[["score_dppac_diff_fr"]]
-                mean_score_dppac_quant_fr <- app$getAllValues()$export[["score_dppac_quant_fr"]]
-                mean_score_dppac_tot_rasch_fr <- app$getAllValues()$export[["score_dppac_tot_rasch_fr"]]
+                mean_score_dppac_diff_fr <- app$get_values()$export[["score_dppac_diff_fr"]]
+                mean_score_dppac_quant_fr <- app$get_values()$export[["score_dppac_quant_fr"]]
+                mean_score_dppac_tot_rasch_fr <- app$get_values()$export[["score_dppac_tot_rasch_fr"]]
                 
                 # Testing Difficulty score (raw)
                 expect_equal(mean_score_dppac_diff_fr, 5)
@@ -1820,7 +1816,7 @@ expect_equal(actual_bmr, test_bmr)
    #************
                 
                 # Setting inputs for D-PPAC tests
-                app$setInputs(
+                app$set_inputs(
                   dppac_FR_d1_q1 = "Enormément (plus d’1 heure au total)",
                   dppac_FR_d1_q2 = "Enormément",
                   dppac_FR_d1_q3 = "Enormément",
@@ -1874,9 +1870,9 @@ expect_equal(actual_bmr, test_bmr)
                 )
                 
                 # Getting final scores computed with the app
-                mean_score_dppac_diff_fr <- app$getAllValues()$export[["score_dppac_diff_fr"]]
-                mean_score_dppac_quant_fr <- app$getAllValues()$export[["score_dppac_quant_fr"]]
-                mean_score_dppac_tot_rasch_fr <- app$getAllValues()$export[["score_dppac_tot_rasch_fr"]]
+                mean_score_dppac_diff_fr <- app$get_values()$export[["score_dppac_diff_fr"]]
+                mean_score_dppac_quant_fr <- app$get_values()$export[["score_dppac_quant_fr"]]
+                mean_score_dppac_tot_rasch_fr <- app$get_values()$export[["score_dppac_tot_rasch_fr"]]
                 
                 # Testing Difficulty score (raw)
                 expect_equal(mean_score_dppac_diff_fr, 0)
@@ -1893,7 +1889,7 @@ expect_equal(actual_bmr, test_bmr)
 #=============================================================================
 
 # Table of inputs should initially have 0 line                        
-recap_pa_perdiods <- app$getAllValues()$export[["recap_pa_perdiods"]]
+recap_pa_perdiods <- app$get_values()$export[["recap_pa_perdiods"]]
 n <- nrow(recap_pa_perdiods)                
 expect_equal(n, 0)
 
@@ -2018,7 +2014,7 @@ test_results_summary <-
 
 
 # Getting inputs from the app
-app$setInputs(
+app$set_inputs(
   
   # Period 1
   `period_1-corr_date` = "2021-04-08", 
@@ -2158,8 +2154,8 @@ app$setInputs(
   Run = "click"
 )
 
-recap_pa_perdiods <- app$getAllValues()$export[["recap_pa_perdiods"]]
-actual_results_summary <- app$getAllValues()$export[["results_by_day"]] %>%
+recap_pa_perdiods <- app$get_values()$export[["recap_pa_perdiods"]]
+actual_results_summary <- app$get_values()$export[["results_by_day"]] %>%
   dplyr::select(
     date, 
     wear_time, 

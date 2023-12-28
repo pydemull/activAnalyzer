@@ -43,7 +43,6 @@ RoxygenNote: 7.2.3
 URL: https://pydemull.github.io/activAnalyzer/, https://github.com/pydemull/activAnalyzer
 BugReports: https://github.com/pydemull/activAnalyzer/issues
 Suggests: 
-    shinytest,
     covr,
     knitr,
     spelling,
@@ -60,7 +59,8 @@ Suggests:
     scales,
     tibble,
     rlang,
-    tinytex
+    tinytex,
+    shinytest2
 Language: en-US
 Depends: R (>= 3.4.0)
 Config/testthat/edition: 3
