@@ -125,11 +125,12 @@ app <- shinytest::ShinyDriver$new(
 # Loading data file inside and outside the app
 #===============================================================================
 
-app$uploadFile(upload = "acc.agd")
-# app$uploadFile(upload = "inst/extdata/acc.agd")
-test_file <- "acc.agd"
-# test_file <- "inst/extdata/acc.agd"
 
+ app$uploadFile(upload = system.file("extdata", "acc.agd", package = "activAnalyzer"))
+ test_file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
+ #app$uploadFile(upload = "acc.agd")
+ #test_file <- "acc.agd"
+ 
 #===============================================================================
 # Testing auto-filling patient information
 #===============================================================================
