@@ -10,7 +10,7 @@
 #' @return No return value, called for side effects.
 run_app <- function(
   onStart = NULL,
-  options = list(), 
+  options = list(launch.browser = TRUE), 
   enableBookmarking = NULL,
   uiPattern = "/",
   ...
