@@ -14,7 +14,7 @@
 #' are stored as attributes, which include `epochlength`.
 #' 
 #' @references The AGD file format is described in the ActiLife 6 Manual.
-#' <https://actigraphcorp.com/support/manuals/actilife-6-manual/>
+#' <chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://6407355.fs1.hubspotusercontent-na1.net/hubfs/6407355/Product%20Manuals/ActiLife%206%20Users%20Manual%20-%20Rev-A-110315.pdf/>
 #' 
 #' @seealso [read_agd_raw()]
 #' 
