@@ -71,15 +71,23 @@ There are three different ways to use the activAnalyzer app:
   machine will can access the app. You will can open only one session at
   a time. As written above, Google Chrome and Microsoft Edge browsers
   allow the app to work as expected but Mozilla Firefox does not seem to
-  allow resetting all the inputs when required.
+  allow resetting all the inputs when required. Due to the extra work
+  required to maintain such a format of the app up to date, it is not
+  planned for the moment to provide updates for version 2.0.2 and newer
+  versions.
 - On your machine via [R software](https://CRAN.R-project.org/)
-  (version: $\ge$ 3.4.0), the [RStudio environment](https://posit.co/)
-  (recommended version: Prairie Trillium \[2022.02\]; **Elsbeth Geranium
-  \[2022-12\] and newer releases of RStudio do not allow to correctly
-  quit the app from the RStudio window**), and the [activAnalyzer
+  (version: $\ge$ 3.4.0), the [RStudio environment](https://posit.co/),
+  and the [activAnalyzer
   package](https://github.com/pydemull/activAnalyzer) installable from
-  CRAN (stable version) or from GitHub (development version). To be able
-  to generate a .pdf report, you will have to install the [TinyTeX
+  CRAN (stable version) or from GitHub (development version). With
+  version 2.0.1 and former versions, the app is launched in the RStudio
+  window by default. For these versions, unfortunately only the RStudio
+  version called Prairie Trillium \[2022.02\] and former versions allow
+  to correctly quit the app from the RStudio window. Since version
+  2.0.2, the app is launched in the default web browser by default and
+  could be used with the latest RStudio version (hopefully) without
+  problems. Whatever the version used, to be able to generate a .pdf
+  report, you will have to install the [TinyTeX
   distribution](https://yihui.org/tinytex/). The first time you will
   generate a .pdf report, you will have to wait some time so that the
   required packages are installed on your machine. In short, after
