@@ -4,7 +4,7 @@
 \alias{get_pal_status}
 \title{Get FAO physical activity level (PAL) status (http://www.fao.org/3/y5686e/y5686e07.htm#bm07.3)}
 \usage{
-get_pal_status(value, language = c("en", "fr"))
+get_pal_status(value, language = c("en", "fr", "de"))
 }
 \arguments{
 \item{value}{A numeric value to indicate the daily mean of PAL.}
