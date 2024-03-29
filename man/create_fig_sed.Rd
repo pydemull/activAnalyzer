@@ -4,7 +4,7 @@
 \alias{create_fig_sed}
 \title{Create a figure showing the mean daily sedentary (SED) time}
 \usage{
-create_fig_sed(score, language = c("en", "fr"))
+create_fig_sed(score, language = c("en", "fr", "de"))
 }
 \arguments{
 \item{score}{A numeric value for mean daily SED time in minutes.}

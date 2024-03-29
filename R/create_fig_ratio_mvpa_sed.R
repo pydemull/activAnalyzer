@@ -12,7 +12,7 @@
 #' @examples
 #' create_fig_ratio_mvpa_sed(score = 0.06)
 #'
-create_fig_ratio_mvpa_sed <- function(score, language = c("en", "fr")) {
+create_fig_ratio_mvpa_sed <- function(score, language = c("en", "fr", "de")) {
   
 language <- match.arg(language)
   
@@ -62,7 +62,7 @@ if (language == "en" && score <= 0.25) {
           plot.background = element_rect(fill = "beige", color = "beige"),
           plot.margin = margin(1, 1, 0, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-    annotate("text", label = "The curve shows the \nmortality hazard ratio in \n50- to 79-yr old adults", 
+    annotate("text", label = "The curve shows the \nmortality hazard ratio in \n50- to 79-yr old adults.", 
              x = 0.155, y = 0.6, hjust = 0, 
              fontface = "bold.italic", colour = "#3366FF") +
     annotate(geom = "curve", 
@@ -120,6 +120,47 @@ if (language == "fr" && score <= 0.25) {
   
 }
   
+  if (language == "de" && score <= 0.25) { 
+    
+    g_ratio <-
+      ggplot() +
+      geom_rect(data = grid_ratio, aes(xmin = 0, xmax = 0.25, ymin = 0.1, ymax = 1.25), fill = "white", color = "grey50") + 
+      geom_line(data = grid_ratio, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
+      geom_point(data = score_ratio, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
+      geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
+      geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
+      geom_point(data = score_ratio, aes(x = x, y = pred), color = "red", size = 7, shape = 3) +
+      scale_x_continuous(limits = c(0, 0.25), breaks = seq(0, 0.25, 0.05)) +
+      coord_cartesian(xlim = c(0, 0.25), ylim = c(0.1, 1.25), expand = FALSE, clip = "off") +
+      labs(title = "Sterblichkeitsrisiko vs. Tägliches MVPA/SED-Verhältnis", x = "", y = NULL) +
+      theme_bw() +
+      theme(axis.ticks = element_blank(),
+            axis.text.x = element_text(size = 13),
+            axis.text.y = element_blank(),
+            legend.position = "none",
+            legend.title = element_text(face = "bold" , size = 10),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.border = element_blank(),
+            plot.background = element_rect(fill = "beige", color = "beige"),
+            plot.margin = margin(1, 1, 0, 1, "cm"),
+            plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre alt sind.", 
+               x = 0.155, y = 0.6, hjust = 0, 
+               fontface = "bold.italic", colour = "#3366FF") +
+      annotate(geom = "curve", 
+               x = 0.150, 
+               y = 0.6, 
+               xend = 0.12, 
+               yend = 0.43, 
+               curvature = .35, arrow = arrow(length = unit(2, "mm")),
+               colour = "#3366FF") +
+      annotate("text", label = "Ref: Chastin et al. J Phys Act Health 2021, 18 (6), 631\u2013637 (angepasst)", hjust = 0, x = 0.004, y = 0.145, size = 3) +
+      annotate("text", label = "Referenzpunkt", hjust = 0, x = 0.008, y = 1.02, color = "grey30", fontface = "bold")
+    
+    return(g_ratio)
+  }
+  
   
   if (language == "en" && score > 0.25) { 
     
@@ -143,7 +184,7 @@ if (language == "fr" && score <= 0.25) {
             plot.background = element_rect(fill = "beige", color = "beige"),
             plot.margin = margin(1, 1, 0, 1, "cm"),
             plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-      annotate("text", label = "The curve shows the \nmortality hazard ratio in \n50- to 79-yr old adults", 
+      annotate("text", label = "The curve shows the \nmortality hazard ratio in \n50- to 79-yr old adults.", 
                x = 0.155, y = 0.6, hjust = 0, 
                fontface = "bold.italic", colour = "#3366FF") +
       annotate(geom = "curve", 
@@ -201,6 +242,46 @@ if (language == "fr" && score <= 0.25) {
     
     return(g_ratio)
     
+  }
+  
+  if (language == "de" && score > 0.25) { 
+    
+    g_ratio <-
+      ggplot() +
+      geom_rect(data = grid_ratio, aes(xmin = 0, xmax = 0.25, ymin = 0.1, ymax = 1.25), fill = "white", color = "grey50") + 
+      geom_line(data = grid_ratio, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
+      geom_point(data = score_ratio, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
+      scale_x_continuous(limits = c(0, 0.25), breaks = seq(0, 0.25, 0.05)) +
+      coord_cartesian(xlim = c(0, 0.25), ylim = c(0.1, 1.25), expand = FALSE, clip = "off") +
+      labs(title = "Sterblichkeitsrisiko vs. Tägliches MVPA/SED-Verhältnis", x = "", y = NULL) +
+      theme_bw() +
+      theme(axis.ticks = element_blank(),
+            axis.text.x = element_text(size = 13),
+            axis.text.y = element_blank(),
+            legend.position = "none",
+            legend.title = element_text(face = "bold" , size = 10),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.border = element_blank(),
+            plot.background = element_rect(fill = "beige", color = "beige"),
+            plot.margin = margin(1, 1, 0, 1, "cm"),
+            plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre alt sind.", 
+               x = 0.155, y = 0.6, hjust = 0, 
+               fontface = "bold.italic", colour = "#3366FF") +
+      annotate(geom = "curve", 
+               x = 0.150, 
+               y = 0.6, 
+               xend = 0.12, 
+               yend = 0.43, 
+               curvature = .35, arrow = arrow(length = unit(2, "mm")),
+               colour = "#3366FF") +
+      annotate("text", label = "Ref: Chastin et al. J Phys Act Health 2021, 18 (6), 631\u2013637 (angepasst)", hjust = 0, x = 0.004, y = 0.145, size = 3) +
+      annotate("text", label = "Referenzpunkt", hjust = 0, x = 0.008, y = 1.02, color = "grey30", fontface = "bold") +
+      annotate("text", label = "Der ermittelte Wert liegt über dem oberen \nlimit der X-Achse der ursprünglichen Abbildung.", 
+               hjust = 0, vjust = 1, x = 0.06, y = 1.20, size = 4, color = "red", fontface = "bold")
+    
+    return(g_ratio)
   }
   
 }

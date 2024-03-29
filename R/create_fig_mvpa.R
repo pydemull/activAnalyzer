@@ -12,7 +12,7 @@
 #' @examples
 #' create_fig_mvpa(score = 27)
 #' 
-create_fig_mvpa <- function(score, language = c("en", "fr")) {
+create_fig_mvpa <- function(score, language = c("en", "fr", "de")) {
 
 language <- match.arg(language)
   
@@ -63,7 +63,7 @@ if (language == "en" && score <= 65) {
           plot.background = element_rect(fill = "beige", color = "beige"),
           plot.margin = margin(1, 1, 0, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-    annotate("text", label = "The curve shows the \nmortality hazard ratio in \nadults older than 40 yr old", 
+    annotate("text", label = "The curve shows the \nmortality hazard ratio in \nadults older than 40 yr old.", 
              x = 31.5, y = 0.75, hjust = 0, 
              fontface = "bold.italic", colour = "#3366FF") +
     annotate(geom = "curve", 
@@ -105,7 +105,7 @@ if (language == "fr" && score <= 65) {
           plot.background = element_rect(fill = "beige", color = "beige"),
           plot.margin = margin(1, 1, 0, 1, "cm"),
           plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-    annotate("text", label = "La courbe montre le \nrisque de mortalit\u00e9 chez \ndes adultes de plus de \n40 ans", 
+    annotate("text", label = "La courbe montre le \nrisque de mortalit\u00e9 chez \ndes adultes de plus de \n40 ans.", 
              x = 31.5, y = 0.75, hjust = 0, 
              fontface = "bold.italic", colour = "#3366FF") +
     annotate(geom = "curve", 
@@ -121,6 +121,49 @@ if (language == "fr" && score <= 65) {
   return(g_mvpa)
   
 }
+  
+  if (language == "de" && score <= 65) {
+    
+    g_mvpa <-
+      ggplot() +
+      geom_rect(data = grid_mvpa, aes(xmin = 0, xmax = 65, ymin = 0.2, ymax = 2.1), fill = "white", color = "grey50") + 
+      geom_line(data = grid_mvpa, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
+      geom_point(data = score_mvpa, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
+      geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 7, shape = 1) +
+      geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 4, shape = 16) +
+      geom_point(data = score_mvpa, aes(x = x, y = pred), color = "red", size = 7, shape = 3) +
+      scale_y_continuous(trans = scales::log2_trans(), breaks = seq(0.2, 2.1, 0.1)) +
+      scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 65, 13)) +
+      theme_bw() +
+      coord_cartesian(xlim = c(0, 65), ylim = c(0.2, 2.1), expand = FALSE, clip = "off") +
+      labs(title = "Sterblichkeitsrisiko vs. MVPA Minuten/Tag", x = "", y = NULL) +
+      theme(axis.ticks = element_blank(),
+            axis.text.x = element_text(size = 13),
+            axis.text.y = element_blank(),
+            legend.position = "none",
+            legend.title = element_text(face = "bold" , size = 10),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.border = element_blank(),
+            plot.background = element_rect(fill = "beige", color = "beige"),
+            plot.margin = margin(1, 1, 0, 1, "cm"),
+            plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre alt sind.", 
+               x = 31.5, y = 0.75, hjust = 0, 
+               fontface = "bold.italic", colour = "#3366FF") +
+      annotate(geom = "curve", 
+               x = 31, 
+               y = 0.75, 
+               xend = 24, 
+               yend = 0.405, 
+               curvature = .35, arrow = arrow(length = unit(2, "mm")),
+               colour = "#3366FF") +
+      annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (angepasst)", hjust = 0, x = 1, y = 0.22) +
+      annotate("text", label = "Referenzpunkt", hjust = 0, x = 2, y = 1.04, color = "grey30", fontface = "bold")
+    
+    return(g_mvpa)
+  }
+  
   
   if (language == "en" && score > 65) {
     g_mvpa <-
@@ -144,7 +187,7 @@ if (language == "fr" && score <= 65) {
             plot.background = element_rect(fill = "beige", color = "beige"),
             plot.margin = margin(1, 1, 0, 1, "cm"),
             plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-      annotate("text", label = "The curve shows the \nmortality hazard ratio in \nadults older than 40 yr old", 
+      annotate("text", label = "The curve shows the \nmortality hazard ratio in \nadults older than 40 yr old.", 
                x = 31.5, y = 0.75, hjust = 0, 
                fontface = "bold.italic", colour = "#3366FF") +
       annotate(geom = "curve", 
@@ -185,7 +228,7 @@ if (language == "fr" && score <= 65) {
             plot.background = element_rect(fill = "beige", color = "beige"),
             plot.margin = margin(1, 1, 0, 1, "cm"),
             plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-      annotate("text", label = "La courbe montre le \nrisque de mortalit\u00e9 chez \ndes adultes de plus de \n40 ans", 
+      annotate("text", label = "La courbe montre le \nrisque de mortalit\u00e9 chez \ndes adultes de plus de \n40 ans.", 
                x = 31.5, y = 0.75, hjust = 0, 
                fontface = "bold.italic", colour = "#3366FF") +
       annotate(geom = "curve", 
@@ -203,5 +246,46 @@ if (language == "fr" && score <= 65) {
     return(g_mvpa)
     
   }
+  
+  if (language == "de" && score > 65) {
+    g_mvpa <-
+      ggplot() +
+      geom_rect(data = grid_mvpa, aes(xmin = 0, xmax = 65, ymin = 0.2, ymax = 2.1), fill = "white", color = "grey50") + 
+      geom_line(data = grid_mvpa, aes (x = x, y = mid), linewidth = 1, colour = "#3366FF") +
+      geom_point(data = score_mvpa, aes(x = 0, y = 1), shape = 21, colour = "#3366FF", fill = "grey95", size = 5, stroke = 1.5) +
+      scale_y_continuous(trans = scales::log2_trans(), breaks = seq(0.2, 2.1, 0.1)) +
+      scale_x_continuous(limits = c(-0.5, 100), breaks = seq(0, 65, 13)) +
+      theme_bw() +
+      coord_cartesian(xlim = c(0, 65), ylim = c(0.2, 2.1), expand = FALSE, clip = "off") +
+      labs(title = " Sterblichkeitsrisiko vs. MVPA Minuten/Tag", x = "", y = NULL) +
+      theme(axis.ticks = element_blank(),
+            axis.text.x = element_text(size = 13),
+            axis.text.y = element_blank(),
+            legend.position = "none",
+            legend.title = element_text(face = "bold" , size = 10),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.border = element_blank(),
+            plot.background = element_rect(fill = "beige", color = "beige"),
+            plot.margin = margin(1, 1, 0, 1, "cm"),
+            plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre alt sind.", 
+               x = 31.5, y = 0.75, hjust = 0, 
+               fontface = "bold.italic", colour = "#3366FF") +
+      annotate(geom = "curve", 
+               x = 31, 
+               y = 0.75, 
+               xend = 24, 
+               yend = 0.405, 
+               curvature = .35, arrow = arrow(length = unit(2, "mm")),
+               colour = "#3366FF") +
+      annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (angepasst)", hjust = 0, x = 1, y = 0.22) +
+      annotate("text", label = " Referenzpunkt", hjust = 0, x = 2, y = 1.04, color = "grey30", fontface = "bold") +
+      annotate("text", label = " Der ermittelte Wert liegt über dem oberen \nlimit der X-Achse der ursprünglichen Abbildung.", 
+               hjust = 0, vjust = 1, x = 5, y = 1.9, size = 4, color = "red", fontface = "bold")
+    
+    return(g_mvpa)
+  }
+  
   
 }

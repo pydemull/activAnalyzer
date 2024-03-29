@@ -12,7 +12,7 @@
 #' @examples
 #' create_fig_pal(score = 1.8)
 #'
-create_fig_pal <- function(score, language = c("en", "fr")) {
+create_fig_pal <- function(score, language = c("en", "fr", "de")) {
   
 language <- match.arg(language)
 
@@ -125,6 +125,52 @@ if (language == "fr") {
   
   return(g_pal)
   
-  }
+}
+
+
+if (language == "de") {
+  
+  g_pal <-
+    ggplot(data = table_pal, aes(x = x, y = start)) +
+    geom_rect(aes(ymin = start,  ymax = end, fill = label), xmin = -Inf, xmax = Inf, alpha = 0.5) +
+    geom_vline(aes(xintercept = 0.51), linewidth = 0.4, color = "grey30") +
+    geom_vline(aes(xintercept = 0.25), linewidth = 0.5, color = "grey30", linetype ="dotted") +
+    geom_segment(x = 0, xend = 0.51, y = score, yend = score, linewidth = 0.5, color = "grey30", linetype ="dotted") +
+    geom_point(aes(x = 0.25, y = score, color = "Ergebnisse der Bewegungsmessung (Tagesmittelwert)"), size = 7, shape = 1) +
+    geom_point(aes(x = 0.25, y = score, color = "Ergebnisse der Bewegungsmessung (Tagesmittelwert)"), size = 4, shape = 16) +
+    geom_point(aes(x = 0.25, y = score, color = "Ergebnisse der Bewegungsmessung (Tagesmittelwert)"), size = 7, shape = 3) +
+    scale_y_continuous(labels = as.character(format(round(c(1.1, 1.4, 1.7, 2.0, 2.4, 2.8), 2), nsmall = 1)), 
+                       breaks = c(1.10, 1.40, 1.70, 2.00, 2.40, 2.80)) +
+    scale_fill_manual(values = c("lightgoldenrodyellow", "lightgoldenrod1", "yellow", "gold1", "gold2")) +
+    scale_color_manual(values = c("red")) +
+    theme_bw() +
+    coord_flip(expand = FALSE) +
+    labs(x = NULL, y = NULL, 
+         fill = "FAO/WHO/UNU-Kategorien", 
+         color = "") +
+    theme(axis.ticks = element_blank(),
+          axis.text.y = element_blank(),
+          axis.text.x = element_text(size = 13),
+          legend.position = c(0.5, 1.4),
+          legend.title = element_text(face = "bold" , size = 10),
+          legend.text = element_text(face = "bold", size = 17),
+          legend.background = element_rect(fill = "beige"),
+          legend.key = element_rect(fill = "beige", linewidth = 15),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.background = element_rect(fill = "beige", color = "beige"),
+          plot.margin = margin(1, 1, 0.5, 1, "cm"),
+          plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+    guides(fill= "none") +
+    ggtitle("Tägliches PAL") +
+    annotate("text", label = "Sitzender oder leicht \naktiver Lebensstil", x = 0.75, y = 1.55, size = 5) +
+    annotate("text", label = "mäßig aktiver \nLebensstil", x = 0.75, y = 1.85, size = 5) +
+    annotate("text", label = "Stark aktiver \nLebensstil", x = 0.75, y = 2.2, size = 5) +
+    annotate("text", label = "Schwierig, über einen langen Zeitraum \nhinweg aufrecht zu erhalten", x = 0.75, y = 2.6, size = 5) +
+    annotate("text", label = "Ref: FAO 2004 | http://www.fao.org/3/y5686e/y5686e07.htm#bm07.3", hjust = 1, x = 0.1, y = 2.79)
+  
+  return(g_pal)
+  
+}
 
 }
