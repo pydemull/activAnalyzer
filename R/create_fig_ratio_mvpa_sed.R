@@ -145,7 +145,7 @@ if (language == "fr" && score <= 0.25) {
             plot.background = element_rect(fill = "beige", color = "beige"),
             plot.margin = margin(1, 1, 0, 1, "cm"),
             plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre alt sind.", 
+      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio \nbei  adults, die älter als \n40 Jahre alt sind.", 
                x = 0.155, y = 0.6, hjust = 0, 
                fontface = "bold.italic", colour = "#3366FF") +
       annotate(geom = "curve", 
@@ -155,7 +155,7 @@ if (language == "fr" && score <= 0.25) {
                yend = 0.43, 
                curvature = .35, arrow = arrow(length = unit(2, "mm")),
                colour = "#3366FF") +
-      annotate("text", label = "Ref: Chastin et al. J Phys Act Health 2021, 18 (6), 631\u2013637 (angepasst)", hjust = 0, x = 0.004, y = 0.145, size = 3) +
+      annotate("text", label = "Ref: Chastin et al. J Phys Act Health 2021, 18 (6), 631\u2013637 (an.)", hjust = 0, x = 0.004, y = 0.145) +
       annotate("text", label = "Referenzpunkt", hjust = 0, x = 0.008, y = 1.02, color = "grey30", fontface = "bold")
     
     return(g_ratio)
@@ -266,7 +266,7 @@ if (language == "fr" && score <= 0.25) {
             plot.background = element_rect(fill = "beige", color = "beige"),
             plot.margin = margin(1, 1, 0, 1, "cm"),
             plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre alt sind.", 
+      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio \nbei adults, die älter als \n40 Jahre alt sind.", 
                x = 0.155, y = 0.6, hjust = 0, 
                fontface = "bold.italic", colour = "#3366FF") +
       annotate(geom = "curve", 
@@ -276,9 +276,9 @@ if (language == "fr" && score <= 0.25) {
                yend = 0.43, 
                curvature = .35, arrow = arrow(length = unit(2, "mm")),
                colour = "#3366FF") +
-      annotate("text", label = "Ref: Chastin et al. J Phys Act Health 2021, 18 (6), 631\u2013637 (angepasst)", hjust = 0, x = 0.004, y = 0.145, size = 3) +
+      annotate("text", label = "Ref: Chastin et al. J Phys Act Health 2021, 18 (6), 631\u2013637 (an.)", hjust = 0, x = 0.004, y = 0.145) +
       annotate("text", label = "Referenzpunkt", hjust = 0, x = 0.008, y = 1.02, color = "grey30", fontface = "bold") +
-      annotate("text", label = "Der ermittelte Wert liegt über dem oberen \nlimit der X-Achse der ursprünglichen Abbildung.", 
+      annotate("text", label = "Der ermittelte Wert liegt über dem oberen \nlimit der X-Achse der ursprünglichen \nAbbildung.", 
                hjust = 0, vjust = 1, x = 0.06, y = 1.20, size = 4, color = "red", fontface = "bold")
     
     return(g_ratio)

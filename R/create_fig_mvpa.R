@@ -148,7 +148,7 @@ if (language == "fr" && score <= 65) {
             plot.background = element_rect(fill = "beige", color = "beige"),
             plot.margin = margin(1, 1, 0, 1, "cm"),
             plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre alt sind.", 
+      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre \nalt sind.", 
                x = 31.5, y = 0.75, hjust = 0, 
                fontface = "bold.italic", colour = "#3366FF") +
       annotate(geom = "curve", 
@@ -269,7 +269,7 @@ if (language == "fr" && score <= 65) {
             plot.background = element_rect(fill = "beige", color = "beige"),
             plot.margin = margin(1, 1, 0, 1, "cm"),
             plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre alt sind.", 
+      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre \nalt sind.", 
                x = 31.5, y = 0.75, hjust = 0, 
                fontface = "bold.italic", colour = "#3366FF") +
       annotate(geom = "curve", 

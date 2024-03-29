@@ -146,7 +146,7 @@ if (language == "fr" && score/60 >= 6 && score/60 <= 12) {
             plot.background = element_rect(fill = "beige", color = "beige"),
             plot.margin = margin(1, 1, 0, 1, "cm"),
             plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre alt sind.", 
+      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 \nJahre alt sind.", 
                x = 9.4, y = 0.85, hjust = 0, 
                fontface = "bold.italic", colour = "#3366FF") +
       annotate(geom = "curve", 
@@ -268,7 +268,7 @@ if (language == "fr" && score/60 >= 6 && score/60 <= 12) {
             plot.background = element_rect(fill = "beige", color = "beige"),
             plot.margin = margin(1, 1, 0, 1, "cm"),
             plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre alt sind.", 
+      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 \nJahre alt sind.", 
                x = 9.4, y = 0.85, hjust = 0, 
                fontface = "bold.italic", colour = "#3366FF") +
       annotate(geom = "curve", 
@@ -280,7 +280,7 @@ if (language == "fr" && score/60 >= 6 && score/60 <= 12) {
                colour = "#3366FF") +
       annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (angepasst)", hjust = 0, x = 6.1, y = 0.54) +
       annotate("text", label = "Referenzpunkt", hjust = 1, vjust = 0, x = 7.45, y = 1.13, color = "grey30", fontface = "bold") +
-      annotate("text", label = "Der ermittelte Wert liegt über dem oberen \nlimit der X-Achse der ursprünglichen Abbildung.", 
+      annotate("text", label = "Der ermittelte Wert liegt über dem oberen \nlimit der X-Achse der ursprünglichen \nAbbildung.", 
                hjust = 0, vjust = 1, x = 6.5, y = 2.9, size = 4, color = "red", fontface = "bold")
     
     return(g_sed)

@@ -12,7 +12,7 @@
 #' @examples
 #' create_fig_steps(score = 12500)
 #' 
-create_fig_steps <- function(score, language = c("en", "fr")) {
+create_fig_steps <- function(score, language = c("en", "fr", "de")) {
   
 language <- match.arg(language)
   
@@ -155,6 +155,54 @@ language <- match.arg(language)
     
   }
   
+  if (language == "de" && score <= 18000) {
+    
+    g_steps <-
+      ggplot(data = table_steps1, aes(x = x, y = start)) +
+      geom_rect(aes(ymin = start, ymax = end, fill = label), xmin = -Inf, xmax = Inf, alpha = 0.5) +
+      geom_vline(aes(xintercept = 0.40), linewidth = 0.4, color = "grey30") +
+      geom_vline(aes(xintercept = 0.20,), linewidth = 0.5, color = "grey30", linetype ="dotted") +
+      geom_segment(x = 0, xend = 0.4, y = score, yend = score, 
+                   linewidth = 0.5, color = "grey30", linetype ="dotted")   +
+      geom_point(aes(x = 0.2, y = score), color = "red", size = 7, shape = 1) +
+      geom_point(aes(x = 0.2, y = score), color = "red", size = 4, shape = 16) +
+      geom_point(aes(x = 0.2, y = score), color = "red", size = 7, shape = 3) +
+      geom_segment(data = table_steps2, aes(x = x, xend = xend, y = y, yend = yend, color = label), linewidth = 1, 
+                   arrow = arrow(length = unit(0.09, "inches"))) +
+      geom_errorbarh(data = table_steps2, aes(y = y, xmin = xmin, xmax = xmax, color = label), linewidth = 1, height = 0) + 
+      scale_y_continuous(limits = c(0, 18000),
+                         labels = as.character(c(0, 2500, 5000, 7500, 10000, 12500, 18000)), 
+                         breaks = c(0, 2500, 5000, 7500, 10000, 12500, 18000)) +
+      scale_fill_manual(values = band_color)  +
+      scale_color_brewer(palette="Dark2") +
+      theme_bw() +
+      coord_flip(expand = FALSE) +
+      labs(x = NULL, y = NULL, 
+           fill = "Activity levels for healthy adults (Tudor-Locke et al., 2O11)", 
+           color = "Expected values when people reach \nMVPA guidelines (Tudor-Locke et al., 2011)") +
+      theme(axis.ticks = element_blank(),
+            axis.text.y = element_blank(),
+            axis.text.x = element_text(size = 13),
+            legend.position = "none",
+            legend.title = element_text(face = "bold", size = 10),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            plot.background = element_rect(fill = "beige", color = "beige"),
+            plot.margin = margin(1, 1, 0.5, 1, "cm"),
+            plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+      guides(fill="none") +
+      ggtitle("Tägliche Schritte") +
+      annotate("text", label = "Erwartete Werte bei \nErfüllung der MVPA-Richtlinien:", x = 0.7, y = 1000, 
+               hjust = 0, fontface = "bold", size = 6,   color = "grey30") +
+      annotate("text", label = "Erwachsene", x = 0.9, y = 8300, hjust = 0, fontface = "bold", size = 5) +
+      annotate("text", label = "Gesunde ältere Erwachsene", x = 0.7, y = 10300, hjust = 0, fontface = "bold", size = 5) +
+      annotate("text", label = "Menschen mit Behinderung und/oder chronischer Krankheit", x = 0.5, y = 8800, hjust = 0, fontface = "bold", size = 5) +
+      annotate("text", label = "Ref: Tudor-Locke et al. Int J Behav Nutr Phys Act 2011, 8 (1), 79", x = 0.9, y = 17900, hjust = 1)
+    
+    return(g_steps)
+    
+  }
+  
   if (language == "en" && score > 18000) {
     
     g_steps <-
@@ -249,6 +297,56 @@ language <- match.arg(language)
       annotate("text", label = "Personnes avec incapacit\u00e9 et/ou maladie chronique", x = 0.5, y = 8800, hjust = 0, fontface = "bold", size = 5) +
       annotate("text", label = "R\u00e9f: Tudor-Locke et al. Int J Behav Nutr Phys Act 2011, 8 (1), 79", x = 0.9, y = 17900, hjust = 1) +
       annotate("text", label = "Le score mesur\u00e9 est au\u002ddel\u00e0 de la limite sup\u00e9rieure de la figure.", 
+               hjust = 0, vjust = 1, x = 0.14, y = 500, size = 8, color = "red", fontface = "bold")
+    
+    return(g_steps)
+    
+  }
+  
+  if (language == "en" && score > 18000) {
+    
+    g_steps <-
+      ggplot(data = table_steps1, aes(x = x, y = start)) +
+      geom_rect(aes(ymin = start, ymax = end, fill = label), xmin = -Inf, xmax = Inf, alpha = 0.5) +
+      geom_vline(aes(xintercept = 0.40), linewidth = 0.4, color = "grey30") +
+      geom_vline(aes(xintercept = 0.20,), linewidth = 0.5, color = "grey30", linetype ="dotted") +
+      geom_segment(x = 0, xend = 0.4, y = score, yend = score, 
+                   linewidth = 0.5, color = "grey30", linetype ="dotted")   +
+      geom_point(aes(x = 0.2, y = score), color = "red", size = 7, shape = 1) +
+      geom_point(aes(x = 0.2, y = score), color = "red", size = 4, shape = 16) +
+      geom_point(aes(x = 0.2, y = score), color = "red", size = 7, shape = 3) +
+      geom_segment(data = table_steps2, aes(x = x, xend = xend, y = y, yend = yend, color = label), linewidth = 1, 
+                   arrow = arrow(length = unit(0.09, "inches"))) +
+      geom_errorbarh(data = table_steps2, aes(y = y, xmin = xmin, xmax = xmax, color = label), linewidth = 1, height = 0) + 
+      scale_y_continuous(limits = c(0, 18000),
+                         labels = as.character(c(0, 2500, 5000, 7500, 10000, 12500, 18000)), 
+                         breaks = c(0, 2500, 5000, 7500, 10000, 12500, 18000)) +
+      scale_fill_manual(values = band_color)  +
+      scale_color_brewer(palette="Dark2") +
+      theme_bw() +
+      coord_flip(expand = FALSE) +
+      labs(x = NULL, y = NULL, 
+           fill = "Activity levels for healthy adults (Tudor-Locke et al., 2O11)", 
+           color = "Expected values when people reach \nMVPA guidelines (Tudor-Locke et al., 2011)") +
+      theme(axis.ticks = element_blank(),
+            axis.text.y = element_blank(),
+            axis.text.x = element_text(size = 13),
+            legend.position = "none",
+            legend.title = element_text(face = "bold", size = 10),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            plot.background = element_rect(fill = "beige", color = "beige"),
+            plot.margin = margin(1, 1, 0.5, 1, "cm"),
+            plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
+      guides(fill="none") +
+      ggtitle("Tägliche Schritte") +
+      annotate("text", label = "Erwartete Werte bei \nErfüllung der MVPA-Richtlinien:", x = 0.7, y = 1000, 
+               hjust = 0, fontface = "bold", size = 6,   color = "grey30") +
+      annotate("text", label = "Erwachsene", x = 0.9, y = 8300, hjust = 0, fontface = "bold", size = 5) +
+      annotate("text", label = "Gesunde ältere Erwachsene", x = 0.7, y = 10300, hjust = 0, fontface = "bold", size = 5) +
+      annotate("text", label = "Menschen mit Behinderung und/oder chronischer Krankheit", x = 0.5, y = 8800, hjust = 0, fontface = "bold", size = 5) +
+      annotate("text", label = "Ref: Tudor-Locke et al. Int J Behav Nutr Phys Act 2011, 8 (1), 79", x = 0.9, y = 17900, hjust = 1) +
+      annotate("text", label = "Der ermittelte Wert liegt über dem oberen \nlimit der ursprünglichen Abbildung.", 
                hjust = 0, vjust = 1, x = 0.14, y = 500, size = 8, color = "red", fontface = "bold")
     
     return(g_steps)
