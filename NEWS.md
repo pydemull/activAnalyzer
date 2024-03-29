@@ -1,4 +1,6 @@
 # activAnalyzer (development version)
+* Moved 'assertthat' from Suggests to Imports field in DESCRIPTION.
+* Added a German translation for most figures.
 
 # activAnalyzer 2.0.2
 * Corrected figure in the vignette (a step-based metrics image was used instead of a figure related IG metrics).
