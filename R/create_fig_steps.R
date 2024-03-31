@@ -191,11 +191,11 @@ language <- match.arg(language)
             plot.margin = margin(1, 1, 0.5, 1, "cm"),
             plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
       guides(fill="none") +
-      ggtitle("Tägliche Schritte") +
-      annotate("text", label = "Erwartete Werte bei \nErfüllung der MVPA-Richtlinien:", x = 0.7, y = 1000, 
+      ggtitle("T\xc3\xa4gliche Schritte") +
+      annotate("text", label = "Erwartete Werte bei \nErf\xc3\xbcllung der MVPA-Richtlinien:", x = 0.7, y = 1000, 
                hjust = 0, fontface = "bold", size = 6,   color = "grey30") +
       annotate("text", label = "Erwachsene", x = 0.9, y = 8300, hjust = 0, fontface = "bold", size = 5) +
-      annotate("text", label = "Gesunde ältere Erwachsene", x = 0.7, y = 10300, hjust = 0, fontface = "bold", size = 5) +
+      annotate("text", label = "Gesunde \xc3\xa4ltere Erwachsene", x = 0.7, y = 10300, hjust = 0, fontface = "bold", size = 5) +
       annotate("text", label = "Menschen mit Behinderung und/oder chronischer Krankheit", x = 0.5, y = 8800, hjust = 0, fontface = "bold", size = 5) +
       annotate("text", label = "Ref: Tudor-Locke et al. Int J Behav Nutr Phys Act 2011, 8 (1), 79", x = 0.9, y = 17900, hjust = 1)
     
@@ -339,14 +339,14 @@ language <- match.arg(language)
             plot.margin = margin(1, 1, 0.5, 1, "cm"),
             plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
       guides(fill="none") +
-      ggtitle("Tägliche Schritte") +
-      annotate("text", label = "Erwartete Werte bei \nErfüllung der MVPA-Richtlinien:", x = 0.7, y = 1000, 
+      ggtitle("T\xc3\xa4gliche Schritte") +
+      annotate("text", label = "Erwartete Werte bei \nErf\xc3\xbcllung der MVPA-Richtlinien:", x = 0.7, y = 1000, 
                hjust = 0, fontface = "bold", size = 6,   color = "grey30") +
       annotate("text", label = "Erwachsene", x = 0.9, y = 8300, hjust = 0, fontface = "bold", size = 5) +
-      annotate("text", label = "Gesunde ältere Erwachsene", x = 0.7, y = 10300, hjust = 0, fontface = "bold", size = 5) +
+      annotate("text", label = "Gesunde \xc3\xa4ltere Erwachsene", x = 0.7, y = 10300, hjust = 0, fontface = "bold", size = 5) +
       annotate("text", label = "Menschen mit Behinderung und/oder chronischer Krankheit", x = 0.5, y = 8800, hjust = 0, fontface = "bold", size = 5) +
       annotate("text", label = "Ref: Tudor-Locke et al. Int J Behav Nutr Phys Act 2011, 8 (1), 79", x = 0.9, y = 17900, hjust = 1) +
-      annotate("text", label = "Der ermittelte Wert liegt über dem oberen \nlimit der ursprünglichen Abbildung.", 
+      annotate("text", label = "Der ermittelte Wert liegt \xc3\xbcber dem oberen \nlimit der urspr\xc3\xbcnglichen Abbildung.", 
                hjust = 0, vjust = 1, x = 0.14, y = 500, size = 8, color = "red", fontface = "bold")
     
     return(g_steps)

@@ -661,7 +661,7 @@ if (language == "de") {
       "MPA-Tragezeitanteil (%)",
       "VPA-Tragezeitanteil (%)",
       "MVPA-Tragezeitanteil (%)",
-      "Verhältnis MVPA/SED",
+      "Verh\xc3\xa4ltnis MVPA/SED",
       "Gesamt-MVPA-MET-Stunden", 
       "Gesamt-kcal",
       "PAL",
@@ -676,7 +676,7 @@ if (language == "de") {
       "Höchstanzahl Schritte akk. 20 min (Schritte/min)",
       "Höchstanzahl Schritte akk. 5 min (Schritte/min)",
       "Höchstanzahl Schritte akk. 1 min (Schritte/min)",
-      "Intensitätsgradient",
+      "Intensit\xc3\xa4tsgradient",
       paste0("M1/3 (counts/", epoch_label, ")"),
       paste0("M120 (counts/", epoch_label, ")"),
       paste0("M60 (counts/", epoch_label, ")"), 
@@ -707,14 +707,14 @@ if (language == "de") {
       "MPA-Tragezeitanteil (%)",
       "VPA-Tragezeitanteil (%)",
       "MVPA-Tragezeitanteil (%)",
-      "Verhältnis MVPA/SED",
+      "Verh\xc3\xa4ltnis MVPA/SED",
       "Gesamt-MVPA-MET-Stunden", 
       "Gesamt-kcal",
       "PAL",
       "Schritte insgesamt"
     )
     
-    fig_title <- "Statistiken zum Aktivitätsvolumen"
+    fig_title <- "Statistiken zum Aktivit\xc3\xa4tsvolumen"
     n_col = 5
     
   } 
@@ -740,7 +740,7 @@ if (language == "de") {
   
   if (metrics == "int_distri") {
     selected_metrics <- c(
-      "Intensitätsgradient",
+      "Intensit\xc3\xa4tsgradient",
       paste0("M1/3 (counts/", epoch_label, ")"),
       paste0("M120 (counts/", epoch_label, ")"),
       paste0("M60 (counts/", epoch_label, ")"), 
@@ -749,7 +749,7 @@ if (language == "de") {
       paste0("M5 (counts/", epoch_label, ")")
     )
     
-    fig_title <- "Metriken der Intensitätsverteilung"
+    fig_title <- "Metriken der Intensit\xc3\xa4tsverteilung"
     n_col = 3
     
   } 
@@ -857,7 +857,7 @@ if (language == "de") {
       "MPA-Tragezeitanteil (%)" = "percent_MPA",
       "VPA-Tragezeitanteil (%)" = "percent_VPA",
       "MVPA-Tragezeitanteil (%)" = "percent_MVPA",
-      "Verhältnis MVPA/SED" = "ratio_mvpa_sed",
+      "Verh\xc3\xa4ltnis MVPA/SED" = "ratio_mvpa_sed",
       "Gesamt-MVPA-MET-Stunden" = "mets_hours_mvpa", 
       "Gesamt-kcal" = "total_kcal",
       "PAL" = "pal",
@@ -872,7 +872,7 @@ if (language == "de") {
       "Höchstanzahl Schritte akk. 20 min (Schritte/min)" ="peak_steps_20min", 
       "Höchstanzahl Schritte akk. 5 min (Schritte/min)" ="peak_steps_5min",
       "Höchstanzahl Schritte akk. 1 min (Schritte/min)" ="peak_steps_1min",
-      "Intensitätsgradient" = "ig",
+      "Intensit\xc3\xa4tsgradient" = "ig",
       "M1/3 (counts/{{epoch_label}})"  := "M1/3",
       "M120 (counts/{{epoch_label}})"  := "M120",
       "M60 (counts/{{epoch_label}})"   := "M60", 
@@ -891,14 +891,14 @@ if (language == "de") {
     geom_text(aes(label = ifelse(is.na(value), "NA", round(value, 1))), size = label_text_size, vjust = -0.6, color = "black") +
     labs(x = "Date", y = "", fill = "") +
     scale_y_continuous(expand = expansion(mult = c(.05, .2))) +
-    scale_fill_manual(labels = c("Gültiger Tag", 
-                                 paste0("Nicht-gültiger Tag  (<", 
+    scale_fill_manual(labels = c("G\xc3\xbcltiger Tag", 
+                                 paste0("Nicht-g\xc3\xbcltiger Tag  (<", 
                                         minimum_wear_time_for_analysis, 
                                         " Stunden zwischen ", start_day_analysis, 
                                         " und ", end_day_analysis, ")")),
                       values = c("#00BE6C", "#FC717F")) +
-    scale_color_manual(labels = c("Gültiger Tag", 
-                                 paste0("Nicht-gültiger Tag  (<", 
+    scale_color_manual(labels = c("G\xc3\xbcltiger Tag", 
+                                 paste0("Nicht-g\xc3\xbcltiger Tag  (<", 
                                         minimum_wear_time_for_analysis, 
                                         " Stunden zwischen ", start_day_analysis, 
                                         " und ", end_day_analysis, ")")),

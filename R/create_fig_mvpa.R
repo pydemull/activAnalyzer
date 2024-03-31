@@ -148,7 +148,7 @@ if (language == "fr" && score <= 65) {
             plot.background = element_rect(fill = "beige", color = "beige"),
             plot.margin = margin(1, 1, 0, 1, "cm"),
             plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre \nalt sind.", 
+      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die \xc3\xa4lter als 40 Jahre \nalt sind.", 
                x = 31.5, y = 0.75, hjust = 0, 
                fontface = "bold.italic", colour = "#3366FF") +
       annotate(geom = "curve", 
@@ -269,7 +269,7 @@ if (language == "fr" && score <= 65) {
             plot.background = element_rect(fill = "beige", color = "beige"),
             plot.margin = margin(1, 1, 0, 1, "cm"),
             plot.title = element_text(size = 15, color = "grey30", face = "bold")) +
-      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die älter als 40 Jahre \nalt sind.", 
+      annotate("text", label = "Die Kurve zeigt den \nmortality hazard ratio bei  \nadults, die \xc3\xa4lter als 40 Jahre \nalt sind.", 
                x = 31.5, y = 0.75, hjust = 0, 
                fontface = "bold.italic", colour = "#3366FF") +
       annotate(geom = "curve", 
@@ -281,7 +281,7 @@ if (language == "fr" && score <= 65) {
                colour = "#3366FF") +
       annotate("text", label = "Ref: Ekelund et al. BMJ 2019, l4570 (angepasst)", hjust = 0, x = 1, y = 0.22) +
       annotate("text", label = " Referenzpunkt", hjust = 0, x = 2, y = 1.04, color = "grey30", fontface = "bold") +
-      annotate("text", label = " Der ermittelte Wert liegt über dem oberen \nlimit der X-Achse der ursprünglichen Abbildung.", 
+      annotate("text", label = " Der ermittelte Wert liegt \xc3\xbcber dem oberen \nlimit der X-Achse der urspr\xc3\xbcnglichen Abbildung.", 
                hjust = 0, vjust = 1, x = 5, y = 1.9, size = 4, color = "red", fontface = "bold")
     
     return(g_mvpa)
