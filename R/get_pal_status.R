@@ -37,7 +37,7 @@ if (language == "de") {
   
   pal_status <- ifelse(value <1.40, "Unterhalb der 'sitzender oder leicht aktiver Lebensstil'-Kategorie",
                        ifelse(value <= 1.69, "'Sitzender oder leicht aktiver Lebensstil'",
-                              ifelse(value <= 1.99, "'Aktiver oder m\xc3\xa4ßig aktiver Lebensstil'",
+                              ifelse(value <= 1.99, "'Aktiver oder m\xc3\xa4\xc3\x9fig aktiver Lebensstil'",
                                      ifelse(value <= 2.40, "'Lebhafter oder stark aktiver Lebensstil'", "'Schwierig, \xc3\xbcber einen langen Zeitraum hinweg aufrecht zu erhalten'"))))
   
   return(pal_status)

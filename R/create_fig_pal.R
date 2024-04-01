@@ -164,7 +164,7 @@ if (language == "de") {
     guides(fill= "none") +
     ggtitle("T\xc3\xa4gliches PAL") +
     annotate("text", label = "Sitzender oder leicht \naktiver Lebensstil", x = 0.75, y = 1.55, size = 5) +
-    annotate("text", label = "M\xc3\xa4ßig aktiver \nLebensstil", x = 0.75, y = 1.85, size = 5) +
+    annotate("text", label = "M\xc3\xa4\xc3\x9fig aktiver \nLebensstil", x = 0.75, y = 1.85, size = 5) +
     annotate("text", label = "Stark aktiver \nLebensstil", x = 0.75, y = 2.2, size = 5) +
     annotate("text", label = "Schwierig, \xc3\xbcber einen langen Zeitraum \nhinweg aufrecht zu erhalten", x = 0.75, y = 2.6, size = 5) +
     annotate("text", label = "Ref: FAO 2004 | http://www.fao.org/3/y5686e/y5686e07.htm#bm07.3", hjust = 1, x = 0.1, y = 2.79)
