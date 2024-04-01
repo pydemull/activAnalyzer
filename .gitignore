@@ -17,3 +17,4 @@ tests/testthat/Rplots.pdf
 inst/app/Rplots.pdf
 # {shinytest2}: Ignore new debug snapshots for `$expect_values()`
 *_.new.png
+temp

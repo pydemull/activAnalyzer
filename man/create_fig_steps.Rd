@@ -4,7 +4,7 @@
 \alias{create_fig_steps}
 \title{Create a figure showing the mean daily step count}
 \usage{
-create_fig_steps(score, language = c("en", "fr"))
+create_fig_steps(score, language = c("en", "fr", "de"))
 }
 \arguments{
 \item{score}{A numeric value for mean daily step count.}

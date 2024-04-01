@@ -9,7 +9,7 @@ create_fig_res_by_day(
   minimum_wear_time_for_analysis = 10,
   start_day_analysis = "00:00:00",
   end_day_analysis = "23:59:00",
-  language = c("en", "fr"),
+  language = c("en", "fr", "de"),
   metrics = c("all", "volume", "step_acc", "int_distri"),
   epoch_label = "60s"
 )

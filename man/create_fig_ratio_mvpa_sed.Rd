@@ -4,7 +4,7 @@
 \alias{create_fig_ratio_mvpa_sed}
 \title{Create a figure showing the mean daily MVPA/SED ratio}
 \usage{
-create_fig_ratio_mvpa_sed(score, language = c("en", "fr"))
+create_fig_ratio_mvpa_sed(score, language = c("en", "fr", "de"))
 }
 \arguments{
 \item{score}{A numeric value for mean daily MVPA/SED ratio.}

@@ -11,6 +11,7 @@ Description: A tool to analyse 'ActiGraph' accelerometer data and to implement
     'actigraph.sleepr' package developed by Petkova (2021) <https://github.com/dipetkov/actigraph.sleepr/>.
 License: GPL (>= 3)
 Imports: 
+    assertthat,
     dbplyr (>= 2.1.1),
     dplyr (>= 1.1.0),
     flextable (>= 0.8.2),
@@ -52,7 +53,6 @@ Suggests:
     config,
     tidyselect,
     DBI,
-    assertthat,
     htmltools,
     officer,
     pkgload,

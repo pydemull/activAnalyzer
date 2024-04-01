@@ -4,7 +4,7 @@
 \alias{create_fig_mvpa}
 \title{Create a figure showing the mean daily MVPA time}
 \usage{
-create_fig_mvpa(score, language = c("en", "fr"))
+create_fig_mvpa(score, language = c("en", "fr", "de"))
 }
 \arguments{
 \item{score}{A numeric value for mean daily MVPA time in minutes.}

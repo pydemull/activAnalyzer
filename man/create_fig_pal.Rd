@@ -4,7 +4,7 @@
 \alias{create_fig_pal}
 \title{Create a figure showing the mean daily Physical Activity Level (PAL)}
 \usage{
-create_fig_pal(score, language = c("en", "fr"))
+create_fig_pal(score, language = c("en", "fr", "de"))
 }
 \arguments{
 \item{score}{A numeric value for mean daily PAL.}
