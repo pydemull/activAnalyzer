@@ -1,3 +1,5 @@
+# activAnalyzer (development version)
+
 # activAnalyzer 2.1.0
 * Moved 'assertthat' from Suggests to Imports field in DESCRIPTION.
 * Added a German translation for most figures.
