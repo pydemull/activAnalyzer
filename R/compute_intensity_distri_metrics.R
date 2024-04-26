@@ -149,12 +149,12 @@ df_mx <-
                   wearing == "w"
   ) %>%
   dplyr::summarise(
-    `M1/3` = mean(head(sort(.data[[col_axis]], decreasing = TRUE), n = 8 * 60 * cor_factor), na.rm = TRUE) %>% round(., 2),
-    M120 = mean(head(sort(.data[[col_axis]], decreasing = TRUE), n = 120 * cor_factor), na.rm = TRUE) %>% round(., 2),
-    M60 = mean(head(sort(.data[[col_axis]], decreasing = TRUE), n = 60 * cor_factor), na.rm = TRUE) %>% round(., 2),
-    M30 = mean(head(sort(.data[[col_axis]], decreasing = TRUE), n = 30 * cor_factor), na.rm = TRUE) %>% round(., 2),
-    M15 = mean(head(sort(.data[[col_axis]], decreasing = TRUE), n = 15 * cor_factor), na.rm = TRUE) %>% round(., 2),
-    M5 = mean(head(sort(.data[[col_axis]], decreasing = TRUE), n = 5 * cor_factor), na.rm = TRUE) %>% round(., 2)
+    `M1/3` = compute_mx(x = .data[[col_axis]], n = 8 * 60 * cor_factor),
+    M120 = compute_mx(x = .data[[col_axis]], n = 120 * cor_factor),
+    M60 = compute_mx(x = .data[[col_axis]], n = 60 * cor_factor),
+    M30 = compute_mx(x = .data[[col_axis]], n = 30 * cor_factor),
+    M15 = compute_mx(x = .data[[col_axis]], n = 15 * cor_factor),
+    M5 = compute_mx(x = .data[[col_axis]], n = 15 * cor_factor)
   ) 
   
 

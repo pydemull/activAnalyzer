@@ -184,7 +184,7 @@ recap_by_day <- function(
            # Defining a function for getting a NA value when computing a step-based metric
            # from a vector with no non-missing values and the max() function
            # Retrieved from: https://stackoverflow.com/questions/24519794/r-max-function-ignore-na
-           my_max <- function(x) ifelse( !all(is.na(x)), max(x, na.rm = TRUE), NA)
+           my_max <- function(x) ifelse(!all(is.na(x)), max(x, na.rm = TRUE), NA)
            
            
            # Getting step-based metrics for each day of measurement (using a 1-min epoch)
@@ -212,11 +212,12 @@ recap_by_day <- function(
                  max_steps_20min = round(my_max(zoo::rollmean(steps, align = "center", k = 20L, fill = NA)), 2),
                  max_steps_5min = round(my_max(zoo::rollmean(steps, align = "center", k = 5L, fill = NA)), 2),
                  max_steps_1min = round(my_max(zoo::rollmean(steps, align = "center", k = 1L, fill = NA)), 2),
-                 peak_steps_60min = round(mean(head(sort(steps, decreasing = TRUE), n = 60L), na.rm = TRUE), 2),
-                 peak_steps_30min = round(mean(head(sort(steps, decreasing = TRUE), n = 30L), na.rm = TRUE), 2),
-                 peak_steps_20min = round(mean(head(sort(steps, decreasing = TRUE), n = 20L), na.rm = TRUE), 2),
-                 peak_steps_5min = round(mean(head(sort(steps, decreasing = TRUE), n = 5L), na.rm = TRUE), 2), 
-                 peak_steps_1min = round(mean(head(sort(steps, decreasing = TRUE), n = 1L), na.rm = TRUE), 2),
+                 
+                 peak_steps_60min = compute_peak_step_acc(x = .data$steps,  n = 60L),
+                 peak_steps_30min = compute_peak_step_acc(x = .data$steps,  n = 30L),
+                 peak_steps_20min = compute_peak_step_acc(x = .data$steps,  n = 20L),
+                 peak_steps_5min = compute_peak_step_acc(x = .data$steps,  n = 5L), 
+                 peak_steps_1min = compute_peak_step_acc(x = .data$steps,  n = 1L)
                )
            } else {
              
@@ -245,11 +246,12 @@ recap_by_day <- function(
                  max_steps_20min = round(my_max(zoo::rollmean(steps, align = "center", k = 20L, fill = NA)), 2),
                  max_steps_5min = round(my_max(zoo::rollmean(steps, align = "center", k = 5L, fill = NA)), 2),
                  max_steps_1min = round(my_max(zoo::rollmean(steps, align = "center", k = 1L, fill = NA)), 2),
-                 peak_steps_60min = round(mean(head(sort(steps, decreasing = TRUE), n = 60L), na.rm = TRUE), 2),
-                 peak_steps_30min = round(mean(head(sort(steps, decreasing = TRUE), n = 30L), na.rm = TRUE), 2),
-                 peak_steps_20min = round(mean(head(sort(steps, decreasing = TRUE), n = 20L), na.rm = TRUE), 2),
-                 peak_steps_5min = round(mean(head(sort(steps, decreasing = TRUE), n = 5L), na.rm = TRUE), 2), 
-                 peak_steps_1min = round(mean(head(sort(steps, decreasing = TRUE), n = 1L), na.rm = TRUE), 2),
+                 
+                 peak_steps_60min = compute_peak_step_acc(x = .data$steps,  n = 60L),
+                 peak_steps_30min = compute_peak_step_acc(x = .data$steps,  n = 30L),
+                 peak_steps_20min = compute_peak_step_acc(x = .data$steps,  n = 20L),
+                 peak_steps_5min = compute_peak_step_acc(x = .data$steps,  n = 5L), 
+                 peak_steps_1min = compute_peak_step_acc(x = .data$steps,  n = 1L)
                )
            }
            

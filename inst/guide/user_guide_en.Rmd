@@ -139,12 +139,12 @@ Once these new variables added to the initial dataset, the app summarizes the re
 * `peak_steps_5min`: step accumulation per minute averaged over the best 5 continuous or discontinuous minutes.
 * `peak_steps_1min`: step accumulation per minute over the best minute (same result as for `max_steps_1min`).
 * `ig`: intensity gradient.
-* `M1/3`: the count value (in counts/epoch duration) above which the most active 8h are accumulated over the day
-* `M120`: the count value (in counts/epoch duration) above which the most active 120 minutes are accumulated over the day
-* `M60`: the count value (in counts/epoch duration) above which the most active 60 minutes are accumulated over the day
-* `M30`: the count value (in counts/epoch duration) above which the most active 30 minutes are accumulated over the day
-* `M15`: the count value (in counts/epoch duration) above which the most active 15 minutes are accumulated over the day
-* `M5`: the count value (in counts/epoch duration) above which the most active 5 minutes are accumulated over the day
+* `M1/3`: the count value (in counts/epoch duration) at and above which the most active 8h are accumulated over the day
+* `M120`: the count value (in counts/epoch duration) at and above which the most active 120 minutes are accumulated over the day
+* `M60`: the count value (in counts/epoch duration) at and above which the most active 60 minutes are accumulated over the day
+* `M30`: the count value (in counts/epoch duration) at and above which the most active 30 minutes are accumulated over the day
+* `M15`: the count value (in counts/epoch duration) at and above which the most active 15 minutes are accumulated over the day
+* `M5`: the count value (in counts/epoch duration) at and above which the most active 5 minutes are accumulated over the day
 
 
 To compute PAL, total energy expenditure (TEE) related to the period of the day the user wanted to analyse is divided by BMR that is computed to also correspond to the period of the day the user wanted to analyse. TEE is obtained by summing the kilocalories measured during wear time epochs and the kilocalories related to BMR expended during nonwear time epochs (it is assumed that the periods where the device was not worn corresponded to sleeping periods, during which energy expenditure is near of BMR), and by multiplying this sum by 10/9 to take into account the thermic effect of food. In principle, PAL should be computed using the whole day, not a given period of the day. Of course, such calculations may conduct to underestimate TEE and PAL if the device was removed during prolonged periods of physical activity, unless the user manually adds physical activity information into the dedicated boxes of the app as explained above. Moreover, even if the device was correctly worn, the estimate of PAL is very approximate since both BMR and kilocalories are estimated using methods that may not be accurate at the individual level.

@@ -144,12 +144,12 @@ Une fois ces nouvelles variables ajoutées au jeu de données initial, l'applica
 * `peak_steps_5min`: accumulation de pas par minute moyennée sur les 5 meilleures minutes, consécutives ou non.
 * `peak_steps_1min`: accumulation de pas par minute sur la meilleure minute (même résultat que pour `max_steps_1min`).
 * `ig`: gradient d'intensité.
-* `M1/3`: la valeur de count (en counts/période d'échantillonnage) au-delà de laquelle les 8 heures les plus actives sont accumulées au cours de la journée
-* `M120`: la valeur de count (en counts/période d'échantillonnage) au-delà de laquelle les 120 minutes les plus actives sont accumulées au cours de la journée
-* `M60`: la valeur de count (en counts/période d'échantillonnage) au-delà de laquelle les 60 minutes les plus actives sont accumulées au cours de la journée
-* `M30`: la valeur de count (en counts/période d'échantillonnage) au-delà de laquelle les 30 minutes les plus actives sont accumulées au cours de la journée
-* `M15`: la valeur de count (en counts/période d'échantillonnage) au-delà de laquelle les 15 minutes les plus actives sont accumulées au cours de la journée
-* `M5`: la valeur de count (en counts/période d'échantillonnage) au-delà de laquelle les 5 minutes les plus actives sont accumulées au cours de la journée
+* `M1/3`: la valeur de count (en counts/période d'échantillonnage) à et au-delà de laquelle les 8 heures les plus actives sont accumulées au cours de la journée
+* `M120`: la valeur de count (en counts/période d'échantillonnage) à et au-delà de laquelle les 120 minutes les plus actives sont accumulées au cours de la journée
+* `M60`: la valeur de count (en counts/période d'échantillonnage) à et au-delà de laquelle les 60 minutes les plus actives sont accumulées au cours de la journée
+* `M30`: la valeur de count (en counts/période d'échantillonnage) à et au-delà de laquelle les 30 minutes les plus actives sont accumulées au cours de la journée
+* `M15`: la valeur de count (en counts/période d'échantillonnage) à et au-delà de laquelle les 15 minutes les plus actives sont accumulées au cours de la journée
+* `M5`: la valeur de count (en counts/période d'échantillonnage) à et au-delà de laquelle les 5 minutes les plus actives sont accumulées au cours de la journée
 
 
 Pour calculer le NAP, la dépense énergétique totale (DET) liée à la période de la journée que l'utilisateur souhaitait analyser est divisée par le MB, qui lui est calculé pour correspondre aussi à la période de la journée à analyser. La DET est obtenue en faisant la somme des kilocalories mesurées durant le temps de port et des kilocalories liées au MB dépensées durant les périodes de non-port (il est supposé que les périodes lors desquelles l'appareil n'était pas porté correspondaient à des périodes de sommeil, durant lesquelles la dépense énergétique est proche du MB), et en multipliant cette somme par 10/9 afin de prendre en compte l'effet thermique des aliments. En principe, le NAP devrait être calculé en utilisant l'ensemble de la journée, pas une période donnée de la journée. Bien sûr, de tels calculs peuvent conduire à sous-estimer la DET et le NAP si l'appareil était enlevé pendant des périodes prolongées d'activité physique, à moins que l'utilisateur ajoute manuellement des périodes d'activité physique dans les espaces de l'application prévus à cet effet comme expliqué plus haut. De plus, même si l'appareil était correctement porté, l'estimation du NAP reste très approximative étant donné qu'à la fois le MB et les kilocalories liées au temps de port étaient estimées à partir de méthodes qui peuvent ne pas être exactes au niveau individuel.
