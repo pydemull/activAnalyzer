@@ -580,7 +580,7 @@ reactable::reactable(
 )
 ```
 
-### Radar view based on means of valid days
+### Radar view based on the means of the valid days
 ```{r, fig.align = "center", out.width='50%', out.height='50%', fig.width=8, fig.height=8}
 cor_factor <- 60 / params$epoch
 
