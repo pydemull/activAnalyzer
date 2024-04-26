@@ -1,4 +1,4 @@
-# activAnalyzer (development version)
+# activAnalyzer 2.1.0
 * Moved 'assertthat' from Suggests to Imports field in DESCRIPTION.
 * Added a German translation for most figures.
 * Corrected an ERROR: replaced the mean by the minimum of the counts/(epoch duration) related to the most X active minutes for computing MX metrics.
