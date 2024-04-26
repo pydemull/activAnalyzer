@@ -1,7 +1,10 @@
 # activAnalyzer (development version)
 * Moved 'assertthat' from Suggests to Imports field in DESCRIPTION.
 * Added a German translation for most figures.
-* ERROR: replaced the mean by the minimum of the counts/(epoch duration) related to the most X active minutes for computing MX metrics.
+* Corrected an ERROR: replaced the mean by the minimum of the counts/(epoch duration) related to the most X active minutes for computing MX metrics.
+* Updated guides for the MX definitions: eg, for `M30`: the count value (in counts/epoch duration) **at and** above which the most active 30 minutes are accumulated over the day.
+* Added an internal function (`compute_peak_step_acc()`) to compute peak step accumulation only when there is the minimum number of minutes required to perform computation. It returns NA otherwise.
+* Added an internal function (`compute_mx()`) to compute MX metrics only when there is the minimum amount of time required to perform the targetted computation. It returns NA otherwise.
 
 # activAnalyzer 2.0.2
 * Corrected figure in the vignette (a step-based metrics image was used instead of a figure related IG metrics).
