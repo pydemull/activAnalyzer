@@ -104,19 +104,35 @@ if (is.null(dates)) {
   selected_dates <- attributes(as.factor(data$date))$levels
 } else {
     selected_dates <- attributes(as.factor(dates))$levels
-    }
-data <- 
-  data %>% 
-  dplyr::filter(date %in% as.Date(selected_dates) &
-                  .data[[col_time]] >= hms::as_hms(valid_wear_time_start) &
-                  .data[[col_time]] <= hms::as_hms(valid_wear_time_end)
-                ) %>%
-  dplyr::mutate(new_intensity_category = 
-                  dplyr::if_else(.data[[col_cat_int]] == "LPA" | .data[[col_cat_int]] == "MVPA", "PA",
-                      dplyr::if_else(.data[[col_cat_int]] == "SED", "SED",
-                          dplyr::if_else(.data[[col_cat_int]] == "Nonwear", "Nonwear", NA
-                  )))
-  )
+}
+  
+  # Fix bug: Convert Nas to "Nonwear"
+  data[[col_cat_int]] <- dplyr::if_else(is.na(data[[col_cat_int]]), "Nonwear", data[[col_cat_int]])
+  
+  data <-
+    data %>%
+    dplyr::filter(
+      date %in% as.Date(selected_dates) &
+        .data[[col_time]] >= hms::as_hms(valid_wear_time_start) &
+        .data[[col_time]] <= hms::as_hms(valid_wear_time_end)
+    ) %>%
+    dplyr::mutate(
+      new_intensity_category =
+        dplyr::if_else(
+          .data[[col_cat_int]] == "LPA" |
+            .data[[col_cat_int]] == "MVPA",
+          "PA",
+          dplyr::if_else(
+            .data[[col_cat_int]] == "SED",
+            "SED",
+            dplyr::if_else(
+              .data[[col_cat_int]] == "Nonwear",
+              "Nonwear",
+              dplyr::if_else(is.na(.data[[col_cat_int]]), "Nonwear", "Nonwear")
+            )
+          )
+        )
+    )
 
 # Updating bouts IDs
 data$new_intensity_category <- as.factor(data$new_intensity_category)
