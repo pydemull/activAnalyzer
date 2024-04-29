@@ -8,7 +8,7 @@
 #' @return
 #' A dataset (1 row) with all computed metrics.
 
-do_all_analyses <- function(){
+do_all_analyses <- function(to_epoch = 60){
   
   # Load file
   file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
@@ -17,7 +17,7 @@ do_all_analyses <- function(){
   mydata <- prepare_dataset(data = file)
   
   # Detect nonwear time
-  mydata_with_wear_marks <- mydata %>% mark_wear_time()
+  mydata_with_wear_marks <- mydata %>% mark_wear_time(to_epoch = to_epoch)
   
   # Add intensity marks
   mydata_with_intensity_marks <- mark_intensity(data = mydata_with_wear_marks)
