@@ -22,9 +22,8 @@ jobs:
       
       - name: Install covr
         run: |
-          install.packages("covr", repos = "https://github.com/r-lib/covr/")
+          renv::install("covr")
         shell: Rscript {0}
-
 
       - name: Test coverage
         run: covr::codecov(quiet = FALSE, clean = FALSE)
