@@ -154,7 +154,7 @@ df_mx <-
     M60 = compute_mx(x = .data[[col_axis]], n = 60 * cor_factor),
     M30 = compute_mx(x = .data[[col_axis]], n = 30 * cor_factor),
     M15 = compute_mx(x = .data[[col_axis]], n = 15 * cor_factor),
-    M5 = compute_mx(x = .data[[col_axis]], n = 15 * cor_factor)
+    M5 = compute_mx(x = .data[[col_axis]], n = 5 * cor_factor)
   ) 
   
 
