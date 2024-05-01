@@ -29,6 +29,11 @@ jobs:
         run: |
           renv::install("testthat")
         shell: Rscript {0}
+        
+      - name: Install shinytest2
+        run: |
+          renv::install("shinytest2")
+        shell: Rscript {0}
 
       - name: Test coverage
         run: covr::codecov(quiet = FALSE, clean = FALSE)
