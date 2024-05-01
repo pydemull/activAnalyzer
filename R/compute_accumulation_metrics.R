@@ -334,24 +334,24 @@ max_bout_duration <- max(summarised_bouts$duration)
       duration = seq(xmin, max_bout_duration, 0.1)
     ) %>% 
     dplyr::mutate(
-      pred = duration ^ (-alpha) ,
+      pred = duration ^ (-alpha),
       pred = duration ^ (-alpha) / max(pred) * max(summarised_bouts$n, na.rm = TRUE)
       ) 
   
   # Building the graphic
    p_alpha <-
-     ggplot(data = recap_bouts) + 
+     ggplot(data = recap_bouts |> dplyr::ungroup(new_bout)) + 
      geom_histogram(aes(x = duration, fill = dur_cat), binwidth = xmin) +
      scale_fill_manual(values = color_fill) +
      labs(x = "Bout duration (min)", y = "n", fill = "Duration (min)") +
-     geom_line(data = df_pred_alpha, aes(x = duration, y = pred), linewidth = 0.8, color = "grey10") +
+     geom_line(data = df_pred_alpha, aes(x = duration, y = pred), linewidth = 0.5, color = "grey10") +
      annotate("text", x = max_bout_duration/2, y = max(summarised_bouts$n, na.rm = TRUE)/2, label = paste("alpha =", round(alpha, 2)), hjust = 0.5, size = 6, vjust = 0.5) +
      theme_bw() +
      theme(legend.position = "bottom")
 
 # Building a graphic for MBD
 p_MBD <-
-  ggplot(data = recap_bouts) + 
+  ggplot(data = recap_bouts |> dplyr::ungroup(new_bout)) + 
   geom_histogram(aes(x = duration, fill = dur_cat), binwidth = xmin) +
   annotate(geom = "segment", x = MBD, xend = MBD, y = 0, yend = max(summarised_bouts$n, na.rm = TRUE), linetype = "dashed") +
   scale_fill_manual(values = color_fill) +
@@ -378,10 +378,10 @@ p_MBD <-
      p_UBD <-
        ggplot(data = summarised_bouts, aes(x = duration, y = cum_frac_time)) +
        geom_point(aes(color = dur_cat), size = 6) +
-       geom_segment(aes(x = 0, y = 0.5, xend = UBD, yend = 0.5), linetype = "dashed", linewidth = 0.5) +
-       geom_segment(aes(x = UBD, y = 0.5, xend = UBD, yend = 0), linetype = "dashed", linewidth = 0.5) +
-       geom_line(data = df_pred_UBD, aes(x = duration, y = pred), linewidth = 0.8, color = "grey10") +
-       geom_segment(aes(x = max_bout_duration/2, y = 0.4, xend = UBD, yend = 0), arrow = arrow(length = unit(0.02, "npc"))) +
+       annotate(geom = "segment", x = 0, y = 0.5, xend = UBD, yend = 0.5, linetype = "dashed", linewidth = 0.5) +
+       annotate(geom = "segment", x = UBD, y = 0.5, xend = UBD, yend = 0, linetype = "dashed", linewidth = 0.5) +
+       geom_line(data = df_pred_UBD, aes(x = duration, y = pred), linewidth = 0.5, color = "grey10") +
+       annotate(geom = "segment", x = max_bout_duration/2, y = 0.4, xend = UBD, yend = 0, arrow = arrow(length = unit(0.02, "npc"))) +
        annotate("text", x = max_bout_duration/2, y = 0.4, label = paste(" UBD =", round(UBD, 1), "min"), hjust = 0, size = 6, vjust = 0) +
        labs(x = "Bout duration (min)", y = paste("Cumulated fraction of total", auto_text, "time"), color = "Duration (min)") +
        scale_color_manual(values = color_fill) +
@@ -418,7 +418,7 @@ p_gini <-
   geom_ribbon(aes(x = cum_frac_bout, ymin = cum_frac_time, ymax = cum_frac_bout), fill = alpha(color_fill[[2]], 0.3)) +
   geom_point(data = summarised_bouts2, aes(color = dur_cat), size = 6) +
   geom_segment(x = 0, xend = 1, y = 0, yend = 1, linewidth = 0.3) +
-  geom_line(linewidth = 0.6) +
+  geom_line(linewidth = 0.5) +
   scale_color_manual(values = color_fill) +
   coord_cartesian(xlim = c(0, 1), ylim = c(0, 1)) +
   labs(
