@@ -54,7 +54,7 @@ get_ig_results <- function(
   df_bins$bin_label <- paste0(round(df_bins$bin_start, 0),"-", round(df_bins$bin_end, 0))
   
   # Correcting the value of the upper bound of the last bin (the value has been arbitrarily set so that it is very high)
-  df_bins[nrow(df_bins), "bin_end"] <- 50000
+  df_bins[nrow(df_bins), "bin_end"] <- 1000000
   
   # Correcting the label of the last bin
   df_bins[nrow(df_bins), "bin_label"] <- paste0(">", round(df_bins[nrow(df_bins), "bin_start"]-1, 0))
