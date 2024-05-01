@@ -24,6 +24,11 @@ jobs:
         run: |
           renv::install("covr")
         shell: Rscript {0}
+        
+      - name: Install testthat
+        run: |
+          renv::install("testthat")
+        shell: Rscript {0}
 
       - name: Test coverage
         run: covr::codecov(quiet = FALSE, clean = FALSE)
