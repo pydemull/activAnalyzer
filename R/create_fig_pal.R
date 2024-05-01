@@ -151,7 +151,7 @@ if (language == "de") {
     theme(axis.ticks = element_blank(),
           axis.text.y = element_blank(),
           axis.text.x = element_text(size = 13),
-          legend.position = c(0.5, 1.4),
+          legend.position.inside = c(0.5, 1.4),
           legend.title = element_text(face = "bold" , size = 10),
           legend.text = element_text(face = "bold", size = 17),
           legend.background = element_rect(fill = "beige"),
