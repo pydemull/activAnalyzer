@@ -126,7 +126,7 @@ p <-
     axis.text.x = element_text(size = 15),
     legend.text = element_text(size = 12),
     legend.key.width = unit(1.5,"cm"),
-    legend.position = c(0.13, 0.07)
+    legend.position.inside = c(0.13, 0.07)
   ) +
   guides(color = "none", fill = "none")
 
