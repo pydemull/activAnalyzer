@@ -4,7 +4,7 @@
 \alias{do_all_analyses}
 \title{Do all analyses at once}
 \usage{
-do_all_analyses()
+do_all_analyses(to_epoch = 60)
 }
 \value{
 A dataset (1 row) with all computed metrics.
