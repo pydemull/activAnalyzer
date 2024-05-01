@@ -105,10 +105,6 @@ if (is.null(dates)) {
     selected_dates <- attributes(as.factor(dates))$levels
 }
   
-# Converting potential NAs created when collapsing data to longer epochs (from 
-# previous steps) to "Nonwear"
-data[[col_cat_int]] <- dplyr::if_else(is.na(data[[col_cat_int]]), "Nonwear", data[[col_cat_int]])
-
 # Filtering data based on selected dates and time periods, and adding a 
 # column 'new_intensity_category' containing "SED", PA, or "Nonwear" values 
 data <-
