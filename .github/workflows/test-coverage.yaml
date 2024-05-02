@@ -56,6 +56,10 @@ jobs:
       - name: Install activAnalyzer
         shell: bash
         run: R CMD INSTALL --preclean .
+        
+      - name: Install covr
+        run: renv::install("covr")
+        shell: Rscript {0}
 
       - name: Test coverage
         run: covr::codecov(quiet = FALSE)
