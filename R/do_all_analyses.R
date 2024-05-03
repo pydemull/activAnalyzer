@@ -5,6 +5,9 @@
 #'     the package. It is an internal function allowing the computation of the speed of the whole
 #'     analysis process, from the data importation to the final line of the results.
 #'
+#' @param to_epoch A numeric value to set the epoch required to collapse counts 
+#'     in seconds.
+#'
 #' @return
 #' A dataset (1 row) with all computed metrics.
 
