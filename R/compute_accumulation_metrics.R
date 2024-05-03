@@ -98,18 +98,16 @@ compute_accumulation_metrics <- function(
     zoom_to = "23:59:59"
     ){
   
-# Filtering data based on selected dates and time periods, and adding a 
-# column containing "SED", NON-SED", or "Nonwear" labels
+# Getting selected dates
 if (is.null(dates)) {
   selected_dates <- attributes(as.factor(data$date))$levels
 } else {
     selected_dates <- attributes(as.factor(dates))$levels
 }
   
-  # Fix bug: Convert Nas to "Nonwear"
-  data[[col_cat_int]] <- dplyr::if_else(is.na(data[[col_cat_int]]), "Nonwear", data[[col_cat_int]])
-  
-  data <-
+# Filtering data based on selected dates and time periods, and adding a 
+# column 'new_intensity_category' containing "SED", PA, or "Nonwear" values 
+data <-
     data %>%
     dplyr::filter(
       date %in% as.Date(selected_dates) &
@@ -127,28 +125,28 @@ if (is.null(dates)) {
             "SED",
             dplyr::if_else(
               .data[[col_cat_int]] == "Nonwear",
-              "Nonwear",
-              dplyr::if_else(is.na(.data[[col_cat_int]]), "Nonwear", "Nonwear")
+              "Nonwear", NA
             )
           )
         )
     )
 
-# Updating bouts IDs
+# Setting IDs for the new PA/SED/Nonwear bouts
 data$new_intensity_category <- as.factor(data$new_intensity_category)
 data$new_intensity_category_num <- as.numeric(as.character(forcats::fct_recode(data$new_intensity_category , "0" = "Nonwear", "1" = "SED", "2" = "PA")))
 data$new_bout <- cumsum(c(1, as.numeric(diff(data$new_intensity_category_num))!= 0))
 
-# Getting arguments
+# Getting the type of activity bout to be analyzed
 behaviour <- match.arg(behaviour)
 if(behaviour == "sed") {BEHAV <- "SED"; color_fill = c("#D9DBE5", "#A6ADD5", "#6A78C3", "#3F51B5"); auto_text = "sedentary"} 
 if(behaviour == "pa") {BEHAV <- "PA"; color_fill = c("#EDD3DD", "#F38DB6", "#FA3B87", "#FF0066"); auto_text = "physical activity"} 
   
-# Getting correction factor related to the epoch length (reference epoch = 60 s);
+# Getting the correction factor related to the epoch length (reference epoch = 60 s);
 # bout durations are computed in minutes
 cor_factor = 60 / (as.numeric(data[[col_time]][2] - data[[col_time]][1]))
  
-# Summarising bout durations (in minutes) of interest by day
+# Getting all the identified bouts of the kind of interest and their respective 
+# durations (in minutes) 
 recap_bouts_by_day <-
   data %>%
   dplyr::group_by(date, new_bout, new_intensity_category) %>%
@@ -166,7 +164,7 @@ recap_bouts_by_day <-
   )
 
 
-# Computing mean daily number of breaks
+# Computing the mean of the daily number of breaks
 mean_breaks <-
   recap_bouts_by_day %>%
   dplyr::ungroup(new_bout, new_intensity_category) %>%
@@ -206,19 +204,21 @@ mean_breaks <-
          fill = dur_cat
          )
      ) +
-     geom_rect(aes(
+     annotate(
+       geom = "rect",
        xmin = hms::as_hms(0), 
        xmax =  hms::as_hms(valid_wear_time_start), 
        ymin = -Inf, 
-       ymax = Inf), 
+       ymax = Inf, 
        color = "grey",
        fill = "grey"
      ) +
-     geom_rect(aes(
+     annotate(
+       geom = "rect",
        xmin = hms::as_hms(valid_wear_time_end), 
        xmax =  hms::as_hms("23:59:59"),
        ymin = -Inf, 
-       ymax = Inf), 
+       ymax = Inf, 
        color = "grey",
        fill = "grey"
      ) +
@@ -266,7 +266,8 @@ mean_breaks <-
      geom_vline(aes(xintercept = 3600*22),   linetype = "dotted", color = "grey50") +
      geom_vline(aes(xintercept = 3600*23),   linetype = "dotted", color = "grey50")
 
-# Summarising bout durations (in minutes) of interest without grouping by day
+# Getting all the identified bouts of the kind of interest and their respective 
+# durations (in minutes) without grouping by day
 recap_bouts <-
   data %>%
   dplyr::group_by(new_bout, new_intensity_category) %>%
@@ -308,7 +309,7 @@ summarised_bouts <-
   )
     
 
-# Fitting cumulated fraction of time vs bout duration
+# Fitting cumulated fraction of time vs bout duration relationship
 model <- nls(
   cum_frac_time ~ duration^x / (duration^x + UBD^x), 
   data = summarised_bouts, 
@@ -333,26 +334,26 @@ max_bout_duration <- max(summarised_bouts$duration)
       duration = seq(xmin, max_bout_duration, 0.1)
     ) %>% 
     dplyr::mutate(
-      pred = duration ^ (-alpha) ,
+      pred = duration ^ (-alpha),
       pred = duration ^ (-alpha) / max(pred) * max(summarised_bouts$n, na.rm = TRUE)
       ) 
   
   # Building the graphic
    p_alpha <-
-     ggplot(data = recap_bouts) + 
+     ggplot(data = recap_bouts |> dplyr::ungroup(new_bout)) + 
      geom_histogram(aes(x = duration, fill = dur_cat), binwidth = xmin) +
      scale_fill_manual(values = color_fill) +
      labs(x = "Bout duration (min)", y = "n", fill = "Duration (min)") +
-     geom_line(data = df_pred_alpha, aes(x = duration, y = pred), linewidth = 0.8, color = "grey10") +
+     geom_line(data = df_pred_alpha, aes(x = duration, y = pred), linewidth = 0.5, color = "grey10") +
      annotate("text", x = max_bout_duration/2, y = max(summarised_bouts$n, na.rm = TRUE)/2, label = paste("alpha =", round(alpha, 2)), hjust = 0.5, size = 6, vjust = 0.5) +
      theme_bw() +
      theme(legend.position = "bottom")
 
 # Building a graphic for MBD
 p_MBD <-
-  ggplot(data = recap_bouts) + 
+  ggplot(data = recap_bouts |> dplyr::ungroup(new_bout)) + 
   geom_histogram(aes(x = duration, fill = dur_cat), binwidth = xmin) +
-  geom_segment(aes(x = MBD, xend = MBD, y = 0, yend = max(summarised_bouts$n, na.rm = TRUE)), linetype = "dashed") +
+  annotate(geom = "segment", x = MBD, xend = MBD, y = 0, yend = max(summarised_bouts$n, na.rm = TRUE), linetype = "dashed") +
   scale_fill_manual(values = color_fill) +
   labs(x = "Bout duration (min)", y = "n", fill = "Duration (min)") +
   geom_segment(
@@ -377,10 +378,10 @@ p_MBD <-
      p_UBD <-
        ggplot(data = summarised_bouts, aes(x = duration, y = cum_frac_time)) +
        geom_point(aes(color = dur_cat), size = 6) +
-       geom_segment(aes(x = 0, y = 0.5, xend = UBD, yend = 0.5), linetype = "dashed", linewidth = 0.5) +
-       geom_segment(aes(x = UBD, y = 0.5, xend = UBD, yend = 0), linetype = "dashed", linewidth = 0.5) +
-       geom_line(data = df_pred_UBD, aes(x = duration, y = pred), linewidth = 0.8, color = "grey10") +
-       geom_segment(aes(x = max_bout_duration/2, y = 0.4, xend = UBD, yend = 0), arrow = arrow(length = unit(0.02, "npc"))) +
+       annotate(geom = "segment", x = 0, y = 0.5, xend = UBD, yend = 0.5, linetype = "dashed", linewidth = 0.5) +
+       annotate(geom = "segment", x = UBD, y = 0.5, xend = UBD, yend = 0, linetype = "dashed", linewidth = 0.5) +
+       geom_line(data = df_pred_UBD, aes(x = duration, y = pred), linewidth = 0.5, color = "grey10") +
+       annotate(geom = "segment", x = max_bout_duration/2, y = 0.4, xend = UBD, yend = 0, arrow = arrow(length = unit(0.02, "npc"))) +
        annotate("text", x = max_bout_duration/2, y = 0.4, label = paste(" UBD =", round(UBD, 1), "min"), hjust = 0, size = 6, vjust = 0) +
        labs(x = "Bout duration (min)", y = paste("Cumulated fraction of total", auto_text, "time"), color = "Duration (min)") +
        scale_color_manual(values = color_fill) +
@@ -417,7 +418,7 @@ p_gini <-
   geom_ribbon(aes(x = cum_frac_bout, ymin = cum_frac_time, ymax = cum_frac_bout), fill = alpha(color_fill[[2]], 0.3)) +
   geom_point(data = summarised_bouts2, aes(color = dur_cat), size = 6) +
   geom_segment(x = 0, xend = 1, y = 0, yend = 1, linewidth = 0.3) +
-  geom_line(linewidth = 0.6) +
+  geom_line(linewidth = 0.5) +
   scale_color_manual(values = color_fill) +
   coord_cartesian(xlim = c(0, 1), ylim = c(0, 1)) +
   labs(

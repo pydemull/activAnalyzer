@@ -91,12 +91,12 @@ The following metrics are computed from epochs corresponding to valid wear time:
 \item \strong{peak_steps_5min:} step accumulation per minute averaged over the best 5 continuous or discontinuous minutes
 \item \strong{peak_steps_1min:} step accumulation per minute over the best minute (same result as for \code{max_steps_1min})
 \item \strong{ig:} intensity gradient
-\item \strong{M1/3:} the count value (in counts/epoch duration) above which the most active 8h were accumulated over the day
-\item \strong{M120:} the count value (in counts/epoch duration) above which the most active 120 minutes were accumulated over the day
-\item \strong{M60:} the count value (in counts/epoch duration) above which the most active 60 minutes were accumulated over the day
-\item \strong{M30:} the count value (in counts/epoch duration) above which the most active 30 minutes were accumulated over the day
-\item \strong{M15:} the count value (in counts/epoch duration) above which the most active 15 minutes were accumulated over the day
-\item \strong{M5:} the count value (in counts/epoch duration) above which the most active 5 minutes were accumulated over the day
+\item \strong{M1/3:} the count value (in counts/epoch duration) at and above which the most active 8h were accumulated over the day
+\item \strong{M120:} the count value (in counts/epoch duration) at and above which the most active 120 minutes were accumulated over the day
+\item \strong{M60:} the count value (in counts/epoch duration) at and above which the most active 60 minutes were accumulated over the day
+\item \strong{M30:} the count value (in counts/epoch duration) at and above which the most active 30 minutes were accumulated over the day
+\item \strong{M15:} the count value (in counts/epoch duration) at and above which the most active 15 minutes were accumulated over the day
+\item \strong{M5:} the count value (in counts/epoch duration) at and above which the most active 5 minutes were accumulated over the day
 }
 
 PAL is computed by dividing total energy expenditure (TEE) by BMR. TEE is obtained by summing

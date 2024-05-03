@@ -4,7 +4,11 @@
 \alias{do_all_analyses}
 \title{Do all analyses at once}
 \usage{
-do_all_analyses()
+do_all_analyses(to_epoch = 60)
+}
+\arguments{
+\item{to_epoch}{A numeric value to set the epoch required to collapse counts
+in seconds.}
 }
 \value{
 A dataset (1 row) with all computed metrics.
