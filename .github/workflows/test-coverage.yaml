@@ -1,4 +1,5 @@
-# Workflow derived from https://github.com/alexquant1993/shareIBC/blob/master/.github/workflows/test-coverage.yaml
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
     branches: [main, master]
@@ -12,68 +13,38 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      RENV_PATHS_ROOT: ~/.local/share/renv
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
 
-      - name: Cache packages
-        uses: actions/cache@v1
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          path: ${{ env.RENV_PATHS_ROOT }}
-          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
-          restore-keys: ${{ runner.os }}-renv-
+          extra-packages: any::covr
+          needs: coverage
 
-      - name: Install Linux system dependencies
-        if: runner.os == 'Linux'
-        shell: bash
-        run: |
-          sudo apt-get install -y software-properties-common
-          sudo apt-get update
-          sudo apt-get install -y make
-          sudo apt-get install -y git
-          sudo apt-get install -y libcurl4-openssl-dev
-          sudo apt-get install -y libfribidi-dev
-          sudo apt-get install -y libgit2-dev
-          sudo apt-get install -y libharfbuzz-dev
-          sudo apt-get install -y libicu-dev
-          sudo apt-get install -y libssl-dev
-          sudo apt-get install -y libxml2-dev
-          sudo apt-get install -y libsodium-dev
-          sudo apt-get install -y python3
-          sudo apt-get install -y python3-pip
-          sudo apt-get install -y python3-venv
-
-      - name: Restore packages
-        shell: Rscript {0}
-        run: |
-          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
-          renv::restore()
-          
-      - name: Install activAnalyzer
-        shell: bash
-        run: R CMD INSTALL --preclean .
-        
-      - name: Install covr
-        run: renv::install("covr")
-        shell: Rscript {0}
-        
-      - name: Install testthat
-        run: renv::install("testthat")
-        shell: Rscript {0}
-
-      - name: Install shinytest2
-        run: renv::install("shinytest2")
-        shell: Rscript {0}
-        
       - name: Test coverage
-        run: covr::codecov(quiet = FALSE)
+        run: |
+          covr::codecov(
+            quiet = FALSE,
+            clean = FALSE,
+            install_path = file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "package")
+          )
         shell: Rscript {0}
 
       - name: Show testthat output
         if: always()
-        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+        run: |
+          ## --------------------------------------------------------------------
+          find '${{ runner.temp }}/package' -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
+
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-test-failures
+          path: ${{ runner.temp }}/package
