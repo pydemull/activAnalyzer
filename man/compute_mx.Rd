@@ -9,7 +9,7 @@ compute_mx(x, n)
 \arguments{
 \item{x}{A vector of counts data.}
 
-\item{n}{A integer setting the number of rows in correspondance with the
+\item{n}{An integer setting the number of rows in correspondance with the
 targetted amount of time.}
 }
 \value{
@@ -17,5 +17,5 @@ A numeric value.
 }
 \description{
 An MX metric is the count/epoch value at and above which a given amount of the
-most active minutes is spent (continuously or discontinuously)
+most active minutes is spent (continuously or discontinuously).
 }
