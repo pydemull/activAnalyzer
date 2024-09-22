@@ -1517,7 +1517,7 @@ app_server <- function(input, output, session) {
                 period_info_12$corr_mets() >= 0,
                 period_info_13$corr_mets() >= 0,
                 period_info_14$corr_mets() >= 0,
-                period_info_15$corr_mets() >= 0,
+                period_info_15$corr_mets() >= 0
                 )
        
    
