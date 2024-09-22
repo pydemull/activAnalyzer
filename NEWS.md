@@ -1,5 +1,6 @@
 # activAnalyzer 2.1.2
 * Removed an undesired comma from a req() function in app_server.R that caused an error with more recent versions of package dependencies (likely Shiny).
+* Updated the figures for the comparisons with norms and recommendations (legend is now correctly placed at the top).
 
 # activAnalyzer 2.1.1
 * When collapsing data from a shorter epoch to a longer epoch, NAs are introduced in the 'wearing' column provided by the PhysicalActivity package during nonwear time analysis. This generated a bug when computing the accumulation metrics because the detection of the bouts partly depends on the labels provided in this column. This has been corrected by replacing NAs by "Nonwear".
