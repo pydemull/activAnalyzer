@@ -1654,7 +1654,7 @@ app_server <- function(input, output, session) {
                       # Thanks to https://stackoverflow.com/questions/29661269/increment-by-1-for-every-change-in-column 
                       # for the code block below
                       df_with_computed_metrics$intensity_category <- as.factor(df_with_computed_metrics$intensity_category)
-                      df_with_computed_metrics$intensity_category_num <- as.numeric(as.character(forcats::fct_recode(df_with_computed_metrics$intensity_category , "0" = "Nonwear", "1" = "SED", "2" = "LPA", "3" = "MVPA")))
+                      df_with_computed_metrics$intensity_category_num <- as.numeric(as.character(forcats::fct_recode(df_with_computed_metrics$intensity_category, "0" = "Nonwear", "1" = "SED", "2" = "LPA", "3" = "MVPA")))
                       df_with_computed_metrics$bout <- cumsum(c(1, as.numeric(diff(df_with_computed_metrics$intensity_category_num))!= 0))
               }
               
@@ -2010,15 +2010,13 @@ app_server <- function(input, output, session) {
   output$int_dist_analysis_fig1 <- renderPlot({
     
     results_list()$results_by_day$p_band
-  }, width = "auto", height = function(){round(nlevels(as.factor(results_list()$df_with_computed_metrics$date))/3, 0) * 370}
-  , res = 100)
+  }, width = "auto", height = function(){round(nlevels(as.factor(results_list()$df_with_computed_metrics$date))/3, 0) * 370}, res = 100)
   
   # Plotting intensity distribution analysis (2)
   output$int_dist_analysis_fig1bis <- renderPlot({
     
     results_list()$results_by_day$p_log
-  }, width = "auto", height = function(){round(nlevels(as.factor(results_list()$df_with_computed_metrics$date))/3, 0) * 370}
-  , res = 100)
+  }, width = "auto", height = function(){round(nlevels(as.factor(results_list()$df_with_computed_metrics$date))/3, 0) * 370}, res = 100)
   
   # Showing results summarized over valid days in a table (means)
   output$results_summary_int_dist_means <- reactable::renderReactable({
