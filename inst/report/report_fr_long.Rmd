@@ -380,9 +380,8 @@ g_sed <- create_fig_sed(score = df1_means[["minutes_SED"]], "fr") + theme(plot.m
 g_ratio <- create_fig_ratio_mvpa_sed(score = df1_means[["ratio_mvpa_sed"]], "fr") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
 
 # Whole figure
-g_pal / g_steps / (g_mvpa | g_sed | g_ratio) + 
+(g_pal + theme(legend.position = "top")) / g_steps / (g_mvpa | g_sed | g_ratio) + 
     plot_layout(heights = c(0.8, 0.7, 1.5)) & theme(legend.justification = "center")
-  
 ```
 
 ### Commentaires
