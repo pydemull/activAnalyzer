@@ -1,6 +1,6 @@
 Package: activAnalyzer
 Title: A 'Shiny' App to Analyze Accelerometer-Measured Daily Physical Behavior Data
-Version: 2.1.1.9000
+Version: 2.1.2
 Authors@R: person('Pierre-Yves', 'de Müllenheim', email = 'pydemull@uco.fr', role = c('cre', 'aut'), comment = c(ORCID = "0000-0001-9157-7371"))
 Description: A tool to analyse 'ActiGraph' accelerometer data and to implement 
     the use of the PROactive Physical Activity in COPD (chronic obstructive pulmonary disease) instruments. Once analysis
