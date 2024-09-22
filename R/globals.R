@@ -133,5 +133,6 @@ utils::globalVariables(c(
   "bin_label",
   "lm",
   "days",
-  "."
+  ".",
+  ".x"
   ))
