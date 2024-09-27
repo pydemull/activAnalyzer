@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">activAnalyzer</a>
 
-    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9000</small>
+    <small class="nav-text text-version me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.2.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,11 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="activanalyzer-development-version">activAnalyzer (development version)<a class="anchor" aria-label="anchor" href="#activanalyzer-development-version"></a></h2>
 </div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.1.2" id="activanalyzer-212">activAnalyzer 2.1.2<a class="anchor" aria-label="anchor" href="#activanalyzer-212"></a></h2><p class="text-muted">CRAN release: 2024-09-23</p>
+<ul><li>Removed an undesired comma from a req() function in app_server.R that caused an error with more recent versions of package dependencies (likely Shiny).</li>
+<li>Updated the figures for the comparisons with norms and recommendations (legend is now correctly placed at the top).</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.1.1" id="activanalyzer-211">activAnalyzer 2.1.1<a class="anchor" aria-label="anchor" href="#activanalyzer-211"></a></h2><p class="text-muted">CRAN release: 2024-05-05</p>
 <ul><li>When collapsing data from a shorter epoch to a longer epoch, NAs are introduced in the ‘wearing’ column provided by the PhysicalActivity package during nonwear time analysis. This generated a bug when computing the accumulation metrics because the detection of the bouts partly depends on the labels provided in this column. This has been corrected by replacing NAs by “Nonwear”.</li>
