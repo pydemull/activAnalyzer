@@ -1,3 +1,5 @@
+# activAnalyzer (development version)
+
 # activAnalyzer 2.1.2
 * Removed an undesired comma from a req() function in app_server.R that caused an error with more recent versions of package dependencies (likely Shiny).
 * Updated the figures for the comparisons with norms and recommendations (legend is now correctly placed at the top).
