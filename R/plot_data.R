@@ -143,7 +143,10 @@ plot_data <- function(
     max_axis1 <- max(data$axis1)
     
     if (metric == "axis1" && ehcv <= max_axis1) { 
-      p <- p + geom_hline(yintercept = ehcv, color = "red", linewidth = 0.8)
+      p <- p + 
+        geom_hline(aes(yintercept = ehcv, linetype = "Threshold for \nabnormal values"), color = "red", linewidth = 0.7) +
+        scale_linetype_manual(values = 1) +
+        labs(linetype = NULL)
       }
     
     suppressWarnings(print(p))
