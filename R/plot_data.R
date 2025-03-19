@@ -72,6 +72,12 @@ plot_data <- function(
     
   # Getting epoch length
     epoch <- as.numeric(data[[col_time]][2] - data[[col_time]][1])
+  
+  # Getting correction factor for epoch duration different from 60s
+    cor_factor = 60 / epoch
+    
+  # Adjusting ehcv for the considered epoch
+    ehcv <- ehcv / cor_factor
 
   # Creating the plot
     p <-
