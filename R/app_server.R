@@ -258,6 +258,15 @@ app_server <- function(input, output, session) {
         shinyjs::hide("warning_epoch")
         }
       })
+      
+    # Ehcv
+      observeEvent(input$validate,
+                   shinyFeedback::feedbackWarning(
+                     "ehcv", 
+                     (is.numeric(input$ehcv) == FALSE | input$ehcv < 0),
+                     "Please choose a number >= 0."
+                   )
+      )
   
     # Frame size
       observeEvent(input$validate,
@@ -353,9 +362,10 @@ app_server <- function(input, output, session) {
          })
         
 
-  # Returning to default values for the wear time detection algorithm
+  # Returning to default values for the wear time detection algorithm and ehcv
     observeEvent(input$reset_nonwear, {
       updateNumericInput(inputId = "to_epoch", value = 60)
+      updateNumericInput(inputId = "ehcv", value = 15000)
       updateSelectInput(inputId = "axis_weartime", selected = "vector magnitude")
       updateNumericInput(inputId = "frame_size", value = 90)
       updateNumericInput(inputId = "allowanceFrame_size", value = 2)
@@ -407,35 +417,52 @@ app_server <- function(input, output, session) {
                    "End time should be superior to start time."
                  )
     )
-  
-  output$graph <- renderPlot({
     
-    # Waiting for correct inputs
-      req(zoom_param$zoom_from_weartime < zoom_param$zoom_to_weartime)
+    observeEvent(input$update_graphic,
+                 shinyFeedback::feedbackWarning(
+                   "ehcv", 
+                   (is.numeric(input$ehcv) == FALSE | input$ehcv < 0),
+                   "Please choose a number >= 0."
+                 )
+    )
     
-    # Making the plot
     
-    if (as.numeric(df()$time[2] - df()$time[1]) < 10) { 
-      ggplot2::ggplot() + ggplot2::geom_text(
-        ggplot2::aes(
-          x = 1, 
-          y  = 1,
-          label = "Sorry, below 10-s epochs, we prefer \nnot to build the plot to save your time..."),
-        size = 10
+    ehcv <- eventReactive(input$validate, input$ehcv)
+    
+    graph <- eventReactive(input$validate | input$update_graphic, {
+      
+      # Waiting for correct inputs
+      req(zoom_param$zoom_from_weartime < zoom_param$zoom_to_weartime & is.numeric(input$ehcv) & input$ehcv >= 0)
+      
+      # Making the plot
+      if (as.numeric(df()$time[2] - df()$time[1]) < 10) { 
+        ggplot2::ggplot() + ggplot2::geom_text(
+          ggplot2::aes(
+            x = 1, 
+            y  = 1,
+            label = "Sorry, below 10-s epochs, we prefer \nnot to build the plot to save your time..."),
+          size = 10
         ) +
-        ggplot2::theme(
-          axis.title = ggplot2::element_blank(),
-          axis.text = ggplot2::element_blank(),
-          axis.ticks = ggplot2::element_blank()
+          ggplot2::theme(
+            axis.title = ggplot2::element_blank(),
+            axis.text = ggplot2::element_blank(),
+            axis.ticks = ggplot2::element_blank()
+          )
+      } else {
+        plot_data(
+          data = df(), 
+          metric = zoom_param$metric, 
+          ehcv = ehcv(),
+          zoom_from = zoom_param$zoom_from_weartime,
+          zoom_to = zoom_param$zoom_to_weartime
         )
-    } else {
-    plot_data(
-      data = df(), 
-      metric = zoom_param$metric, 
-      zoom_from = zoom_param$zoom_from_weartime,
-      zoom_to = zoom_param$zoom_to_weartime
-      )
-    }
+      }
+      
+    })
+  
+    output$graph <- renderPlot({
+    
+    graph()
   }, 
   width = "auto", 
   height = function(){

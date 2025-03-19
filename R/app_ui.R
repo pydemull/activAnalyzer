@@ -226,6 +226,11 @@ app_ui <- function(request) {
                  ),
                  fluidRow(
                    column(12,
+                          numericInput("ehcv", "Threshold to highlight abnormal values for Axis 1 (counts/min)", value = 15000, min = 0)
+                   ),
+                 ),
+                 fluidRow(
+                   column(12,
                           shinydashboardPlus::box(id = "box-epoch",
                                                   title = "NOTE",
                                                   width = 12,
