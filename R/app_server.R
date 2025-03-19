@@ -258,6 +258,15 @@ app_server <- function(input, output, session) {
         shinyjs::hide("warning_epoch")
         }
       })
+      
+    # Ehcv
+      observeEvent(input$validate,
+                   shinyFeedback::feedbackWarning(
+                     "ehcv_val1", 
+                     (is.numeric(input$ehcv_val1) == FALSE | input$ehcv_val1 < 0),
+                     "Please choose a number >= 0."
+                   )
+      )
   
     # Frame size
       observeEvent(input$validate,
@@ -353,9 +362,10 @@ app_server <- function(input, output, session) {
          })
         
 
-  # Returning to default values for the wear time detection algorithm
+  # Returning to default values for the wear time detection algorithm and ehcv
     observeEvent(input$reset_nonwear, {
       updateNumericInput(inputId = "to_epoch", value = 60)
+      updateNumericInput(inputId = "ehcv_val1", value = 15000)
       updateSelectInput(inputId = "axis_weartime", selected = "vector magnitude")
       updateNumericInput(inputId = "frame_size", value = 90)
       updateNumericInput(inputId = "allowanceFrame_size", value = 2)
@@ -407,35 +417,52 @@ app_server <- function(input, output, session) {
                    "End time should be superior to start time."
                  )
     )
-  
-  output$graph <- renderPlot({
     
-    # Waiting for correct inputs
-      req(zoom_param$zoom_from_weartime < zoom_param$zoom_to_weartime)
+    observeEvent(input$update_graphic,
+                 shinyFeedback::feedbackWarning(
+                   "ehcv_val1", 
+                   (is.numeric(input$ehcv_val1) == FALSE | input$ehcv_val1 < 0),
+                   "Please choose a number >= 0."
+                 )
+    )
     
-    # Making the plot
     
-    if (as.numeric(df()$time[2] - df()$time[1]) < 10) { 
-      ggplot2::ggplot() + ggplot2::geom_text(
-        ggplot2::aes(
-          x = 1, 
-          y  = 1,
-          label = "Sorry, below 10-s epochs, we prefer \nnot to build the plot to save your time..."),
-        size = 10
+    ehcv_val1 <- eventReactive(input$validate, input$ehcv_val1)
+    
+    graph <- eventReactive(input$validate | input$update_graphic, {
+      
+      # Waiting for correct inputs
+      req(zoom_param$zoom_from_weartime < zoom_param$zoom_to_weartime & is.numeric(input$ehcv_val1) & input$ehcv_val1 >= 0)
+      
+      # Making the plot
+      if (as.numeric(df()$time[2] - df()$time[1]) < 10) { 
+        ggplot2::ggplot() + ggplot2::geom_text(
+          ggplot2::aes(
+            x = 1, 
+            y  = 1,
+            label = "Sorry, below 10-s epochs, we prefer \nnot to build the plot to save your time..."),
+          size = 10
         ) +
-        ggplot2::theme(
-          axis.title = ggplot2::element_blank(),
-          axis.text = ggplot2::element_blank(),
-          axis.ticks = ggplot2::element_blank()
+          ggplot2::theme(
+            axis.title = ggplot2::element_blank(),
+            axis.text = ggplot2::element_blank(),
+            axis.ticks = ggplot2::element_blank()
+          )
+      } else {
+        plot_data(
+          data = df(), 
+          metric = zoom_param$metric, 
+          ehcv = ehcv_val1(),
+          zoom_from = zoom_param$zoom_from_weartime,
+          zoom_to = zoom_param$zoom_to_weartime
         )
-    } else {
-    plot_data(
-      data = df(), 
-      metric = zoom_param$metric, 
-      zoom_from = zoom_param$zoom_from_weartime,
-      zoom_to = zoom_param$zoom_to_weartime
-      )
-    }
+      }
+      
+    })
+  
+    output$graph <- renderPlot({
+    
+    graph()
   }, 
   width = "auto", 
   height = function(){
@@ -824,6 +851,14 @@ app_server <- function(input, output, session) {
                      )
         )
         
+      # Threshold for data removal
+        observeEvent(input$Run,
+                     shinyFeedback::feedbackWarning(
+                       "ehcv_val2", 
+                       ((is.numeric(input$ehcv_val2) == FALSE | input$ehcv_val2 < 0)),
+                       "Please provide a value >=0."
+                     )
+        )
        
       # Intensity bins parameters
         observeEvent(input$Run,
@@ -1375,6 +1410,14 @@ app_server <- function(input, output, session) {
         return(list)
         
       })
+      
+      # Setting ehcv for dealing with the removal of abnormal epochs
+      ehcv_val2 <- eventReactive(input$Run, {
+        
+        if (!(input$ehcv_check)) {ehcv <- "none"}
+        if (input$ehcv_check) {ehcv <- input$ehcv_val2}
+        ehcv
+      })
    
       # Building the list  
         results_list <- eventReactive(input$Run, {
@@ -1517,11 +1560,13 @@ app_server <- function(input, output, session) {
                 period_info_12$corr_mets() >= 0,
                 period_info_13$corr_mets() >= 0,
                 period_info_14$corr_mets() >= 0,
-                period_info_15$corr_mets() >= 0
-                )
-       
-   
-    
+                period_info_15$corr_mets() >= 0,
+
+               # Settings for abnormal epoch removal
+               is.numeric(input$ehcv_val2) & input$ehcv_val2 >= 0
+              )
+            
+
             # Building the dataframe with intensity marks
               df_with_computed_metrics <-
                 df() %>%
@@ -1534,7 +1579,8 @@ app_server <- function(input, output, session) {
                   age = input$age,
                   weight = input$weight,
                   sex = input$sex,
-                  dates = input$selected_days
+                  dates = input$selected_days,
+                  ehcv = ehcv_val2()
                   )
               
              shiny::setProgress(0.5)  # set progress to 50%

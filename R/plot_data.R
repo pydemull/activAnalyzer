@@ -8,6 +8,8 @@
 #' @param col_time A character value to indicate the name of the variable to plot time data.
 #' @param col_nonwear A character value to indicate the name of the variable used to count nonwear time.
 #' @param col_wear A character value to indicate the name of the variable used to count wear time.
+#' @param ehcv A numeric value to set the threshold above which Axis 1 data should be considered as extremely high (abnormal).
+#'     The value should be in counts/min.
 #' @param zoom_from A character value with the HH:MM:SS format to set the start of the daily period to visualize.
 #' @param zoom_to A character value with the HH:MM:SS format to set the end of the daily period to visualize.
 #'
@@ -34,6 +36,7 @@
 #'     col_time = "time", 
 #'     col_nonwear = "non_wearing_count", 
 #'     col_wear = "wearing_count",
+#'     ehcv = 15000,
 #'     zoom_from = "02:00:00",
 #'     zoom_to = "23:58:00"
 #'     )
@@ -43,6 +46,7 @@ plot_data <- function(
     metric = "axis1", 
     col_time = "time", 
     col_nonwear = "non_wearing_count",
+    ehcv = 15000,
     col_wear = "wearing_count",
     zoom_from = "00:00:00",
     zoom_to = "23:59:59"
@@ -68,6 +72,12 @@ plot_data <- function(
     
   # Getting epoch length
     epoch <- as.numeric(data[[col_time]][2] - data[[col_time]][1])
+  
+  # Getting correction factor for epoch duration different from 60s
+    cor_factor = 60 / epoch
+    
+  # Adjusting ehcv for the considered epoch
+    ehcv <- ehcv / cor_factor
 
   # Creating the plot
     p <-
@@ -127,6 +137,17 @@ plot_data <- function(
     geom_vline(aes(xintercept = 3600*21),   linetype = "dotted", color = "grey50") +
     geom_vline(aes(xintercept = 3600*22),   linetype = "dotted", color = "grey50") +
     geom_vline(aes(xintercept = 3600*23),   linetype = "dotted", color = "grey50")
+    
+    
+    # Add line for highlighting abnormal values if any
+    max_axis1 <- max(data$axis1)
+    
+    if (metric == "axis1" && ehcv <= max_axis1) { 
+      p <- p + 
+        geom_hline(aes(yintercept = ehcv, linetype = "Threshold for \nabnormal values"), color = "red", linewidth = 0.7) +
+        scale_linetype_manual(values = 1) +
+        labs(linetype = NULL)
+      }
     
     suppressWarnings(print(p))
 }

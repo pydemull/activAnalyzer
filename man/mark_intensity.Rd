@@ -18,7 +18,8 @@ mark_intensity(
   age = 40,
   weight = 70,
   sex = c("male", "female", "intersex", "undefined", "prefer not to say"),
-  dates = NULL
+  dates = NULL,
+  ehcv = "none"
 )
 }
 \arguments{
@@ -50,6 +51,10 @@ dataset would be shorter than 60 s, the function will divide the cut-point value
 \item{sex}{A character value.}
 
 \item{dates}{A character vector containing the dates to be retained for analysis. The dates must be with the "YYYY-MM-DD" format.}
+
+\item{ehcv}{A numeric value to set the threshold above which vertical axis data should be considered as extremely high (abnormal).
+The value should be in counts/min. Default is "none". If a value is set, all Axis 1, VM data and related metrics corresponding to the epochs for which the counts
+in Axis 1 are equal or higher to the threshold will be replaced by NA.}
 }
 \value{
 A dataframe.
@@ -98,6 +103,7 @@ mydata_with_intensity_marks <- mark_intensity(
     age = 32,
     weight = 67,
     sex = "male",
+    ehcv = 15000
     )
 head(mydata_with_intensity_marks)
 

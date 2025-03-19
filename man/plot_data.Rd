@@ -9,6 +9,7 @@ plot_data(
   metric = "axis1",
   col_time = "time",
   col_nonwear = "non_wearing_count",
+  ehcv = 15000,
   col_wear = "wearing_count",
   zoom_from = "00:00:00",
   zoom_to = "23:59:59"
@@ -22,6 +23,9 @@ plot_data(
 \item{col_time}{A character value to indicate the name of the variable to plot time data.}
 
 \item{col_nonwear}{A character value to indicate the name of the variable used to count nonwear time.}
+
+\item{ehcv}{A numeric value to set the threshold above which vertical axis data should be considered as extremely high (abnormal).
+The value should be in counts/min.}
 
 \item{col_wear}{A character value to indicate the name of the variable used to count wear time.}
 
@@ -54,6 +58,7 @@ plot_data(
     col_time = "time", 
     col_nonwear = "non_wearing_count", 
     col_wear = "wearing_count",
+    ehcv = 15000,
     zoom_from = "02:00:00",
     zoom_to = "23:58:00"
     )

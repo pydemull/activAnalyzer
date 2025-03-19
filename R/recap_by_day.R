@@ -68,7 +68,11 @@
 #' @param start_first_bin A numeric value to set the lower bound of the first bin of the intensity band (in counts/epoch duration).
 #' @param start_last_bin A numeric value to set the lower bound of the last bin of the intensity band (in counts/epoch duration).
 #' @param bin_width A numeric value to set the width of the bins of the intensity band (in counts/epoch duration).
-#'
+#' @param ehcv A numeric value to set the threshold above which Axis 1 data should be considered as extremely high (abnormal).
+#'     The value should be in counts/min. Default is "none". If a value is set, step-based metrics corresponding to the epochs for which the counts
+#'     in Axis 1 are equal or higher to the threshold will be replaced by NA. The correction of the other metrics should be done when marking the dataset
+#'     with the different categories of intensity.
+#'     
 #' @return A list of objects: `df_all_metrics`, `p_band`, and `p_log`. 
 #'     `df_all_metrics` is a dataframe containing all the metrics for each day.
 #'     `p_band` is a figure that shows the distribution of time spent in the configured bins of intensity for each day of the dataset. 
@@ -130,7 +134,8 @@ recap_by_day <- function(
   sex = c("male", "female", "intersex", "undefined", "prefer not to say"),
   start_first_bin = 0,
   start_last_bin = 10000,
-  bin_width = 500
+  bin_width = 500,
+  ehcv = "none"
   ) {
   
   sex <- match.arg(sex)
@@ -191,11 +196,22 @@ recap_by_day <- function(
            
            if (as.numeric(data[[col_time]][2] - data[[col_time]][1]) == 60) { 
              
+             ## Prepare dataset
              df_step_metrics <- 
                data %>%
                dplyr::mutate(timestamp = format(timestamp, "%Y-%m-%d %H:%M:%S")) %>%
                tidyr::separate("timestamp", c("date", "time"), sep = " ") %>%
-               dplyr::mutate(date = as.Date(date), time = hms::as_hms(time)) %>%
+               dplyr::mutate(date = as.Date(date), time = hms::as_hms(time))
+             
+             ## Remove epochs with abnormal counts
+             if (ehcv != "none" & is.numeric(ehcv) & ehcv >= 0) {
+               ehcv <- ehcv / cor_factor
+               df_step_metrics$steps   <- dplyr::if_else(df_step_metrics$axis1 >= ehcv, NA, df_step_metrics$steps)
+             }
+             
+             ## Compute step-based metrics
+             df_step_metrics <-
+               df_step_metrics %>%
                dplyr::select(
                  date, 
                  time, 
@@ -221,6 +237,7 @@ recap_by_day <- function(
                )
            } else {
              
+             ## Prepare dataset
              df_step_metrics <- 
                PhysicalActivity::dataCollapser(
                  dataset = data, 
@@ -229,7 +246,17 @@ recap_by_day <- function(
                ) %>%
                dplyr::mutate(timestamp = format(timestamp, "%Y-%m-%d %H:%M:%S")) %>%
                tidyr::separate("timestamp", c("date", "time"), sep = " ") %>%
-               dplyr::mutate(date = as.Date(date), time = hms::as_hms(time)) %>%
+               dplyr::mutate(date = as.Date(date), time = hms::as_hms(time))
+             
+             ## Remove epochs with abnormal counts
+             if (ehcv != "none" & is.numeric(ehcv) & ehcv >= 0) {
+               ehcv <- ehcv / cor_factor
+               df_step_metrics$steps   <- dplyr::if_else(df_step_metrics$axis1 >= ehcv, NA, df_step_metrics$steps)
+             }
+             
+             ## Compute step-based metrics
+             df_step_metrics <-
+               df_step_metrics %>%
                dplyr::select(
                  date, 
                  time, 
