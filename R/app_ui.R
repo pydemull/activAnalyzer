@@ -226,7 +226,7 @@ app_ui <- function(request) {
                  ),
                  fluidRow(
                    column(12,
-                          numericInput("ehcv", "Threshold to highlight abnormal values for Axis 1 (counts/min)", value = 15000, min = 0)
+                          numericInput("ehcv_val1", "Threshold to highlight abnormal values for Axis 1 (counts/min)", value = 15000, min = 0)
                    ),
                  ),
                  fluidRow(
@@ -403,6 +403,24 @@ app_ui <- function(request) {
                           shiny::actionButton("auto_fill_intensity", "Default settings",  class = "btn-return", style = "margin-top: 10px"),
                    ),
                  ),
+                 
+                 #*************************
+                 # Removing abnormal values
+                 #*************************
+                 
+                 fluidRow(
+                   column(12,
+                          h3("Tick the box and adjust the threshold to detect epochs corresponding to abnormal counts in Axis 1 (not mandatory)."),
+                   ),
+                 ),
+                 
+                 fluidRow(
+                   column(6,
+                          hr(),
+                          checkboxInput("ehcv_check", "Use threshold to remove abnormal epochs (Detected epochs will be considered as nonwear epochs with NAs)."),
+                          numericInput("ehcv_val2", "Threshold related to Axis 1 (counts/min)", value = 15000, min = 0))
+                 ),
+                 
                  
                  #*************************************
                  # Choosing intensity bins

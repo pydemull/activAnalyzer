@@ -8,7 +8,7 @@
 #' @param col_time A character value to indicate the name of the variable to plot time data.
 #' @param col_nonwear A character value to indicate the name of the variable used to count nonwear time.
 #' @param col_wear A character value to indicate the name of the variable used to count wear time.
-#' @param ehcv A numeric value to set the threshold above which vertical axis data should be considered as extremely high (abnormal).
+#' @param ehcv A numeric value to set the threshold above which Axis 1 data should be considered as extremely high (abnormal).
 #'     The value should be in counts/min.
 #' @param zoom_from A character value with the HH:MM:SS format to set the start of the daily period to visualize.
 #' @param zoom_to A character value with the HH:MM:SS format to set the end of the daily period to visualize.

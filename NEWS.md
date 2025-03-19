@@ -1,5 +1,7 @@
 # activAnalyzer (development version)
 
+* Added the possibility to see a threshold highlighting abnormal values for axis 1 in the nonwear/wear graph. In addition, abnormal values for Axis 1 and dependant metrics (e.g. VM) can now be replaced by NA.
+
 # activAnalyzer 2.1.2
 * Removed an undesired comma from a req() function in app_server.R that caused an error with more recent versions of package dependencies (likely Shiny).
 * Updated the figures for the comparisons with norms and recommendations (legend is now correctly placed at the top).

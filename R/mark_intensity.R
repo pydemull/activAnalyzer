@@ -37,6 +37,9 @@
 #' @param weight A numeric value in kg.
 #' @param sex A character value.
 #' @param dates A character vector containing the dates to be retained for analysis. The dates must be with the "YYYY-MM-DD" format.
+#' @param ehcv A numeric value to set the threshold above which Axis 1 data should be considered as extremely high (abnormal).
+#'     The value should be in counts/min. Default is "none". If a value is set, all Axis 1/2/3 data, VM data and related metrics corresponding to the epochs for which the counts
+#'     in Axis 1 are equal or higher to the threshold will be replaced by NA.
 
 #' @return A dataframe.
 #' @export
@@ -63,6 +66,7 @@
 #'     age = 32,
 #'     weight = 67,
 #'     sex = "male",
+#'     ehcv = 15000
 #'     )
 #' head(mydata_with_intensity_marks)
 #' 
@@ -81,7 +85,9 @@ mark_intensity <- function(data,
                            age = 40, 
                            weight = 70, 
                            sex = c("male", "female", "intersex", "undefined", "prefer not to say"),
-                           dates = NULL) {
+                           dates = NULL,
+                           ehcv = "none"
+                           ) {
   
   
   if (is.null(dates)) {selected_dates <- attributes(as.factor(data$date))$levels}
@@ -144,7 +150,28 @@ mark_intensity <- function(data,
         df$bout <- cumsum(c(1, as.numeric(diff(df$intensity_category_num))!= 0))
     
     
+  # Setting count-based data and related data to NA for abnormal metric if required
+        
+  if (ehcv != "none" & is.numeric(ehcv) & ehcv >= 0) {
     
+    ehcv <- ehcv / cor_factor
+    
+    df$axis1 <- dplyr::if_else(df$axis1 >= ehcv, NA, df$axis1)
+    df$axis2 <- dplyr::if_else(df$axis1 >= ehcv, NA, df$axis2)
+    df$axis3 <- dplyr::if_else(df$axis1 >= ehcv, NA, df$axis3)
+    df$vm    <- dplyr::if_else(df$axis1 >= ehcv, NA, df$vm)
+    df$steps   <- dplyr::if_else(df$axis1 >= ehcv, NA, df$steps)
+    df$wearing <- dplyr::if_else(df$axis1 >= ehcv, "nw", df$wearing)
+    df$non_wearing_count <- dplyr::if_else(df$axis1 >= ehcv, 1, df$non_wearing_count)
+    df$wearing_count <- dplyr::if_else(df$axis1 >= ehcv, 0, df$wearing_count)
+    df$SED <- dplyr::if_else(df$axis1 >= ehcv, NA, df$SED)
+    df$LPA <- dplyr::if_else(df$axis1 >= ehcv, NA, df$LPA)
+    df$MPA <- dplyr::if_else(df$axis1 >= ehcv, NA, df$MPA)
+    df$VPA <- dplyr::if_else(df$axis1 >= ehcv, NA, df$VPA)
+    df$METS <- dplyr::if_else(df$axis1 >= ehcv, NA, df$METS)
+    df$kcal <- dplyr::if_else(df$axis1 >= ehcv, NA, df$kcal)
+    df$mets_hours_mvpa <- dplyr::if_else(df$axis1 >= ehcv, NA, df$mets_hours_mvpa)
+  }
     
   # Providing information about the parameters used for computing results
     message(paste0("You have computed intensity metrics with the mark_intensity() function using the following inputs: 
