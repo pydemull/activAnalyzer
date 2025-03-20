@@ -207,8 +207,7 @@ recap_by_day <- function(
              
              ## Remove epochs with abnormal counts
              if (ehcv != "none" & is.numeric(ehcv) & ehcv >= 0) {
-               ehcv <- ehcv / cor_factor
-               df_step_metrics$steps   <- dplyr::if_else(df_step_metrics$axis1 >= ehcv, NA, df_step_metrics$steps)
+               df_step_metrics$steps <- dplyr::if_else(df_step_metrics$axis1 >= ehcv, NA, df_step_metrics$steps)
              }
              
              ## Compute step-based metrics
@@ -252,7 +251,6 @@ recap_by_day <- function(
              
              ## Remove epochs with abnormal counts
              if (ehcv != "none" & is.numeric(ehcv) & ehcv >= 0) {
-               ehcv <- ehcv / cor_factor
                df_step_metrics$steps   <- dplyr::if_else(df_step_metrics$axis1 >= ehcv, NA, df_step_metrics$steps)
              }
              
