@@ -120,7 +120,7 @@ app <- shinytest2::AppDriver$new(
   options = list(test.mode = TRUE),
   timeout = 60 * 1000,
   height = 1024,
-  width = 68
+  width = 768
 )
   
 #===============================================================================
