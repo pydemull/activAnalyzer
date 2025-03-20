@@ -150,7 +150,8 @@ mark_intensity <- function(data,
         df$bout <- cumsum(c(1, as.numeric(diff(df$intensity_category_num))!= 0))
     
     
-  # Setting count-based data and related data to NA for abnormal metric if required
+  # Setting count-based variables and related variables to NA when Axis 1 data are abnormal
+  # Detected abnormal epochs will considered as "nonwear"
         
   if (ehcv != "none" & is.numeric(ehcv) & ehcv >= 0) {
     

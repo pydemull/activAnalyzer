@@ -105,7 +105,8 @@
 #'     vpa_cutpoint = 6167, 
 #'     age = 32,
 #'     weight = 67,
-#'     sex = "male"
+#'     sex = "male",
+#'     ehcv = 15000
 #'     )
 #' recap_by_day(
 #'     data = mydata_with_intensity_marks, 
@@ -117,7 +118,8 @@
 #'     valid_wear_time_end = "22:00:00",
 #'     start_first_bin = 0,
 #'     start_last_bin = 10000,
-#'     bin_width = 500
+#'     bin_width = 500,
+#'     ehcv = 15000
 #'     )
 #' }
 #' 
