@@ -114,7 +114,7 @@
 
 
 <dt id="arg-ehcv">ehcv<a class="anchor" aria-label="anchor" href="#arg-ehcv"></a></dt>
-<dd><p>A numeric value to set the threshold above which vertical axis data should be considered as extremely high (abnormal).
+<dd><p>A numeric value to set the threshold above which Axis 1 data should be considered as extremely high (abnormal).
 The value should be in counts/min. Default is "none". If a value is set, step-based metrics corresponding to the epochs for which the counts
 in Axis 1 are equal or higher to the threshold will be replaced by NA. The correction of the other metrics should be done when marking the dataset
 with the different categories of intensity.</p></dd>
@@ -205,7 +205,8 @@ that may not be accurate at the individual level.</p>
 <span class="r-in"><span>    vpa_cutpoint <span class="op">=</span> <span class="fl">6167</span>, </span></span>
 <span class="r-in"><span>    age <span class="op">=</span> <span class="fl">32</span>,</span></span>
 <span class="r-in"><span>    weight <span class="op">=</span> <span class="fl">67</span>,</span></span>
-<span class="r-in"><span>    sex <span class="op">=</span> <span class="st">"male"</span></span></span>
+<span class="r-in"><span>    sex <span class="op">=</span> <span class="st">"male"</span>,</span></span>
+<span class="r-in"><span>    ehcv <span class="op">=</span> <span class="fl">15000</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You have computed intensity metrics with the mark_intensity() function using the following inputs: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     axis = vm</span>
@@ -226,7 +227,8 @@ that may not be accurate at the individual level.</p>
 <span class="r-in"><span>    valid_wear_time_end <span class="op">=</span> <span class="st">"22:00:00"</span>,</span></span>
 <span class="r-in"><span>    start_first_bin <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>    start_last_bin <span class="op">=</span> <span class="fl">10000</span>,</span></span>
-<span class="r-in"><span>    bin_width <span class="op">=</span> <span class="fl">500</span></span></span>
+<span class="r-in"><span>    bin_width <span class="op">=</span> <span class="fl">500</span>,</span></span>
+<span class="r-in"><span>    ehcv <span class="op">=</span> <span class="fl">15000</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(date)`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(date)`</span>
