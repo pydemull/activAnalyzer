@@ -52,8 +52,8 @@ dataset would be shorter than 60 s, the function will divide the cut-point value
 
 \item{dates}{A character vector containing the dates to be retained for analysis. The dates must be with the "YYYY-MM-DD" format.}
 
-\item{ehcv}{A numeric value to set the threshold above which vertical axis data should be considered as extremely high (abnormal).
-The value should be in counts/min. Default is "none". If a value is set, all Axis 1, VM data and related metrics corresponding to the epochs for which the counts
+\item{ehcv}{A numeric value to set the threshold above which Axis 1 data should be considered as extremely high (abnormal).
+The value should be in counts/min. Default is "none". If a value is set, all Axis 1/2/3 data, VM data and related metrics corresponding to the epochs for which the counts
 in Axis 1 are equal or higher to the threshold will be replaced by NA.}
 }
 \value{
