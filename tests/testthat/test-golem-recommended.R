@@ -117,7 +117,10 @@ attach(test_activAnalyzer_env)
 # Creating shinyDriver object
 app <- shinytest2::AppDriver$new(
   run_app(),
-  options = list(test.mode = TRUE)
+  options = list(test.mode = TRUE),
+  timeout = 60 * 1000,
+  height = 1024,
+  width = 768
 )
   
 #===============================================================================

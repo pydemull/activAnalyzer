@@ -24,7 +24,7 @@ plot_data(
 
 \item{col_nonwear}{A character value to indicate the name of the variable used to count nonwear time.}
 
-\item{ehcv}{A numeric value to set the threshold above which vertical axis data should be considered as extremely high (abnormal).
+\item{ehcv}{A numeric value to set the threshold above which Axis 1 data should be considered as extremely high (abnormal).
 The value should be in counts/min.}
 
 \item{col_wear}{A character value to indicate the name of the variable used to count wear time.}

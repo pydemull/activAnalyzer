@@ -48,7 +48,7 @@ recap_by_day(
 
 \item{bin_width}{A numeric value to set the width of the bins of the intensity band (in counts/epoch duration).}
 
-\item{ehcv}{A numeric value to set the threshold above which vertical axis data should be considered as extremely high (abnormal).
+\item{ehcv}{A numeric value to set the threshold above which Axis 1 data should be considered as extremely high (abnormal).
 The value should be in counts/min. Default is "none". If a value is set, step-based metrics corresponding to the epochs for which the counts
 in Axis 1 are equal or higher to the threshold will be replaced by NA. The correction of the other metrics should be done when marking the dataset
 with the different categories of intensity.}
@@ -139,7 +139,8 @@ mydata_with_intensity_marks <- mark_intensity(
     vpa_cutpoint = 6167, 
     age = 32,
     weight = 67,
-    sex = "male"
+    sex = "male",
+    ehcv = 15000
     )
 recap_by_day(
     data = mydata_with_intensity_marks, 
@@ -151,7 +152,8 @@ recap_by_day(
     valid_wear_time_end = "22:00:00",
     start_first_bin = 0,
     start_last_bin = 10000,
-    bin_width = 500
+    bin_width = 500,
+    ehcv = 15000
     )
 }
 
